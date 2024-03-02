@@ -1,0 +1,1 @@
+Scaffold-DbContext "server=103.112.213.175;database=SSDB_JSS_WEB_25Sep;uid=sa;password=Rational@1;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
