@@ -45,8 +45,8 @@ namespace HIMS.API.Controllers.Login
             }
             else
             {
-                if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
-                {
+                //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                //{
                     LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
                     if (user == null)
                     {
@@ -66,11 +66,11 @@ namespace HIMS.API.Controllers.Login
                             user.UserId
                         });
                     }
-                }
-                else
-                {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
-                }
+                //}
+                //else
+                //{
+                //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                //}
             }
         }
         [NonAction]
