@@ -17,40 +17,40 @@ namespace HIMS.API.Controllers.Masters
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class PrefixController : BaseController
+    public class GenderController : BaseController
     {
-        private readonly IGenericService<DbPrefixMaster> _repository;
-        public PrefixController(IGenericService<DbPrefixMaster> repository)
+        private readonly IGenericService<DbGenderMaster> _repository;
+        public GenderController(IGenericService<DbGenderMaster> repository)
         {
             _repository = repository;
         }
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission(PageCode = "Gender", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<DbPrefixMaster> DocList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(DocList.ToGridResponse(objGrid, "Prefix List"));
+            IPagedList<DbGenderMaster> DocList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(DocList.ToGridResponse(objGrid, "Gender List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission(PageCode = "Gender", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.PrefixId == id);
-            return data.ToSingleResponse<DbPrefixMaster, PrefixModel>("Prefix");
+            var data = await _repository.GetById(x => x.GenderId == id);
+            return data.ToSingleResponse<DbGenderMaster, GenderModel>("Gender");
         }
 
         [HttpPost]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(PrefixModel obj)
+        [Permission(PageCode = "Gender", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> post(GenderModel obj)
         {
-            DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
+            DbGenderMaster model = obj.MapTo<DbGenderMaster>();
             model.IsActive = 1;
-            if (obj.PrefixId == 0)
+            if (obj.GenderId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -58,15 +58,15 @@ namespace HIMS.API.Controllers.Masters
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Gender added successfully.");
         }
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PrefixModel obj)
+        [Permission(PageCode = "Gender", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(GenderModel obj)
         {
-            DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
+            DbGenderMaster model = obj.MapTo<DbGenderMaster>();
             model.IsActive = 1;
-            if (obj.PrefixId == 0)
+            if (obj.GenderId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -74,20 +74,20 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Gender updated successfully.");
         }
         [HttpDelete]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Gender", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
-            DbPrefixMaster model = await _repository.GetById(x => x.PrefixId == Id);
-            if ((model?.PrefixId ?? 0) > 0)
+            DbGenderMaster model = await _repository.GetById(x => x.GenderId == Id);
+            if ((model?.GenderId ?? 0) > 0)
             {
                 model.IsActive = 2;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Gender deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -20,6 +20,7 @@ namespace HIMS.Data
 
         Task<bool> HardDelete(int id, int UserId, string Username, Expression<Func<TModel, bool>>? where = null);
         Task<bool> SoftDelete(TModel dto, int UserId, string Username);
+        Task Add(DbPrefixMaster model, int currentUserId, string currentUserName);
     }
 
 }

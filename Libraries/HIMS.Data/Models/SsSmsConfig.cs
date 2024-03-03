@@ -12,5 +12,7 @@ namespace HIMS.Data.Models
         public string? SenderId { get; set; }
         public string? UserName { get; set; }
         public string? Spassword { get; set; }
+        public string? StorageLocLink { get; set; }
+        public string? ConType { get; set; }
     }
 }

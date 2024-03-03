@@ -461,14 +461,12 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=117.216.212.131;Initial Catalog=AIRMID_WEB_TEST_2024;Persist Security Info=True;User ID=sa;Password=Rational@1;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=122.169.42.110;Initial Catalog=JSS_Web_2;Persist Security Info=True;User ID=sa;Password=Rational@1;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<AddCharge>(entity =>
             {
                 entity.HasKey(e => e.ChargesId);
@@ -1359,7 +1357,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("DB_GenderMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DbPrefixMaster>(entity =>
@@ -1372,8 +1374,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DeletedDate).HasColumnType("date");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -2844,7 +2844,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.UserName).HasMaxLength(100);
 
-                entity.Property(e => e.UserToken).HasMaxLength(500);
+                entity.Property(e => e.UserToken).HasMaxLength(250);
             });
 
             modelBuilder.Entity<LvwAddCharge>(entity =>
@@ -7376,7 +7376,13 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.PermissionMasters)
                     .HasForeignKey(d => d.MenuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PermissionMaster_MenuMaster");
+                    .HasConstraintName("FK_PermissionMaster_PageMaster");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.PermissionMasters)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PermissionMaster_RoleTemplateMaster");
             });
 
             modelBuilder.Entity<PharTotalSalesV>(entity =>
@@ -8054,6 +8060,8 @@ namespace HIMS.Data.Models
                     .HasMaxLength(10)
                     .HasColumnName("campaign");
 
+                entity.Property(e => e.ConType).HasMaxLength(20);
+
                 entity.Property(e => e.Keys)
                     .HasMaxLength(30)
                     .HasColumnName("keys");
@@ -8065,6 +8073,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Spassword)
                     .HasMaxLength(100)
                     .HasColumnName("SPassword");
+
+                entity.Property(e => e.StorageLocLink).HasMaxLength(500);
 
                 entity.Property(e => e.Url)
                     .HasMaxLength(200)
@@ -11610,7 +11620,7 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DoctorName).HasMaxLength(200);
 
                 entity.Property(e => e.ExtAddress)
-                    .HasMaxLength(200)
+                    .HasMaxLength(500)
                     .HasColumnName("extAddress");
 
                 entity.Property(e => e.ExtMobileNo).HasMaxLength(20);
