@@ -51,7 +51,11 @@ namespace HIMS.API.Controllers.Masters
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
             model.IsActive = 1;
             if (obj.PrefixId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
+            }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
@@ -65,15 +69,28 @@ namespace HIMS.API.Controllers.Masters
             if (obj.PrefixId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
-                await _repository.Update(model, CurrentUserId, CurrentUserName);
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix updated successfully.");
         }
         [HttpDelete]
         [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
-            await _repository.SoftDelete(Id, CurrentUserId, CurrentUserName, x => x.PrefixId == Id);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix deleted successfully.");
+            DbPrefixMaster model = await _repository.GetById(x => x.PrefixId == Id);
+            if ((model?.PrefixId ?? 0) > 0)
+            {
+                model.IsActive = 2;
+                model.DeletedBy = CurrentUserId;
+                model.DeletedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
 }

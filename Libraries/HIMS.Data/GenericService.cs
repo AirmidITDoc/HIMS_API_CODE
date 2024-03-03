@@ -60,9 +60,16 @@ namespace HIMS.Data
             return entity;
         }
 
-        public async Task<TModel> Update(TModel entity, int UserId, string Username, params Expression<Func<TModel, object>>[] references)
+        public async Task<TModel> Update(TModel entity, int UserId, string Username, string[]? ignoreColumns = null)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
+            if ((ignoreColumns?.Length ?? 0) > 0)
+            {
+                foreach (var column in ignoreColumns)
+                {
+                    _dbContext.Entry(entity).Property(column).IsModified = false;
+                }
+            }
             await _dbContext.SaveChangesAsync(UserId, Username);
             return entity;
 
@@ -86,23 +93,10 @@ namespace HIMS.Data
 
             return true;
         }
-        public async Task<bool> SoftDelete(int id, int UserId, string Username, Expression<Func<TModel, bool>>? where = null, string DelFlagColName = "IsActive")
+        public async Task<bool> SoftDelete(TModel entity, int UserId, string Username)
         {
-            var query = _dbContext.Set<TModel>().AsQueryable();
-            if (where != null)
-            {
-                query = query.Where(where);
-            }
-            var entity = await query.FirstOrDefaultAsync();
-            if (entity == null)
-            {
-                return false;
-            }
-
-            var val = typeof(TModel).GetProperty(DelFlagColName).GetValue("0");
             _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync(UserId, Username);
-
+            await _dbContext.SaveChangesAsync(UserId, Username, true);
             return true;
         }
 

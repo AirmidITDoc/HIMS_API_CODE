@@ -24,7 +24,7 @@ namespace HIMS.API.Infrastructure
             // services.AddScoped<IDataProvider, MsSqlDataProvider>();
             //services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-            services.AddScoped<IContext, SSDB_JSS_WEB_25SepContext>();
+            services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddHttpContextAccessor();

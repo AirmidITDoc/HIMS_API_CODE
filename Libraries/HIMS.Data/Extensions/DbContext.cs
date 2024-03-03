@@ -12,20 +12,20 @@ using Newtonsoft.Json;
 
 namespace HIMS.Data.Models
 {
-    public partial class SSDB_JSS_WEB_25SepContext : DbContext, IContext
+    public partial class HIMSDbContext : DbContext, IContext
     {
-        public SSDB_JSS_WEB_25SepContext(DbContextOptions<SSDB_JSS_WEB_25SepContext> options)
+        public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
         }
-        public virtual async Task<int> SaveChangesAsync(int UserId, string Username, CancellationToken cancellationToken = default)
+        public virtual async Task<int> SaveChangesAsync(int UserId, string Username, bool IsDelete = false, CancellationToken cancellationToken = default)
         {
             if (UserId > 0)
-                await AuditChanges(UserId, Username);
+                await AuditChanges(UserId, Username, IsDelete);
             return await base.SaveChangesAsync(cancellationToken);
         }
-        private async Task AuditChanges(int UserId, string Username)
+        private async Task AuditChanges(int UserId, string Username, bool IsDelete)
         {
             DateTime now = DateTime.Now;
 
@@ -37,7 +37,7 @@ namespace HIMS.Data.Models
             foreach (EntityEntry entityEntry in entityEntries)
             {
                 IncrementVersionNumber(entityEntry);
-                await CreateAuditAsync(entityEntry, UserId, Username);
+                await CreateAuditAsync(entityEntry, UserId, Username, IsDelete);
             }
         }
         private void IncrementVersionNumber(EntityEntry entityEntry)
@@ -49,12 +49,12 @@ namespace HIMS.Data.Models
             }
         }
 
-        private async Task CreateAuditAsync(EntityEntry entityEntry, int UserId, string Username)
+        private async Task CreateAuditAsync(EntityEntry entityEntry, int UserId, string Username, bool IsDelete)
         {
             AuditLog objAdd = new()
             {
                 CreatedOn = DateTime.Now,
-                ActionId = (int)LogAction.Add,
+                ActionId = IsDelete ? (int)LogAction.Delete : (int)LogAction.Add,
                 ActionById = UserId,
                 ActionByName = Username,
                 Id = 0,

@@ -13,5 +13,6 @@ namespace HIMS.Data.Models
         public decimal? UnitMrp { get; set; }
         public decimal? PurUnitRateWf { get; set; }
         public decimal? LandedRate { get; set; }
+        public long StockId { get; set; }
     }
 }

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HIMS.Data.Models
 {
-    public partial class SSDB_JSS_WEB_25SepContext : DbContext
+    public partial class HIMSDbContext : DbContext
     {
-        //public SSDB_JSS_WEB_25SepContext()
+        //public HIMSDbContext()
         //{
         //}
 
-        //public SSDB_JSS_WEB_25SepContext(DbContextOptions<SSDB_JSS_WEB_25SepContext> options)
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
         //    : base(options)
         //{
         //}
@@ -19,8 +19,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
         public virtual DbSet<AdmittedPatientBalanceAmount> AdmittedPatientBalanceAmounts { get; set; } = null!;
-        public virtual DbSet<AdmittedPatientPharAdvBalAmt> AdmittedPatientPharAdvBalAmts { get; set; } = null!;
-        public virtual DbSet<AdmittedPatientPharBalAmt> AdmittedPatientPharBalAmts { get; set; } = null!;
         public virtual DbSet<AdvRefundDetail> AdvRefundDetails { get; set; } = null!;
         public virtual DbSet<AdvanceDetail> AdvanceDetails { get; set; } = null!;
         public virtual DbSet<AdvanceHeader> AdvanceHeaders { get; set; } = null!;
@@ -32,18 +30,19 @@ namespace HIMS.Data.Models
         public virtual DbSet<Bedmasterddd> Bedmasterddds { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;
         public virtual DbSet<BillDetail> BillDetails { get; set; } = null!;
+        public virtual DbSet<BkpCurrentStk09oct2023> BkpCurrentStk09oct2023s { get; set; } = null!;
+        public virtual DbSet<BkpCurrentStk10oct2023> BkpCurrentStk10oct2023s { get; set; } = null!;
         public virtual DbSet<CasePaper> CasePapers { get; set; } = null!;
         public virtual DbSet<CashCounter> CashCounters { get; set; } = null!;
         public virtual DbSet<ClassMaster> ClassMasters { get; set; } = null!;
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; } = null!;
         public virtual DbSet<CompanyTypeMaster> CompanyTypeMasters { get; set; } = null!;
         public virtual DbSet<ConfigSetting> ConfigSettings { get; set; } = null!;
+        public virtual DbSet<CurrentStk10oct20231> CurrentStk10oct20231s { get; set; } = null!;
+        public virtual DbSet<CurrentStk10oct20232> CurrentStk10oct20232s { get; set; } = null!;
         public virtual DbSet<DbGenderMaster> DbGenderMasters { get; set; } = null!;
         public virtual DbSet<DbPrefixMaster> DbPrefixMasters { get; set; } = null!;
         public virtual DbSet<DbPurposeMaster> DbPurposeMasters { get; set; } = null!;
-        public virtual DbSet<Demo> Demos { get; set; } = null!;
-        public virtual DbSet<Demo1> Demo1s { get; set; } = null!;
-        public virtual DbSet<Demo3> Demo3s { get; set; } = null!;
         public virtual DbSet<Discharge> Discharges { get; set; } = null!;
         public virtual DbSet<DischargeSummary> DischargeSummaries { get; set; } = null!;
         public virtual DbSet<DischargeTypeMaster> DischargeTypeMasters { get; set; } = null!;
@@ -156,6 +155,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwRetrievePathologyResultMachineUpload> LvwRetrievePathologyResultMachineUploads { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResultUpdate> LvwRetrievePathologyResultUpdates { get; set; } = null!;
         public virtual DbSet<LvwSalesBatchNo> LvwSalesBatchNos { get; set; } = null!;
+        public virtual DbSet<LvwSalesGstissue> LvwSalesGstissues { get; set; } = null!;
         public virtual DbSet<LvwServiceMasterList> LvwServiceMasterLists { get; set; } = null!;
         public virtual DbSet<LvwServicePriceList> LvwServicePriceLists { get; set; } = null!;
         public virtual DbSet<LvwSonography> LvwSonographies { get; set; } = null!;
@@ -177,6 +177,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MClassMaster> MClassMasters { get; set; } = null!;
         public virtual DbSet<MComplaintMaster> MComplaintMasters { get; set; } = null!;
         public virtual DbSet<MConcessionReasonMaster> MConcessionReasonMasters { get; set; } = null!;
+        public virtual DbSet<MConstant> MConstants { get; set; } = null!;
         public virtual DbSet<MCountryMaster> MCountryMasters { get; set; } = null!;
         public virtual DbSet<MCreditReasonMaster> MCreditReasonMasters { get; set; } = null!;
         public virtual DbSet<MCurrencyMaster> MCurrencyMasters { get; set; } = null!;
@@ -257,6 +258,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MUnitofMeasurementMaster> MUnitofMeasurementMasters { get; set; } = null!;
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
+        public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
         public virtual DbSet<MisIpgroWiseTot> MisIpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisOpdocPatCnt> MisOpdocPatCnts { get; set; } = null!;
         public virtual DbSet<MisOpdocRevTot> MisOpdocRevTots { get; set; } = null!;
@@ -282,27 +284,29 @@ namespace HIMS.Data.Models
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
+        public virtual DbSet<RoleMaster> RoleMasters { get; set; } = null!;
         public virtual DbSet<RoleTemplateDetail> RoleTemplateDetails { get; set; } = null!;
         public virtual DbSet<RoleTemplateMaster> RoleTemplateMasters { get; set; } = null!;
         public virtual DbSet<RoomMaster> RoomMasters { get; set; } = null!;
         public virtual DbSet<RtrvAdvDetForPay> RtrvAdvDetForPays { get; set; } = null!;
+        public virtual DbSet<SalesGststoreWiseOpip> SalesGststoreWiseOpips { get; set; } = null!;
         public virtual DbSet<SalesPaymentDateWise> SalesPaymentDateWises { get; set; } = null!;
         public virtual DbSet<SalesRefundDateWise> SalesRefundDateWises { get; set; } = null!;
         public virtual DbSet<SalesReturnAmt> SalesReturnAmts { get; set; } = null!;
         public virtual DbSet<SalesReturnGststoreWise> SalesReturnGststoreWises { get; set; } = null!;
-        public virtual DbSet<Satish> Satishes { get; set; } = null!;
+        public virtual DbSet<SalesReturnGststoreWiseOpip> SalesReturnGststoreWiseOpips { get; set; } = null!;
         public virtual DbSet<SerPer> SerPers { get; set; } = null!;
         public virtual DbSet<ServiceDetail> ServiceDetails { get; set; } = null!;
         public virtual DbSet<ServiceMaster> ServiceMasters { get; set; } = null!;
         public virtual DbSet<SmsoutGoing> SmsoutGoings { get; set; } = null!;
         public virtual DbSet<Sonography> Sonographies { get; set; } = null!;
+        public virtual DbSet<SsGstperConfig> SsGstperConfigs { get; set; } = null!;
         public virtual DbSet<SsMenuMaster> SsMenuMasters { get; set; } = null!;
         public virtual DbSet<SsMenuMasterDetail> SsMenuMasterDetails { get; set; } = null!;
         public virtual DbSet<SsMenuMasterDetailDetail> SsMenuMasterDetailDetails { get; set; } = null!;
         public virtual DbSet<SsRoleTemplateDetail> SsRoleTemplateDetails { get; set; } = null!;
         public virtual DbSet<SsRoleTemplateMaster> SsRoleTemplateMasters { get; set; } = null!;
         public virtual DbSet<SsSmsConfig> SsSmsConfigs { get; set; } = null!;
-        public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
         public virtual DbSet<TAbillDetail> TAbillDetails { get; set; } = null!;
         public virtual DbSet<TAddCharge> TAddCharges { get; set; } = null!;
@@ -331,7 +335,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCurrentStk21sep21> TCurrentStk21sep21s { get; set; } = null!;
         public virtual DbSet<TCurrentStkWithDaily> TCurrentStkWithDailies { get; set; } = null!;
         public virtual DbSet<TCurrentStock> TCurrentStocks { get; set; } = null!;
+        public virtual DbSet<TCurrentStock09oct2023> TCurrentStock09oct2023s { get; set; } = null!;
         public virtual DbSet<TCurrentStockPkFinal> TCurrentStockPkFinals { get; set; } = null!;
+        public virtual DbSet<TCurrentStockPkOrginalBkp> TCurrentStockPkOrginalBkps { get; set; } = null!;
+        public virtual DbSet<TCurrentstock09oct23> TCurrentstock09oct23s { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
@@ -400,6 +407,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPhadvRefundDetail> TPhadvRefundDetails { get; set; } = null!;
         public virtual DbSet<TPhadvanceDetail> TPhadvanceDetails { get; set; } = null!;
         public virtual DbSet<TPhadvanceHeader> TPhadvanceHeaders { get; set; } = null!;
+        public virtual DbSet<TPharPatientInformation> TPharPatientInformations { get; set; } = null!;
         public virtual DbSet<TPhoneAppointment> TPhoneAppointments { get; set; } = null!;
         public virtual DbSet<TPrePostOperativeNote> TPrePostOperativeNotes { get; set; } = null!;
         public virtual DbSet<TPrescription> TPrescriptions { get; set; } = null!;
@@ -424,19 +432,26 @@ namespace HIMS.Data.Models
         public virtual DbSet<TTokenNoDoctorWiseMannual> TTokenNoDoctorWiseMannuals { get; set; } = null!;
         public virtual DbSet<TTokenNumberGroupWise> TTokenNumberGroupWises { get; set; } = null!;
         public virtual DbSet<TTokenNumberWithDoctorWise> TTokenNumberWithDoctorWises { get; set; } = null!;
+        public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
         public virtual DbSet<TableSubhash> TableSubhashes { get; set; } = null!;
         public virtual DbSet<TariffMaster> TariffMasters { get; set; } = null!;
-        public virtual DbSet<Tblstudent> Tblstudents { get; set; } = null!;
-        public virtual DbSet<Tblstudent1> Tblstudent1s { get; set; } = null!;
         public virtual DbSet<TempPathReportId> TempPathReportIds { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkIssueToDept> TempPkCurrStkIssueToDepts { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkNewBatchNo> TempPkCurrStkNewBatchNos { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkNewRecord> TempPkCurrStkNewRecords { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkReceivedQty> TempPkCurrStkReceivedQties { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkSale> TempPkCurrStkSales { get; set; } = null!;
+        public virtual DbSet<TempPkCurrStkSales1> TempPkCurrStkSales1s { get; set; } = null!;
         public virtual DbSet<TempStrId> TempStrIds { get; set; } = null!;
         public virtual DbSet<TempSulpId> TempSulpIds { get; set; } = null!;
         public virtual DbSet<TemplateMasterbak> TemplateMasterbaks { get; set; } = null!;
+        public virtual DbSet<TemppkCurrstkNegativeBalQty> TemppkCurrstkNegativeBalQties { get; set; } = null!;
         public virtual DbSet<TgHtlTmp> TgHtlTmps { get; set; } = null!;
         public virtual DbSet<UserChatMailSystem> UserChatMailSystems { get; set; } = null!;
         public virtual DbSet<UserMailSystemBlog> UserMailSystemBlogs { get; set; } = null!;
+        public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
@@ -446,12 +461,14 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=103.112.213.175;database=SSDB_JSS_WEB_25Sep;uid=sa;password=Rational@1;");
+                optionsBuilder.UseSqlServer("Data Source=117.216.212.131;Initial Catalog=AIRMID_WEB_TEST_2024;Persist Security Info=True;User ID=sa;Password=Rational@1;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<AddCharge>(entity =>
             {
                 entity.HasKey(e => e.ChargesId);
@@ -680,30 +697,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ChargesAmount).HasColumnType("money");
 
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
-            });
-
-            modelBuilder.Entity<AdmittedPatientPharAdvBalAmt>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("AdmittedPatientPharAdvBalAmt");
-
-                entity.Property(e => e.AdvBalAmount).HasColumnType("money");
-
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
-            });
-
-            modelBuilder.Entity<AdmittedPatientPharBalAmt>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("AdmittedPatientPharBalAmt");
-
-                entity.Property(e => e.BillAmount).HasColumnType("money");
-
-                entity.Property(e => e.BillBalAmt).HasColumnType("money");
-
-                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
             modelBuilder.Entity<AdvRefundDetail>(entity =>
@@ -956,6 +949,80 @@ namespace HIMS.Data.Models
                     .HasFillFactor(80);
 
                 entity.Property(e => e.ChargesId).HasColumnName("ChargesID");
+            });
+
+            modelBuilder.Entity<BkpCurrentStk09oct2023>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("bkp_CurrentStk_09Oct2023");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<BkpCurrentStk10oct2023>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("bkp_CurrentStk_10Oct2023");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
             });
 
             modelBuilder.Entity<CasePaper>(entity =>
@@ -1211,6 +1278,80 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegPrefix).HasMaxLength(20);
             });
 
+            modelBuilder.Entity<CurrentStk10oct20231>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("CurrentStk_10Oct2023_1");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<CurrentStk10oct20232>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("CurrentStk_10Oct2023_2");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
             modelBuilder.Entity<DbGenderMaster>(entity =>
             {
                 entity.HasKey(e => e.GenderId)
@@ -1230,6 +1371,12 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedDate).HasColumnType("date");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PrefixName).HasMaxLength(100);
 
                 entity.Property(e => e.SexId).HasColumnName("SexID");
@@ -1243,62 +1390,6 @@ namespace HIMS.Data.Models
                 entity.ToTable("DB_PurposeMaster");
 
                 entity.Property(e => e.PurposeName).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<Demo>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Demo");
-
-                entity.Property(e => e.Firstname).HasMaxLength(100);
-
-                entity.Property(e => e.LastName).HasMaxLength(100);
-
-                entity.Property(e => e.PAddress)
-                    .HasMaxLength(200)
-                    .HasColumnName("pAddress");
-            });
-
-            modelBuilder.Entity<Demo1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("demo1");
-
-                entity.Property(e => e.Adress)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PinCode).HasColumnName("Pin_code");
-            });
-
-            modelBuilder.Entity<Demo3>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("demo3");
-
-                entity.Property(e => e.Adress)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Discharge>(entity =>
@@ -2753,7 +2844,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.UserName).HasMaxLength(100);
 
-                entity.Property(e => e.UserToken).HasMaxLength(250);
+                entity.Property(e => e.UserToken).HasMaxLength(500);
             });
 
             modelBuilder.Entity<LvwAddCharge>(entity =>
@@ -3368,7 +3459,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ItemName).HasMaxLength(200);
 
-                entity.Property(e => e.Price).HasColumnType("money");
+                entity.Property(e => e.Price)
+                    .HasColumnType("money")
+                    .HasColumnName("price");
             });
 
             modelBuilder.Entity<LvwChargesCompany>(entity =>
@@ -5121,6 +5214,39 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
             });
 
+            modelBuilder.Entity<LvwSalesGstissue>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("lvwSalesGSTISSUE");
+
+                entity.Property(e => e.Acgstamt).HasColumnName("ACGSTAmt");
+
+                entity.Property(e => e.AcgstamtDiff).HasColumnName("ACGSTAmtDiff");
+
+                entity.Property(e => e.Cgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTAmt");
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Mrpamount)
+                    .HasColumnType("money")
+                    .HasColumnName("MRPAmount");
+
+                entity.Property(e => e.SalesNo).HasMaxLength(50);
+
+                entity.Property(e => e.Sgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("SGSTAmt");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+            });
+
             modelBuilder.Entity<LvwServiceMasterList>(entity =>
             {
                 entity.HasNoKey();
@@ -5501,6 +5627,29 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_ConcessionReasonMaster");
 
                 entity.Property(e => e.ConcessionReason).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<MConstant>(entity =>
+            {
+                entity.HasKey(e => e.ConstantId);
+
+                entity.ToTable("M_Constants");
+
+                entity.Property(e => e.ConstantType).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name).HasMaxLength(250);
+
+                entity.Property(e => e.UpdatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Value).HasMaxLength(250);
             });
 
             modelBuilder.Entity<MCountryMaster>(entity =>
@@ -6381,6 +6530,10 @@ namespace HIMS.Data.Models
                     .HasMaxLength(100)
                     .HasColumnName("GSTIN");
 
+                entity.Property(e => e.HospitalEmailId).HasMaxLength(500);
+
+                entity.Property(e => e.HospitalMobileNo).HasMaxLength(20);
+
                 entity.Property(e => e.IndentNo)
                     .HasMaxLength(50)
                     .IsFixedLength();
@@ -6404,6 +6557,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PharSalReturnCountId).HasColumnName("PharSalReturnCountID");
 
                 entity.Property(e => e.PrintStoreName).HasMaxLength(200);
+
+                entity.Property(e => e.PrintStoreUnitName).HasMaxLength(100);
 
                 entity.Property(e => e.PurchaseNo)
                     .HasMaxLength(50)
@@ -6616,6 +6771,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MenuKey).HasMaxLength(100);
 
                 entity.Property(e => e.MenuName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<MenuMaster>(entity =>
+            {
+                entity.ToTable("MenuMaster");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Icon).HasMaxLength(250);
+
+                entity.Property(e => e.LinkAction).HasMaxLength(250);
+
+                entity.Property(e => e.LinkName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<MisIpgroWiseTot>(entity =>
@@ -7204,17 +7372,11 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("PermissionMaster");
 
-                entity.HasOne(d => d.Page)
+                entity.HasOne(d => d.Menu)
                     .WithMany(p => p.PermissionMasters)
-                    .HasForeignKey(d => d.PageId)
+                    .HasForeignKey(d => d.MenuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PermissionMaster_PageMaster");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.PermissionMasters)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PermissionMaster_RoleTemplateMaster");
+                    .HasConstraintName("FK_PermissionMaster_MenuMaster");
             });
 
             modelBuilder.Entity<PharTotalSalesV>(entity =>
@@ -7337,6 +7499,15 @@ namespace HIMS.Data.Models
                     .HasColumnName("SMSString");
             });
 
+            modelBuilder.Entity<RoleMaster>(entity =>
+            {
+                entity.HasKey(e => e.RoleId);
+
+                entity.ToTable("RoleMaster");
+
+                entity.Property(e => e.RoleName).HasMaxLength(250);
+            });
+
             modelBuilder.Entity<RoleTemplateDetail>(entity =>
             {
                 entity.HasKey(e => e.RoleDetailId);
@@ -7438,6 +7609,38 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UsedAmount).HasColumnType("money");
             });
 
+            modelBuilder.Entity<SalesGststoreWiseOpip>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SalesGSTStoreWise_OPIP");
+
+                entity.Property(e => e.Cgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTAmt");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Gstper).HasColumnName("GSTPer");
+
+                entity.Property(e => e.Lbl)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("lbl");
+
+                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+
+                entity.Property(e => e.Sgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("SGSTAmt");
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.Property(e => e.TaxableAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<SalesPaymentDateWise>(entity =>
             {
                 entity.HasNoKey();
@@ -7500,17 +7703,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
-                entity.Property(e => e.DiscAmount).HasColumnType("money");
-
                 entity.Property(e => e.GrossAmount).HasColumnType("money");
 
                 entity.Property(e => e.Gstper).HasColumnName("GSTPer");
-
-                entity.Property(e => e.Igstamt)
-                    .HasColumnType("money")
-                    .HasColumnName("IGSTAmt");
-
-                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
 
                 entity.Property(e => e.Lbl)
                     .HasMaxLength(17)
@@ -7521,31 +7716,41 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasColumnName("SGSTAmt");
 
-                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.TaxableAmount).HasColumnType("money");
             });
 
-            modelBuilder.Entity<Satish>(entity =>
+            modelBuilder.Entity<SalesReturnGststoreWiseOpip>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("satish");
+                entity.ToView("SalesReturnGSTStoreWise_OPIP");
 
-                entity.Property(e => e.City)
-                    .HasMaxLength(1)
+                entity.Property(e => e.Cgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTAmt");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Gstper).HasColumnName("GSTPer");
+
+                entity.Property(e => e.Lbl)
+                    .HasMaxLength(17)
                     .IsUnicode(false)
-                    .HasColumnName("city");
+                    .HasColumnName("lbl");
 
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(1)
-                    .HasColumnName("firstname");
+                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
-                entity.Property(e => e.Lastname)
-                    .HasMaxLength(1)
-                    .HasColumnName("lastname");
+                entity.Property(e => e.Sgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("SGSTAmt");
 
-                entity.Property(e => e.MobileNo).HasColumnName("mobileNo");
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.Property(e => e.TaxableAmount).HasColumnType("money");
             });
 
             modelBuilder.Entity<SerPer>(entity =>
@@ -7645,6 +7850,15 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Uterus).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<SsGstperConfig>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("SS_GSTPer_Config");
+
+                entity.Property(e => e.Gstper).HasColumnName("GSTPer");
             });
 
             modelBuilder.Entity<SsMenuMaster>(entity =>
@@ -7857,29 +8071,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("url");
 
                 entity.Property(e => e.UserName).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<Student>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("student");
-
-                entity.Property(e => e.City)
-                    .HasMaxLength(100)
-                    .HasColumnName("city");
-
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(100)
-                    .HasColumnName("firstname");
-
-                entity.Property(e => e.Grades).HasColumnName("grades");
-
-                entity.Property(e => e.Lastname)
-                    .HasMaxLength(100)
-                    .HasColumnName("lastname");
-
-                entity.Property(e => e.Rollno).HasColumnName("rollno");
             });
 
             modelBuilder.Entity<TAbill>(entity =>
@@ -8641,11 +8832,122 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VatPercentage).HasColumnType("money");
             });
 
+            modelBuilder.Entity<TCurrentStock09oct2023>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_CurrentStock_09Oct2023");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
             modelBuilder.Entity<TCurrentStockPkFinal>(entity =>
             {
                 entity.HasNoKey();
 
                 entity.ToTable("T_CurrentStock_pk_final");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TCurrentStockPkOrginalBkp>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_CurrentStock_pk_orginal_bkp");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TCurrentstock09oct23>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("t_currentstock_09Oct23");
 
                 entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
 
@@ -10829,6 +11131,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
             });
 
+            modelBuilder.Entity<TPharPatientInformation>(entity =>
+            {
+                entity.HasKey(e => e.PatientId);
+
+                entity.ToTable("T_PharPatientInformation");
+
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(500);
+
+                entity.Property(e => e.PatientAddress).HasMaxLength(500);
+
+                entity.Property(e => e.PatientName).HasMaxLength(500);
+
+                entity.Property(e => e.UpdatedDatetime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TPhoneAppointment>(entity =>
             {
                 entity.HasKey(e => e.PhoneAppId);
@@ -11290,6 +11609,12 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DoctorName).HasMaxLength(200);
 
+                entity.Property(e => e.ExtAddress)
+                    .HasMaxLength(200)
+                    .HasColumnName("extAddress");
+
+                entity.Property(e => e.ExtMobileNo).HasMaxLength(20);
+
                 entity.Property(e => e.ExternalPatientName).HasMaxLength(200);
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
@@ -11360,6 +11685,8 @@ namespace HIMS.Data.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RegNo).HasMaxLength(50);
+
+                entity.Property(e => e.RoundOff).HasColumnType("money");
 
                 entity.Property(e => e.SalesHeadName).HasMaxLength(100);
 
@@ -11620,6 +11947,40 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TWhatsAppSmsOutgoing>(entity =>
+            {
+                entity.HasKey(e => e.SmsoutGoingId);
+
+                entity.ToTable("T_WhatsAppSMS_Outgoing");
+
+                entity.Property(e => e.SmsoutGoingId).HasColumnName("SMSOutGoingID");
+
+                entity.Property(e => e.FilePath).HasMaxLength(500);
+
+                entity.Property(e => e.MobileNumber).HasMaxLength(50);
+
+                entity.Property(e => e.Smsdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SMSDate")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Smsflag)
+                    .HasMaxLength(20)
+                    .HasColumnName("SMSFlag");
+
+                entity.Property(e => e.Smsstring)
+                    .HasMaxLength(500)
+                    .HasColumnName("SMSString");
+
+                entity.Property(e => e.Smstype)
+                    .HasMaxLength(100)
+                    .HasColumnName("SMSType");
+
+                entity.Property(e => e.Smsurl)
+                    .HasMaxLength(1000)
+                    .HasColumnName("SMSurl");
+            });
+
             modelBuilder.Entity<TWorkOrderDetail>(entity =>
             {
                 entity.HasKey(e => e.WodetId)
@@ -11715,59 +12076,147 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TariffName).HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Tblstudent>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("tblstudent");
-
-                entity.Property(e => e.Mobile)
-                    .HasMaxLength(50)
-                    .HasColumnName("mobile");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<Tblstudent1>(entity =>
-            {
-                entity.HasKey(e => e.RollNo);
-
-                entity.ToTable("tblstudent1");
-
-                entity.Property(e => e.RollNo)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("roll_no");
-
-                entity.Property(e => e.City)
-                    .HasMaxLength(50)
-                    .HasColumnName("city");
-
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(50)
-                    .HasColumnName("firstname");
-
-                entity.Property(e => e.Lastname)
-                    .HasMaxLength(50)
-                    .HasColumnName("lastname");
-
-                entity.Property(e => e.OdiSix)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("odi_six");
-
-                entity.Property(e => e.Ranking)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("ranking");
-
-                entity.Property(e => e.T20runs).HasColumnType("numeric(18, 0)");
-            });
-
             modelBuilder.Entity<TempPathReportId>(entity =>
             {
                 entity.HasNoKey();
 
                 entity.ToTable("Temp_PathReportId");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkIssueToDept>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_IssueToDept");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitPurRate).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkNewBatchNo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_NewBatchNo");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkNewRecord>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_NewRecords");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.IstkId).HasColumnName("IStkId");
+
+                entity.Property(e => e.LandedRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRate).HasColumnType("money");
+
+                entity.Property(e => e.PurUnitRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("PurUnitRateWF");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkReceivedQty>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_ReceivedQty");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitPurRate).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkSale>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_Sales");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.StkId).HasColumnName("StkID");
+            });
+
+            modelBuilder.Entity<TempPkCurrStkSales1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("TempPK_CurrStk_Sales_1");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.PurRateWf).HasColumnType("money");
+
+                entity.Property(e => e.StkId).HasColumnName("StkID");
             });
 
             modelBuilder.Entity<TempStrId>(entity =>
@@ -11795,6 +12244,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TemplateId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.TemplateName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TemppkCurrstkNegativeBalQty>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("temppk_currstk_NegativeBalQty");
             });
 
             modelBuilder.Entity<TgHtlTmp>(entity =>
@@ -11866,6 +12322,25 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Xuser)
                     .HasMaxLength(50)
                     .HasColumnName("xuser");
+            });
+
+            modelBuilder.Entity<View1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_1");
+
+                entity.Property(e => e.CashPayAmount).HasColumnType("money");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.Property(e => e.TranMode).HasMaxLength(30);
             });
 
             modelBuilder.Entity<ViewDoctorshare>(entity =>

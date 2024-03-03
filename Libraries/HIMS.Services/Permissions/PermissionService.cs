@@ -13,10 +13,10 @@ namespace HIMS.Services.Permissions
 {
     public class PermissionService : IPermissionService
     {
-        private readonly Data.Models.SSDB_JSS_WEB_25SepContext _context;
-        public PermissionService(SSDB_JSS_WEB_25SepContext sSDB_JSS_WEB_25SepContext)
+        private readonly Data.Models.HIMSDbContext _context;
+        public PermissionService(HIMSDbContext HIMSDbContext)
         {
-            _context = sSDB_JSS_WEB_25SepContext;
+            _context = HIMSDbContext;
         }
         public virtual async Task<List<PageMaster>> GetAllModules(long RoleId)
         {
@@ -31,7 +31,7 @@ namespace HIMS.Services.Permissions
                         equals
                         new
                         {
-                            Key1 = P.PageId,
+                            Key1 = P.MenuId,
                             Key2 = P.RoleId == RoleId
                         } into tmpPermission
                         from P in tmpPermission.DefaultIfEmpty()

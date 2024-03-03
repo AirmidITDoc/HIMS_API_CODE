@@ -47,5 +47,6 @@ namespace HIMS.Data.Models
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
         public string? ExtMobileNo { get; set; }
+        public decimal? RoundOff { get; set; }
     }
 }

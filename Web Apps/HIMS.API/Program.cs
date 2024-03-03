@@ -34,7 +34,7 @@ builder.Services.Configure<FormOptions>(o =>
 });
 //Entity Framework  
 builder.Services.AddEntityFrameworkSqlServer();
-builder.Services.AddDbContextPool<SSDB_JSS_WEB_25SepContext>((provider, options) =>
+builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 {
     options.UseSqlServer(Configuration.GetValue<string>("CONNECTION_STRING"));
     options.UseInternalServiceProvider(provider);

@@ -36,5 +36,9 @@ namespace HIMS.Data.Models
         public string? DlNo { get; set; }
         public string? Gstin { get; set; }
         public string? StoreAddress { get; set; }
+        public string? HospitalMobileNo { get; set; }
+        public string? HospitalEmailId { get; set; }
+        public string? PrintStoreUnitName { get; set; }
+        public bool? IsPharStore { get; set; }
     }
 }

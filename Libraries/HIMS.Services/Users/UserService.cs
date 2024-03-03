@@ -12,10 +12,10 @@ namespace HIMS.Services.Users
 {
     public class UserService : IUserService
     {
-        private readonly Data.Models.SSDB_JSS_WEB_25SepContext _context;
-        public UserService(SSDB_JSS_WEB_25SepContext sSDB_JSS_WEB_25SepContext)
+        private readonly Data.Models.HIMSDbContext _context;
+        public UserService(HIMSDbContext HIMSDbContext)
         {
-            _context = sSDB_JSS_WEB_25SepContext;
+            _context = HIMSDbContext;
         }
         public virtual async Task<LoginManager> CheckLogin(string UserName, string Password)
         {

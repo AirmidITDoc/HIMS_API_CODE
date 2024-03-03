@@ -32,6 +32,7 @@ namespace HIMS.Data.Models
         public bool? IsPoinchargeVerify { get; set; }
         public bool? IsRefDocEditOpt { get; set; }
         public bool? IsInchIndVfy { get; set; }
+        public long? WebRoleId { get; set; }
         public string? UserToken { get; set; }
     }
 }
