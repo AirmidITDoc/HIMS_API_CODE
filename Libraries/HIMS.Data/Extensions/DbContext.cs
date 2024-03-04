@@ -9,9 +9,26 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Net;
 using HIMS.Core.Domain.Logging;
 using Newtonsoft.Json;
+using HIMS.Core;
 
 namespace HIMS.Data.Models
 {
+    public static class ConnectionStrings
+    {
+        public static string? MainDbConnectionString { get; set; }
+
+        public static void SetConnectionString(string connectionString)
+        {
+            if (MainDbConnectionString == null)
+            {
+                MainDbConnectionString = connectionString;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+    }
     public partial class HIMSDbContext : DbContext, IContext
     {
         public HIMSDbContext(DbContextOptions<HIMSDbContext> options)

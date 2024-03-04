@@ -39,6 +39,8 @@ builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
     options.UseSqlServer(Configuration.GetValue<string>("CONNECTION_STRING"));
     options.UseInternalServiceProvider(provider);
 });
+var connectionString = Configuration.GetConnectionString("CONNECTION_STRING");
+ConnectionStrings.SetConnectionString(connectionString);
 DependencyRegistrar.Register(builder.Services);
 builder.Services.AddMvc(opt =>
 {

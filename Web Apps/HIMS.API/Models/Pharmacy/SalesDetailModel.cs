@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Pharmacy
 {
-    public partial class TSalesDetail
+    public class SalesDetailModel
     {
-        public long SalesDetId { get; set; }
         public long? SalesId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
@@ -33,7 +31,5 @@ namespace HIMS.Data.Models
         public long? StkId { get; set; }
         public decimal? Mrp { get; set; }
         public decimal? MrpTotal { get; set; }
-
-        public virtual TSalesHeader? Sales { get; set; }
     }
 }

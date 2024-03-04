@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
+using HIMS.Data.Models;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Pharmacy
 {
-    public partial class TSalesHeader
+    public class SalesModel
     {
-        public TSalesHeader()
-        {
-            TSalesDetails = new HashSet<TSalesDetail>();
-        }
-
         public long SalesId { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? Time { get; set; }
-        public string? SalesNo { get; set; }
         public long? OpIpId { get; set; }
         public long? OpIpType { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -25,12 +17,6 @@ namespace HIMS.Data.Models
         public long? ConcessionReasonId { get; set; }
         public long? ConcessionAuthorizationId { get; set; }
         public long? CashCounterId { get; set; }
-        public bool? IsSellted { get; set; }
-        public bool? IsPrint { get; set; }
-        public bool? IsFree { get; set; }
-        public long? UnitId { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public string? ExternalPatientName { get; set; }
         public string? DoctorName { get; set; }
         public long? StoreId { get; set; }
@@ -42,10 +28,6 @@ namespace HIMS.Data.Models
         public long? WardId { get; set; }
         public long? BedId { get; set; }
         public float? DiscperH { get; set; }
-        public bool? IsPurBill { get; set; }
-        public bool? IsBillCheck { get; set; }
-        public bool? IsRefundFlag { get; set; }
-        public long? IsCancelled { get; set; }
         public string? SalesHeadName { get; set; }
         public long? SalesTypeId { get; set; }
         public long? RegId { get; set; }
@@ -54,6 +36,14 @@ namespace HIMS.Data.Models
         public string? ExtMobileNo { get; set; }
         public decimal? RoundOff { get; set; }
 
-        public virtual ICollection<TSalesDetail> TSalesDetails { get; set; }
+        public List<SalesDetailModel> TSalesDetails { get; set; }
+    }
+    public class SalesModelValidator : AbstractValidator<SalesModel>
+    {
+        public SalesModelValidator()
+        {
+            RuleFor(x => x.SalesHeadName).NotNull().NotEmpty().WithMessage("Prefix Name is required");
+            RuleFor(x => x.TotalAmount).GreaterThanOrEqualTo(0).WithMessage("Enter valid sex");
+        }
     }
 }
