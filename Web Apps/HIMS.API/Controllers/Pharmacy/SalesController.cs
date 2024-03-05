@@ -27,7 +27,8 @@ namespace HIMS.API.Controllers.Pharmacy
             _ISalesService = repository;
         }
         [HttpPost]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public async Task<ApiResponse> post(SalesModel obj)
         {
             TSalesHeader model = obj.MapTo<TSalesHeader>();
@@ -35,6 +36,11 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = DateTime.Now.Date;
                 model.Time = DateTime.Now;
+                foreach (var objItem in model.TSalesDetails)
+                {
+                    objItem.Sgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
+                    objItem.Cgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
+                }
                 await _ISalesService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

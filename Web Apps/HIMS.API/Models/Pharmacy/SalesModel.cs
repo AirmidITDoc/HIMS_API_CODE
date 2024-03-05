@@ -42,7 +42,8 @@ namespace HIMS.API.Models.Pharmacy
     {
         public SalesModelValidator()
         {
-            RuleFor(x => x.SalesHeadName).NotNull().NotEmpty().WithMessage("Prefix Name is required");
+            RuleFor(x => x.ExternalPatientName).NotNull().NotEmpty().WithMessage("Patient Name is required");
+            RuleFor(x => x.DoctorName).NotNull().NotEmpty().WithMessage("Doctor Name is required");
             RuleFor(x => x.TotalAmount).GreaterThanOrEqualTo(0).WithMessage("Enter valid sex");
         }
     }
