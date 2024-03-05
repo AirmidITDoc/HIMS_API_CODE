@@ -1093,6 +1093,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCounterName).HasMaxLength(100);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Prefix).HasMaxLength(50);
             });
 
@@ -11560,6 +11564,11 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.TSalesDetails)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK_T_SalesDetails_T_SalesHeader");
             });
 
             modelBuilder.Entity<TSalesDraftDet>(entity =>

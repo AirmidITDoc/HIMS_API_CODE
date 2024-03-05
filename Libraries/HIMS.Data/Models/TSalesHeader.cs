@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TSalesHeader
     {
+        public TSalesHeader()
+        {
+            TSalesDetails = new HashSet<TSalesDetail>();
+        }
+
         public long SalesId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
@@ -48,5 +53,7 @@ namespace HIMS.Data.Models
         public string? RegNo { get; set; }
         public string? ExtMobileNo { get; set; }
         public decimal? RoundOff { get; set; }
+
+        public virtual ICollection<TSalesDetail> TSalesDetails { get; set; }
     }
 }

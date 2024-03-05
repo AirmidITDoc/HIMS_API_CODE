@@ -33,5 +33,7 @@ namespace HIMS.Data.Models
         public long? StkId { get; set; }
         public decimal? Mrp { get; set; }
         public decimal? MrpTotal { get; set; }
+
+        public virtual TSalesHeader? Sales { get; set; }
     }
 }

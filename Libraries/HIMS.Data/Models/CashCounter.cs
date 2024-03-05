@@ -9,6 +9,10 @@ namespace HIMS.Data.Models
         public string? CashCounterName { get; set; }
         public string? Prefix { get; set; }
         public string? BillNo { get; set; }
-        public bool? IsActive { get; set; }
+        public int? IsActive { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
