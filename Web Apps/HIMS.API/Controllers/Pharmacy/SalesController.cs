@@ -29,10 +29,11 @@ namespace HIMS.API.Controllers.Pharmacy
         [HttpPost]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> post(SalesModel obj)
+        public async Task<ApiResponse> post(SalesReqDto obj)
         {
-            TSalesHeader model = obj.MapTo<TSalesHeader>();
-            if (obj.SalesId == 0)
+            TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
+            Payment objPayment = obj.Payment.MapTo<Payment>();
+            if (obj.Sales.SalesId == 0)
             {
                 model.Date = DateTime.Now.Date;
                 model.Time = DateTime.Now;
@@ -41,7 +42,7 @@ namespace HIMS.API.Controllers.Pharmacy
                     objItem.Sgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
                     objItem.Cgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
                 }
-                await _ISalesService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertAsync(model, objPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

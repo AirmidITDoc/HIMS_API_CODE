@@ -47,4 +47,10 @@ namespace HIMS.API.Models.Pharmacy
             RuleFor(x => x.TotalAmount).GreaterThanOrEqualTo(0).WithMessage("Enter valid sex");
         }
     }
+
+    public class SalesReqDto
+    {
+        public SalesModel Sales { get; set; }
+        public PaymentModel Payment { get; set; }
+    }
 }
