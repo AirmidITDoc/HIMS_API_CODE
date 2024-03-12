@@ -281,6 +281,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<PermissionMaster> PermissionMasters { get; set; } = null!;
         public virtual DbSet<PharTotalSalesV> PharTotalSalesVs { get; set; } = null!;
         public virtual DbSet<ProcedureMaster> ProcedureMasters { get; set; } = null!;
+        public virtual DbSet<RStoreWiseRecord> RStoreWiseRecords { get; set; } = null!;
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
@@ -7409,6 +7410,85 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.ProcedureName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<RStoreWiseRecord>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("R_StoreWiseRecords");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Admin')");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.PhDiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.PhFreightCharges).HasColumnType("money");
+
+                entity.Property(e => e.PhGrandTotal).HasColumnType("money");
+
+                entity.Property(e => e.PhHandlingCharges).HasColumnType("money");
+
+                entity.Property(e => e.PhTaxAmount).HasColumnType("money");
+
+                entity.Property(e => e.PhTotCgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("PhTotCGSTAmt");
+
+                entity.Property(e => e.PhTotIgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("PhTotIGSTAmt");
+
+                entity.Property(e => e.PhTotSgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("PhTotSGSTAmt");
+
+                entity.Property(e => e.PhTotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.PhTransportChanges).HasColumnType("money");
+
+                entity.Property(e => e.ReportDate).HasColumnType("date");
+
+                entity.Property(e => e.SalesBalanceAmount).HasColumnType("money");
+
+                entity.Property(e => e.SalesNetAmount).HasColumnType("money");
+
+                entity.Property(e => e.SalesPaidAmount).HasColumnType("money");
+
+                entity.Property(e => e.SalesTotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.ShClosingBalByLandedRate).HasColumnType("money");
+
+                entity.Property(e => e.ShClosingBalByPurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.ShClosingBalByPurchaseRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("ShClosingBalByPurchaseRateWF");
+
+                entity.Property(e => e.ShOpBalByLandedRate).HasColumnType("money");
+
+                entity.Property(e => e.ShOpBalByPurchaseRate).HasColumnType("money");
+
+                entity.Property(e => e.ShOpBalByPurchaseRateWf)
+                    .HasColumnType("money")
+                    .HasColumnName("ShOpBalByPurchaseRateWF");
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.StoreRecordId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Admin')");
+
+                entity.Property(e => e.UpdatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Refund>(entity =>
