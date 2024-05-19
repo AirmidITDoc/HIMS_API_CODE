@@ -56,6 +56,7 @@ namespace HIMS.Services.Users
                         objPayment.CashCounterId = objSales.OpIpType == 0 ? config.OpdReceiptCounterId : (objSales.OpIpType == 1 ? config.IpdReceiptCounterId : StoreInfo.PharSalRecCountId);
                         var objCashCounter = await _context.CashCounters.FirstOrDefaultAsync(x => x.CashCounterId == objPayment.CashCounterId);
                         objPayment.ReceiptNo = (objCashCounter != null ? Convert.ToInt64(objCashCounter.BillNo) + 1 : 1).ToString();
+                        objPayment.BillNo = objSales.SalesId;
                         _context.Payments.Add(objPayment);
                         objCashCounter.BillNo = objPayment.ReceiptNo;
                         _context.Entry(objCashCounter).State = EntityState.Modified;
