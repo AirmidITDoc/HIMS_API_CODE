@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Apps", "Web Apps", "{D4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Clients", "Web Clients", "{259B3E46-5446-45CD-970E-CEB13B948ABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.Core", "Libraries\HIMS.Core\HIMS.Core.csproj", "{408A6776-2D29-4D14-9474-C9AAACAA96FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HIMS.Core", "Libraries\HIMS.Core\HIMS.Core.csproj", "{408A6776-2D29-4D14-9474-C9AAACAA96FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.Data", "Libraries\HIMS.Data\HIMS.Data.csproj", "{3D9CDB2E-C8E1-43BB-AE38-2F4188856C05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HIMS.Data", "Libraries\HIMS.Data\HIMS.Data.csproj", "{3D9CDB2E-C8E1-43BB-AE38-2F4188856C05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.Services", "Libraries\HIMS.Services\HIMS.Services.csproj", "{D8E7B7E4-A109-429A-B6A2-FCA5A7BF8334}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HIMS.Services", "Libraries\HIMS.Services\HIMS.Services.csproj", "{D8E7B7E4-A109-429A-B6A2-FCA5A7BF8334}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

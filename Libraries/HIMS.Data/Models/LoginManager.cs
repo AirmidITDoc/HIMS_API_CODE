@@ -34,5 +34,8 @@ namespace HIMS.Data.Models
         public bool? IsInchIndVfy { get; set; }
         public long? WebRoleId { get; set; }
         public string? UserToken { get; set; }
+        public int? PharExtOpt { get; set; }
+        public int? PharOpopt { get; set; }
+        public int? PharIpopt { get; set; }
     }
 }

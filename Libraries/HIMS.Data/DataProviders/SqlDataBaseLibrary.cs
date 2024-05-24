@@ -184,6 +184,44 @@ namespace HIMS.Data.DataProviders
             return i;
         }
 
+        public string ExecuteNonQuery(string query, CommandType commandtype, string outputparam, SqlParameter[] para = null)
+        {
+            Command.CommandText = query;
+            Command.CommandType = commandtype;
+            string outputParamValue = "";
+            if (para?.Length > 0)
+            {
+                Command.Parameters.AddRange(para);
+            }
+            int i = -1;
+            try
+            {
+                if (objConnection.State == System.Data.ConnectionState.Closed)
+                {
+                    objConnection.Open();
+                }
+                i = Command.ExecuteNonQuery();
+                outputParamValue = Command.Parameters[outputparam].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                SqlException sx = (SqlException)ex;
+                if (sx.Number == 547)       // Foreign Key Error
+                    i = sx.Number;
+                else
+                    HandleExceptions(ex, query);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return outputParamValue;
+        }
+
         public string ExecuteNonQuery(string query, CommandType commandtype, string outputparam)
         {
             Command.CommandText = query;

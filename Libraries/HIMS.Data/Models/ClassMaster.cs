@@ -7,6 +7,6 @@ namespace HIMS.Data.Models
     {
         public long ClassId { get; set; }
         public string? ClassName { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

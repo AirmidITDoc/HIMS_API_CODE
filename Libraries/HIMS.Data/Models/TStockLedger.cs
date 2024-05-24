@@ -28,5 +28,6 @@ namespace HIMS.Data.Models
         public float? GrnRetQty { get; set; }
         public DateTime? LedgerDate { get; set; }
         public float? ClosingBalance { get; set; }
+        public float? IssDeptQty { get; set; }
     }
 }

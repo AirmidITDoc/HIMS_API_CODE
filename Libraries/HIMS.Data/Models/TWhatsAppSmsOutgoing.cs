@@ -16,5 +16,9 @@ namespace HIMS.Data.Models
         public long? TemplateId { get; set; }
         public string? Smsurl { get; set; }
         public string? FilePath { get; set; }
+        public int? Status { get; set; }
+        public DateTime? LastTry { get; set; }
+        public string? LastResponse { get; set; }
+        public int? Retry { get; set; }
     }
 }

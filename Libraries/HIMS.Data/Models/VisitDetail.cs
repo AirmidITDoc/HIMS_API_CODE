@@ -31,5 +31,6 @@ namespace HIMS.Data.Models
         public string? Comments { get; set; }
         public bool? IsXray { get; set; }
         public byte? CrossConsulFlag { get; set; }
+        public long? PhoneAppId { get; set; }
     }
 }

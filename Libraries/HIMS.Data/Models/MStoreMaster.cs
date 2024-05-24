@@ -40,5 +40,9 @@ namespace HIMS.Data.Models
         public string? HospitalEmailId { get; set; }
         public string? PrintStoreUnitName { get; set; }
         public bool? IsPharStore { get; set; }
+        public bool? IsWhatsAppMsg { get; set; }
+        public string? WhatsAppTemplateId { get; set; }
+        public bool? IsSmsmsg { get; set; }
+        public string? SmstemplateId { get; set; }
     }
 }

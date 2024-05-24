@@ -1,1 +1,1 @@
-Scaffold-DbContext "Data Source=122.169.42.110;Initial Catalog=JSS_Web_2;Persist Security Info=True;User ID=sa;Password=Rational@1;MultipleActiveResultSets=True;Max Pool Size=5000;" Microsoft.EntityFrameworkCore.SqlServer -o Models -force -project HIMS.Data -context HIMSDbContext
+Scaffold-DbContext "Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;" Microsoft.EntityFrameworkCore.SqlServer -o Models -force -project HIMS.Data -context HIMSDbContext

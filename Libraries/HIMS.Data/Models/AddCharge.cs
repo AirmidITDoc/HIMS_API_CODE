@@ -47,5 +47,6 @@ namespace HIMS.Data.Models
         public decimal? ChTotalAmount { get; set; }
         public bool? IsBillableCharity { get; set; }
         public long? SalesId { get; set; }
+        public long? BillNo { get; set; }
     }
 }

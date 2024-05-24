@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TPurchaseHeader
     {
+        public TPurchaseHeader()
+        {
+            TPurchaseDetails = new HashSet<TPurchaseDetail>();
+        }
+
         public long PurchaseId { get; set; }
         public string? PurchaseNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
@@ -12,10 +17,10 @@ namespace HIMS.Data.Models
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public decimal? TotalAmount { get; set; }
-        public double? DiscAmount { get; set; }
-        public double? TaxAmount { get; set; }
-        public double? FreightAmount { get; set; }
-        public double? OctriAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
+        public decimal? FreightAmount { get; set; }
+        public decimal? OctriAmount { get; set; }
         public decimal? GrandTotal { get; set; }
         public bool? Isclosed { get; set; }
         public bool? IsVerified { get; set; }
@@ -40,5 +45,7 @@ namespace HIMS.Data.Models
         public decimal? HandlingCharges { get; set; }
         public decimal? FreightCharges { get; set; }
         public bool? IsCancelled { get; set; }
+
+        public virtual ICollection<TPurchaseDetail> TPurchaseDetails { get; set; }
     }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Pharmacy
 {
-    public partial class TGrnheader
+    public class GRNModel
     {
-        public TGrnheader()
-        {
-            TGrndetails = new HashSet<TGrndetail>();
-        }
-
         public long Grnid { get; set; }
         public string? GrnNumber { get; set; }
         public DateTime? Grndate { get; set; }
@@ -28,31 +22,35 @@ namespace HIMS.Data.Models
         public string? Remark { get; set; }
         public string? ReceivedBy { get; set; }
         public bool? IsVerified { get; set; }
-        public long? IsClosed { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
-        public string? Prefix { get; set; }
-        public bool? IsCancelled { get; set; }
-        public bool? IsPaymentProcess { get; set; }
-        public DateTime? PaymentPrcDate { get; set; }
-        public string? ProcessDes { get; set; }
-        public DateTime? InvDate { get; set; }
+        public bool? IsClosed { get; set; }
+        public DateTime?  InvDate { get; set; }
         public decimal? DebitNote { get; set; }
         public decimal? CreditNote { get; set; }
         public decimal? OtherCharge { get; set; }
         public decimal? RoundingAmt { get; set; }
-        public decimal? PaidAmount { get; set; }
-        public decimal? BalAmount { get; set; }
         public decimal? TotCgstamt { get; set; }
         public decimal? TotSgstamt { get; set; }
         public decimal? TotIgstamt { get; set; }
-        public byte? TranProcessId { get; set; }
+        public long? TranProcessId { get; set; }
         public string? TranProcessMode { get; set; }
-        public decimal? BillDiscAmt { get; set; }
-        public DateTime? PaymentDate { get; set; }
         public string? EwayBillNo { get; set; }
         public DateTime? EwayBillDate { get; set; }
+        public decimal? BillDiscAmt { get; set; }
+        public List<GRNDetailModel> TGrndetails { get; set; }
+    }
+    public class GRNModelValidator : AbstractValidator<GRNModel>
+    {
+        public GRNModelValidator()
+        {
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("Store is required");
+            RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("Supplier is required");
+            RuleFor(x => x.InvoiceNo).NotNull().NotEmpty().WithMessage("Invoice No is required");
+        }
+    }
 
-        public virtual ICollection<TGrndetail> TGrndetails { get; set; }
+    public class GRNReqDto
+    {
+        public GRNModel Grn { get; set; }
+        public List<ItemModel> GrnItems { get; set; }
     }
 }

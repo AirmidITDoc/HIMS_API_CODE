@@ -1,0 +1,115 @@
+﻿using HIMS.Data.DataProviders;
+using HIMS.Data.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Transactions;
+
+namespace HIMS.Services.Pharmacy
+{
+    public class GRNService : IGRNService
+    {
+        private readonly Data.Models.HIMSDbContext _context;
+        public GRNService(HIMSDbContext HIMSDbContext)
+        {
+            _context = HIMSDbContext;
+        }
+
+        public virtual async Task InsertAsyncSP(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        {
+            // Add header table records
+            DatabaseHelper odal = new();
+            SqlParameter[] para = new SqlParameter[27];
+            para[0] = new SqlParameter("@GRNDate", objGRN.Grndate);
+            para[1] = new SqlParameter("@GRNTime", objGRN.Grntime);
+            para[2] = new SqlParameter("@StoreId", objGRN.StoreId);
+            para[3] = new SqlParameter("@SupplierID", objGRN.SupplierId);
+            para[4] = new SqlParameter("@InvoiceNo", objGRN.InvoiceNo);
+            para[5] = new SqlParameter("@DeliveryNo", objGRN.DeliveryNo);
+            para[6] = new SqlParameter("@GateEntryNo", objGRN.GateEntryNo);
+            //para[7] = new SqlParameter("@Cash_CreditType", objGRN.Cash_CreditType);
+            para[8] = new SqlParameter("@GRNType", objGRN.Grntype);
+            para[9] = new SqlParameter("@TotalAmount", objGRN.TotalAmount);
+            para[10] = new SqlParameter("@TotalDiscAmount", objGRN.TotalDiscAmount);
+
+            para[11] = new SqlParameter("@TotalVATAmount", objGRN.TotalVatamount);
+            para[12] = new SqlParameter("@NetAmount", objGRN.NetAmount);
+            para[13] = new SqlParameter("@Remark", objGRN.Remark);
+            para[14] = new SqlParameter("@ReceivedBy", objGRN.ReceivedBy);
+            para[15] = new SqlParameter("@IsVerified", objGRN.IsVerified);
+            para[16] = new SqlParameter("@IsClosed", objGRN.IsClosed);
+            para[17] = new SqlParameter("@AddedBy", objGRN.AddedBy ?? 0);
+            para[18] = new SqlParameter("@InvDate", objGRN.InvDate);
+            para[19] = new SqlParameter("@DebitNote", objGRN.DebitNote);
+            para[20] = new SqlParameter("@CreditNote", objGRN.CreditNote);
+
+            para[21] = new SqlParameter("@OtherCharge", objGRN.OtherCharge);
+            para[22] = new SqlParameter("@RoundingAmt", objGRN.RoundingAmt);
+            para[23] = new SqlParameter("@TotCGSTAmt", objGRN.TotCgstamt);
+            para[24] = new SqlParameter("@TotSGSTAmt", objGRN.TotSgstamt);
+            para[25] = new SqlParameter("@TotIGSTAmt", objGRN.TotIgstamt);
+            para[26] = new SqlParameter("@TranProcessId", objGRN.TranProcessId);
+            para[27] = new SqlParameter("@TranProcessMode", objGRN.TranProcessMode);
+            para[28] = new SqlParameter("@BillDiscAmt", objGRN.BillDiscAmt);
+            para[29] = new SqlParameter("@EwayBillNo", objGRN.EwayBillNo);
+            para[30] = new SqlParameter("@EwayBillDate", objGRN.EwayBillDate);
+
+            para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt);
+            para[31].Direction = ParameterDirection.Output;
+
+            //SqlParameter retval = new SqlParameter("@PurchaseId", System.Data.SqlDbType.BigInt);
+            //retval.Direction = System.Data.ParameterDirection.Output;
+            //para[26] = retval;
+
+            string purchaseNo = odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "@GRNID", para);
+            objGRN.Grnid = Convert.ToInt32(purchaseNo);
+
+            // Add details table records
+            foreach (var objItem in objGRN.TGrndetails)
+            {
+                objItem.Grnid = objGRN.Grnid;
+            }
+            _context.TGrndetails.AddRange(objGRN.TGrndetails);
+            await _context.SaveChangesAsync(UserId, Username);
+        }
+
+        public virtual async Task InsertAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update store table records
+                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRN.StoreId);
+                StoreInfo.GrnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnNo) + 1);
+                _context.MStoreMasters.Update(StoreInfo);
+                await _context.SaveChangesAsync();
+
+                // Add header & detail table records
+                objGRN.GrnNumber = StoreInfo.GrnNo;
+                _context.TGrnheaders.Add(objGRN);
+                await _context.SaveChangesAsync();
+
+                // Update item master table records
+                _context.MItemMasters.UpdateRange(objItems);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Delete details table realted records
+                var lst = await _context.TGrndetails.Where(x => x.Grnid == objGRN.Grnid).ToListAsync();
+                _context.TGrndetails.RemoveRange(lst);
+
+                // Update header & detail table records
+                _context.TGrnheaders.Update(objGRN);
+                _context.Entry(objGRN).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+    }
+}

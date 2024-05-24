@@ -21,5 +21,8 @@ namespace HIMS.Data.Models
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
+        public bool? IsAccepted { get; set; }
+        public long? AcceptedBy { get; set; }
+        public DateTime? AcceptedDatetime { get; set; }
     }
 }

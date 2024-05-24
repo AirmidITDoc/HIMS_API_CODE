@@ -10,14 +10,14 @@ namespace HIMS.Data.Models
         public long? ItemId { get; set; }
         public long? Uomid { get; set; }
         public double? Qty { get; set; }
-        public double? Rate { get; set; }
-        public double? TotalAmount { get; set; }
-        public double? DiscAmount { get; set; }
+        public decimal? Rate { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
         public double? DiscPer { get; set; }
-        public double? VatAmount { get; set; }
+        public decimal? VatAmount { get; set; }
         public double? VatPer { get; set; }
-        public double? GrandTotalAmount { get; set; }
-        public double? Mrp { get; set; }
+        public decimal? GrandTotalAmount { get; set; }
+        public decimal? Mrp { get; set; }
         public string? Specification { get; set; }
         public bool? IsClosed { get; set; }
         public double? PobalQty { get; set; }
@@ -28,5 +28,10 @@ namespace HIMS.Data.Models
         public decimal? Sgstamt { get; set; }
         public double? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
+        public decimal? DefRate { get; set; }
+        public float? VendDiscPer { get; set; }
+        public decimal? VendDiscAmt { get; set; }
+
+        public virtual TPurchaseHeader? Purchase { get; set; }
     }
 }

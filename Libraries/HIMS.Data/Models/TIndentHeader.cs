@@ -18,5 +18,6 @@ namespace HIMS.Data.Models
         public bool? IsInchargeVerify { get; set; }
         public long? IsInchargeVerifyId { get; set; }
         public DateTime? IsInchargeVerifyDate { get; set; }
+        public string? Comments { get; set; }
     }
 }

@@ -41,5 +41,6 @@ namespace HIMS.Data.Models
         public bool? IsSeniorCitizen { get; set; }
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
+        public string? Photo { get; set; }
     }
 }

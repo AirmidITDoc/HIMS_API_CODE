@@ -28,5 +28,17 @@ namespace HIMS.Data.Models
         public long? UpdatedBy { get; set; }
         public string? Gstno { get; set; }
         public string? PanNo { get; set; }
+        public string? PinCode { get; set; }
+        public long? Taluka { get; set; }
+        public string? LicNo { get; set; }
+        public DateTime? ExpDate { get; set; }
+        public string? DlNo { get; set; }
+        public long? BankId { get; set; }
+        public string? Bankname { get; set; }
+        public string? Branch { get; set; }
+        public long? BankNo { get; set; }
+        public string? Ifsccode { get; set; }
+        public long? VenderTypeId { get; set; }
+        public decimal? OpeningBalance { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace HIMS.Data.Models
         public decimal? PurTotalAmount { get; set; }
         public float? ReturnQty { get; set; }
         public long? StkId { get; set; }
+        public string? Status { get; set; }
     }
 }

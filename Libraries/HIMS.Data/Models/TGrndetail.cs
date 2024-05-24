@@ -43,5 +43,7 @@ namespace HIMS.Data.Models
         public long? IsVerifiedUserId { get; set; }
         public double? DiscPerc2 { get; set; }
         public decimal? DiscAmt2 { get; set; }
+
+        public virtual TGrnheader? Grn { get; set; }
     }
 }

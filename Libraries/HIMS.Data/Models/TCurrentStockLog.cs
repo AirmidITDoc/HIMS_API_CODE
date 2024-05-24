@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class TCurrentStock
+    public partial class TCurrentStockLog
     {
+        public int Id { get; set; }
         public long StockId { get; set; }
         public long? StoreId { get; set; }
         public long? ItemId { get; set; }
@@ -27,5 +28,7 @@ namespace HIMS.Data.Models
         public long? IstkId { get; set; }
         public float? GrnRetQty { get; set; }
         public float? IssDeptQty { get; set; }
+        public string? Remark { get; set; }
+        public DateTime? TranDate { get; set; }
     }
 }

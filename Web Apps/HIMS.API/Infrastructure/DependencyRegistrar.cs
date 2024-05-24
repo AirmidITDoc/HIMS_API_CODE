@@ -8,6 +8,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Users;
 using System.Security;
 using HIMS.Services.Permissions;
+using HIMS.Services.Pharmacy;
 
 namespace HIMS.API.Infrastructure
 {
@@ -28,6 +29,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<ISalesService, SalesService>();
+            services.AddScoped<IPurchaseService, PurchaseService>();
+            services.AddScoped<IGRNService, GRNService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

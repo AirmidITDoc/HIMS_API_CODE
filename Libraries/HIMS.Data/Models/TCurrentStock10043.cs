@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class TCurrentStock
+    public partial class TCurrentStock10043
     {
         public long StockId { get; set; }
         public long? StoreId { get; set; }

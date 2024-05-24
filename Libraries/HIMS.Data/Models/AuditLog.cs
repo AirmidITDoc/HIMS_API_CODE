@@ -8,11 +8,11 @@ namespace HIMS.Data.Models
         public int Id { get; set; }
         public int ActionId { get; set; }
         public int? ActionById { get; set; }
-        public string ActionByName { get; set; } = null!;
+        public string? ActionByName { get; set; }
         public int? EntityId { get; set; }
-        public string EntityName { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public string AdditionalInfo { get; set; } = null!;
+        public string? EntityName { get; set; }
+        public string? Description { get; set; }
+        public string? AdditionalInfo { get; set; }
         public int LogTypeId { get; set; }
         public int LogSourceId { get; set; }
         public DateTime CreatedOn { get; set; }
