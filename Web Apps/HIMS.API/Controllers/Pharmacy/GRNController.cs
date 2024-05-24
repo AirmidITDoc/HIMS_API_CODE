@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Grntime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                await _IGRNService.InsertAsyncSP(model, objItems, CurrentUserId, CurrentUserName);
+                await _IGRNService.InsertAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
