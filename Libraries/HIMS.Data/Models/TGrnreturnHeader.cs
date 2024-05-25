@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TGrnreturnHeader
     {
+        public TGrnreturnHeader()
+        {
+            TGrnreturnDetails = new HashSet<TGrnreturnDetail>();
+        }
+
         public long GrnreturnId { get; set; }
         public string? GrnreturnNo { get; set; }
         public long? Grnid { get; set; }
@@ -29,5 +34,7 @@ namespace HIMS.Data.Models
         public string? Prefix { get; set; }
         public string? GrnType { get; set; }
         public bool? IsGrnTypeFlag { get; set; }
+
+        public virtual ICollection<TGrnreturnDetail> TGrnreturnDetails { get; set; }
     }
 }

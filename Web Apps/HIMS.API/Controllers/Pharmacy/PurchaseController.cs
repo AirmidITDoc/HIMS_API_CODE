@@ -22,10 +22,10 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _IPurchaseService = repository;
         }
-        [HttpPost]
+        [HttpPost("Insert")]
         //[Permission(PageCode = "Purchase", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> post(PurchaseModel obj)
+        public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
             if (obj.PurchaseId == 0)
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase added successfully.");
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "Purchase", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
     }
 }

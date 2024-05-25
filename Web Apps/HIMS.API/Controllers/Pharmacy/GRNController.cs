@@ -20,10 +20,10 @@ namespace HIMS.API.Controllers.Pharmacy
             _IGRNService = repository;
         }
 
-        [HttpPost]
+        [HttpPost("Insert")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> post(GRNReqDto obj)
+        public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
             List<MItemMaster> objItems = obj.GrnItems.MapTo< List<MItemMaster>>();
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN added successfully.");
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
@@ -56,6 +56,65 @@ namespace HIMS.API.Controllers.Pharmacy
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN updated successfully.");
+        }
+
+        [HttpPost("InsertPO")]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        public async Task<ApiResponse> InsertPO(GRNReqDto obj)
+        {
+            TGrnheader model = obj.MapTo<TGrnheader>();
+            List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
+            List<TPurchaseDetail> objPurDetails = obj.GrnPODetails.MapTo<List<TPurchaseDetail>>();
+            List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders.MapTo<List<TPurchaseHeader>>();
+            if (obj.Grn.Grnid == 0)
+            {
+                model.Grndate = DateTime.Now.Date;
+                model.Grntime = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+                model.UpdatedBy = 0;
+                await _IGRNService.InsertWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN added successfully.");
+        }
+
+        [HttpPut("EditPO/{id:int}")]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> EditPO(GRNReqDto obj)
+        {
+            TGrnheader model = obj.MapTo<TGrnheader>();
+            List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
+            List<TPurchaseDetail> objPurDetails = obj.GrnPODetails.MapTo<List<TPurchaseDetail>>();
+            List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders.MapTo<List<TPurchaseHeader>>();
+            if (obj.Grn.Grnid == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.Grndate = DateTime.Now.Date;
+                model.Grntime = DateTime.Now;
+                model.UpdatedBy = CurrentUserId;
+                await _IGRNService.UpdateWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN updated successfully.");
+        }
+
+        [HttpPost("Verify")]
+        //[Permission(PageCode = "Purchase", Permission = PagePermission.Edit)]
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        public async Task<ApiResponse> Verify(GRNVerifyModel obj)
+        {
+            TGrndetail model = obj.MapTo<TGrndetail>();
+            if (obj.Grnid != 0)
+            {
+                model.IsVerified = true;
+                model.IsVerifiedDatetime = DateTime.Now.Date;
+                await _IGRNService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN verify successfully.");
         }
     }
 }

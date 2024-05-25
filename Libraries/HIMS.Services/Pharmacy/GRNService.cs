@@ -3,6 +3,7 @@ using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.Pharmacy
@@ -19,7 +20,7 @@ namespace HIMS.Services.Pharmacy
         {
             // Add header table records
             DatabaseHelper odal = new();
-            SqlParameter[] para = new SqlParameter[27];
+            SqlParameter[] para = new SqlParameter[31];
             para[0] = new SqlParameter("@GRNDate", objGRN.Grndate);
             para[1] = new SqlParameter("@GRNTime", objGRN.Grntime);
             para[2] = new SqlParameter("@StoreId", objGRN.StoreId);
@@ -28,6 +29,7 @@ namespace HIMS.Services.Pharmacy
             para[5] = new SqlParameter("@DeliveryNo", objGRN.DeliveryNo);
             para[6] = new SqlParameter("@GateEntryNo", objGRN.GateEntryNo);
             //para[7] = new SqlParameter("@Cash_CreditType", objGRN.Cash_CreditType);
+            para[7] = new SqlParameter("@Cash_CreditType", 0);
             para[8] = new SqlParameter("@GRNType", objGRN.Grntype);
             para[9] = new SqlParameter("@TotalAmount", objGRN.TotalAmount);
             para[10] = new SqlParameter("@TotalDiscAmount", objGRN.TotalDiscAmount);
@@ -56,10 +58,6 @@ namespace HIMS.Services.Pharmacy
 
             para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt);
             para[31].Direction = ParameterDirection.Output;
-
-            //SqlParameter retval = new SqlParameter("@PurchaseId", System.Data.SqlDbType.BigInt);
-            //retval.Direction = System.Data.ParameterDirection.Output;
-            //para[26] = retval;
 
             string purchaseNo = odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "@GRNID", para);
             objGRN.Grnid = Convert.ToInt32(purchaseNo);
@@ -106,6 +104,121 @@ namespace HIMS.Services.Pharmacy
                 // Update header & detail table records
                 _context.TGrnheaders.Update(objGRN);
                 _context.Entry(objGRN).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task InsertWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update store table records
+                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRN.StoreId);
+                StoreInfo.GrnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnNo) + 1);
+                _context.MStoreMasters.Update(StoreInfo);
+                await _context.SaveChangesAsync();
+
+                // Add header & detail table records
+                objGRN.GrnNumber = StoreInfo.GrnNo;
+                _context.TGrnheaders.Add(objGRN);
+                await _context.SaveChangesAsync();
+
+                // Update item master table records
+                _context.MItemMasters.UpdateRange(objItems);
+                await _context.SaveChangesAsync();
+
+                // Update purchase details table records
+                List<TPurchaseDetail> objPurDetailsList =  new List<TPurchaseDetail>();
+                foreach (var objDet in objPurDetails)
+                {
+                    TPurchaseDetail DetailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
+                    DetailsInfo.PobalQty = objDet.PobalQty;
+                    DetailsInfo.IsClosed = objDet.IsClosed;
+                    DetailsInfo.IsGrnQty = DetailsInfo.Qty - objDet.PobalQty;
+                    objPurDetailsList.Add(DetailsInfo);
+                }
+                _context.TPurchaseDetails.UpdateRange(objPurDetailsList);
+                _context.Entry(objPurDetailsList).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                // Update purchase header table records
+                List<TPurchaseHeader> objPurHeadersList = new List<TPurchaseHeader>();
+                foreach (var objHed in objPurHeaders)
+                {
+                    TPurchaseHeader HeaderInfo = await _context.TPurchaseHeaders.FirstOrDefaultAsync(x => x.PurchaseId == objHed.PurchaseId);
+                    HeaderInfo.Isclosed = objHed.Isclosed;
+                    objPurHeadersList.Add(HeaderInfo);
+                }
+                _context.TPurchaseHeaders.UpdateRange(objPurHeadersList);
+                _context.Entry(objPurHeadersList).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Delete details table realted records
+                var lst = await _context.TGrndetails.Where(x => x.Grnid == objGRN.Grnid).ToListAsync();
+                _context.TGrndetails.RemoveRange(lst);
+
+                // Update header & detail table records
+                _context.TGrnheaders.Update(objGRN);
+                _context.Entry(objGRN).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                // Update item master table records
+                _context.MItemMasters.UpdateRange(objItems);
+                await _context.SaveChangesAsync();
+
+                // Update purchase details table records
+                List<TPurchaseDetail> objPurDetailsList = new List<TPurchaseDetail>();
+                foreach (var objDet in objPurDetails)
+                {
+                    TPurchaseDetail DetailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
+                    DetailsInfo.PobalQty = objDet.PobalQty;
+                    DetailsInfo.IsClosed = objDet.IsClosed;
+                    DetailsInfo.IsGrnQty = DetailsInfo.Qty - objDet.PobalQty;
+                    objPurDetailsList.Add(DetailsInfo);
+                }
+                _context.TPurchaseDetails.UpdateRange(objPurDetailsList);
+                await _context.SaveChangesAsync();
+
+                // Update purchase header table records
+                List<TPurchaseHeader> objPurHeadersList = new List<TPurchaseHeader>();
+                foreach (var objHed in objPurHeaders)
+                {
+                    TPurchaseHeader HeaderInfo = await _context.TPurchaseHeaders.FirstOrDefaultAsync(x => x.PurchaseId == objHed.PurchaseId);
+                    HeaderInfo.Isclosed = objHed.Isclosed;
+                    objPurHeadersList.Add(HeaderInfo);
+                }
+                _context.TPurchaseHeaders.UpdateRange(objPurHeadersList);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task VerifyAsync(TGrndetail objGRN, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TGrnheader objGrnHeader = await _context.TGrnheaders.FindAsync(objGRN.Grnid);
+                objGrnHeader.IsVerified = objGRN.IsVerified;
+                foreach (var objDet in objGrnHeader.TGrndetails)
+                {
+                    objDet.IsVerified = objGRN.IsVerified;
+                    objDet.IsVerifiedUserId = objGRN.IsVerifiedUserId;
+                    objDet.IsVerifiedDatetime = objGRN.IsVerifiedDatetime;
+                }
+                _context.TGrnheaders.Update(objGrnHeader);
+                _context.Entry(objGrnHeader).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

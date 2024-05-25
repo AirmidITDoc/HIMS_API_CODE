@@ -2901,6 +2901,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PharOpopt).HasColumnName("PharOPOpt");
 
                 entity.Property(e => e.UserName).HasMaxLength(100);
+
+                entity.Property(e => e.UserToken).HasMaxLength(250);
             });
 
             modelBuilder.Entity<LvwAddCharge>(entity =>
@@ -10191,9 +10193,11 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TGrnreturnDetail>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.GrnreturnDetailId);
 
                 entity.ToTable("T_GRNReturnDetail");
+
+                entity.Property(e => e.GrnreturnDetailId).HasColumnName("GRNReturnDetailId");
 
                 entity.Property(e => e.BatchExpiryDate).HasColumnType("datetime");
 
@@ -10201,37 +10205,38 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Grnid).HasColumnName("GRNId");
 
-                entity.Property(e => e.GrnreturnDetailId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("GRNReturnDetailId");
-
                 entity.Property(e => e.GrnreturnId).HasColumnName("GRNReturnId");
 
-                entity.Property(e => e.LandedRate).HasColumnType("money");
+                entity.Property(e => e.LandedRate).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.LandedTotalAmount).HasColumnType("money");
+                entity.Property(e => e.LandedTotalAmount).HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.Mrp)
-                    .HasColumnType("money")
+                    .HasColumnType("decimal(18, 4)")
                     .HasColumnName("MRP");
 
                 entity.Property(e => e.MrptotalAmount)
-                    .HasColumnType("money")
+                    .HasColumnType("decimal(18, 4)")
                     .HasColumnName("MRPTotalAmount");
 
-                entity.Property(e => e.OctroiAmt).HasColumnType("money");
+                entity.Property(e => e.OctroiAmt).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.OtherTaxAmount).HasColumnType("money");
+                entity.Property(e => e.OtherTaxAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.PurchaseTotalAmount).HasColumnType("money");
+                entity.Property(e => e.PurchaseTotalAmount).HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.Remarks).HasMaxLength(50);
 
-                entity.Property(e => e.TaxAmount).HasColumnType("money");
+                entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.UnitPurchaseRate).HasColumnType("money");
+                entity.Property(e => e.UnitPurchaseRate).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.VatAmount).HasColumnType("money");
+                entity.Property(e => e.VatAmount).HasColumnType("decimal(18, 4)");
+
+                entity.HasOne(d => d.Grnreturn)
+                    .WithMany(p => p.TGrnreturnDetails)
+                    .HasForeignKey(d => d.GrnreturnId)
+                    .HasConstraintName("FK_T_GRNReturnDetail_T_GRNReturnHeader");
             });
 
             modelBuilder.Entity<TGrnreturnHeader>(entity =>
@@ -10244,7 +10249,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCredit).HasColumnName("Cash_Credit");
 
-                entity.Property(e => e.GrnReturnAmount).HasColumnType("money");
+                entity.Property(e => e.GrnReturnAmount).HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.GrnType).HasMaxLength(100);
 
@@ -10262,21 +10267,21 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("GRNReturnTime");
 
-                entity.Property(e => e.NetAmount).HasColumnType("money");
+                entity.Property(e => e.NetAmount).HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.Prefix).HasMaxLength(20);
 
                 entity.Property(e => e.Remark).HasMaxLength(100);
 
-                entity.Property(e => e.TotalAmount).HasColumnType("money");
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.TotalDiscAmount).HasColumnType("money");
+                entity.Property(e => e.TotalDiscAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.TotalOctroiAmount).HasColumnType("money");
+                entity.Property(e => e.TotalOctroiAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.TotalOtherTaxAmount).HasColumnType("money");
+                entity.Property(e => e.TotalOtherTaxAmount).HasColumnType("decimal(18, 4)");
 
-                entity.Property(e => e.TotalVatAmount).HasColumnType("money");
+                entity.Property(e => e.TotalVatAmount).HasColumnType("decimal(18, 4)");
             });
 
             modelBuilder.Entity<TGrnsupPayment>(entity =>

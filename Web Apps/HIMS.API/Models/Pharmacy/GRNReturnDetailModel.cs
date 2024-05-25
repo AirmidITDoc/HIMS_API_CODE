@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HIMS.Data.Models
+﻿namespace HIMS.API.Models.Pharmacy
 {
-    public partial class TGrnreturnDetail
+    public class GRNReturnDetailModel
     {
         public long GrnreturnDetailId { get; set; }
         public long? GrnreturnId { get; set; }
@@ -30,6 +27,5 @@ namespace HIMS.Data.Models
         public float? Cf { get; set; }
         public float? TotalQty { get; set; }
 
-        public virtual TGrnreturnHeader? Grnreturn { get; set; }
     }
 }
