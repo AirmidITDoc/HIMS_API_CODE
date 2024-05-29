@@ -52,6 +52,11 @@ namespace HIMS.API.Models.Pharmacy
     {
         public GRNModel Grn { get; set; }
         public List<ItemModel> GrnItems { get; set; }
+    }
+    public class GRNPOReqDto
+    {
+        public GRNModel Grn { get; set; }
+        public List<ItemModel> GrnItems { get; set; }
         public List<POAganistGRNModel> GrnPODetails { get; set; }
         public List<POHeaderAganistGRNModel> GrnPOHeaders { get; set; }
     }

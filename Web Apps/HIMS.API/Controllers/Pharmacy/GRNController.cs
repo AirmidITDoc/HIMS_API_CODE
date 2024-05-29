@@ -25,15 +25,15 @@ namespace HIMS.API.Controllers.Pharmacy
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
-            TGrnheader model = obj.MapTo<TGrnheader>();
-            List<MItemMaster> objItems = obj.GrnItems.MapTo< List<MItemMaster>>();
+            TGrnheader model = obj.Grn.MapTo<TGrnheader>();
+            List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             if (obj.Grn.Grnid == 0)
             {
                 model.Grndate = DateTime.Now.Date;
                 model.Grntime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                await _IGRNService.InsertAsync(model, objItems, CurrentUserId, CurrentUserName);
+                await _IGRNService.InsertAsyncSP(model, objItems, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
-            TGrnheader model = obj.MapTo<TGrnheader>();
+            TGrnheader model = obj.Grn.MapTo<TGrnheader>();
             List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             if (obj.Grn.Grnid == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -61,9 +61,9 @@ namespace HIMS.API.Controllers.Pharmacy
         [HttpPost("InsertPO")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> InsertPO(GRNReqDto obj)
+        public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
-            TGrnheader model = obj.MapTo<TGrnheader>();
+            TGrnheader model = obj.Grn.MapTo<TGrnheader>();
             List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             List<TPurchaseDetail> objPurDetails = obj.GrnPODetails.MapTo<List<TPurchaseDetail>>();
             List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders.MapTo<List<TPurchaseHeader>>();
@@ -82,9 +82,9 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("EditPO/{id:int}")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> EditPO(GRNReqDto obj)
+        public async Task<ApiResponse> EditPO(GRNPOReqDto obj)
         {
-            TGrnheader model = obj.MapTo<TGrnheader>();
+            TGrnheader model = obj.Grn.MapTo<TGrnheader>();
             List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             List<TPurchaseDetail> objPurDetails = obj.GrnPODetails.MapTo<List<TPurchaseDetail>>();
             List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders.MapTo<List<TPurchaseHeader>>();

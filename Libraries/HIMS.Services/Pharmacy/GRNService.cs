@@ -20,7 +20,7 @@ namespace HIMS.Services.Pharmacy
         {
             // Add header table records
             DatabaseHelper odal = new();
-            SqlParameter[] para = new SqlParameter[31];
+            SqlParameter[] para = new SqlParameter[32];
             para[0] = new SqlParameter("@GRNDate", objGRN.Grndate);
             para[1] = new SqlParameter("@GRNTime", objGRN.Grntime);
             para[2] = new SqlParameter("@StoreId", objGRN.StoreId);
@@ -28,8 +28,7 @@ namespace HIMS.Services.Pharmacy
             para[4] = new SqlParameter("@InvoiceNo", objGRN.InvoiceNo);
             para[5] = new SqlParameter("@DeliveryNo", objGRN.DeliveryNo);
             para[6] = new SqlParameter("@GateEntryNo", objGRN.GateEntryNo);
-            //para[7] = new SqlParameter("@Cash_CreditType", objGRN.Cash_CreditType);
-            para[7] = new SqlParameter("@Cash_CreditType", 0);
+            para[7] = new SqlParameter("@Cash_CreditType", objGRN.CashCreditType);
             para[8] = new SqlParameter("@GRNType", objGRN.Grntype);
             para[9] = new SqlParameter("@TotalAmount", objGRN.TotalAmount);
             para[10] = new SqlParameter("@TotalDiscAmount", objGRN.TotalDiscAmount);
@@ -59,8 +58,8 @@ namespace HIMS.Services.Pharmacy
             para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt);
             para[31].Direction = ParameterDirection.Output;
 
-            string purchaseNo = odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "@GRNID", para);
-            objGRN.Grnid = Convert.ToInt32(purchaseNo);
+            string grnNo = odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "@GRNID", para);
+            objGRN.Grnid = Convert.ToInt32(grnNo);
 
             // Add details table records
             foreach (var objItem in objGRN.TGrndetails)
@@ -68,7 +67,7 @@ namespace HIMS.Services.Pharmacy
                 objItem.Grnid = objGRN.Grnid;
             }
             _context.TGrndetails.AddRange(objGRN.TGrndetails);
-            await _context.SaveChangesAsync(UserId, Username);
+            await _context.SaveChangesAsync();
         }
 
         public virtual async Task InsertAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
@@ -119,7 +118,7 @@ namespace HIMS.Services.Pharmacy
                 StoreInfo.GrnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnNo) + 1);
                 _context.MStoreMasters.Update(StoreInfo);
                 await _context.SaveChangesAsync();
-
+                    
                 // Add header & detail table records
                 objGRN.GrnNumber = StoreInfo.GrnNo;
                 _context.TGrnheaders.Add(objGRN);
