@@ -1,7 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -326,6 +329,37 @@ namespace HIMS.Data.Extensions
             resultParameterVisitor.Visit(parameter);
             Expression resultParameter = resultParameterVisitor.Parameter;
             return Expression.Lambda(predicate, (ParameterExpression)resultParameter);
+        }
+        public static Dictionary<string, object> ToDictionary(this JObject entity)
+        {
+            var keyValues = new Dictionary<string, object>();
+            foreach (var property in entity.Properties())
+            {
+                keyValues.Add(property.Name, property.Value);
+            }
+            return keyValues;
+        }
+
+        public static List<Dictionary<string, string>> ToArrayDictionary(this JArray entities)
+        {
+            var list = new List<Dictionary<string, string>>();
+
+            return list;
+        }
+        public static List<dynamic> ToDynamic(this DataTable dt)
+        {
+            var dynamicDt = new List<dynamic>();
+            foreach (DataRow row in dt.Rows)
+            {
+                dynamic dyn = new ExpandoObject();
+                dynamicDt.Add(dyn);
+                foreach (DataColumn column in dt.Columns)
+                {
+                    var dic = (IDictionary<string, object>)dyn;
+                    dic[column.ColumnName] = row[column];
+                }
+            }
+            return dynamicDt;
         }
 
         private class ParameterVisitor : ExpressionVisitor
