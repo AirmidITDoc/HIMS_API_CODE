@@ -1,0 +1,132 @@
+﻿
+<html>
+<head>
+    <style>
+        .watermark {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            opacity: .1;
+            z-index: 99;
+            color: #000;
+            font-size: 70px;
+            transform: translate(-50%,-50%) rotate(-45deg);
+            white-space: nowrap;
+            pointer-events: none
+        }
+    </style>
+</head>
+<body>
+    <div class="bill-template-wrapper" style="font-size: 30.25%;">
+
+
+        {{HeaderName}}
+
+        <div style="border:1px solid grey;text-align:center;padding:2px;background-color: beige;">
+            <div style="display:block;width:100%; align-items: center;">
+                <div style="font-weight:400;font-size:18px;text-align:center;display:inline-block;">
+                   OP BILLING Daily COLLECTION SUMMARY
+                </div>
+                <span style="font-size: 9px;font-weight: 700;float: right;margin-top:5px; margin-right:10px;">Print Date : {{CurrentDate}}</span>
+            </div>
+
+        </div>
+        <div style="margin-top:2px;">
+            <div style="font-weight: bold;font-size:15px;margin-left:10px;padding:5px;">From Date : {{FromDate}} -- To Date :{{Todate}}</div>
+        </div>
+        <table class="table" style="width:100%;border-collapse:collapse">
+            <tbody>
+
+                <tr style="font-size:10px;background-color: rgb(127, 174, 255);">
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Type
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        PAY Date
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Bill Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Disc Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Net Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Bal Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Paid Amt
+                    </td>
+
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Cash Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Card Amt
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Cheque PAY
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        NEFT PAY
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        UPI PAY
+                    </td>
+
+                </tr>
+
+                {{Items}}
+
+                <tr style="border: 1px solid black;font-size: 14px;font-weight: bold;">
+
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        Total Amt.
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalBillAmount}}
+                    </td>
+
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalDiscAmount}}
+                    </td>
+
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalNETAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalBalAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalPaidAmount}}
+                    </td>
+
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalCashAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalCardAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalChequeAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalNEFTAmount}}
+                    </td>
+                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                        {{TotalOnlineAmount}}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <hr>
+
+    </div>
+
+</body>
+</html>

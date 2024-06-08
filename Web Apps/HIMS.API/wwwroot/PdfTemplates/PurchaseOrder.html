@@ -1,0 +1,203 @@
+﻿
+    <div class="bill-template-wrapper" style="font-size: 30.25%;">
+
+        <div style=" align-items: center; margin-bottom: 10px;text-align: center; ">
+            <!--<div style="border: 1px solid black;width: 1000px;height: 50px; background-color: red;border-top-right-radius: 110px;
+        margin-top: 0px;border-top-left-radius: 110px;padding: 6px ;">
+                <span style="text-transform: uppercase;font-weight:bolder;margin:0;text-align: center;color: white;padding-top: 6px;font-size:20px;">
+                    jnanayogi shri siddeshwar
+                    super speciality hospital
+                </span>
+            </div>-->
+            <div style="display: flex;">
+                <!--<div style="border: 1px solid transparent;width: 700px;height: 50px; background-color: black;border-bottom-right-radius: 110px;">
+        <span style="text-transform: uppercase;font-size: 18px;font-weight: 500;text-align: center;color: white;">
+            (A Unit of Shri
+            Siddeshwar Loka Kalyana Charitable
+            Trust)
+        </span><br>
+        <span style="font-size:15px;font-weight: 500;text-align: center;color: white;">
+            Survey No.10/4, Near S-Hyper Mart, Vijayapur
+            586 101
+        </span><br>
+        <span style="font-size: 15px;font-weight: 500;text-align: center;color: white;padding-bottom:10px;">
+            Call :-08352-249399 | info@ jsshospitals.com
+            | www.jsshospitals.com
+            | Reg.No :-BIJ00467ALSSh
+        </span>
+
+    </div>-->
+                {{HeaderName}}
+                <span style="font-size: 20px; text-transform: uppercase;font-weight: 500;margin-top: 20px;margin-left: 60px;color:black">
+                    Purchase
+                    Order
+                </span>
+            </div>
+          <!--  <hr>-->
+
+        </div>
+        <table style="border: 1px solid gray;">
+            <tr>
+                <td>
+                    <span style="font-weight: 500; margin-right: 82px; font-size: 20px;">PO No.</span>
+                    <span style="font-size:15px; ">{{PurchaseNo}} </span>
+                </td>
+                <td>
+                    <span style="font-weight: 500; margin-right: 34px; margin-left: 100px;font-size:20px;">PO Date</span>
+                    <span style="font-size:15px;"> {{PurchaseDate | date: 'dd/MM/yyyy'}} </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span style="font-weight: 500; margin-right: 25px; font-size: 20px;">Supplier Name</span>
+                    <span style="font-size:15px;">{{SupplierName}}</span>
+                </td>
+                <td>
+                    <span style="font-weight: 500; margin-right: 73px; margin-left: 300px; font-size: 20px;">Fax</span>
+                    <span style="font-size:15px;">{{Fax}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span style="font-weight: 500; margin-right: 75px; font-size: 20px;">Address</span>
+                    <span style="font-size:15px;">{{Address}}</span>
+                </td>
+                <td>
+                    <span style="font-weight: 500; margin-right: 38px; margin-left: 300px; font-size: 20px;">Email Id</span>
+                    <span style="font-size:15px;">{{Email}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span style="font-weight: 500; margin-right: 75px; font-size: 20px;">GST No.</span>
+                    <span style="font-size:15px;">{{GSTNo}}</span>'
+                </td>
+                <td>
+                    <span style="font-weight: 500; margin-right: 25px; margin-left: 300px; font-size: 20px;">Phone No</span>
+                    <span style="font-size:15px;">{{Phone}} </span>
+                </td>
+            </tr>
+        </table>
+
+
+        <!--<hr>-->
+
+        <table class="table6" style="width: 100%;  text-align: right;border-spacing: 1px;border-collapse: separate;border-color: gray;padding-bottom:20px;">
+            <tr style="font-size:15px;">
+
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;
+                 background-color: red; border-top-left-radius: 10px;color: white;">
+                    Sr.No
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;
+                background-color: red;color: white;">
+
+                    Item Name
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    Unit
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    Qty
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    Rate
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    Total Amount
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    Disc%
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    CGST
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    SGST
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+                background-color: red;color: white;">
+                    IGST
+                </td>
+                <td style="border: 1px solid gray;font-weight:bold;text-align:center;vertical-align: middle;padding:10px 5px;
+               background-color: red; border-top-right-radius: 10px;color: white;">
+                    Net Amount
+                </td>
+            </tr>
+        
+            {{Items}}
+        </table>
+
+        <div style="display: flex;">
+            <div style="font-weight: 400;margin-right: 20px;font-size:15px;">Terms & Conditions </div>
+            <ul style="margin: 5px 0 0 0; font-size: 15px; padding-left: 17px; font-weight: 400;">
+                <li>
+                    Exchange NOT accepted after 72 hrs. of Purchase, Bill is
+                    required for Exchange
+                </li>
+                <li>
+                    Insulin’s & Vaccines will not be taken back. Fridge Items
+                    will not be taken Back
+                </li>
+                <li>
+                    All disputes are subject to Vijayapura jurisdiction only
+                </li>
+                <li>
+                    Please check the medicines before leaving the medical
+                </li>
+                <li>
+                    Consult your Doctor before consuming the medicines.
+                </li>
+            </ul>
+
+            <span style="vertical-align: top;padding:0 10px 10px;">
+
+                <span style="margin-left: 100px;font-weight: 500;margin-right: 20px;font-size:20px">Total Amount</span>
+                <span style="width: 400px;font-size:11px;"> {{TotalAmount}}</span> <br>
+                <span style="margin-left: 300px; font-weight: 500; margin-right: 25px; font-size: 20px">Disc Amount</span>
+                <span style="width: 400px;font-size:11px;"> {{TotalDiscAmount}}</span> <br>
+                <span style="margin-left: 300px; font-weight: 500; margin-right: 30px; font-size: 20px">GST Amount</span>
+                <span style="width: 400px;font-size:11px;"> {{TotalVatAmount}}</span> <br>
+                <span style="margin-left: 300px; font-weight: 500; margin-right: 25px; font-size: 20px">Net Amount</span>
+                <span style="width: 400px;font-size:11px;"> {{TotalNETAmount}}</span> <br>
+            </span>
+
+        </div>
+
+        <br>
+        <span style="font-weight: 500;"> Total Amount in words :-</span>
+        <hr>
+        <div style="display: flex;">
+            <span style="font-weight: 500;">Remark</span>
+
+        </div><br><br>
+
+        <div style="display: flex;margin-top:50px;">
+            <span style="font-weight: 500;">ADMIN ADMIN</span>
+            <span style="margin-left: 650px; font-weight: 500;">Authorized Signature</span>
+        </div><br>
+
+
+        <div style="border: 1px solid black;width: 1000px;height: 30px; background-color: red;border-bottom-right-radius: 110px;
+    margin-top: 0px;border-bottom-left-radius: 110px;padding: 6px ;">
+            <div style="font-style: italic; opacity:1;text-align: center;font-size: 15px; margin-top: 8px; color: white;">
+                This is Computer generated invoice hence doesn’t require signature
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>

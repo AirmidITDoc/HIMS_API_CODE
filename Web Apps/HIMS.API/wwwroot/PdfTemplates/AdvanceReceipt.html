@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>  ADVANCE PAYMENT RECEIPT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Advance No. : </span>
+                                    <span>{{AdvanceNo}} </span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>DOA: </span>
+                                    <span>{{AdmissionTime}} </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Age : </span>
+                                    <span> {{Age}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <!--<td style="padding: 2px;">
+                        <span>ConsultantDocName : </span>
+                        <span>{{ConsultantDocName}}</span>
+                    </td>-->
+                                <td style="padding: 2px;">
+                                    <span>IPD No : </span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <!--<td style="padding: 2px;">
+                                    <span>Phone : </span>
+                                    <span> {{Phone}}</span>
+                                </td>-->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                        Advance Amount :
+                    </td>
+                    <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                        {{AdvanceAmount}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                        Reason
+                    </td>
+                    <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                        {{reason}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                        Total Amount in words :
+                    </td>
+                    <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                        {{finalamt}}
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                        Remark
+                    </td>
+                    <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                        {{Remark}}
+                    </td>
+                </tr>-->
+                <tr class="payment-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td>
+                                    <table style="text-align:center; border-collapse: collapse; width: 100%;">
+
+
+                                        <tr>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                Advance Amount :
+                                            </td>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                {{AdvanceAmount}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                Reason
+                                            </td>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                {{reason}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                Total Amount in words :
+                                            </td>
+                                            <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                {{finalamt}}
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                             
+                                <td>
+                                    <table style="text-align:center; border-collapse: collapse; width: 100%;">
+
+                                        <tbody style="font-size: 14px;">
+                                            <tr style="display:{{chkcashflag}}">
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Cash Amount :
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    {{CashPayAmount}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                </td>
+                                            </tr>
+                                            <tr style="display:{{chkcardflag}}">
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Card Amount
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    {{CardPayAmount}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    Card No-{{CardNo}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    Bank Name :-{{CardBankName}}
+                                                </td>
+                                            </tr>
+                                            <tr style="display:{{chkchequeflag}}">
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Cheque Amount
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    {{ChequePayAmount}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    Cheque No-{{ChequeNo}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    Bank Name :-{{BankName}}
+                                                </td>
+                                            </tr>
+                                            <tr style="display:{{chkneftflag}}">
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Neft Amount
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    {{NEFTPayAmount}}
+
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    NEFT No-{{NEFTNo}}
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    NEFT Bank :-{{NEFTBankMaster}}
+                                                </td>
+                                            </tr>
+
+                                            <tr style="display:{{chkpaytmflag}}">
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Online Amount
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    {{PayTMAmount}}
+
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    PAYTM No-{{PayTMTranNo}}
+
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                                    Payment Date :-{{PayTMDate}}
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{Addedby}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+                                <span>Authorized By</span>
+                            </td>
+                        </tr>
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

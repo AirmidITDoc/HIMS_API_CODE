@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{HeaderName}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b> PHARMACY COLLECTION SUMMARY</b> </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <i style="font-size: 16px;"> From Date : {{FromDate}} -- To Date : {{ToDate}} </i>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <!-- <thead style="font-size: 15px; text-align: center;">-->
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
+
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Bill Amt </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">  Disc Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Net Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Bal Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Paid Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Cash Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Card Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">  Cheque Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> NEFT Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> UPI  Amt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Total Amount</td>
+
+                            </tr>
+                            <!-- </thead>-->
+                            {{Items}}
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                <tr style="font-size:20px;padding:10px;text-align:center;font-weight:bold;color:blue;width:99%;">Total Collection = ₹ {{F_TotalColl}}  <span style="font-size:10px;">(Cash + Card + Cheque+ NEFT + Onine Pay )</span></tr>
+
+                </tr>
+               
+                <tr></tr>
+
+                <table class="table" style="width:40%;border-collapse:collapse">
+                    <tbody>
+                        <th style="font-size:20px;margin-top:20px;text-align:center;">Denomination</th>
+                        <tr style="font-size:16px;">
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                500 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                200 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                100 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                50 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                20 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                10 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                5 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                2 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                1 X
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+
+                        <tr style="font-size:16px;">
+
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                Total
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            </td>
+                        </tr>
+
+
+
+
+                    </tbody>
+                </table>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

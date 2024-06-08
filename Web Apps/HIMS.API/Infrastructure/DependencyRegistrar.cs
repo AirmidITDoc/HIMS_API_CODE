@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using HIMS.API.Extensions;
-using HIMS.API.Extensions;
 using HIMS.Data;
 using HIMS.Services;
 using HIMS.Data.Extensions;
@@ -10,6 +9,9 @@ using System.Security;
 using HIMS.Services.Permissions;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Common;
+using HIMS.Services.Report;
+using HIMS.Services.Report.OPReports;
+using HIMS.Services.Utilities;
 
 namespace HIMS.API.Infrastructure
 {
@@ -33,6 +35,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPurchaseService, PurchaseService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IGRNService, GRNService>();
+
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IOPBillingReport, OPBillingReport>();
+            services.AddTransient<IPdfUtility, PdfUtility>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

@@ -1,0 +1,83 @@
+﻿<html>
+
+<head>
+    <style>
+        .watermark {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            opacity: .1;
+            z-index: 99;
+            color: #000;
+            font-size: 70px;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            white-space: nowrap;
+            pointer-events: none
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bill-template-wrapper" style="font-size: 30.25%;">
+
+
+        {{HeaderName}}
+        <div style="border:1px solid grey;text-align:center;padding:2px;background-color: gray;">
+            <div style="display:block;width:100%; align-items: center;">
+                <div style="font-weight:400;font-size:18px;text-align:center;display:inline-block;margin-left:100px">
+                    EXPIRY ITEM REPORT
+                </div>
+                <span style="font-size: 9px;font-weight: 700;float: right;margin-top:5px; margin-right:10px;">Print Date : {{CurrentDate}}</span>
+            </div>
+
+        </div>
+       
+        <table class="table" style="width:100%;border-collapse:collapse">
+            <tbody>
+
+                <tr style="font-size:15px;background-color: rgb(127, 174, 255);">
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        SR.NO
+                    </td>
+
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        StockId
+                    </td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        Store Name
+                    </td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        Item Name
+                    </td>
+
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        Batch No
+                    </td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        Batch ExpDate
+                    </td>
+
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        ExpMonth
+                    </td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        ExpYear
+                    </td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                        Bal.Qty
+                    </td>
+                </tr>
+
+                {{Items}}
+
+
+
+            </tbody>
+        </table>
+        <hr>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> RADIOLOGY TEMPLATE REPORT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>IPD No. : </span>
+                                    <span>{{RegNo}} </span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>PathDate Time: </span>
+                                    <span>{{PathTime}} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Age / Gender : </span>
+                                    <span> {{AgeYear}} / {{GenderName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span>ConsultantDocName : </span>
+                                    <span>{{ConsultantDocName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Room /Bed  : </span>
+                                    <span>{{RoomName}} {{BedName}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>ReportTime  : </span>
+                                    <span>{{ReportTime}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>RadiologyDocName  : </span>
+                                    <span>{{RadiologyDocName}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <hr />
+                <tr style=""><td style="text-align:center;">{{PrintTestName}}</td></tr>
+                <hr />
+                <tr style=" border-collapse: collapse;">
+                    <div>
+                        <div style="display:flex;justify-content:space-between;padding:10px;border:2px solid gray;margin:5px;width:100%;">
+                            <div style="display:flex;width:100%;margin-left:10px;height:auto">
+                                <div [innerHtml]="PathTemplateDetailsResult"></div>
+                                {{ResultEntry}}
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                        <tr style="margin-top: 12px;">
+                            SuggestionNotes :{{SuggestionNotes}}
+                        <tr>
+                            <!--<td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>-->
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{RadiologyDocName}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+
+                            <td>
+
+                                <span>Radiology Doctor Name</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+﻿
+
+<div class="main-content-wrapper" #WorkorderTemplate>
+    <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+        <table style="width: 100%;line-height: inherit;text-align: left;">
+            <tr class="top-header-row">
+                <td style="padding: 6px;">
+                        {{NewHeader}}
+                </td>
+            </tr>
+            <tr class="title-date-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="font-size: 18px">
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>PURCHASE ORDER</b> </td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bill-info-row">
+                <td>
+                    <table style="font-size: 14px;">
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span>PO No. : </span>
+                                <span>{{PurchaseNo}}</span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span>PO Date : </span>
+                                <span>{{PurchaseTime}} </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span>Supplier Name : </span>
+                                <span>{{SupplierName}}</span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span>Mobile No. : </span>
+                                <span>{{Mobile}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span>Address: </span>
+                                <span>{{Address}} </span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span>Email : </span>
+                                <span>{{Email}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span>GST No. : </span>
+                                <span>{{GSTNo}} </span>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="bill-table-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead style="font-size: 15px; text-align: center;">
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">ItemName</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Unit</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Qty</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">MRP</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Rate</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">TotalAmt</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Disc%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">CGST%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">SGST%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">IGST%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">NetAmt</td>
+                            </tr>
+                            {{Items}}
+                        </thead>
+                        <tbody style="font-size: 14px;">
+
+                            <tr style="height: 5px;">
+                                <td colspan="2" style="border: 1px solid gray;font-weight: 500;padding: 15px;text-align: left;vertical-align: top;">
+                                    Freight Amount :-
+                                    <span>{{FreightAmount}}</span>
+                                </td>
+                                <td colspan="4" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;font-weight: 500;">
+                                    Transport Charges :-
+                                    <span>{{TransportChanges}}</span>
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;">
+                                    Grand Total Amount
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;height: 20px;text-align: right;">
+                                    {{TotalAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <!-- <td colspan="7"></td> -->
+                                <td colspan="2" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;font-weight: 500;">
+                                    Handling Charges :-
+                                    <span>{{HandlingCharges}}</span>
+                                </td>
+                                <td colspan="4" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;font-weight: 500;">
+                                    Octri Amount :-
+                                    <span>{{OctriAmount}}</span>
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;">
+                                    Discount Amount
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;height: 20px;text-align: right;">
+                                    {{T_TotalDiscAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;font-weight: 500;">
+                                    <!--Remark :-
+                                    <pre>{{Remarks}}</pre>-->
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;">
+                                    GST Amount
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;padding: 15px;height: 20px;text-align: right;">
+                                    {{TotalVatAmount}}
+                                </td>
+                            </tr>
+
+                            <tr rowspan="2">
+                                <td colspan="6" style="font-weight: 500;border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left; border-bottom-left-radius: 20px;">
+                                    Total Amount in words :-
+                                    {{finalamt}}
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;text-align: left;font-weight:bold;padding: 15px;color: black; ">
+                                    Total Net Amount
+                                </td>
+                                <td colspan="3" style="border: 1px solid gray;vertical-align: top;text-align: right;font-weight:bold;padding: 15px;height: 20px;color: black;border-bottom-right-radius: 20px;">
+                                    {{TotalNETAmount}}
+                                </td>
+                            </tr>
+
+                            <tr rowspan="2">
+                                <td colspan="12" style="border: 1px solid gray;vertical-align: top;padding: 15px;text-align: left;font-weight: 500;">
+                                    Remark :-
+                                    <pre>{{Remarks}}</pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <!-- <tr  class="signature-line-row">
+                <td colspan="8" style="padding: 6px; text-align: center; font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+            </tr> -->
+            <tr class="signature-line-row">
+                <td style="padding: 6px; text-align: center; font-size: 12px; padding:15px 100px 15px 100px">This is Computer generated invoice hence doesn’t require signature</td>
+            </tr>
+
+
+            <tr class="footer-row">
+                <td style="padding: 6px;margin-top:10px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td style="padding: 6px; text-align: left;">
+                                    {{AddedByName}}  <br> Added By
+                                </td>
+                                <td style="padding: 6px; text-align: center;">
+                                    {{AddedByName}}  <br> Checked By
+                                </td>
+                                <td style="padding: 6px; text-align: right;">
+                                    {{AddedByName}} <br> Authorized Signature
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+

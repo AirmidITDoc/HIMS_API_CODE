@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box"
+             style="margin: auto;font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table cellpadding="5" cellspacing="5" style="width: 100%;line-height: inherit;text-align: left;">
+                <tr class="top-header-row">
+                    {{NewHeader}}
+                </tr>
+                <tr class="title-date-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 16px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <b>
+                                        MATERIAL CONSUMPTION REPORT
+                                    </b>
+                                </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <b>
+                                        Print
+                                        Date : {{CurrentDate}}
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name:</span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Reg No:</span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                    <td style="padding: 2px;">
+                        <span>ConsumptionTime:</span>
+                        <span>{{ConsumptionTime}}</span>
+                    </td>
+
+                </tr>-->
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>StoreName:</span>
+                                    <span>{{StoreName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Patient Type:</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Item Name
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Qty
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> MRP/unit</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">TotalMRP </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">LanRate/Unit</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Total LAmount</td>
+                            </tr>
+                            <!--cornflowerblue-->
+                            {{Items}}
+                            <tr style="border: 1px solid black;">
+
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                </td>
+
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Total
+                                </td>
+
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    {{T_TotalMrpAmount}}
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    {{T_TotalLandAmount}}
+                                </td>
+
+
+                            </tr>
+
+
+                        </table>
+                    </td>
+                </tr>
+
+              
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">Remark</td>
+                            <td style="padding: 6px;font-size: 12px;">{{Remark}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td style="text-align: right;">
+                                <span>{{AddedBy}}</span><br>
+                                <span>Authorized Signature</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

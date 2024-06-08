@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> ISSUE TO DEPARTMENT REPORT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Issue No. : </span>
+                                    <span>{{IssueNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Issue Time: </span>
+                                    <span>{{IssueTime}} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>From Store Name: </span>
+                                    <span>{{StoreName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>To Department  : </span>
+                                    <span>{{ToStreName}} </span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <!--<thead style="font-size: 14px;">--><!--  -->
+                            <tr style="color:cadetblue">
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Item Name</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> UMO</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">MRP</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Qty </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Batch No</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> BatchExpDate</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">LandRate</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">GST %</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">GSTAmt</td>
+                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">TotalAmt</td>
+                            </tr>
+                            {{Items}}
+                            <!--</thead>-->
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td colspan="11" style="vertical-align: top;border: 1px solid gray;padding: 10px;text-align: left;font-weight: 500;font-weight:bold">
+                                    Total Amount In Words :- <span style="color:blue">{{finalamt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" style="border: 1px solid gray; vertical-align: top; text-align: left; font-weight: bold; padding: 15px; color: black; ">
+                                    Remark :{{Remark}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" style="vertical-align: top; text-align: left; font-weight: bold; padding: 10px; height: 20px; color: black; border-bottom-right-radius: 20px;">
+                                    {{AddedByName}} PrintDate:{{CurrentDate}}
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                            <!--<tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{AddedByName}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+                                <span>Authorized By</span>
+                            </td>
+                        </tr>
+                    </table>
+                </tr>-->
+                        </table>
+
+
+</div>
+    </div>
+</body>
+</html>

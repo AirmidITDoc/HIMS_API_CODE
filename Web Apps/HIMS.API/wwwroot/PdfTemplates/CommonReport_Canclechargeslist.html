@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+{{NewHeader}}
+
+<div style="border:1px solid grey;text-align:center;padding:2px;background-color: beige;">
+    <div style="display:block;width:100%; align-items: center;">
+        <div style="font-weight:400;font-size:18px;text-align:center;display:inline-block;">
+            CANCLE CHARGES LIST
+        </div>
+        <span style="font-size: 18px;font-weight: 700;float: right;margin-top:5px; margin-right:10px;">Print Date : {{CurrentDate}}</span>
+    </div>
+
+</div>
+<div style="margin-top:2px;">
+    <div style="font-weight: bold;font-size:18px;margin-left:10px;padding:5px;">From Date : {{FromDate}} -- To Date :{{ToDate}}</div>
+</div>
+<table class="table" style="width:100%;border-collapse:collapse">
+    <tbody>
+
+
+        <tr class="bill-table-row">
+            <td style="padding: 6px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <!--<thead style="font-size: 14px;">--><!--  -->
+                    <tr>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Patient Name</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Admission Date </td>
+
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">IPD NO</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Service Name</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Price</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Qty</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Total Amt </td>
+
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Disc %</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Disc Amt</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Net Amt</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Cancelled BY</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Cancle Date</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">User Name</td>
+
+
+                    </tr>
+                    {{Items}}
+                <tr>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Total Service Amt.</td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">{{Tot_ServiceAmt}}</td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+
+                </tr>
+                </table>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

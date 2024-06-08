@@ -1,0 +1,155 @@
+﻿
+
+<div class="main-content-wrapper" #WorkorderTemplate>
+    <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+        <table style="width: 100%;line-height: inherit;text-align: left;">
+            <tr class="top-header-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                       {{NewHeader}}
+                    </table>
+                </td>
+            </tr>
+            <tr class="title-date-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="font-size: 18px">
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>WORKORDER</b> </td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bill-info-row">
+                <table style="font-size: 14px;">
+                    <tr>
+                        <td style="padding: 2px;">
+                            <span>Supplier Name : </span>
+                            <span>{{SupplierName}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Order No : </span>
+                            <span>{{WOId}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px;">
+                            <span>Address : </span>
+                            <span>{{Address}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Order Date : </span>
+                            <span>{{Date}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px;">
+                            <span>Phone No : </span>
+                            <span>{{Phone}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Mobile No : </span>
+                            <span>{{Mobile}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </tr>
+           
+            <tr class="bill-table-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead style="font-size: 15px; text-align: center;">
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">ItemName</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Qty</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Rate</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">TotalAmt</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Disc%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">GST%</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">NetAmt</td>
+                            </tr>
+                            {{Items}}
+                        </thead>
+                        <tbody style="font-size: 14px;">
+                          
+                            <tr>
+                                <td colspan="4" rowspan="3" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    Remark : -
+                                    <span style=" text-align: center; padding: 6px;"> {{Remarks}}</span>
+                                </td>
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    TotalAmount
+                                </td>
+                                <!-- <div></div> -->
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    ₹ {{TotalAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    DiscAmount
+                                </td>
+                                <!-- <div></div> -->
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    ₹ {{TotalDiscAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    TaxAmount
+                                </td>
+                                <!-- <div></div> -->
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    ₹ {{TotalVatAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    Total Amount in words :-
+                                    <span style=" text-align: center; padding: 6px;">{{finalamt}}</span>
+                                </td>
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-weight: bold;">
+                                    NetAmount
+                                </td>
+                                <!-- <div></div> -->
+                                <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-weight: bold;">
+                                    ₹ {{TotalNETAmount}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <!-- <tr  class="signature-line-row">
+                <td colspan="8" style="padding: 6px; text-align: center; font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+            </tr> -->
+            <tr class="signature-line-row">
+                <td style="padding: 6px; text-align: center; font-size: 12px; padding:15px 100px 15px 100px">This is Computer generated invoice hence doesn’t require signature</td>
+            </tr>
+
+
+            <tr class="footer-row">
+                <td style="padding: 6px;margin-top:20px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td style="padding: 6px; text-align: left;">
+                                    {{AddedbyName}}  <br> Added By
+                                </td>
+                                <td style="padding: 6px; text-align: center;">
+                                    {{AddedbyName}}  <br> Checked By
+                                </td>
+                                <td style="padding: 6px; text-align: right;">
+                                    {{AddedbyName}} <br> Authorized Signature
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+

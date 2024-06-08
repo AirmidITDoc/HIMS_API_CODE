@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box"
+             style="margin: auto;font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table cellpadding="5" cellspacing="5" style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 16px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <b>
+                                        INDENT WISE REPORT
+                                    </b>
+                                </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <b>
+                                        Print
+                                        Date : {{CurrentDate}}
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Indent No.:</span>
+                                    <span>{{IndentNo}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Indent Date:</span>
+                                    <span>{{IndentTime}} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>From Store Name:</span>
+                                    <span>{{FromStoreName}} </span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>Isverify:</span>
+                                    <span> {{Isverify}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>To Store Name:</span>
+                                    <span>{{ToStoreName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Verified By:</span>
+                                    <span> {{VLabel}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="font-size: 14px;">
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                        Item Name
+                                    </td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                        QTY
+                                    </td>
+
+                                </tr>
+
+                            <tbody style="font-size: 14px;">
+                                {{Items}}
+
+                                <tr style="margin-top: 12px;">
+                                    <td colspan="6"
+                                        style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                        Comments:- {{Comments}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+                       
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{UserName}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+
+                            <td>
+
+                                <span>Authorized Signature</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>BILL SUMMARY WITH TCS</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <!--<thead style="font-size: 14px;">-->
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Bill Date</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">RegNo</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;"> Bill Not</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;"> Patient Namet</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Total Amt</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Con. Pay</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Net Amt</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Paid PAY</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Bal PAY</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Cash PAY</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;">UPI PAY</td>
+                                <td style="border: 1px solid #d4c3c3; padding: 6px;"> Adv Used Amt</td>
+
+                            </tr>
+                            {{Items}}
+                            <!--</thead>-->
+                        </table>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>PATHOLOGY TEST REPORT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>IPD No. : </span>
+                                    <span>{{RegNo}} </span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>PathDate Time: </span>
+                                    <span>{{PathTime}} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Age / Gender : </span>
+                                    <span> {{AgeYear}} / {{GenderName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span>ConsultantDocName : </span>
+                                    <span>{{ConsultantDocName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Room /Bed  : </span>
+                                    <span>{{RoomName}} {{BedName}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Admiss Date  : </span>
+                                    <span>{{Adm_Visit_Time}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>PathResultDr   : </span>
+                                    <span>{{PathResultDr1}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <hr />
+             
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="font-size: 14px;">
+                                <tr>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        PathTime
+                                    </th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        Report Time
+                                    </th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Parameter</th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Result </th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Normal Range</th>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">  Doctor Namet</th>
+                                 
+                                {{Items}}
+                            </thead>
+                           
+                        </table>
+                    </td>
+                </tr>
+
+
+
+
+
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                      
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{PathResultDr1}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+
+                            <td>
+
+                                <span>Pathology Doc Name</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

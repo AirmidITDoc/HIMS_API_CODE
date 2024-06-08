@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+       
+        <div style="display:flex; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 12px;font-weight: 700;width:40%;">
+                (A Unit of Shri Siddeshwar Loka Kalyana Charitable
+                Trust)
+            </span>
+            <span style="text-transform: uppercase;font-weight: 500;margin-left:250px;width:50%;font-size:18px;">
+                Tax Invoice
+            </span>
+        </div>
+
+        <table class="table" style="width: 100%;border-collapse: collapse;">
+            <tbody>
+                <tr>
+                    <td colspan="4"
+                        style="vertical-align: top;border: 1px solid black;width:40%; padding:0 10px 10px;font-size:18px;">
+                        <h3 style="margin-top:0;margin-bottom:5px;color: #e26d14;text-transform: uppercase;font-size: 16px;">
+                            {{StoreName}}
+                        </h3>
+
+                        <div>{{StoreAddress}}</div>
+                        <!-- <div>GST No. 29ABCTS6874R1Z8</div>
+            <div>
+                <span style="margin-right: 20px;">D.L.No. 123456789456123</span>
+                <span>D.L.No. 123456789456123</span>
+            </div> -->
+                        <div>
+                            <a href="tel:08352259399"
+                               style="margin-right: 20px;">{{HospitalMobileNo}}</a>
+                            <a href="mailto:info@jsshospitals.com">{{HospitalEmailId}}</a>
+                        </div>
+                    </td>
+                    <td colspan="6" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
+                        <table style="width: 100%;border-collapse: collapse;font-size:18px;">
+                            <!-- <tr> -->
+                            <td style="vertical-align: top;padding:0 10px 10px">
+                                Customer Id : {{RegNo}} <br>
+                                Customer Name: {{PatientName}} <br>
+                                Age & Gen: - <span style="margin-left: 10px;">
+                                    Mob:
+                                    {{ExtMobileNo}}
+                                </span><br>
+                                Doctor Name: {{DoctorName}}
+                            </td>
+                            <!-- </tr> -->
+                        </table>
+                    </td>
+                    <!-- <td>
+        </td> -->
+
+                </tr>
+                <tr>
+                    <td colspan="4"
+                        style="vertical-align: top;border: 1px solid black;width:40%; padding:0 10px 10px;font-size:16px;">
+                        <div>GST No. {{GSTIN}}</div>
+                        <div>
+                            <span style="margin-right: 20px;">D.L.No. {{DL_NO}}</span>
+                            <!-- <span>D.L.No. {{DL_NO}}</span> -->
+                        </div>
+                    </td>
+                    <td colspan="6" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
+                        <table style="width: 100%;font-size:16px;">
+                            <!-- <tr> -->
+                            <td style="vertical-align: top;padding:0 10px 10px">
+                                Bill No: {{SalesNo}} <span style="margin-left: 10px;">
+                                    Bill
+                                    Date:{{Date}}
+                                </span><br>
+                                Mode of Payment : {{PayMode}} <br>
+                            </td>
+                            <!-- </tr> -->
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="font-size:13px;">
+                    <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:5%;">
+                        Sr No.
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
+                        HSN
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 7%;">
+                        MFR
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">
+                        Product Name
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">
+                        Pack
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
+                        Batch No.
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
+                        ExpDate
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
+                        Qty
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">
+                        MRP
+                    </td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">
+                        Amount
+                    </td>
+                </tr>
+                {{Items}}
+                <tr>
+                    <td colspan="7" style="border: 1px solid black;vertical-align: top;
+                padding: 0 10px 10px;">
+                        <div style="font-weight: 400;font-size:20px">Terms & Conditions</div>
+                        <ul style="margin: 5px 0 0 0;
+                    font-size: 12px;
+                    padding-left: 17px;
+                    font-weight: 400;">
+                            <li>
+                                Please check the item before leaving medical.
+                            </li>
+                            <li>
+                                Please consult your doctor before consuming the medicine
+                            </li>
+                            <li>
+                                All disputes are subject to Vijayapura jurisdiction only
+                            </li>
+                        </ul>
+                    </td>
+                    <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
+        </td> -->
+                    <td colspan="3" style="border: 1px solid black;vertical-align: top;
+                padding: 5px 1px 5px 0;font-size:18px;">
+                        <div style="margin-left:140px;">
+                            <span style="width:90px;display:inline-block;">Sub Total</span>
+                            <span style="margin:0 2px">:</span>
+                            <span>₹ {{HTotalAmount}}</span>
+                        </div>
+                        <div style="margin-left:140px; ">
+                            <span style="width:90px;display:inline-block;">Discount</span>
+                            <span style="margin:0 2px">:</span>
+                            <span>₹ {{DiscAmount}}</span>
+                        </div>
+                        <div style="margin-left:140px; ">
+                            <span style="width:90px;display:inline-block;">Total GST</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{TotalGST}}</span>
+                        </div>
+                        <div style="margin-left:140px; ">
+                            <span style="width:90px;display:inline-block;">Round off</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ 0.00</span>
+                        </div>
+                        <div style="margin-left:90px; font-size: 18px; font-weight: bold ">
+                            <span style="width: 110px; display: inline-block;">Grand Total</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{NetAmount}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- <tr>
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            <div style="font-size: 15px;font-weight: bold">
+                Your Saved Amount: {{DiscAmount}}
+            </div>
+        </td>
+        <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
+        padding: 5px 10px;text-align: center;">
+
+            <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
+        </td>
+    </tr> -->
+                <!-- <tr>
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            Total Invoice Value in words:
+        </td>
+    </tr> -->
+                <tr style="font-size: 14px;">
+                    <td colspan="3">
+                        Billed By: {{UserName}}
+                    </td>
+                    <td colspan="10" style="text-align: right;font-size:14px;">
+                        This is Computer generated invoice hence doesn’t require signature
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- <div style="font-style: italic; opacity:.6;text-align: center;font-size: 10px; margin-top: 15px;">
+            This is Computer generated invoice hence doesn’t require signature
+        </div> -->
+    </div>
+</body>
+</html>

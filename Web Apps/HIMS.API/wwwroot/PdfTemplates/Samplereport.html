@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                <tr class="top-header-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 16px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <span>
+                                        <img src="jss-hospitals.jpeg" alt="logo" width="180">
+                                    </span>
+                                </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tbody style="text-align: center;">
+                                            <tr>
+                                                <td style="font-size: 20px; padding: 0px; font-weight: 600; padding: 0px;"> JNANAYOGI SHRI SIDDESHWAR SUPER SPECIALTY HOSPITAL </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 15px; padding: 0px;">(A UNIT OF SHRI SIDDESHWAR LOKA KALYANA CHARITABLE TRUST)</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 13px; padding: 0px; ">
+                                                    <span> Survey No.10/4, Near S-Hyper Mart, Vijayapur - 586 101 </span> <br>
+                                                    <span> Call :- 08352-249399 | info@jsshospitals.com | www.jsshospitals.com | Reg. No :- BIJ00467ALSSH </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>PHARMACY COLLECTION SUMMARY</b> </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <i style="font-size: 16px;"> From Date : {{FromDate}} -- To Date : {{ToDate}} UserName {{UserName}} </i>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-size: 16px;"> {{items}}</span>
+                                </td>
+                            </tr> -->
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="font-size: 15px; text-align: center;">
+                                <tr>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Bill Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Disc Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Net Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Bal Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Paid Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Cash Pay</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Card Amt</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Cheque PAY</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">NEFT PAY</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">UPI PAY</th>
+                                    <th style="border: 1px solid #d4c3c3; padding: 6px;">Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 14px;">
+                                <tr>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">1</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 200</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 20</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 180</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 0</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 180</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 100</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 50</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 0</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 20</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 10</td>
+                                    <td style="text-align: center; border: 1px solid #d4c3c3; padding: 6px;">₹ 180</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 15px;">
+                                        <span><b>Total Collection = ₹ {{F_TotalColl}}</b></span>
+                                        <span style="font-size: 11px;"> (Cash + Card + Cheque + NEFT + Onine Pay ) </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="denomination-table-row">
+                    <td style="padding: 6px;">
+                        <table style="text-align:center; border-collapse: collapse; width: 100%;">
+                            <thead style="font-size: 18px;">
+                                <tr>
+                                    <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;" colspan="2">
+                                        <h4 style="margin: 8px 0px;">Denomination </h4>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 16px;">
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 500 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 200 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 100 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 50 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 20 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 10 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 5 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 2 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> 1 X</td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"> <b>Total</b></td>
+                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- <tr class="signature-line-row">
+                    <td style="padding: 6px; text-align: center; font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                </tr> -->
+                <!-- <tr class="footer-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tbody style="font-size: 14px;">
+                                <tr>
+                                    <td style="padding: 6px; text-align: left;">
+                                        {{AddedByName}} <br> Added By
+                                    </td>
+                                    <td style="padding: 6px; text-align: center;">
+                                        {{CheckedBy}} <br> Checked By
+                                    </td>
+                                    <td style="padding: 6px; text-align: right;">
+                                        {{UserName}} <br> Authorized Signature
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr> -->
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

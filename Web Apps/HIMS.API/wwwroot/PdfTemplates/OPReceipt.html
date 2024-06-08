@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                <tr class="top-header-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            {{NewHeader}}
+                        </table>
+                    </td>
+                </tr>
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> RECEIPT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Receipt No : </span>
+                                    <span>{{ReceiptNo}}</span>
+                                </td>
+
+
+                                <td style="padding: 2px;">
+                                    <span>Reg No : </span>
+                                    <span>{{RegId}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span> Date : </span>
+                                    <span> {{PaymentTime}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Received With Thanks From : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                             
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Cash Amount: </span>
+                                    <span>{{CashPayAmount}}</span>
+                                </td>
+                             
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Remark : </span>
+                                    <span> {{Remark}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+        
+                <tr>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+                        <tr class="payment-info-row">
+                            <td style="padding: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td>Total Amount in words :-{{finalamt}}</td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{UserName}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+                           
+                            <td>
+
+                                <span>Cashier</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -17,6 +17,8 @@ using HIMS.Core.Utilities;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using WkHtmlToPdfDotNet.Contracts;
+using WkHtmlToPdfDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -96,8 +98,7 @@ builder.Services.AddAuthentication(auth =>
         ValidateAudience = false
     };
 });
-
-
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API.Project", Version = "v1" });
