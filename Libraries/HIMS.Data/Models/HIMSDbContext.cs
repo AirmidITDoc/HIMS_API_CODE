@@ -1114,6 +1114,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCounterName).HasMaxLength(100);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Prefix).HasMaxLength(50);
             });
 
@@ -1378,7 +1382,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("DB_GenderMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DbPrefixMaster>(entity =>
@@ -1389,6 +1397,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("DB_PrefixMaster");
 
                 entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PrefixName).HasMaxLength(100);
 
@@ -6875,6 +6887,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.LinkAction).HasMaxLength(250);
 
                 entity.Property(e => e.LinkName).HasMaxLength(250);
+
+                entity.Property(e => e.PermissionCode).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MisIpgroWiseTot>(entity =>
@@ -12097,6 +12111,11 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.TSalesDetails)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK_T_SalesDetails_T_SalesHeader");
             });
 
             modelBuilder.Entity<TSalesDraftDet>(entity =>
@@ -12208,6 +12227,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DiscperH).HasColumnName("Discper_H");
 
                 entity.Property(e => e.DoctorName).HasMaxLength(200);
+
+                entity.Property(e => e.ExtAddress).HasMaxLength(200);
 
                 entity.Property(e => e.ExtMobileNo).HasMaxLength(11);
 

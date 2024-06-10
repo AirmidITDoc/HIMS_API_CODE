@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> post(CashCounterModel obj)
         {
             CashCounter model = obj.MapTo<CashCounter>();
-            model.IsActive = 1;
+            model.IsActive = true;
             if (obj.CashCounterId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Edit(CashCounterModel obj)
         {
             CashCounter model = obj.MapTo<CashCounter>();
-            model.IsActive = 1;
+            model.IsActive = true;
             if (obj.CashCounterId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters
             CashCounter model = await _repository.GetById(x => x.CashCounterId == Id);
             if ((model?.CashCounterId ?? 0) > 0)
             {
-                model.IsActive = 2;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

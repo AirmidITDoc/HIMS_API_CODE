@@ -53,6 +53,7 @@ namespace HIMS.Data.Models
         public string? RegNo { get; set; }
         public string? ExtMobileNo { get; set; }
         public decimal? RoundOff { get; set; }
+        public string? ExtAddress { get; set; }
 
         public virtual ICollection<TSalesDetail> TSalesDetails { get; set; }
     }
