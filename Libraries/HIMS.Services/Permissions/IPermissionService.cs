@@ -9,6 +9,6 @@ namespace HIMS.Services.Permissions
 {
     public partial interface IPermissionService
     {
-        Task<List<PageMaster>> GetAllModules(long RoleId);
+        Task<List<PageMasterDto>> GetAllModules(long RoleId);
     }
 }

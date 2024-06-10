@@ -18,14 +18,13 @@ namespace HIMS.Services.Permissions
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<List<PageMaster>> GetAllModules(long RoleId)
+        public virtual async Task<List<PageMasterDto>> GetAllModules(long RoleId)
         {
-            var query = from PM in _context.PageMasters
-                        join M in _context.ModuleMasters on PM.ModuleId equals M.Id
+            var query = from M in _context.MenuMasters
                         join P in _context.PermissionMasters on
                         new
                         {
-                            Key1 = PM.Id,
+                            Key1 = M.Id,
                             Key2 = true
                         }
                         equals
@@ -36,15 +35,12 @@ namespace HIMS.Services.Permissions
                         } into tmpPermission
                         from P in tmpPermission.DefaultIfEmpty()
                         where M.IsActive == true
-                            && PM.IsActive == true
+                            && M.IsActive == true
                         orderby M.Id
-                        select new PageMaster()
+                        select new PageMasterDto()
                         {
-                            ModuleName = M.ModuleName,
-                            Id = PM.Id,
-                            PageName = PM.PageName,
-                            PageCode = PM.PageCode,
-                            ModuleId = PM.ModuleId,
+                            PageName = M.LinkName,
+                            PageCode = M.PermissionCode,
                             RoleId = RoleId,
                             IsAdd = P.IsAdd,
                             IsDelete = P.IsDelete,

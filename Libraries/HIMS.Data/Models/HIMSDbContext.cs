@@ -267,7 +267,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MisOpdocRevTot> MisOpdocRevTots { get; set; } = null!;
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisPharmacySale> MisPharmacySales { get; set; } = null!;
-        public virtual DbSet<ModuleMaster> ModuleMasters { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
@@ -278,7 +277,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<OpsmsqueryTempleteSm> OpsmsqueryTempleteSms { get; set; } = null!;
         public virtual DbSet<Otcharge> Otcharges { get; set; } = null!;
         public virtual DbSet<Otdetail> Otdetails { get; set; } = null!;
-        public virtual DbSet<PageMaster> PageMasters { get; set; } = null!;
         public virtual DbSet<PatientTypeMaster> PatientTypeMasters { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentPharmacy> PaymentPharmacies { get; set; } = null!;
@@ -7173,13 +7171,6 @@ namespace HIMS.Data.Models
                     .HasDefaultValueSql("((0))");
             });
 
-            modelBuilder.Entity<ModuleMaster>(entity =>
-            {
-                entity.ToTable("ModuleMaster");
-
-                entity.Property(e => e.ModuleName).HasMaxLength(250);
-            });
-
             modelBuilder.Entity<NeroOtdetail>(entity =>
             {
                 entity.HasNoKey();
@@ -7479,17 +7470,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TheaterName).HasMaxLength(50);
 
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<PageMaster>(entity =>
-            {
-                entity.ToTable("PageMaster");
-
-                entity.Property(e => e.PageCode).HasMaxLength(250);
-
-                entity.Property(e => e.PageName).HasMaxLength(250);
-
-                entity.Property(e => e.TableNames).HasMaxLength(250);
             });
 
             modelBuilder.Entity<PatientTypeMaster>(entity =>
