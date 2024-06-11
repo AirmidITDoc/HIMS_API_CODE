@@ -58,6 +58,28 @@ namespace HIMS.Data.Infrastructure
                         break;
                     }
                 #endregion
+
+                #region :: OPVisit ::
+                case "OPVisit":
+                    {
+                        sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi";
+                        para = new SqlParameter[] {
+                            new SqlParameter { ParameterName = "@F_Name", SqlDbType = SqlDbType.NVarChar, Direction = ParameterDirection.Input, Value = model.ToStoreId},
+                            new SqlParameter { ParameterName = "@L_Name", SqlDbType = SqlDbType.NVarChar, Direction = ParameterDirection.Input, Value = model.ToStoreId},
+                            new SqlParameter { ParameterName = "@Reg_No", SqlDbType = SqlDbType.BigInt, Direction = ParameterDirection.Input, Value = model.ToStoreId},
+                            new SqlParameter { ParameterName = "@Doctor_Id", SqlDbType = SqlDbType.BigInt, Direction = ParameterDirection.Input, Value = model.ToStoreId},
+                            new SqlParameter { ParameterName = "@From_Dt", SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input, Value = model.From_Dt},
+                            new SqlParameter { ParameterName = "@To_Dt", SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input, Value = model.To_Dt},
+                            new SqlParameter { ParameterName = "@IsMark", SqlDbType = SqlDbType.TinyInt, Direction = ParameterDirection.Input, Value = model.IsVerify},
+                            new SqlParameter { ParameterName = "@Start", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input, Value = model.Start},
+                            new SqlParameter { ParameterName = "@Length", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input, Value = model.Length },
+                            new SqlParameter { ParameterName = "@Sort", SqlDbType = SqlDbType.NVarChar, Direction = ParameterDirection.Input, Value = model.Sort},
+                            new SqlParameter { ParameterName = "@Order", SqlDbType = SqlDbType.NVarChar, Direction = ParameterDirection.Input, Value = model.Order}
+                        };
+
+                        break;
+                    }
+                #endregion
                 default:
                     break;
             }

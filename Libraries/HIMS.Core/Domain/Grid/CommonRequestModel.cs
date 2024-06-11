@@ -11,6 +11,9 @@ namespace HIMS.Core.Domain.Grid
         public string? IsVerify { get; set; }
         public int? Length { get; set; }
         public int? Start { get; set; }
+        public int? Sort { get; set; }
+        public int? Order { get; set; }
+
     }
 
     public class ReportRequestModel
@@ -44,6 +47,10 @@ namespace HIMS.Core.Domain.Grid
         public int? DoctorId { get; set; }
         public int? WardId { get; set; }
         public int? AdmissionId { get; set; }
+        public string? F_Name { get; set; }
+        public string? L_Name { get; set; }
+        public string? Reg_No { get; set; }
+
     }
     public class CommonFileResponseModel
     {
