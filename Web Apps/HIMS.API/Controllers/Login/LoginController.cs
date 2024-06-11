@@ -60,6 +60,7 @@ namespace HIMS.API.Controllers.Login
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
                     {
                         user.UserToken,
+                        user.WebRoleId,
                         Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
                         Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 30, permissionString),
                         UserName = user.FirstName + " " + user.LastName,
