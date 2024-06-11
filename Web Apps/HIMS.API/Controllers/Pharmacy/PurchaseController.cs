@@ -23,8 +23,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseService = repository;
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Purchase", Permission = PagePermission.Add)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -42,7 +41,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Purchase", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -59,8 +58,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Purchase", Permission = PagePermission.Edit)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PurchaseVerifyModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();

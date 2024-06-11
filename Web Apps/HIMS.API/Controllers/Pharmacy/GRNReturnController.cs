@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -42,8 +42,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnDetail model = obj.MapTo<TGrnreturnDetail>();
