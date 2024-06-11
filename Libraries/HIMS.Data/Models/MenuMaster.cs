@@ -18,6 +18,8 @@ namespace HIMS.Data.Models
         public double? SortOrder { get; set; }
         public bool IsActive { get; set; }
         public bool IsDisplay { get; set; }
+        public string? PermissionCode { get; set; }
+        public string? TableNames { get; set; }
 
         public virtual ICollection<PermissionMaster> PermissionMasters { get; set; }
     }

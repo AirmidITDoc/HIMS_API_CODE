@@ -267,7 +267,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MisOpdocRevTot> MisOpdocRevTots { get; set; } = null!;
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisPharmacySale> MisPharmacySales { get; set; } = null!;
-        public virtual DbSet<ModuleMaster> ModuleMasters { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
@@ -278,7 +277,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<OpsmsqueryTempleteSm> OpsmsqueryTempleteSms { get; set; } = null!;
         public virtual DbSet<Otcharge> Otcharges { get; set; } = null!;
         public virtual DbSet<Otdetail> Otdetails { get; set; } = null!;
-        public virtual DbSet<PageMaster> PageMasters { get; set; } = null!;
         public virtual DbSet<PatientTypeMaster> PatientTypeMasters { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentPharmacy> PaymentPharmacies { get; set; } = null!;
@@ -1114,6 +1112,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCounterName).HasMaxLength(100);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Prefix).HasMaxLength(50);
             });
 
@@ -1378,7 +1380,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("DB_GenderMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DbPrefixMaster>(entity =>
@@ -1389,6 +1395,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("DB_PrefixMaster");
 
                 entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PrefixName).HasMaxLength(100);
 
@@ -6875,6 +6885,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.LinkAction).HasMaxLength(250);
 
                 entity.Property(e => e.LinkName).HasMaxLength(250);
+
+                entity.Property(e => e.PermissionCode).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MisIpgroWiseTot>(entity =>
@@ -7157,13 +7169,6 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasColumnName("SRTotalAmount")
                     .HasDefaultValueSql("((0))");
-            });
-
-            modelBuilder.Entity<ModuleMaster>(entity =>
-            {
-                entity.ToTable("ModuleMaster");
-
-                entity.Property(e => e.ModuleName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<NeroOtdetail>(entity =>
@@ -7465,17 +7470,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TheaterName).HasMaxLength(50);
 
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<PageMaster>(entity =>
-            {
-                entity.ToTable("PageMaster");
-
-                entity.Property(e => e.PageCode).HasMaxLength(250);
-
-                entity.Property(e => e.PageName).HasMaxLength(250);
-
-                entity.Property(e => e.TableNames).HasMaxLength(250);
             });
 
             modelBuilder.Entity<PatientTypeMaster>(entity =>
@@ -12097,6 +12091,11 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.TSalesDetails)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK_T_SalesDetails_T_SalesHeader");
             });
 
             modelBuilder.Entity<TSalesDraftDet>(entity =>
@@ -12208,6 +12207,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DiscperH).HasColumnName("Discper_H");
 
                 entity.Property(e => e.DoctorName).HasMaxLength(200);
+
+                entity.Property(e => e.ExtAddress).HasMaxLength(200);
 
                 entity.Property(e => e.ExtMobileNo).HasMaxLength(11);
 

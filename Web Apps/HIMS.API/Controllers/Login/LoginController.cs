@@ -47,25 +47,25 @@ namespace HIMS.API.Controllers.Login
             {
                 //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
                 //{
-                    LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
-                    if (user == null)
+                LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
+                if (user == null)
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+                }
+                else
+                {
+                    user.UserToken = Guid.NewGuid().ToString();
+                    await _userService.UpdateAsync(user, 0, "");
+                    (var permissionString, var permissions) = await GetPermissions(user.RoleId.Value);
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
                     {
-                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
-                    }
-                    else
-                    {
-                        user.UserToken = Guid.NewGuid().ToString();
-                        await _userService.UpdateAsync(user, 0, "");
-                        (var permissionString, var permissions) = await GetPermissions(user.RoleId.Value);
-                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
-                        {
-                            user.UserToken,
-                            Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
-                            Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 30, permissionString),
-                            UserName = user.FirstName + " " + user.LastName,
-                            user.UserId
-                        });
-                    }
+                        user.UserToken,
+                        Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
+                        Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 30, permissionString),
+                        UserName = user.FirstName + " " + user.LastName,
+                        user.UserId
+                    });
+                }
                 //}
                 //else
                 //{
@@ -74,11 +74,11 @@ namespace HIMS.API.Controllers.Login
             }
         }
         [NonAction]
-        public async Task<(string menuHideString, List<PageMaster> permissions)> GetPermissions(long RoleId)
+        public async Task<(string menuHideString, List<PageMasterDto> permissions)> GetPermissions(long RoleId)
         {
-            List<PageMaster> permissions = await _IPermissionService.GetAllModules(RoleId);
+            List<PageMasterDto> permissions = await _IPermissionService.GetAllModules(RoleId);
             StringBuilder permissionString = new();
-            foreach (PageMaster objPage in permissions)
+            foreach (PageMasterDto objPage in permissions)
             {
                 permissionString.Append(objPage.PageCode).Append('|').Append(objPage.IsAdd ? 1 : 0).Append('|').Append(objPage.IsEdit ? 1 : 0).Append('|').Append(objPage.IsDelete ? 1 : 0).Append('|').Append(objPage.IsView ? 1 : 0).Append(',');
             }

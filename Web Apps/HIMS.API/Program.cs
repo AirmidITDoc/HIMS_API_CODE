@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet;
+using Aspose.Cells.Charts;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -132,31 +133,31 @@ builder.Services.AddSwaggerGen(c =>
 string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "corspolicy",
-                      builder =>
-                      {
-                          builder
-                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")//.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .WithExposedHeaders("Content-Disposition");
-                      });
-    /*options.AddPolicy(name: "dev_corspolicy",
-                      builder =>
-                      {
-                          builder
-                          .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")//.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader();
-                      });*/
+    //options.AddPolicy(name: "corspolicy",
+    //                  builder =>
+    //                  {
+    //                      builder
+    //                      //.WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+    //                      .AllowAnyOrigin()
+    //                      .AllowAnyMethod()
+    //                      .AllowAnyHeader();
+    //                  });
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        //.AllowCredentials()
+        );
+});
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint(Configuration["SwaggerUrl"], "API v1"));
 
 app.UseAuthentication();
-
+app.UseCors("CorsPolicy");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseRouting();

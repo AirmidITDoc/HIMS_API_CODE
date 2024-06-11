@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> post(GenderModel obj)
         {
             DbGenderMaster model = obj.MapTo<DbGenderMaster>();
-            model.IsActive = 1;
+            model.IsActive = true;
             if (obj.GenderId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Edit(GenderModel obj)
         {
             DbGenderMaster model = obj.MapTo<DbGenderMaster>();
-            model.IsActive = 1;
+            model.IsActive = true;
             if (obj.GenderId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters
             DbGenderMaster model = await _repository.GetById(x => x.GenderId == Id);
             if ((model?.GenderId ?? 0) > 0)
             {
-                model.IsActive = 2;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

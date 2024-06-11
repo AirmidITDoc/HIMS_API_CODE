@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.Models
 {
-    public partial class PageMaster
+    public class PageMasterDto
     {
-        public string ModuleName { get; set; }
+        public string PageName { get; set; }
+        public string PageCode { get; set; }
         public long RoleId { get; set; }
         public bool IsAdd { get; set; }
         public bool IsDelete { get; set; }
