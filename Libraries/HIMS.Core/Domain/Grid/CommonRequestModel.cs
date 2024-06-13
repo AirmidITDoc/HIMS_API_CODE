@@ -4,17 +4,12 @@ namespace HIMS.Core.Domain.Grid
 {
     public class ListRequestModel
     {
-        public DateTime? From_Dt { get; set; }
-        public DateTime? To_Dt { get; set; }
-        public long? Supplier_Id { get; set; }
-        public long? ToStoreId { get; set; }
-        public string? IsVerify { get; set; }
-        public int? Length { get; set; }
-        public int? Start { get; set; }
-        public int? Sort { get; set; }
-        public int? Order { get; set; }
-
-    }
+        //public SortingField SortingField { get; set; } = new SortingField();
+        //public int PageNumber { get; set; } = 1;
+        //public int PageSize { get; set; } = 10;
+        public List<SearchFields> SearchFields { get; set; } = new List<SearchFields>();
+        public string? mode { get; set; }
+      }
 
     public class ReportRequestModel
     {
@@ -26,6 +21,11 @@ namespace HIMS.Core.Domain.Grid
         public string storageBaseUrl { get; set; } = string.Empty;
     }
 
+    public class SortingField
+    {
+        public string FieldName { get; set; }
+        public string Direction { get; set; }
+    }
     public class SearchFields
     {
         public string FieldName { get; set; }

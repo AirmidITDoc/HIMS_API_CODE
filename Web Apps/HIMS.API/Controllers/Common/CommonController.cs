@@ -19,11 +19,10 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPost]
-        [Route("{mode}")]
-        public ApiResponse GetByProc(string mode, ListRequestModel model)
+        public ApiResponse GetByProc(ListRequestModel model)
         {
-            dynamic resultList = _ICommonService.GetDataSetByProc(mode, model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, mode+ " List.", (dynamic)resultList);
+            dynamic resultList = _ICommonService.GetDataSetByProc(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", (dynamic)resultList);
         }
     }
 }

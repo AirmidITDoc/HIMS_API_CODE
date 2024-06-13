@@ -11,6 +11,6 @@ namespace HIMS.Services.Common
 {
     public partial interface ICommonService
     {
-        dynamic GetDataSetByProc(string mode, ListRequestModel model);
+        dynamic GetDataSetByProc(ListRequestModel model);
     }
 }

@@ -2,7 +2,6 @@
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
-using HIMS.Data.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.Pharmacy;
