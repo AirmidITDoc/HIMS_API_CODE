@@ -38,20 +38,6 @@ namespace HIMS.Core.Domain.Grid
         public string? FieldValueString { get; set; }
         public string? FieldOperator { get; set; }
     }
-
-    public class CommonReportModel
-    {
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
-        public string? BillNo { get; set; }
-        public int? DoctorId { get; set; }
-        public int? WardId { get; set; }
-        public int? AdmissionId { get; set; }
-        public string? F_Name { get; set; }
-        public string? L_Name { get; set; }
-        public string? Reg_No { get; set; }
-
-    }
     public class CommonFileResponseModel
     {
         public string? htmlFilePath { get; set; }

@@ -34,7 +34,6 @@ namespace HIMS.Services.Report
 
         public string GetReportSetByProc(ReportRequestModel model)
         {
-            CommonReportModel commonReportModel = new CommonReportModel();
             string byteFile = string.Empty;
 
             switch (model.mode)
@@ -46,10 +45,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewRegistrationReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewRegistrationReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "RegistrationReport", "RegistrationReport", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -64,10 +63,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewOPAppointmentListReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewOPAppointmentListReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "AppointmentListReport", "AppointmentListReport",  Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -82,10 +81,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewDoctorWiseVisitReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewDoctorWiseVisitReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DoctorWiseVisitReport", "DoctorWiseVisitReport", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -100,10 +99,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewRefDoctorWiseReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewRefDoctorWiseReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "RefDoctorWiseReport", "RefDoctorWiseReport", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -117,10 +116,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewDepartmentWisecountSummury(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewDepartmentWisecountSummury(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentWiseCountSummury", "DepartmentWiseCountSummury", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -134,10 +133,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewOPDoctorWiseVisitCountSummary(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewOPDoctorWiseVisitCountSummary(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPDoctorWiseVisitCountSummary", "OPDoctorWiseVisitCountSummary", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -151,10 +150,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewOPAppoinmentListWithServiseAvailed(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewOPAppoinmentListWithServiseAvailed(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPAppoinmentListWithServiseAvailed", "OPAppoinmentListWithServiseAvailed", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -168,10 +167,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewCrossConsultationReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewCrossConsultationReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "CrossConsultationReport", "CrossConsultationReport", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
@@ -185,10 +184,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         List<SearchModel> fields = SearchFieldExtension.GetSearchFields(model.SearchFields);
 
-                        commonReportModel.FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
-                        commonReportModel.ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
+                        DateTime FromDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValueString);
+                        DateTime ToDate = Convert.ToDateTime(fields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValueString);
 
-                        var html = _OPbilling.ViewOPDoctorWiseNewOldPatientReport(commonReportModel.FromDate, commonReportModel.ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
+                        var html = _OPbilling.ViewOPDoctorWiseNewOldPatientReport(FromDate, ToDate, htmlFilePath, _pdfUtility.GetHeader(htmlHeaderFilePath, model.baseUrl));
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPDoctorWiseNewAndOldPatientReport", "OPDoctorWiseNewAndOldPatientReport", Orientation.Portrait);
                         byteFile = Convert.ToBase64String(tuple.Item1);
                         break;
