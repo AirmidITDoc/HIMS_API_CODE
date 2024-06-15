@@ -257,7 +257,7 @@ namespace HIMS.API.Extensions
                    new Claim("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
                    new Claim("UserToken",EncryptionUtility.EncryptText(user.UserToken,SecurityKeys.EnDeKey)),
                    new Claim("Permissions",EncryptionUtility.EncryptText(permissions,SecurityKeys.EnDeKey)),
-                   new Claim("RoleId", EncryptionUtility.EncryptText(user.RoleId.Value.ToString(),SecurityKeys.EnDeKey)),
+                   new Claim("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
                    new Claim("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
                    new Claim("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey))
                 }),

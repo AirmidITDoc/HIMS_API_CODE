@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
@@ -6,6 +7,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,16 +21,18 @@ namespace HIMS.API.Controllers.Login
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class LoginController : ControllerBase
+    public class LoginController : BaseController
     {
         protected readonly IUserService _userService;
         private readonly IConfiguration _Configuration;
         private readonly IPermissionService _IPermissionService;
-        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission)
+        private readonly IMenuService _IMenuService;
+        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService)
         {
             _userService = userService;
             _Configuration = configuration;
             _IPermissionService = permission;
+            _IMenuService = iMenuService;
         }
         [HttpPost]
         [Route("[action]")]
@@ -56,7 +60,7 @@ namespace HIMS.API.Controllers.Login
                 {
                     user.UserToken = Guid.NewGuid().ToString();
                     await _userService.UpdateAsync(user, 0, "");
-                    (var permissionString, var permissions) = await GetPermissions(user.RoleId.Value);
+                    (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
                     {
                         user.UserToken,
@@ -114,5 +118,14 @@ namespace HIMS.API.Controllers.Login
             return CaptchaCode == decrypt[0] && Convert.ToDateTime(decrypt[1]).AddMinutes(2) >= DateTime.Now;
         }
 
+
+        [HttpGet]
+        [Route("get-menus")]
+        [Permission]
+        public ActionResult GetMenus()
+        {
+            //return Ok(PrepareMenu(RoleId, true));
+            return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
+        }
     }
 }

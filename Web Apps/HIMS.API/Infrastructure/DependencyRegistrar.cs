@@ -12,6 +12,8 @@ using HIMS.Services.Common;
 using HIMS.Services.Report;
 using HIMS.Services.Report.OPReports;
 using HIMS.Services.Utilities;
+using WkHtmlToPdfDotNet.Contracts;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.API.Infrastructure
 {
@@ -30,6 +32,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<ISalesService, SalesService>();
             services.AddScoped<IPurchaseService, PurchaseService>();
