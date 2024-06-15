@@ -18,4 +18,26 @@ namespace HIMS.Data.Models
         public int PermissionId { get; set; }
         public bool PageType { get; set; }
     }
+    public partial class MenuMaster
+    {
+        public int RoleId { get; set; }
+        public bool IsView { get; set; }
+        public bool IsAdd { get; set; }
+        public bool IsEdit { get; set; }
+        public bool IsDelete { get; set; }
+    }
+    public class MenuModel
+    {
+        public string id { get; set; }
+        public string title { get; set; }
+        public string translate { get; set; }
+        public string type { get; set; }
+        public string icon { get; set; }
+        public string url { get; set; }
+        public bool IsView { get; set; }
+        public bool IsAdd { get; set; }
+        public bool IsEdit { get; set; }
+        public bool IsDelete { get; set; }
+        public List<MenuModel> children { get; set; }
+    }
 }
