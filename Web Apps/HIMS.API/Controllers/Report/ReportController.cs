@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.Report;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Security;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -52,19 +54,78 @@ namespace HIMS.API.Controllers.Report
             return Ok(UserList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("DoctorList")]
-        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> DoctorList(GridRequestModel objGrid)
         {
             IPagedList<DoctorMaster> DoctorList = await _doctorRepository.GetAllPagedAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor List"));
         }
         [HttpPost("ViewReport")]
-        public ApiResponse ViewReport(ReportRequestModel model)
+        public IActionResult ViewReport(ReportRequestModel model)
         {
+            switch (model.mode)
+            {
+                case "RegistrationReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "AppointmentListReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "DoctorWiseVisitReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "RefDoctorWiseReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "DepartmentWisecountSummury":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "OPDoctorWiseVisitCountSummary":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "OPAppoinmentListWithServiseAvailed":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "CrossConsultationReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                case "OPDoctorWiseNewOldPatientReport":
+                    {
+                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                default:
+                    break;
+            }
             model.baseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.storageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetReportSetByProc(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile });
+            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
     }
 }
