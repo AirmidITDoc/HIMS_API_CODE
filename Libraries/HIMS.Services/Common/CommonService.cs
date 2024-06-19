@@ -36,6 +36,8 @@ namespace HIMS.Services.Common
                 case "PurchaseOrder": sp_Name = "m_Rtrv_PurchaseOrderList_by_Name_Pagn"; break;
                 case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
                 case "OPVisit": sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi"; break;
+                // Check for Dashboard API
+                case "DailyDashboardSummary": sp_Name = "rptOP_DepartmentChart_Range"; break;
                 default: break;
             }
             foreach (var property in fields)

@@ -65,60 +65,23 @@ namespace HIMS.API.Controllers.Report
         {
             switch (model.mode)
             {
+                #region " OP Reports "
                 case "RegistrationReport":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "AppointmentListReport":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "DoctorWiseVisitReport":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "RefDoctorWiseReport":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "DepartmentWisecountSummury":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "OPDoctorWiseVisitCountSummary":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "OPAppoinmentListWithServiseAvailed":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "CrossConsultationReport":
-                    {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
-                            return Unauthorized("You don't have permission to access this report.");
-                        break;
-                    }
                 case "OPDoctorWiseNewOldPatientReport":
                     {
-                        if (!CommonExtensions.CheckPermission("", PagePermission.View))
+                        if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
                             return Unauthorized("You don't have permission to access this report.");
                         break;
                     }
+                #endregion
+
                 default:
                     break;
             }

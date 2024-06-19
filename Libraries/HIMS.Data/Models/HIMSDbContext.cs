@@ -262,11 +262,14 @@ namespace HIMS.Data.Models
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
         public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
+        public virtual DbSet<MisBillDateWiseBillPaymentSummary> MisBillDateWiseBillPaymentSummaries { get; set; } = null!;
+        public virtual DbSet<MisDailyDashboardRecord> MisDailyDashboardRecords { get; set; } = null!;
         public virtual DbSet<MisIpgroWiseTot> MisIpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisOpdocPatCnt> MisOpdocPatCnts { get; set; } = null!;
         public virtual DbSet<MisOpdocRevTot> MisOpdocRevTots { get; set; } = null!;
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisPharmacySale> MisPharmacySales { get; set; } = null!;
+        public virtual DbSet<MisRefreshProcessLog> MisRefreshProcessLogs { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
@@ -297,6 +300,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SalesReturnAmt> SalesReturnAmts { get; set; } = null!;
         public virtual DbSet<SalesReturnGststoreWise> SalesReturnGststoreWises { get; set; } = null!;
         public virtual DbSet<SalesReturnGststoreWiseOpip> SalesReturnGststoreWiseOpips { get; set; } = null!;
+        public virtual DbSet<ScheduleMaster> ScheduleMasters { get; set; } = null!;
         public virtual DbSet<SerPer> SerPers { get; set; } = null!;
         public virtual DbSet<ServiceDetail> ServiceDetails { get; set; } = null!;
         public virtual DbSet<ServiceMaster> ServiceMasters { get; set; } = null!;
@@ -362,6 +366,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TEndoscopyBooking> TEndoscopyBookings { get; set; } = null!;
         public virtual DbSet<TEndoscopyNote> TEndoscopyNotes { get; set; } = null!;
         public virtual DbSet<TExpense> TExpenses { get; set; } = null!;
+        public virtual DbSet<TFavouriteUserList> TFavouriteUserLists { get; set; } = null!;
         public virtual DbSet<TFileLocation> TFileLocations { get; set; } = null!;
         public virtual DbSet<TGeneralSurgeryOtnote> TGeneralSurgeryOtnotes { get; set; } = null!;
         public virtual DbSet<TGrndetail> TGrndetails { get; set; } = null!;
@@ -6889,6 +6894,205 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PermissionCode).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<MisBillDateWiseBillPaymentSummary>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("MIS_BillDateWiseBillPaymentSummary");
+
+                entity.Property(e => e.BBilledPatientCount).HasColumnName("B_BilledPatientCount");
+
+                entity.Property(e => e.BNetBillAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_NetBillAmountSum");
+
+                entity.Property(e => e.BTotalBalanceAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalBalanceAmountSum");
+
+                entity.Property(e => e.BTotalBillAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalBillAmountSum");
+
+                entity.Property(e => e.BTotalConcessionAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalConcessionAmountSum");
+
+                entity.Property(e => e.BTotalDiscountAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalDiscountAmountSum");
+
+                entity.Property(e => e.BillDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdIpd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PBadDebitAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_BadDebitAmountSum");
+
+                entity.Property(e => e.PBillBalanceAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_BillBalanceAmountSum");
+
+                entity.Property(e => e.PCashPayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_CashPayAmountSum");
+
+                entity.Property(e => e.PChequePayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_ChequePayAmountSum");
+
+                entity.Property(e => e.PConcessionSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_ConcessionSum");
+
+                entity.Property(e => e.PCreditCardPayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_CreditCardPayAmountSum");
+
+                entity.Property(e => e.PDebitCardPayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_DebitCardPayAmountSum");
+
+                entity.Property(e => e.POnlinePayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_OnlinePayAmountSum");
+
+                entity.Property(e => e.PPatientAdvanceAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_PatientAdvanceAmountSum");
+
+                entity.Property(e => e.PRefundAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_RefundAmountSum");
+
+                entity.Property(e => e.PTotalPaidAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_TotalPaidAmountSum");
+
+                entity.Property(e => e.PUpipayAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("P_UPIPayAmountSum");
+
+                entity.Property(e => e.RecordInsertedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Process')");
+
+                entity.Property(e => e.RecordInsertedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.RecordUpdatedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Process')");
+
+                entity.Property(e => e.RecordUpdatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<MisDailyDashboardRecord>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("MIS_DailyDashboardRecords");
+
+                entity.Property(e => e.AdmDoctor).HasMaxLength(63);
+
+                entity.Property(e => e.AdmShare).HasColumnType("money");
+
+                entity.Property(e => e.AdmSharetotal).HasColumnType("money");
+
+                entity.Property(e => e.BBalanceBilledAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("B_BalanceBilledAmount");
+
+                entity.Property(e => e.BBilledPaidAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("B_BilledPaidAmount");
+
+                entity.Property(e => e.BBilledPatientCount).HasColumnName("B_BilledPatientCount");
+
+                entity.Property(e => e.BDistinctBilledPatientCount).HasColumnName("B_DistinctBilledPatientCount");
+
+                entity.Property(e => e.BTotalBillAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalBillAmountSum");
+
+                entity.Property(e => e.BTotalConcessionAmountSum)
+                    .HasColumnType("money")
+                    .HasColumnName("B_TotalConcessionAmountSum");
+
+                entity.Property(e => e.BillDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Company).HasMaxLength(150);
+
+                entity.Property(e => e.Country).HasMaxLength(50);
+
+                entity.Property(e => e.Department).HasMaxLength(50);
+
+                entity.Property(e => e.HospitalExpences).HasColumnType("money");
+
+                entity.Property(e => e.MedicineOperative)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("Medicine_Operative");
+
+                entity.Property(e => e.OpdIpd)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PackageActShare).HasColumnType("money");
+
+                entity.Property(e => e.PackageAdmShare)
+                    .HasColumnType("money")
+                    .HasColumnName("packageAdmShare");
+
+                entity.Property(e => e.PaidDoctorshare).HasColumnType("money");
+
+                entity.Property(e => e.PaidrefDoctorshare).HasColumnType("money");
+
+                entity.Property(e => e.PathoInHouse).HasColumnType("money");
+
+                entity.Property(e => e.PathoOutsource).HasColumnType("money");
+
+                entity.Property(e => e.PatientSource).HasMaxLength(50);
+
+                entity.Property(e => e.PharmaOt)
+                    .HasColumnType("money")
+                    .HasColumnName("PharmaOT");
+
+                entity.Property(e => e.RadioInHouse).HasColumnType("money");
+
+                entity.Property(e => e.RadioOutsource).HasColumnType("money");
+
+                entity.Property(e => e.RecordInsertedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Process')");
+
+                entity.Property(e => e.RecordInsertedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.RecordUpdatedBy)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Process')");
+
+                entity.Property(e => e.RecordUpdatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.RefDocName).HasMaxLength(250);
+
+                entity.Property(e => e.RefProcessedDate)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SurgeryName).HasMaxLength(200);
+            });
+
             modelBuilder.Entity<MisIpgroWiseTot>(entity =>
             {
                 entity.HasNoKey();
@@ -7169,6 +7373,29 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasColumnName("SRTotalAmount")
                     .HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<MisRefreshProcessLog>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("MIS_RefreshProcessLogs");
+
+                entity.Property(e => e.CurrTimeStamp)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ProcedureName).HasMaxLength(250);
+
+                entity.Property(e => e.ProcessName).HasMaxLength(500);
+
+                entity.Property(e => e.ProcessRunDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remark).HasColumnType("ntext");
+
+                entity.Property(e => e.Task).HasMaxLength(500);
+
+                entity.Property(e => e.TaskStage).HasMaxLength(50);
             });
 
             modelBuilder.Entity<NeroOtdetail>(entity =>
@@ -8030,6 +8257,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.TaxableAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<ScheduleMaster>(entity =>
+            {
+                entity.ToTable("ScheduleMaster");
+
+                entity.Property(e => e.Days).HasMaxLength(250);
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.ScheduleName).HasMaxLength(250);
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
             });
 
             modelBuilder.Entity<SerPer>(entity =>
@@ -9926,6 +10166,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PersonName).HasMaxLength(100);
 
                 entity.Property(e => e.VoucharNo).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TFavouriteUserList>(entity =>
+            {
+                entity.HasKey(e => e.FavouriteId);
+
+                entity.ToTable("T_FavouriteUserList");
             });
 
             modelBuilder.Entity<TFileLocation>(entity =>
