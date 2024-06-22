@@ -25,7 +25,7 @@ namespace HIMS.Services.Users
             DatabaseHelper sql=new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@RoleId", RoleId);
-            List<MenuMaster> lstMenu = sql.FetchListByQuery<MenuMaster>("SELECT M.*,P.IsView,P.IsAdd,P.IsEdit,P.IsDelete FROM MenuMaster M LEFT JOIN PermissionMaster P ON M.Id=P.MenuId AND P.RoleId=@RoleId\r\nWHERE IsActive=1 AND IsDisplay=1", para);
+            List<MenuMaster> lstMenu = sql.FetchListByQuery<MenuMaster>("SELECT M.Id,ISNULL(M.UpId,0) UpId,M.LinkName,M.Icon,M.LinkAction,M.SortOrder,M.IsActive,M.IsDisplay,M.PermissionCode,M.TableNames,P.IsView,P.IsAdd,P.IsEdit,P.IsDelete FROM MenuMaster M LEFT JOIN PermissionMaster P ON M.Id=P.MenuId AND P.RoleId=@RoleId\r\nWHERE IsActive=1 AND IsDisplay=1", para);
             return PrepareMenu(lstMenu, isActiveMenuOnly);
         }
         public List<MenuModel> PrepareMenu(List<MenuMaster> lstMenu, bool isActiveMenuOnly)
