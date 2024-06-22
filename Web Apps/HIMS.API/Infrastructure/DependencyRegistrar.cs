@@ -14,6 +14,7 @@ using HIMS.Services.Report.OPReports;
 using HIMS.Services.Utilities;
 using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet;
+using HIMS.Services.Masters;
 
 namespace HIMS.API.Infrastructure
 {
@@ -42,6 +43,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IOPBillingReport, OPBillingReport>();
             services.AddTransient<IPdfUtility, PdfUtility>();
+            services.AddScoped<IFavouriteService, FavouriteService>();
+
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

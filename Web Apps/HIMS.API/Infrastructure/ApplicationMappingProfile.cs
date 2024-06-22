@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pharmacy;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 
@@ -29,6 +30,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, GRNReturnCurrentStock>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TGrndetail, GRNReturnReturnQty>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ScheduleMaster, ScheduleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TFavouriteUserList, FavouriteDtoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<SearchFields, SearchGrid>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
 }

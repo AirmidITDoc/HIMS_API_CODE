@@ -31,4 +31,18 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.Query).NotNull().NotEmpty().WithMessage("Query is required");
         }
     }
+
+    public class FavouriteDtoModel
+    {
+        public int UserId { get; set; }
+        public int MenuId { get; set; }
+    }
+    public class FavouriteDtoModelValidator : AbstractValidator<FavouriteDtoModel>
+    {
+        public FavouriteDtoModelValidator()
+        {
+            RuleFor(x => x.UserId).NotNull().NotEmpty().WithMessage("User Id is required");
+            RuleFor(x => x.MenuId).NotNull().NotEmpty().WithMessage("Menu Id is required");
+        }
+    }
 }

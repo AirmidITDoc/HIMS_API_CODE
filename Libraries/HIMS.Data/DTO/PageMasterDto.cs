@@ -40,4 +40,13 @@ namespace HIMS.Data.Models
         public bool IsDelete { get; set; }
         public List<MenuModel> children { get; set; }
     }
+    public class FavouriteModel
+    {
+        public Int64 UserId { get; set; }
+        public string LinkName { get; set; }
+        public int MenuId { get; set; }
+        public string LinkAction { get; set; }
+        public string Icon { get; set; }
+        public bool IsFavourite { get; set; }
+    }
 }
