@@ -7705,6 +7705,10 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("PatientTypeMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PatientType).HasMaxLength(100);
             });
 

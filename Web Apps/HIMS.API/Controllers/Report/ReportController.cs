@@ -82,6 +82,7 @@ namespace HIMS.API.Controllers.Report
                     }
                 #endregion
 
+
                 default:
                     break;
             }
