@@ -1,7 +1,13 @@
 ﻿using HIMS.Data;
+using HIMS.Data.DataProviders;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -12,6 +18,49 @@ namespace HIMS.Services.Inventory
         public IndentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+
+        public virtual async Task InsertAsyncSP(TIndentHeader objIndent, int UserId, string Username)
+        {
+            try
+            {
+                // //Add header table records
+                DatabaseHelper odal = new();
+                //SqlParameter[] para = new SqlParameter[7];
+                //para[0] = new SqlParameter("@IndentDate", objIndent.IndentDate);
+                //para[1] = new SqlParameter("@IndentTime", objIndent.IndentTime);
+                //para[2] = new SqlParameter("@FromStoreId", objIndent.FromStoreId);
+                //para[3] = new SqlParameter("@ToStoreId", objIndent.ToStoreId);
+                //para[4] = new SqlParameter("@Addedby", objIndent.Addedby);
+                //para[5] = new SqlParameter("@Comments", objIndent.Comments);
+                //para[6] = new SqlParameter("@IndentId", SqlDbType.BigInt);
+                //para[6].Direction = ParameterDirection.Output;
+                //string indentNo = odal.ExecuteNonQuery("m_insert_IndentHeader_1", CommandType.StoredProcedure, "@IndentId", para);
+                //objIndent.IndentId = Convert.ToInt32(indentNo);
+
+                string[] rEntity = {"IndentNo","Isdeleted","Isverify","Isclosed","IsInchargeVerify","IsInchargeVerifyId","IsInchargeVerifyDate","TIndentDetails" };
+                var entity = objIndent.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                string indentNo = odal.ExecuteNonQuery("m_insert_IndentHeader_1", CommandType.StoredProcedure, "IndentId", entity);
+                objIndent.IndentId = Convert.ToInt32(indentNo);
+
+                // Add details table records
+                foreach (var objItem in objIndent.TIndentDetails)
+                {
+                    objItem.IndentId = objIndent.IndentId;
+                }
+                _context.TIndentDetails.AddRange(objIndent.TIndentDetails);
+                await _context.SaveChangesAsync(UserId, Username);
+            }
+            catch (Exception ex)
+            {
+                // Delete header table realted records
+                _context.TIndentHeaders.Remove(objIndent);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public virtual async Task InsertAsync(TIndentHeader objIndent, int UserId, string Username)
