@@ -12,5 +12,7 @@ namespace HIMS.Data.Models
         public bool? IsClosed { get; set; }
         public long? IndQty { get; set; }
         public long? IssQty { get; set; }
+
+        public virtual TIndentHeader? Indent { get; set; }
     }
 }

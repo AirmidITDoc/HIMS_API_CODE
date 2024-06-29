@@ -16,6 +16,7 @@ using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet;
 using HIMS.Services.Masters;
 using HIMS.Services.Dashboard;
+using HIMS.Services.Inventory;
 
 namespace HIMS.API.Infrastructure
 {
@@ -47,6 +48,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFavouriteService, FavouriteService>();
 
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IIndentService, IndentService>();
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();

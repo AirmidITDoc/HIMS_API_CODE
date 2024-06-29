@@ -10635,6 +10635,11 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_IndentDetails");
 
                 entity.Property(e => e.IsClosed).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Indent)
+                    .WithMany(p => p.TIndentDetails)
+                    .HasForeignKey(d => d.IndentId)
+                    .HasConstraintName("FK_T_IndentDetails_T_IndentHeader");
             });
 
             modelBuilder.Entity<TIndentHeader>(entity =>
