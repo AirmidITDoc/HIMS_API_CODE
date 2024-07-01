@@ -58,7 +58,18 @@ namespace HIMS.Services.Inventory
             catch (Exception ex)
             {
                 // Delete header table realted records
-                _context.TIndentHeaders.Remove(objIndent);
+                TIndentHeader objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
+                if (objInd != null)
+                {
+                    _context.TIndentHeaders.Remove(objInd);
+                }                
+
+                // Delete details table realted records
+                var lst = await _context.TIndentDetails.Where(x => x.IndentId == objIndent.IndentId).ToListAsync();
+                if(lst.Count() > 0)
+                {
+                    _context.TIndentDetails.RemoveRange(lst);
+                }
                 await _context.SaveChangesAsync();
             }
         }
