@@ -28,7 +28,7 @@ namespace HIMS.Services.Utilities
             return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
         }
 
-        public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath , string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait)
+        public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath , string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
             //var options = new ConvertOptions
             //{
@@ -67,8 +67,8 @@ namespace HIMS.Services.Utilities
             {
                 GlobalSettings = {
                     ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Portrait,
-                    PaperSize = PaperKind.A4,
+                    Orientation = PageOrientation,//Orientation.Portrait,
+                    PaperSize = PaperSize,//PaperKind.A4,
                 },
                 Objects = {
                     new ObjectSettings() {
