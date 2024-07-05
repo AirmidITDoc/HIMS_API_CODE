@@ -22,8 +22,6 @@ namespace HIMS.Services.OutPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
-            try
-            {
                 DatabaseHelper odal = new();
                 string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
                 var entity = objRegistration.ToDictionary();
@@ -31,22 +29,10 @@ namespace HIMS.Services.OutPatient
                 {
                     entity.Remove(rProperty);
                 }
-                entity.Remove("RegID");
-                string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegID", entity);
+                string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
 
                 await _context.SaveChangesAsync(UserId, Username);
-            }
-            catch (Exception ex)
-            {
-                // Delete header table realted records
-                Registration objReg = await _context.Registrations.FindAsync(objRegistration.RegId);
-                if (objReg != null)
-                {
-                    _context.Registrations.Remove(objReg);
-                }
-                await _context.SaveChangesAsync();
-            }
         }
 
     }

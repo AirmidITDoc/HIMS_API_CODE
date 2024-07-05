@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Insert(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
-            if (obj.RegID == 0)
+            if (obj.RegId == 0)
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
