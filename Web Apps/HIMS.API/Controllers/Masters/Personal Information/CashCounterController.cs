@@ -32,6 +32,11 @@ namespace HIMS.API.Controllers.Masters
             IPagedList<CashCounter> DocList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DocList.ToGridResponse(objGrid, "CashCounter List"));
         }
+        /// <summary>
+        /// get cash counter data.
+        /// </summary>
+        /// <param name="id">cash counter id</param>
+        /// <returns>return cash counter detail.</returns>
         [HttpGet("{id?}")]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
