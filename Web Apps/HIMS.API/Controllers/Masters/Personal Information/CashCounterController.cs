@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Masters
         /// For save data with validation 
         /// </summary>
         /// <param name="obj">Cash counter params</param>
-        /// <returns>200 for success</returns>
+        /// <returns>200 for success.</returns>
         [HttpPost]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.Add)]
         public async Task<ApiResponse> post(CashCounterModel obj)
