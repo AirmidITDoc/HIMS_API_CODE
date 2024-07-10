@@ -38,6 +38,7 @@ namespace HIMS.Services.Common
                 case "OPVisit": sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi"; break;
                 // Check for Dashboard API
                 case "DailyDashboardSummary": sp_Name = "rptOP_DepartmentChart_Range"; break;
+                case "MISDashboards": sp_Name = "sp_MIS_Dashboards"; break;
                 default: break;
             }
             foreach (var property in fields)
