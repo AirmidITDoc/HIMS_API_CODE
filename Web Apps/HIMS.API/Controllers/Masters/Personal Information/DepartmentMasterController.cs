@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(DepartmentMasterModel obj)
         {
             MDepartmentMaster model = obj.MapTo<MDepartmentMaster>();
-            model.IsDeleted = true;
+            model.IsActive = true;
             if (obj.DepartmentId == 0)
             {
                 //model.CreatedBy = CurrentUserId;
@@ -63,6 +63,44 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department added successfully.");
         }
+
+        //Edit API
+        [HttpPut("{id:int}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(DepartmentMasterModel obj)
+        {
+            MDepartmentMaster model = obj.MapTo<MDepartmentMaster>();
+            model.IsActive = true;
+            if (obj.DepartmentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department updated successfully.");
+        }
+
+        //Delete API
+        [HttpDelete]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> delete(int Id)
+        {
+            MDepartmentMaster model = await _repository.GetById(x => x.DepartmentId == Id);
+            if ((model?.DepartmentId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+
     }
 }
 

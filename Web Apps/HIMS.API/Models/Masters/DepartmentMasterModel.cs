@@ -6,9 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
-        public bool? IsDeleted { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+       
     }
 
     public class DepartmentMasterModelValidator : AbstractValidator<DepartmentMasterModel>
