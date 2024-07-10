@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;

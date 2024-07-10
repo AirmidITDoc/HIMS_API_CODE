@@ -17,6 +17,7 @@ using WkHtmlToPdfDotNet;
 using HIMS.Services.Masters;
 using HIMS.Services.Dashboard;
 using HIMS.Services.Inventory;
+using HIMS.Services.OutPatient;
 
 namespace HIMS.API.Infrastructure
 {
@@ -49,6 +50,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
+
+            services.AddScoped<IRegistrationService, RegistrationService>();
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
