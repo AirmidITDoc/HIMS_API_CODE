@@ -1,0 +1,4 @@
+select * from M_ReligionMaster
+
+Select * from MenuMaster
+Where Linkname like 'Religion%' --134
