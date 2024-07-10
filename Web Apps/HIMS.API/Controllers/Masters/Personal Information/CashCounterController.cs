@@ -32,6 +32,11 @@ namespace HIMS.API.Controllers.Masters
             IPagedList<CashCounter> DocList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DocList.ToGridResponse(objGrid, "CashCounter List"));
         }
+        /// <summary>
+        /// get cash counter data.
+        /// </summary>
+        /// <param name="id">cash counter id</param>
+        /// <returns>return cash counter detail.</returns>
         [HttpGet("{id?}")]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -44,6 +49,11 @@ namespace HIMS.API.Controllers.Masters
             return data.ToSingleResponse<CashCounter, CashCounterModel>("CashCounter");
         }
 
+        /// <summary>
+        /// For save data with validation 
+        /// </summary>
+        /// <param name="obj">Cash counter params</param>
+        /// <returns>200 for success.</returns>
         [HttpPost]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.Add)]
         public async Task<ApiResponse> post(CashCounterModel obj)
