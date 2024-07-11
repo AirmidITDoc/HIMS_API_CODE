@@ -14,10 +14,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class TarrifMasterController : BaseController
+    public class ClassMasterController : BaseController
     {
-        private readonly IGenericService<TariffMaster> _repository;
-        public TarrifMasterController(IGenericService<TariffMaster> repository)
+        private readonly IGenericService<ClassMaster> _repository;
+        public ClassMasterController(IGenericService<ClassMaster> repository)
         {
             _repository = repository;
         }
@@ -25,32 +25,34 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TariffMaster> TariffMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(TariffMasterList.ToGridResponse(objGrid, "Tarrif List"));
+            IPagedList<ClassMaster> ClassMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(ClassMasterList.ToGridResponse(objGrid, "Class Master List"));
         }
+
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.TariffId == id);
-            return data.ToSingleResponse<TariffMaster, TarifMasterModel>("TarrifMaster");
+            var data = await _repository.GetById(x => x.ClassId == id);
+            return data.ToSingleResponse<ClassMaster, ClassMasterModel>("Class Master");
         }
+
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(TarifMasterModel obj)
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(ClassMasterModel obj)
         {
-            TariffMaster model = obj.MapTo<TariffMaster>();
+            ClassMaster model = obj.MapTo<ClassMaster>();
             model.IsActive = true;
-            if (obj.TariffId == 0)
+            if (obj.ClassId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -58,17 +60,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Class name added successfully.");
         }
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(TarifMasterModel obj)
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ClassMasterModel obj)
         {
-            TariffMaster model = obj.MapTo<TariffMaster>();
+            ClassMaster model = obj.MapTo<ClassMaster>();
             model.IsActive = true;
-            if (obj.TariffId == 0)
+            if (obj.ClassId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -76,31 +78,26 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Class Name updated successfully.");
         }
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
-            TariffMaster model = await _repository.GetById(x => x.TariffId == Id);
-            if ((model?.TariffId ?? 0) > 0)
+            ClassMaster model = await _repository.GetById(x => x.ClassId == Id);
+            if ((model?.ClassId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Class Name deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
-
-
-
 
 
     }
