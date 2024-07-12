@@ -49,11 +49,11 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Post(ReligionMasterModel obj)
         {
             MReligionMaster model = obj.MapTo<MReligionMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.ReligionId == 0)
             {
-            //    model.CreatedBy = CurrentUserId;
-            //    model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+               model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -67,13 +67,13 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Edit(ReligionMasterModel obj)
         {
             MReligionMaster model = obj.MapTo<MReligionMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.ReligionId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion updated successfully.");
@@ -87,9 +87,9 @@ namespace HIMS.API.Controllers.Masters
             MReligionMaster model = await _repository.GetById(x => x.ReligionId == Id);
             if ((model?.ReligionId ?? 0) > 0)
             {
-                //model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion deleted successfully.");
             }
