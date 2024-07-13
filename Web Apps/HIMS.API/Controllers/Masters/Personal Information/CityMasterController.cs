@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(CityMasterModel obj)
         {
             MCityMaster model = obj.MapTo<MCityMaster>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.CityId == 0)
             {
                 model.CreatedBy = CurrentUserId;

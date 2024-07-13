@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(MaritalStatusModel obj)
         {
             MMaritalStatusMaster model = obj.MapTo<MMaritalStatusMaster>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.MaritalStatusId == 0)
             {
                 model.CreatedBy = CurrentUserId;

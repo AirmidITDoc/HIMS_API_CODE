@@ -48,8 +48,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             model.IsActive = true;
             if (obj.GenericId == 0)
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                //model.CreatedBy = CurrentUserId;
+                //model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else

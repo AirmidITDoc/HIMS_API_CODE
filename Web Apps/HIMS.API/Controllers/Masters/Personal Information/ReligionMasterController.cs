@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Post(ReligionMasterModel obj)
         {
             MReligionMaster model = obj.MapTo<MReligionMaster>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.ReligionId == 0)
             {
                 model.CreatedBy = CurrentUserId;
