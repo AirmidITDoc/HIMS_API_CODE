@@ -29,8 +29,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MRadiologyTemplateMaster> PatientTypeList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientTypeList.ToGridResponse(objGrid, " RadiologyTemplate List"));
+            IPagedList<MRadiologyTemplateMaster> RadiologyTemplteList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(RadiologyTemplteList.ToGridResponse(objGrid, " RadiologyTemplate List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
