@@ -62,5 +62,37 @@ namespace HIMS.Services.Common
             }
             return result;
         }
+
+        public List<T> GetSingleListByProc<T>(ListRequestModel model)
+        {
+            DatabaseHelper odal = new();
+            Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+           
+            string sp_Name = string.Empty;
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            switch (model.mode)
+            {
+                //case "PurchaseOrder": sp_Name = "m_Rtrv_PurchaseOrderList_by_Name_Pagn"; break;
+                //case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
+                //case "OPVisit": sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi"; break;
+                //// Check for Dashboard API
+                //case "DailyDashboardSummary": sp_Name = "rptOP_DepartmentChart_Range"; break;
+                case "MISDashboards": sp_Name = "sp_MIS_Dashboards"; break;
+                default: break;
+            }
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = property.Value.ToString()
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            return odal.FetchListBySP<T>(sp_Name, para);
+        }
     }
 }
