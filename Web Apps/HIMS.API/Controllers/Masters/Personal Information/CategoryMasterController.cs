@@ -9,15 +9,15 @@ using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.Masters
+namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class ReligionMasterController : BaseController
+    public class CategoryMasterController : BaseController
     {
-        private readonly IGenericService<MReligionMaster> _repository;
-        public ReligionMasterController(IGenericService<MReligionMaster> repository)
+        private readonly IGenericService<MItemCategoryMaster> _repository;
+        public CategoryMasterController(IGenericService<MItemCategoryMaster> repository)
         {
             _repository = repository;
         }
@@ -25,50 +25,49 @@ namespace HIMS.API.Controllers.Masters
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MReligionMaster> MReligionMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MReligionMasterList.ToGridResponse(objGrid, "Religion List"));
+            IPagedList<MItemCategoryMaster> PatientTypeList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(PatientTypeList.ToGridResponse(objGrid, "Categoty List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.ReligionId == id);
-            return data.ToSingleResponse<MReligionMaster, ReligionMasterModel>("Religion ype");
+            var data = await _repository.GetById(x => x.ItemCategoryId == id);
+            return data.ToSingleResponse<MItemCategoryMaster, CategoryMasterModel>("CategoryMaster");
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(ReligionMasterModel obj)
+        //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(CategoryMasterModel obj)
         {
-            MReligionMaster model = obj.MapTo<MReligionMaster>();
-            //model.IsActive = true;
-            if (obj.ReligionId == 0)
+            MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
+            model.IsActive = true;
+            if (obj.ItemCategoryId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-               model.CreatedDate = DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemCategory added successfully.");
         }
-
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ReligionMasterModel obj)
+        //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(CategoryMasterModel obj)
         {
-            MReligionMaster model = obj.MapTo<MReligionMaster>();
+            MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
             model.IsActive = true;
-            if (obj.ReligionId == 0)
+            if (obj.ItemCategoryId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -76,27 +75,25 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Item Category updated successfully.");
         }
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
-            MReligionMaster model = await _repository.GetById(x => x.ReligionId == Id);
-            if ((model?.ReligionId ?? 0) > 0)
+            MItemCategoryMaster model = await _repository.GetById(x => x.ItemCategoryId == Id);
+            if ((model?.ItemCategoryId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Category deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
     }
 }
