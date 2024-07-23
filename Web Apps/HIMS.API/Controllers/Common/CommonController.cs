@@ -46,10 +46,10 @@ namespace HIMS.API.Controllers.Common
         public DateTime? BillDate { get; set; }
         public int BillMonth { get; set; }
         public int BillYear { get; set; }
-        public decimal Ipd { get; set; }
-        public decimal Opd { get; set; }
-        public decimal Pharma { get; set; }
-        public decimal Total { get { return Ipd + Opd + Pharma; } }
+        public string Ipd { get; set; }
+        public string Opd { get; set; }
+        public string Pharma { get; set; }
+        public string Total { get { return Convert.ToString(Convert.ToDecimal(Ipd) + Convert.ToDecimal(Opd) + Convert.ToDecimal(Pharma)); } }
     }
     public class DashboardHospitalDto
     {

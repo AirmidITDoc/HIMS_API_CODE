@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(StateMasterModel1 obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.StateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(StateMasterModel1 obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.StateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             MStateMaster model = await _repository.GetById(x => x.StateId == Id);
             if ((model?.StateId ?? 0) > 0)
             {
-                model.IsActive = false;
+                //model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
