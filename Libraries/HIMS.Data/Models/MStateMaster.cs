@@ -8,7 +8,7 @@ namespace HIMS.Data.Models
         public long StateId { get; set; }
         public string? StateName { get; set; }
         public long? CountryId { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
