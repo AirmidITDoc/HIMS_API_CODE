@@ -137,6 +137,220 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                #region :: BillReportSummary ::
+                case "BillReportSummary":
+                    {
+                        string[] colList = { "RegId", "PatientName", "BillNo", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay" , "ChequePay", "CardPay" , "NeftPay", "PayTMPay" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_BillReportSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptBillDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "BillReportSummary", "BillReportSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: BillReportSummarySummary ::
+                case "BillReportSummarySummary":
+                    {
+                        string[] colList = { "RegId", "PatientName", "BillNo", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_BillReportSummarySummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptBillDetails", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "BillReportSummarySummary", "BillReportSummarySummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: OPDBillBalanceReport ::
+                case "OPDBillBalanceReport":
+                    {
+                        string[] colList = { "RegId", "BillNo", "PatientName", "NetPayableAmt", "PaidAmount", "BalanceAmt", "TotalAmt"};
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPDBillBalanceReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOPDCreditBills", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPDBillBalanceReport", "OPDBillBalanceReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: OPDRefundOfBill ::
+                case "OPDRefundOfBill":
+                    {
+                        string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPDRefundOfBill.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOPDRefundOfBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPDRefundOfBill", "OPDRefundOfBill", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: OPDailyCollectionReport ::
+                case "OPDailyCollectionReport":
+                    {
+                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt" , "CashPayAmount", "ChequePayAmount", "CardPayAmount" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPDailycollectionuserwise.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOPDailyCollectionReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPDailyCollectionReport", "OPDailyCollectionReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: OPCollectionSummary ::
+                case "OPCollectionSummary":
+                    {
+                        string[] colList = { "RegNo", "PatientName", "PBillNo", "BillDate", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "CashPayAmount",  "CardPayAmount", "NEFTPayAmount", "PayTMAmount", "RefundAmount", "ConcessionReason", "CompanyName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPCollectionReportSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOPDCollectionReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "OPCollectionSummary", "OPCollectionSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+                #region :: DayWiseOpdCountDetails ::
+                case "DayWiseOpdCountDetails":
+                    {
+                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName"};
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DayWiseOpdCountDetails.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DayWiseOpdCountDetails", "DayWiseOpdCountDetails", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: DayWiseOpdCountSummry ::
+                case "DayWiseOpdCountSummry":
+                    {
+                        string[] colList = { "VisitDate", "DateWiseCount" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DayWiseOpdCountSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDaywiseopdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DayWiseOpdCountSummry", "DayWiseOpdCountSummry", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+                #region :: DepartmentWiseOPDCount ::
+                case "DepartmentWiseOPDCount":
+                    {
+                        string[] colList = { "DepartmentName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentWiseCountSummury.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentWiseOPDCount", "DepartmentWiseOPDCount", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentWiseOpdCountSummary ::
+                case "DepartmentWiseOpdCountSummary":
+                    {
+                        string[] colList = { "DepartmentName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentWiseOpdCountSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDepartmentDaywiseopdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentWiseOpdCountSummary", "DepartmentWiseOpdCountSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DrWiseOPDCountDetail ::
+                case "DrWiseOPDCountDetail":
+                    {
+                        string[] colList = { "DepartmentName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentWiseOpdCountSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DrWiseOPDCountDetail", "DrWiseOPDCountDetail", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: DoctorWiseOpdCountSummary ::
+                case "DoctorWiseOpdCountSummary":
+                    {
+                        string[] colList = { "DoctorName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DoctorWiseOpdCountSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDaywiseDoctoropdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DoctorWiseOpdCountSummary", "DoctorWiseOpdCountSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DrWiseOPDCollectionDetails ::
+                case "DrWiseOPDCollectionDetails":
+                    {
+                        string[] colList = { "DoctorName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DoctorWiseOpdCountSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDrwiseopdcollectiondetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DrWiseOPDCollectionDetails", "DrWiseOPDCollectionDetails", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: DoctorWiseOpdCollectionSummary ::
+                case "DoctorWiseOpdCollectionSummary":
+                    {
+                        string[] colList = { "DoctorName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DoctorWiseOPDCollectionSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDrwiseopdcollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DoctorWiseOpdCollectionSummary", "DoctorWiseOpdCollectionSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentWiseOPDCollectionDetails ::
+                case "DepartmentWiseOPDCollectionDetails":
+                    {
+                        string[] colList = { "DoctorName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DoctorWiseOPDCollectionSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDrwiseopdcollectiondetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentWiseOPDCollectionDetails", "DepartmentWiseOPDCollectionDetails", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentWiseOpdCollectionSummary ::
+                case "DepartmentWiseOpdCollectionSummary":
+                    {
+                        string[] colList = { "DoctorName", "TotalAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentWiseOpdCollectionSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDepartmentwiseopdcollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentWiseOpdCollectionSummary", "DepartmentWiseOpdCollectionSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentServiceGroupWiseCollectionDetails ::
+                case "DepartmentServiceGroupWiseCollectionDetails":
+                    {
+                        string[] colList = { "DepartmentName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentWiseOpdCollectionSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDepartmentservicegroupwisecollectionDetail", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentServiceGroupWiseCollectionDetails", "DepartmentServiceGroupWiseCollectionDetails", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentServiceGroupWiseCollectionSummary ::
+                case "DepartmentServiceGroupWiseCollectionSummary":
+                    {
+                        string[] colList = { "GroupName" , "NetPayableAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_DepartmentServiceGroupWiseCollectionSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptservicegroupwisecollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.storageBaseUrl, "DepartmentServiceGroupWiseCollectionSummary", "DepartmentServiceGroupWiseCollectionSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 default:
                     break;
 

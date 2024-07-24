@@ -65,8 +65,9 @@ namespace HIMS.API.Controllers.Report
         {
             switch (model.mode)
             {
-                #region " OP Reports "
-                case "RegistrationReport":
+                #region"OP Reports"
+
+                case "Registrationreport":
                 case "AppointmentListReport":
                 case "DoctorWiseVisitReport":
                 case "RefDoctorWiseReport":
@@ -75,6 +76,7 @@ namespace HIMS.API.Controllers.Report
                 case "OPAppoinmentListWithServiseAvailed":
                 case "CrossConsultationReport":
                 case "OPDoctorWiseNewOldPatientReport":
+
                     {
                         if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
                             return Unauthorized("You don't have permission to access this report.");
@@ -83,6 +85,44 @@ namespace HIMS.API.Controllers.Report
                 #endregion
 
 
+                #region"OPBilling Reports"
+
+                case "BillReportSummary":
+                case "BillReportSummarySummary":
+                case "OPDBillBalanceReport":
+                case "OPDRefundOfBill":
+                case "OPDailyCollectionReport":
+                case "OPCollectionSummary":
+              
+                    {
+                        if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                #endregion
+
+
+                #region"OP MIS Reports"
+
+                case "DayWiseOpdCountDetails":
+                case "DayWiseOpdCountSummry":
+                case "DepartmentWiseOPDCount":
+                case "DepartmentWiseOpdCountSummary":
+                case "DrWiseOPDCountDetail":
+                case "DoctorWiseOpdCountSummary":
+                case "DrWiseOPDCollectionDetails":
+                case "DoctorWiseOpdCollectionSummary":
+                case "DepartmentWiseOPDCollectionDetails":
+                case "DepartmentWiseOpdCollectionSummary":
+                case "DepartmentServiceGroupWiseCollectionDetails":
+                case "DepartmentServiceGroupWiseCollectionSummary":
+
+                    {
+                        if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
+                #endregion
                 default:
                     break;
             }
