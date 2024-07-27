@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MItemManufactureMaster> ItemManufactureMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ItemManufactureModel obj)
         {
             MItemManufactureMaster model = obj.MapTo<MItemManufactureMaster>();
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemManufactureModel obj)
         {
             MItemManufactureMaster model = obj.MapTo<MItemManufactureMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MItemManufactureMaster model = await _repository.GetById(x => x.ItemManufactureId == Id);
