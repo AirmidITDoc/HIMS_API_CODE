@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Masters
     {
         public TarifMasterModelValidator()
         {
-            RuleFor(x => x.TariffName).NotNull().NotEmpty().WithMessage("Tarrif is required");
+            RuleFor(x => x.TariffName).NotNull().NotEmpty().WithMessage("Tarif is required");
         }
     }
 }

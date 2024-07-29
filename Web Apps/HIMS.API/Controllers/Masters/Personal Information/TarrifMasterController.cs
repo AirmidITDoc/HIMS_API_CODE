@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TariffMaster> TariffMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(TariffMasterList.ToGridResponse(objGrid, "Tarrif List"));
+            return Ok(TariffMasterList.ToGridResponse(objGrid, "Tarif List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.TariffId == id);
-            return data.ToSingleResponse<TariffMaster, TarifMasterModel>("TarrifMaster");
+            return data.ToSingleResponse<TariffMaster, TarifMasterModel>("TarifMaster");
         }
         //Add API
         [HttpPost]
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarif Name added successfully.");
         }
 
         //Edit API
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarif name updated successfully.");
         }
 
         //Delete API
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarrif deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Tarif deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
