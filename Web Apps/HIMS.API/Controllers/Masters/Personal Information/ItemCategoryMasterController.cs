@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MItemCategoryMaster> ItemCategoryList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ItemCategoryModel obj)
         {
             MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemCategoryModel obj)
         {
             MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MItemCategoryMaster model = await _repository.GetById(x => x.ItemCategoryId == Id);
