@@ -55,6 +55,7 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
             RuleFor(x => x.GenderId).NotNull().NotEmpty().WithMessage("Gender is required");
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
+
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
             RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
         }

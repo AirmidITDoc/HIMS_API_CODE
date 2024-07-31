@@ -22,27 +22,27 @@ namespace HIMS.Services.OutPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration,VisitDetail objVisitDetail, int UserId, string Username)
         {
-                DatabaseHelper odal = new();
-                string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-                var entity = objRegistration.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-                objRegistration.RegId = Convert.ToInt32(RegId);
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            var entity = objRegistration.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            objRegistration.RegId = Convert.ToInt32(RegId);
 
-                string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-                var visitentity = objVisitDetail.ToDictionary();
-                foreach (var rProperty in rVisitEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitID", visitentity);
-                objVisitDetail.VisitId = Convert.ToInt32(VisitID);
+            string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            var visitentity = objVisitDetail.ToDictionary();
+            foreach (var rProperty in rVisitEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitID", visitentity);
+            objVisitDetail.VisitId = Convert.ToInt32(VisitID);
 
 
-                await _context.SaveChangesAsync(UserId, Username);
+            await _context.SaveChangesAsync(UserId, Username);
         }
 
         public Task InsertAsyncSP(VisitDetail model, int currentUserId, string currentUserName)

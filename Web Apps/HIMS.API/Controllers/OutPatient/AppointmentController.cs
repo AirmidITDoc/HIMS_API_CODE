@@ -39,12 +39,6 @@ namespace HIMS.API.Controllers.OutPatient
             VisitDetail model = obj.MapTo<VisitDetail>();
 
          
-
-
-
-
-
-
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
