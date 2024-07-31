@@ -46,5 +46,23 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
         }
+
+        [HttpPost("AppointmentVisitUpdate")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(VisitDetailModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.RegId == 0)
+            {
+                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+
+                model.AddedBy = CurrentUserId;
+                await _IAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment updated successfully.");
+        }
     }
 }

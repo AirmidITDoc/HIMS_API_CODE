@@ -32,6 +32,8 @@ namespace HIMS.Services.OutPatient
             string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
 
+            await _context.SaveChangesAsync(UserId, Username);
+
             string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
@@ -43,11 +45,24 @@ namespace HIMS.Services.OutPatient
 
 
             await _context.SaveChangesAsync(UserId, Username);
+            string[] rVisitentity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            var visitEntity = objVisitDetail.ToDictionary();
+            foreach (var rProperty in rVisitEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VisitId = odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, "VisitID", visitentity);
+            objVisitDetail.VisitId = Convert.ToInt32(VisitID);
+
+
+            await _context.SaveChangesAsync(UserId, Username);
         }
 
         public Task InsertAsyncSP(VisitDetail model, int currentUserId, string currentUserName)
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }
