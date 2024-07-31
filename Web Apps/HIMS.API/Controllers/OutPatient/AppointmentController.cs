@@ -29,16 +29,11 @@ namespace HIMS.API.Controllers.OutPatient
             _IAppointmentService = repository;
         }
 
-        [HttpPost]
+        [HttpPost("AppointmentInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public async Task<ApiResponse> Insert(VisitDetailModel obj)
-
-
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
-
-         
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);

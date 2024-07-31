@@ -63,10 +63,10 @@ namespace HIMS.API.Models.OutPatient
 
     public class VisitDetailModel
     {
-        public long VisitID { get; set; }
+        public long VisitId { get; set; }
         public long? RegId { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public DateTime? VisitTime { get; set; }
+        public string? VisitDate { get; set; }
+        public string? VisitTime { get; set; }
         public long? UnitId { get; set; }
         public long? PatientTypeId { get; set; }
         public long? ConsultantDocId { get; set; }
@@ -77,13 +77,13 @@ namespace HIMS.API.Models.OutPatient
         public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
+        public string? IsCancelledDate { get; set; }
         public long? ClassId { get; set; }
         public long? DepartmentId { get; set; }
         public long? PatientOldNew { get; set; }
         public int? FirstFollowupVisit { get; set; }
         public long? AppPurposeId { get; set; }
-        public DateTime? FollowupDate { get; set; }
+        public string? FollowupDate { get; set; }
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
 
