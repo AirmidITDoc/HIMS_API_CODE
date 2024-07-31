@@ -2,7 +2,7 @@
 
 namespace HIMS.API.Models.Masters
 {
-    public interface BankMasterModel
+    public class BankMasterModel
     {
         public long BankId { get; set; }
         public string? BankName { get; set; }
