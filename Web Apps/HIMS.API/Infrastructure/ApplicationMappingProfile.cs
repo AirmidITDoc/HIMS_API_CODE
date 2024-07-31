@@ -29,6 +29,20 @@ namespace HIMS.API.Infrastructure
             CreateMap<MCertificateTemplateMaster, CertificateTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ClassMaster, ClassMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TariffMaster, TarifMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDepartmentMaster, DepartmentMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MCityMaster, CityMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MMaritalStatusMaster, MaritalStatusModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MRelationshipMaster, RelationshipMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MCountryMaster, CountryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<RoomMaster, WardMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+
+
+
+
+
 
 
 
@@ -46,7 +60,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MSupplierMaster, SupplierModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTalukaMaster, TalukaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAreaMaster, AreaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            
             CreateMap<CompanyMaster, CompanyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<CompanyTypeMaster, CompanyTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<GroupMaster, GroupMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -62,6 +76,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<MModeOfPayment, ModeOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathUnitMaster, PathUnitMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<LocationMaster, LocationMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
