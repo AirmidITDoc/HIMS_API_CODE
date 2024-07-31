@@ -45,5 +45,24 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.");
         }
+        //[HttpPost("AppointmentInsert")]
+        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(VisitDetailModel obj)
+        //{
+        //    VisitDetail model = obj.MapTo<VisitDetail>();
+        //    if (obj.VisitID == 0)
+        //    {
+        //        model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+        //        model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+              
+        //        await _IAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
+        //}
+
+
+
     }
 }
