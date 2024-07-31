@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ClassMaster> ClassMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ClassMasterModel obj)
         {
             ClassMaster model = obj.MapTo<ClassMaster>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ClassMasterModel obj)
         {
             ClassMaster model = obj.MapTo<ClassMaster>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             ClassMaster model = await _repository.GetById(x => x.ClassId == Id);

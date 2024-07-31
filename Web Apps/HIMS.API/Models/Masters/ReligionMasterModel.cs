@@ -6,9 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long ReligionId { get; set; }
         public string? ReligionName { get; set; }
-        public bool? IsDeleted { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+        
     }
 
     public class ReligionMasterModelValidator : AbstractValidator<ReligionMasterModel>

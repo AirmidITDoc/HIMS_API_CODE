@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MItemGenericNameMaster> MItemGenericNameMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemGenericNameMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MItemGenericNameMaster model = await _repository.GetById(x => x.ItemGenericNameId == Id);
