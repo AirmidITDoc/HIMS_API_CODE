@@ -7,3 +7,4 @@ namespace HIMS.Services.OutPatient
         Task InsertAsyncSP(Registration objRegistration, int UserId, string Username);
     }
 }
+
