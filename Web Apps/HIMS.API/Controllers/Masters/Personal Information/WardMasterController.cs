@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
          //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RoomMaster> RoomMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(WardMasterModel obj)
         {
             RoomMaster model = obj.MapTo<RoomMaster>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(WardMasterModel obj)
         {
             RoomMaster model = obj.MapTo<RoomMaster>();
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             RoomMaster model = await _repository.GetById(x => x.RoomId == Id);
