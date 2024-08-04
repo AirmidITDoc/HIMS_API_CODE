@@ -11,5 +11,6 @@ namespace HIMS.Data.Models
         public bool? IsDeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
+        public string? TemplateDescInHtml { get; set; }
     }
 }
