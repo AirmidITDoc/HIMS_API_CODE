@@ -102,7 +102,7 @@ builder.Services.AddAuthentication(auth =>
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API.Project", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Airmid HIMS API.Project", Version = "v1" });
     c.MapType<DateTime>(() => new OpenApiSchema { Format = "dd/MMM/yyyy hh:mm tt", Type = "DateTime" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {

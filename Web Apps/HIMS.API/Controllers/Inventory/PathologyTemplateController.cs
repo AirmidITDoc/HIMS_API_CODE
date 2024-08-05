@@ -1,9 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-
 using HIMS.Data.Models;
-
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Api.Controllers;
@@ -31,10 +29,7 @@ namespace HIMS.API.Controllers.Inventory
             MTemplateMaster model = obj.MapTo<MTemplateMaster>();
             if (obj.TemplateId == 0)
             {
-                //model.IndentDate = Convert.ToDateTime(obj.IndentDate);
-                //model.IndentTime = Convert.ToDateTime(obj.IndentTime);
-                //model.Addedby = CurrentUserId;
-                //await _IIndentService.InsertAsync(model, CurrentUserId, CurrentUserName);
+              await _IPathologyTemplateService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -19,38 +19,22 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-            public virtual async Task InsertAsyncSP(MTemplateMaster objTemplate, int UserId, string Username)
-              {
-            try
-            {
-                // //Add header table records
+        public virtual async Task InsertAsyncSP(MTemplateMaster objTemplate, int UserId, string Username)
+        {
                 DatabaseHelper odal = new();
 
-
-                string[] rEntity = { "TemplateId", "UpdatedBy" };
+                string[] rEntity = {"UpdatedBy" };
                 var entity = objTemplate.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
-                string TemplateNo = odal.ExecuteNonQuery("M_Insert_M_PathologyTemplateMaster", CommandType.StoredProcedure, null, entity);
-                objTemplate.TemplateId = Convert.ToInt32(TemplateNo);
 
-               
+                string TemplateId = odal.ExecuteNonQuery("M_Insert_M_PathologyTemplateMaster", CommandType.StoredProcedure, "TemplateId", entity);
+                objTemplate.TemplateId = Convert.ToInt32(TemplateId);
+
                 await _context.SaveChangesAsync(UserId, Username);
-            }
-            catch (Exception ex)
-            {
-                //// Delete header table realted records
-                //MTemplateMaster objTemp = await _context.MTemplateMaster.FindAsync(objTemp.TemplateId);
-                //if (objTemp != null)
-                //{
-                //    _context.MTemplateMaster.Remove(objTemp);
-                //}
 
-                
-                //await _context.SaveChangesAsync();
-            }
         }
 
     }

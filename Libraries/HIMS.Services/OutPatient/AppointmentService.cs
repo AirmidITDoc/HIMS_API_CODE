@@ -22,19 +22,17 @@ namespace HIMS.Services.OutPatient
         }
 
       
-        public virtual async Task InsertAsyncSP(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            //string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            //var entity = objRegistration.ToDictionary();
-            //foreach (var rProperty in rEntity)
-            //{
-            //    entity.Remove(rProperty);
-            //}
-            //string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            //objRegistration.RegId = Convert.ToInt32(RegId);
-
-            //await _context.SaveChangesAsync(UserId, Username);
+            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            var entity = objRegistration.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            objRegistration.RegId = Convert.ToInt32(RegId);
 
             string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
             var visitentity = objVisitDetail.ToDictionary();
@@ -50,19 +48,17 @@ namespace HIMS.Services.OutPatient
 
         }
 
-        public virtual async Task UpdateAsyncSP(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            //string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            //var entity = objRegistration.ToDictionary();
-            //foreach (var rProperty in rEntity)
-            //{
-            //    entity.Remove(rProperty);
-            //}
-            //string RegId = odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, "RegId", entity);
-            //objRegistration.RegId = Convert.ToInt32(RegId);
-
-            //await _context.SaveChangesAsync(currentUserId, currentUserName);
+            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            var entity = objRegistration.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RegId = odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, "RegId", entity);
+            objRegistration.RegId = Convert.ToInt32(RegId);
 
             string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
             var visitentity = objVisitDetail.ToDictionary();
@@ -78,29 +74,19 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task CancelAsyncSP(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            //string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            //var entity = objRegistration.ToDictionary();
-            //foreach (var rProperty in rEntity)
-            //{
-            //    entity.Remove(rProperty);
-            //}
-            //string RegId = odal.ExecuteNonQuery("m_Cancle_Appointment", CommandType.StoredProcedure, "RegId", entity);
-            //objRegistration.RegId = Convert.ToInt32(RegId);
-
-            //await _context.SaveChangesAsync(currentUserId, currentUserName);
-
-            string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            var visitentity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in rVisitEntity)
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                visitentity.Remove(rProperty);
+                // Update header table records
+                VisitDetail objVisit = await _context.VisitDetails.FindAsync(objVisitDetail.VisitId);
+                objVisit.IsCancelled= objVisitDetail.IsCancelled;
+                objVisit.IsCancelledBy = objVisitDetail.IsCancelledBy;
+                objVisit.IsCancelledDate = objVisitDetail.IsCancelledDate;
+                _context.VisitDetails.Update(objVisit);
+                _context.Entry(objVisit).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
             }
-            string VisitID = odal.ExecuteNonQuery("m_Cancle_Appointment", CommandType.StoredProcedure, "VisitID", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitID);
-
-
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
         }
 
      

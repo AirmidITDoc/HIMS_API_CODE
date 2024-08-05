@@ -170,7 +170,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwWardDetail> LvwWardDetails { get; set; } = null!;
         public virtual DbSet<MAnaesthesiaTypeMaster> MAnaesthesiaTypeMasters { get; set; } = null!;
         public virtual DbSet<MAreaMaster> MAreaMasters { get; set; } = null!;
-        public virtual DbSet<MAssignItemToStore> MAssignItemToStores { get; set; } = null!;
+        //public virtual DbSet<MAssignItemToStore> MAssignItemToStores { get; set; } = null!;
         public virtual DbSet<MAssignSupplierToStore> MAssignSupplierToStores { get; set; } = null!;
         public virtual DbSet<MBankMaster> MBankMasters { get; set; } = null!;
         public virtual DbSet<MCanItemMaster> MCanItemMasters { get; set; } = null!;
@@ -5638,12 +5638,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MAssignItemToStore>(entity =>
-            {
-                entity.HasKey(e => e.AssignId);
+            //modelBuilder.Entity<MAssignItemToStore>(entity =>
+            //{
+            //    entity.HasKey(e => e.AssignId);
 
-                entity.ToTable("M_AssignItemToStore");
-            });
+            //    entity.ToTable("M_AssignItemToStore");
+            //});
 
             modelBuilder.Entity<MAssignSupplierToStore>(entity =>
             {

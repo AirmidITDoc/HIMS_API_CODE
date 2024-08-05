@@ -19,7 +19,6 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
                 DatabaseHelper odal = new();
