@@ -20,7 +20,6 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-
       
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
@@ -42,7 +41,6 @@ namespace HIMS.Services.OutPatient
             }
             string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitID", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitID);
-
 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
