@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.OutPatient
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
             
                 model.AddedBy = CurrentUserId;
-                await _IAppointmentService.InsertAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
+                //await _IAppointmentService.InsertAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.OutPatient
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
                 model.AddedBy = CurrentUserId;
-                await _IAppointmentService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+                //await _IAppointmentService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
