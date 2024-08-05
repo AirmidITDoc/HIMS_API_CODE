@@ -77,12 +77,11 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Cancel(VisitDetailModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
-            if (obj.RegId == 0)
+            if (obj.VisitId == 0)
             {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-
-                model.AddedBy = CurrentUserId;
+                model.IsCancelled = true;
+                model.IsCancelledDate = DateTime.Now.Date;
+                model.IsCancelledBy = CurrentUserId;
                 await _IAppointmentService.CancelAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else

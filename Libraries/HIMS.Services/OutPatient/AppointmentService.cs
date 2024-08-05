@@ -20,7 +20,6 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-
       
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
