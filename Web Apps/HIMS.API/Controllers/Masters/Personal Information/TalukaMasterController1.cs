@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "TalukaMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "TalukaMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MTalukaMaster model = await _repository.GetById(x => x.TalukaId == Id);

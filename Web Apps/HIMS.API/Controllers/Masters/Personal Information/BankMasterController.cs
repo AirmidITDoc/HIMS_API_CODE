@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(BankMasterModel obj)
         {
             MBankMaster model = obj.MapTo<MBankMaster>();

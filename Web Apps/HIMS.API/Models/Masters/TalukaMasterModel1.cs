@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Masters
     {
         public TalukaMasterModel1Validator()
         {
-            RuleFor(x => x.TalukaName).NotNull().NotEmpty().WithMessage("TalukaName  is required");
+            RuleFor(x => x.TalukaName).NotNull().NotEmpty().WithMessage("Taluka Name  is required");
         }
     }
 }
