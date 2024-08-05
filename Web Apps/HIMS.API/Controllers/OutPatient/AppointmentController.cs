@@ -34,6 +34,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Insert(VisitDetailModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
+            Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
@@ -52,6 +53,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Update(VisitDetailModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
+            Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
@@ -69,6 +71,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Cancel(VisitDetailModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
+            Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);

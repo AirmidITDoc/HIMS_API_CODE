@@ -5,8 +5,8 @@ namespace HIMS.API.Models.OutPatient
     public class RegistrationSaveModel
     {
         public long RegID { get; set; }
-        public DateTime? RegDate { get; set; }
-        public DateTime? RegTime { get; set; }
+        public String? RegDate { get; set; }
+        public String? RegTime { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -14,7 +14,7 @@ namespace HIMS.API.Models.OutPatient
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? PinNo { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public String? DateOfBirth { get; set; }
         public string? Age { get; set; }
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
