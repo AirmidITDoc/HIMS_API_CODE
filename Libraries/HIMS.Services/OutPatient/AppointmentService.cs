@@ -33,19 +33,25 @@ namespace HIMS.Services.OutPatient
             }
             string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
+            objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray"};
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
                 visitentity.Remove(rProperty);
             }
-            string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitID", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitID);
+            string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
-
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter
+            {
+                SqlDbType = SqlDbType.BigInt,
+                ParameterName = "@PatVisitID",
+                Value = Convert.ToInt32(VisitId)
+            };
+            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, para);
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)

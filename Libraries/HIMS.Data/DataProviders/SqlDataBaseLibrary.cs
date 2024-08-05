@@ -4,6 +4,7 @@ using System.Data;
 using System.Reflection;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Data.DataProviders
 {
@@ -150,6 +151,7 @@ namespace HIMS.Data.DataProviders
 
         public int ExecuteNonQuery(string query, CommandType commandtype, SqlParameter[] para = null)
         {
+            Command.Parameters.Clear();
             Command.CommandText = query;
             Command.CommandType = commandtype;
             if (para?.Length > 0)
@@ -186,6 +188,7 @@ namespace HIMS.Data.DataProviders
 
         public string ExecuteNonQuery(string query, CommandType commandtype, string outputParam ,Dictionary<string, object> entity = null)
         {
+            Command.Parameters.Clear();
             var outputId = new SqlParameter
             {
                 SqlDbType = SqlDbType.BigInt,
