@@ -10,5 +10,6 @@ namespace HIMS.Data.Models
         public long? PathTemplateId { get; set; }
         public string? PathTemplateDetailsResult { get; set; }
         public long? TestId { get; set; }
+        public string? TemplateResultInHtml { get; set; }
     }
 }

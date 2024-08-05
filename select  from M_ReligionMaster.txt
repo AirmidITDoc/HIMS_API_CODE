@@ -2,3 +2,81 @@ select * from M_ReligionMaster
 
 Select * from MenuMaster
 Where Linkname like 'Religion%' --134
+
+
+
+ public virtual async Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username)
+ {
+     try
+     {
+         // //Add header table records
+         DatabaseHelper odal = new();
+
+
+         string[] rEntity = { "SupplierId", "SupplierName", "ContactPerson", "Address", "CityId", "StateId", "CountryId", "Mobile", "MAssignSupplierToStore" };
+         var entity = objSupplier.ToDictionary();
+         foreach (var rProperty in rEntity)
+         {
+             entity.Remove(rProperty);
+         }
+         string indentNo = odal.ExecuteNonQuery("m_insert_IndentHeader_1", CommandType.StoredProcedure, "IndentId", entity);
+         objSupplier.SupplierId = Convert.ToInt32(indentNo);
+
+         // Add details table records
+         foreach (var objItem in objSupplier.MAssignSupplierToStore)
+         {
+             objItem.SupplierId = objSupplier.SupplierId;
+         }
+         _context.MAssignSupplierToStore.AddRange(objSupplier.MAssignSupplierToStore);
+         await _context.SaveChangesAsync(UserId, Username);
+     }
+     catch (Exception ex)
+     {
+         // Delete header table realted records
+         TIndentHeader objInd = await _context.MSupplierMaster.FindAsync(objSupplier.SupplierId);
+         if (objInd != null)
+         {
+             _context.MSupplierMaster.Remove(objInd);
+         }
+
+         // Delete details table realted records
+         var lst = await _context.MAssignSupplierToStore.Where(x => x.SupplierId == objSupplier.SupplierId).ToListAsync();
+         if (lst.Count() > 0)
+         {
+             _context.MAssignSupplierToStore.RemoveRange(lst);
+         }
+         await _context.SaveChangesAsync();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Insert_SupplierMaster_1_New
+
+
+
+insert_M_AssignSupplierToStore_1
+
+[Insert_ItemMaster_1_New]     
+
+
+
+
+
+
+SupplierName ,ContactPerson ,Address,CityId,StateID, CountryId, CreditPeriod ,Mobile,phone,Fax,Email, ModeofPayment ,TermsofPayment ,CurrencyId          
+ Octroi , Freight , IsDeleted , Addedby , SupplierId , PanNo         
+          
+         

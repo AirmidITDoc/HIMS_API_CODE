@@ -17,4 +17,12 @@
     <ProjectReference Include="..\HIMS.Data\HIMS.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\AIRID\Libraries\HIMS.Services\Inventory\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\AIRID\Libraries\HIMS.Services\Inventory\.editorconfig" />
+  </ItemGroup>
+
 </Project>
