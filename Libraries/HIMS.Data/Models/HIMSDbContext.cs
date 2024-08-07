@@ -1513,13 +1513,12 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<DischargeTypeMaster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.DischargeTypeId)
+                    .HasName("PK_DischargeTypeMaster_1");
 
                 entity.ToTable("DischargeTypeMaster");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DischargeTypeId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DischargeTypeName).HasMaxLength(100);
 
@@ -2869,13 +2868,11 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<LocationMaster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.LocationId);
 
                 entity.ToTable("LocationMaster");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.LocationId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.LocationName).HasMaxLength(100);
 
@@ -6992,6 +6989,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.TemplateDesc).HasColumnType("text");
 
+                entity.Property(e => e.TemplateDescInHtml).HasColumnName("TemplateDescInHTML");
+
                 entity.Property(e => e.TemplateName).HasMaxLength(100);
             });
 
@@ -7155,6 +7154,16 @@ namespace HIMS.Data.Models
                 entity.HasNoKey();
 
                 entity.ToTable("MIS_DailyDashboardRecords");
+
+                entity.HasIndex(e => e.BillDate, "idx_BillDate");
+
+                entity.HasIndex(e => e.BillMonth, "idx_BillMonth");
+
+                entity.HasIndex(e => e.BillQuarter, "idx_BillQrtr");
+
+                entity.HasIndex(e => e.BillYear, "idx_BillYear");
+
+                entity.HasIndex(e => e.OpdIpd, "idx_OpdIpd");
 
                 entity.Property(e => e.AdmDoctor).HasMaxLength(63);
 
@@ -11900,6 +11909,8 @@ namespace HIMS.Data.Models
                     .HasFillFactor(90);
 
                 entity.Property(e => e.PathTemplateDetailsResult).HasColumnType("text");
+
+                entity.Property(e => e.TemplateResultInHtml).HasColumnName("TemplateResultInHTML");
             });
 
             modelBuilder.Entity<TPatientDetail>(entity =>

@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Models.OutPatient
 {
     public class RegistrationSaveModel
     {
         public long RegID { get; set; }
-        public String? RegDate { get; set; }
-        public String? RegTime { get; set; }
+        public string? RegDate { get; set; }
+        public string? RegTime { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -14,13 +15,13 @@ namespace HIMS.API.Models.OutPatient
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? PinNo { get; set; }
-        public String? DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; }
         public string? Age { get; set; }
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
 
-        public long? AddedBy { get; set; }
+        //public long? AddedBy { get; set; }
         //public long UpdatedBy { get; set; }
 
         public string? AgeYear { get; set; }
@@ -73,8 +74,8 @@ namespace HIMS.API.Models.OutPatient
         public long? RefDocId { get; set; }
         public long? TariffId { get; set; }
         public long? CompanyId { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+        //public long? AddedBy { get; set; }
+        //public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
@@ -102,4 +103,13 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
         }
     }
+    public class AppointmentReqDto
+    {
+        public RegistrationSaveModel Registration { get; set; }
+        public VisitDetailModel Visit { get; set; }
     }
+    public class TokenNumberWithDoctorWiseSave
+    {
+        public long PatVisitID { get; set; }
+    }
+}

@@ -1,29 +1,23 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
+using HIMS.Data.Models;
+using HIMS.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
-
-
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class BankMasterController : BaseController
+    public class DischargeTypeController1 : BaseController
     {
-
-        private readonly IGenericService<MBankMaster> _repository;
-        public BankMasterController(IGenericService<MBankMaster> repository)
+        private readonly IGenericService<DischargeTypeMaster> _repository;
+        public DischargeTypeController1(IGenericService<DischargeTypeMaster> repository)
         {
             _repository = repository;
         }
@@ -31,32 +25,32 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DischargeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MBankMaster> BankMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(BankMasterList.ToGridResponse(objGrid, "Bank List"));
+            IPagedList<DischargeTypeMaster> DischargeTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(DischargeTypeMasterList.ToGridResponse(objGrid, "Discharge Type  List"));
         }
+        //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DischargeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.BankId == id);
-            return data.ToSingleResponse<MBankMaster, BankMasterModel>("BankMaster");
+            var data = await _repository.GetById(x => x.DischargeTypeId == id);
+            return data.ToSingleResponse<DischargeTypeMaster, DischargeTypeModel1>("Discharge Type");
         }
-
-
+        //Add API
         [HttpPost]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(BankMasterModel obj)
+        [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(DischargeTypeModel1 obj)
         {
-            MBankMaster model = obj.MapTo<MBankMaster>();
+            DischargeTypeMaster model = obj.MapTo<DischargeTypeMaster>();
             model.IsActive = true;
-            if (obj.BankId == 0)
+            if (obj.DischargeTypeId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -64,16 +58,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bank added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Discharge Type added successfully.");
         }
+
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(BankMasterModel obj)
+        [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(DischargeTypeModel1 obj)
         {
-            MBankMaster model = obj.MapTo<MBankMaster>();
+            DischargeTypeMaster model = obj.MapTo<DischargeTypeMaster>();
             model.IsActive = true;
-            if (obj.BankId == 0)
+            if (obj.DischargeTypeId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -81,28 +76,24 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bank updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Type updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
-            MBankMaster model = await _repository.GetById(x => x.BankId == Id);
-            if ((model?.BankId ?? 0) > 0)
+            DischargeTypeMaster model = await _repository.GetById(x => x.DischargeTypeId == Id);
+            if ((model?.DischargeTypeId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bank deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeType deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
-
     }
 }
-

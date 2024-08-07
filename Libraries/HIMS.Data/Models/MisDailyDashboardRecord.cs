@@ -23,7 +23,7 @@ namespace HIMS.Data.Models
         public string? SurgeryName { get; set; }
         public string? Company { get; set; }
         public string? Country { get; set; }
-        public string MedicineOperative { get; set; } = null!;
+        public string? MedicineOperative { get; set; }
         public decimal? BTotalBillAmountSum { get; set; }
         public decimal? BTotalConcessionAmountSum { get; set; }
         public decimal? BBalanceBilledAmount { get; set; }
