@@ -8,3 +8,4 @@ obj
 *.user
 *.suo
 /Web Apps/HIMS.API/Controllers/Masters/ScheduleController.cs
+/Web Apps/HIMS.API/Controllers/OutPatient/AppointmentController.cs
