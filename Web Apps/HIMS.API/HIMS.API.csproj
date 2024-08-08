@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NewFolder1\**" />
+    <Compile Remove="Controllers\NewFolder\**" />
+    <Compile Remove="Models\Users\**" />
+    <Content Remove="Controllers\NewFolder1\**" />
+    <Content Remove="Controllers\NewFolder\**" />
+    <Content Remove="Models\Users\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder1\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Models\Users\**" />
+    <None Remove="Controllers\NewFolder1\**" />
+    <None Remove="Controllers\NewFolder\**" />
+    <None Remove="Models\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="6.4.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="EPPlus" Version="7.0.0" />
@@ -34,9 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\NewFolder1\" />
-    <Folder Include="Controllers\NewFolder\" />
-    <Folder Include="Models\Users\" />
     <Folder Include="DbData\" />
   </ItemGroup>
 

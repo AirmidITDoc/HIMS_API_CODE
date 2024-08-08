@@ -1,3 +1,8 @@
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
 .vs/*
 .vscode/*
 !.vscode/tasks.json
@@ -8,3 +13,4 @@ obj
 *.user
 *.suo
 /Web Apps/HIMS.API/Controllers/Masters/ScheduleController.cs
+/Web Apps/HIMS.API/Models/Masters/TalukaMasterModel.cs

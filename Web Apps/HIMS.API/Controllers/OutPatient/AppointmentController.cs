@@ -57,20 +57,28 @@ namespace HIMS.API.Controllers.OutPatient
 
         [HttpPost("AppointmentVisitUpdate")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(VisitDetailModel obj)
+        public async Task<ApiResponse> Update(AppointmentReqDto obj)
         {
-            VisitDetail model = obj.MapTo<VisitDetail>();
-            if (obj.RegId == 0)
+            Registration model = obj.Registration.MapTo<Registration>();
+            VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+            if (obj.Registration.RegID == 0)
             {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-
+                model.RegDate = Convert.ToDateTime(obj.Registration.RegDate);
+                model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
                 model.AddedBy = CurrentUserId;
-                await _IAppointmentService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+
+                if (obj.Visit.VisitId == 0)
+                {
+                    objVisitDetail.VisitDate = Convert.ToDateTime(obj.Visit.VisitDate);
+                    objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
+                    objVisitDetail.AddedBy = CurrentUserId;
+                    objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+                await _IAppointmentService.InsertAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
         }
         [HttpPost("AppointmentCancel")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]

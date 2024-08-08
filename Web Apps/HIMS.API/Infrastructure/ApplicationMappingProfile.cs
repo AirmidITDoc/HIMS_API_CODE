@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HIMS.API.Controllers.Masters.Personal_Information;
-using HIMS.API.Models;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
