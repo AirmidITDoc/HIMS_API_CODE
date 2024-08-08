@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -17,10 +18,10 @@ namespace HIMS.API.Models.Inventory
     {
         public PathologyTemplateModelValidator()
         {
-            RuleFor(x => x.TemplateId).NotNull().NotEmpty().WithMessage("TemplateId is required");
             RuleFor(x => x.TemplateName).NotNull().NotEmpty().WithMessage("TemplateName is required");
             RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("TemplateDesc is required");
 
         }
     }
+   
 }
