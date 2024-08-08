@@ -20,6 +20,8 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.TemplateName).NotNull().NotEmpty().WithMessage("TemplateName is required");
             RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("TemplateDesc is required");
+            RuleFor(x => x.AddedBy).NotNull().NotEmpty().WithMessage("Added by is required");
+
 
         }
     }
