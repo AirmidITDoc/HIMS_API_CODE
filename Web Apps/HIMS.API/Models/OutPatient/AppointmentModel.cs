@@ -108,8 +108,9 @@ namespace HIMS.API.Models.OutPatient
         public RegistrationSaveModel Registration { get; set; }
         public VisitDetailModel Visit { get; set; }
     }
-    public class TokenNumberWithDoctorWiseSave
+    public class CancelAppointment
     {
         public long PatVisitID { get; set; }
     }
+   
 }

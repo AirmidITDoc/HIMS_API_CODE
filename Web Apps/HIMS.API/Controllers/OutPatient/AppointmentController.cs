@@ -55,36 +55,35 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
         }
 
-        [HttpPost("AppointmentVisitUpdate")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(VisitDetailModel obj)
-        {
-            VisitDetail model = obj.MapTo<VisitDetail>();
-            if (obj.RegId == 0)
-            {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+        //[HttpPost("AppointmentVisitUpdate")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Update(AppointmentReqDto obj)
+        //{
+        //    VisitDetail model = obj.MapTo<VisitDetail>();
+        //    if (obj.RegId == 0)
+        //    {
+        //        model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+        //        model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
-                model.AddedBy = CurrentUserId;
-                await _IAppointmentService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment updated successfully.");
-        }
+        //        model.AddedBy = CurrentUserId;
+        //        await _IAppointmentService.UpdateAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment updated successfully.");
+        //}
         [HttpPost("AppointmentCancel")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Cancel(VisitDetailModel obj)
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
-            VisitDetail model = obj.MapTo<VisitDetail>();
-            Registration objVisitDetail = obj.MapTo<Registration>();
-            if (obj.RegId == 0)
+            VisitDetail model = new VisitDetail();
+            if (obj.PatVisitID != 0)
             {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-
-                model.AddedBy = CurrentUserId;
-                await _IAppointmentService.CancelAsyncSP(model, CurrentUserId, CurrentUserName);
+                model.VisitId = obj.PatVisitID;
+                model.IsCancelled = true;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = DateTime.Now;
+                await _IAppointmentService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
