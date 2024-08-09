@@ -42,5 +42,7 @@ namespace HIMS.Data.Models
         public long? ItemCompnayId { get; set; }
         public DateTime? IsCreatedBy { get; set; }
         public DateTime? IsUpdatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

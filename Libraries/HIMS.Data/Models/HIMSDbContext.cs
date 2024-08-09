@@ -6090,6 +6090,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ConversionFactor).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DrugTypeName).HasMaxLength(100);
 
                 entity.Property(e => e.Hsncode)
