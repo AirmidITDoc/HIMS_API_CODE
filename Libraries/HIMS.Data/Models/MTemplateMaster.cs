@@ -12,5 +12,7 @@ namespace HIMS.Data.Models
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? TemplateDescInHtml { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? CreatedBy { get; set; }
     }
 }

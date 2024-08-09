@@ -6987,6 +6987,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_TemplateMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TemplateDesc).HasColumnType("text");
 
                 entity.Property(e => e.TemplateDescInHtml).HasColumnName("TemplateDescInHTML");

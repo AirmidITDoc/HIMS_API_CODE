@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Cancel(VisitDetailModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
-            Registration model = obj.MapTo<Registration>();
+            Registration objVisitDetail = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
