@@ -57,28 +57,20 @@ namespace HIMS.API.Controllers.OutPatient
 
         [HttpPost("AppointmentVisitUpdate")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(AppointmentReqDto obj)
+        public async Task<ApiResponse> Update(VisitDetailModel obj)
         {
-            Registration model = obj.Registration.MapTo<Registration>();
-            VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-            if (obj.Registration.RegID == 0)
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.RegId == 0)
             {
-                model.RegDate = Convert.ToDateTime(obj.Registration.RegDate);
-                model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
-                model.AddedBy = CurrentUserId;
+                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
-                if (obj.Visit.VisitId == 0)
-                {
-                    objVisitDetail.VisitDate = Convert.ToDateTime(obj.Visit.VisitDate);
-                    objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
-                    objVisitDetail.AddedBy = CurrentUserId;
-                    objVisitDetail.UpdatedBy = CurrentUserId;
-                }
-                await _IAppointmentService.InsertAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
+                model.AddedBy = CurrentUserId;
+                await _IAppointmentService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment updated successfully.");
         }
         [HttpPost("AppointmentCancel")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
