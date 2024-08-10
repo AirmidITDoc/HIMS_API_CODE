@@ -255,6 +255,56 @@ namespace HIMS.Data.DataProviders
             return outputParamValue;
         }
 
+        public int ExecuteNonQuery(string query, CommandType commandtype, Dictionary<string, object> entity)
+        {
+            Command.Parameters.Clear();
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[entity.Count];
+            foreach (var property in entity)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = (object)property.Value
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            Command.CommandText = query;
+            Command.CommandType = commandtype;
+            if (para?.Length > 0)
+            {
+                Command.Parameters.AddRange(para);
+            }
+            int i = -1;
+            try
+            {
+                if (objConnection.State == System.Data.ConnectionState.Closed)
+                {
+                    objConnection.Open();
+                }
+                i = Command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                SqlException sx = (SqlException)ex;
+                if (sx.Number == 547)       // Foreign Key Error
+                    i = sx.Number;
+                else
+                    HandleExceptions(ex, query);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return i;
+        }
+
         public string ExecuteNonQuery(string query, CommandType commandtype, string outputparam, SqlParameter[] para = null)
         {
             Command.CommandText = query;

@@ -37,13 +37,11 @@ namespace HIMS.API.Controllers.OutPatient
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
             if (obj.Registration.RegID == 0)
             {
-                model.RegDate = Convert.ToDateTime(obj.Registration.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
                 model.AddedBy = CurrentUserId;
 
                 if (obj.Visit.VisitId == 0)
                 {
-                    objVisitDetail.VisitDate = Convert.ToDateTime(obj.Visit.VisitDate);
                     objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;

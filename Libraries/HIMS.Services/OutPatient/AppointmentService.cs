@@ -44,14 +44,11 @@ namespace HIMS.Services.OutPatient
             string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
-            SqlParameter[] para = new SqlParameter[1];
-            para[0] = new SqlParameter
+            var tokenObj = new
             {
-                SqlDbType = SqlDbType.BigInt,
-                ParameterName = "@PatVisitID",
-                Value = Convert.ToInt32(VisitId)
+                PatVisitID = Convert.ToInt32(VisitId)
             };
-            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, para);
+            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -76,14 +73,11 @@ namespace HIMS.Services.OutPatient
             string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
-            SqlParameter[] para = new SqlParameter[1];
-            para[0] = new SqlParameter
+            var tokenObj = new
             {
-                SqlDbType = SqlDbType.BigInt,
-                ParameterName = "@PatVisitID",
-                Value = Convert.ToInt32(VisitId)
+                PatVisitID = Convert.ToInt32(VisitId)
             };
-            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, para);
+            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {

@@ -6,7 +6,7 @@ namespace HIMS.API.Models.OutPatient
     public class RegistrationSaveModel
     {
         public long RegID { get; set; }
-        public string? RegDate { get; set; }
+        public DateTime? RegDate { get; set; }
         public string? RegTime { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
@@ -15,7 +15,7 @@ namespace HIMS.API.Models.OutPatient
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? PinNo { get; set; }
-        public string? DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string? Age { get; set; }
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
@@ -66,7 +66,7 @@ namespace HIMS.API.Models.OutPatient
     {
         public long VisitId { get; set; }
         public long? RegId { get; set; }
-        public string? VisitDate { get; set; }
+        public DateTime? VisitDate { get; set; }
         public string? VisitTime { get; set; }
         public long? UnitId { get; set; }
         public long? PatientTypeId { get; set; }
@@ -78,13 +78,13 @@ namespace HIMS.API.Models.OutPatient
         //public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
-        public string? IsCancelledDate { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
         public long? ClassId { get; set; }
         public long? DepartmentId { get; set; }
         public long? PatientOldNew { get; set; }
         public int? FirstFollowupVisit { get; set; }
         public long? AppPurposeId { get; set; }
-        public string? FollowupDate { get; set; }
+        public DateTime? FollowupDate { get; set; }
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
 
