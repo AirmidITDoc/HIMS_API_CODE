@@ -6932,6 +6932,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PinCode).HasMaxLength(20);
 
                 entity.Property(e => e.SupplierName).HasMaxLength(100);
+
+                entity.Property(e => e.SupplierTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MSurgeryCategoryMaster>(entity =>

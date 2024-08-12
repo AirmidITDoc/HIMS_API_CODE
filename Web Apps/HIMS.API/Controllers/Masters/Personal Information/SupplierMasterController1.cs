@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierMasterModel1 obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SupplierMasterModel1 obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MSupplierMaster model = await _repository.GetById(x => x.SupplierId == Id);

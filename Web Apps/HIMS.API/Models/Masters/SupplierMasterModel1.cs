@@ -26,9 +26,7 @@ namespace HIMS.API.Models.Masters
 
         public List<AssignSupplierTostoreModel> AssignSupplierTostoreModel { get; set; }
 
-
-
-    }
+         }
 
 
     public class SupplierMasterModel1Validator : AbstractValidator<SupplierMasterModel1>
