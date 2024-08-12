@@ -14,10 +14,12 @@ namespace HIMS.Data.Models
         public string? MachineName { get; set; }
         public string? SuggestionNote { get; set; }
         public string? FootNote { get; set; }
-        public bool? Isdeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? CreatedBy { get; set; }
     }
 }

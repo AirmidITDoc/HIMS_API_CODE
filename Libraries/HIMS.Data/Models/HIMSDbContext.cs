@@ -6484,6 +6484,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PathTestMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.FootNote).HasMaxLength(400);
 
                 entity.Property(e => e.MachineName).HasMaxLength(200);
@@ -6727,6 +6729,8 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.StoreId);
 
                 entity.ToTable("M_StoreMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DlNo)
                     .HasMaxLength(100)

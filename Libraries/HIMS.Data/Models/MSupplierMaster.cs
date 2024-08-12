@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MSupplierMaster
     {
-
-        public MSupplierMaster()
-        {
-            MAssignSupplierToStore = new HashSet<MAssignSupplierToStore>();
-        }
         public long SupplierId { get; set; }
         public string? SupplierName { get; set; }
         public string? ContactPerson { get; set; }
@@ -50,9 +45,5 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? SupplierTime { get; set; }
-        public virtual ICollection<MAssignSupplierToStore> MAssignSupplierToStore { get; set; }
-
-
-
     }
 }
