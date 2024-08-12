@@ -24,60 +24,159 @@ namespace HIMS.Services.OutPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in rEntity)
+            //// NEW CODE With EDMX
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                entity.Remove(rProperty);
-            }
-            string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt32(RegId);
-            objVisitDetail.RegId = Convert.ToInt32(RegId);
+                // Add Registration table records
+                _context.Registrations.Add(objRegistration);
+                await _context.SaveChangesAsync();
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
-            var visitentity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in rVisitEntity)
-            {
-                visitentity.Remove(rProperty);
-            }
-            string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                // Update Registration table records
+                ConfigSetting objConfigRSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
+                objConfigRSetting.RegNo = Convert.ToString(Convert.ToInt32(objConfigRSetting.RegNo) + 1);
+                _context.ConfigSettings.Update(objConfigRSetting);
+                _context.Entry(objConfigRSetting).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
-            var tokenObj = new
-            {
-                PatVisitID = Convert.ToInt32(VisitId)
-            };
-            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                // Add VisitDetail table records
+                objVisitDetail.RegId = objRegistration.RegId;
+                _context.VisitDetails.Add(objVisitDetail);
+                await _context.SaveChangesAsync();
+
+                // Update VisitDetail table records
+                ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
+                objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
+                _context.ConfigSettings.Update(objConfigSetting);
+                _context.Entry(objConfigSetting).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                // Add TokenNumber table records
+                List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+                foreach (var item in objVisit)
+                {
+                    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                    if(objToken != null)
+                    {
+                        objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
+
+                        TTokenNumberWithDoctorWise objCurrentToken = new TTokenNumberWithDoctorWise();
+                        objCurrentToken.TokenNo = objToken.TokenNo;
+                        objCurrentToken.VisitDate = item.VisitDate;
+                        objCurrentToken.VisitId = item.VisitId;
+                        objCurrentToken.DoctorId = item.ConsultantDocId;
+                        objCurrentToken.IsStatus = false;
+                        _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                scope.Complete();
+            }
+
+            //// OLD CODE With SP
+            //DatabaseHelper odal = new();
+            //string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            //var entity = objRegistration.ToDictionary();
+            //foreach (var rProperty in rEntity)
+            //{
+            //    entity.Remove(rProperty);
+            //}
+            //string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            //objRegistration.RegId = Convert.ToInt32(RegId);
+            //objVisitDetail.RegId = Convert.ToInt32(RegId);
+
+            //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            //var visitentity = objVisitDetail.ToDictionary();
+            //foreach (var rProperty in rVisitEntity)
+            //{
+            //    visitentity.Remove(rProperty);
+            //}
+            //string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+
+            //var tokenObj = new
+            //{
+            //    PatVisitID = Convert.ToInt32(VisitId)
+            //};
+            //odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in rEntity)
+            //// NEW CODE With EDMX
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                entity.Remove(rProperty);
-            }
-            string RegId = odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt32(RegId);
-            objVisitDetail.RegId = Convert.ToInt32(RegId);
+                // Update Registration table records
+                _context.Registrations.Update(objRegistration);
+                _context.Entry(objRegistration).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
-            var visitentity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in rVisitEntity)
-            {
-                visitentity.Remove(rProperty);
-            }
-            string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                // Add VisitDetail table records
+                objVisitDetail.RegId = objRegistration.RegId;
+                _context.VisitDetails.Add(objVisitDetail);
+                await _context.SaveChangesAsync();
 
-            var tokenObj = new
-            {
-                PatVisitID = Convert.ToInt32(VisitId)
-            };
-            odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                // Update VisitDetail table records
+                ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
+                objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
+                _context.ConfigSettings.Update(objConfigSetting);
+                _context.Entry(objConfigSetting).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                // Add TokenNumber table records
+                VisitDetail objVisit = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now);
+                TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                objToken.TokenNo = Convert.ToInt32(objToken.TokenNo) + 1;
+
+                // Add TokenNumber table records
+                List<VisitDetail> objVisitList = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+                foreach (var item in objVisitList)
+                {
+                    TTokenNumberWithDoctorWise objTokenData = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                    if (objTokenData != null)
+                    {
+                        objTokenData.TokenNo = Convert.ToInt32(objTokenData.TokenNo ?? 0) + 1;
+
+                        TTokenNumberWithDoctorWise objCurrentToken = new TTokenNumberWithDoctorWise();
+                        objCurrentToken.TokenNo = objTokenData.TokenNo;
+                        objCurrentToken.VisitDate = item.VisitDate;
+                        objCurrentToken.VisitId = item.VisitId;
+                        objCurrentToken.DoctorId = item.ConsultantDocId;
+                        objCurrentToken.IsStatus = false;
+                        _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                scope.Complete();
+            }
+
+            //// OLD CODE With SP
+            //DatabaseHelper odal = new();
+            //string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            //var entity = objRegistration.ToDictionary();
+            //foreach (var rProperty in rEntity)
+            //{
+            //    entity.Remove(rProperty);
+            //}
+            //string RegId = odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, "RegId", entity);
+            //objRegistration.RegId = Convert.ToInt32(RegId);
+            //objVisitDetail.RegId = Convert.ToInt32(RegId);
+
+            //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            //var visitentity = objVisitDetail.ToDictionary();
+            //foreach (var rProperty in rVisitEntity)
+            //{
+            //    visitentity.Remove(rProperty);
+            //}
+            //string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+
+            //var tokenObj = new
+            //{
+            //    PatVisitID = Convert.ToInt32(VisitId)
+            //};
+            //odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
@@ -96,10 +195,10 @@ namespace HIMS.Services.OutPatient
             }
         }
 
-     
 
-      
 
-      
+
+
+
     }
 }
