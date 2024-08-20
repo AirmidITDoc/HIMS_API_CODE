@@ -54,6 +54,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
 
+            services.AddScoped<IOPBillingService, OPBillingService>();
+
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }
