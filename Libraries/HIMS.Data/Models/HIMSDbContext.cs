@@ -5728,6 +5728,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_ClassMaster");
 
                 entity.Property(e => e.ClassName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MComplaintMaster>(entity =>
@@ -5794,7 +5798,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_CreditReasonMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.CreditReason).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MCurrencyMaster>(entity =>
@@ -6111,6 +6119,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ItemName).HasMaxLength(200);
 
                 entity.Property(e => e.ItemShortName).HasMaxLength(100);
+
+                entity.Property(e => e.ItemTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ItemTypeId).HasColumnName("ItemTypeID");
 
@@ -6498,7 +6508,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.TechniqueName).HasMaxLength(200);
 
+                entity.Property(e => e.TestDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.TestTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MPathUnitMaster>(entity =>
@@ -7018,6 +7032,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.UnitofMeasurementId);
 
                 entity.ToTable("M_UnitofMeasurementMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UnitofMeasurementName).HasMaxLength(50);
             });
@@ -12196,11 +12214,15 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_PhoneAppointment");
 
+                entity.Property(e => e.AddedByDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Address).HasMaxLength(100);
 
                 entity.Property(e => e.AppDate).HasColumnType("datetime");
 
                 entity.Property(e => e.AppTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
@@ -12216,6 +12238,8 @@ namespace HIMS.Data.Models
                     .HasMaxLength(15)
                     .IsFixedLength();
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PhAppDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PhAppTime).HasColumnType("datetime");
@@ -12223,6 +12247,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
+
+                entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>
