@@ -23,10 +23,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _repository = repository;
         }
 
-       
+
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PathTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(TestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -42,10 +42,49 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
         }
 
+            [HttpPut("Edit/{id:int}")]
+            //[Permission(PageCode = "PathTestMaster", Permission = PagePermission.Edit)]
+            public async Task<ApiResponse> Edit(TestMasterModel obj)
+            {
+                MPathTestMaster model = obj.MapTo<MPathTestMaster>();
+                if (obj.TestId == 0)
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                else
+                {
+                    model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
+                    model.TestTime = Convert.ToDateTime(obj.TestTime);
+                    await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                }
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name updated successfully.");
+            }
+
+        //Delete API
+        [HttpDelete]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> delete(int Id)
+        {
+            MPathTestMaster model = await _repository.GetById(x => x.TestId == Id);
+            if ((model?.TestId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                //model.ModifiedBy = CurrentUserId;
+                //model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
 
 
-       
 
-      
+
+
+
+
+
+
+
     }
 }
+    
