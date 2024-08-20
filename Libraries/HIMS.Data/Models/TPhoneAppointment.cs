@@ -24,5 +24,8 @@ namespace HIMS.Data.Models
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public string? RegNo { get; set; }
+        public DateTime? AddedByDate { get; set; }
+        public DateTime? UpdatedByDate { get; set; }
+      
     }
 }
