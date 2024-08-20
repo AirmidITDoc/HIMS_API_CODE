@@ -7,6 +7,7 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
+using static HIMS.API.Models.Masters.PathTemplateDetailModelValidator;
 
 namespace HIMS.API.Infrastructure
 {
@@ -35,10 +36,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<MCountryMaster, CountryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RoomMaster, WardMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DischargeTypeMaster, DischargeTypeModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            CreateMap<MStoreMaster, StoreMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            
-           
+            CreateMap<MUnitofMeasurementMaster, UnitOfMeasurementModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MCreditReasonMaster, CreditReasonModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+           CreateMap<MPathTestMaster, TestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+            CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSupplierMaster, SupplierMasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAssignSupplierToStore, AssignSupplierTostoreModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -100,13 +108,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<Registration, RegistrationSaveModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
-
-
 
 
             //Purchase

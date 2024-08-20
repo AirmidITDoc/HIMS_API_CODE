@@ -21,7 +21,7 @@ namespace HIMS.Data.Models
         public string? ReturnFromDeptNoPrefix { get; set; }
         public string? ReturnFromDeptNo { get; set; }
         public long? AddedBy { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? UpdatedBy { get; set; }
         public string? WorkOrderPrefix { get; set; }
         public string? WorkOrderNo { get; set; }
@@ -44,5 +44,7 @@ namespace HIMS.Data.Models
         public string? WhatsAppTemplateId { get; set; }
         public bool? IsSmsmsg { get; set; }
         public string? SmstemplateId { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }
