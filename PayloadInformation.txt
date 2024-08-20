@@ -4,7 +4,7 @@ Appointment Save
   "Registration": {
     "RegID": 0,
 	"RegTime": "10:30:20 PM",
-    "RegDate": "31/07/2024",
+    "RegDate": "07/30/2024",
     "PrefixId": 0,
     "FirstName": "TEST1",
     "MiddleName": "TEST2",
@@ -12,7 +12,7 @@ Appointment Save
     "Address": "Pune",
     "City": "Pune",
     "PinNo": "490526",
-    "DateOfBirth": "31/07/1990",
+    "DateOfBirth": "07/30/2024",
     "Age": "33",
     "GenderId": 1,
     "PhoneNo": "7897897890",
@@ -36,7 +36,7 @@ Appointment Save
     "VisitId": 0,
     "RegId": 0,
     "VisitTime": "11:30:20 PM",
-    "VisitDate": "31/07/2024",
+    "VisitDate": "07/30/2024",
     "UnitId": 10,
     "PatientTypeId": 10,
     "ConsultantDocId": 10,
@@ -45,14 +45,81 @@ Appointment Save
     "CompanyId": 10,
     "IsCancelled": true,
     "IsCancelledBy": 0,
-    "IsCancelledDate": "31/07/2024",
+    "IsCancelledDate": "07/30/2024",
     "ClassId": 10,
     "DepartmentId": 10,
     "PatientOldNew": 0,
     "FirstFollowupVisit": 0,
     "AppPurposeId": 0,
-    "FollowupDate": "31/07/2024",
+    "FollowupDate": "07/30/2024",
     "CrossConsulFlag": 0,
-    "PhoneAppId": 1
-  }
+    "PhoneAppId": 0
+  }
+}
+
+
+========================================
+{
+  "insertPathologyTestMaster": {
+    "testName": "string",
+    "printTestName": "string",
+    "categoryId": 0,
+    "isSubTest": true,
+    "techniqueName": "string",
+    "machineName": "string",
+    "suggestionNote": "string",
+    "footNote": "string",
+    "isDeleted": true,
+    "addedBy": 0,
+    "serviceId": 0,
+    "isTemplateTest": true,
+    "testId": 0
+  },
+  "pathologyTemplateTest": [
+    {
+      "testId": 0,
+      "templateId": 0
+    }
+  ],
+   "pathTestDetailMaster": [
+    {
+      "testId": 0,
+      "subTestID": 0,
+      "parameterID": 0
+    }
+  ]
+}
+
+
+======================================================
+{
+  "Bill": {
+    "BillNo": 0,
+    "OPD_IPD_ID": 0,
+    "TotalAmt": 0,
+    "ConcessionAmt": 0,
+    "NetPayableAmt": 0,
+    "PaidAmt": 0,
+    "BalanceAmt": 0,
+    "BillDate": "07/30/2024",
+    "OPD_IPD_Type": 0,
+    "AddedBy": 0,
+    "TotalAdvanceAmount": 0,
+    "BillTime": "10:30:20 PM",
+    "ConcessionReasonId": 0,
+    "IsSettled": true,
+    "IsPrinted": true,
+    "IsFree": true,
+    "CompanyId": 0,
+    "TariffId": 0,
+    "UnitId": 0,
+    "InterimOrFinal": 0,
+    "CompanyRefNo": 0,
+    "ConcessionAuthorizationName": 0,
+    "TaxPer": 0,
+    "TaxAmount": 0,
+    "CompDiscAmt": 0,
+    "DiscComments": "string",
+    "CashCounterId": 0
+  }
 }
