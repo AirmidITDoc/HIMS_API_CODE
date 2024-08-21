@@ -1,9 +1,17 @@
-select * from M_ReligionMaster
+Select * from MenuMaster
+Where PermissionCode IS NOT NULL
 
 Select * from MenuMaster
-Where Linkname like 'Religion%' --134
+Where Linkname like 'Patient%' --134
 
+Update MenuMaster Set PermissionCode='PatientType', TableNames = 'PatientTypeMaster' Where Id=134
 
+Select * from  ROlemaster
+
+Select * from PermissionMaster
+Where MenuId = 134 AND ROleId=5
+
+Update PermissionMaster Set IsView=1, IsAdd=1,IsEdit=1, IsDelete=1 Where Id =3058
 
  public virtual async Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username)
  {
@@ -76,7 +84,4 @@ insert_M_AssignSupplierToStore_1
 
 
 
-SupplierName ,ContactPerson ,Address,CityId,StateID, CountryId, CreditPeriod ,Mobile,phone,Fax,Email, ModeofPayment ,TermsofPayment ,CurrencyId          
- Octroi , Freight , IsDeleted , Addedby , SupplierId , PanNo         
-          
          

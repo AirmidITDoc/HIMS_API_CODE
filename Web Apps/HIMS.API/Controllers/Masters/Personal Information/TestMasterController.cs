@@ -25,24 +25,65 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
 
+        //[HttpPost("Insert")]
+        ////[Permission(PageCode = "PathTestMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(TestMasterModel obj)
+        //{
+        //    MPathTestMaster model = obj.MapTo<MPathTestMaster>();
+        //    if (obj.TestId == 0)
+        //    {
+        //        model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
+        //        model.TestTime = Convert.ToDateTime(obj.TestTime);
+        //        model.AddedBy = CurrentUserId;
+        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+        //}
+
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "PathTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(TestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
+
             if (obj.TestId == 0)
             {
                 model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
                 model.TestTime = Convert.ToDateTime(obj.TestTime);
                 model.AddedBy = CurrentUserId;
+
+                if (obj.IsTemplateTest == 1)
+                {
+                    
+                    MPathTemplateDetail objMPathTemplateDetail = obj.MPathTemplateDetail.MapTo<MPathTemplateDetail>();
+                }
+                //else if (obj.IsTemplateTest == 0)
+                //{
+                    
+                //    MPathTestDetailMaster objMPathTestDetailMaster = obj.MPathTestDetailMaster.MapTo<MPathTestDetailMaster>();
+                //}
+
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
+
+             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
             }
             else
+            {
+               
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+            }
         }
 
-            [HttpPut("Edit/{id:int}")]
+
+
+
+
+
+
+        [HttpPut("Edit/{id:int}")]
             //[Permission(PageCode = "PathTestMaster", Permission = PagePermission.Edit)]
             public async Task<ApiResponse> Edit(TestMasterModel obj)
             {

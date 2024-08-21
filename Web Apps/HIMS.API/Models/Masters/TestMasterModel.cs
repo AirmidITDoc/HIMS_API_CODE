@@ -14,6 +14,8 @@ namespace HIMS.API.Models.Masters
         public string? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public string? TestTime { get; set; }
+        public long? IsTemplateTest { get; set; }
+
 
 
         public List<PathTemplateDetailModel> MPathTemplateDetail { get; set; }

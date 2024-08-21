@@ -23,5 +23,7 @@ namespace HIMS.Data.Models
         public int? CreatedBy { get; set; }
         public DateTime? TestTime { get; set; }
         public DateTime? TestDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

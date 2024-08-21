@@ -17,6 +17,7 @@ namespace HIMS.Data.Models
         //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
+        public virtual DbSet<AddchargesBkp> AddchargesBkps { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
         public virtual DbSet<AdmittedPatientBalanceAmount> AdmittedPatientBalanceAmounts { get; set; } = null!;
         public virtual DbSet<AdvRefundDetail> AdvRefundDetails { get; set; } = null!;
@@ -538,6 +539,62 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
                 entity.Property(e => e.ServiceName).HasMaxLength(500);
+
+                entity.HasOne(d => d.BillNoNavigation)
+                    .WithMany(p => p.AddCharges)
+                    .HasForeignKey(d => d.BillNo)
+                    .HasConstraintName("FK_AddCharges_Bill");
+            });
+
+            modelBuilder.Entity<AddchargesBkp>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("addcharges_bkp");
+
+                entity.Property(e => e.CPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("C_Price");
+
+                entity.Property(e => e.CQty).HasColumnName("C_Qty");
+
+                entity.Property(e => e.CTotalAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("C_TotalAmount");
+
+                entity.Property(e => e.ChPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("Ch_Price");
+
+                entity.Property(e => e.ChQty).HasColumnName("Ch_Qty");
+
+                entity.Property(e => e.ChTotalAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("Ch_TotalAmount");
+
+                entity.Property(e => e.ChargesDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ChargesId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ChargesTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ConcessionAmount).HasColumnType("money");
+
+                entity.Property(e => e.IsBillableCharity).HasColumnName("IsBillable_Charity");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.PackageMainChargeId).HasColumnName("PackageMainChargeID");
+
+                entity.Property(e => e.RefundAmount).HasColumnType("money");
+
+                entity.Property(e => e.ServiceName).HasMaxLength(500);
             });
 
             modelBuilder.Entity<Admission>(entity =>
@@ -974,6 +1031,12 @@ namespace HIMS.Data.Models
                     .HasFillFactor(80);
 
                 entity.Property(e => e.ChargesId).HasColumnName("ChargesID");
+
+                entity.HasOne(d => d.BillNoNavigation)
+                    .WithMany(p => p.BillDetails)
+                    .HasForeignKey(d => d.BillNo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BillDetails_Bill");
             });
 
             modelBuilder.Entity<BkpCurrentStk09oct2023>(entity =>
@@ -6500,6 +6563,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MachineName).HasMaxLength(200);
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PrintTestName).HasMaxLength(200);
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
@@ -7010,6 +7075,8 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_TemplateMaster");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TemplateDesc).HasColumnType("text");
 
