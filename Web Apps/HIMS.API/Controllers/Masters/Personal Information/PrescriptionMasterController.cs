@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(PrescriptionMasterModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
-            //model.IsActive = true;
+           
             if (obj.PrecriptionId == 0)
             {
                 model.IsAddBy = CurrentUserId;
@@ -73,7 +73,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(PrescriptionMasterModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
-            //model.IsActive = true;
+
             if (obj.PrecriptionId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             TPrescription model = await _repository.GetById(x => x.PrecriptionId == Id);
             if ((model?.PrecriptionId ?? 0) > 0)
             {
-                //model.IsActive = false;
+             
                 model.IsAddBy = CurrentUserId;
                 model.Date = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
