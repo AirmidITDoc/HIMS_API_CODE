@@ -11,7 +11,7 @@ namespace HIMS.Data.Extensions
     {
         public static List<SearchModel> GetSearchFields(List<SearchFields> model)
         {
-            List<SearchModel> searchModelList = new List<SearchModel>();
+            List<SearchModel> searchModelList = new();
             foreach (SearchFields fields in model)
             {
                 if (string.IsNullOrEmpty(fields.FieldName) || fields.FieldValue == null) throw new Exception("Invalid search field.");
@@ -19,7 +19,7 @@ namespace HIMS.Data.Extensions
                 string fieldName = fields.FieldName;
 
                 if (string.IsNullOrEmpty(fieldName)) continue;
-                SearchModel searchModel = new SearchModel();
+                SearchModel searchModel = new();
                 switch (Convert.ToInt32(fields.OpType))
                 {
                     //(OperatorComparer)Enum.Parse(typeof(OperatorComparer), objFilter.OpType
@@ -32,7 +32,7 @@ namespace HIMS.Data.Extensions
                         };
                         break;
                     case (int)OperatorComparer.InClause:
-                        List<string> values = new List<string>();
+                        List<string> values = new();
                         foreach (var field in fields.FieldValue)
                         {
                             values.Add($"'{field}'");

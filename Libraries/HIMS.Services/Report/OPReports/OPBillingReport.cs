@@ -36,7 +36,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0;
 
             foreach (DataRow dr in Bills.Rows)
@@ -79,7 +79,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount=0;
 
@@ -104,15 +104,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
                  
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count +1;
+                Dcount++;
+                T_Count++;
                 previousLabel = dr["DoctorName"].ConvertToString();
 
                 items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\"border: 1px solid #d4c3c3; text-align: right; padding: 6px;\">").Append(j).Append("</td>");
@@ -131,7 +131,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                        
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -164,7 +164,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -189,15 +189,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
 
                 previousLabel = dr["RefDoctorName"].ConvertToString();
 
@@ -214,7 +214,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
 
@@ -246,8 +246,8 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
+            StringBuilder items = new("");
+            int i = 0;
 
             foreach (DataRow dr in Bills.Rows)
             {
@@ -285,8 +285,8 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
+            StringBuilder items = new("");
+            int i = 0;
 
             foreach (DataRow dr in Bills.Rows)
             {
@@ -326,7 +326,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
              double   T_Count=0;
 
@@ -366,7 +366,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0;
 
@@ -407,7 +407,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Medical = 0, T_Pathology = 0, T_Radiology = 0;
 
@@ -461,7 +461,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -486,15 +486,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["PatientOldAndNew"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
 
                 previousLabel = dr["PatientOldAndNew"].ConvertToString();
 
@@ -515,7 +515,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -547,8 +547,8 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
+            StringBuilder items = new("");
+            int i = 0;
             double T_TotalAmt = 0;
 
             foreach (DataRow dr in Bills.Rows)
@@ -585,7 +585,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -610,15 +610,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
                 previousLabel = dr["DoctorName"].ConvertToDateString();
 
                 items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append(" </td>");
@@ -636,7 +636,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -671,7 +671,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_COUNT = 0;
 
@@ -721,7 +721,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0;
 
@@ -765,7 +765,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0;
 
@@ -807,7 +807,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -832,15 +832,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["VisitDate"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
                 previousLabel = dr["VisitDate"].ConvertToDateString("dd/MM/yyyy");
 
 
@@ -852,7 +852,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -887,7 +887,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_TotalAmt = 0, T_ConcessionAmt = 0, T_NetPayableAmt = 0, T_CashPayAmount = 0, T_CardPayAmount = 0, T_NEFTPayAmount = 0, T_PayTMAmount = 0, T_RefundAmount = 0;
 
@@ -955,9 +955,9 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
-            double T_Count = 0, T_BillAmt = 0, T_ConcessionAmt = 0, T_NetPayableAmt = 0, T_PaidAmount = 0, T_BalanceAmt = 0, T_CashPay = 0, T_ChequePay = 0, T_CardPay = 0, T_NeftPay = 0, T_PayTMPay = 0;
+            StringBuilder items = new("");
+            int i = 0;
+            double T_BillAmt = 0, T_ConcessionAmt = 0, T_NetPayableAmt = 0, T_PaidAmount = 0, T_BalanceAmt = 0, T_CashPay = 0, T_ChequePay = 0, T_CardPay = 0, T_NeftPay = 0, T_PayTMPay = 0;
 
             foreach (DataRow dr in Bills.Rows)
             {
@@ -1029,9 +1029,9 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
-            double T_Count = 0, T_BillAmt = 0, T_ConcessionAmt = 0, T_NetPayableAmt = 0, T_PaidAmount = 0, T_BalanceAmt = 0, T_CashPay = 0, T_ChequePay = 0, T_CardPay = 0, T_NeftPay = 0, T_PayTMPay = 0;
+            StringBuilder items = new("");
+            int i = 0;
+            double T_BillAmt = 0, T_ConcessionAmt = 0, T_PaidAmount = 0, T_BalanceAmt = 0;
 
             foreach (DataRow dr in Bills.Rows)
             {
@@ -1089,7 +1089,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_NetPayableAmt = 0, T_PaidAmount = 0, T_BalanceAmt = 0, T_TotalAmt = 0;
 
@@ -1140,8 +1140,8 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
-            int i = 0, j = 0;
+            StringBuilder items = new("");
+            int i = 0;
             double T_Count = 0;
 
             foreach (DataRow dr in Bills.Rows)
@@ -1185,7 +1185,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -1210,15 +1210,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
 
                 previousLabel = dr["DepartmentName"].ConvertToString();
                 items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
@@ -1229,7 +1229,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -1303,7 +1303,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -1328,15 +1328,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
 
                 previousLabel = dr["DepartmentName"].ConvertToString();
 
@@ -1355,7 +1355,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -1384,7 +1384,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -1409,15 +1409,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
                 previousLabel = dr["DoctorName"].ConvertToString();
 
                 items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
@@ -1439,7 +1439,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Day Wise Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -1469,9 +1469,9 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
-            double T_Count = 0, Dcount = 0, T_TotalAmt = 0;
+            double T_Count = 0, T_TotalAmt = 0;
 
             string previousLabel = "";
 
@@ -1494,7 +1494,7 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;'><td colspan='12' style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Doctor Wise Collection</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                       .Append(T_TotalAmt.ToString()).Append("</td></tr>");
+                       .Append(T_TotalAmt).Append("</td></tr>");
 
                     T_TotalAmt = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"12\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
@@ -1523,7 +1523,7 @@ namespace HIMS.Services.Report.OPReports
                 {
 
                     items.Append("<tr style='border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='12' style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Doctor Wise Collection</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
-                    .Append(T_TotalAmt.ToString()).Append("</td></tr>");
+                    .Append(T_TotalAmt).Append("</td></tr>");
 
                     //items.Append("<tr style='border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='10' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Day Wise Collection</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                     //.Append(T_Count.ToString()).Append("</td></tr>");
@@ -1559,7 +1559,7 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -1584,15 +1584,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
                 previousLabel = dr["DepartmentName"].ConvertToString();
 
 
@@ -1614,7 +1614,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Day Wise Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(Dcount.ToString()).Append("</td></tr>");
+                         .Append(Dcount).Append("</td></tr>");
 
 
                 }
@@ -1644,7 +1644,7 @@ namespace HIMS.Services.Report.OPReports
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
 
@@ -1669,15 +1669,15 @@ namespace HIMS.Services.Report.OPReports
                     j = 1;
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                       .Append(Dcount.ToString()).Append("</td></tr>");
+                       .Append(Dcount).Append("</td></tr>");
 
                     Dcount = 0;
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td></tr>");
 
                 }
 
-                Dcount = Dcount + 1;
-                T_Count = T_Count + 1;
+                Dcount++;
+                T_Count++;
 
                 previousLabel = dr["DepartmentName"].ConvertToString();
 
@@ -1699,7 +1699,7 @@ namespace HIMS.Services.Report.OPReports
 
                     items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> TOTAL</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                         .Append(T_Count.ToString()).Append("</td></tr>");
+                         .Append(T_Count).Append("</td></tr>");
 
 
                 }
@@ -1735,12 +1735,11 @@ namespace HIMS.Services.Report.OPReports
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-            StringBuilder items = new StringBuilder("");
+            StringBuilder items = new("");
             int i = 0, j = 0;
             string previousLabel = "";
-            double TotalCollection = 0;
-            double G_CashPayAmount = 0, G_CardPayAmount = 0, G_ChequePayAmount = 0, G_NETPayAmount = 0, G_NEFTPayAmount = 0, G_PayTMAmount = 0, G_DiscAmount = 0, G_NETAmount = 0, G_PaidAmount = 0, G_BalAmount = 0, G_TotAmount = 0;
-            double T_CashPayAmount = 0, T_CardPayAmount = 0, T_ChequePayAmount = 0, T_NETPayAmount = 0, T_NEFTPayAmount = 0, T_PayTmAmount = 0;
+            double G_CashPayAmount = 0, G_CardPayAmount = 0, G_ChequePayAmount = 0, G_NETPayAmount = 0, G_PayTMAmount = 0, G_DiscAmount = 0, G_NETAmount = 0, G_PaidAmount = 0, G_BalAmount = 0, G_TotAmount = 0;
+            double T_CashPayAmount = 0, T_CardPayAmount = 0, T_ChequePayAmount = 0;
 
           
 
@@ -1748,9 +1747,6 @@ namespace HIMS.Services.Report.OPReports
             double T_TotAmount = 0, T_DiscAmount = 0, T_NetAmount = 0, T_BalAmount = 0, T_PaidAmount = 0;
             double T_BillReturnCash = 0, T_BillReturnCard = 0, T_BillReturnCheque = 0, T_BillReturnNEFT = 0, T_BillReturnPAYTM = 0;
             double T_BillReturnTot = 0, T_BillReturnDisc = 0, T_BillReturnNet = 0, T_BillReturnPaid = 0, T_BillReturnBal = 0;
-            double T_TotalCash = 0, T_TotalCard = 0, T_TotalCheque = 0, T_TotalNEFT = 0, T_TotalPAYTM = 0;
-
-
             foreach (DataRow dr in Bills.Rows)
             {
 
@@ -1776,7 +1772,8 @@ namespace HIMS.Services.Report.OPReports
                         .Append(G_ChequePayAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                         .Append(G_CardPayAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                         .Append(G_PayTMAmount.To2DecimalPlace()).Append("</td></tr>");
-                    G_TotAmount = 0; G_DiscAmount = 0; G_NETAmount = 0; G_PaidAmount = 0; G_BalAmount = 0; G_CashPayAmount = 0; G_CardPayAmount = 0; G_ChequePayAmount = 0; G_NEFTPayAmount = 0; G_PayTMAmount = 0;
+                    G_TotAmount = 0; G_DiscAmount = 0; G_NETAmount = 0; G_PaidAmount = 0; G_BalAmount = 0; G_CashPayAmount = 0; G_CardPayAmount = 0; G_ChequePayAmount = 0; double G_NEFTPayAmount = 0;
+                    G_PayTMAmount = 0;
 
                     items.Append("<tr style=\"font-size:20px;border-bottom: 1px;color:black\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["Type"].ConvertToString()).Append("</td></tr>");
 
@@ -1887,14 +1884,14 @@ namespace HIMS.Services.Report.OPReports
             //T_FinalTotal = T_TotAmount.ConvertToDouble() - T_BillReturnTot.ConvertToDouble();
             //T_FinalTotal = T_TotAmount.ConvertToDouble() - T_BillReturnTot.ConvertToDouble();
 
-            T_TotalCash = T_BillCash.ConvertToDouble() - T_BillReturnCash.ConvertToDouble();
-            T_TotalCard = T_BillCard.ConvertToDouble() - T_BillReturnCard.ConvertToDouble();
-            T_TotalCheque = T_BillCheque.ConvertToDouble() - T_BillReturnCheque.ConvertToDouble();
-            T_TotalNEFT = T_BillNEFT.ConvertToDouble() - T_BillReturnNEFT.ConvertToDouble();
-            T_TotalPAYTM = T_BillPayTm.ConvertToDouble() - T_BillReturnPAYTM.ConvertToDouble();
+            double T_TotalCash = T_BillCash.ConvertToDouble() - T_BillReturnCash.ConvertToDouble();
+            double T_TotalCard = T_BillCard.ConvertToDouble() - T_BillReturnCard.ConvertToDouble();
+            double T_TotalCheque = T_BillCheque.ConvertToDouble() - T_BillReturnCheque.ConvertToDouble();
+            double T_TotalNEFT = T_BillNEFT.ConvertToDouble() - T_BillReturnNEFT.ConvertToDouble();
+            double T_TotalPAYTM = T_BillPayTm.ConvertToDouble() - T_BillReturnPAYTM.ConvertToDouble();
 
 
-            TotalCollection = T_CashPayAmount.ConvertToDouble() + T_CardPayAmount.ConvertToDouble() + T_ChequePayAmount.ConvertToDouble() + T_TotalNEFT.ConvertToDouble() + T_TotalPAYTM.ConvertToDouble();
+            double TotalCollection = T_CashPayAmount.ConvertToDouble() + T_CardPayAmount.ConvertToDouble() + T_ChequePayAmount.ConvertToDouble() + T_TotalNEFT.ConvertToDouble() + T_TotalPAYTM.ConvertToDouble();
 
             html = html.Replace("{{Items}}", items.ToString());
             html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));

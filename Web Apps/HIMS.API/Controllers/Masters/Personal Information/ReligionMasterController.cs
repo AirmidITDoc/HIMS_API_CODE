@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MReligionMaster model = await _repository.GetById(x => x.ReligionId == Id);
             if ((model?.ReligionId ?? 0) > 0)

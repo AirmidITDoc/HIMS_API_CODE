@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "ModeOfPayment", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MModeOfPayment model = await _repository.GetById(x => x.Id == Id);
             if ((model?.Id ?? 0) > 0)

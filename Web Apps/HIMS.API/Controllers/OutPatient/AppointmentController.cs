@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
-            VisitDetail model = new VisitDetail();
+            VisitDetail model = new();
             if (obj.PatVisitID != 0)
             {
                 model.VisitId = obj.PatVisitID;

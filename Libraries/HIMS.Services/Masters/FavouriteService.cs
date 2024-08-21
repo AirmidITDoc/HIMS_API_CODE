@@ -35,7 +35,7 @@ namespace HIMS.Services.Masters
                             Icon = M.Icon ?? string.Empty,
                             LinkAction = M.LinkAction ?? string.Empty,
                             MenuId = P.MenuId,
-                            IsFavourite = F.FavouriteId > 0 ? true : false
+                            IsFavourite = F.FavouriteId > 0
                         });
 
             //if (!string.IsNullOrWhiteSpace(objGrid.SortField))

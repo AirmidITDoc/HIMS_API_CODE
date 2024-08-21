@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Report
         [HttpPost("ViewReport")]
         public IActionResult ViewReport(ReportRequestModel model)
         {
-            switch (model.mode)
+            switch (model.Mode)
             {
                 #region"OP Reports"
 
@@ -126,8 +126,8 @@ namespace HIMS.API.Controllers.Report
                 default:
                     break;
             }
-            model.baseUrl = Convert.ToString(_configuration["BaseUrl"]);
-            model.storageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
+            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }

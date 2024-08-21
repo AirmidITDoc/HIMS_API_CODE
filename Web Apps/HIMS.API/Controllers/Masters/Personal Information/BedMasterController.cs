@@ -79,9 +79,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "Bed", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
-            Bedmaster model = await _repository.GetById(x => x.BedId == Id);
+            Bedmaster? model = await _repository.GetById(x => x.BedId == Id);
             if ((model?.BedId ?? 0) > 0)
             {
                 model.IsActive = false;

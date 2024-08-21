@@ -31,7 +31,7 @@ namespace HIMS.Data
         public async Task<IEnumerable<TModel>> GetAll(Expression<Func<TModel, bool>>? where = null,
             params string[] includes)
         {
-            var query = ApplyIncludes(_dbContext.Set<TModel>(), includes);
+            var query = GenericService<TModel>.ApplyIncludes(_dbContext.Set<TModel>(), includes);
 
             if (where != null)
             {
@@ -44,7 +44,7 @@ namespace HIMS.Data
         public async Task<TModel?> GetById(Expression<Func<TModel, bool>> predicateToGetId,
             params string[] includes)
         {
-            var query = ApplyIncludes(_dbContext.Set<TModel>(), includes);
+            var query = GenericService<TModel>.ApplyIncludes(_dbContext.Set<TModel>(), includes);
 
             return await query.FirstOrDefaultAsync(predicateToGetId);
         }
@@ -100,7 +100,7 @@ namespace HIMS.Data
             return true;
         }
 
-        private IQueryable<TModel> ApplyIncludes(IQueryable<TModel> query, IEnumerable<string> includes)
+        private static IQueryable<TModel> ApplyIncludes(IQueryable<TModel> query, IEnumerable<string> includes)
         {
             return includes.Aggregate(query, (current, include) => current.Include(include));
         }

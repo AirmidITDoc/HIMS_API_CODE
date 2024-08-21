@@ -55,8 +55,10 @@ namespace HIMS.Services.Pharmacy
             para[29] = new SqlParameter("@EwayBillNo", objGRN.EwayBillNo);
             para[30] = new SqlParameter("@EwayBillDate", objGRN.EwayBillDate);
 
-            para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt);
-            para[31].Direction = ParameterDirection.Output;
+            para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.Output
+            };
 
             string grnNo = odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "@GRNID", para);
             objGRN.Grnid = Convert.ToInt32(grnNo);
@@ -129,7 +131,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update purchase details table records
-                List<TPurchaseDetail> objPurDetailsList =  new List<TPurchaseDetail>();
+                List<TPurchaseDetail> objPurDetailsList =  new();
                 foreach (var objDet in objPurDetails)
                 {
                     TPurchaseDetail DetailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
@@ -143,7 +145,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update purchase header table records
-                List<TPurchaseHeader> objPurHeadersList = new List<TPurchaseHeader>();
+                List<TPurchaseHeader> objPurHeadersList = new();
                 foreach (var objHed in objPurHeaders)
                 {
                     TPurchaseHeader HeaderInfo = await _context.TPurchaseHeaders.FirstOrDefaultAsync(x => x.PurchaseId == objHed.PurchaseId);
@@ -176,7 +178,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update purchase details table records
-                List<TPurchaseDetail> objPurDetailsList = new List<TPurchaseDetail>();
+                List<TPurchaseDetail> objPurDetailsList = new();
                 foreach (var objDet in objPurDetails)
                 {
                     TPurchaseDetail DetailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
@@ -189,7 +191,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update purchase header table records
-                List<TPurchaseHeader> objPurHeadersList = new List<TPurchaseHeader>();
+                List<TPurchaseHeader> objPurHeadersList = new();
                 foreach (var objHed in objPurHeaders)
                 {
                     TPurchaseHeader HeaderInfo = await _context.TPurchaseHeaders.FirstOrDefaultAsync(x => x.PurchaseId == objHed.PurchaseId);

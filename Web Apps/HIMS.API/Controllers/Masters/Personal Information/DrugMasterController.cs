@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers
 
         [HttpPost]
         [Permission(PageCode = "DrugMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(DrugMasterModel obj)
+        public async Task<ApiResponse> Post(DrugMasterModel obj)
         {
             MDrugMaster model = obj.MapTo<MDrugMaster>();
             model.IsActive = true;
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "DrugMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MDrugMaster model = await _repository.GetById(x => x.DrugId == Id);
             if ((model?.DrugId ?? 0) > 0)

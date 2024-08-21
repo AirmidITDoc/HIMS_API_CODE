@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers
 
         [HttpPost]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(CompanyMasterModel obj)
+        public async Task<ApiResponse> Post(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
             model.IsActive = true;
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             CompanyMaster model = await _repository.GetById(x => x.CompanyId == Id);
             if ((model?.CompanyId ?? 0) > 0)

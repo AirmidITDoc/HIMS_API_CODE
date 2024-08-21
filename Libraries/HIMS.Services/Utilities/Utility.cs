@@ -28,13 +28,13 @@ namespace HIMS.Services.Utilities
 
         public static List<Dictionary<string, object>> ToList(DataTable table)
         {
-            List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
-            List<string> columns = new List<string>();
+            List<Dictionary<string, object>> list = new();
+            List<string> columns = new();
             foreach (DataColumn col in table.Columns) columns.Add(col.ColumnName);
 
             foreach (DataRow row in table.Rows)
             {
-                Dictionary<string, object> d = new Dictionary<string, object>();
+                Dictionary<string, object> d = new();
                 list.Add(d);
                 foreach (string col in columns)
                 {

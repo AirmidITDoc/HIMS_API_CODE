@@ -13,10 +13,8 @@ namespace HIMS.Services.Common
 {
     public class CommonService : ICommonService
     {
-        private readonly Data.Models.HIMSDbContext _context;
-        public CommonService(HIMSDbContext HIMSDbContext)
+        public CommonService()
         {
-            _context = HIMSDbContext;
         }
 
         public dynamic GetDataSetByProc(ListRequestModel model)
@@ -31,7 +29,7 @@ namespace HIMS.Services.Common
             string sp_Name = string.Empty;
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];
-            switch (model.mode)
+            switch (model.Mode)
             {
                 case "PurchaseOrder": sp_Name = "m_Rtrv_PurchaseOrderList_by_Name_Pagn"; break;
                 case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
@@ -71,7 +69,7 @@ namespace HIMS.Services.Common
             string sp_Name = string.Empty;
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];
-            switch (model.mode)
+            switch (model.Mode)
             {
                 //case "PurchaseOrder": sp_Name = "m_Rtrv_PurchaseOrderList_by_Name_Pagn"; break;
                 //case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;

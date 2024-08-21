@@ -28,15 +28,15 @@ namespace HIMS.API.Controllers.OutPatient
 
         //Add API
         [HttpPost]
-      //  [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        //  [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PhoneAppointmentModel obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             //model.IsActive = true;
             if (obj.PhoneAppId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -47,40 +47,40 @@ namespace HIMS.API.Controllers.OutPatient
 
         //Edit API
         [HttpPut("{id:int}")]
-            //[Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
-            public async Task<ApiResponse> Edit(PhoneAppointmentModel obj)
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PhoneAppointmentModel obj)
+        {
+            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+            // model.IsActive = true;
+            if (obj.PhoneAppId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
             {
-                TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
-                // model.IsActive = true;
-                if (obj.PhoneAppId == 0)
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-                else
-                {
-                    model.UpdatedBy = CurrentUserId;
-                    //  model.UpdatedByDate = DateTime.Now;
+                model.UpdatedBy = CurrentUserId;
+                 model.UpdatedByDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "AddedBy", "UpdatedByDate" });
-                }
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Phone Appointment updated successfully.");
             }
-
-            //Delete API
-            [HttpDelete]
-            //  [Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
-            public async Task<ApiResponse> delete(int Id)
-            {
-                TPhoneAppointment model = await _repository.GetById(x => x.PhoneAppId == Id);
-                if ((model?.PhoneAppId ?? 0) > 0)
-                {
-                    //  model.IsActive = false;
-                    model.UpdatedBy = CurrentUserId;
-                    //  model.ModifiedDate = DateTime.Now;
-                    await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Phone Appointment deleted successfully.");
-                }
-                else
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            }
-
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Phone Appointment updated successfully.");
         }
+
+        //Delete API
+        [HttpDelete]
+        //  [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            TPhoneAppointment model = await _repository.GetById(x => x.PhoneAppId == Id);
+            if ((model?.PhoneAppId ?? 0) > 0)
+            {
+                //  model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Phone Appointment deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+    }
     }
 

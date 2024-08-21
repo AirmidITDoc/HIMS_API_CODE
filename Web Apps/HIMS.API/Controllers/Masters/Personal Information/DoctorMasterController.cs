@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpPost]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(DoctorMasterModel obj)
+        public async Task<ApiResponse> Post(DoctorMasterModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             model.IsActive = true;
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             DoctorMaster model = await _repository.GetById(x => x.DoctorId == Id);
             if ((model?.DoctorId ?? 0) > 0)
