@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long MaritalStatusId { get; set; }
         public string? MaritalStatusName { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
     }
@@ -15,6 +15,8 @@ namespace HIMS.API.Models.Masters
         public MaritalStatusModelValidator()
         {
             RuleFor(x => x.MaritalStatusName).NotNull().NotEmpty().WithMessage("Marital Status is required");
+            RuleFor(x => x.AddedBy).NotNull().NotEmpty().WithMessage("AddedBy  is required");
+
         }
     }
 }
