@@ -13,15 +13,11 @@ namespace HIMS.Services.Report
 {
     public class ReportService : IReportService
     {
-        private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly IOPBillingReport _OPbilling;
         public readonly IPdfUtility _pdfUtility;
-        public ReportService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IOPBillingReport OPbilling, IPdfUtility pdfUtility)
+        public ReportService(IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
         {
-            _context = HIMSDbContext;
             _hostingEnvironment = hostingEnvironment;
-            _OPbilling = OPbilling;
             _pdfUtility = pdfUtility;
         }
 

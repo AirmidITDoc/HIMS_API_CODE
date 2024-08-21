@@ -30,15 +30,15 @@ namespace HIMS.Services.Utilities
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
             {
-                throw new ArgumentNullException("cipherText");
+                throw new ArgumentNullException(nameof(cipherText));
             }
             if (key == null || key.Length <= 0)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
             if (iv == null || iv.Length <= 0)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             // Declare the string used to hold
@@ -63,21 +63,13 @@ namespace HIMS.Services.Utilities
                 try
                 {
                     // Create the streams used for decryption.
-                    using (var msDecrypt = new MemoryStream(cipherText))
-                    {
-                        using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                        {
+                    using var msDecrypt = new MemoryStream(cipherText);
+                    using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
 
-                            using (var srDecrypt = new StreamReader(csDecrypt))
-                            {
-                                // Read the decrypted bytes from the decrypting stream
-                                // and place them in a string.
-                                plaintext = srDecrypt.ReadToEnd();
-
-                            }
-
-                        }
-                    }
+                    using var srDecrypt = new StreamReader(csDecrypt);
+                    // Read the decrypted bytes from the decrypting stream
+                    // and place them in a string.
+                    plaintext = srDecrypt.ReadToEnd();
                 }
                 catch
                 {
@@ -101,15 +93,15 @@ namespace HIMS.Services.Utilities
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
             {
-                throw new ArgumentNullException("plainText");
+                throw new ArgumentNullException(nameof(plainText));
             }
             if (key == null || key.Length <= 0)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
             if (iv == null || iv.Length <= 0)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
             byte[] encrypted;
             // Create a RijndaelManaged object
@@ -127,18 +119,14 @@ namespace HIMS.Services.Utilities
                 var encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
 
                 // Create the streams used for encryption.
-                using (var msEncrypt = new MemoryStream())
+                using var msEncrypt = new MemoryStream();
+                using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+                using (var swEncrypt = new StreamWriter(csEncrypt))
                 {
-                    using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            //Write all data to the stream.
-                            swEncrypt.Write(plainText);
-                        }
-                        encrypted = msEncrypt.ToArray();
-                    }
+                    //Write all data to the stream.
+                    swEncrypt.Write(plainText);
                 }
+                encrypted = msEncrypt.ToArray();
             }
             // Return the encrypted bytes from the memory stream.
             return encrypted;

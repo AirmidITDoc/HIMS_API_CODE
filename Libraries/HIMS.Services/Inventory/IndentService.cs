@@ -55,7 +55,7 @@ namespace HIMS.Services.Inventory
                 _context.TIndentDetails.AddRange(objIndent.TIndentDetails);
                 await _context.SaveChangesAsync(UserId, Username);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Delete header table realted records
                 TIndentHeader? objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);

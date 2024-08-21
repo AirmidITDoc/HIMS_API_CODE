@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Masters
 
         [HttpPost]
         [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(ConcessionReasonMasterModel obj)
+        public async Task<ApiResponse> Post(ConcessionReasonMasterModel obj)
         {
             MConcessionReasonMaster model = obj.MapTo<MConcessionReasonMaster>();
             model.IsActive = true;
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Masters
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MConcessionReasonMaster model = await _repository.GetById(x => x.ConcessionId == Id);
             if ((model?.ConcessionId ?? 0) > 0)

@@ -57,7 +57,7 @@ namespace HIMS.Data.Models
                 await CreateAuditAsync(entityEntry, UserId, Username, IsDelete);
             }
         }
-        private void IncrementVersionNumber(EntityEntry entityEntry)
+        private static void IncrementVersionNumber(EntityEntry entityEntry)
         {
             if (entityEntry.Metadata.FindProperty("Version") != null)
             {

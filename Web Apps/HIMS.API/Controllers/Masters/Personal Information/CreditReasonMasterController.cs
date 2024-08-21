@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MCreditReasonMaster model = await _repository.GetById(x => x.CreditId == Id);
             if ((model?.CreditId ?? 0) > 0)
