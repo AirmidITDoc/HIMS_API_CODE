@@ -47,13 +47,6 @@ namespace HIMS.Data
             return null;
         }
 
-        /// <summary>
-        /// Initialize database settings
-        /// </summary>
-        public static void IntiDatabaseSettings(IServiceCollection services, DataSettings DBSettings)
-        {
-            SetSettings(DBSettings);
-        }
 
 
         /// <summary>

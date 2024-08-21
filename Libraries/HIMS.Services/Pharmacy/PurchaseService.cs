@@ -47,8 +47,10 @@ namespace HIMS.Services.Pharmacy
             para[23] = new SqlParameter("@TransportChanges", objPurchase.TransportChanges);
             para[24] = new SqlParameter("@HandlingCharges", objPurchase.HandlingCharges);
             para[25] = new SqlParameter("@FreightCharges", objPurchase.FreightCharges);
-            para[26] = new SqlParameter("@PurchaseId", SqlDbType.BigInt);
-            para[26].Direction = ParameterDirection.Output;
+            para[26] = new SqlParameter("@PurchaseId", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.Output
+            };
 
             //SqlParameter retval = new SqlParameter("@PurchaseId", System.Data.SqlDbType.BigInt);
             //retval.Direction = System.Data.ParameterDirection.Output;

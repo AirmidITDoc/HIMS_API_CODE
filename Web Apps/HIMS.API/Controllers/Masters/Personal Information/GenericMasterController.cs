@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "GenericMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse>  Delete(int Id)
         {
             MGenericMaster model = await _repository.GetById(x => x.GenericId == Id);
             if ((model?.GenericId ?? 0) > 0)

@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "ItemManufactureMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MItemManufactureMaster model = await _repository.GetById(x => x.ItemManufactureId == Id);
             if ((model?.ItemManufactureId ?? 0) > 0)

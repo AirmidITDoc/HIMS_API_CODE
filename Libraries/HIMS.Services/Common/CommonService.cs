@@ -13,10 +13,8 @@ namespace HIMS.Services.Common
 {
     public class CommonService : ICommonService
     {
-        private readonly Data.Models.HIMSDbContext _context;
-        public CommonService(HIMSDbContext HIMSDbContext)
+        public CommonService()
         {
-            _context = HIMSDbContext;
         }
 
         public dynamic GetDataSetByProc(ListRequestModel model)

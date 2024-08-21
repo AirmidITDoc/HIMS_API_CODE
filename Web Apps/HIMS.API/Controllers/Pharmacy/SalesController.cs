@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Pharmacy
         [HttpPost]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> post(SalesReqDto obj)
+        public async Task<ApiResponse> Post(SalesReqDto obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
             Payment objPayment = obj.Payment.MapTo<Payment>();
