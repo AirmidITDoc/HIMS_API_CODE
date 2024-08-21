@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpPost]
         [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(AreaMasterModel obj)
+        public async Task<ApiResponse> Post(AreaMasterModel obj)
         {
             MAreaMaster model = obj.MapTo<MAreaMaster>();
             model.IsActive = true;
@@ -86,9 +86,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
-            MAreaMaster model = await _repository.GetById(x => x.AreaId == Id);
+            MAreaMaster? model = await _repository.GetById(x => x.AreaId == Id);
             if ((model?.AreaId ?? 0) > 0)
             {
                 model.IsActive = false;

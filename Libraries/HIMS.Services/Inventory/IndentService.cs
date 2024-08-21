@@ -58,7 +58,7 @@ namespace HIMS.Services.Inventory
             catch (Exception ex)
             {
                 // Delete header table realted records
-                TIndentHeader objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
+                TIndentHeader? objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
                 if (objInd != null)
                 {
                     _context.TIndentHeaders.Remove(objInd);
@@ -66,7 +66,7 @@ namespace HIMS.Services.Inventory
 
                 // Delete details table realted records
                 var lst = await _context.TIndentDetails.Where(x => x.IndentId == objIndent.IndentId).ToListAsync();
-                if(lst.Count() > 0)
+                if(lst.Count > 0)
                 {
                     _context.TIndentDetails.RemoveRange(lst);
                 }
@@ -118,7 +118,7 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                TIndentHeader objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
+                TIndentHeader? objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
                 objInd.IsInchargeVerify = objIndent.IsInchargeVerify;
                 objInd.IsInchargeVerifyId = objIndent.IsInchargeVerifyId;
                 objInd.IsInchargeVerifyDate = objIndent.IsInchargeVerifyDate;

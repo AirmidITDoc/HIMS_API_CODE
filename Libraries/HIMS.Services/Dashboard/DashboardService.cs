@@ -88,7 +88,7 @@ namespace HIMS.Services.Dashboard
 
             //var allResults = query1;
             var allResults = query1.Concat(query2).Concat(query3).Concat(query4);
-            return await allResults.ToListAsync();  
+            return await allResults.ToListAsync();
         }
 
         public async Task<List<OPDepartmentRangeChartModel>> GetOPDepartmentRangeChart(OPDepartmentRangeChartRequestModel model)
@@ -108,69 +108,73 @@ namespace HIMS.Services.Dashboard
             if (model.DateRange == "Todays")
             {
                 query = (from M in _context.VisitDetails
-                          join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
-                          where M.VisitDate.Value.Year == TodaysDate.Year && M.VisitDate.Value.Month == TodaysDate.Month && M.VisitDate.Value.Day == TodaysDate.Day
-                          group F by F.DepartmentName into pg
-                          select new OPDepartmentRangeChartModel()
-                          {
-                              Name = pg.FirstOrDefault().DepartmentName,
-                              Value = pg.Count(),
-                              TotalCount = _context.VisitDetails.Count(),
-                              DischargeCount = 0
-                          });
-            } 
-            else if (model.DateRange == "Last Weeks")
-            {
-                query = (from M in _context.VisitDetails
-                          join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
-                          where M.VisitDate >= WeekStartDate && M.VisitDate <= WeekEndDate
-                          group F by F.DepartmentName into pg
-                          select new OPDepartmentRangeChartModel()
-                          {
-                              Name = pg.FirstOrDefault().DepartmentName,
-                              Value = pg.Count(),
-                              TotalCount = _context.VisitDetails.Where(M => M.VisitDate >= WeekStartDate && M.VisitDate <= WeekEndDate).Count(),
-                              DischargeCount = 0
-                          });
+                         join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
+                         where M.VisitDate.Value.Year == TodaysDate.Year && M.VisitDate.Value.Month == TodaysDate.Month && M.VisitDate.Value.Day == TodaysDate.Day
+                         group F by F.DepartmentName into pg
+                         select new OPDepartmentRangeChartModel()
+                         {
+                             Name = pg.FirstOrDefault().DepartmentName,
+                             Value = pg.Count(),
+                             TotalCount = _context.VisitDetails.Count(),
+                             DischargeCount = 0
+                         });
             }
             else if (model.DateRange == "Last Weeks")
             {
                 query = (from M in _context.VisitDetails
-                          join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
-                          where M.VisitDate >= StartDate && M.VisitDate <= EndDate
-                          group F by F.DepartmentName into pg
-                          select new OPDepartmentRangeChartModel()
-                          {
-                              Name = pg.FirstOrDefault().DepartmentName,
-                              Value = pg.Count(),
-                              TotalCount = _context.VisitDetails.Where(M => M.VisitDate >= StartDate && M.VisitDate <= EndDate).Count(),
-                              DischargeCount = 0
-                          });
+                         join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
+                         where M.VisitDate >= WeekStartDate && M.VisitDate <= WeekEndDate
+                         group F by F.DepartmentName into pg
+                         select new OPDepartmentRangeChartModel()
+                         {
+                             Name = pg.FirstOrDefault().DepartmentName,
+                             Value = pg.Count(),
+                             TotalCount = _context.VisitDetails.Where(M => M.VisitDate >= WeekStartDate && M.VisitDate <= WeekEndDate).Count(),
+                             DischargeCount = 0
+                         });
+            }
+            else if (model.DateRange == "Last Weeks")
+            {
+                query = (from M in _context.VisitDetails
+                         join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
+                         where M.VisitDate >= StartDate && M.VisitDate <= EndDate
+                         group F by F.DepartmentName into pg
+                         select new OPDepartmentRangeChartModel()
+                         {
+                             Name = pg.FirstOrDefault().DepartmentName,
+                             Value = pg.Count(),
+                             TotalCount = _context.VisitDetails.Where(M => M.VisitDate >= StartDate && M.VisitDate <= EndDate).Count(),
+                             DischargeCount = 0
+                         });
             }
             return await query.ToListAsync();
         }
 
         public IPAdemissionDischargeCountModel GetIPAdemissionDischargeCount()
         {
-            IPAdemissionDischargeCountModel res = new IPAdemissionDischargeCountModel();
-            res.AppointmentCount = _context.VisitDetails.Where(M => M.VisitDate.Value.Year == DateTime.Now.Year && M.VisitDate.Value.Month == DateTime.Now.Month && M.VisitDate.Value.Day == DateTime.Now.Day).Count();
-            res.SelfPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId == 1).Count();
-            res.CompnayPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId > 1).Count();
-            res.TodayAdmittedPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0).Count();
-            res.TodayDischargePatient = _context.Discharges.Where(M => M.DischargeDate.Value.Year == DateTime.Now.Year && M.DischargeDate.Value.Month == DateTime.Now.Month && M.DischargeDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0).Count();
-            res.TodaySelfPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId == 1).Count();
-            res.TodayOtherPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId > 1).Count();
+            IPAdemissionDischargeCountModel res = new()
+            {
+                AppointmentCount = _context.VisitDetails.Where(M => M.VisitDate.Value.Year == DateTime.Now.Year && M.VisitDate.Value.Month == DateTime.Now.Month && M.VisitDate.Value.Day == DateTime.Now.Day).Count(),
+                SelfPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId == 1).Count(),
+                CompnayPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId > 1).Count(),
+                TodayAdmittedPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0).Count(),
+                TodayDischargePatient = _context.Discharges.Where(M => M.DischargeDate.Value.Year == DateTime.Now.Year && M.DischargeDate.Value.Month == DateTime.Now.Month && M.DischargeDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0).Count(),
+                TodaySelfPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId == 1).Count(),
+                TodayOtherPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == DateTime.Now.Year && M.AdmissionDate.Value.Month == DateTime.Now.Month && M.AdmissionDate.Value.Day == DateTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId > 1).Count()
+            };
             res.TotalAdmittedPatientCount = res.AppointmentCount + res.SelfPatient + res.CompnayPatient + res.TodayAdmittedPatient + res.TodayDischargePatient + res.TodaySelfPatient + res.TodayOtherPatient;
             return res;
         }
 
         public OPVisitCountList GetOPVisitCount(OPVisitCountRequestModel model)
         {
-            OPVisitCountList res = new OPVisitCountList();
-            res.NewPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.PatientOldNew == 0).Count(); 
-            res.OldPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.PatientOldNew == 1).Count();
-            res.CompanyPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.CompanyId > 1).Count();
-            res.CrossConsultantPatCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.CrossConsulFlag == 1).Count();
+            OPVisitCountList res = new()
+            {
+                NewPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.PatientOldNew == 0).Count(),
+                OldPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.PatientOldNew == 1).Count(),
+                CompanyPatientCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.CompanyId > 1).Count(),
+                CrossConsultantPatCount = _context.VisitDetails.Where(M => M.VisitDate >= model.FromDate && M.VisitDate <= model.ToDate && M.CrossConsulFlag == 1).Count()
+            };
             res.TotalVisitCount = res.NewPatientCount + res.OldPatientCount + res.CompanyPatientCount + res.CrossConsultantPatCount;
             return res;
         }
