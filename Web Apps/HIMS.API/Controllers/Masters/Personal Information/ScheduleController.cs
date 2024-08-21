@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(ScheduleModel obj)
+        public async Task<ApiResponse> Post(ScheduleModel obj)
         {
             ScheduleMaster model = obj.MapTo<ScheduleMaster>();
             model.IsActive = true;
@@ -73,7 +73,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpDelete]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             ScheduleMaster model = await _repository.GetById(x => x.Id == Id);
             if ((model?.Id ?? 0) > 0)

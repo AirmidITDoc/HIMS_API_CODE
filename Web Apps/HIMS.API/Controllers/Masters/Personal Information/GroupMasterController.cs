@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers
 
         [HttpPost]
         [Permission(PageCode = "GroupMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(GroupMasterModel obj)
+        public async Task<ApiResponse> Post(GroupMasterModel obj)
         {
             GroupMaster model = obj.MapTo<GroupMaster>();
             model.IsActive = true;
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "GroupMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             GroupMaster model = await _repository.GetById(x => x.GroupId == Id);
             if ((model?.GroupId ?? 0) > 0)

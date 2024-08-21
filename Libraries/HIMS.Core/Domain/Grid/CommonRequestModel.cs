@@ -8,17 +8,17 @@ namespace HIMS.Core.Domain.Grid
         //public int PageNumber { get; set; } = 1;
         //public int PageSize { get; set; } = 10;
         public List<SearchFields> SearchFields { get; set; } = new List<SearchFields>();
-        public string? mode { get; set; }
+        public string? Mode { get; set; }
       }
 
     public class ReportRequestModel
     {
         public List<SearchFields> SearchFields { get; set; } = new List<SearchFields>();
-        public string? mode { get; set; }
+        public string? Mode { get; set; }
         [JsonIgnore]
-        public string baseUrl { get; set; } = string.Empty;
+        public string BaseUrl { get; set; } = string.Empty;
         [JsonIgnore]
-        public string storageBaseUrl { get; set; } = string.Empty;
+        public string StorageBaseUrl { get; set; } = string.Empty;
     }
 
     public class SortingField
@@ -40,8 +40,8 @@ namespace HIMS.Core.Domain.Grid
     }
     public class CommonFileResponseModel
     {
-        public string? htmlFilePath { get; set; }
-        public string? htmlHeaderFilePath { get; set; }
-        public List<SearchModel>? fields { get; set; }
+        public string? HtmlFilePath { get; set; }
+        public string? HtmlHeaderFilePath { get; set; }
+        public List<SearchModel>? Fields { get; set; }
     }
 }

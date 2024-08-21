@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.Masters
         /// <returns>200 for success.</returns>
         [HttpPost]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(CashCounterModel obj)
+        public async Task<ApiResponse> Post(CashCounterModel obj)
         {
             CashCounter model = obj.MapTo<CashCounter>();
             model.IsActive = true;
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpDelete]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             CashCounter model = await _repository.GetById(x => x.CashCounterId == Id);
             if ((model?.CashCounterId ?? 0) > 0)

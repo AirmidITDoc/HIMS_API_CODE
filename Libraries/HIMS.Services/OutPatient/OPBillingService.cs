@@ -31,7 +31,7 @@ namespace HIMS.Services.OutPatient
             //      m_insert_Payment_1
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "PBillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "Ch_TotalAmt", "Ch_ConcessionAmt", "Ch_NetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo" };
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo" };
             var entity = objBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -39,13 +39,21 @@ namespace HIMS.Services.OutPatient
             }
             string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
             objBill.BillNo = Convert.ToInt32(vBillNo);
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
-            //foreach (var objItem in objGRN.TGrndetails)
-            //{
-            //    objItem.Grnid = objGRN.Grnid;
-            //}
-            //_context.TGrndetails.AddRange(objGRN.TGrndetails);
+            foreach (var objItem1 in objBill.AddCharges)
+            {
+                objItem1.BillNo = objBill.BillNo;
+                _context.AddCharges.AddRange(objBill.AddCharges);
+
+                foreach (var objItem in objBill.BillDetails)
+                {
+                    objItem.BillNo = objBill.BillNo;
+                    objItem.ChargesId = objItem1?.ChargesId;
+                }
+                _context.BillDetails.AddRange(objBill.BillDetails);
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            }
+
 
             //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
             //var visitentity = objVisitDetail.ToDictionary();

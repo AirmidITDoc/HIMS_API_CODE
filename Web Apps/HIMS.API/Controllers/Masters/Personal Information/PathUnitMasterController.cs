@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MPathUnitMaster model = await _repository.GetById(x => x.UnitId == Id);
             if ((model?.UnitId ?? 0) > 0)

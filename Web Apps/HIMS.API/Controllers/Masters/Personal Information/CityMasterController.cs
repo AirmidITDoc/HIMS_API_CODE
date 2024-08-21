@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MCityMaster model = await _repository.GetById(x => x.CityId == Id);
             if ((model?.CityId ?? 0) > 0)

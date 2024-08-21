@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters
 
         [HttpPost]
         [Permission(PageCode = "Gender", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(GenderModel obj)
+        public async Task<ApiResponse> Post(GenderModel obj)
         {
             DbGenderMaster model = obj.MapTo<DbGenderMaster>();
             model.IsActive = true;
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpDelete]
         [Permission(PageCode = "Gender", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             DbGenderMaster model = await _repository.GetById(x => x.GenderId == Id);
             if ((model?.GenderId ?? 0) > 0)

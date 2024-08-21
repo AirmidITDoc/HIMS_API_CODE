@@ -28,17 +28,17 @@ namespace HIMS.Data.Models
     }
     public class MenuModel
     {
-        public string id { get; set; }
-        public string title { get; set; }
-        public string translate { get; set; }
-        public string type { get; set; }
-        public string icon { get; set; }
-        public string url { get; set; }
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Translate { get; set; }
+        public string Type { get; set; }
+        public string Icon { get; set; }
+        public string Url { get; set; }
         public bool IsView { get; set; }
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
-        public List<MenuModel> children { get; set; }
+        public List<MenuModel> Children { get; set; }
     }
     public class FavouriteModel
     {

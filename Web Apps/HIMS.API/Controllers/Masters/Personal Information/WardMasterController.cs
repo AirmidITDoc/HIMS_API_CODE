@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             RoomMaster model = await _repository.GetById(x => x.RoomId == Id);
             if ((model?.RoomId ?? 0) > 0)

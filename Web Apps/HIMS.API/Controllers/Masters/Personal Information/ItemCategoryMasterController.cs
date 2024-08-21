@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "ItemCategoryMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MItemCategoryMaster model = await _repository.GetById(x => x.ItemCategoryId == Id);
             if ((model?.ItemCategoryId ?? 0) > 0)

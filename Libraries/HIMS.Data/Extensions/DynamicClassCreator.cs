@@ -17,25 +17,24 @@ namespace HIMS.Data.Extensions
     public class DynamicClassCreator
     {
 
-        public Type objType { get; set; }
+        public Type ObjType { get; set; }
 
         public DynamicClassCreator()
         {
-            this.objType = null;
+            this.ObjType = null;
         }
 
         public object CreateNewObject(List<DynamicClassField> Fields)
         {
-            this.objType = CompileResultType(Fields);
-            var myObject = Activator.CreateInstance(this.objType);
+            this.ObjType = CompileResultType(Fields);
+            var myObject = Activator.CreateInstance(this.ObjType);
 
             return myObject;
         }
         public static Type CompileResultType(List<DynamicClassField> Fields)
         {
             TypeBuilder tb = GetTypeBuilder();
-            ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
-
+         
             // NOTE: assuming your list contains Field objects with fields FieldName(string) and FieldType(Type)
             foreach (var field in Fields)
                 CreateProperty(tb, field.FieldName, field.FieldType);

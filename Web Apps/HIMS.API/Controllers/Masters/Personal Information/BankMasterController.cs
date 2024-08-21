@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpPost]
         [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(BankMasterModel obj)
+        public async Task<ApiResponse> Post(BankMasterModel obj)
         {
             MBankMaster model = obj.MapTo<MBankMaster>();
             model.IsActive = true;
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MBankMaster model = await _repository.GetById(x => x.BankId == Id);
             if ((model?.BankId ?? 0) > 0)

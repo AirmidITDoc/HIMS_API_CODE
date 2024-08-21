@@ -2,25 +2,25 @@
 
 namespace HIMS.API.Models.OutPatient
 {
+    //public class OPBillIngModel
+    //{
+    //    public BillModel Bill { get; set; }
+    //    public ChargesModel AddCharge { get; set; }
+    //    public BillDetailsModel BillDet { get; set; }
+    //    //public OPPaymentModel Payment { get; set; }
+    //}
+
     public class OPBillIngModel
     {
-        public BillModel Bill { get; set; }
-        //public ChargesModel Charges { get; set; }
-        //public BillDetailsModel BillDet { get; set;}
-        //public OPPaymentModel Payment { get; set; }
-    }
-
-    public class BillModel
-    {
         public int BillNo { get; set; }
-        public int? OPD_IPD_ID { get; set; }
+        public int? OPDIPDID { get; set; }
         public float? TotalAmt { get; set; }
         public float? ConcessionAmt { get; set; }
         public float? NetPayableAmt { get; set; }
         public float? PaidAmt { get; set; }
         public float? BalanceAmt { get; set; }
         public string? BillDate { get; set; }
-        public int? OPD_IPD_Type { get; set; }
+        public int? OPDIPDType { get; set; }
         public int? AddedBy { get; set; }
         public float? TotalAdvanceAmount { get; set; }
         public string? BillTime { get; set; }
@@ -34,17 +34,19 @@ namespace HIMS.API.Models.OutPatient
         public int? InterimOrFinal { get; set; }
         public int? CompanyRefNo { get; set; }
         public int? ConcessionAuthorizationName { get; set; }
-        public float? TaxPer { get; set; }
-        public float? TaxAmount { get; set; }
+        public float? SpeTaxPer { get; set; }
+        public float? SpeTaxAmt { get; set; }
         public int? CompDiscAmt { get; set; }
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
+        public List<ChargesModel> AddCharge { get; set; }
+        public List<BillDetailsModel> BillDetails { get; set; }
     }
-    public class BillModelValidator : AbstractValidator<BillModel>
+    public class BillModelValidator : AbstractValidator<OPBillIngModel>
     {
         public BillModelValidator()
         {
-            RuleFor(x => x.OPD_IPD_ID).NotNull().NotEmpty().WithMessage("OPD_IPD_ID is required");
+            RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
             RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
             RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
             RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
@@ -52,45 +54,62 @@ namespace HIMS.API.Models.OutPatient
         }
     }
 
-    //public class BillDetailsModel
-    //{
-    //    public int BillNo { get; set; }
-    //    public int ChargesId { get; set; }
-    //}
+    public class BillDetailsModel
+    {
+        public int BillNo { get; set; }
+        public int ChargesId { get; set; }
+    }
 
-    //public class ChargesModel
-    //{
-    //    public DateTime ChargesDate { get; set; }
-    //    public bool OPD_IPD_Type { get; set; }
-    //    public int OPD_IPD_Id { get; set; }
-    //    public int ServiceId { get; set; }
-    //    public long Price { get; set; }
-    //    public long Qty { get; set; }
-    //    public float TotalAmt { get; set; }
-    //    public float ConcessionPercentage { get; set; }
-    //    public float ConcessionAmount { get; set; }
-    //    public float NetAmount { get; set; }
-    //    public int DoctorId { get; set; }
-    //    public float DocPercentage { get; set; }
-    //    public float DocAmt { get; set; }
-    //    public float HospitalAmt { get; set; }
-    //    public bool IsGenerated { get; set; }
-    //    public int AddedBy { get; set; }
-    //    public bool IsCancelled { get; set; }
-    //    public bool IsCancelledBy { get; set; }
-    //    public DateTime IsCancelledDate { get; set; }
-    //    public bool IsPathology { get; set; }
-    //    public bool IsRadiology { get; set; }
-    //    public bool IsPackage { get; set; }
-    //    public int PackageMainChargeID { get; set; }
-    //    public bool IsSelfOrCompanyService { get; set; }
-    //    public int PackageId { get; set; }
-    //    public DateTime ChargeTime { get; set; }
-    //    public int ClassId { get; set; }
-    //    public int BillNo { get; set; }
-    //    public int ChargeID { get; set; }
+    public class BillDetailsModelValidator : AbstractValidator<BillDetailsModel>
+    {
+        public BillDetailsModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
+        }
+    }
 
-    //}
+    public class ChargesModel
+    {
+        public int ChargeID { get; set; }
+        public string? ChargesDate { get; set; }
+        public long? OPDIPDType { get; set; }
+        public int? OPDIPDId { get; set; }
+        public int? ServiceId { get; set; }
+        public long? Price { get; set; }
+        public long? Qty { get; set; }
+        public float? TotalAmt { get; set; }
+        public float? ConcessionPercentage { get; set; }
+        public float? ConcessionAmount { get; set; }
+        public float? NetAmount { get; set; }
+        public int? DoctorId { get; set; }
+        public float? DocPercentage { get; set; }
+        public float? DocAmt { get; set; }
+        public float? HospitalAmt { get; set; }
+        public bool? IsGenerated { get; set; }
+        public int? AddedBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public bool? IsCancelledBy { get; set; }
+        public string? IsCancelledDate { get; set; }
+        public bool? IsPathology { get; set; }
+        public bool? IsRadiology { get; set; }
+        public bool? IsPackage { get; set; }
+        public int? PackageMainChargeID { get; set; }
+        public bool? IsSelfOrCompanyService { get; set; }
+        public int? PackageId { get; set; }
+        public string? ChargeTime { get; set; }
+        public int? ClassId { get; set; }
+        public int? BillNo { get; set; }
+
+    }
+    public class ChargesModelValidator : AbstractValidator<ChargesModel>
+    {
+        public ChargesModelValidator()
+        {
+            RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+        }
+    }
 
     //public class OPPaymentModel
     //{
