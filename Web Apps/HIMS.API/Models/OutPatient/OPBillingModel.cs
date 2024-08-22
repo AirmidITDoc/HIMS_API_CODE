@@ -39,7 +39,7 @@ namespace HIMS.API.Models.OutPatient
         public int? CompDiscAmt { get; set; }
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
-        public List<ChargesModel> AddCharge { get; set; }
+        public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
     }
     public class BillModelValidator : AbstractValidator<OPBillIngModel>
@@ -71,35 +71,35 @@ namespace HIMS.API.Models.OutPatient
 
     public class ChargesModel
     {
-        public int ChargeID { get; set; }
+        public long ChargesId { get; set; }
         public string? ChargesDate { get; set; }
-        public long? OPDIPDType { get; set; }
-        public int? OPDIPDId { get; set; }
-        public int? ServiceId { get; set; }
-        public long? Price { get; set; }
-        public long? Qty { get; set; }
+        public int? OpdIpdType { get; set; }
+        public long? OpdIpdId { get; set; }
+        public long? ServiceId { get; set; }
+        public float? Price { get; set; }
+        public float? Qty { get; set; }
         public float? TotalAmt { get; set; }
         public float? ConcessionPercentage { get; set; }
         public float? ConcessionAmount { get; set; }
         public float? NetAmount { get; set; }
-        public int? DoctorId { get; set; }
+        public long? DoctorId { get; set; }
         public float? DocPercentage { get; set; }
         public float? DocAmt { get; set; }
         public float? HospitalAmt { get; set; }
         public bool? IsGenerated { get; set; }
         public int? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
-        public bool? IsCancelledBy { get; set; }
+        public long? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
         public bool? IsPathology { get; set; }
         public bool? IsRadiology { get; set; }
         public bool? IsPackage { get; set; }
         public int? PackageMainChargeID { get; set; }
         public bool? IsSelfOrCompanyService { get; set; }
-        public int? PackageId { get; set; }
-        public string? ChargeTime { get; set; }
-        public int? ClassId { get; set; }
-        public int? BillNo { get; set; }
+        public long? PackageId { get; set; }
+        public string? ChargesTime { get; set; }
+        public long? ClassId { get; set; }
+        public long? BillNo { get; set; }
 
     }
     public class ChargesModelValidator : AbstractValidator<ChargesModel>
