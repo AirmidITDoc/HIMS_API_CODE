@@ -29,49 +29,46 @@ namespace HIMS.Services.OutPatient
             //      m_insert_PathologyReportHeader_1
             //      m_insert_RadiologyReportHeader_1
             //      m_insert_Payment_1
-
-            DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo" };
-            var entity = objBill.ToDictionary();
-            foreach (var rProperty in rEntity)
+            try
             {
-                entity.Remove(rProperty);
-            }
-            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
-            objBill.BillNo = Convert.ToInt32(vBillNo);
-
-            foreach (var objItem1 in objBill.AddCharges)
-            {
-                objItem1.BillNo = objBill.BillNo;
-                _context.AddCharges.AddRange(objBill.AddCharges);
-
-                foreach (var objItem in objBill.BillDetails)
+                DatabaseHelper odal = new();
+                string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+                var entity = objBill.ToDictionary();
+                foreach (var rProperty in rEntity)
                 {
-                    objItem.BillNo = objBill.BillNo;
-                    objItem.ChargesId = objItem1?.ChargesId;
+                    entity.Remove(rProperty);
                 }
-                _context.BillDetails.AddRange(objBill.BillDetails);
-                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                objBill.BillNo = Convert.ToInt32(vBillNo);
+
+                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+                {
+                    foreach (var objItem1 in objBill.AddCharges)
+                    {
+                        objItem1.BillNo = objBill.BillNo;
+                        objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
+                        objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
+                        objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
+                        _context.AddCharges.Add(objItem1);
+                        await _context.SaveChangesAsync();
+
+                        foreach (var objItem in objBill.BillDetails)
+                        {
+                            objItem.BillNo = objBill.BillNo;
+                            objItem.ChargesId = objItem1?.ChargesId;
+                            _context.BillDetails.Add(objItem);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                    scope.Complete();
+                }
             }
-
-
-            //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
-            //var visitentity = objVisitDetail.ToDictionary();
-            //foreach (var rProperty in rVisitEntity)
-            //{
-            //    visitentity.Remove(rProperty);
-            //}
-            //string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-
-            //SqlParameter[] para = new SqlParameter[1];
-            //para[0] = new SqlParameter
-            //{
-            //    SqlDbType = SqlDbType.BigInt,
-            //    ParameterName = "@PatVisitID",
-            //    Value = Convert.ToInt32(VisitId)
-            //};
-            //odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, para);
+            catch (Exception)
+            {
+                Bill objBills = await _context.Bills.FindAsync(objBill.BillNo);
+                _context.Bills.Remove(objBills);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

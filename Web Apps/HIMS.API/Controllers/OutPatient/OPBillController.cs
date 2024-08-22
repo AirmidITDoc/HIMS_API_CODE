@@ -35,7 +35,6 @@ namespace HIMS.API.Controllers.OutPatient
             Bill model = obj.MapTo<Bill>();
             if (obj.BillNo == 0)
             {
-                model.BillDate = Convert.ToDateTime(obj.BillDate);
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 await _oPBillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
