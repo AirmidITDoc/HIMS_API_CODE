@@ -28,8 +28,8 @@ namespace HIMS.API.Controllers.Masters
         //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MReligionMaster> MReligionMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MReligionMasterList.ToGridResponse(objGrid, "Religion List"));
+            IPagedList<MReligionMaster> ReligionMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(ReligionMasterList.ToGridResponse(objGrid, "Religion List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.ReligionId == id);
-            return data.ToSingleResponse<MReligionMaster, ReligionMasterModel>("Religion ype");
+            return data.ToSingleResponse<MReligionMaster, ReligionMasterModel>("ReligionMaster");
         }
         //Add API
         [HttpPost]
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Masters
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion Name  added successfully.");
         }
 
         //Edit API
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ReligionName updated successfully.");
         }
 
         //Delete API
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Religion deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ReligionName  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -29,8 +29,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "CountryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MCountryMaster> MCountryMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MCountryMasterList.ToGridResponse(objGrid, "Country  List"));
+            IPagedList<MCountryMaster> CountryMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(CountryMasterList.ToGridResponse(objGrid, "CountryMaster List"));
         }
 
         //List API Get By Id
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.CountryId == id);
-            return data.ToSingleResponse<MCountryMaster, CountryMasterModel>("CountryType");
+            return data.ToSingleResponse<MCountryMaster, CountryMasterModel>("CountryMaster");
         }
 
         //Add API
@@ -55,13 +55,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             //model.IsActive = true;
             if (obj.CountryId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country  Name added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -74,11 +74,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country  Name updated successfully.");
         }
 
         //Delete API
@@ -90,10 +90,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             if ((model?.CountryId ?? 0) > 0)
             {
                 //model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Country Name  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

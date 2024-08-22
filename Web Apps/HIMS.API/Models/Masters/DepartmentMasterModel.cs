@@ -13,7 +13,7 @@ namespace HIMS.API.Models.Masters
     {
         public DepartmentMasterModelValidator()
         {
-            RuleFor(x => x.DepartmentName).NotNull().NotEmpty().WithMessage("Department is required");
+            RuleFor(x => x.DepartmentName).NotNull().NotEmpty().WithMessage("DepartmentName is required");
         }
     }
 }
