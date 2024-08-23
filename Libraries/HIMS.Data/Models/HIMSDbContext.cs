@@ -226,11 +226,11 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPathCategoryMaster> MPathCategoryMasters { get; set; } = null!;
         public virtual DbSet<MPathParaRangeMaster> MPathParaRangeMasters { get; set; } = null!;
         public virtual DbSet<MPathParameterMaster> MPathParameterMasters { get; set; } = null!;
-        public virtual DbSet<MPathTemplateDetail> MPathTemplateDetails { get; set; } = null!;
+        public virtual DbSet<MPathTemplateDetail> MPathTemplateDetail { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail1> MPathTemplateDetails1 { get; set; } = null!;
         public virtual DbSet<MPathTestDetailMaster> MPathTestDetailMasters { get; set; } = null!;
         public virtual DbSet<MPathTestFormula> MPathTestFormulas { get; set; } = null!;
-        public virtual DbSet<MPathTestMaster> MPathTestMasters { get; set; } = null!;
+        public virtual DbSet<MPathTestMaster> MPathTestMaster { get; set; } = null!;
         public virtual DbSet<MPathUnitMaster> MPathUnitMasters { get; set; } = null!;
         public virtual DbSet<MPresTemplateD> MPresTemplateDs { get; set; } = null!;
         public virtual DbSet<MPresTemplateH> MPresTemplateHs { get; set; } = null!;
