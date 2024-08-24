@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Masters
     {
         public CurrencyMasterModelValidator()
         {
-            RuleFor(x => x.CurrencyName).NotNull().NotEmpty().WithMessage("Patient Type is required");
+            RuleFor(x => x.CurrencyName).NotNull().NotEmpty().WithMessage("CurrencyName is required");
         }
     }
 }

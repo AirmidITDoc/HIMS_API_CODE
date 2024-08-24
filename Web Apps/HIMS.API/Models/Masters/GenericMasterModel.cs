@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
     {
         public GenericMasterModelValidator()
         {
-            RuleFor(x => x.GenericName).NotNull().NotEmpty().WithMessage("Generic is required");
+            RuleFor(x => x.GenericName).NotNull().NotEmpty().WithMessage("GenericName is required");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
     {
         public PathUnitMasterModelValidator()
         {
-            RuleFor(x => x.UnitName).NotNull().NotEmpty().WithMessage("Patient Type is required");
+            RuleFor(x => x.UnitName).NotNull().NotEmpty().WithMessage("UnitName  is required");
         }
     }
 }

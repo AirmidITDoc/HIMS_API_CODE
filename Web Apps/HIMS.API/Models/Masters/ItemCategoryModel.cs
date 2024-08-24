@@ -6,12 +6,16 @@ namespace HIMS.API.Models.Masters
     {
         public long ItemCategoryId { get; set; }
         public string? ItemCategoryName { get; set; }
+        public long? ItemTypeId { get; set; }
+
     }
     public class ItemCategoryModelValidator : AbstractValidator<ItemCategoryModel>
     {
         public ItemCategoryModelValidator()
         {
-            RuleFor(x => x.ItemCategoryName).NotNull().NotEmpty().WithMessage("Item Category is required");
+            RuleFor(x => x.ItemCategoryName).NotNull().NotEmpty().WithMessage("ItemCategoryName is required");
+            RuleFor(x => x.ItemTypeId).NotNull().NotEmpty().WithMessage("ItemTypeId is required");
+
         }
     }
 }

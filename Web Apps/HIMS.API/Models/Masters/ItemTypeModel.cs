@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
     {
         public ItemTypeModelValidator()
         {
-            RuleFor(x => x.ItemTypeName).NotNull().NotEmpty().WithMessage("Item Type is required");
+            RuleFor(x => x.ItemTypeName).NotNull().NotEmpty().WithMessage("ItemTypeName is required");
         }
     }
 }

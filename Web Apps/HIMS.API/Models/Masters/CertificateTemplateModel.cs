@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
     {
         public CertificateTemplateModelValidator()
         {
-            RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("Certificate is required");
+            RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("TemplateDesc is required");
         }
     }
 }
