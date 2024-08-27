@@ -43,6 +43,7 @@ namespace HIMS.API.Models.Inventory
         public long PtemplateId { get; set; }
         public long TestId { get; set; }
         public long  TemplateId { get; set; }
+
     }
     public class PathTemplateDetailModelValidator : AbstractValidator<PathTemplateDetailModel>
     {

@@ -8,10 +8,9 @@ namespace HIMS.Data.Models
         public long PtemplateId { get; set; }
         public long? TestId { get; set; }
         public long? TemplateId { get; set; }
-        //public string? Test { get; set; } 
 
+        public virtual MPathTestMaster? PathTestMaster { get; set; }
 
-        public virtual MPathTestMaster? pathTest { get; set; }
 
     }
 }
