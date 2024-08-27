@@ -7,7 +7,7 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
-using static HIMS.API.Models.Masters.PathTemplateDetailModelValidator;
+
 
 namespace HIMS.API.Infrastructure
 {
@@ -36,13 +36,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<MRelationshipMaster, RelationshipMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCountryMaster, CountryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RoomMaster, WardMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<DischargeTypeMaster, DischargeTypeModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DischargeTypeMaster, DischargeTypeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MStoreMaster, StoreMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            
             CreateMap<MUnitofMeasurementMaster, UnitOfMeasurementModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCreditReasonMaster, CreditReasonModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-           CreateMap<MPathTestMaster, TestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+           CreateMap<MPathTestMaster, PathTestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            
             

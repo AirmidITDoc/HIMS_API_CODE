@@ -226,11 +226,11 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPathCategoryMaster> MPathCategoryMasters { get; set; } = null!;
         public virtual DbSet<MPathParaRangeMaster> MPathParaRangeMasters { get; set; } = null!;
         public virtual DbSet<MPathParameterMaster> MPathParameterMasters { get; set; } = null!;
-        public virtual DbSet<MPathTemplateDetail> MPathTemplateDetail { get; set; } = null!;
+        public virtual DbSet<MPathTemplateDetail> MPathTemplateDetails { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail1> MPathTemplateDetails1 { get; set; } = null!;
         public virtual DbSet<MPathTestDetailMaster> MPathTestDetailMasters { get; set; } = null!;
         public virtual DbSet<MPathTestFormula> MPathTestFormulas { get; set; } = null!;
-        public virtual DbSet<MPathTestMaster> MPathTestMaster { get; set; } = null!;
+        public virtual DbSet<MPathTestMaster> MPathTestMasters { get; set; } = null!;
         public virtual DbSet<MPathUnitMaster> MPathUnitMasters { get; set; } = null!;
         public virtual DbSet<MPresTemplateD> MPresTemplateDs { get; set; } = null!;
         public virtual DbSet<MPresTemplateH> MPresTemplateHs { get; set; } = null!;
@@ -6529,6 +6529,11 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_PathTemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTemplateDetail1s)
+                    .HasForeignKey(d => d.TestId)
+                    .HasConstraintName("constraint_name");
             });
 
             modelBuilder.Entity<MPathTestDetailMaster>(entity =>
@@ -8063,6 +8068,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
 
+                entity.Property(e => e.Tdsamount)
+                    .HasColumnType("money")
+                    .HasColumnName("TDSAmount");
+
                 entity.Property(e => e.TranMode).HasMaxLength(30);
             });
 
@@ -8653,6 +8662,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
                 entity.Property(e => e.ServiceDetailId).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Service)
+                    .WithMany()
+                    .HasForeignKey(d => d.ServiceId)
+                    .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
 
             modelBuilder.Entity<ServiceMaster>(entity =>
