@@ -6541,6 +6541,21 @@ namespace HIMS.Data.Models
                     .HasConstraintName("constraint_name");
             });
 
+            //modelBuilder.Entity<MPathTemplateDetail1>(entity =>
+            //{
+            //    entity.HasKey(e => e.PtemplateId)
+            //        .HasName("PK_M_Path_TemplateDetails1");
+
+            //    entity.ToTable("M_PathTemplateDetails");
+
+            //    entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+            //    entity.HasOne(d => d.Test)
+            //        .WithMany(p => p.MPathTemplateDetail1s)
+            //        .HasForeignKey(d => d.TestId)
+            //        .HasConstraintName("constraint_name");
+            //});
+
             modelBuilder.Entity<MPathTestDetailMaster>(entity =>
             {
                 entity.HasKey(e => e.TestDetId)
