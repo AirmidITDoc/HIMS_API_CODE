@@ -5,6 +5,12 @@ namespace HIMS.Data.Models
 {
     public partial class Bill
     {
+        public Bill()
+        {
+            AddCharges = new HashSet<AddCharge>();
+            BillDetails = new HashSet<BillDetail>();
+        }
+
         public long BillNo { get; set; }
         public long? OpdIpdId { get; set; }
         public decimal? TotalAmt { get; set; }
@@ -44,5 +50,8 @@ namespace HIMS.Data.Models
         public string? BillMonth { get; set; }
         public string? BillYear { get; set; }
         public string? PrintBillNo { get; set; }
+
+        public virtual ICollection<AddCharge> AddCharges { get; set; }
+        public virtual ICollection<BillDetail> BillDetails { get; set; }
     }
 }

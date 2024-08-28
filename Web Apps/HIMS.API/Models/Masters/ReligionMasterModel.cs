@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long ReligionId { get; set; }
         public string? ReligionName { get; set; }
-        
+       
     }
 
     public class ReligionMasterModelValidator : AbstractValidator<ReligionMasterModel>
@@ -14,6 +14,8 @@ namespace HIMS.API.Models.Masters
         public ReligionMasterModelValidator()
         {
             RuleFor(x => x.ReligionName).NotNull().NotEmpty().WithMessage("Religion is required");
+            
+
         }
     }
 }

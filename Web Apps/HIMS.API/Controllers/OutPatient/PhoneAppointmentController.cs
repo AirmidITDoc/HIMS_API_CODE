@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.OutPatient
         //Delete API
         [HttpDelete]
         //  [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             TPhoneAppointment model = await _repository.GetById(x => x.PhoneAppId == Id);
             if ((model?.PhoneAppId ?? 0) > 0)

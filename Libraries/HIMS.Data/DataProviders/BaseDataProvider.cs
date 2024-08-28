@@ -17,24 +17,8 @@ namespace HIMS.Data.DataProviders
 {
     public abstract class BaseDataProvider
     {
+
         #region Utils
-
-        /// <summary>
-        /// Gets an additional mapping schema
-        /// </summary>
-        private MappingSchema GetMappingSchema()
-        {
-            if (Singleton<MappingSchema>.Instance is null)
-            {
-                Singleton<MappingSchema>.Instance = new MappingSchema(ConfigurationName)
-                {
-                    //  MetadataReader = new FluentMigratorMetadataReader()
-                };
-            }
-
-            return Singleton<MappingSchema>.Instance;
-
-        }
 
         /// <summary>
         /// Creates the database connection

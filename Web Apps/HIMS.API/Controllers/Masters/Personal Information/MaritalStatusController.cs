@@ -28,8 +28,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MMaritalStatusMaster> MMaritalStatusMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MMaritalStatusMasterList.ToGridResponse(objGrid, "Marital Status List"));
+            IPagedList<MMaritalStatusMaster> MaritalStatusMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MaritalStatusMasterList.ToGridResponse(objGrid, "MaritalStatus List"));
         }
 
         //List API Get By Id
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.MaritalStatusId == id);
-            return data.ToSingleResponse<MMaritalStatusMaster, MaritalStatusModel>("MaritalStatusType");
+            return data.ToSingleResponse<MMaritalStatusMaster, MaritalStatusModel>("MaritalStatusMaster");
         }
 
         //Add API
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(MaritalStatusModel obj)
         {
             MMaritalStatusMaster model = obj.MapTo<MMaritalStatusMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.MaritalStatusId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Marital Status  name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MaritalStatus  name added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -77,12 +77,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "marital Status name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "maritalStatus name updated successfully.");
         }
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MMaritalStatusMaster model = await _repository.GetById(x => x.MaritalStatusId == Id);
             if ((model?.MaritalStatusId ?? 0) > 0)

@@ -55,16 +55,18 @@ namespace HIMS.Services.OutPatient
                 foreach (var item in objVisit)
                 {
                     TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
-                    if(objToken != null)
+                    if (objToken != null)
                     {
                         objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
 
-                        TTokenNumberWithDoctorWise objCurrentToken = new TTokenNumberWithDoctorWise();
-                        objCurrentToken.TokenNo = objToken.TokenNo;
-                        objCurrentToken.VisitDate = item.VisitDate;
-                        objCurrentToken.VisitId = item.VisitId;
-                        objCurrentToken.DoctorId = item.ConsultantDocId;
-                        objCurrentToken.IsStatus = false;
+                        TTokenNumberWithDoctorWise objCurrentToken = new()
+                        {
+                            TokenNo = objToken.TokenNo,
+                            VisitDate = item.VisitDate,
+                            VisitId = item.VisitId,
+                            DoctorId = item.ConsultantDocId,
+                            IsStatus = false
+                        };
                         _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
                         await _context.SaveChangesAsync();
                     }
@@ -137,12 +139,14 @@ namespace HIMS.Services.OutPatient
                     {
                         objTokenData.TokenNo = Convert.ToInt32(objTokenData.TokenNo ?? 0) + 1;
 
-                        TTokenNumberWithDoctorWise objCurrentToken = new TTokenNumberWithDoctorWise();
-                        objCurrentToken.TokenNo = objTokenData.TokenNo;
-                        objCurrentToken.VisitDate = item.VisitDate;
-                        objCurrentToken.VisitId = item.VisitId;
-                        objCurrentToken.DoctorId = item.ConsultantDocId;
-                        objCurrentToken.IsStatus = false;
+                        TTokenNumberWithDoctorWise objCurrentToken = new()
+                        {
+                            TokenNo = objTokenData.TokenNo,
+                            VisitDate = item.VisitDate,
+                            VisitId = item.VisitId,
+                            DoctorId = item.ConsultantDocId,
+                            IsStatus = false
+                        };
                         _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
                         await _context.SaveChangesAsync();
                     }

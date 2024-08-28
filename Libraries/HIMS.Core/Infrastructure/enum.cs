@@ -176,7 +176,7 @@ namespace HIMS.Core.Infrastructure
     {
         Pending = 1, Send = 2
     }
-    public enum enmSalesApprovalDepartmentType
+    public enum EnmSalesApprovalDepartmentType
     {
         [Description("Sales")]
         Sales = 1,
@@ -190,7 +190,7 @@ namespace HIMS.Core.Infrastructure
         [Description("Logistics")]
         Logistics = 4
     }
-    public enum enmSalesApprovalOperationType
+    public enum EnmSalesApprovalOperationType
     {
         [Description("N.A")]
         NA = 0,
@@ -273,7 +273,7 @@ namespace HIMS.Core.Infrastructure
         [Description("Void - SM Approval")]
         Void_SM_Approval = 26
     }
-    public enum enmSalesApprovalActionType
+    public enum EnmSalesApprovalActionType
     {
         [Description("Pending")]
         Pending = 1,
@@ -290,7 +290,7 @@ namespace HIMS.Core.Infrastructure
         [Description("Not Applicable")]
         NA = 5
     }
-    public enum enmSalesApprovalStartMeterType
+    public enum EnmSalesApprovalStartMeterType
     {
         [Description("Sales")]
         Sales = 1,
@@ -328,21 +328,21 @@ namespace HIMS.Core.Infrastructure
         [Description("Withdraw - SA Record Meter End")]
         Withdraw_SA_End_Meter = 12
     }
-    public enum enmAssetMovementActionType
+    public enum EnmAssetMovementActionType
     {
         Installed = 1,
         Removed = 2,
         Changed = 3,
         Relocated = 4
     }
-    public enum enmServiceScheduleWeekType
+    public enum EnmServiceScheduleWeekType
     {
         Week1 = 1,
         Week2 = 2,
         Week3 = 3,
         Week4 = 4
     }
-    public enum enmServiceScheduleWeekDays
+    public enum EnmServiceScheduleWeekDays
     {
         Monday = 1,
         Tuesday = 2,
@@ -352,20 +352,20 @@ namespace HIMS.Core.Infrastructure
         Saturday = 6,
         Sunday = 7
     }
-    public enum enumAssetStatusType
+    public enum EnumAssetStatusType
     {
         Available = 1, In_Use = 2, Scrap = 3, Ready = 4, Van = 5 //, Return = 5
     } // note : when add new asset type, add record in Tech_AssetStatusType db. enum id and  Tech_AssetStatusType.StatusTypeid MUST BE same
-    public enum enumSalesItemAcitivity
+    public enum EnumSalesItemAcitivity
     {
         [Description("Edit Item List Activity")]
         EditItemActity = 1,
     }
-    public enum enumMachineType
+    public enum EnumMachineType
     {
         None = 1, IMO = 2, RVM = 3
     }
-    public enum enumTechQATestStatus
+    public enum EnumTechQATestStatus
     {
         Cold_Drinks_Brix = 1,
         Hot_Drinks = 2,
@@ -380,18 +380,18 @@ namespace HIMS.Core.Infrastructure
     {
         New_Sales = 1, Exchange = 2, Change_Company_Name = 3, Relocation = 4, Withdrawal = 5
     }
-    public enum enumStatus
+    public enum EnumStatus
     {
         Completed = 1, Fail = 2, Progressing = 3
     }
 
-    public enum enmSalesMeterReadingType
+    public enum EnmSalesMeterReadingType
     {
         NEW = 1,
         MR = 2
     }
 
-    public enum enmMetereReadingAuditStatus
+    public enum EnmMetereReadingAuditStatus
     {
         [Description("Pending Audit")]
         Pending_Audit = 1,

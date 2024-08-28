@@ -32,11 +32,10 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
-            Bill model = obj.Bill.MapTo<Bill>();
-            if (obj.Bill.BillNo == 0)
+            Bill model = obj.MapTo<Bill>();
+            if (obj.BillNo == 0)
             {
-                model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
-                model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
+                model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 await _oPBillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }

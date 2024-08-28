@@ -22,7 +22,7 @@ namespace HIMS.API.Controllers.Common
         public ApiResponse GetByProc(ListRequestModel model)
         {
             dynamic resultList = _ICommonService.GetDataSetByProc(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", (dynamic)resultList);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", (dynamic)resultList);
         }
         [Route("get-daily-dashboard-data")]
         [HttpPost]
@@ -30,13 +30,13 @@ namespace HIMS.API.Controllers.Common
         {
             string pDashboardId = model?.SearchFields?.FirstOrDefault(x => x.FieldName == "pDashboardId")?.FieldValue ?? "";
             if (pDashboardId == "1")
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", _ICommonService.GetSingleListByProc<DashboardDto1>(model));
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", _ICommonService.GetSingleListByProc<DashboardDto1>(model));
             else if (pDashboardId == "2")
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", _ICommonService.GetSingleListByProc<DashboardHospitalDto>(model));
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", _ICommonService.GetSingleListByProc<DashboardHospitalDto>(model));
             else if (pDashboardId == "3")
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", _ICommonService.GetSingleListByProc<DashboardDoctorDto>(model));
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", _ICommonService.GetSingleListByProc<DashboardDoctorDto>(model));
             else if (pDashboardId == "3")
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.mode + " List.", _ICommonService.GetSingleListByProc<DashboardOperativeDto>(model));
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", _ICommonService.GetSingleListByProc<DashboardOperativeDto>(model));
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "invalid data");
         }

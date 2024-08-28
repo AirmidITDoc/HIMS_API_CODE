@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.Report.IPReports
 {
-    public interface I_IPReport
+    public interface IIPReport
     {
         string ViewIPDailyCollectionReceipt(DateTime FromDate, DateTime ToDate, int AddedById, string htmlFilePath, string HeaderName);
 

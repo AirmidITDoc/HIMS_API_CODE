@@ -28,8 +28,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MRelationshipMaster> MRelationshipMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MRelationshipMasterList.ToGridResponse(objGrid, "Relation Type List"));
+            IPagedList<MRelationshipMaster> RelationshipMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(RelationshipMasterList.ToGridResponse(objGrid, "RelationshipMaster List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.RelationshipId == id);
-            return data.ToSingleResponse<MRelationshipMaster, RelationshipMasterModel>("RelationType");
+            return data.ToSingleResponse<MRelationshipMaster, RelationshipMasterModel>("RelationshipMaster");
         }
 
         //Add API
@@ -50,16 +50,16 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(RelationshipMasterModel obj)
         {
             MRelationshipMaster model = obj.MapTo<MRelationshipMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.RelationshipId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship  Name added successfully.");
         }
 
         //Edit API
@@ -68,31 +68,31 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(RelationshipMasterModel obj)
         {
             MRelationshipMaster model = obj.MapTo<MRelationshipMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.RelationshipId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship Name updated successfully.");
         }
 
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MRelationshipMaster model = await _repository.GetById(x => x.RelationshipId == Id);
             if ((model?.RelationshipId ?? 0) > 0)
             {
-                //model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Relationship  Name deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

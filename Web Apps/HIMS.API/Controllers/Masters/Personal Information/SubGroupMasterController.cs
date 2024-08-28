@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers
 
         [HttpPost]
         [Permission(PageCode = "SubGroupMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(SubGroupMasterModel obj)
+        public async Task<ApiResponse> Post(SubGroupMasterModel obj)
         {
             MSubGroupMaster model = obj.MapTo<MSubGroupMaster>();
             model.IsDeleted = true;
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "SubGroupMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MSubGroupMaster model = await _repository.GetById(x => x.SubGroupId == Id);
             if ((model?.SubGroupId ?? 0) > 0)

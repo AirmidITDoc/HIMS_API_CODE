@@ -254,12 +254,12 @@ namespace HIMS.API.Extensions
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                   new Claim("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
-                   new Claim("UserToken",EncryptionUtility.EncryptText(user.UserToken,SecurityKeys.EnDeKey)),
-                   new Claim("Permissions",EncryptionUtility.EncryptText(permissions,SecurityKeys.EnDeKey)),
-                   new Claim("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
-                   new Claim("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
-                   new Claim("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey))
+                   new("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
+                   new("UserToken",EncryptionUtility.EncryptText(user.UserToken,SecurityKeys.EnDeKey)),
+                   new("Permissions",EncryptionUtility.EncryptText(permissions,SecurityKeys.EnDeKey)),
+                   new("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
+                   new("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
+                   new("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey))
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Minutes <= 0 ? 30 : Minutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

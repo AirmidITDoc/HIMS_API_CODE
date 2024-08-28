@@ -44,8 +44,10 @@ namespace HIMS.Services.Pharmacy
             para[19] = new SqlParameter("@GrnType", objGRNReturn.GrnType);
             para[20] = new SqlParameter("@IsGrnTypeFlag", objGRNReturn.IsGrnTypeFlag);
 
-            para[21] = new SqlParameter("@GRNReturnId", SqlDbType.BigInt);
-            para[21].Direction = ParameterDirection.Output;
+            para[21] = new SqlParameter("@GRNReturnId", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.Output
+            };
 
 
             string grnreturnNo = odal.ExecuteNonQuery("m_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "@GRNReturnId", para);
@@ -76,7 +78,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update curren stock table records
-                List<TCurrentStock> objCStockList = new List<TCurrentStock>();
+                List<TCurrentStock> objCStockList = new();
                 foreach (var objC in objCStock)
                 {
                     TCurrentStock objCInfo = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == objC.ItemId && x.StockId == objC.StockId && x.StoreId == objC.StoreId);
@@ -88,7 +90,7 @@ namespace HIMS.Services.Pharmacy
                 await _context.SaveChangesAsync();
 
                 // Update grn details table records
-                List<TGrndetail> objGrnList = new List<TGrndetail>();
+                List<TGrndetail> objGrnList = new();
                 foreach (var objGrn in objReturnQty)
                 {
                     TGrndetail objGRNInfo = await _context.TGrndetails.FirstOrDefaultAsync(x => x.GrndetId == objGrn.GrndetId);

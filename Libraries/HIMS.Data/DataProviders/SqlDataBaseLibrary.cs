@@ -55,7 +55,7 @@ namespace HIMS.Data.DataProviders
             {
                 p.Size = (p.SqlDbType == SqlDbType.VarChar) ? 8000 : 4000;
 
-                if ((value != null) && !(value is DBNull) && (value.ToString().Length > p.Size))
+                if ((value != null) && value is not DBNull && (value.ToString().Length > p.Size))
                     p.Size = -1;
             }
             return Command.Parameters.Add(p);
@@ -72,7 +72,7 @@ namespace HIMS.Data.DataProviders
             {
                 p.Size = (p.SqlDbType == SqlDbType.VarChar) ? 8000 : 4000;
 
-                if ((value != null) && !(value is DBNull) && (value.ToString().Length > p.Size))
+                if ((value != null) && value is not DBNull && (value.ToString().Length > p.Size))
                     p.Size = -1;
             }
             return Command.Parameters.Add(p);
@@ -185,7 +185,7 @@ namespace HIMS.Data.DataProviders
             return i;
         }
 
-        public string ExecuteNonQuery(string query, CommandType commandtype, string outputParam ,Dictionary<string, object> entity = null)
+        public string ExecuteNonQuery(string query, CommandType commandtype, string outputParam, Dictionary<string, object> entity = null)
         {
             Command.Parameters.Clear();
             var outputId = new SqlParameter
@@ -223,7 +223,7 @@ namespace HIMS.Data.DataProviders
                     Command.Parameters.Add(outputId);
                 }
             }
-            int i = -1;
+            int i;
             try
             {
                 if (objConnection.State == System.Data.ConnectionState.Closed)
@@ -314,7 +314,7 @@ namespace HIMS.Data.DataProviders
             {
                 Command.Parameters.AddRange(para);
             }
-            int i = -1;
+            int i;
             try
             {
                 if (objConnection.State == System.Data.ConnectionState.Closed)
@@ -424,41 +424,37 @@ namespace HIMS.Data.DataProviders
         public async static Task<object> ExecuteScalarAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, params SqlParameter[] commandParameters)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            await connection.OpenAsync().ConfigureAwait(false);
+            var cmd = new SqlCommand
             {
-                await connection.OpenAsync().ConfigureAwait(false);
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
-                var retval = await cmd.ExecuteScalarAsync().ConfigureAwait(false);
-                cmd.Parameters.Clear();
-                if (mustCloseConnection)
-                    connection.Close();
-                return retval;
-            }
+                CommandTimeout = 180
+            };
+            var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
+            var retval = await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+            cmd.Parameters.Clear();
+            if (mustCloseConnection)
+                connection.Close();
+            return retval;
         }
-        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, SqlParameter[] commandParameters=null)
+        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, SqlParameter[] commandParameters = null)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            await connection.OpenAsync().ConfigureAwait(false);
+            var cmd = new SqlCommand
             {
-                await connection.OpenAsync().ConfigureAwait(false);
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
-                var retval = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
-                cmd.Parameters.Clear();
-                if (mustCloseConnection)
-                    connection.Close();
-                return retval;
-            }
+                CommandTimeout = 180
+            };
+            var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
+            var retval = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+            cmd.Parameters.Clear();
+            if (mustCloseConnection)
+                connection.Close();
+            return retval;
         }
 
-        
+
         #endregion ExecuteScalarAsync        
 
         public SqlDataReader ExecuteReader(string query)
@@ -501,11 +497,11 @@ namespace HIMS.Data.DataProviders
 
         public DataSet ExecuteDataSet(string query, CommandType commandtype)
         {
-            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlDataAdapter adapter = new();
             Command.CommandText = query;
             Command.CommandType = commandtype;
             adapter.SelectCommand = Command;
-            DataSet ds = new DataSet();
+            DataSet ds = new();
             try
             {
                 adapter.Fill(ds);
@@ -527,11 +523,11 @@ namespace HIMS.Data.DataProviders
 
         public DataSet FetchDataSetBySP(string Spname, SqlParameter[] para)
         {
-            DataSet ds = new DataSet();
+            DataSet ds = new();
             Command.CommandType = CommandType.StoredProcedure;
             Command.Parameters.AddRange(para);
             Command.CommandText = Spname;
-            SqlDataAdapter da = new SqlDataAdapter(Command);
+            SqlDataAdapter da = new(Command);
             try
             {
                 objConnection.Open();
@@ -593,38 +589,34 @@ namespace HIMS.Data.DataProviders
             }
             return mustCloseConnection;
         }
-public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, params SqlParameter[] commandParameters)
+        public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, params SqlParameter[] commandParameters)
         {
-           if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            await connection.OpenAsync().ConfigureAwait(false);
+            var cmd = new SqlCommand
             {
-                await connection.OpenAsync().ConfigureAwait(false);
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
-                using (var da = new SqlDataAdapter(cmd))
-                {
-                    var ds = new DataSet();
-                    da.Fill(ds);
-                    cmd.Parameters.Clear();
-                    if (mustCloseConnection)
-                        connection.Close();
-                    return ds;
-                }
-            }
+                CommandTimeout = 180
+            };
+            var mustCloseConnection = await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
+            using var da = new SqlDataAdapter(cmd);
+            var ds = new DataSet();
+            da.Fill(ds);
+            cmd.Parameters.Clear();
+            if (mustCloseConnection)
+                connection.Close();
+            return ds;
         }
 
         #endregion ExecuteDatasetAsync 
 
         public DataTable FetchDataTableBySP(string Spname, SqlParameter[] para)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             Command.CommandType = CommandType.StoredProcedure;
             Command.Parameters.AddRange(para);
             Command.CommandText = Spname;
-            SqlDataAdapter da = new SqlDataAdapter(Command);
+            SqlDataAdapter da = new(Command);
             try
             {
                 objConnection.Open();
@@ -648,12 +640,12 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
 
         public DataTable FetchDataTableByQuery(string Qry, SqlParameter[] para = null)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             Command.CommandType = CommandType.Text;
             if (para != null)
                 Command.Parameters.AddRange(para);
             Command.CommandText = Qry;
-            SqlDataAdapter da = new SqlDataAdapter(Command);
+            SqlDataAdapter da = new(Command);
             try
             {
                 objConnection.Open();
@@ -677,38 +669,34 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
 
         #region ExecuteDataTableAsync
 
-        public async static Task<DataTable> FetchDataTableBySPAsync(string commandText,  params SqlParameter[] commandParameters)
+        public async static Task<DataTable> FetchDataTableBySPAsync(string commandText, params SqlParameter[] commandParameters)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            DataTable dt = new();
+            var cmd = new SqlCommand
             {
-                DataTable dt = new DataTable();
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                dt.Load(reader);
-                return dt;
-            }
+                CommandTimeout = 180
+            };
+            await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
+            var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            dt.Load(reader);
+            return dt;
         }
 
-        public async static Task<DataTable> FetchDataTableByQueryAsync(string commandText,  params SqlParameter[] commandParameters)
+        public async static Task<DataTable> FetchDataTableByQueryAsync(string commandText, params SqlParameter[] commandParameters)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            DataTable dt = new();
+            var cmd = new SqlCommand
             {
-                DataTable dt = new DataTable();
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                dt.Load(reader);
-                return dt;
-            }
+                CommandTimeout = 180
+            };
+            await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
+            var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            dt.Load(reader);
+            return dt;
         }
 
         #endregion ExecuteDatasetAsync 
@@ -728,7 +716,7 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
                             if (pro.PropertyType.Name == "String")
                                 pro.SetValue(obj, Convert.ToString(dr[i]));
                             else if (pro.PropertyType.Name == "Byte[]" && string.IsNullOrEmpty(Convert.ToString(dr[i])))
-                                pro.SetValue(obj, new byte[0]);
+                                pro.SetValue(obj, Array.Empty<byte>());
                             else
                                 pro.SetValue(obj, dr[i]);
                         }
@@ -778,7 +766,7 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
 
         public List<T> FetchListByQuery<T>(string Qry, SqlParameter[] para = null)
         {
-            List<T> lst = new List<T>();
+            List<T> lst = new();
             Command.CommandType = CommandType.Text;
             Command.Parameters.AddRange(para);
             Command.CommandText = Qry;
@@ -813,50 +801,46 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
         public async static Task<List<T>> FetchListBySPAsync<T>(string commandText, params SqlParameter[] commandParameters)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            var cmd = new SqlCommand
             {
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
-                var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                List<T> lst = new List<T>();
-                while (await dr.ReadAsync().ConfigureAwait(false))
-                {
-                        T item = GetListItem<T>(dr);
-                        lst.Add(item);
-                }
-                return lst;
+                CommandTimeout = 180
+            };
+            await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
+            var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            List<T> lst = new();
+            while (await dr.ReadAsync().ConfigureAwait(false))
+            {
+                T item = GetListItem<T>(dr);
+                lst.Add(item);
             }
+            return lst;
         }
 
-        public async static Task<List<T>> FetchListByQueryAsync<T>(string commandText, params SqlParameter[] commandParameters) 
+        public async static Task<List<T>> FetchListByQueryAsync<T>(string commandText, params SqlParameter[] commandParameters)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
-            using (var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString))
+            using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            var cmd = new SqlCommand
             {
-                var cmd = new SqlCommand
-                {
-                    CommandTimeout = 180
-                };
-                await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
-                var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                List<T> lst = new();
-                while (await dr.ReadAsync().ConfigureAwait(false))
-                {
-                        T item = GetListItem<T>(dr);
-                        lst.Add(item);
-                }
-                return lst;
+                CommandTimeout = 180
+            };
+            await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
+            var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            List<T> lst = new();
+            while (await dr.ReadAsync().ConfigureAwait(false))
+            {
+                T item = GetListItem<T>(dr);
+                lst.Add(item);
             }
+            return lst;
         }
 
         #endregion ExecuteDatasetAsync 
 
         public DataSet SpExecuteDataSet(string SpName, SqlParameter[] parameter)
         {
-            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlDataAdapter adapter = new();
             Command.CommandText = SpName;
             Command.CommandType = CommandType.StoredProcedure;
             foreach (SqlParameter sParam in parameter)
@@ -864,7 +848,7 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
                 Command.Parameters.Add(sParam);
             }
             adapter.SelectCommand = Command;
-            DataSet ds = new DataSet();
+            DataSet ds = new();
             try
             {
                 adapter.Fill(ds);
@@ -890,7 +874,7 @@ public async static Task<DataSet> FetchDataSetBySPAsync(string commandText, para
             WriteToLog(ex.Message, query);
         }
 
-        private void WriteToLog(string msg, string query)
+        private static void WriteToLog(string msg, string query)
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));

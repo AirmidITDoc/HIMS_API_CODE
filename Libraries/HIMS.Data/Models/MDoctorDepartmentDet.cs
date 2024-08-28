@@ -8,5 +8,7 @@ namespace HIMS.Data.Models
         public long DocDeptId { get; set; }
         public long? DoctorId { get; set; }
         public long? DepartmentId { get; set; }
+
+        public virtual DoctorMaster? Doctor { get; set; }
     }
 }

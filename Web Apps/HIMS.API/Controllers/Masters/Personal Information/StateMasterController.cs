@@ -29,7 +29,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MStateMaster> StateMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(StateMasterList.ToGridResponse(objGrid, "State Name List"));
+            return Ok(StateMasterList.ToGridResponse(objGrid, "StateMaster List"));
+        }
+        //State List find with country Id - API
+        [HttpGet("StateListWithCountry/{CountryId?}")]
+        //[Permission(PageCode = "StateListWithCountry", Permission = PagePermission.View)]
+        public async Task<ApiResponse> StateListWithCountry(int CountryId)
+        {
+            var data = await _repository.GetAll(x => x.IsActive == true && x.CountryId == CountryId);
+            return new ApiResponse { StatusCode = 200, Data = data };
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -41,15 +49,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.StateId == id);
-            return data.ToSingleResponse<MStateMaster, StateMasterModel1>("StateMaster");
+            return data.ToSingleResponse<MStateMaster, StateMasterModel>("StateMaster");
         }
         //Add API
         [HttpPost]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(StateMasterModel1 obj)
+        public async Task<ApiResponse> Post(StateMasterModel obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.StateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -63,10 +71,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(StateMasterModel1 obj)
+        public async Task<ApiResponse> Edit(StateMasterModel obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.StateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -80,12 +88,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MStateMaster model = await _repository.GetById(x => x.StateId == Id);
             if ((model?.StateId ?? 0) > 0)
             {
-                //model.IsActive = false;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

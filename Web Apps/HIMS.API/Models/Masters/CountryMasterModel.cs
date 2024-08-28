@@ -6,8 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long CountryId { get; set; }
         public string? CountryName { get; set; }
-        public long? AddBy { get; set; }
-        public long? UpdatedBy { get; set; }
+       
     }
     public class CountryMasterModelValidator : AbstractValidator<CountryMasterModel>
     {

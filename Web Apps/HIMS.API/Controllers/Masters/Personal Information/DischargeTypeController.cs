@@ -14,10 +14,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class DischargeTypeController1 : BaseController
+    public class DischargeTypeController : BaseController
     {
         private readonly IGenericService<DischargeTypeMaster> _repository;
-        public DischargeTypeController1(IGenericService<DischargeTypeMaster> repository)
+        public DischargeTypeController(IGenericService<DischargeTypeMaster> repository)
         {
             _repository = repository;
         }
@@ -41,12 +41,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.DischargeTypeId == id);
-            return data.ToSingleResponse<DischargeTypeMaster, DischargeTypeModel1>("Discharge Type");
+            return data.ToSingleResponse<DischargeTypeMaster, DischargeTypeModel>("Discharge Type");
         }
         //Add API
         [HttpPost]
         [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(DischargeTypeModel1 obj)
+        public async Task<ApiResponse> Post(DischargeTypeModel obj)
         {
             DischargeTypeMaster model = obj.MapTo<DischargeTypeMaster>();
             model.IsActive = true;
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Edit API
         [HttpPut("{id:int}")]
         [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DischargeTypeModel1 obj)
+        public async Task<ApiResponse> Edit(DischargeTypeModel obj)
         {
             DischargeTypeMaster model = obj.MapTo<DischargeTypeMaster>();
             model.IsActive = true;
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "DischargeMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             DischargeTypeMaster model = await _repository.GetById(x => x.DischargeTypeId == Id);
             if ((model?.DischargeTypeId ?? 0) > 0)

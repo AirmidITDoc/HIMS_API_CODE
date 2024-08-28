@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters
 
         [HttpPost]
         [Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> post(PrefixModel obj)
+        public async Task<ApiResponse> Post(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
             model.IsActive = true;
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpDelete]
         [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             DbPrefixMaster model = await _repository.GetById(x => x.PrefixId == Id);
             if ((model?.PrefixId ?? 0) > 0)

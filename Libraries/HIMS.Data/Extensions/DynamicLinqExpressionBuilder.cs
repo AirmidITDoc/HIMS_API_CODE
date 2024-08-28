@@ -341,13 +341,6 @@ namespace HIMS.Data.Extensions
             return keyValues;
         }
 
-        public static List<Dictionary<string, string>> ToArrayDictionary(this JArray entities)
-        {
-            var list = new List<Dictionary<string, string>>();
-
-            return list;
-        }
-
 
         public static IDictionary<string, T> ToDictionary<T>(this object source)
         {

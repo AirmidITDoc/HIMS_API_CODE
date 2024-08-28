@@ -48,5 +48,7 @@ namespace HIMS.Data.Models
         public bool? IsBillableCharity { get; set; }
         public long? SalesId { get; set; }
         public long? BillNo { get; set; }
+
+        public virtual Bill? BillNoNavigation { get; set; }
     }
 }
