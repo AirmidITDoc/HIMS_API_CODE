@@ -27,10 +27,10 @@ namespace HIMS.API.Controllers.Inventory
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
             if (obj.TestId == 0)
             {
-                model.TestDate = Convert.ToDateTime(obj.TestDate);
                 model.TestTime = Convert.ToDateTime(obj.TestTime);
                 model.AddedBy = CurrentUserId;
-                await _ITestmasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                model.IsActive = true;
+                await _ITestmasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

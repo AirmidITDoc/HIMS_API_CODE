@@ -227,7 +227,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPathParaRangeMaster> MPathParaRangeMasters { get; set; } = null!;
         public virtual DbSet<MPathParameterMaster> MPathParameterMasters { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail> MPathTemplateDetails { get; set; } = null!;
-        public virtual DbSet<MPathTemplateDetail1> MPathTemplateDetails1 { get; set; } = null!;
         public virtual DbSet<MPathTestDetailMaster> MPathTestDetailMasters { get; set; } = null!;
         public virtual DbSet<MPathTestFormula> MPathTestFormulas { get; set; } = null!;
         public virtual DbSet<MPathTestMaster> MPathTestMasters { get; set; } = null!;
@@ -5703,6 +5702,11 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.AssignId);
 
                 entity.ToTable("M_AssignItemToStore");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.MAssignItemToStores)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK_M_AssignItemToStore_M_ItemMaster");
             });
 
             modelBuilder.Entity<MAssignSupplierToStore>(entity =>
@@ -5712,6 +5716,11 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_AssignSupplierToStore");
 
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierId ");
+
+                entity.HasOne(d => d.Supplier)
+                    .WithMany(p => p.MAssignSupplierToStores)
+                    .HasForeignKey(d => d.SupplierId)
+                    .HasConstraintName("FK_M_AssignSupplierToStore_M_SupplierMaster");
             });
 
             modelBuilder.Entity<MBankMaster>(entity =>
@@ -5908,6 +5917,11 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.DocDeptId);
 
                 entity.ToTable("M_DoctorDepartmentDet");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorDepartmentDets)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorDepartmentDet_DoctorMaster");
             });
 
             modelBuilder.Entity<MDoctorHouseManMaster>(entity =>
@@ -6514,35 +6528,32 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<MPathTemplateDetail>(entity =>
             {
-                entity.HasKey(e => e.PtemplateId);
+                entity.HasKey(e => e.PtemplateId)
+                    .HasName("PK_M_Path_TemplateDetails1");
 
-                entity.ToTable("M_Path_TemplateDetails");
+                entity.ToTable("M_PathTemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTemplateDetails)
+                    .HasForeignKey(d => d.TestId)
+                    .HasConstraintName("constraint_name");
             });
-
-            //modelBuilder.Entity<MPathTemplateDetail1>(entity =>
-            //{
-            //    entity.HasKey(e => e.PtemplateId)
-            //        .HasName("PK_M_Path_TemplateDetails1");
-
-            //    entity.ToTable("M_PathTemplateDetails");
-
-            //    entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
-
-            //    entity.HasOne(d => d.Test)
-            //        .WithMany(p => p.MPathTemplateDetail1s)
-            //        .HasForeignKey(d => d.TestId)
-            //        .HasConstraintName("constraint_name");
-            //});
 
             modelBuilder.Entity<MPathTestDetailMaster>(entity =>
             {
-                entity.HasKey(e => e.TestDetId);
+                entity.HasKey(e => e.TestDetId)
+                    .HasName("PK_M_PathTestDetailMaster2");
 
                 entity.ToTable("M_PathTestDetailMaster");
 
                 entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTestDetailMasters)
+                    .HasForeignKey(d => d.TestId)
+                    .HasConstraintName("FK_M_PathTestDetailMaster_M_PathTestMaster");
             });
 
             modelBuilder.Entity<MPathTestFormula>(entity =>
@@ -6670,6 +6681,11 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_RadiologyTemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MRadiologyTemplateDetails)
+                    .HasForeignKey(d => d.TestId)
+                    .HasConstraintName("FK_M_RadiologyTemplateDetails_M_RadiologyTestMaster");
             });
 
             modelBuilder.Entity<MRadiologyTemplateMaster>(entity =>

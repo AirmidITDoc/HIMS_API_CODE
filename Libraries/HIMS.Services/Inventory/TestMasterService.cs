@@ -25,11 +25,9 @@ namespace HIMS.Services.Inventory
         {
             try
             {
-                // //Add header table records
+                //Add header table records
                 DatabaseHelper odal = new();
-
-
-                string[] rEntity = { "IsActive", "UpdatedBy", "CreatedBy", "CreatedDate", "TestTime", "TestDate", "ModifiedBy", "ModifiedDate ", "MPathTemplateDetail" };
+                string[] rEntity = { "UpdatedBy", "CreatedBy", "CreatedDate", "TestTime", "TestDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
                 var entity = objTest.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -37,14 +35,26 @@ namespace HIMS.Services.Inventory
                 }
                 string TestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
                 objTest.TestId = Convert.ToInt32(TestId);
-
-                // Add details table records
-                foreach (var objItem in objTest.MPathTemplateDetail)
+             
+                // Add sub table records
+                if (objTest.IsTemplateTest == 1)
                 {
-                    objItem.TestId = objTest.TestId;
+                    foreach (var item in objTest.MPathTemplateDetails)
+                    {
+                        item.TestId = objTest.TestId;
+                    }
+                    _context.MPathTemplateDetails.AddRange(objTest.MPathTemplateDetails);
+                    await _context.SaveChangesAsync();
                 }
-                _context.MPathTemplateDetails.AddRange(objTest.MPathTemplateDetail);
-                await _context.SaveChangesAsync(UserId, Username);
+                else
+                {
+                    foreach (var item in objTest.MPathTestDetailMasters)
+                    {
+                        item.TestId = objTest.TestId;
+                    }
+                    _context.MPathTestDetailMasters.AddRange(objTest.MPathTestDetailMasters);
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (Exception)
             {
@@ -62,6 +72,13 @@ namespace HIMS.Services.Inventory
                     _context.MPathTemplateDetails.RemoveRange(lst);
                 }
                 await _context.SaveChangesAsync();
+
+                var lst1 = await _context.MPathTestDetailMasters.Where(x => x.TestId == objTest.TestId).ToListAsync();
+                if (lst1.Count > 0)
+                {
+                    _context.MPathTestDetailMasters.RemoveRange(lst1);
+                }
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -70,29 +87,16 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Update store table records
-                MPathTemplateDetail1 TestInfo = await _context.MPathTemplateDetails1.FirstOrDefaultAsync(x => x.TestId == objTest.TestId);
-                if (TestInfo != null)
-                {
-                    //TestInfo.TestId = Convert.ToString(Convert.ToInt32(TestInfo.TestId ?? "0") + 1);
-                    _context.MPathTemplateDetails1.Update(TestInfo);
-                    await _context.SaveChangesAsync();
-                }
-
-                // Add header & detail table records
-
-                //objTest.TestId = (TestInfo != null) ? TestInfo.TestId : "0";
+                // remove conditional records
+                if (objTest.IsTemplateTest == 1)
+                    objTest.MPathTestDetailMasters = null;
+                else
+                    objTest.MPathTemplateDetails = null;
+                // Add header table records
                 _context.MPathTestMasters.Add(objTest);
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
-
-
-
-
-
-
         }
     }
 }
