@@ -8,5 +8,7 @@ namespace HIMS.Data.Models
         public long AssignId { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
+
+        public virtual MSupplierMaster? Supplier { get; set; }
     }
 }

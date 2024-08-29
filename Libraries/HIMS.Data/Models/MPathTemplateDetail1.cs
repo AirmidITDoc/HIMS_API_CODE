@@ -8,5 +8,8 @@ namespace HIMS.Data.Models
         public long PtemplateId { get; set; }
         public long? TestId { get; set; }
         public long? TemplateId { get; set; }
+
+        //public long? Test { get; set; } 
+
     }
 }

@@ -16,12 +16,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [ApiController]
     [ApiVersion("1")]
 
-    public class PrescriptionMasterController : BaseController
+    public class PrescriptionController : BaseController
     {
-        private readonly IGenericService<TPrescription> _repository;
-        public PrescriptionMasterController(IGenericService<TPrescription> repository)
+        private readonly IGenericService<TPrescription> _IPrescriptionService;
+        public PrescriptionController(IGenericService<TPrescription> repository)
         {
-            _repository = repository;
+            _IPrescriptionService = repository;
+
         }
         //List API
         [HttpPost]
@@ -29,7 +30,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "TPrescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TPrescription> TPrescriptionList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<TPrescription> TPrescriptionList = await _IPrescriptionService.GetAllPagedAsync(objGrid);
             return Ok(TPrescriptionList.ToGridResponse(objGrid, "TPrescription List"));
         }
 
@@ -41,15 +42,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.PrecriptionId == id);
-            return data.ToSingleResponse<TPrescription, PrescriptionMasterModel>("TPrescriptionList");
+            var data = await _IPrescriptionService.GetById(x => x.PrecriptionId == id);
+            return data.ToSingleResponse<TPrescription, PrescriptionModel>("TPrescriptionList");
         }
 
 
         //Add API
         [HttpPost]
         //[Permission(PageCode = "TPrescription", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(PrescriptionMasterModel obj)
+        public async Task<ApiResponse> Post(PrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
            
@@ -58,7 +59,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.IsAddBy = CurrentUserId;
                 model.Date = DateTime.Now;
                 model.Ptime = DateTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _IPrescriptionService.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -70,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "TPrescription", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PrescriptionMasterModel obj)
+        public async Task<ApiResponse> Edit(PrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
 
@@ -80,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             {
                 model.IsAddBy = CurrentUserId;
                 model.Date = DateTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "IsAddBy", "Date" });
+                await _IPrescriptionService.Update(model, CurrentUserId, CurrentUserName, new string[2] { "IsAddBy", "Date" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription  updated successfully.");
         }
@@ -89,18 +90,32 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "TPrescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            TPrescription model = await _repository.GetById(x => x.PrecriptionId == Id);
+            TPrescription model = await _IPrescriptionService.GetById(x => x.PrecriptionId == Id);
             if ((model?.PrecriptionId ?? 0) > 0)
             {
              
                 model.IsAddBy = CurrentUserId;
                 model.Date = DateTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                await _IPrescriptionService.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
+        //[HttpPost("Verify")]
+        ////[Permission(PageCode = "TPrescription", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Verify(PrescriptionModel obj)
+        //{
+        //    TPrescription model = obj.MapTo<TPrescription>();
+        //    if (obj.PrecriptionId != 0)
+        //    {
+        //        model.IsClosed = true;
+        //        model.Date = DateTime.Now.Date;
+        //        await _IPrescriptionService.DeleteAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription verify successfully.");
+        //}
     }
 }

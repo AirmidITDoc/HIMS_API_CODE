@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 
+
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -41,10 +42,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<MUnitofMeasurementMaster, UnitOfMeasurementModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCreditReasonMaster, CreditReasonModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            //CreateMap<MPathTestMaster, TestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-           
-            
+            CreateMap<MPathTestMaster, PathTestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPathTestDetailMaster, PathTestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
@@ -55,7 +57,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MItemMaster, ItemMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAssignItemToStore, MAssignItemToStore>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            CreateMap<TPrescription, PrescriptionMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPrescription, PrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MAreaMaster, AreaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             
