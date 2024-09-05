@@ -27,8 +27,6 @@ namespace HIMS.API.Models.Inventory
         public string? PanNo { get; set; }
         public string? SupplierTime { get; set; }
         public string? ModifiedDate { get; set; }
-
-
         public List<AssignSupplierToStoreModel> MAssignSupplierToStore { get; set; }
      }
      public class SupplierModelValidator : AbstractValidator<SupplierModel>

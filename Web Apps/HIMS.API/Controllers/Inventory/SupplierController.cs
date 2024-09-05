@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
