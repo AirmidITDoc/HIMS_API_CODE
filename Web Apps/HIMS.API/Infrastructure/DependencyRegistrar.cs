@@ -51,8 +51,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<ITestMasterServices, TestMasterService>();
-            services.AddScoped<ISupplierService, SupplierService>();
-
 
 
             services.AddScoped<IRegistrationService, RegistrationService>();
