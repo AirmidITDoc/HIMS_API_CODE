@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
                 model.AddedBy = CurrentUserId;
                 model.IsActive = true;
-                await _SupplierService.InsertAsync(model, newSupplierStore,  CurrentUserId, CurrentUserName);
+                await _SupplierService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
