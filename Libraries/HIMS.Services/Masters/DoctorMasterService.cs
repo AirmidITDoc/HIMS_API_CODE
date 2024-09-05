@@ -8,7 +8,6 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using LinqToDB;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -34,50 +33,97 @@ namespace HIMS.Services.Masters
         }
 
 
-        public virtual async Task InsertAsync(DoctorMaster objDoctor, List<MDoctorDepartmentDet> objDepartment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(DoctorMaster objDoctor, int UserId, string Username)
         {
-            
+
+            try
             {
-                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+                //Add header table records
+                DatabaseHelper odal = new();
+                string[] rEntity = { "UpdatedBy", "CreatedBy", "CreatedDate",  "RegDate", "ModifiedBy", "ModifiedDate", "MDoctorDepartmentDet"};
+                var entity = objDoctor.ToDictionary();
+                foreach (var rProperty in rEntity)
                 {
-                    // Update store table records
-                    DoctorMaster StoreInfo = await _context.DoctorMasters.FirstOrDefaultAsync(x => x.DoctorId == objDoctor.DoctorId);
-                    StoreInfo.RegNo = Convert.ToString(Convert.ToInt32(StoreInfo.RegNo) + 1);
-                    _context.DoctorMasters.Update(StoreInfo);
-                    await _context.SaveChangesAsync();
+                    entity.Remove(rProperty);
+                }
+                string DoctorId = odal.ExecuteNonQuery("Insert_DoctorMaster_1", CommandType.StoredProcedure, "DoctorId", entity);
+                objDoctor.DoctorId = Convert.ToInt32(DoctorId);
 
-                    // Add header & detail table records
-                    objDoctor.RegNo = StoreInfo.RegNo;
-                    _context.DoctorMasters.Add(objDoctor);
+                // Add sub table records
+                if (objDoctor.DoctorId == 1)
+                {
+                    foreach (var item in objDoctor.MDoctorDepartmentDets)
+                    {
+                        item.DoctorId = objDoctor.DoctorId;
+                    }
+                    _context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
                     await _context.SaveChangesAsync();
-
-                    // Update item master table records
-                    _context.DoctorMasters.UpdateRange(objDoctor);
-                    await _context.SaveChangesAsync();
-
-                    scope.Complete();
+                }
+               
+            }
+            catch (Exception)
+            {
+                // Delete header table realted records
+                DoctorMaster? objdoctor = await _context.DoctorMasters.FindAsync(objDoctor.DoctorId);
+                if (objDoctor != null)
+                {
+                    _context.DoctorMasters.Remove(objdoctor);
                 }
 
+                // Delete details table realted records
+                var lst = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctor.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorDepartmentDets.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
+
+               
             }
         }
 
-        public Task InsertAsyncSP(DoctorMaster objDoctor, List<MDoctorDepartmentDet> objDepartment, int CurrentUserId, string CurrentUserName)
+
+       
+        public virtual async Task InsertAsync(DoctorMaster objDoctor, int UserId, string Username)
         {
-            throw new NotImplementedException();
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+
+                objDoctor.DoctorId = (objDoctor != null) ? objDoctor.DoctorId : long.Parse("0");
+                _context.DoctorMasters.Add(objDoctor);
+                await _context.SaveChangesAsync();
+
+                // Add details table records
+                //foreach (var objItem in objDoctor.MDoctorDepartmentDets)
+                //{
+                //    objItem.DoctorId = objDoctor.DoctorId;
+                //}
+                //_context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
+                //await _context.SaveChangesAsync(UserId, Username);
+
+
+               
+                var DoctorMaster = new MDoctorDepartmentDet
+                {
+                    DoctorId = objDoctor.DoctorId,
+                    DocDeptId = UserId,
+                    DepartmentId = UserId,
+
+                };
+
+                _context.MDoctorDepartmentDets.Add(DoctorMaster);
+                await _context.SaveChangesAsync(UserId, Username);
+                scope.Complete();
+            }
         }
 
-        public Task InsertWithPOAsync(DoctorMaster objDoctor, List<MDoctorDepartmentDet> objDepartment, int CurrentUserId, string CurrentUserName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual async Task UpdateAsync(DoctorMaster objDoctor, List<MDoctorDepartmentDet> objDepartment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsync(DoctorMaster objDoctor, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Delete details table realted records
-                var lst = await _context.DoctorMasters.Where(x => x.DoctorId == objDoctor.DoctorId).ToListAsync();
-                _context.DoctorMasters.RemoveRange(lst);
+                var lst = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctor.DoctorId).ToListAsync();
+                _context.MDoctorDepartmentDets.RemoveRange(lst);
 
                 // Update header & detail table records
                 _context.DoctorMasters.Update(objDoctor);
@@ -88,11 +134,7 @@ namespace HIMS.Services.Masters
             }
         }
 
-        public Task UpdateWithPOAsync(DoctorMaster objDoctor, List<MDoctorDepartmentDet> objDepartment, int CurrentUserId, string CurrentUserName)
-        {
-            throw new NotImplementedException();
-        }
+       
+
     }
 }
-
-

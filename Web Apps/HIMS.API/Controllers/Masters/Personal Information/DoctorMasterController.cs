@@ -9,6 +9,7 @@ using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
+using HIMS.Services.Masters;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -16,85 +17,43 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [ApiVersion("1")]
     public class DoctorMasterController : BaseController
     {
-        private readonly IGenericService<DoctorMaster> _repository;
-        public DoctorMasterController(IGenericService<DoctorMaster> repository)
+        private readonly IDoctorMasterService _IDoctorMasterService;
+        public DoctorMasterController(IDoctorMasterService repository)
         {
-            _repository = repository;
+            _IDoctorMasterService = repository;
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<DoctorMaster> DoctorMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(DoctorMasterList.ToGridResponse(objGrid, "Doctor List"));
-        }
-        [HttpGet("{id?}")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        public async Task<ApiResponse> Get(int id)
-        {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-            var data = await _repository.GetById(x => x.DoctorId == id);
-            return data.ToSingleResponse<DoctorMaster, DoctorMasterModel>("DoctorMaster");
-        }
-
-
-        [HttpPost]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(DoctorMasterModel obj)
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(DoctorMasterModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
-            model.IsActive = true;
             if (obj.DoctorId == 0)
             {
+                model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.IsActive = true;
+                await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor  added successfully.");
         }
-        //Edit API
-        [HttpPut("{id:int}")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorMasterModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
-            model.IsActive = true;
             if (obj.DoctorId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
+                model.CreatedBy = CurrentUserId;
+                model.IsActive = true;
+                await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");
         }
-        //Delete API
-        [HttpDelete]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Delete(int Id)
-        {
-            DoctorMaster model = await _repository.GetById(x => x.DoctorId == Id);
-            if ((model?.DoctorId ?? 0) > 0)
-            {
-                model.IsActive = false;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor deleted successfully.");
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        }
-
-
     }
 }
