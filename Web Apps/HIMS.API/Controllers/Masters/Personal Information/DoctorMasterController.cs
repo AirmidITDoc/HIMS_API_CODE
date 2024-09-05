@@ -1,4 +1,6 @@
-﻿using HIMS.API.Extensions;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
+using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
@@ -6,10 +8,12 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.Api.Controllers;
-
+using HIMS.API.Models.Inventory;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class DoctorMasterController : BaseController
     {
         private readonly IGenericService<DoctorMaster> _repository;
@@ -21,14 +25,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMaster> DoctorMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DoctorMasterList.ToGridResponse(objGrid, "Doctor List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -48,8 +52,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             model.IsActive = true;
             if (obj.DoctorId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -58,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorMasterModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -67,8 +71,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");
@@ -82,8 +86,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             if ((model?.DoctorId ?? 0) > 0)
             {
                 model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor deleted successfully.");
             }

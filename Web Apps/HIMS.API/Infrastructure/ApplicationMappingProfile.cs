@@ -56,7 +56,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MAssignSupplierToStore, AssignSupplierToStoreModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            CreateMap<TPrescription, PrescriptionMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPrescription, PrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MAreaMaster, AreaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             
