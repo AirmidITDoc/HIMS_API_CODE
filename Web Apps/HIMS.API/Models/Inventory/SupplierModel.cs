@@ -8,26 +8,23 @@ namespace HIMS.API.Models.Inventory
         public string? SupplierName { get; set; }
         public string? ContactPerson { get; set; }
         public string? Address { get; set; }
-        public int? CityId { get; set; }
-        public int? StateId { get; set; }
-        public int? CountryId { get; set; }
+        public long? CityId { get; set; }
+        public long? StateId { get; set; }
+        public long? CountryId { get; set; }
         public string? CreditPeriod { get; set; }
         public string? Mobile { get; set; }
         public string? Phone { get; set; }
         public string? Fax { get; set; }
         public string? Email { get; set; }
-        public int? ModeofPayment { get; set; }
-        public int? TermsofPayment { get; set; }
-        public int? CurrencyId { get; set; }
-        public int? Octroi { get; set; }
-        public int? Freight { get; set; }
-        public long? IsDeleted { get; set; }
-        public int? Addedby { get; set; }
+        public long? ModeofPayment { get; set; }
+        public long? TermofPayment { get; set; }
+        public long? CurrencyId { get; set; }
+        public long? Octroi { get; set; }
+        public long? Freight { get; set; }
         public string? GSTNo { get; set; }
         public string? PanNo { get; set; }
         public string? SupplierTime { get; set; }
-        public string? ModifiedDate { get; set; }
-        public List<AssignSupplierToStoreModel> MAssignSupplierToStore { get; set; }
+        public List<AssignSupplierToStoreModel> MAssignSupplierToStores { get; set; }
      }
      public class SupplierModelValidator : AbstractValidator<SupplierModel>
      {
@@ -47,6 +44,7 @@ namespace HIMS.API.Models.Inventory
 
     public class AssignSupplierToStoreModel
     {
+        public long AssignId { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
     }

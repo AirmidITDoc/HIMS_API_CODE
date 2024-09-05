@@ -23,12 +23,8 @@ namespace HIMS.API.Controllers.Inventory
         [HttpPost("Insert")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierModel obj)
-
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
-            List<MAssignSupplierToStore> newSupplierStore = obj.MapTo<List<MAssignSupplierToStore>>();
-
-
             if (obj.SupplierId == 0)
             {
                 model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
@@ -51,7 +47,6 @@ namespace HIMS.API.Controllers.Inventory
             else
             {
                 model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
-                model.ModifiedDate = Convert.ToDateTime(obj.ModifiedDate);
                 await _SupplierService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name updated successfully.");
