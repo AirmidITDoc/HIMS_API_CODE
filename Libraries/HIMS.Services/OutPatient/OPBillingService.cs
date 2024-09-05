@@ -60,6 +60,13 @@ namespace HIMS.Services.OutPatient
                             await _context.SaveChangesAsync();
                         }
                     }
+                    ////string[] rEntityPay = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+                    ////var entityPay = objBill.ToDictionary();
+                    ////foreach (var rProperty in rEntityPay)
+                    ////{
+                    ////    entityPay.Remove(rProperty);
+                    ////}
+                    ////odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, tokenObj.ToDictionary());
                     scope.Complete();
                 }
             }
