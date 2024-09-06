@@ -19,7 +19,7 @@ namespace HIMS.API.Models.Masters
         public string? Education { get; set; }
         public bool? IsConsultant { get; set; }
         public bool? IsRefDoc { get; set; }
-        public bool? IsActive { get; set; }
+        //public bool? IsActive { get; set; }
         public long DoctorTypeId { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
@@ -37,12 +37,7 @@ namespace HIMS.API.Models.Masters
         public bool? IsOnCallDoctor { get; set; }
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-
-        public List<InsertMDoctorDepartmentDetModel> InsertMDoctorDepartmentDet { get; set; }
+        public List<MDoctorDepartmentDetModel> MDoctorDepartmentDet { get; set; }
     }
     public class DoctorMasterModelValidator : AbstractValidator<DoctorMasterModel>
     {
@@ -57,7 +52,7 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.DoctorTypeId).NotNull().NotEmpty().WithMessage("DoctorTypeId is required");
         }
     }
-    public class InsertMDoctorDepartmentDetModel
+    public class MDoctorDepartmentDetModel
     {
         public long DocDeptId { get; set; }
         public long? DoctorId { get; set; }
@@ -65,7 +60,7 @@ namespace HIMS.API.Models.Masters
     }
 
 
-    public class MDoctorDepartmentDetValidator : AbstractValidator<InsertMDoctorDepartmentDetModel>
+    public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
     {
         public MDoctorDepartmentDetValidator()
         {

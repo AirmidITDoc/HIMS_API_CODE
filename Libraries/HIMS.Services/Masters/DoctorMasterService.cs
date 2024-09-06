@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
 using System.Transactions;
+using LinqToDB;
 
 namespace HIMS.Services.Masters
 {
@@ -37,10 +38,11 @@ namespace HIMS.Services.Masters
         {
 
             try
+            
             {
                 //Add header table records
                 DatabaseHelper odal = new();
-                string[] rEntity = { "UpdatedBy", "CreatedBy", "CreatedDate",  "RegDate", "ModifiedBy", "ModifiedDate", "MDoctorDepartmentDet"};
+                string[] rEntity = { "MDoctorDepartmentDet"};
                 var entity = objDoctor.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -49,17 +51,15 @@ namespace HIMS.Services.Masters
                 string DoctorId = odal.ExecuteNonQuery("Insert_DoctorMaster_1", CommandType.StoredProcedure, "DoctorId", entity);
                 objDoctor.DoctorId = Convert.ToInt32(DoctorId);
 
-                // Add sub table records
-                if (objDoctor.DoctorId == 1)
+                // Add details table records
+                foreach (var objItem in objDoctor.MDoctorDepartmentDets)
                 {
-                    foreach (var item in objDoctor.MDoctorDepartmentDets)
-                    {
-                        item.DoctorId = objDoctor.DoctorId;
-                    }
-                    _context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
-                    await _context.SaveChangesAsync();
+                    objItem.DoctorId = objDoctor.DoctorId;
                 }
-               
+                _context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
+                await _context.SaveChangesAsync();
+            
+
             }
             catch (Exception)
             {
@@ -88,31 +88,9 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-
-                objDoctor.DoctorId = (objDoctor != null) ? objDoctor.DoctorId : long.Parse("0");
                 _context.DoctorMasters.Add(objDoctor);
                 await _context.SaveChangesAsync();
 
-                // Add details table records
-                //foreach (var objItem in objDoctor.MDoctorDepartmentDets)
-                //{
-                //    objItem.DoctorId = objDoctor.DoctorId;
-                //}
-                //_context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
-                //await _context.SaveChangesAsync(UserId, Username);
-
-
-               
-                var DoctorMaster = new MDoctorDepartmentDet
-                {
-                    DoctorId = objDoctor.DoctorId,
-                    DocDeptId = UserId,
-                    DepartmentId = UserId,
-
-                };
-
-                _context.MDoctorDepartmentDets.Add(DoctorMaster);
-                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
             }
         }
@@ -121,10 +99,6 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Delete details table realted records
-                var lst = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctor.DoctorId).ToListAsync();
-                _context.MDoctorDepartmentDets.RemoveRange(lst);
-
                 // Update header & detail table records
                 _context.DoctorMasters.Update(objDoctor);
                 _context.Entry(objDoctor).State = EntityState.Modified;

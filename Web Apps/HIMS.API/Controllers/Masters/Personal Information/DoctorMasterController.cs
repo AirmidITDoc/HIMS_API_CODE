@@ -23,14 +23,31 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _IDoctorMasterService = repository;
         }
 
-        [HttpPost("Insert")]
+        [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(DoctorMasterModel obj)
+        public async Task<ApiResponse> InsertSP(DoctorMasterModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
-                model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.IsActive = true;
+                await _IDoctorMasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor  added successfully.");
+        }
+
+        [HttpPost("InsertEDMX")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(DoctorMasterModel obj)
+        {
+            DoctorMaster model = obj.MapTo<DoctorMaster>();
+            if (obj.DoctorId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -39,6 +56,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor  added successfully.");
         }
+
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorMasterModel obj)
@@ -48,8 +66,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.CreatedDate = Convert.ToDateTime(obj.CreatedDate);
-                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
