@@ -50,7 +50,6 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? SupplierTime { get; set; }
-
         public virtual ICollection<MAssignSupplierToStore> MAssignSupplierToStores { get; set; }
     }
 }

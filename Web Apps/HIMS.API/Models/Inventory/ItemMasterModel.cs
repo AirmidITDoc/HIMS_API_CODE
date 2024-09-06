@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
+using static HIMS.API.Models.Inventory.ItemMasterModelValidator;
 
-namespace HIMS.API.Models.Masters
+namespace HIMS.API.Models.Inventory
+{
+    public class ItemMasterModel
     {
-        public class ItemMasterModel
-        {
-
         public long ItemId { get; set; }
         public string? ItemShortName { get; set; }
         public string? ItemName { get; set; }
@@ -43,40 +43,33 @@ namespace HIMS.API.Models.Masters
         public DateTime? IsCreatedBy { get; set; }
         public DateTime? IsUpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ItemTime { get; set; }
-
+        public String? CreatedDate { get; set; }
+        public String? ItemTime { get; set; }
+        public List<MAssignItemToStoreModel> MAssignItemToStore { get; set; }
     }
-
-        public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
+    public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
+    {
+        public ItemMasterModelValidator()
         {
-            public ItemMasterModelValidator()
-            {
-               
-                RuleFor(x => x.ItemShortName).NotNull().NotEmpty().WithMessage("ItemShortName is required");
-                RuleFor(x => x.ItemName).NotNull().NotEmpty().WithMessage("ItemName is required");
-            RuleFor(x => x.ItemTypeId).NotNull().NotEmpty().WithMessage("ItemTypeId is required");
-            RuleFor(x => x.ItemCategaryId).NotNull().NotEmpty().WithMessage("ItemCategaryId is required");
-            RuleFor(x => x.ItemGenericNameId).NotNull().NotEmpty().WithMessage("ItemGenericNameId is required");
-            RuleFor(x => x.ItemClassId).NotNull().NotEmpty().WithMessage("ItemClassId is required");
+
+            RuleFor(x => x.ItemShortName).NotNull().NotEmpty().WithMessage("ItemShortName is required");
+            RuleFor(x => x.ItemName).NotNull().NotEmpty().WithMessage("ItemName is required");
+
         }
-            public class MAssignItemToStoreModel
+        public class MAssignItemToStoreModel
+        {
+            public long AssignId { get; set; }
+            public long? StoreId { get; set; }
+            public long? ItemId { get; set; }
+        }
+        public class MAssignItemToStoreModelValidator : AbstractValidator<MAssignItemToStoreModel>
+        {
+            public MAssignItemToStoreModelValidator()
             {
-                public long AssignId { get; set; }
-                public long? StoreId { get; set; }
-                public long? ItemId { get; set; }
-            }
-            public class MAssignItemToStoreModelValidator : AbstractValidator<MAssignItemToStoreModel>
-            {
-                public MAssignItemToStoreModelValidator()
-                {
-                   
-                    RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
-                    RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
-                }
+
+                RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+                RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
             }
         }
     }
-
-
-
+}
