@@ -30,6 +30,23 @@ namespace HIMS.API.Controllers.Inventory
                 model.TestTime = Convert.ToDateTime(obj.TestTime);
                 model.AddedBy = CurrentUserId;
                 model.IsActive = true;
+                await _ITestmasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+        }
+
+        [HttpPost("InsertEDMX")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(PathTestMasterModel obj)
+        {
+            MPathTestMaster model = obj.MapTo<MPathTestMaster>();
+            if (obj.TestId == 0)
+            {
+                model.TestTime = Convert.ToDateTime(obj.TestTime);
+                model.AddedBy = CurrentUserId;
+                model.IsActive = true;
                 await _ITestmasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

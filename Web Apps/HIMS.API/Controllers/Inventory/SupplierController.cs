@@ -20,7 +20,7 @@ namespace HIMS.API.Controllers.Inventory
             _SupplierService = repository;
         }
 
-        [HttpPost("Insert")]
+        [HttpPost("InsertSP")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierModel obj)
         {
@@ -31,6 +31,23 @@ namespace HIMS.API.Controllers.Inventory
                 model.AddedBy = CurrentUserId;
                 model.IsActive = true;
                 await _SupplierService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name  added successfully.");
+        }
+
+        [HttpPost("InsertEDMX")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(SupplierModel obj)
+        {
+            MSupplierMaster model = obj.MapTo<MSupplierMaster>();
+            if (obj.SupplierId == 0)
+            {
+                model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
+                model.AddedBy = CurrentUserId;
+                model.IsActive = true;
+                await _SupplierService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
