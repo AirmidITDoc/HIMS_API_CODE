@@ -9,6 +9,8 @@ using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 
 
+
+
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -50,10 +52,15 @@ namespace HIMS.API.Infrastructure
 
 
 
-            CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
             CreateMap<MSupplierMaster, SupplierModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAssignSupplierToStore, AssignSupplierToStoreModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<MItemMaster, ItemMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MAssignItemToStore, AssignItemToStoreModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+            CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TPrescription, PrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

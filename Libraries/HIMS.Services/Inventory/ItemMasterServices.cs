@@ -1,6 +1,10 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Data.DataProviders;
+using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,25 +19,66 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsync(MItemMaster objItem, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username)
+        {
+            try
+            {
+                //Add header table records
+                DatabaseHelper odal = new();
+                string[] rEntity = { " UpDatedBy", "IsNarcotic", "IsUpdatedBy","CreatedBy",  "CreatedDate", " ItemTime", "MAssignItemToStore" };
+                var entity = objItemMaster.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                string vItemId = odal.ExecuteNonQuery("Insert_ItemMaster_1_New", CommandType.StoredProcedure, "ItemId", entity);
+                objItemMaster.ItemId = Convert.ToInt32(vItemId);
+
+                // Add details table records
+                foreach (var objAssign in objItemMaster.MAssignItemToStores)
+                {
+                    objAssign.ItemId = objItemMaster.ItemId;
+                }
+                _context.MAssignItemToStores.AddRange(objItemMaster.MAssignItemToStores);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                // Delete header table realted records
+                MItemMaster? objSup = await _context.MItemMasters.FindAsync(objItemMaster.ItemId);
+                if (objSup != null)
+                {
+                    _context.MItemMasters.Remove(objSup);
+                }
+
+                // Delete details table realted records
+                var lst = await _context.MAssignItemToStores.Where(x => x.ItemId == objItemMaster.ItemId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MAssignItemToStores.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
+        public virtual async Task InsertAsync(MItemMaster objItemMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Insert into MSupplierMaster table
-                objItem.ItemId = (objItem != null) ? objItem.ItemId : long.Parse("0");
-                _context.MItemMasters.Add(objItem);
+                _context.MItemMasters.Add(objItemMaster);
                 await _context.SaveChangesAsync();
 
-                var ItemStore = new MAssignItemToStore
-                {
-                    ItemId = objItem.ItemId,
-                    AssignId = UserId,
-                    StoreId = UserId,
-
-                };
-
-                _context.MAssignItemToStores.Add(ItemStore);
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.MItemMasters.Update(objItemMaster);
+                _context.Entry(objItemMaster).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
                 scope.Complete();
             }
         }
