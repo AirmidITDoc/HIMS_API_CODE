@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using static HIMS.API.Models.Inventory.ItemMasterModelValidator;
-
 namespace HIMS.API.Models.Inventory
 {
     public class ItemMasterModel
@@ -17,9 +15,6 @@ namespace HIMS.API.Models.Inventory
         public string? ConversionFactor { get; set; }
         public long? CurrencyId { get; set; }
         public double? TaxPer { get; set; }
-        public bool? Isdeleted { get; set; }
-        public long? Addedby { get; set; }
-        public long? UpDatedBy { get; set; }
         public bool? IsBatchRequired { get; set; }
         public float? MinQty { get; set; }
         public float? MaxQty { get; set; }
@@ -40,36 +35,42 @@ namespace HIMS.API.Models.Inventory
         public string? DrugTypeName { get; set; }
         public string? ProdLocation { get; set; }
         public long? ItemCompnayId { get; set; }
-        public String? IsCreatedBy { get; set; }
-        public String? IsUpdatedBy { get; set; }
-        public int? CreatedBy { get; set; }
-        public String? CreatedDate { get; set; }
-        public String? ItemTime { get; set; }
-        public List<MAssignItemToStoreModel> MAssignItemToStore { get; set; }
+        public string? ItemTime { get; set; }
+        public List<AssignItemToStoreModel> MAssignItemToStore { get; set; }
     }
     public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
     {
         public ItemMasterModelValidator()
         {
-
             RuleFor(x => x.ItemShortName).NotNull().NotEmpty().WithMessage("ItemShortName is required");
             RuleFor(x => x.ItemName).NotNull().NotEmpty().WithMessage("ItemName is required");
-
+            RuleFor(x => x.ItemTypeId).NotNull().NotEmpty().WithMessage("ItemTypeId is required");
+            RuleFor(x => x.ItemCategaryId).NotNull().NotEmpty().WithMessage("ItemCategaryId is required");
+            RuleFor(x => x.ItemGenericNameId).NotNull().NotEmpty().WithMessage("ItemGenericNameId is required");
+            RuleFor(x => x.ItemClassId).NotNull().NotEmpty().WithMessage("ItemClassId is required");
+            RuleFor(x => x.PurchaseUomid).NotNull().NotEmpty().WithMessage("PurchaseUomid is required");
+            RuleFor(x => x.StockUomid).NotNull().NotEmpty().WithMessage("StockUomid is required");
+            RuleFor(x => x.ConversionFactor).NotNull().NotEmpty().WithMessage("ConversionFactor is required");
+            RuleFor(x => x.CurrencyId).NotNull().NotEmpty().WithMessage("CurrencyId is required");
+            RuleFor(x => x.IsBatchRequired).NotNull().NotEmpty().WithMessage("IsBatchRequired is required");
+            RuleFor(x => x.DrugType).NotNull().NotEmpty().WithMessage("DrugType is required");
+            RuleFor(x => x.ItemCompnayId).NotNull().NotEmpty().WithMessage("ItemCompnayId is required");
+            RuleFor(x => x.DrugType).NotNull().NotEmpty().WithMessage("DrugType is required");
         }
-        public class MAssignItemToStoreModel
+    }
+        public class AssignItemToStoreModel
         {
             public long AssignId { get; set; }
             public long? StoreId { get; set; }
             public long? ItemId { get; set; }
         }
-        public class MAssignItemToStoreModelValidator : AbstractValidator<MAssignItemToStoreModel>
+        public class AssignItemToStoreModelValidator : AbstractValidator<AssignItemToStoreModel>
         {
-            public MAssignItemToStoreModelValidator()
+            public AssignItemToStoreModelValidator()
             {
-
                 RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
                 RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
             }
         }
     }
-}
+

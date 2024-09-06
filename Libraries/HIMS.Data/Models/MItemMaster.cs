@@ -22,7 +22,7 @@ namespace HIMS.Data.Models
         public string? ConversionFactor { get; set; }
         public long? CurrencyId { get; set; }
         public double? TaxPer { get; set; }
-        public bool? Isdeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? Addedby { get; set; }
         public long? UpDatedBy { get; set; }
         public bool? IsBatchRequired { get; set; }
