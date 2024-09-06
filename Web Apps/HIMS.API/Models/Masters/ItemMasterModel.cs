@@ -40,11 +40,11 @@ namespace HIMS.API.Models.Masters
         public string? DrugTypeName { get; set; }
         public string? ProdLocation { get; set; }
         public long? ItemCompnayId { get; set; }
-        public String? IsCreatedBy { get; set; }
-        public String? IsUpdatedBy { get; set; }
+        public DateTime? IsCreatedBy { get; set; }
+        public DateTime? IsUpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
-        public String? CreatedDate { get; set; }
-        public String? ItemTime { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ItemTime { get; set; }
 
     }
 
@@ -55,17 +55,20 @@ namespace HIMS.API.Models.Masters
                
                 RuleFor(x => x.ItemShortName).NotNull().NotEmpty().WithMessage("ItemShortName is required");
                 RuleFor(x => x.ItemName).NotNull().NotEmpty().WithMessage("ItemName is required");
-
-            }
-            public class MAssignItemToStore
+            RuleFor(x => x.ItemTypeId).NotNull().NotEmpty().WithMessage("ItemTypeId is required");
+            RuleFor(x => x.ItemCategaryId).NotNull().NotEmpty().WithMessage("ItemCategaryId is required");
+            RuleFor(x => x.ItemGenericNameId).NotNull().NotEmpty().WithMessage("ItemGenericNameId is required");
+            RuleFor(x => x.ItemClassId).NotNull().NotEmpty().WithMessage("ItemClassId is required");
+        }
+            public class MAssignItemToStoreModel
             {
                 public long AssignId { get; set; }
                 public long? StoreId { get; set; }
                 public long? ItemId { get; set; }
             }
-            public class MAssignItemToStoreValidator : AbstractValidator<MAssignItemToStore>
+            public class MAssignItemToStoreModelValidator : AbstractValidator<MAssignItemToStoreModel>
             {
-                public MAssignItemToStoreValidator()
+                public MAssignItemToStoreModelValidator()
                 {
                    
                     RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
