@@ -9,6 +9,9 @@ namespace HIMS.Services.Inventory
 {
     public partial interface IItemMasterService
     {
-        Task InsertAsync(MItemMaster objItem, int UserId, string Username);
+        Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username);
+        Task InsertAsync(MItemMaster objItemMaster, int UserId, string Username);
+        Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username);
+
     }
 }

@@ -5706,7 +5706,7 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Item)
                     .WithMany(p => p.MAssignItemToStores)
                     .HasForeignKey(d => d.ItemId)
-                    .HasConstraintName("FK_M_AssignItemToStore_M_ItemMaster");
+                    .HasConstraintName("FK_M_AssignItemToStore_M_ItemMaster1");
             });
 
             modelBuilder.Entity<MAssignSupplierToStore>(entity =>
@@ -6168,8 +6168,6 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.ItemId);
 
                 entity.ToTable("M_ItemMaster");
-
-                entity.Property(e => e.ItemId).HasColumnName("ItemID");
 
                 entity.Property(e => e.Cgst).HasColumnName("CGST");
 
