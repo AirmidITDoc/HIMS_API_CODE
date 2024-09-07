@@ -45,9 +45,11 @@ namespace HIMS.API.Controllers.Inventory
             MItemMaster model = obj.MapTo<MItemMaster>();
             if (obj.ItemId == 0)
             {
-                model.ItemTime = Convert.ToDateTime(obj.ItemTime);
-                model.Addedby = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
+                model.Addedby = CurrentUserId;
+                model.UpDatedBy = CurrentUserId;
                 await _ItemMasterServices.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
