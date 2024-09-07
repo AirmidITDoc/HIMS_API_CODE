@@ -12,16 +12,16 @@ namespace HIMS.API.Models.Inventory
         public bool? IsSubTest { get; set; }
         public string? TechniqueName { get; set; }
         public string? MachineName { get; set; }
-        public string ?SuggestionNote { get; set; }
+        public string? SuggestionNote { get; set; }
         public string? FootNote { get; set; }
         public bool? IsDeleted { get; set; }
-        public long ?ServiceId { get; set; }
+        public long? ServiceId { get; set; }
         public bool? IsTemplateTest { get; set; }
         public string? TestTime { get; set; }
-        public DateTime? TestDate { get; set; }
+        public string? TestDate { get; set; }
 
-        public List<PathTemplateDetailModel> MPathTemplateDetails { get; set; }
-        public List<PathTestDetailModel> MPathTestDetailMasters { get; set; }
+        public List<PathTemplateDetailModel>? MPathTemplateDetails { get; set; }
+        public List<PathTestDetailModel>? MPathTestDetailMasters { get; set; }
     }
     public class PathTestMasterModelValidator : AbstractValidator<PathTestMasterModel>
     {
