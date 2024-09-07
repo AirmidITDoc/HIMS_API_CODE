@@ -33,6 +33,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
+                model.Addedby = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
                 await _IDoctorMasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -50,6 +52,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
+                model.Addedby = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -69,6 +73,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
+                model.Addedby = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");

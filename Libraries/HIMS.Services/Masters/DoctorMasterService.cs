@@ -22,6 +22,7 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 using LinqToDB;
+using Aspose.Cells.Charts;
 
 namespace HIMS.Services.Masters
 {
@@ -42,7 +43,7 @@ namespace HIMS.Services.Masters
             {
                 //Add header table records
                 DatabaseHelper odal = new();
-                string[] rEntity = { "MDoctorDepartmentDet"};
+                string[] rEntity = { "RefDocHospitalName", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MDoctorDepartmentDets" };
                 var entity = objDoctor.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {

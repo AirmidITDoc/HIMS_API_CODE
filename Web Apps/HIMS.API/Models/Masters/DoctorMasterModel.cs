@@ -4,7 +4,7 @@ namespace HIMS.API.Models.Masters
 {
     public class DoctorMasterModel
     {
-        public int DoctorId { get; set; }
+        public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -19,7 +19,6 @@ namespace HIMS.API.Models.Masters
         public string? Education { get; set; }
         public bool? IsConsultant { get; set; }
         public bool? IsRefDoc { get; set; }
-        //public bool? IsActive { get; set; }
         public long DoctorTypeId { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
@@ -30,14 +29,12 @@ namespace HIMS.API.Models.Masters
         public DateTime? RegDate { get; set; }
         public string? MahRegNo { get; set; }
         public DateTime? MahRegDate { get; set; }
-        public long? Addedby { get; set; }
-        public long? UpdatedBy { get; set; }
         public string? RefDocHospitalName { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
-        public List<MDoctorDepartmentDetModel> MDoctorDepartmentDet { get; set; }
+        public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
     }
     public class DoctorMasterModelValidator : AbstractValidator<DoctorMasterModel>
     {
