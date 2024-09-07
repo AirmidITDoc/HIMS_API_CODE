@@ -9,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public DateTime? DateofBirth { get; set; }
+        public string? DateofBirth { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? Pin { get; set; }
@@ -26,9 +26,9 @@ namespace HIMS.API.Models.Masters
         public string? PassportNo { get; set; }
         public string? Esino { get; set; }
         public string? RegNo { get; set; }
-        public DateTime? RegDate { get; set; }
+        public string? RegDate { get; set; }
         public string? MahRegNo { get; set; }
-        public DateTime? MahRegDate { get; set; }
+        public string? MahRegDate { get; set; }
         public string? RefDocHospitalName { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
