@@ -57,6 +57,9 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<MItemMaster, ItemMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAssignItemToStore, AssignItemToStoreModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MRadiologyTestMaster, RadiologyTestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MRadiologyTemplateDetail, RadiologyTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -101,9 +104,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MItemCategoryMaster, ItemCategoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemTypeMaster, ItemTypeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCurrencyMaster, CurrencyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MRadiologyTestMaster, RadiologyTestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MRadiologyTemplateMaster, RadiologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MGenericMaster, GenericMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<VisitDetail, VisitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
