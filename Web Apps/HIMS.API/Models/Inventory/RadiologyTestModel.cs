@@ -36,5 +36,8 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.TemplateId).NotNull().NotEmpty().WithMessage("TemplateId is required");
         }
     }
-
+    public class CancelRadiologyTest
+    {
+        public long TestId { get; set; }
+    }
 }

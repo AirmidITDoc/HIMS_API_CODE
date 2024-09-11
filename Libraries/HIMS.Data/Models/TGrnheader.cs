@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public TGrnheader()
         {
             TGrndetails = new HashSet<TGrndetail>();
+            TSupPayDets = new HashSet<TSupPayDet>();
         }
 
         public long Grnid { get; set; }
@@ -54,5 +55,6 @@ namespace HIMS.Data.Models
         public DateTime? EwayBillDate { get; set; }
 
         public virtual ICollection<TGrndetail> TGrndetails { get; set; }
+        public virtual ICollection<TSupPayDet> TSupPayDets { get; set; }
     }
 }

@@ -6468,6 +6468,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DefaultValue).HasMaxLength(500);
 
                 entity.Property(e => e.ParameterValues).HasMaxLength(500);
+
+                entity.HasOne(d => d.Parameter)
+                    .WithMany(p => p.MParameterDescriptiveMasters)
+                    .HasForeignKey(d => d.ParameterId)
+                    .HasConstraintName("FK_M_ParameterDescriptiveMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPastHistoryMaster>(entity =>
@@ -6501,6 +6506,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Maxvalue).HasMaxLength(50);
 
                 entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.HasOne(d => d.Para)
+                    .WithMany(p => p.MPathParaRangeMasters)
+                    .HasForeignKey(d => d.ParaId)
+                    .HasConstraintName("FK_M_PathParaRangeMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPathParameterMaster>(entity =>
@@ -8669,16 +8679,12 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<ServiceDetail>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ServiceDetail");
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
-                entity.Property(e => e.ServiceDetailId).ValueGeneratedOnAdd();
-
                 entity.HasOne(d => d.Service)
-                    .WithMany()
+                    .WithMany(p => p.ServiceDetails)
                     .HasForeignKey(d => d.ServiceId)
                     .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
@@ -8688,6 +8694,8 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.ServiceId);
 
                 entity.ToTable("ServiceMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DoctorId).HasDefaultValueSql("((0))");
 
@@ -13141,6 +13149,16 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.SupTranId);
 
                 entity.ToTable("T_SupPayDet");
+
+                entity.HasOne(d => d.SupGrn)
+                    .WithMany(p => p.TSupPayDets)
+                    .HasForeignKey(d => d.SupGrnId)
+                    .HasConstraintName("FK_T_SupPayDetT_GRNHeader");
+
+                entity.HasOne(d => d.SupPay)
+                    .WithMany(p => p.TSupPayDets)
+                    .HasForeignKey(d => d.SupPayId)
+                    .HasConstraintName("FK_T_SupPayDet_T_GRNSupPayment");
             });
 
             modelBuilder.Entity<TTokenNoDoctorWiseMannual>(entity =>

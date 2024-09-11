@@ -1,7 +1,9 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +21,7 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
+
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
@@ -72,5 +75,40 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+        public virtual async Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.MRadiologyTestMasters.Update(objRadio);
+                _context.Entry(objRadio).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task CancelAsync(MRadiologyTestMaster objRadio, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                MRadiologyTestMaster objRadiology = await _context.MRadiologyTestMasters.FindAsync(objRadio.TestId);
+                objRadiology.CreatedDate = objRadio.CreatedDate;
+                objRadiology.ModifiedBy = objRadio.ModifiedBy;
+                _context.MRadiologyTestMasters.Update(objRadiology);
+                _context.Entry(objRadiology).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        //public virtual async Task<IPagedList<RadiologyTestMaster>> GetAllPagedAsync(GridRequestModel objGrid)
+        //    {
+        //        return await _RadiologyTestService.GetAllPagedAsync(objGrid);
+        //    }
     }
 }
+
+    
+

@@ -8,5 +8,8 @@ namespace HIMS.Data.Models
         public long SupTranId { get; set; }
         public long? SupPayId { get; set; }
         public long? SupGrnId { get; set; }
+
+        public virtual TGrnheader? SupGrn { get; set; }
+        public virtual TGrnsupPayment? SupPay { get; set; }
     }
 }
