@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class ServiceMaster
     {
+        public ServiceMaster()
+        {
+            ServiceDetails = new HashSet<ServiceDetail>();
+        }
+
         public long ServiceId { get; set; }
         public long? GroupId { get; set; }
         public string? ServiceShortDesc { get; set; }
@@ -23,5 +28,10 @@ namespace HIMS.Data.Models
         public decimal? EmgAmt { get; set; }
         public double? EmgPer { get; set; }
         public bool? IsDocEditable { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? AddedBy { get; set; }
+
+        public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }
 }

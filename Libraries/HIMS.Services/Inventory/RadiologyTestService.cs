@@ -103,10 +103,25 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        //public virtual async Task<IPagedList<RadiologyTestMaster>> GetAllPagedAsync(GridRequestModel objGrid)
-        //    {
-        //        return await _RadiologyTestService.GetAllPagedAsync(objGrid);
-        //    }
+       
+        public virtual async Task<List<MRadiologyTestMaster>> GetAllRadiologyTest()
+        {
+            var query = from M in _context.MRadiologyTestMasters
+                        where M.IsActive == true
+                        orderby M.TestId
+                        select M;
+
+            return await query.ToListAsync();
+        }
+        //public virtual async Task<MRadiologyTestMaster> GetByIdRadiologyTest(long Id)
+        //{
+        //    var query = from M in _context.MRadiologyTestMasters
+        //                where M.IsActive == true && M.TestId == Id
+        //                orderby M.TestId
+        //                select M;
+
+        //    return await query;
+        //}
     }
 }
 

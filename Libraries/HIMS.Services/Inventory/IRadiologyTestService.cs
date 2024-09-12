@@ -16,8 +16,8 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task CancelAsync(MRadiologyTestMaster objRadio, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
-
-
+        Task<List<MRadiologyTestMaster>> GetAllRadiologyTest();
+        //Task<MRadiologyTestMaster> GetByIdRadiologyTest(long Id);
     }
 
 

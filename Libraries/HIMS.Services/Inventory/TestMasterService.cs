@@ -111,7 +111,21 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+        public virtual async Task CancelAsync(MPathTestMaster objTest, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                MPathTestMaster objPathology = await _context.MPathTestMasters.FindAsync(objTest.TestId);
+                objTest.CreatedDate = objTest.CreatedDate;
+                objTest.ModifiedBy = objTest.ModifiedBy;
+                _context.MPathTestMasters.Update(objTest);
+                _context.Entry(objTest).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
     }
 }
 

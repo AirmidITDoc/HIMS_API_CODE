@@ -9,6 +9,7 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -71,6 +72,21 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name  updated successfully.");
         }
-
+        [HttpPost("PathTestCanceled")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
+        {
+            MPathTestMaster model = new();
+            if (obj.TestId != 0)
+            {
+                model.TestId = obj.TestId;
+                model.ModifiedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _ITestmasterService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest Canceled successfully.");
+        }
     }
 }

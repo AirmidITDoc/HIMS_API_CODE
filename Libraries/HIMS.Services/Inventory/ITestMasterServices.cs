@@ -13,6 +13,8 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
+        Task CancelAsync(MPathTestMaster objTest, int CurrentUserId, string CurrentUserName);
+
 
     }
 }

@@ -10,6 +10,7 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -23,16 +24,16 @@ namespace HIMS.API.Controllers.Inventory
         {
             _RadiologyTestService = repository;
         }
-        ////List API
-        //[HttpPost]
-        //[Route("[action]")]
-        ////[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> List(GridRequestModel objGrid)
-        //{
-        //    IPagedList<MRadiologyTestMaster> RadiologyTestMasterList = await _RadiologyTestService.GetAllPagedAsync(objGrid);
-        //    return Ok(RadiologyTestMasterList.ToGridResponse(objGrid, "RadiologyTestMaster List"));
-        //}
-        ////List API Get By Id
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            List<MRadiologyTestMaster> RadiologyTestMasterList = await _RadiologyTestService.GetAllRadiologyTest();
+            return Ok(RadiologyTestMasterList.ToList());
+        }
+        //List API Get By Id
         //[HttpGet("{id?}")]
         ////[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         //public async Task<ApiResponse> Get(int id)
@@ -41,8 +42,8 @@ namespace HIMS.API.Controllers.Inventory
         //    {
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
         //    }
-        //    var data = await _RadiologyTestService.GetById(x => x.PatientTypeId == id);
-        //    return data.ToSingleResponse<PatientTypeMaster, PatientTypeModel>("PatientType");
+        //    var data = await _RadiologyTestService.GetByIdRadiologyTest(id);
+        //    return data.ToSingleResponse<MRadiologyTestMaster, RadiologyTestModel>("PatientType");
         //}
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
@@ -95,7 +96,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("RadilogyCancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(CancelRadiologyTest obj)
+        public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
         {
             MRadiologyTestMaster model = new();
             if (obj.TestId != 0)
