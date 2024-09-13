@@ -22,5 +22,7 @@ namespace HIMS.Data.Models
         public DateTime? MrdreceivedTime { get; set; }
         public long? MrdreceivedUserId { get; set; }
         public string? MrdreceivedName { get; set; }
+
+        public virtual Admission? Admission { get; set; }
     }
 }

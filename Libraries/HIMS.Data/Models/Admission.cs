@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class Admission
     {
+        public Admission()
+        {
+            Discharges = new HashSet<Discharge>();
+        }
+
         public long AdmissionId { get; set; }
         public long? RegId { get; set; }
         public DateTime? AdmissionDate { get; set; }
@@ -84,5 +89,7 @@ namespace HIMS.Data.Models
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
         public decimal? MedicalApreAmt { get; set; }
+
+        public virtual ICollection<Discharge> Discharges { get; set; }
     }
 }

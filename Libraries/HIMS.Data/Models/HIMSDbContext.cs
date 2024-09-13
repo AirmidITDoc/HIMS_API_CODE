@@ -16,6 +16,8 @@ namespace HIMS.Data.Models
         //{
         //}
 
+        public virtual DbSet<ACustomerInformation> ACustomerInformations { get; set; } = null!;
+        public virtual DbSet<ACustomerPaymentSummary> ACustomerPaymentSummaries { get; set; } = null!;
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<AddchargesBkp> AddchargesBkps { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -484,6 +486,61 @@ namespace HIMS.Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACustomerInformation>(entity =>
+            {
+                entity.HasKey(e => e.CustomerId);
+
+                entity.ToTable("A_CustomerInformation");
+
+                entity.Property(e => e.Amcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("AMCDate");
+
+                entity.Property(e => e.Amcduration).HasColumnName("AMCDuration");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CustomerAddress).HasMaxLength(250);
+
+                entity.Property(e => e.CustomerContactNo).HasMaxLength(10);
+
+                entity.Property(e => e.CustomerContactPerson).HasMaxLength(100);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(500);
+
+                entity.Property(e => e.CustomerNumber).HasMaxLength(50);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.NextAmcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("NextAMCDate");
+
+                entity.Property(e => e.OrderAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<ACustomerPaymentSummary>(entity =>
+            {
+                entity.HasKey(e => e.CustPayTranId);
+
+                entity.ToTable("A_CustomerPaymentSummary");
+
+                entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.Comments).HasMaxLength(200);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.ACustomerPaymentSummaries)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_A_CustomerPaymentSummary_A_CustomerPaymentSummary");
+            });
+
             modelBuilder.Entity<AddCharge>(entity =>
             {
                 entity.HasKey(e => e.ChargesId);
@@ -1534,6 +1591,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MrdreceivedUserId).HasColumnName("MRDReceivedUserID");
 
                 entity.Property(e => e.UpdatedBy).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Admission)
+                    .WithMany(p => p.Discharges)
+                    .HasForeignKey(d => d.AdmissionId)
+                    .HasConstraintName("FK_Discharge_Admission");
             });
 
             modelBuilder.Entity<DischargeSummary>(entity =>
