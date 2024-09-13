@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.Services.Inventory;
 using Asp.Versioning;
+using HIMS.Services.OutPatient;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -70,6 +71,22 @@ namespace HIMS.API.Controllers.Inventory
                 await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name updated successfully.");
+        }
+        [HttpPost("ItemCanceled")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
+        {
+            MItemMaster model = new();
+            if (obj.ItemId != 0)
+            {
+                model.ItemId = obj.ItemId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _ItemMasterServices.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name Canceled successfully.");
         }
     }
 }

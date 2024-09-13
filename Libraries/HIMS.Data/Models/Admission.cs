@@ -7,7 +7,9 @@ namespace HIMS.Data.Models
     {
         public Admission()
         {
+            DischargeSummaries = new HashSet<DischargeSummary>();
             Discharges = new HashSet<Discharge>();
+            TIpPrescriptionDischarges = new HashSet<TIpPrescriptionDischarge>();
         }
 
         public long AdmissionId { get; set; }
@@ -90,6 +92,8 @@ namespace HIMS.Data.Models
         public byte? AdmissionType { get; set; }
         public decimal? MedicalApreAmt { get; set; }
 
+        public virtual ICollection<DischargeSummary> DischargeSummaries { get; set; }
         public virtual ICollection<Discharge> Discharges { get; set; }
+        public virtual ICollection<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; }
     }
 }

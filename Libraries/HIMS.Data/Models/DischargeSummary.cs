@@ -25,5 +25,23 @@ namespace HIMS.Data.Models
         public long? DischargeDoctor3 { get; set; }
         public DateTime? DischargeSummaryTime { get; set; }
         public string? DoctorAssistantName { get; set; }
+        public string? ClaimNumber { get; set; }
+        public string? PreOthNumber { get; set; }
+        public long? AddedBy { get; set; }
+        public DateTime? AddedByDate { get; set; }
+        public long? UpdatedBy { get; set; }
+        public DateTime? UpdatedByDate { get; set; }
+        public string? SurgeryProcDone { get; set; }
+        public string? Icd10code { get; set; }
+        public string? ClinicalConditionOnAdmisssion { get; set; }
+        public string? OtherConDrOpinions { get; set; }
+        public string? ConditionAtTheTimeOfDischarge { get; set; }
+        public string? PainManagementTechnique { get; set; }
+        public string? LifeStyle { get; set; }
+        public string? WarningSymptoms { get; set; }
+        public string? Radiology { get; set; }
+        public byte? IsNormalOrDeath { get; set; }
+
+        public virtual Admission? Admission { get; set; }
     }
 }

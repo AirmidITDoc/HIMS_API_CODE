@@ -117,10 +117,11 @@ namespace HIMS.Services.Inventory
             {
                 // Update header table records
                 MPathTestMaster objPathology = await _context.MPathTestMasters.FindAsync(objTest.TestId);
-                objTest.CreatedDate = objTest.CreatedDate;
-                objTest.ModifiedBy = objTest.ModifiedBy;
-                _context.MPathTestMasters.Update(objTest);
-                _context.Entry(objTest).State = EntityState.Modified;
+                objPathology.IsActive = false;
+                objPathology.CreatedDate = objTest.CreatedDate;
+                objPathology.ModifiedBy = objTest.ModifiedBy;
+                _context.MPathTestMasters.Update(objPathology);
+                _context.Entry(objPathology).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

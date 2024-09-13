@@ -86,12 +86,13 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
+         public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
                 ServiceMaster objBilling = await _context.ServiceMasters.FindAsync(objService.ServiceId);
+                objBilling.IsActive = false;
                 objBilling.CreatedDate = objService.CreatedDate;
                 objBilling.CreatedBy = objService.CreatedBy;
                 _context.ServiceMasters.Update(objBilling);
