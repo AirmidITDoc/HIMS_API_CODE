@@ -17,7 +17,6 @@ namespace HIMS.API.Models.Customer
         public string? Amcdate { get; set; }
         public int? Amcduration { get; set; }
         public string? NextAmcdate { get; set; }
-        public string? ModifiedOn { get; set; }
     }
     public class CustomerInformationModelValidator : AbstractValidator<CustomerInformationModel>
     {

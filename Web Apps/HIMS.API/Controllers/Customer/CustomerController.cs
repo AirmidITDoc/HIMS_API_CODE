@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Customer
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerName added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Customer
                 model.CreatedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerName  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation  updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Customer
                 model.ModifiedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerName  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
