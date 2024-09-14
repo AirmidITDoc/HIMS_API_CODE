@@ -49,7 +49,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathTestDetailMaster, PathTestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ACustomerInformation, CustomerInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<ACustomerPaymentSummary, CustomerPaymentSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<ACustomerPaymentSummary, CustomerPaymentSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
@@ -67,7 +67,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-            CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
