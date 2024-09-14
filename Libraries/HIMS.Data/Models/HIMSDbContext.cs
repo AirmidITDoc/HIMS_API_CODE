@@ -501,8 +501,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.CustomerAddress).HasMaxLength(250);
 
                 entity.Property(e => e.CustomerContactNo).HasMaxLength(10);
@@ -514,8 +512,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CustomerNumber).HasMaxLength(50);
 
                 entity.Property(e => e.InstallationDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.NextAmcdate)
                     .HasColumnType("datetime")

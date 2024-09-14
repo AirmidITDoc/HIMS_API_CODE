@@ -11,6 +11,10 @@ namespace HIMS.Data.Models
         public DateTime? PaymentTime { get; set; }
         public decimal? Amount { get; set; }
         public string? Comments { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public bool? IsActive { get; set; }
+        public long? ModifiedBy { get; set; }
 
         public virtual ACustomerInformation? Customer { get; set; }
     }
