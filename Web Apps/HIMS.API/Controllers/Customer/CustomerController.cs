@@ -8,17 +8,18 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Models.Customer;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Controllers.Customer
 {
-
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class RadiologyTestController : BaseController
+
+    public class CustomerController : BaseController
     {
-        private readonly IGenericService<MRadiologyTestMaster> _repository;
-        public RadiologyTestController(IGenericService<MRadiologyTestMaster> repository)
+        private readonly IGenericService<ACustomerInformation> _repository;
+        public CustomerController(IGenericService<ACustomerInformation> repository)
         {
             _repository = repository;
         }
@@ -26,32 +27,32 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MRadiologyTestMaster> RadiologyTestList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(RadiologyTestList.ToGridResponse(objGrid, "RadiologyTest List"));
+            IPagedList<ACustomerInformation> CustomerInformationList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(CustomerInformationList.ToGridResponse(objGrid, "CustomerInformation List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.TestId == id);
-            return data.ToSingleResponse<MRadiologyTestMaster, RadiologyTestModel>("RadiologyTestMaster");
+            var data = await _repository.GetById(x => x.CustomerId == id);
+            return data.ToSingleResponse<ACustomerInformation, CustomerInformationModel>("CustomerInformation");
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(RadiologyTestModel obj)
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(CustomerInformationModel obj)
         {
-            MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
+            ACustomerInformation model = obj.MapTo<ACustomerInformation>();
             model.IsActive = true;
-            if (obj.TestId == 0)
+            if (obj.CustomerId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -59,38 +60,38 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology test Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(RadiologyTestModel obj)
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(CustomerInformationModel obj)
         {
-            MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
+            ACustomerInformation model = obj.MapTo<ACustomerInformation>();
             model.IsActive = true;
-            if (obj.TestId == 0)
+            if (obj.CustomerId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MRadiologyTestMaster model = await _repository.GetById(x => x.TestId == Id);
-            if ((model?.TestId ?? 0) > 0)
+            ACustomerInformation model = await _repository.GetById(x => x.CustomerId == Id);
+            if ((model?.CustomerId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Type deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CustomerInformation  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -98,3 +99,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
     }
 }
+
+    
+

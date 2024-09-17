@@ -72,5 +72,9 @@ namespace HIMS.API.Models.Inventory
                 RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
             }
         }
+    public class DeleteAssignItemToStore
+    {
+        public long ItemId { get; set; }
     }
+}
 

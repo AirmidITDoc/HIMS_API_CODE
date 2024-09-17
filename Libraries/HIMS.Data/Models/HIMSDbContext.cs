@@ -500,7 +500,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Amcduration).HasColumnName("AMCDuration");
 
-                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerAddress).HasMaxLength(250);
 
@@ -513,8 +513,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CustomerNumber).HasMaxLength(50);
 
                 entity.Property(e => e.InstallationDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.NextAmcdate)
                     .HasColumnType("datetime")
@@ -532,6 +530,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Amount).HasColumnType("money");
 
                 entity.Property(e => e.Comments).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PaymentDate).HasColumnType("datetime");
 
@@ -3078,6 +3078,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("LoginManager");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
@@ -3101,6 +3103,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MailDomain).HasMaxLength(50);
 
                 entity.Property(e => e.MailId).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Password).HasMaxLength(100);
 
@@ -8198,6 +8202,11 @@ namespace HIMS.Data.Models
                     .HasColumnName("TDSAmount");
 
                 entity.Property(e => e.TranMode).HasMaxLength(30);
+
+                entity.HasOne(d => d.BillNoNavigation)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.BillNo)
+                    .HasConstraintName("FK_Payment_Bill");
             });
 
             modelBuilder.Entity<PaymentPharmacy>(entity =>

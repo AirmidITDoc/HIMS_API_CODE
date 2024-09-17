@@ -12,6 +12,7 @@ namespace HIMS.Services.Inventory
         Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username);
         Task InsertAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username);
+        Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
 
     }
 }

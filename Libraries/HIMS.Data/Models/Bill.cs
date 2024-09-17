@@ -9,6 +9,7 @@ namespace HIMS.Data.Models
         {
             AddCharges = new HashSet<AddCharge>();
             BillDetails = new HashSet<BillDetail>();
+            Payments = new HashSet<Payment>();
         }
 
         public long BillNo { get; set; }
@@ -53,5 +54,6 @@ namespace HIMS.Data.Models
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

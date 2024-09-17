@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class TIpPrescriptionDischarge 
+    public partial class TIpPrescriptionDischarge
     {
         public long PrecriptionId { get; set; }
         public long? OpdIpdId { get; set; }
