@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.OutPatient
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-               
+
                 model.UpdatedBy = CurrentUserId;
                 await _ICrossConsultationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
