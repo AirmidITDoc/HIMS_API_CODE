@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
 
-namespace HIMS.Data.Models
+
+namespace HIMS.API.Models.Inventory
 {
-    public partial class Discharge
+    public class DischargeModel
     {
         public long DischargeId { get; set; }
         public long? AdmissionId { get; set; }
@@ -13,8 +13,8 @@ namespace HIMS.Data.Models
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+        //public long? AddedBy { get; set; }
+        //public long? UpdatedBy { get; set; }
         public long? IsCancelledby { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public bool? IsMrdreceived { get; set; }
@@ -22,7 +22,19 @@ namespace HIMS.Data.Models
         public DateTime? MrdreceivedTime { get; set; }
         public long? MrdreceivedUserId { get; set; }
         public string? MrdreceivedName { get; set; }
-
-        public virtual Admission? Admission { get; set; }
+       
     }
+    public class DischargeModelValidator : AbstractValidator<DischargeModel>
+    {
+        public DischargeModelValidator()
+        {
+            RuleFor(x => x.DischargeDate).NotNull().NotEmpty().WithMessage("DischargeDate is required");
+            RuleFor(x => x.AdmissionId).NotNull().NotEmpty().WithMessage("AdmissionId is required");
+            RuleFor(x => x.DischargeTypeId).NotNull().NotEmpty().WithMessage("DischargeTypeId is required");
+
+
+        }
+    }
+    
 }
+

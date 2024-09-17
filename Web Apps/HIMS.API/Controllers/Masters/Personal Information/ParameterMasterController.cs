@@ -8,6 +8,8 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Services.Masters;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -17,45 +19,26 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     public class ParameterMasterController : BaseController
     {
 
-        private readonly IGenericService<MPathParameterMaster> _repository;
-        public ParameterMasterController(IGenericService<MPathParameterMaster> repository)
+        private readonly IParameterMasterService _IParameterMasterService;
+        public ParameterMasterController(IParameterMasterService repository)
         {
-            _repository = repository;
+            _IParameterMasterService = repository;
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<MPathParameterMaster> PathParameterMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PathParameterMasterList.ToGridResponse(objGrid, "Parameter Master List"));
-        }
-        //List API Get By Id
-        [HttpGet("{id?}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
-        public async Task<ApiResponse> Get(int id)
-        {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-            var data = await _repository.GetById(x => x.ParameterId == id);
-            return data.ToSingleResponse<MPathParameterMaster, ParameterMasterModel>("Parameter Master");
-        }
+      
         //Add API
-        [HttpPost]
+        [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(ParameterMasterModel obj)
+        public async Task<ApiResponse> InsertEDMX(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
-            model.IsActive = true;
+           
             if (obj.ParameterId == 0)
             {
+                model.IsActive = true;
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _IParameterMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -63,38 +46,39 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         //Edit API
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
-            model.IsActive = true;
+           
             if (obj.ParameterId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter name updated successfully.");
         }
-        //Delete API
-        [HttpDelete]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Delete(int Id)
+        [HttpPost("ParameterCancel")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(CancelParameter obj)
         {
-            MPathParameterMaster model = await _repository.GetById(x => x.ParameterId == Id);
-            if ((model?.ParameterId ?? 0) > 0)
+            MPathParameterMaster model = new();
+            if (obj.ParameterId != 0)
             {
-                model.IsActive = false;
+                model.ParameterId = obj.ParameterId;
+               
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Name deleted successfully.");
+                await _IParameterMasterService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Deleted successfully.");
         }
 
     }

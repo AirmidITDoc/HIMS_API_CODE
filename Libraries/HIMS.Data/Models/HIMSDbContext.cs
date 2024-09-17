@@ -16,6 +16,8 @@ namespace HIMS.Data.Models
         //{
         //}
 
+        public virtual DbSet<ACustomerInformation> ACustomerInformations { get; set; } = null!;
+        public virtual DbSet<ACustomerPaymentSummary> ACustomerPaymentSummaries { get; set; } = null!;
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<AddchargesBkp> AddchargesBkps { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -153,6 +155,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwRegNoWithPrefix> LvwRegNoWithPrefixes { get; set; } = null!;
         public virtual DbSet<LvwRegistrationList> LvwRegistrationLists { get; set; } = null!;
         public virtual DbSet<LvwRetrieveDischargeSummary> LvwRetrieveDischargeSummaries { get; set; } = null!;
+        public virtual DbSet<DischargeSummary> DischargeSummarys { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResult> LvwRetrievePathologyResults { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResultIppatientUpdate> LvwRetrievePathologyResultIppatientUpdates { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResultMachineUpload> LvwRetrievePathologyResultMachineUploads { get; set; } = null!;
@@ -380,6 +383,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
+        public virtual DbSet<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; } = null!;
         public virtual DbSet<TIpmedicalRecord> TIpmedicalRecords { get; set; } = null!;
         public virtual DbSet<TIpprescriptionReturnD> TIpprescriptionReturnDs { get; set; } = null!;
         public virtual DbSet<TIpprescriptionReturnH> TIpprescriptionReturnHs { get; set; } = null!;
@@ -484,6 +488,61 @@ namespace HIMS.Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACustomerInformation>(entity =>
+            {
+                entity.HasKey(e => e.CustomerId);
+
+                entity.ToTable("A_CustomerInformation");
+
+                entity.Property(e => e.Amcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("AMCDate");
+
+                entity.Property(e => e.Amcduration).HasColumnName("AMCDuration");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CustomerAddress).HasMaxLength(250);
+
+                entity.Property(e => e.CustomerContactNo).HasMaxLength(10);
+
+                entity.Property(e => e.CustomerContactPerson).HasMaxLength(100);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(500);
+
+                entity.Property(e => e.CustomerNumber).HasMaxLength(50);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.NextAmcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("NextAMCDate");
+
+                entity.Property(e => e.OrderAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<ACustomerPaymentSummary>(entity =>
+            {
+                entity.HasKey(e => e.CustPayTranId);
+
+                entity.ToTable("A_CustomerPaymentSummary");
+
+                entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.Comments).HasMaxLength(200);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.ACustomerPaymentSummaries)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_A_CustomerPaymentSummary_A_CustomerPaymentSummary");
+            });
+
             modelBuilder.Entity<AddCharge>(entity =>
             {
                 entity.HasKey(e => e.ChargesId);
@@ -1534,13 +1593,28 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MrdreceivedUserId).HasColumnName("MRDReceivedUserID");
 
                 entity.Property(e => e.UpdatedBy).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Admission)
+                    .WithMany(p => p.Discharges)
+                    .HasForeignKey(d => d.AdmissionId)
+                    .HasConstraintName("FK_Discharge_Admission");
             });
 
             modelBuilder.Entity<DischargeSummary>(entity =>
             {
                 entity.ToTable("DischargeSummary");
 
+                entity.Property(e => e.AddedByDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ClaimNumber)
+                    .HasMaxLength(50)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ClinicalConditionOnAdmisssion).HasColumnType("text");
+
                 entity.Property(e => e.ClinicalFinding).HasColumnType("text");
+
+                entity.Property(e => e.ConditionAtTheTimeOfDischarge).HasColumnType("text");
 
                 entity.Property(e => e.Diagnosis).HasColumnType("text");
 
@@ -1556,7 +1630,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.History).HasColumnType("text");
 
+                entity.Property(e => e.Icd10code)
+                    .HasColumnType("text")
+                    .HasColumnName("ICD10CODE");
+
                 entity.Property(e => e.Investigation).HasColumnType("text");
+
+                entity.Property(e => e.LifeStyle).HasColumnType("text");
 
                 entity.Property(e => e.OpDate).HasColumnType("datetime");
 
@@ -1566,11 +1646,32 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("OPTime");
 
+                entity.Property(e => e.OtherConDrOpinions).HasColumnType("text");
+
+                entity.Property(e => e.PainManagementTechnique).HasColumnType("text");
+
+                entity.Property(e => e.PreOthNumber)
+                    .HasMaxLength(50)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Radiology).HasColumnType("text");
+
                 entity.Property(e => e.Remark).HasColumnType("text");
+
+                entity.Property(e => e.SurgeryProcDone).HasColumnType("text");
 
                 entity.Property(e => e.TreatmentAdvisedAfterDischarge).HasColumnType("text");
 
                 entity.Property(e => e.TreatmentGiven).HasColumnType("text");
+
+                entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
+
+                entity.Property(e => e.WarningSymptoms).HasColumnType("text");
+
+                entity.HasOne(d => d.Admission)
+                    .WithMany(p => p.DischargeSummaries)
+                    .HasForeignKey(d => d.AdmissionId)
+                    .HasConstraintName("FK_DischargeSummary_Admission");
             });
 
             modelBuilder.Entity<DischargeTypeMaster>(entity =>
@@ -6468,6 +6569,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DefaultValue).HasMaxLength(500);
 
                 entity.Property(e => e.ParameterValues).HasMaxLength(500);
+
+                entity.HasOne(d => d.Parameter)
+                    .WithMany(p => p.MParameterDescriptiveMasters)
+                    .HasForeignKey(d => d.ParameterId)
+                    .HasConstraintName("FK_M_ParameterDescriptiveMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPastHistoryMaster>(entity =>
@@ -6501,6 +6607,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Maxvalue).HasMaxLength(50);
 
                 entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.HasOne(d => d.Para)
+                    .WithMany(p => p.MPathParaRangeMasters)
+                    .HasForeignKey(d => d.ParaId)
+                    .HasConstraintName("FK_M_PathParaRangeMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPathParameterMaster>(entity =>
@@ -6536,7 +6647,7 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Test)
                     .WithMany(p => p.MPathTemplateDetails)
                     .HasForeignKey(d => d.TestId)
-                    .HasConstraintName("constraint_name");
+                    .HasConstraintName("FK_M_PathTemplateDetails_TestId");
             });
 
             modelBuilder.Entity<MPathTestDetailMaster>(entity =>
@@ -8669,16 +8780,12 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<ServiceDetail>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ServiceDetail");
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
-                entity.Property(e => e.ServiceDetailId).ValueGeneratedOnAdd();
-
                 entity.HasOne(d => d.Service)
-                    .WithMany()
+                    .WithMany(p => p.ServiceDetails)
                     .HasForeignKey(d => d.ServiceId)
                     .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
@@ -8688,6 +8795,8 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.ServiceId);
 
                 entity.ToTable("ServiceMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DoctorId).HasDefaultValueSql("((0))");
 
@@ -11080,6 +11189,38 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.WardId).HasColumnName("WardID");
             });
 
+            modelBuilder.Entity<TIpPrescriptionDischarge>(entity =>
+            {
+                entity.HasKey(e => e.PrecriptionId);
+
+                entity.ToTable("T_IP_Prescription_Discharge");
+
+                entity.Property(e => e.ClassId).HasColumnName("ClassID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Instruction).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Ptime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PTime");
+
+                entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.HasOne(d => d.OpdIpd)
+                    .WithMany(p => p.TIpPrescriptionDischarges)
+                    .HasForeignKey(d => d.OpdIpdId)
+                    .HasConstraintName("FK_T_IP_Prescription_Discharge_Admission");
+            });
+
             modelBuilder.Entity<TIpmedicalRecord>(entity =>
             {
                 entity.HasKey(e => e.MedicalRecoredId);
@@ -13141,6 +13282,16 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.SupTranId);
 
                 entity.ToTable("T_SupPayDet");
+
+                entity.HasOne(d => d.SupGrn)
+                    .WithMany(p => p.TSupPayDets)
+                    .HasForeignKey(d => d.SupGrnId)
+                    .HasConstraintName("FK_T_SupPayDetT_GRNHeader");
+
+                entity.HasOne(d => d.SupPay)
+                    .WithMany(p => p.TSupPayDets)
+                    .HasForeignKey(d => d.SupPayId)
+                    .HasConstraintName("FK_T_SupPayDet_T_GRNSupPayment");
             });
 
             modelBuilder.Entity<TTokenNoDoctorWiseMannual>(entity =>

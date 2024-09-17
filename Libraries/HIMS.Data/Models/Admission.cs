@@ -5,6 +5,13 @@ namespace HIMS.Data.Models
 {
     public partial class Admission
     {
+        public Admission()
+        {
+            DischargeSummaries = new HashSet<DischargeSummary>();
+            Discharges = new HashSet<Discharge>();
+            TIpPrescriptionDischarges = new HashSet<TIpPrescriptionDischarge>();
+        }
+
         public long AdmissionId { get; set; }
         public long? RegId { get; set; }
         public DateTime? AdmissionDate { get; set; }
@@ -84,5 +91,9 @@ namespace HIMS.Data.Models
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
         public decimal? MedicalApreAmt { get; set; }
+
+        public virtual ICollection<DischargeSummary> DischargeSummaries { get; set; }
+        public virtual ICollection<Discharge> Discharges { get; set; }
+        public virtual ICollection<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; }
     }
 }

@@ -57,13 +57,16 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<ISupplierService, SupplierService>();
 
+            services.AddScoped<IDischargeService, DischargeService>();
+            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
+
             services.AddScoped<ISupplierPaymentService, SupplierPaymentService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
            
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             services.AddScoped<IParameterMasterService, ParameterMasterService>();
 
-
+            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
             //services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddScoped<IOPBillingService, OPBillingService>();
 
