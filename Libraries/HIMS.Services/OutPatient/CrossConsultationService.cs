@@ -24,7 +24,7 @@ namespace HIMS.Services.OutPatient
         public virtual async Task InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Opdno", "IsMark", "Comments", "IsXray", "PhoneAppId" };
+            string[] rEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
             var entity = objCrossConsultation.ToDictionary();
             foreach (var rProperty in rEntity)
             {
