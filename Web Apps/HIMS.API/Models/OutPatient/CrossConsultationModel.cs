@@ -33,7 +33,7 @@ namespace HIMS.API.Models.OutPatient
         //public bool? IsXray { get; set; }
 
         public int? CrossConsulFlag { get; set; }
-        //public long? PhoneAppId { get; set; }
+        public long? PhoneAppId { get; set; }
     }
     public class CrossConsultationModelValidator : AbstractValidator<CrossConsultationModel>
     {
