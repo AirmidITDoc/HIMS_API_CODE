@@ -160,7 +160,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Bill, OPBillIngModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<BillDetail, BillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, ChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            CreateMap<Payment, OPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
 }
