@@ -5,6 +5,10 @@ namespace HIMS.Data.Models
 {
     public partial class DischargeSummary
     {
+        public DischargeSummary()
+        {
+            TIpPrescriptionDischarges = new HashSet<TIpPrescriptionDischarge>();
+        }
         public long DischargeSummaryId { get; set; }
         public long? AdmissionId { get; set; }
         public long? DischargeId { get; set; }
@@ -43,5 +47,8 @@ namespace HIMS.Data.Models
         public byte? IsNormalOrDeath { get; set; }
 
         public virtual Admission? Admission { get; set; }
+
+        public virtual ICollection<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; }
+
     }
 }
