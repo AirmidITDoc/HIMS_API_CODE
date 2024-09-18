@@ -31,7 +31,6 @@ namespace HIMS.API.Models.OutPatient
         //public bool? IsMark { get; set; }
         //public string? Comments { get; set; }
         //public bool? IsXray { get; set; }
-
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
     }
