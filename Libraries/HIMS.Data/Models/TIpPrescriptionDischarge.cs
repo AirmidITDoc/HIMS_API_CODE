@@ -29,6 +29,5 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
 
         public virtual Admission? OpdIpd { get; set; }
-        public virtual DischargeSummary? DischargeSummarys { get; set; }
     }
 }

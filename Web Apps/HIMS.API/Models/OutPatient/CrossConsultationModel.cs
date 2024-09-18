@@ -5,7 +5,7 @@ namespace HIMS.API.Models.OutPatient
 {
     public class CrossConsultationModel
     {
-        public long VisitID { get; set; }
+        public long VisitId { get; set; }
         public long? RegId { get; set; }
         public string? VisitDate { get; set; }
         public string? VisitTime { get; set; }

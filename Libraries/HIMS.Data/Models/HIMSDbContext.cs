@@ -155,7 +155,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwRegNoWithPrefix> LvwRegNoWithPrefixes { get; set; } = null!;
         public virtual DbSet<LvwRegistrationList> LvwRegistrationLists { get; set; } = null!;
         public virtual DbSet<LvwRetrieveDischargeSummary> LvwRetrieveDischargeSummaries { get; set; } = null!;
-        public virtual DbSet<DischargeSummary> DischargeSummarys { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResult> LvwRetrievePathologyResults { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResultIppatientUpdate> LvwRetrievePathologyResultIppatientUpdates { get; set; } = null!;
         public virtual DbSet<LvwRetrievePathologyResultMachineUpload> LvwRetrievePathologyResultMachineUploads { get; set; } = null!;

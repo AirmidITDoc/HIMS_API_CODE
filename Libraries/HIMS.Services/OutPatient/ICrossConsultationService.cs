@@ -9,6 +9,6 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface ICrossConsultationService
     {
-        Task InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
+        Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
     }
 }

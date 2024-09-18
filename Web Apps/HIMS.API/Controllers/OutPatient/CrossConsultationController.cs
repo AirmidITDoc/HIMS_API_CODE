@@ -34,17 +34,17 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
-            if (obj.VisitID == 0)
+            if (obj.VisitId == 0)
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
                 model.UpdatedBy = CurrentUserId;
-                await _ICrossConsultationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                model = await _ICrossConsultationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CrossConsultation added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CrossConsultation added successfully.", model);
         }
     }
 }

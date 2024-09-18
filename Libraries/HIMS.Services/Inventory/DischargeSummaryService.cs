@@ -32,8 +32,8 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                _context.DischargeSummarys.Add(objDischargeSummary);
-                await _context.SaveChangesAsync();
+                //_context.DischargeSummarys.Add(objDischargeSummary);
+                //await _context.SaveChangesAsync();
                 
                 scope.Complete();
             }
@@ -43,10 +43,10 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Update header & detail table records
-                _context.DischargeSummarys.Update(objDischargeSummary);
-                _context.Entry(objDischargeSummary).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                //// Update header & detail table records
+                //_context.DischargeSummarys.Update(objDischargeSummary);
+                //_context.Entry(objDischargeSummary).State = EntityState.Modified;
+                //await _context.SaveChangesAsync();
 
                 scope.Complete();
             }

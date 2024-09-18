@@ -9,7 +9,6 @@ namespace HIMS.Data.Models
         {
             TGrndetails = new HashSet<TGrndetail>();
             TSupPayDets = new HashSet<TSupPayDet>();
-            TGrnsupPayments = new HashSet<TGrnsupPayment>();
         }
 
         public long Grnid { get; set; }
@@ -57,6 +56,5 @@ namespace HIMS.Data.Models
 
         public virtual ICollection<TGrndetail> TGrndetails { get; set; }
         public virtual ICollection<TSupPayDet> TSupPayDets { get; set; }
-        public virtual ICollection<TGrnsupPayment> TGrnsupPayments { get; set; }
     }
 }

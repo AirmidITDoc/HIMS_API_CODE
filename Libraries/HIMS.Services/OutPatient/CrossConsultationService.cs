@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
@@ -30,10 +30,12 @@ namespace HIMS.Services.OutPatient
             {
                 entity.Remove(rProperty);
             }
-            string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitID", entity);
+            string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
 
             await _context.SaveChangesAsync(UserId, Username);
+
+            return objCrossConsultation;
         }
     }
 }
