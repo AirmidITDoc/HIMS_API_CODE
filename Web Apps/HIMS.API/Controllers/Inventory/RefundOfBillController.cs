@@ -26,9 +26,9 @@ namespace HIMS.API.Controllers.Inventory
             Refund model = obj.MapTo<Refund>();
             if (obj.RefundId == 0)
             {
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 model.AddBy = CurrentUserId;
-                //model.IsActive = true;
+                model.IsActive = true;
                 await _RefundOfBillService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else

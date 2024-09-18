@@ -41,6 +41,7 @@ namespace HIMS.API.Models.OutPatient
         public long? CashCounterId { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
+        public List<OPPaymentModel> Payments { get; set; }
     }
     public class BillModelValidator : AbstractValidator<OPBillIngModel>
     {
@@ -115,35 +116,35 @@ namespace HIMS.API.Models.OutPatient
     {
         public int PaymentId { get; set; }
         public int? BillNo { get; set; }
-        public String? ReceiptNo { get; set; }
+        public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public DateTime? PaymentTime { get; set; }
         public long? CashPayAmount { get; set; }
         public long? ChequePayAmount { get; set; }
-        public String? ChequeNo { get; set; }
-        public String? BankName { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
         public DateTime? ChequeDate { get; set; }
         public long? CardPayAmount { get; set; }
-        public String? CardNo { get; set; }
-        public String? CardBankName { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
         public DateTime? CardDate { get; set; }
         public long? AdvanceUsedAmount { get; set; }
         public int? AdvanceId { get; set; }
         public int? RefundId { get; set; }
         public int? TransactionType { get; set; }
-        public String? Remark { get; set; }
+        public string? Remark { get; set; }
         public int? AddBy { get; set; }
-        public int IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         public int? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? NEFTPayAmount { get; set; }
-        public String? NEFTNo { get; set; }
-        public String? NEFTBankMaster { get; set; }
-        public DateTime? NEFTDate { get; set; }
-        public long? PayTMAmount { get; set; }
-        public String? PayTMTranNo { get; set; }
-        public DateTime? PayTMDate { get; set; }
-        public long? TDSAmount { get; set; }
+        public long? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public DateTime? Neftdate { get; set; }
+        public long? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+        public DateTime? PayTmdate { get; set; }
+        public long? Tdsamount { get; set; }
     }
 
     public class OPPaymentModelValidator : AbstractValidator<OPPaymentModel>
