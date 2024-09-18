@@ -59,6 +59,11 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IRefundOfBillService, RefundOfBillService>();
+
+
+
 
 
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
