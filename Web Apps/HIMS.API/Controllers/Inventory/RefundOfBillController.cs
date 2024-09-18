@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Inventory
                 if (obj.RefundDetail.RefundDetId == 0)
                 {
                     //objTRefundDetail.VisitTime = Convert.ToDateTime(obj.RefundDetail.VisitTime);
-                    //objTRefundDetail.AddBy = CurrentUserId;
+                    objTRefundDetail.AddBy = CurrentUserId;
                     //objTRefundDetail.UpdatedBy = CurrentUserId;
                 }
                 await _RefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
