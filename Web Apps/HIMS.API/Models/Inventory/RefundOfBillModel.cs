@@ -67,6 +67,14 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
+    public class RefundBillModel
+    {
+        public RefundOfBillModel Refund { get; set; }
+        public TRefundDetailModel RefundDetail { get; set; }
+
+
+
+    }
 
 }
 

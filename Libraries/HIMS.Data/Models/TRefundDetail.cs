@@ -17,6 +17,5 @@ namespace HIMS.Data.Models
         public decimal? HospitalAmount { get; set; }
         public decimal? DoctorAmount { get; set; }
 
-        public virtual Refund? Refund { get; set; }
     }
 }

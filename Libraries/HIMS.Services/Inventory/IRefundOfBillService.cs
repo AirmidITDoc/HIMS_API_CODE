@@ -9,7 +9,8 @@ namespace HIMS.Services.Inventory
 {
     public partial interface IRefundOfBillService
     {
-        Task InsertAsyncSP(Refund objRefund, int UserId, string Username);
+        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int currentUserId, string currentUserName);
+
 
     }
 }

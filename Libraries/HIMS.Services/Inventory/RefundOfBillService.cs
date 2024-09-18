@@ -18,48 +18,30 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(Refund objRefund, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int CurrentUserId, string CurrentUserName)
         {
-            try
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy ", "CreatedDate", "ModifiedDate", " IsActive" };
+            var entity = objRefund.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                //Add header table records
-                DatabaseHelper odal = new();
-                string[] rEntity = { "CashCounterId", "IsRefundFlag", "TRefundDetails" };
-                var entity = objRefund.ToDictionary(); 
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string VRefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
-                objRefund.RefundId = Convert.ToInt32(VRefundId);
-
-
-
-                //// Add details table records
-                //foreach (var objRefundDetails in objRefund.TRefundDetails)
-                //{
-                //    objRefundDetails.RefundId = objRefund.RefundId;
-                //}
-                //_context.TRefundDetails.AddRange(objRefund.TRefundDetail);
-                //await _context.SaveChangesAsync();
+                entity.Remove(rProperty);
             }
-            catch (Exception)
+            string RegId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
+            objRefund.RefundId = Convert.ToInt32(RegId);
+            objTRefundDetail.RefundId = Convert.ToInt32(RegId);
+
+            string[] rRefundEntity = { " RefundDetId", "ChargesId ", " HospitalAmount", "DoctorAmount " };
+            var RefundEntity = objTRefundDetail.ToDictionary();
+            foreach (var rProperty in rRefundEntity)
             {
-                // Delete header table realted records
-                Refund? objSup = await _context.Refunds.FindAsync(objRefund.RefundId);
-                if (objSup != null)
-                {
-                    _context.Refunds.Remove(objSup);
-                }
-
-                // Delete details table realted records
-                var lst = await _context.TRefundDetails.Where(x => x.RefundId == objRefund.RefundId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TRefundDetails.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
+                RefundEntity.Remove(rProperty);
             }
+            string VisitId = odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, "RefundDetId", RefundEntity);
+            objTRefundDetail.RefundDetId = Convert.ToInt32(VisitId);
+
+            
         }
 
     }
