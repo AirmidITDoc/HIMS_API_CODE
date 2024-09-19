@@ -12783,14 +12783,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundId).HasColumnName("RefundID");
 
+                entity.Property(e => e.RefundTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Remark).HasMaxLength(50);
 
                 entity.Property(e => e.ServiceAmount).HasColumnType("money");
-
-                entity.HasOne(d => d.Refund)
-                    .WithMany(p => p.TRefundDetails)
-                    .HasForeignKey(d => d.RefundId)
-                    .HasConstraintName("FK_T_RefundDetails_Refund");
             });
 
             modelBuilder.Entity<TReturnFromDepartmentDetail>(entity =>

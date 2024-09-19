@@ -5,8 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class Refund
     {
-        
-
         public long RefundId { get; set; }
         public DateTime? RefundDate { get; set; }
         public DateTime? RefundTime { get; set; }
@@ -29,6 +27,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsActive { get; set; }
-
     }
 }
