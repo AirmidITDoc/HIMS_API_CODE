@@ -2,25 +2,24 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
+using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.Inventory
+namespace HIMS.API.Controllers.OutPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
     public class RefundOfBillController : BaseController
     {
-        private readonly IRefundOfBillService _RefundOfBillService;
-        public RefundOfBillController(IRefundOfBillService repository)
-        {
-            _RefundOfBillService = repository;
-        }
-       
+            private readonly IRefundOfBillService _IRefundOfBillService;
+            public RefundOfBillController(IRefundOfBillService repository)
+            {
+            _IRefundOfBillService = repository;
+            }
+
         [HttpPost("RefundInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RefundBillModel obj)
@@ -30,15 +29,15 @@ namespace HIMS.API.Controllers.Inventory
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
-                model.AddBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
 
                 if (obj.RefundDetail.RefundDetId == 0)
                 {
-                    //objTRefundDetail.VisitTime = Convert.ToDateTime(obj.RefundDetail.VisitTime);
+                    objTRefundDetail.RefundDetailsTime = Convert.ToDateTime(obj.RefundDetail.RefundDetailsTime);
                     objTRefundDetail.AddBy = CurrentUserId;
-                    //objTRefundDetail.UpdatedBy = CurrentUserId;
+                    objTRefundDetail.UpdatedBy = CurrentUserId;
                 }
-                await _RefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
+                await _IRefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -49,4 +48,6 @@ namespace HIMS.API.Controllers.Inventory
 
 
     }
-}
+
+    }
+

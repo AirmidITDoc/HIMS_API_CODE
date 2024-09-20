@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.Inventory
+namespace HIMS.Services.OutPatient
 {
     public partial interface IRefundOfBillService
     {
-        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int currentUserId, string currentUserName);
+        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int CurrentUserId, string CurrentUserName);
+
 
 
     }
