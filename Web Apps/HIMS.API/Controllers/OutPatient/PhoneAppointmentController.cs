@@ -45,6 +45,8 @@ namespace HIMS.API.Controllers.OutPatient
         }
 
 
+
+
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
