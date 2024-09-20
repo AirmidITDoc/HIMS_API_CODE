@@ -23,16 +23,11 @@ namespace HIMS.Services.OutPatient
 
         public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
-            //      m_insert_Bill_1
-            //      m_insert_OPAddCharges_1
-            //      m_insert_BillDetails_1
-            //      m_insert_PathologyReportHeader_1
-            //      m_insert_RadiologyReportHeader_1
-            //      m_insert_Payment_1
             try
             {
+                // Bill Code
                 DatabaseHelper odal = new();
-                string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+                string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
                 var entity = objBill.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -45,6 +40,7 @@ namespace HIMS.Services.OutPatient
                 {
                     foreach (var objItem1 in objBill.AddCharges)
                     {
+                        // Add Charges Code
                         objItem1.BillNo = objBill.BillNo;
                         objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
                         objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
@@ -52,6 +48,7 @@ namespace HIMS.Services.OutPatient
                         _context.AddCharges.Add(objItem1);
                         await _context.SaveChangesAsync();
 
+                        // Bill Details Code
                         foreach (var objItem in objBill.BillDetails)
                         {
                             objItem.BillNo = objBill.BillNo;
@@ -59,20 +56,64 @@ namespace HIMS.Services.OutPatient
                             _context.BillDetails.Add(objItem);
                             await _context.SaveChangesAsync();
                         }
+                        // Pathology Code
+                        if (objItem1.IsPathology == 1)
+                        {
+                            TPathologyReportHeader objPatho = new TPathologyReportHeader();
+                            objPatho.PathDate = objItem1.ChargesDate;
+                            objPatho.PathTime = objItem1?.ChargesDate;
+                            objPatho.OpdIpdType = objItem1?.OpdIpdType;
+                            objPatho.OpdIpdId = objItem1?.OpdIpdId;
+                            objPatho.PathTestId = objItem1?.ServiceId;
+                            objPatho.AddedBy = objItem1?.AddedBy;
+                            objPatho.ChargeId = objItem1?.ChargesId;
+                            objPatho.IsCompleted = false;
+                            objPatho.IsPrinted = false;
+                            objPatho.IsSampleCollection = false;
+                            objPatho.TestType = false;
+
+                            _context.TPathologyReportHeaders.Add(objPatho);
+                            await _context.SaveChangesAsync();
+                        }
+                        // Radiology Code
+                        if (objItem1?.IsRadiology == 1)
+                        {
+                            TRadiologyReportHeader objRadio = new TRadiologyReportHeader();
+                            objRadio.RadDate = objItem1.ChargesDate;
+                            objRadio.RadTime = objItem1?.ChargesDate;
+                            objRadio.OpdIpdType = objItem1?.OpdIpdType;
+                            objRadio.OpdIpdId = objItem1?.OpdIpdId;
+                            objRadio.RadTestId = objItem1?.ServiceId;
+                            objRadio.AddedBy = objItem1?.AddedBy;
+                            objRadio.ChargeId = objItem1?.ChargesId;
+                            objRadio.IsCompleted = false;
+                            objRadio.IsCancelled = 0;
+                            objRadio.IsPrinted = false;
+                            objRadio.TestType = false;
+
+                            _context.TRadiologyReportHeaders.Add(objRadio);
+                            await _context.SaveChangesAsync();
+                        }
                     }
-                    ////string[] rEntityPay = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
-                    ////var entityPay = objBill.ToDictionary();
-                    ////foreach (var rProperty in rEntityPay)
-                    ////{
-                    ////    entityPay.Remove(rProperty);
-                    ////}
-                    ////odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, tokenObj.ToDictionary());
+
+                    // Payment Code
+                    int _val = 0;
+                    foreach (var objPayment in objBill.Payments)
+                    {
+                        if(_val == 0)
+                        {
+                            objPayment.BillNo = objBill.BillNo;
+                            _context.Payments.Add(objPayment);
+                            await _context.SaveChangesAsync();
+                        }
+                        _val += 1;
+                    }
                     scope.Complete();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Bill objBills = await _context.Bills.FindAsync(objBill.BillNo);
+                Bill? objBills = await _context.Bills.FindAsync(objBill.BillNo);
                 _context.Bills.Remove(objBills);
                 await _context.SaveChangesAsync();
             }

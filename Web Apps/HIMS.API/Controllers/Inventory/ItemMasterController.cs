@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster added successfully.");
         }
 
         [HttpPost("InsertEDMX")]
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster   added successfully.");
         }
 
          [HttpPut("Edit/{id:int}")]
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.ItemTime = Convert.ToDateTime(obj.ItemTime);
                 await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
         }
         [HttpPost("ItemCanceled")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]

@@ -12785,6 +12785,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundId).HasColumnName("RefundID");
 
+                entity.Property(e => e.RefundTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Remark).HasMaxLength(50);
 
                 entity.Property(e => e.ServiceAmount).HasColumnType("money");
