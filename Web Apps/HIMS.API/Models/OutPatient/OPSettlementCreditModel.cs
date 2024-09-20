@@ -2,11 +2,25 @@
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class OPPaymentdetailModel
+    public class OPSettlementCreditModel
+    {
+        public int BillNo { get; set; }
+
+        public float BillBalAmount { get; set; }
+    }
+    public class OPSettlementCreditModelValidator : AbstractValidator<OPSettlementCreditModel>
+    {
+        public OPSettlementCreditModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.BillBalAmount).NotNull().NotEmpty().WithMessage("BillBalAmount is required");
+          
+        }
+    }
+    public class OPSettlementPaymentModel
     {
         public int PaymentId { get; set; }
         public int? BillNo { get; set; }
-        //  public String ReceiptNo { get; set; }
         public string? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
         public long? CashPayAmount { get; set; }
@@ -24,29 +38,32 @@ namespace HIMS.API.Models.OutPatient
         public int? TransactionType { get; set; }
         public string? Remark { get; set; }
         public int? AddBy { get; set; }
-        public int? IsCancelled { get; set; }
+        public bool? IsCancelled { get; set; }
         public int? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
-        public int? OPDIPDType { get; set; }
         public long? NEFTPayAmount { get; set; }
+
+        public bool? OPD_IPD_Type { get; set; }
         public string? NEFTNo { get; set; }
         public string? NEFTBankMaster { get; set; }
         public string? NEFTDate { get; set; }
         public long? PayTMAmount { get; set; }
         public string? PayTMTranNo { get; set; }
         public string? PayTMDate { get; set; }
-        public float? TDSAmount { get; set; }
+        //public long? TDSAmount { get; set; }
     }
 
-    public class PaymentModelValidator : AbstractValidator<OPPaymentModel>
+    public class OPSettlementPaymentModelValidator : AbstractValidator<OPSettlementPaymentModel>
     {
-        public PaymentModelValidator()
+        public OPSettlementPaymentModelValidator()
         {
-            //RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
-            //RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            //RuleFor(x => x.MobileNo).NotNull().NotEmpty().WithMessage("Mobile is required");
-            //RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("Department is required");
-            //RuleFor(x => x.DoctorId).NotNull().NotEmpty().WithMessage("Doctor is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
+    }
+
+    public class OPSettlementpayment
+    {
+        public OPSettlementCreditModel OPSettlementCredit { get; set; }
+        public OPSettlementPaymentModel OPSettlementPayment { get; set; }
     }
 }

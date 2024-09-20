@@ -24,9 +24,11 @@ namespace HIMS.API.Controllers.OutPatient
     public class OPBillController : BaseController
     {
         private readonly IOPBillingService _oPBillingService;
-        public OPBillController(IOPBillingService repository)
+        private readonly IOPCreditBillService _IOPCreditBillService;
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1)
         {
             _oPBillingService = repository;
+            _IOPCreditBillService = repository1;
         }
         [HttpPost("OPBillingInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -43,5 +45,41 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.");
         }
+
+
+        [HttpPost("OPCreditBillingInsert")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            if (obj.BillNo == 0)
+            {
+                model.BillTime = Convert.ToDateTime(obj.BillTime);
+                model.AddedBy = CurrentUserId;
+                await _IOPCreditBillService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.");
+        }
+
+
+        [HttpPost("OPSettlementCreditPayment")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> OPSettlementCreditPayment(OPSettlementpayment obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            if (obj.OPSettlementCredit.BillNo != 0)
+            {
+              //  model.BillTime = Convert.ToDateTime(obj.BillTime);
+                model.AddedBy = CurrentUserId;
+                await _IOPCreditBillService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill Payment added successfully.");
+        }
+
+
     }
 }

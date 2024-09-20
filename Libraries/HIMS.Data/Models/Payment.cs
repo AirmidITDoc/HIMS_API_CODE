@@ -46,5 +46,7 @@ namespace HIMS.Data.Models
         public decimal? ChPayTmamount { get; set; }
         public string? TranMode { get; set; }
         public decimal? Tdsamount { get; set; }
+
+        public virtual Bill? BillNoNavigation { get; set; }
     }
 }

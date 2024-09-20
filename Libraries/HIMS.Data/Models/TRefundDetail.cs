@@ -16,5 +16,7 @@ namespace HIMS.Data.Models
         public long? ChargesId { get; set; }
         public decimal? HospitalAmount { get; set; }
         public decimal? DoctorAmount { get; set; }
+        public int? UpdatedBy { get; set; }
+        public DateTime? RefundDetailsTime { get; set; }
     }
 }

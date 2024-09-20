@@ -37,5 +37,9 @@ namespace HIMS.Data.Models
         public int? PharExtOpt { get; set; }
         public int? PharOpopt { get; set; }
         public int? PharIpopt { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }
