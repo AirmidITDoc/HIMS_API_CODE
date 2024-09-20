@@ -58,15 +58,12 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPAddchargesService, OPAddchargesService>();
             services.AddScoped<IOPPayment, OPPayment>();
             services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
-            services.AddScoped<IVisitDetailsService, VisitDetailsService>();
-            services.AddScoped<IAdmissionService, AdmissionService>();
-
-            // services.AddScoped<IOPCreditBillService,OPCreditBillService>();
+            services.AddScoped<IOPCreditBillService,OPCreditBillService>();
             services.AddScoped<IDischargeService,DischargeService>();
-          //  services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
+            services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
 
 
-           // services.AddScoped<IIPBillService,IPBillService>();
+            services.AddScoped<IIPBillService,IPBillService>();
         //    services.AddScoped<IPBill, OPSettlementCreditService>();
 
 
@@ -74,7 +71,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
-          
+              services.AddScoped<IVisitDetailsService, VisitDetailsService>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
+
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
