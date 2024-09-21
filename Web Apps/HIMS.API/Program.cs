@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet;
 using Aspose.Cells.Charts;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -66,7 +67,7 @@ mapperConfiguration.CreateMapper().InitializeMapper();
 
 builder.Services.AddMvc().AddJsonOptions(jsonOptions =>
 {
-    jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+    jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     jsonOptions.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
