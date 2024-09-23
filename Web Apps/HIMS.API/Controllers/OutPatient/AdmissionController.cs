@@ -59,5 +59,18 @@ namespace HIMS.API.Controllers.OutPatient
            
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully.");
         }
+
+
+        [HttpPost("AdmissionUpdateSP")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
+        {
+
+            Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
+
+            await _IAdmissionService.UpdateAdmissionAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Admission Updated successfully.");
+        }
     }
 }

@@ -23,13 +23,13 @@ namespace HIMS.Services.OutPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "OpdIpdType", "OpdIpdId", "IsDoctorShareGenerated", "IsInterimBillFlag", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "BillNoNavigation" };
+            string[] rEntity = {"IsDoctorShareGenerated", "IsInterimBillFlag", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "BillNoNavigation" };
             var entity = objAddcharges.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            string ChargesId = odal.ExecuteNonQuery("insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+            string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
             objAddcharges.ChargesId = Convert.ToInt32(ChargesId);
         }
     }

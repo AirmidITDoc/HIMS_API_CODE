@@ -58,20 +58,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPAddchargesService, OPAddchargesService>();
             services.AddScoped<IOPPayment, OPPayment>();
             services.AddScoped<IOPCreditBillService,OPCreditBillService>();
-            services.AddScoped<IOPSettlementCreditService, OPSettlementCreditService>();
-            //services.AddScoped<IOPSettlementService, OPSettlementService>();
-
-
-
-            services.AddScoped<IIPBillService,IPBillService>();
-        //    services.AddScoped<IPBill, OPSettlementCreditService>();
+            services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
 
 
             services.AddScoped<ISupplierService, SupplierService>();
-
-            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
-
-            services.AddScoped<ISupplierPaymentService, SupplierPaymentService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
@@ -82,14 +72,11 @@ namespace HIMS.API.Infrastructure
 
 
 
-
-
+            services.AddScoped<IVisitDetailsService, VisitDetailsService>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
 
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
-            services.AddScoped<IParameterMasterService, ParameterMasterService>();
-
-            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
-            //services.AddScoped<IPrescriptionService, PrescriptionService>();
+            //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
 
             services.AddHttpContextAccessor();

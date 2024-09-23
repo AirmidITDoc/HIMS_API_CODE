@@ -1,9 +1,17 @@
 ﻿using FluentValidation;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class IPBillIngModel
+    public class IPBillModel
     {
+        //public IPBillModel()
+        //{
+        //    AddCharges = new HashSet<AddCharge>();
+        //    BillDetails = new HashSet<BillDetail>();
+        //    Payments = new Payment();
+        //}
+
         public int BillNo { get; set; }
         public int? OPDIPDID { get; set; }
         public float? TotalAmt { get; set; }
@@ -31,21 +39,11 @@ namespace HIMS.API.Models.OutPatient
         public int? CompDiscAmt { get; set; }
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
-        public List<ChargesModel> AddCharges { get; set; }
-        public List<BillDetailsModel> BillDetails { get; set; }
-    }
-    public class IPBillModelValidator : AbstractValidator<IPBillIngModel>
-    {
-        public IPBillModelValidator()
-        {
-            RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
-            RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
-            RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
-        }
-    }
 
+        public List<IPChargesModel> AddCharges { get; set; }
+        public List<IPBillDetailsModel> BillDetails { get; set; }
+        public List<IPPaymentModel> Payments { get; set; }
+    }
     public class IPBillDetailsModel
     {
         public int BillNo { get; set; }
@@ -56,8 +54,8 @@ namespace HIMS.API.Models.OutPatient
     {
         public IPBillDetailsModelValidator()
         {
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
+            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            //RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
         }
     }
 
@@ -98,8 +96,8 @@ namespace HIMS.API.Models.OutPatient
     {
         public IPChargesModelValidator()
         {
-            RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+        //    RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+        //    RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 
@@ -107,42 +105,51 @@ namespace HIMS.API.Models.OutPatient
     {
         public int PaymentId { get; set; }
         public int? BillNo { get; set; }
-        public String? ReceiptNo { get; set; }
-        public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? ReceiptNo { get; set; }
+        public string? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
         public long? CashPayAmount { get; set; }
         public long? ChequePayAmount { get; set; }
-        public String? ChequeNo { get; set; }
-        public String? BankName { get; set; }
-        public DateTime? ChequeDate { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public string? ChequeDate { get; set; }
         public long? CardPayAmount { get; set; }
-        public String? CardNo { get; set; }
-        public String? CardBankName { get; set; }
-        public DateTime? CardDate { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
+        public string? CardDate { get; set; }
         public long? AdvanceUsedAmount { get; set; }
         public int? AdvanceId { get; set; }
         public int? RefundId { get; set; }
         public int? TransactionType { get; set; }
-        public String? Remark { get; set; }
+        public string? Remark { get; set; }
         public int? AddBy { get; set; }
-        public int IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         public int? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
-        public long? NEFTPayAmount { get; set; }
-        public String? NEFTNo { get; set; }
-        public String? NEFTBankMaster { get; set; }
-        public DateTime? NEFTDate { get; set; }
-        public long? PayTMAmount { get; set; }
-        public String? PayTMTranNo { get; set; }
-        public DateTime? PayTMDate { get; set; }
-        public long? TDSAmount { get; set; }
+        public string? IsCancelledDate { get; set; }
+        public long? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public string? Neftdate { get; set; }
+        public long? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+        public string? PayTmdate { get; set; }
+        public long? Tdsamount { get; set; }
     }
 
-    public class IPPaymentModelValidator : AbstractValidator<OPPaymentModel>
+    public class IPPaymentModelValidator : AbstractValidator<IPPaymentModel>
     {
         public IPPaymentModelValidator()
         {
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("ClassId is required");
+           // RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
+
+   //public class NewIPBill{
+
+   //     public IPBillModel IPBillModel { get; set; }
+   //     public IPBillDetailsModel IPBillDetailsModel { get; set; }
+   //     public IPChargesModel IPChargeModel { get; set; }
+   //     public IPPaymentModel IpPayment { get; set; }
+   // }
+
 }

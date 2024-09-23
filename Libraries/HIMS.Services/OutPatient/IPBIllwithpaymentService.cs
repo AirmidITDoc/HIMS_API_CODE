@@ -13,10 +13,10 @@ using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
-    public class IPBillwithCreditService:IIPBillwithCreditService
+    public class IPBIllwithpaymentService : IIPBIllwithpaymentService
     {
         private readonly Data.Models.HIMSDbContext _context;
-        public IPBillwithCreditService(HIMSDbContext HIMSDbContext)
+        public IPBIllwithpaymentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
@@ -40,7 +40,7 @@ namespace HIMS.Services.OutPatient
                 {
                     foreach (var objItem1 in objBill.AddCharges)
                     {
-                        // Add Charges Code
+                        //Add Charges Code
                         objItem1.BillNo = objBill.BillNo;
                         objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
                         objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
@@ -57,7 +57,7 @@ namespace HIMS.Services.OutPatient
                             await _context.SaveChangesAsync();
                         }
 
-                        //m_update_AdvanceDetail_1
+                       // m_update_AdvanceDetail_1
                         //foreach (var a in objBill.IPAdvanceDetailUpdate)
                         //{
                         //    DatabaseHelper odal = new();
@@ -73,7 +73,19 @@ namespace HIMS.Services.OutPatient
 
                     }
 
-                   
+                    // Payment Code
+                    int _val = 0;
+                    foreach (var objPayment in objBill.Payments)
+                    {
+                        if (_val == 0)
+                        {
+                            objPayment.BillNo = objBill.BillNo;
+                            _context.Payments.Add(objPayment);
+                            await _context.SaveChangesAsync();
+                        }
+                        _val += 1;
+                    }
+
                     scope.Complete();
 
                 }
@@ -89,15 +101,15 @@ namespace HIMS.Services.OutPatient
                 //odal.ExecuteNonQuery("m_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, entity1);
 
                 // //m_update_T_AdmissionforIPBilling
-                // DatabaseHelper odal2 = new();
-                // string[] rEntity2 = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
-                // var entity2 = objBill.ToDictionary();
-                // foreach (var rProperty in rEntity2)
-                // {
-                //     entity2.Remove(rProperty);
-                // }
-                // odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
-                // //objBill.BillNo = Convert.ToInt32(vBillNo);
+                //DatabaseHelper odal2 = new();
+                //string[] rEntity2 = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
+                //var entity2 = objBill.ToDictionary();
+                //foreach (var rProperty in rEntity2)
+                //{
+                //    entity2.Remove(rProperty);
+                //}
+                //odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
+                //objBill.BillNo = Convert.ToInt32(vBillNo);
 
 
                 // //m_update_BillBalAmount_1
@@ -134,3 +146,5 @@ namespace HIMS.Services.OutPatient
         }
     }
 }
+
+
