@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.OutPatient
 {
-    public partial interface IIPBillwithCreditService
+    public partial interface IIPLabRequestService
     {
-        Task InsertAsyncSP(Bill objBill, Admission objAdmission, Payment objpayment, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(THlabRequest objTHlabRequest, int currentUserId, string currentUserName);
     }
 }

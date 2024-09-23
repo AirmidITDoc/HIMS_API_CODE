@@ -58,38 +58,26 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPAddchargesService, OPAddchargesService>();
             services.AddScoped<IOPPayment, OPPayment>();
             services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
-            services.AddScoped<IOPCreditBillService,OPCreditBillService>();
-            services.AddScoped<IDischargeService,DischargeService>();
-            services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
+            services.AddScoped<IOPCreditBillService, OPCreditBillService>();
+          //  services.AddScoped<IDischargeService, DischargeService>();
+            services.AddScoped<IOPSettlementCreditService, OPSettlementCreditService>();
+            services.AddScoped<IIPBIllwithpaymentService,IPBIllwithpaymentService>();
+            services.AddScoped<IIPPrescriptionService,IPPrescriptionService>();
+            services.AddScoped<IIPAdvanceService,IPAdvanceService>();
 
 
-            services.AddScoped<IIPBillService,IPBillService>();
-        //    services.AddScoped<IPBill, OPSettlementCreditService>();
+            //    services.AddScoped<IPBill, OPSettlementCreditService>();
 
 
             services.AddScoped<ISupplierService, SupplierService>();
-
-            services.AddScoped<IDischargeService, DischargeService>();
-            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
-
-            services.AddScoped<ISupplierPaymentService, SupplierPaymentService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
-            services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<IRefundOfBillService, RefundOfBillService>();
-
-
-              services.AddScoped<IVisitDetailsService, VisitDetailsService>();
+            services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService, AdmissionService>();
 
-
-
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
-            services.AddScoped<IParameterMasterService, ParameterMasterService>();
-
-            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
-            //services.AddScoped<IPrescriptionService, PrescriptionService>();
+            //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
 
             services.AddHttpContextAccessor();

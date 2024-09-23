@@ -25,9 +25,9 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> OPAddchargesInsert(OPAddchargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
-            if (obj.ChargesId == 0)
+            if (obj.ChargeID == 0)
             {
-                model.ChargesTime = Convert.ToDateTime(obj.ChargeTime);
+               model.ChargesTime = Convert.ToDateTime(obj.ChargeTime);
                 model.AddedBy = CurrentUserId;
                 await _IOPAddchargesService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }

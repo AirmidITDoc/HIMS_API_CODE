@@ -8418,9 +8418,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+                entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
 
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
@@ -12784,8 +12784,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RefundDetailsTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefundId).HasColumnName("RefundID");
-
-                entity.Property(e => e.RefundTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Remark).HasMaxLength(50);
 

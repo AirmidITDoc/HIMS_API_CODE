@@ -21,29 +21,29 @@ namespace HIMS.API.Controllers.Inventory
             _RefundOfBillService = repository;
         }
        
-        [HttpPost("RefundInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(RefundBillModel obj)
-        {
-            Refund model = obj.Refund.MapTo<Refund>();
-            TRefundDetail objTRefundDetail = obj.RefundDetail.MapTo<TRefundDetail>();
-            if (obj.Refund.RefundId == 0)
-            {
-                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
-                model.AddBy = CurrentUserId;
+        //[HttpPost("RefundInsert")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(RefundBillModel obj)
+        //{
+        //    Refund model = obj.Refund.MapTo<Refund>();
+        //    TRefundDetail objTRefundDetail = obj.RefundDetail.MapTo<TRefundDetail>();
+        //    if (obj.Refund.RefundId == 0)
+        //    {
+        //        model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+        //        model.AddBy = CurrentUserId;
 
-                if (obj.RefundDetail.RefundDetId == 0)
-                {
-                    //objTRefundDetail.VisitTime = Convert.ToDateTime(obj.RefundDetail.VisitTime);
-                    objTRefundDetail.AddBy = CurrentUserId;
-                    //objTRefundDetail.UpdatedBy = CurrentUserId;
-                }
-                await _RefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
-        }
+        //        if (obj.RefundDetail.RefundDetId == 0)
+        //        {
+        //            //objTRefundDetail.VisitTime = Convert.ToDateTime(obj.RefundDetail.VisitTime);
+        //            objTRefundDetail.AddBy = CurrentUserId;
+        //            //objTRefundDetail.UpdatedBy = CurrentUserId;
+        //        }
+        //        await _RefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
+        //}
 
 
 
