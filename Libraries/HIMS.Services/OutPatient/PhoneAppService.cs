@@ -1,12 +1,14 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
@@ -34,5 +36,45 @@ namespace HIMS.Services.OutPatient
 
             return objPhoneAppointment;
         }
+        public virtual async Task InsertAsync(TPhoneAppointment objPhoneAppointment, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TPhoneAppointments.Add(objPhoneAppointment);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TPhoneAppointment objPhoneAppointment, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.TPhoneAppointments.Update(objPhoneAppointment);
+                _context.Entry(objPhoneAppointment).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task CancelAsync(TPhoneAppointment objPhoneAppointment, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TPhoneAppointment objphone = await _context.TPhoneAppointments.FindAsync(objPhoneAppointment.PhoneAppId);
+                //objphone.IsActive = false;
+                objphone.CreatedDate = objPhoneAppointment.CreatedDate;
+                objphone.CreatedBy = objPhoneAppointment.CreatedBy;
+                _context.TPhoneAppointments.Update(objphone);
+                _context.Entry(objphone).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }

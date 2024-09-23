@@ -12,15 +12,15 @@ namespace HIMS.API.Controllers.OutPatient
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class RefundOfBillController : BaseController
+    public class OPRefundOfBillController : BaseController
     {
-            private readonly IRefundOfBillService _IRefundOfBillService;
-            public RefundOfBillController(IRefundOfBillService repository)
+            private readonly IOPRefundOfBillService _IRefundOfBillService;
+            public OPRefundOfBillController(IOPRefundOfBillService repository)
             {
             _IRefundOfBillService = repository;
             }
 
-        [HttpPost("RefundInsert")]
+        [HttpPost("OPRefundInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RefundBillModel obj)
         {
@@ -33,7 +33,8 @@ namespace HIMS.API.Controllers.OutPatient
 
                 if (obj.RefundDetail.RefundDetId == 0)
                 {
-                    objTRefundDetail.RefundDetailsTime = Convert.ToDateTime(obj.RefundDetail.RefundDetailsTime);
+                    obj.RefundDetail.RefundId = obj.Refund.RefundId;
+                    //objTRefundDetail.RefundDetailsTime = Convert.ToDateTime(obj.RefundDetail.RefundDetailsTime);
                     objTRefundDetail.AddBy = CurrentUserId;
                     objTRefundDetail.UpdatedBy = CurrentUserId;
                 }
@@ -43,11 +44,7 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         }
-
-
-
-
     }
 
-    }
+}
 

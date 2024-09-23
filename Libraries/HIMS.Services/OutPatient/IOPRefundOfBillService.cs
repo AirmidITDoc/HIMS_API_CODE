@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.OutPatient
 {
-    public partial interface IRefundOfBillService
+    public partial interface IOPRefundOfBillService
     {
         Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int CurrentUserId, string CurrentUserName);
 
