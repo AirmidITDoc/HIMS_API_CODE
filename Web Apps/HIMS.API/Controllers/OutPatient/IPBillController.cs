@@ -73,9 +73,9 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewIPAdvance obj)
         {
-            AdvanceHeader model = obj.MapTo<AdvanceHeader>();
-            AdvanceDetail ObjAdvanceDetail = obj.MapTo<AdvanceDetail>();
-            Payment Objpayment = obj.MapTo<Payment>();
+            AdvanceHeader model = obj.AdvanceHeaderModel.MapTo<AdvanceHeader>();
+            AdvanceDetail ObjAdvanceDetail = obj.AdvanceDetail.MapTo<AdvanceDetail>();
+            Payment Objpayment = obj.AdvPayment.MapTo<Payment>();
 
             if (obj.AdvanceHeaderModel.AdvanceId == 0)
             {
