@@ -21,27 +21,21 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-        //    public virtual async Task InsertAsyncSP(IPPrescription objTPrescription, int CurrentUserId, string CurrentUserName)
-        //    {
-        //        // throw new NotImplementedException();
+        public virtual async Task InsertAsyncSP(TIpPrescription objTPrescription, int CurrentUserId, string CurrentUserName)
+        {
+            // throw new NotImplementedException();
+            //insert_T_IPMedicalRecord_1
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                //foreach (var objItem in objTPrescription.TIpPrescription)
+                //{
+                   // _context.TIpPrescription.Add(objTPrescription);
+                    await _context.SaveChangesAsync();
+                //}
+                scope.Complete();
+            }
 
+        }
 
-        //        //PrecriptionId InstructionId Instruction IsEnglishOrIsMarathi Pweight
-        //        //Pulse Bp Bsl ChiefComplaint SpO2 DoseOption2 DaysOption2  DoseOption3 DaysOption3
-
-
-        //        using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //        {
-        //            foreach (var objItem in objTPrescription.TIpPrescription)
-        //            {
-
-        //               // _context.objTPrescription.Add(objItem);
-        //                await _context.SaveChangesAsync();
-        //            }
-        //            scope.Complete();
-        //        }
-
-        //    }
-        
     }
 }

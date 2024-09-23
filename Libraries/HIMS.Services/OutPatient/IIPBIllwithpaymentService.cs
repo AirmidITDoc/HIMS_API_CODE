@@ -9,6 +9,6 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IIPBIllwithpaymentService
     {
-        Task InsertAsyncSP(Bill objBill,Admission objAdmission, Payment objpayment, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
     }
 }

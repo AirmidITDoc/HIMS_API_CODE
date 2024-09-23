@@ -2,7 +2,7 @@
 {
     public class OPAddchargesModel
     {
-        public long ChargeID { get; set; }
+        public long ChargesId { get; set; }
         public DateTime? ChargesDate { get; set; }
 
         public string? ChargeTime { get; set; }

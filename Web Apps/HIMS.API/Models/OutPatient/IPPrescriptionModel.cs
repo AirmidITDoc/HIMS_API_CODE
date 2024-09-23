@@ -3,13 +3,14 @@
 
     public class NewPrescription
     {
-        public List<IPPrescriptionModel> TPrescription { get; set; }
+        public List<IPPrescriptionModel> TIpPrescription { get; set; }
 
         //public IPMedicalRecordModel TPrescription { get; set; }
     } 
     public class IPPrescriptionModel
     {
 
+        public long IppreId { get; set; }
         public long? OpdIpdIp { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Date { get; set; }

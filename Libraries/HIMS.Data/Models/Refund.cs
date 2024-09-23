@@ -11,11 +11,11 @@ namespace HIMS.Data.Models
         public string? RefundNo { get; set; }
         public long? BillId { get; set; }
         public long? AdvanceId { get; set; }
-        public byte? Opdipdtype { get; set; }
+        public bool? Opdipdtype { get; set; }
         public long? Opdipdid { get; set; }
         public decimal? RefundAmount { get; set; }
         public string? Remark { get; set; }
-        public byte? TransactionId { get; set; }
+        public long? TransactionId { get; set; }
         public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }

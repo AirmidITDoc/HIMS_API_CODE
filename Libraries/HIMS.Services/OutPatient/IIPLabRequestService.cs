@@ -9,6 +9,6 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IIPLabRequestService
     {
-        Task InsertAsyncSP(THlabRequest objTHlabRequest, int currentUserId, string currentUserName);
+        Task InsertAsyncSP(TPathologyReportHeader objTHlabRequest, int currentUserId, string currentUserName);
     }
 }

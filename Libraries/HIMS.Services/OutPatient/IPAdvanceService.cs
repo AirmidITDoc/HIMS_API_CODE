@@ -51,7 +51,7 @@ namespace HIMS.Services.OutPatient
             }
             catch (Exception ex)
             {
-                //Bill? objAdvanceHeader = await _context.Bills.FindAsync(objAdvanceHeader.BillNo);
+                //Bill? objAdvanceHeader = await _context.AdvanceHeaders.FindAsync(objAdvanceHeader.Adv);
                 //_context.Bills.Remove(objBills);
                 //await _context.SaveChangesAsync();
             }

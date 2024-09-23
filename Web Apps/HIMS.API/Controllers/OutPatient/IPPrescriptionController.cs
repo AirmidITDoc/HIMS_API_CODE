@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.OutPatient
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class IPPrescriptionController : Controller
+    public class IPPrescriptionController : BaseController
     {
         private readonly IIPPrescriptionService _IIPPrescriptionService;
        
@@ -35,15 +35,15 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Insert(NewPrescription obj)
         {
             TIpPrescription model = obj.MapTo<TIpPrescription>();
-            //if (obj.TPrescription == 0)
+            //if (obj.IppreId == 0)
             //{
-            //    //model.BillTime = Convert.ToDateTime(obj.Pres);
-            //    //model.AddedBy = CurrentUserId;
-            //   // await _IIPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+              // model.BillTime = Convert.ToDateTime(obj.Pres);
+               // model.AddedBy = CurrentUserId;
+                await _IIPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             //}
             //else
             //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
 
     }
