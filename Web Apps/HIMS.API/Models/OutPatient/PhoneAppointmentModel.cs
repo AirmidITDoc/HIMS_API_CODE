@@ -21,10 +21,6 @@ namespace HIMS.API.Models.OutPatient
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
         public string? RegNo { get; set; }
-        public int? CreatedBy { get; set; }
-        public string? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public string? ModifiedDate { get; set; }
 
 
     }

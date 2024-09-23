@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.Inventory
+namespace HIMS.API.Models.OutPatient
 {
     public class RefundOfBillModel
     {
@@ -10,35 +10,36 @@ namespace HIMS.API.Models.Inventory
         public string? RefundNo { get; set; }
         public long? BillId { get; set; }
         public long? AdvanceId { get; set; }
-        public byte? OpdIpdType { get; set; }
-        public long? OpdIpdId { get; set; }
-        public decimal? RefundAmount { get; set; }
+        public int? Opdipdtype { get; set; }
+        public long? Opdipdid { get; set; }
+        public float? RefundAmount { get; set; }
         public string? Remark { get; set; }
-        public byte? TransactionId { get; set; }
+        public int? TransactionId { get; set; }
+        public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
+        public bool? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
         public long? CashCounterId { get; set; }
         public bool? IsRefundFlag { get; set; }
 
     }
-    public class RefundOfBillModelValidator : AbstractValidator<RefundOfBillModel>
-    {
-        public RefundOfBillModelValidator()
+        public class RefundOfBillModelValidator : AbstractValidator<RefundOfBillModel>
         {
-            RuleFor(x => x.RefundDate).NotNull().NotEmpty().WithMessage("RefundDate Date is required");
-            RuleFor(x => x.RefundTime).NotNull().NotEmpty().WithMessage("RefundTime Time is required");
-            RuleFor(x => x.RefundNo).NotNull().NotEmpty().WithMessage(" RefundNo is required");
-            RuleFor(x => x.BillId).NotNull().NotEmpty().WithMessage(" BillId is required");
-            RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage(" AdvanceId is required");
-            RuleFor(x => x.OpdIpdType).NotNull().NotEmpty().WithMessage(" OpdIpdType is required");
-            RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
-            RuleFor(x => x.RefundAmount).NotNull().NotEmpty().WithMessage(" RefundAmount is required");
+            public RefundOfBillModelValidator()
+            {
+                RuleFor(x => x.RefundDate).NotNull().NotEmpty().WithMessage("RefundDate Date is required");
+                RuleFor(x => x.RefundTime).NotNull().NotEmpty().WithMessage("RefundTime Time is required");
+                RuleFor(x => x.RefundNo).NotNull().NotEmpty().WithMessage(" RefundNo is required");
+                RuleFor(x => x.BillId).NotNull().NotEmpty().WithMessage(" BillId is required");
+                RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage(" AdvanceId is required");
+                RuleFor(x => x.Opdipdtype).NotNull().NotEmpty().WithMessage(" Opdipdtype is required");
+                RuleFor(x => x.Opdipdid).NotNull().NotEmpty().WithMessage("Opdipdid is required");
+                RuleFor(x => x.RefundAmount).NotNull().NotEmpty().WithMessage(" RefundAmount is required");
 
 
+            }
         }
-    }
-    public  class TRefundDetailModel
+    public class TRefundDetailModel
     {
         public long RefundDetId { get; set; }
         public long? RefundId { get; set; }
@@ -50,6 +51,8 @@ namespace HIMS.API.Models.Inventory
         public long? ChargesId { get; set; }
         public decimal? HospitalAmount { get; set; }
         public decimal? DoctorAmount { get; set; }
+        public string? RefundDetailsTime { get; set; }
+
     }
     public class TRefundDetailModelValidator : AbstractValidator<TRefundDetailModel>
     {
@@ -71,10 +74,6 @@ namespace HIMS.API.Models.Inventory
     {
         public RefundOfBillModel Refund { get; set; }
         public TRefundDetailModel RefundDetail { get; set; }
-
-
-
     }
-
 }
 
