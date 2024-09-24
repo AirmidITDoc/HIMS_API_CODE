@@ -12,13 +12,17 @@ namespace HIMS.API.Models.OutPatient
         public long? AdvanceId { get; set; }
         public int? Opdipdtype { get; set; }
         public long? Opdipdid { get; set; }
-        public float? RefundAmount { get; set; }
+        public decimal? RefundAmount { get; set; }
         public string? Remark { get; set; }
         public int? TransactionId { get; set; }
         public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public bool? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+        public long? CashCounterId { get; set; }
+        public int? IsRefundFlag { get; set; }
+
+
     }
     public class IPRefundOfBillModelValidator : AbstractValidator<IPRefundOfBillModel>
     {
@@ -48,6 +52,7 @@ namespace HIMS.API.Models.OutPatient
         public long? ChargesId { get; set; }
         public decimal? HospitalAmount { get; set; }
         public decimal? DoctorAmount { get; set; }
+        public int? UpdatedBy { get; set; }
         public DateTime? RefundDetailsTime { get; set; }
 
     }

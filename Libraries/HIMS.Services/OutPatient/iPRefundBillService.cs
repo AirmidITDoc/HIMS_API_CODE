@@ -20,7 +20,6 @@ namespace HIMS.Services.OutPatient
         public virtual async Task InsertAsyncSP(Refund objIPRefund, TRefundDetail objIPTRefundDetail, int UserId, string Username)
 
         {
-
             DatabaseHelper odal = new();
             string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate" };
             var entity = objIPRefund.ToDictionary();
@@ -32,8 +31,7 @@ namespace HIMS.Services.OutPatient
             objIPRefund.RefundId = Convert.ToInt32(RefundId);
 
 
-
-            string[] rRefundEntity = { " RefundDetId", "ChargesId ", " HospitalAmount", "DoctorAmount " };
+            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" };
             var RefundEntity = objIPTRefundDetail.ToDictionary();
             foreach (var rProperty in rRefundEntity)
             {

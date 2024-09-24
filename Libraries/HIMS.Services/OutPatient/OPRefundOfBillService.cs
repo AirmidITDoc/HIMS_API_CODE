@@ -22,7 +22,34 @@ namespace HIMS.Services.OutPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = {"CashCounterId","IsRefundFlag","CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate" };
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
+ 
+            var entity = objRefund.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
+            objRefund.RefundId = Convert.ToInt32(RefundId);
+
+
+
+            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" , "RefundDetId","Refund" };
+            var RefundEntity = objTRefundDetail.ToDictionary();
+            foreach (var rProperty in rRefundEntity)
+            {
+                RefundEntity.Remove(rProperty);
+            }
+             odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure,  RefundEntity);
+
+
+        }
+        public virtual async Task InsertAsync(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username)
+
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate" };
             var entity = objRefund.ToDictionary();
             foreach (var rProperty in rEntity)
             {

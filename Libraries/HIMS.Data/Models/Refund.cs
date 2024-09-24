@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class Refund
     {
+        public Refund()
+        {
+            TRefundDetails = new HashSet<TRefundDetail>();
+        }
+
         public long RefundId { get; set; }
         public DateTime? RefundDate { get; set; }
         public DateTime? RefundTime { get; set; }
@@ -26,5 +31,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<TRefundDetail> TRefundDetails { get; set; }
     }
 }

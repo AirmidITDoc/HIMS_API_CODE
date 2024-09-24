@@ -9,9 +9,13 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IOPRefundOfBillService
     {
-        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username);
+
+        Task InsertAsync(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username);
 
 
-
+        //Task InsertAsync(Refund objRefund, int UserId, string Username);
+        //Task UpdateAsync(Refund objRefund, int UserId, string Username);
+        //Task CancelAsync(Refund objRefund, int UserId, string Username);
     }
 }
