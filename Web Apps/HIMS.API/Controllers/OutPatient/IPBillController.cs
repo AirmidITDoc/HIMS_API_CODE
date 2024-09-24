@@ -40,11 +40,13 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> IPBIllInsertSP(IPBillModel obj)
         {
             Bill model = obj.MapTo<Bill>();
+            AddCharge objAddcharges = obj.MapTo<AddCharge>();
+
             if (obj.BillNo == 0)
             {
                  model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
-                await _IPBillService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IPBillService.InsertAsyncSP(model,objAddcharges, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -75,13 +77,14 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewIPAdvance obj)
         {
-            AdvanceHeader model = obj.AdvanceHeaderModel.MapTo<AdvanceHeader>();
-            AdvanceDetail ObjAdvanceDetail = obj.AdvanceDetail.MapTo<AdvanceDetail>();
-            Payment Objpayment = obj.AdvPayment.MapTo<Payment>();
+            AdvanceHeader model = obj.IPAdvanceHeader.MapTo<AdvanceHeader>();
+            AdvanceDetail ObjAdvanceDetail = obj.IPAdvanceDetail.MapTo<AdvanceDetail>();
+            Payment Objpayment = obj.IPPayments.MapTo<Payment>();
 
-            if (obj.AdvanceHeaderModel.AdvanceId == 0)
+            if (obj.IPAdvanceHeader.AdvanceId == 0)
             {
-                ObjAdvanceDetail.Time = Convert.ToDateTime(new DateTime());
+                ObjAdvanceDetail.Time = Convert.ToDateTime(ObjAdvanceDetail.Time);
+                Objpayment.PaymentTime = Convert.ToDateTime(Objpayment.PaymentTime);
                 model.AddedBy = CurrentUserId;
                 await _IIPAdvanceService.InsertAsyncSP(model,ObjAdvanceDetail,Objpayment, CurrentUserId, CurrentUserName);
             }

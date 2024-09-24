@@ -1,11 +1,11 @@
-﻿namespace HIMS.API.Models.OutPatient
+﻿using HIMS.Data.Models;
+
+namespace HIMS.API.Models.OutPatient
 {
     public class OPAddchargesModel
     {
         public long ChargesId { get; set; }
         public DateTime? ChargesDate { get; set; }
-
-        public string? ChargeTime { get; set; }
         public byte? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
         public long? ServiceId { get; set; }
@@ -26,11 +26,14 @@
         public DateTime? IsCancelledDate { get; set; }
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
-
+        // public long? IsDoctorShareGenerated { get; set; }
+        // public byte? IsInterimBillFlag { get; set; }
+        public long? PackageMainChargeId { get; set; }
+        
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
-        public long? PackageMainChargeID { get; set; }
+        public string? ChargesTime { get; set; }
         public long? ClassId { get; set; }
 
 
