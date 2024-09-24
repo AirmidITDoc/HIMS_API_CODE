@@ -18,6 +18,7 @@ using HIMS.Services.Masters;
 using HIMS.Services.Dashboard;
 using HIMS.Services.Inventory;
 using HIMS.Services.OutPatient;
+using HIMS.Services.Inventory;
 
 namespace HIMS.API.Infrastructure
 {
@@ -65,12 +66,12 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
 
-
+           
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             services.AddScoped<IParameterMasterService, ParameterMasterService>();
 
             services.AddScoped<ICrossConsultationService, CrossConsultationService>();
-            //services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddScoped<IPrescription, PrescriptionSer>();
             services.AddScoped<IOPBillingService, OPBillingService>();
 
             services.AddHttpContextAccessor();
