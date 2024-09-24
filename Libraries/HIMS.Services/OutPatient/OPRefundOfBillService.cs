@@ -18,7 +18,6 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
         public virtual async Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username)
-
         {
 
             DatabaseHelper odal = new();
@@ -31,10 +30,9 @@ namespace HIMS.Services.OutPatient
             }
             string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(RefundId);
+            objTRefundDetail.RefundId = Convert.ToInt32(RefundId);
 
-
-
-            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" , "RefundDetId","Refund" };
+            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" , "RefundDetId"};
             var RefundEntity = objTRefundDetail.ToDictionary();
             foreach (var rProperty in rRefundEntity)
             {
@@ -44,8 +42,7 @@ namespace HIMS.Services.OutPatient
 
 
         }
-        public virtual async Task InsertAsync(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username)
-
+        public virtual async Task InsertAsync(Refund objRefund, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -58,17 +55,13 @@ namespace HIMS.Services.OutPatient
             string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(RefundId);
 
-
-
-            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" };
-            var RefundEntity = objTRefundDetail.ToDictionary();
-            foreach (var rProperty in rRefundEntity)
+            //// Add details table records
+            foreach (var objRefundDet in objRefund.TRefundDetails)
             {
-                RefundEntity.Remove(rProperty);
+                objRefundDet.RefundId = objRefund.RefundId;
             }
-            string RefundDetId = odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, "RefundDetId", RefundEntity);
-            objTRefundDetail.RefundDetId = Convert.ToInt32(RefundDetId);
-
+            _context.TRefundDetails.AddRange(objRefund.TRefundDetails);
+            await _context.SaveChangesAsync();
 
         }
 
