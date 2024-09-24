@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class AdvanceHeader
     {
+        public AdvanceHeader()
+        {
+            AdvanceDetails = new HashSet<AdvanceDetail>();
+        }
+
         public long AdvanceId { get; set; }
         public DateTime? Date { get; set; }
         public long? RefId { get; set; }
@@ -17,5 +22,7 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+
+        public virtual ICollection<AdvanceDetail> AdvanceDetails { get; set; }
     }
 }

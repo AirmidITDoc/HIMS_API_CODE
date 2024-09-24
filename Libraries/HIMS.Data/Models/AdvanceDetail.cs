@@ -24,5 +24,7 @@ namespace HIMS.Data.Models
         public long? IsCancelledby { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public string? Reason { get; set; }
+
+        public virtual AdvanceHeader? Advance { get; set; }
     }
 }

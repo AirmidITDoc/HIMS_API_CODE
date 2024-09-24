@@ -21,8 +21,7 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-       
-        //public List<TRefundDetailModel>? TRefundDetail { get; set; }
+        public List<TRefundDetailModel>? TRefundDetails { get; set; }
 
     }
     public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>
@@ -68,10 +67,10 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
-    public class RefundBillModel
-    {
-        public OPRefundOfBillModel Refund { get; set; }
-        public TRefundDetailModel RefundDetail { get; set; }
-    }
+    //public class RefundBillModel
+    //{
+    //    public OPRefundOfBillModel Refund { get; set; }
+    //    public TRefundDetailModel TRefundDetails { get; set; }
+    //}
 }
 
