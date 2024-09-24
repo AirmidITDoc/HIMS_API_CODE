@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, AddCharge objAddcharges, int CurrentUserId, string CurrentUserName)
         {
             try
             {
@@ -57,7 +57,11 @@ namespace HIMS.Services.OutPatient
                             await _context.SaveChangesAsync();
                         }
 
-                       // m_update_AdvanceDetail_1
+
+
+
+
+                        // m_update_AdvanceDetail_1
                         //foreach (var a in objBill.IPAdvanceDetailUpdate)
                         //{
                         //    DatabaseHelper odal = new();
@@ -92,8 +96,8 @@ namespace HIMS.Services.OutPatient
 
                 //m_Cal_DiscAmount_OPBill
                 //DatabaseHelper odal1 = new();
-                //string[] rEntity1 = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
-                //var entity1 = objBill.ToDictionary();
+                //string[] rEntity1 = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty ", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId" };
+                //var entity1 = objAddcharges.ToDictionary();
                 //foreach (var rProperty in rEntity1)
                 //{
                 //    entity1.Remove(rProperty);
