@@ -25,14 +25,14 @@ namespace HIMS.API.Models.Masters
         public string? Pulse { get; set; }
         public string? Bp { get; set; }
         public string? Bsl { get; set; }
-        public string? ChiefComplaint { get; set; }
-        public long? IsAddBy { get; set; }
-        public string? SpO2 { get; set; }
+        //public string? ChiefComplaint { get; set; }
+        //public long? IsAddBy { get; set; }
+        //public string? SpO2 { get; set; }
         public long? StoreId { get; set; }
-        public long? DoseOption2 { get; set; }
-        public long? DaysOption2 { get; set; }
-        public long? DoseOption3 { get; set; }
-        public long? DaysOption3 { get; set; }
+        //public long? DoseOption2 { get; set; }
+        //public long? DaysOption2 { get; set; }
+        //public long? DoseOption3 { get; set; }
+        //public long? DaysOption3 { get; set; }
 
 
 

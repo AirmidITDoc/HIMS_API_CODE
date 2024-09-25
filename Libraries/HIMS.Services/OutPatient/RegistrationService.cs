@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
-    public class RegistrationService :IRegistrationService
+    public class RegistrationService : IRegistrationService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public RegistrationService(HIMSDbContext HIMSDbContext)
@@ -34,6 +34,17 @@ namespace HIMS.Services.OutPatient
 
                 await _context.SaveChangesAsync(UserId, Username);
         }
+        public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.Registrations.Update(objRegistration);
+                _context.Entry(objRegistration).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
     }
 }

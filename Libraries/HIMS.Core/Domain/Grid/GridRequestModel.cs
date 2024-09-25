@@ -27,6 +27,6 @@ namespace HIMS.Core.Domain.Grid
     }
     public enum ExportType
     {
-        Excel = 1, Pdf = 2
+        JSON=1,Excel = 2, Pdf = 3
     }
 }

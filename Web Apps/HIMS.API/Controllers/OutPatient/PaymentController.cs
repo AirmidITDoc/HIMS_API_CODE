@@ -9,6 +9,9 @@ using HIMS.Services.OutPatient;
 
 namespace HIMS.API.Controllers.OutPatient
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class PaymentController : BaseController
     {
         private readonly IOPPayment _oPPayment;
@@ -34,5 +37,22 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OP Payment added successfully.");
         }
+
+        [HttpPost("PaymentUpdate")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(PaymentModel1 obj)
+        {
+            Payment model = obj.MapTo<Payment>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
+                model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
+                await _IPaymentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment updated successfully.");
+        }
+
     }
 }

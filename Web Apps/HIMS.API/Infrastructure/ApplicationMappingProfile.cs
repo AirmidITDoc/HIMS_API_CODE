@@ -169,7 +169,8 @@ namespace HIMS.API.Infrastructure
 
             
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            CreateMap<Registration, RegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Payment, PaymentModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             //Purchase
