@@ -42,11 +42,11 @@ namespace HIMS.Services.OutPatient
 
 
         }
-        public virtual async Task InsertAsync(Refund objRefund, int UserId, string Username)
+        public virtual async Task<long> InsertAsync(Refund objRefund, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate" };
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
             var entity = objRefund.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -54,7 +54,7 @@ namespace HIMS.Services.OutPatient
             }
             string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(RefundId);
-
+           
             //// Add details table records
             foreach (var objRefundDet in objRefund.TRefundDetails)
             {
@@ -63,6 +63,7 @@ namespace HIMS.Services.OutPatient
             _context.TRefundDetails.AddRange(objRefund.TRefundDetails);
             await _context.SaveChangesAsync();
 
+            return objRefund.RefundId;
         }
 
     }
