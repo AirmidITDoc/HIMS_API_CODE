@@ -1,6 +1,6 @@
 ﻿using HIMS.Data.Models;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
     public partial interface IRegistrationService
     {

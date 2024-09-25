@@ -18,6 +18,8 @@ using HIMS.Services.Masters;
 using HIMS.Services.Dashboard;
 using HIMS.Services.Inventory;
 using HIMS.Services.OutPatient;
+using HIMS.Services.OPPatient;
+using HIMS.Services.IPPatient;
 
 namespace HIMS.API.Infrastructure
 {
@@ -59,7 +61,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPPayment, OPPayment>();
             services.AddScoped<IOPCreditBillService,OPCreditBillService>();
             services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
-
+            services.AddScoped<IIPBIllwithpaymentService, IPBIllwithpaymentService>();
+            services.AddScoped<IIPBillwithCreditService, IPBillwithCreditService>();
+            services.AddScoped<IIPAdvanceService, IPAdvanceService>();
+            
 
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
@@ -70,7 +75,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
             services.AddScoped<IipRefundBillService, ipRefundBillService>();
 
-
+            
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService, AdmissionService>();
@@ -78,6 +83,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
+            
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();

@@ -4,10 +4,10 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
+using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace HIMS.API.Controllers.OutPatient
 
     public class AdmissionController : BaseController
     {
-       
+
         private readonly IAdmissionService _IAdmissionService;
         public AdmissionController(IAdmissionService repository)
         {
@@ -52,11 +52,11 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionRegisteredInsertSP(NewAdmission obj)
         {
-          
+
             Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
-            
-                await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
-           
+
+            await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully.");
         }
 

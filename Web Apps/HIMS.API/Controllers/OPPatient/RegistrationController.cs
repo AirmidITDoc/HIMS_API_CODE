@@ -9,14 +9,14 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
+using HIMS.Services.OPPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.OutPatient
         //    {
         //        model.VisitDate = Convert.ToDateTime(obj.VisitDate);
         //        model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-              
+
         //        await _IAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
         //    }
         //    else

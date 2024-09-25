@@ -9,7 +9,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

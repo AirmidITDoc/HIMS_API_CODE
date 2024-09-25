@@ -151,10 +151,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<AddCharge, CreditBillChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             //IPBill
-            CreateMap<Bill,IPBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<BillDetail, IPBillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Bill, IPBillingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<BillDetail, IpBillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Payment, IPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<AddCharge, IPChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, IpChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             
 
 
