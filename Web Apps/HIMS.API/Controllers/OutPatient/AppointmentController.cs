@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.OutPatient
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-            if (obj.Registration.RegID == 0)
+            if (obj.Registration.RegId == 0)
             {
                 model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
                 model.AddedBy = CurrentUserId;
