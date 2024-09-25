@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Inventory;
 using System;
 
 namespace HIMS.API.Models.OutPatient
@@ -15,15 +16,15 @@ namespace HIMS.API.Models.OutPatient
         public long? Opdipdid { get; set; }
         public decimal? RefundAmount { get; set; }
         public string? Remark { get; set; }
-        public int? TransactionId { get; set; }
+        public long? TransactionId { get; set; }
         public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? CashCounterId { get; set; }
-        public int? IsRefundFlag { get; set; }
-}
-        public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>
+        public List<TRefundDetailModel>? TRefundDetails { get; set; }
+
+    }
+    public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>
         {
             public OPRefundOfBillModelValidator()
             {
@@ -48,10 +49,9 @@ namespace HIMS.API.Models.OutPatient
         public decimal? RefundAmount { get; set; }
         public long? DoctorId { get; set; }
         public string? Remark { get; set; }
+        public long? AddBy { get; set; }
         public long? ChargesId { get; set; }
-        public decimal? HospitalAmount { get; set; }
-        public decimal? DoctorAmount { get; set; }
-        public int? UpdatedBy { get; set; }
+        
     }
     public class TRefundDetailModelValidator : AbstractValidator<TRefundDetailModel>
     {
@@ -67,10 +67,10 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
-    public class RefundBillModel
-    {
-        public OPRefundOfBillModel Refund { get; set; }
-        public TRefundDetailModel RefundDetail { get; set; }
-    }
+    //public class RefundBillModel
+    //{
+    //    public OPRefundOfBillModel Refund { get; set; }
+    //    public TRefundDetailModel TRefundDetails { get; set; }
+    //}
 }
 

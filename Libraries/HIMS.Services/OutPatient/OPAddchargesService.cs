@@ -4,6 +4,7 @@ using HIMS.Services.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,18 +20,33 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
+        public virtual async Task DeleteAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
         {
-            //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = {"IsDoctorShareGenerated", "IsInterimBillFlag", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "BillNoNavigation" };
+           
+            string[] rEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledDate", "IsPathology", "IsRadiology", "PackageMainChargeId", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "IsDoctorShareGenerated", "IsInterimBillFlag", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "BillNoNavigation" };
             var entity = objAddcharges.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
-            objAddcharges.ChargesId = Convert.ToInt32(ChargesId);
+           odal.ExecuteNonQuery("Delete_IPAddcharges", CommandType.StoredProcedure, entity);
+           
+        }
+
+        public virtual async Task InsertAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
+        {
+           
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "IsDoctorShareGenerated", "IsInterimBillFlag", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "BillNoNavigation" };
+            var entity = objAddcharges.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string ChargesId = odal.ExecuteNonQuery("N_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+            
         }
     }
 }

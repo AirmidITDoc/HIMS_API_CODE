@@ -868,6 +868,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
 
                 entity.Property(e => e.UsedAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Advance)
+                    .WithMany(p => p.AdvanceDetails)
+                    .HasForeignKey(d => d.AdvanceId)
+                    .HasConstraintName("FK_AdvanceDetail_AdvanceHeader");
             });
 
             modelBuilder.Entity<AdvanceHeader>(entity =>
@@ -12781,13 +12786,14 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
-                entity.Property(e => e.RefundDetailsTime).HasColumnType("datetime");
-
-                entity.Property(e => e.RefundId).HasColumnName("RefundID");
-
                 entity.Property(e => e.Remark).HasMaxLength(50);
 
                 entity.Property(e => e.ServiceAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Refund)
+                    .WithMany(p => p.TRefundDetails)
+                    .HasForeignKey(d => d.RefundId)
+                    .HasConstraintName("FK_T_RefundDetails_Refund");
             });
 
             modelBuilder.Entity<TReturnFromDepartmentDetail>(entity =>

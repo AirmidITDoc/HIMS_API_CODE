@@ -680,11 +680,11 @@ namespace HIMS.Data
 
             if (!getOnlyTotalCount)
             {
-                data.AddRange(await source.Skip(pageIndex).Take(pageSize).ToListAsync());
+                data.AddRange(await source.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync());
             }
             else
             {
-               data.AddRange(await source.Skip(pageIndex).Take(count == 0 ? 1 : count).ToListAsync());
+                data.AddRange(await source.Skip(pageIndex).Take(count == 0 ? 1 : count).ToListAsync());
             }
 
             return new PagedList<T>(data, pageIndex, pageSize, count);

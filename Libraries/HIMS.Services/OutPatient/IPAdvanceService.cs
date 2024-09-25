@@ -30,19 +30,28 @@ namespace HIMS.Services.OutPatient
                 {
 
                     //AdHeader
+                    ConfigSetting objConfigRSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
+
                     _context.AdvanceHeaders.Add(objAdvanceHeader);
                     await _context.SaveChangesAsync();
 
 
                     // Add AdvDetail table records
+                       //await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                     advanceDetail.AdvanceId = objAdvanceHeader.AdvanceId;
                     _context.AdvanceDetails.Add(advanceDetail);
+                    //_context.ConfigSettings.Update(objConfigRSetting);
+                    //_context.Entry(objConfigRSetting).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
 
 
                     // Add AdvDetail table records
+                      //await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                     objpayment.AdvanceId = objAdvanceHeader.AdvanceId;
+                    //_context.ConfigSettings.Update(objConfigRSetting);
+                    //_context.Entry(objConfigRSetting).State = EntityState.Modified;
                     _context.Payments.Add(objpayment);
+
                     await _context.SaveChangesAsync();
 
 
@@ -51,9 +60,9 @@ namespace HIMS.Services.OutPatient
             }
             catch (Exception ex)
             {
-                //Bill? objAdvanceHeader = await _context.AdvanceHeaders.FindAsync(objAdvanceHeader.Adv);
-                //_context.Bills.Remove(objBills);
-                //await _context.SaveChangesAsync();
+                AdvanceHeader? objAdvanceHeader1 = await _context.AdvanceHeaders.FindAsync(objAdvanceHeader.AdvanceId);
+                _context.AdvanceHeaders.Remove(objAdvanceHeader1);
+                await _context.SaveChangesAsync();
             }
         }
     }

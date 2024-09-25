@@ -102,7 +102,7 @@ namespace HIMS.Data.Extensions
             {
                 query = query.OrderBy(objGrid.SortField, objGrid.SortOrder == -1);
             }
-            return await query.ToPagedListAsync(objGrid.First, objGrid.Rows, objGrid.ExportType != 0 || objGrid.Rows == -1);
+            return await query.ToPagedListAsync(objGrid.First, objGrid.Rows, objGrid.ExportType != ExportType.JSON || objGrid.Rows == -1);
         }
         public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByProperty, bool desc)
         {

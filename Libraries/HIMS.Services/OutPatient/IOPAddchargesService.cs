@@ -10,6 +10,6 @@ namespace HIMS.Services.OutPatient
     public partial interface IOPAddchargesService
     {
         Task InsertAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName);
-
+        Task DeleteAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName);
     }
 }

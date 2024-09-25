@@ -30,13 +30,13 @@ namespace HIMS.API.Controllers.OutPatient
                 model.RefundTime = Convert.ToDateTime(obj.IPRefund.RefundTime);
                 model.AddedBy = CurrentUserId;
 
-                if (obj.IPRefundDetail.RefundDetId == 0)
+                //if (obj.IPRefundDetail.RefundDetId == 0)
                 {
                     //objIPTRefundDetail.RefundDetailsTime = Convert.ToDateTime(obj.IPRefundDetail.RefundDetailsTime);
                     objIPTRefundDetail.AddBy = CurrentUserId;
                     objIPTRefundDetail.UpdatedBy = CurrentUserId;
                 }
-                await _IIPRefundOfBillService.InsertAsyncSP(model, objIPTRefundDetail, CurrentUserId, CurrentUserName);
+                //await _IIPRefundOfBillService.InsertAsyncSP(model, objIPTRefundDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

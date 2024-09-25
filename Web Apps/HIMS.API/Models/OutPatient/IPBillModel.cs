@@ -46,8 +46,8 @@ namespace HIMS.API.Models.OutPatient
     }
     public class IPBillDetailsModel
     {
-        public int BillNo { get; set; }
-        public int ChargesId { get; set; }
+        public int? BillNo { get; set; }
+        public int? ChargesId { get; set; }
     }
 
     public class IPBillDetailsModelValidator : AbstractValidator<IPBillDetailsModel>
