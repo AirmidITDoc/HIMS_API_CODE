@@ -117,17 +117,17 @@ namespace HIMS.API.Models.OutPatient
         public int PaymentId { get; set; }
         public int? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
-        public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
         public long? CashPayAmount { get; set; }
         public long? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
         public string? BankName { get; set; }
-        public DateTime? ChequeDate { get; set; }
+        public string? ChequeDate { get; set; }
         public long? CardPayAmount { get; set; }
         public string? CardNo { get; set; }
         public string? CardBankName { get; set; }
-        public DateTime? CardDate { get; set; }
+        public string? CardDate { get; set; }
         public long? AdvanceUsedAmount { get; set; }
         public int? AdvanceId { get; set; }
         public int? RefundId { get; set; }
@@ -136,14 +136,14 @@ namespace HIMS.API.Models.OutPatient
         public int? AddBy { get; set; }
         public bool IsCancelled { get; set; }
         public int? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
+        public string? IsCancelledDate { get; set; }
         public long? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
-        public DateTime? Neftdate { get; set; }
+        public string? Neftdate { get; set; }
         public long? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
-        public DateTime? PayTmdate { get; set; }
+        public string? PayTmdate { get; set; }
         public long? Tdsamount { get; set; }
     }
 

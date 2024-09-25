@@ -56,22 +56,28 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IOPAddchargesService, OPAddchargesService>();
+            services.AddScoped<IOPPayment, OPPayment>();
+            services.AddScoped<IOPCreditBillService,OPCreditBillService>();
+            services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
+
+
             services.AddScoped<ISupplierService, SupplierService>();
-
-            services.AddScoped<IDischargeService, DischargeService>();
-            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
-
-            services.AddScoped<ISupplierPaymentService, SupplierPaymentService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IBillingService, BillingService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPhoneAppService, PhoneAppService>();
+            services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
+            services.AddScoped<IipRefundBillService, ipRefundBillService>();
 
-           
+
+
+            services.AddScoped<IVisitDetailsService, VisitDetailsService>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
+
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
-            services.AddScoped<IParameterMasterService, ParameterMasterService>();
-
-            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
-            services.AddScoped<IPrescription, PrescriptionSer>();
+            //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
 
             services.AddHttpContextAccessor();

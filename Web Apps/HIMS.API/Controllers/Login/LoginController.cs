@@ -122,10 +122,10 @@ namespace HIMS.API.Controllers.Login
         [HttpGet]
         [Route("get-menus")]
         [Permission]
-        public ActionResult GetMenus()
+        public ApiResponse GetMenus()
         {
-            //return Ok(PrepareMenu(RoleId, true));
-            return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", _IMenuService.GetMenus(CurrentRoleId, true));
+            //return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
         }
     }
 }

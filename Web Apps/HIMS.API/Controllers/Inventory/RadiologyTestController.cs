@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radilogy TestName  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology TestName  added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
@@ -88,11 +88,11 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radilogy TestName updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology TestName updated successfully.");
         }
         [HttpPost("RadilogyCancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radilogy Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Canceled successfully.");
         }
     }
 }

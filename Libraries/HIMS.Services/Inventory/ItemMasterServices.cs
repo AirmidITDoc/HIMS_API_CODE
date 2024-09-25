@@ -88,12 +88,12 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                MItemMaster objRadiology = await _context.MItemMasters.FindAsync(objItemMaster.ItemId);
-                objRadiology.IsActive = false;
-                objRadiology.CreatedDate = objItemMaster.CreatedDate;
-                objRadiology.CreatedBy = objItemMaster.CreatedBy;
-                _context.MItemMasters.Update(objRadiology);
-                _context.Entry(objRadiology).State = EntityState.Modified;
+                MItemMaster objItem = await _context.MItemMasters.FindAsync(objItemMaster.ItemId);
+                objItem.IsActive = false;
+                objItem.CreatedDate = objItemMaster.CreatedDate;
+                objItem.CreatedBy = objItemMaster.CreatedBy;
+                _context.MItemMasters.Update(objItem);
+                _context.Entry(objItem).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

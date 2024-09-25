@@ -7198,6 +7198,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TaxNature).HasMaxLength(500);
             });
 
@@ -8408,11 +8412,15 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("Refund");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+                entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
@@ -12307,9 +12315,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+                entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
 
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
@@ -12772,6 +12780,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.HospitalAmount).HasColumnType("money");
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
+
+                entity.Property(e => e.RefundDetailsTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefundId).HasColumnName("RefundID");
 
