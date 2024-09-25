@@ -45,23 +45,22 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.");
         }
-        //[HttpPost("AppointmentInsert")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(VisitDetailModel obj)
-        //{
-        //    VisitDetail model = obj.MapTo<VisitDetail>();
-        //    if (obj.VisitID == 0)
-        //    {
-        //        model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-        //        model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
-        //        await _IAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
-        //}
-
+        [HttpPost("RegistrationUpdate")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(RegistrationModel obj)
+        {
+            Registration model = obj.MapTo<Registration>();
+            if (obj.RegId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.RegDate = Convert.ToDateTime(obj.RegDate);
+                model.RegTime = Convert.ToDateTime(obj.RegTime);
+                await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.");
+        }
 
 
     }
