@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill, AddCharge objAddcharges, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill,int CurrentUserId, string CurrentUserName)
         {
             try
             {
@@ -38,27 +38,20 @@ namespace HIMS.Services.OutPatient
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 {
-                    foreach (var objItem1 in objBill.AddCharges)
-                    {
-                        //Add Charges Code
-                        objItem1.BillNo = objBill.BillNo;
-                        objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
-                        objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
-                        objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
-                        _context.AddCharges.Add(objItem1);
-                        await _context.SaveChangesAsync();
+                    //foreach (var objItem1 in objBill.Bil)
+                    //{
 
-                        // Bill Details Code
-                        foreach (var objItem in objBill.BillDetails)
+                        //Bill detail
+                        DatabaseHelper odal1 = new();
+                        string[] rEntity1 = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "TotalAdvanceAmount", "AddedBy", "BillTime", "BillYear", "PrintBillNo", "AddCharges", "Bill", "Payments" };
+                        var entity1 = objBill.ToDictionary();
+                        foreach (var rProperty in rEntity)
                         {
-                            objItem.BillNo = objBill.BillNo;
-                            objItem.ChargesId = objItem1?.ChargesId;
-                            _context.BillDetails.Add(objItem);
-                            await _context.SaveChangesAsync();
+                            entity1.Remove(rProperty);
                         }
-
-
-
+                        odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, entity1);
+                        
+                       
 
 
                         // m_update_AdvanceDetail_1
@@ -75,7 +68,7 @@ namespace HIMS.Services.OutPatient
 
                         //}
 
-                    }
+                    //}
 
                     // Payment Code
                     int _val = 0;

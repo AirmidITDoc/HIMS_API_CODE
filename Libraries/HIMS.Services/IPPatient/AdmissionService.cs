@@ -12,11 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Aspose.Cells.Drawing;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.IPPatient
 {
-    public class AdmissionService:IAdmissionService
+    public class AdmissionService : IAdmissionService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public AdmissionService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -90,8 +90,8 @@ namespace HIMS.Services.OutPatient
             {
                 visitentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_Admission_1", CommandType.StoredProcedure,visitentity);
-           // objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+            odal.ExecuteNonQuery("update_Admission_1", CommandType.StoredProcedure, visitentity);
+            // objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
         }
     }
 }

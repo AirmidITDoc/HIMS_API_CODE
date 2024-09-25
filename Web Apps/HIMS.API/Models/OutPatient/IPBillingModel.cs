@@ -1,17 +1,9 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class IPBillModel
+    public class IPBillingModel
     {
-        //public IPBillModel()
-        //{
-        //    AddCharges = new HashSet<AddCharge>();
-        //    BillDetails = new HashSet<BillDetail>();
-        //    Payments = new Payment();
-        //}
-
         public int BillNo { get; set; }
         public int? OPDIPDID { get; set; }
         public float? TotalAmt { get; set; }
@@ -39,27 +31,37 @@ namespace HIMS.API.Models.OutPatient
         public int? CompDiscAmt { get; set; }
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
-
-        public List<IPChargesModel> AddCharges { get; set; }
-        public List<IPBillDetailsModel> BillDetails { get; set; }
+        public List<IpChargesModel> AddCharge { get; set; }
+        public List<IpBillDetailsModel> BillDetails { get; set; }
         public List<IPPaymentModel> Payments { get; set; }
     }
-    public class IPBillDetailsModel
+    public class IpBillModelValidator : AbstractValidator<IPBillingModel>
     {
-        public int? BillNo { get; set; }
-        public int? ChargesId { get; set; }
+        public IpBillModelValidator()
+        {
+            RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
+            RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
+            RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
+            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
+            RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
+        }
+    }
+    public class IpBillDetailsModel
+    {
+        public int BillNo { get; set; }
+        public int ChargesId { get; set; }
     }
 
-    public class IPBillDetailsModelValidator : AbstractValidator<IPBillDetailsModel>
+    public class IpBillDetailsModelValidator : AbstractValidator<IpBillDetailsModel>
     {
-        public IPBillDetailsModelValidator()
+        public IpBillDetailsModelValidator()
         {
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
         }
     }
 
-    public class IPChargesModel
+    public class IpChargesModel
     {
         public long ChargesId { get; set; }
         public string? ChargesDate { get; set; }
@@ -92,12 +94,12 @@ namespace HIMS.API.Models.OutPatient
         public long? BillNo { get; set; }
 
     }
-    public class IPChargesModelValidator : AbstractValidator<IPChargesModel>
+    public class IpChargesModelValidator : AbstractValidator<IpChargesModel>
     {
-        public IPChargesModelValidator()
+        public IpChargesModelValidator()
         {
-        //    RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
-        //    RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            //RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 
@@ -140,16 +142,50 @@ namespace HIMS.API.Models.OutPatient
     {
         public IPPaymentModelValidator()
         {
-           // RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("ClassId is required");
         }
     }
 
-   //public class NewIPBill{
+    //public class InsertPathologyReportHeader
+    //{
+    //    public DateTime PathDate { get; set; }
+    //    public DateTime PathTime { get; set; }
+    //    public Boolean OPD_IPD_Type { get; set; }
+    //    public int OPD_IPD_Id { get; set; }
+    //    public int PathTestID { get; set; }
+    //    public int AddedBy { get; set; }
+    //    public int ChargeID { get; set; }
+    //    public Boolean IsCompleted { get; set; }
+    //    public Boolean IsPrinted { get; set; }
+    //    public Boolean IsSampleCollection { get; set; }
+    //    public Boolean TestType { get; set; }
+    //}
 
-   //     public IPBillModel IPBillModel { get; set; }
-   //     public IPBillDetailsModel IPBillDetailsModel { get; set; }
-   //     public IPChargesModel IPChargeModel { get; set; }
-   //     public IPPaymentModel IpPayment { get; set; }
-   // }
+    //public class InsertRadiologyReportHeader
+    //{
+    //    public DateTime RadDate { get; set; }
+    //    public DateTime RadTime { get; set; }
+    //    public Boolean OPD_IPD_Type { get; set; }
+    //    public int OPD_IPD_Id { get; set; }
+    //    public int RadTestID { get; set; }
+    //    public int AddedBy { get; set; }
+    //    public Boolean IsCancelled { get; set; }
+    //    public int ChargeID { get; set; }
+    //    public Boolean IsPrinted { get; set; }
+    //    public Boolean IsCompleted { get; set; }
+    //    public Boolean TestType { get; set; }
+    //}
 
+    //public class OPoctorShareGroupAdmChargeDoc
+    //{
+    //    public int BillNo { get; set; }
+
+    //}
+
+    //public class OPCalDiscAmountBill
+    //{
+    //    public int BillNo { get; set; }
+
+    //}
 }
+

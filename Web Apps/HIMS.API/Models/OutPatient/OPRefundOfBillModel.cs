@@ -67,10 +67,10 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
-    //public class RefundBillModel
-    //{
-    //    public OPRefundOfBillModel Refund { get; set; }
-    //    public TRefundDetailModel TRefundDetails { get; set; }
-    //}
+    public class RefundBillModel
+    {
+        public OPRefundOfBillModel Refund { get; set; }
+        public TRefundDetailModel TRefundDetails { get; set; }
+    }
 }
 
