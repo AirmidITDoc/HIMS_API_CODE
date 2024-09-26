@@ -11,12 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Aspose.Cells.Drawing;
+using HIMS.Services.OutPatient;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
     public class VisitDetailsService : IVisitDetailsService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public VisitDetailsService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -28,9 +29,9 @@ namespace HIMS.Services.OutPatient
             {
                 // Update header table records
                 VisitDetail objVisit = await _context.VisitDetails.FindAsync(objVisitDetail.VisitId);
-                //objVisit.IsCancelled = objVisitDetail.IsCancelled;
-                //objVisit.IsCancelledBy = objVisitDetail.IsCancelledBy;
-                //objVisit.IsCancelledDate = objVisitDetail.IsCancelledDate;
+                objVisit.IsCancelled = objVisitDetail.IsCancelled;
+                objVisit.IsCancelledBy = objVisitDetail.IsCancelledBy;
+                objVisit.IsCancelledDate = objVisitDetail.IsCancelledDate;
                 _context.VisitDetails.Update(objVisit);
                 _context.Entry(objVisit).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -91,7 +92,7 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
 
-          
+
         }
 
 
@@ -124,33 +125,33 @@ namespace HIMS.Services.OutPatient
             string VisitId = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
-            //var tokenObj = new
-            //{
-            //    PatVisitID = Convert.ToInt32(VisitId)
-            //};
-            //odal.ExecuteNonQuery("m_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            var tokenObj = new
+            {
+                VisitId = Convert.ToInt32(VisitId)
+            };
+            odal.ExecuteNonQuery("v_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
 
             // Add TokenNumber table records
-            List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
-            foreach (var item in objVisit)
-            {
-                TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
-                if (objToken != null)
-                {
-                    objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
+            //List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+            //foreach (var item in objVisit)
+            //{
+            //    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+            //    if (objToken != null)
+            //    {
+            //        objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
 
-                    TTokenNumberWithDoctorWise objCurrentToken = new()
-                    {
-                        TokenNo = objToken.TokenNo,
-                        VisitDate = item.VisitDate,
-                        VisitId = item.VisitId,
-                        DoctorId = item.ConsultantDocId,
-                        IsStatus = false
-                    };
-                    _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
-                    await _context.SaveChangesAsync();
-                }
-            }
+            //        TTokenNumberWithDoctorWise objCurrentToken = new()
+            //        {
+            //            TokenNo = objToken.TokenNo,
+            //            VisitDate = item.VisitDate,
+            //            VisitId = item.VisitId,
+            //            DoctorId = item.ConsultantDocId,
+            //            IsStatus = false
+            //        };
+            //        _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //}
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -160,7 +161,7 @@ namespace HIMS.Services.OutPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo","RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "ReligionId", "AreaId", "IsSeniorCitizen","AddedBy","RegDate","RegTime"};
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "ReligionId", "AreaId", "IsSeniorCitizen", "AddedBy", "RegDate", "RegTime" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -170,13 +171,13 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray"};
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
                 visitentity.Remove(rProperty);
             }
-            string VisitId = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            string VisitId = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
             //var tokenObj = new

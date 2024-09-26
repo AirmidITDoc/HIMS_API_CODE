@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
     //public class OPBillIngModel
     //{
@@ -25,9 +25,9 @@ namespace HIMS.API.Models.OutPatient
         public float? TotalAdvanceAmount { get; set; }
         public string? BillTime { get; set; }
         public int? ConcessionReasonId { get; set; }
-        public Boolean? IsSettled { get; set; }
-        public Boolean? IsPrinted { get; set; }
-        public Boolean? IsFree { get; set; }
+        public bool? IsSettled { get; set; }
+        public bool? IsPrinted { get; set; }
+        public bool? IsFree { get; set; }
         public int? CompanyId { get; set; }
         public int? TariffId { get; set; }
         public int? UnitId { get; set; }

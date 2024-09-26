@@ -82,16 +82,16 @@ namespace HIMS.Services.IPPatient
             string[] rAdmissEntity = {"RegId", "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
                "MedicalApreAmt" , "IsPharClearance", "Ipnumber", "EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","AddedBy"
             ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
-                "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges",
-             "DocNameId" ,"WardId", "BedId", "DischargeDate", "DischargeTime","IsDischarged","IsBillGenerated","ClassId","Discharges","PhoneNo ","MobileNo","AddedBy","PolicyNo",
+                "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges"
+            ,"WardId", "BedId", "DischargeDate", "DischargeTime","IsDischarged","IsBillGenerated","ClassId","Discharges","PhoneNo ","MobileNo","PolicyNo",
             "AprovAmount","CompDod","RefDoctorDept","AdmissionType"};
             var rAdmissentity1 = objAdmission.ToDictionary();
             foreach (var rProperty in rAdmissEntity)
             {
                 rAdmissentity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
-           // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
+            objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
         }
     }
 }
