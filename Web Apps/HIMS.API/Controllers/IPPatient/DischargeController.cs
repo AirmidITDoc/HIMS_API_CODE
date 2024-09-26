@@ -16,15 +16,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class IPDischargeController : BaseController
+    public class DischargeController : BaseController
     {
         private readonly IDischargeService _IPDischargeService;
-        public IPDischargeController(IDischargeService repository)
+        public DischargeController(IDischargeService repository)
         {
             _IPDischargeService = repository;
         }
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.OutPatient
                 {
                     objAdmission.DischargeTime = Convert.ToDateTime(obj.DischargeModel.DischargeTime);
                     objAdmission.AddedBy = CurrentUserId;
-                   // objVisitDetail.UpdatedBy = CurrentUserId;
+                    // objVisitDetail.UpdatedBy = CurrentUserId;
                 }
                 await _IPDischargeService.InsertAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
             }
