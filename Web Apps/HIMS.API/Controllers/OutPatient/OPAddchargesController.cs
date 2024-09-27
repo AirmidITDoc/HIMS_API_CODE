@@ -2,9 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
+using HIMS.Services.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.OutPatient

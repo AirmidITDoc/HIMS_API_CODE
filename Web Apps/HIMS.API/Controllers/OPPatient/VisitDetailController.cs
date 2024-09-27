@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
@@ -72,7 +73,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("AppVisitupdateSP")]
+        [HttpPost("AppointmentupdateSP")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitupdateSP(AppointmentReqDtovisit obj)
         {
@@ -93,7 +94,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit Updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment  Updated successfully.");
         }
 
 
@@ -105,9 +106,9 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
             VisitDetail model = new();
-            if (obj.PatVisitID != 0)
+            if (obj.VisitId != 0)
             {
-                model.VisitId = obj.PatVisitID;
+                model.VisitId = obj.VisitId;
                 model.IsCancelled = true;
                 model.IsCancelledBy = CurrentUserId;
                 model.IsCancelledDate = DateTime.Now;

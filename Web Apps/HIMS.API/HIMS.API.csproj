@@ -55,8 +55,6 @@
     <Folder Include="Controllers\Pathology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
-    <Folder Include="Models\IPPatient\" />
-    <Folder Include="Models\OPPatient\" />
     <Folder Include="Models\Nursing\" />
     <Folder Include="Models\Radiology\" />
   </ItemGroup>

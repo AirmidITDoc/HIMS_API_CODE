@@ -2,7 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -65,12 +65,19 @@ namespace HIMS.API.Controllers.IPPatient
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
         {
-
+           
             Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
+            if (obj.ADMISSION.AdmissionId != 0)
+            {
 
-            await _IAdmissionService.UpdateAdmissionAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
+                objAdmission.AddedBy = CurrentUserId;
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Admission Updated successfully.");
+              
+                await _IAdmissionService.UpdateAdmissionAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission  Updated successfully.");
         }
     }
 }

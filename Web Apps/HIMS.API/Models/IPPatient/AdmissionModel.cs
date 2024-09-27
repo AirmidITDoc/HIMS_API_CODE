@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.IPPatient
 {
     public class AdmissionRegModel
     {
+      
         public long RegId { get; set; }
         public string? RegDate { get; set; }
         public string? RegTime { get; set; }
@@ -31,13 +32,9 @@ namespace HIMS.API.Models.OutPatient
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
         public bool? IsCharity { get; set; }
-        //public string? RegPrefix { get; set; }
+     
         public long? ReligionId { get; set; }
         public long? AreaId { get; set; }
-        //public decimal? AnnualIncome { get; set; }
-        //public bool? IsIndientOrWeaker { get; set; }
-        //public string? RationCardNo { get; set; }
-        //public bool? IsMember { get; set; }
         public bool? IsSeniorCitizen { get; set; }
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
@@ -145,7 +142,7 @@ namespace HIMS.API.Models.OutPatient
     {
         public AdmissModelValidator()
         {
-           // RuleFor(x => x.RegId).NotNull().NotEmpty().WithMessage("regId is required");
+            // RuleFor(x => x.RegId).NotNull().NotEmpty().WithMessage("regId is required");
             RuleFor(x => x.HospitalId).NotNull().NotEmpty().WithMessage("UnitId is required");
             RuleFor(x => x.PatientTypeId).NotNull().NotEmpty().WithMessage("PatientTypeId is required");
             //RuleFor(x => x.ConsultantDocId).NotNull().NotEmpty().WithMessage("ConsultantDocId is required");

@@ -3,7 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.OutPatient
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-            if (obj.Registration.RegID == 0)
+            if (obj.Registration.RegId == 0)
             {
                 model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
                 model.AddedBy = CurrentUserId;
@@ -75,9 +75,9 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
             VisitDetail model = new();
-            if (obj.PatVisitID != 0)
+            if (obj.VisitId != 0)
             {
-                model.VisitId = obj.PatVisitID;
+                model.VisitId = obj.VisitId;
                 model.IsCancelled = true;
                 model.IsCancelledBy = CurrentUserId;
                 model.IsCancelledDate = DateTime.Now;

@@ -1,6 +1,6 @@
 ﻿using HIMS.Data.Models;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
     public class OPAddchargesModel
     {
@@ -26,17 +26,12 @@ namespace HIMS.API.Models.OutPatient
         public DateTime? IsCancelledDate { get; set; }
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
-        // public long? IsDoctorShareGenerated { get; set; }
-        // public byte? IsInterimBillFlag { get; set; }
         public long? PackageMainChargeId { get; set; }
-        
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
         public string? ChargesTime { get; set; }
+        //public long? BillNo { get; set; }
         public long? ClassId { get; set; }
-
-
-
     }
 }

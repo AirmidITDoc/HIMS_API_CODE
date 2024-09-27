@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Pharmacy;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
     public class RegistrationSaveModel
     {
-        public long RegID { get; set; }
+        public long RegId { get; set; }
         public DateTime? RegDate { get; set; }
         public string? RegTime { get; set; }
         public long? PrefixId { get; set; }
@@ -20,10 +20,6 @@ namespace HIMS.API.Models.OutPatient
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
-
-        //public long? AddedBy { get; set; }
-        //public long UpdatedBy { get; set; }
-
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
@@ -34,16 +30,10 @@ namespace HIMS.API.Models.OutPatient
 
         public int? ReligionId { get; set; }
         public bool? IsCharity { get; set; }
-        //  public string RegPrefix { get; set; }
         public long? AreaId { get; set; }
-        //  public long VillageId { get; set; }
         public bool? IsSeniorCitizen { get; set; }
-
-        //public long TalukaId { get; set; }
-        // public double PatientWeight { get; set; }
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
-        // public String ImgFile { get; set; }
         public string? Photo { get; set; }
 
     }
@@ -74,8 +64,6 @@ namespace HIMS.API.Models.OutPatient
         public long? RefDocId { get; set; }
         public long? TariffId { get; set; }
         public long? CompanyId { get; set; }
-        //public long? AddedBy { get; set; }
-        //public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
@@ -110,7 +98,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class CancelAppointment
     {
-        public long PatVisitID { get; set; }
+        public long VisitId { get; set; }
     }
-   
+
 }
