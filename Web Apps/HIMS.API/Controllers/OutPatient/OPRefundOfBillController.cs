@@ -7,7 +7,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.OPPatient.phoneAppModelValidator;
+//using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
 
 namespace HIMS.API.Controllers.OutPatient
 {
@@ -45,6 +45,28 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         }
 
+
+        //[HttpPost("InsertIpSP")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(RefundBillModel obj)
+        //{
+        //    Refund model = obj.Refund.MapTo<Refund>();
+        //    TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
+        //    if (obj.Refund.RefundId == 0)
+        //    {
+        //        model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+        //        model.AddedBy = CurrentUserId;
+
+        //        obj.TRefundDetails.RefundId = obj.Refund.RefundId;
+        //        objTRefundDetail.AddBy = CurrentUserId;
+        //        objTRefundDetail.UpdatedBy = CurrentUserId;
+
+        //        await _IRefundOfBillService.InsertAsyncSP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
+        //}
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]

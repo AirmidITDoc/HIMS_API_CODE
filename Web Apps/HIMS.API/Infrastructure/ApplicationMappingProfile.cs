@@ -109,7 +109,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<VisitDetail, CrossConsultationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TPhoneAppointment,phoneAppModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             //Sales
