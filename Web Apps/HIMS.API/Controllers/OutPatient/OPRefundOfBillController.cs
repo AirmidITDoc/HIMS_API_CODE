@@ -7,7 +7,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
+//using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
 
 namespace HIMS.API.Controllers.OutPatient
 {
