@@ -178,9 +178,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<AddCharge, ChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Payment, OPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            CreateMap<AdvanceHeader, IPAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<AdvanceDetail, IPAdvanceDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, AdvancePaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<AdvanceHeader, IPAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<AdvanceDetail, IPAdvanceDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<Payment, AdvancePaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TIpPrescription,NewPrescription>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, IPLabRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
