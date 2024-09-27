@@ -16,11 +16,11 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.IPPatient
 {
     public class AdvanceService : IAdvanceService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public AdvanceService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -40,7 +40,7 @@ namespace HIMS.Services.OutPatient
             objAdvanceHeader.AdvanceId = Convert.ToInt32(AdvanceId);
             objAdvanceDetail.AdvanceId = Convert.ToInt32(AdvanceId);
             objpayment.AdvanceId = Convert.ToInt32(AdvanceId);
-           
+
             string[] rDetailEntity = { "IsCancelled", "IsCancelledby", "IsCancelledDate" };
 
             var AdvanceEntity = objAdvanceDetail.ToDictionary();
@@ -49,7 +49,7 @@ namespace HIMS.Services.OutPatient
                 entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("v_insert_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceEntity);
-           
+
 
             string[] rPaymentEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
 
@@ -58,8 +58,8 @@ namespace HIMS.Services.OutPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_m_insert_Payment_1", CommandType.StoredProcedure,  PaymentEntity);
-           
+            odal.ExecuteNonQuery("v_m_insert_Payment_1", CommandType.StoredProcedure, PaymentEntity);
+
         }
 
 
@@ -86,8 +86,8 @@ namespace HIMS.Services.OutPatient
             {
                 entity.Remove(rProperty);
             }
-              odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure,  entity);
-           
+            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, entity);
+
 
 
 

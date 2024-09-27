@@ -5,13 +5,13 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.Inventory;
 using HIMS.API.Models.Inventory;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
+using HIMS.Services.IPPatient;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -45,8 +45,8 @@ namespace HIMS.API.Controllers.OutPatient
                 if (obj.AdvanceDetailModel.AdvanceId == 0)
                 {
                     objpayment.PaymentDate = Convert.ToDateTime(obj.AdvancePayment.PaymentDate);
-                   
-                   
+
+
                 }
                 await _IAdvanceService.InsertAsyncSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
@@ -101,12 +101,12 @@ namespace HIMS.API.Controllers.OutPatient
                 if (obj.AdvRefundDetailModel.AdvRefId == 0)
                 {
                     objAdvRefundDetail.RefundDate = Convert.ToDateTime(obj.AdvRefundDetailModel.RefundDate);
-                   
+
                     // objVisitDetail.UpdatedBy = CurrentUserId;
                 }
                 if (obj.AdvanceDetailModel1.AdvanceDetailId == 0)
                 {
-                
+
                     objAdvanceDetail.AddedBy = CurrentUserId;
                     // objVisitDetail.UpdatedBy = CurrentUserId;
                 }
