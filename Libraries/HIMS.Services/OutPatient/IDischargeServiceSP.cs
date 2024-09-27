@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HIMS.Services.OutPatient
 {
    
-        public partial interface IDischargeService
+        public partial interface IDischargeServiceSP
         {
             Task InsertAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);
         Task UpdateAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);

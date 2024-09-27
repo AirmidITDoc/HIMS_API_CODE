@@ -76,7 +76,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IipRefundBillService, ipRefundBillService>();
             services.AddScoped<IBedTransferService, BedTransferService>();
 
-
+            services.AddScoped<IDischargeService, DischargeService>();
 
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
