@@ -41,7 +41,7 @@ namespace HIMS.API.Models.OutPatient
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
         public long? AdvanceId { get; set; }
-        public string? AdvanceNo { get; set; }
+        //public string? AdvanceNo { get; set; }
         public long? RefId { get; set; }
         public long? TransactionId { get; set; }
         public long? OpdIpdId { get; set; }
@@ -76,8 +76,8 @@ namespace HIMS.API.Models.OutPatient
         public int PaymentId { get; set; }
         public int? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
-        public string? PaymentDate { get; set; }
-        public string? PaymentTime { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public DateTime? PaymentTime { get; set; }
         public long? CashPayAmount { get; set; }
         public long? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
@@ -123,4 +123,5 @@ namespace HIMS.API.Models.OutPatient
     }
 }
     
+
 

@@ -64,7 +64,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIPBIllwithpaymentService, IPBIllwithpaymentService>();
             services.AddScoped<IIPBillwithCreditService, IPBillwithCreditService>();
             services.AddScoped<IIPAdvanceService, IPAdvanceService>();
-            
+            services.AddScoped<IAdvanceService, AdvanceService>();
 
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();

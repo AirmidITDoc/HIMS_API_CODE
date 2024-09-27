@@ -29,12 +29,24 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            string RegId = odal.ExecuteNonQuery("m_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            string RegId = odal.ExecuteNonQuery("v_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
 
             await _context.SaveChangesAsync(UserId, Username);
         }
 
-       
+        public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.Registrations.Update(objRegistration);
+                _context.Entry(objRegistration).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }
