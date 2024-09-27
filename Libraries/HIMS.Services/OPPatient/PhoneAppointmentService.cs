@@ -10,25 +10,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace HIMS.Services.OutPatient
+
+namespace HIMS.Services.OPPatient
 {
-    public  class PhoneAppService: IPhoneAppService
+    public class PhoneAppointmentService: IPhoneAppointmentService
     {
         private readonly Data.Models.HIMSDbContext _context;
-        public PhoneAppService(HIMSDbContext HIMSDbContext)
+        public PhoneAppointmentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
+
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objPhoneAppointment, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {"SeqNo","IsCancelled","IsCancelledBy","IsCancelledDate","AddedByDate","UpdatedByDate","CreatedBy","CreatedDate", "ModifiedBy","ModifiedDate"};
-            var entity = objPhoneAppointment.ToDictionary(); 
+            string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedByDate", "UpdatedByDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var entity = objPhoneAppointment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            string PhoneAppId = odal.ExecuteNonQuery("insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
+            string PhoneAppId = odal.ExecuteNonQuery("v_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
             objPhoneAppointment.PhoneAppId = Convert.ToInt32(PhoneAppId);
 
 
@@ -75,6 +77,5 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
-
     }
 }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
-    public partial  interface IPhoneAppService
+    public partial interface IPhoneAppointmentService
     {
         Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objPhoneAppointment, int UserId, string Username);
         Task InsertAsync(TPhoneAppointment objPhoneAppointment, int UserId, string Username);

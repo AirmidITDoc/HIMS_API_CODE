@@ -9,6 +9,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.Inventory;
 using HIMS.API.Models.Inventory;
+using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 
 namespace HIMS.API.Controllers.OutPatient
 {
@@ -57,12 +58,6 @@ namespace HIMS.API.Controllers.OutPatient
 
 
 
-
-
-
-
-
-
         //[HttpPost("InsertAdvance")]
         ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> Insert(AdvanceModel obj)
@@ -79,5 +74,57 @@ namespace HIMS.API.Controllers.OutPatient
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAdvance added successfully.");
         //}
+
+
+
+        [HttpPost("RefundAdvanceInsertSP")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(RefundAdvance obj)
+        {
+            Refund model = obj.RefundAdvanceModel.MapTo<Refund>();
+            AdvRefundDetail objAdvRefundDetail = obj.AdvRefundDetailModel.MapTo<AdvRefundDetail>();
+            AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderModel.MapTo<AdvanceHeader>();
+            AdvanceDetail objAdvanceDetail = obj.AdvanceDetailModel1.MapTo<AdvanceDetail>();
+            Payment objPayment = obj.PaymentModel2.MapTo<Payment>();
+            if (obj.RefundAdvanceModel.RefundId == 0)
+            {
+                model.RefundDate = Convert.ToDateTime(obj.RefundAdvanceModel.RefundDate);
+                model.AddedBy = CurrentUserId;
+
+                if (obj.AdvanceHeaderModel.AdvanceId == 0)
+                {
+                    //objAdvanceHeader.Date = Convert.ToDateTime(obj.AdvanceHeaderModel.Date);
+                    objAdvanceHeader.AddedBy = CurrentUserId;
+                    // objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+
+                if (obj.AdvRefundDetailModel.AdvRefId == 0)
+                {
+                    objAdvRefundDetail.RefundDate = Convert.ToDateTime(obj.AdvRefundDetailModel.RefundDate);
+                   
+                    // objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+                if (obj.AdvanceDetailModel1.AdvanceDetailId == 0)
+                {
+                
+                    objAdvanceDetail.AddedBy = CurrentUserId;
+                    // objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+
+                if (obj.PaymentModel2.AdvanceId == 0)
+                {
+                    objPayment.PaymentDate = Convert.ToDateTime(obj.PaymentModel2.PaymentDate);
+
+
+                }
+                await _IAdvanceService.InsertAsyncSP(model, objAdvanceHeader, objAdvRefundDetail, objAdvanceDetail, objPayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund of Advance added successfully.");
+        }
+
+
+
     }
 }
