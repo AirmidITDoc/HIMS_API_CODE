@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
@@ -39,8 +40,8 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added successfully.");
         }
-       
-        [HttpPost("PhoneAppointmentCancel")]
+
+        [HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
         {
@@ -57,6 +58,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Canceled successfully.");
         }
+        
 
     }
 }
