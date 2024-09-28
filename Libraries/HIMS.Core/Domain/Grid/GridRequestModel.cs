@@ -12,7 +12,7 @@ namespace HIMS.Core.Domain.Grid
         public ExportType ExportType { get; set; }
         //public string GlobalFilterText { get; set; }
         //public string GlobalFilterColumns { get; set; }
-        public List<GridColumn> Columns { get; set; }
+        //public List<GridColumn> Columns { get; set; }
     }
     public class GridColumn
     {

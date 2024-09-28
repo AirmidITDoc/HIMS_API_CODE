@@ -15,10 +15,10 @@ using Aspose.Cells.Drawing;
 
 namespace HIMS.Services.OutPatient
 {
-    public class DischargeService:IDischargeService
+    public class DischargeServiceSP:IDischargeServiceSP
     {
         private readonly Data.Models.HIMSDbContext _context;
-        public DischargeService(HIMSDbContext HIMSDbContext)
+        public DischargeServiceSP(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }

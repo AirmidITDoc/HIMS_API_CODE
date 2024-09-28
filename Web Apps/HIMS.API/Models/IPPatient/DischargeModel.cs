@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 
 
-namespace HIMS.API.Models.Inventory
+namespace HIMS.API.Models.IPPatient
 {
     public class DischargeModel
     {
@@ -22,7 +22,7 @@ namespace HIMS.API.Models.Inventory
         public DateTime? MrdreceivedTime { get; set; }
         public long? MrdreceivedUserId { get; set; }
         public string? MrdreceivedName { get; set; }
-       
+
     }
     public class DischargeModelValidator : AbstractValidator<DischargeModel>
     {
@@ -35,6 +35,6 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    
+
 }
 

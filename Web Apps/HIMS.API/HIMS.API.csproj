@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="wwwroot\PdfTemplates\DischargeController.cs" />
+    <Content Include="Controllers\IPPatient\DischargeController.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -111,7 +111,7 @@ namespace HIMS.API.Controllers.IPPatient
                     // objVisitDetail.UpdatedBy = CurrentUserId;
                 }
 
-                if (obj.PaymentModel2.AdvanceId == 0)
+                if (obj.PaymentModel2.PaymentId == 0)
                 {
                     objPayment.PaymentDate = Convert.ToDateTime(obj.PaymentModel2.PaymentDate);
 
