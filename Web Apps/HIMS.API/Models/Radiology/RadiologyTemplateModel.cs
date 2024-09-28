@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.Masters
+namespace HIMS.API.Models.Radiology
 {
     public class RadiologyTemplateModel
     {
@@ -17,5 +17,4 @@ namespace HIMS.API.Models.Masters
 
         }
     }
-
 }

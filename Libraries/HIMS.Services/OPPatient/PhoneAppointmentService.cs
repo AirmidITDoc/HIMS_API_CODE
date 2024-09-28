@@ -39,7 +39,7 @@ namespace HIMS.Services.OPPatient
 
                 return objPhoneAppointment;
             }
-        
+
 
         public virtual async Task CancelAsync(TPhoneAppointment objPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {
@@ -60,5 +60,5 @@ namespace HIMS.Services.OPPatient
 
 
     }
- }
+}
 
