@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
     public class phoneAppModel
     {
