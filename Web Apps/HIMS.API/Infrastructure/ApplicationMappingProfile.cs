@@ -7,6 +7,7 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
+using HIMS.API.Models.Radiology;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -84,6 +85,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            //Radiology//
+            CreateMap<MRadiologyTemplateMaster, RadiologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
             CreateMap<TPrescription, PrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -140,6 +145,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<Registration, AppReistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, AppReistrationUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
              CreateMap<Payment, OPPaymentdetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhoneAppointment, phoneAppointmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             //Admission
             CreateMap<Admission, ADMISSIONModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

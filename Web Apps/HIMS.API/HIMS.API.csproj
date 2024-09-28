@@ -56,7 +56,7 @@
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
     <Folder Include="Models\Nursing\" />
-    <Folder Include="Models\Radiology\" />
+    <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 
 </Project>
