@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.OutPatient
 {
-    public class OPSettlementService :IOPSettlementService
+    public class OPSettlementService : IOPSettlementService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public OPSettlementService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -22,9 +22,9 @@ namespace HIMS.Services.OutPatient
         {
             DatabaseHelper odal = new();
 
-            string[] rVisitEntity = { "ReceiptNo", "CashCounterId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
-            var payentity = objpayment.ToDictionary(); 
-            foreach (var rProperty in rVisitEntity)
+            string[] rpayEntity = { "ReceiptNo", "CashCounterId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
+            var payentity = objpayment.ToDictionary();
+            foreach (var rProperty in rpayEntity)
             {
                 payentity.Remove(rProperty);
             }

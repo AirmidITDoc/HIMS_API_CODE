@@ -12504,8 +12504,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
-
-                entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>

@@ -70,9 +70,8 @@ namespace HIMS.API.Controllers.IPPatient
             if (obj.ADMISSION.AdmissionId != 0)
             {
 
-                objAdmission.AddedBy = CurrentUserId;
-
-              
+                objAdmission.IsUpdatedBy = CurrentUserId;
+                              
                 await _IAdmissionService.UpdateAdmissionAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
             }
             else

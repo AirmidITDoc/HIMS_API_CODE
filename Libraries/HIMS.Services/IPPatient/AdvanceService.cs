@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.IPPatient
 {
@@ -25,41 +26,54 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId, string UserName)
+        public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail,Payment objpayment, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            string[] rEntity = { "AdvanceDetails" };
 
             var entity = objAdvanceHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            string AdvanceId = odal.ExecuteNonQuery("insert_AdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
+            string AdvanceId = odal.ExecuteNonQuery("v_insert_AdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
             objAdvanceHeader.AdvanceId = Convert.ToInt32(AdvanceId);
             objAdvanceDetail.AdvanceId = Convert.ToInt32(AdvanceId);
-            objpayment.AdvanceId = Convert.ToInt32(AdvanceId);
+         
 
-            string[] rDetailEntity = { "IsCancelled", "IsCancelledby", "IsCancelledDate" };
+            string[] rDetailEntity = { "AdvanceNo", "Advance" };
 
             var AdvanceEntity = objAdvanceDetail.ToDictionary();
             foreach (var rProperty in rDetailEntity)
             {
-                entity.Remove(rProperty);
+                AdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("insert_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceEntity);
-           
+            string AdvanceDetailId = odal.ExecuteNonQuery("v_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
+            objpayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
 
-            string[] rPaymentEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
+            string[] rPaymentEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "BillNoNavigation" };
 
             var PaymentEntity = objpayment.ToDictionary();
             foreach (var rProperty in rPaymentEntity)
             {
-                entity.Remove(rProperty);
+                PaymentEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure,  PaymentEntity);
-           
+
+            // Payment Code
+            int _val = 0;
+            ////foreach (var objPayment in objBill.Payments)
+            ////{
+            ////    if (_val == 0)
+            ////    {
+            //        //objPayment.BillNo = objBill.BillNo;
+            //        _context.Payments.Add(objpayment);
+            //        await _context.SaveChangesAsync();
+            //    //}
+            //    //_val += 1;
+            ////}
+
         }
 
 
@@ -128,6 +142,33 @@ namespace HIMS.Services.IPPatient
             objAdvanceDetail.AdvanceDetailId = Convert.ToInt32(RefundId);
             objPayment.PaymentId = Convert.ToInt32(RefundId);
 
+        }
+
+        public virtual async Task UpdateAdvanceAsyncSP(AdvanceDetail objAdvanceDetail,int UserId, string UserName)
+        {
+         
+
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType","BalanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+
+
+            var AdvanceEntity = objAdvanceDetail.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                AdvanceEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("v_Update_Advance_det", CommandType.StoredProcedure,AdvanceEntity);
+           // objpayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
+
+            //string[] rPaymentEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "BillNoNavigation" };
+
+            //var PaymentEntity = objpayment.ToDictionary();
+            //foreach (var rProperty in rPaymentEntity)
+            //{
+            //    PaymentEntity.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, PaymentEntity);
         }
     }
 }

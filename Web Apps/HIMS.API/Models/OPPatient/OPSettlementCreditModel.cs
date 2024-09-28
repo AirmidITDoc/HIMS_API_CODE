@@ -1,9 +1,24 @@
 ﻿using FluentValidation;
 using HIMS.Data.Models;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
-    public class OPSettlementModel
+    public class OPSettlementCreditModel
+    {
+        public int BillNo { get; set; }
+
+        public float BalanceAmt { get; set; }
+    }
+    public class OPSettlementCreditModelValidator : AbstractValidator<OPSettlementCreditModel>
+    {
+        public OPSettlementCreditModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.BalanceAmt).NotNull().NotEmpty().WithMessage("BillBalAmount is required");
+
+        }
+    }
+    public class OPSettlementPaymentModel
     {
         public long PaymentId { get; set; }
         public long? BillNo { get; set; }
@@ -49,17 +64,18 @@ namespace HIMS.API.Models.OutPatient
 
         public virtual Bill? BillNoNavigation { get; set; }
     }
-    public class OPSettlementModelValidator : AbstractValidator<OPSettlementModel>
-    {
-        public OPSettlementModelValidator()
-        {
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo is required");
-            //RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
 
+    public class OPSettlementPaymentModelValidator : AbstractValidator<OPSettlementPaymentModel>
+    {
+        public OPSettlementPaymentModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
+    }
+
+    public class OPSettlementpayment
+    {
+        public OPSettlementCreditModel OPSettlementCredit { get; set; }
+        public OPSettlementPaymentModel OPSettlementPayment { get; set; }
     }
 }

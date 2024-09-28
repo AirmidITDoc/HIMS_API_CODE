@@ -18,7 +18,7 @@ namespace HIMS.API.Models.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
 
-        //  public virtual ICollection<AdvanceDetail> AdvanceDetails { get; set; }
+         //public virtual ICollection<AdvanceDetailModel> AdvanceDetail { get; set; }
 
     }
 
