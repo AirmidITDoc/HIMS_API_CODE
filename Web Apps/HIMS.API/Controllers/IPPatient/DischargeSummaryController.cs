@@ -3,12 +3,12 @@ using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Models.IPPatient;
+using HIMS.Services.IPPatient;
 
-namespace HIMS.API.Controllers.Inventory
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -20,8 +20,8 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IDischargeSummaryService = repository;
         }
-       
-        
+
+
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DischargeSummaryModel obj)
@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.DischargeSummaryTime = Convert.ToDateTime(obj.DischargeSummaryTime);
                 model.AddedBy = CurrentUserId;
-               
+
                 await _IDischargeSummaryService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

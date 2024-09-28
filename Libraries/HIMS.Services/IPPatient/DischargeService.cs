@@ -19,37 +19,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace HIMS.Services.Inventory
+namespace HIMS.Services.IPPatient
 {
-    public class DischargeSummaryService : IDischargeSummaryService
+    public class DischargeService : IDischargeService
     {
-        private readonly Data.Models.HIMSDbContext _context;
-        public DischargeSummaryService(HIMSDbContext HIMSDbContext)
+        private readonly HIMSDbContext _context;
+        public DischargeService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsync(DischargeSummary objDischargeSummary, int UserId, string Username)
+        public virtual async Task InsertAsync(Discharge objDischarge, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                //_context.DischargeSummarys.Add(objDischargeSummary);
-                //await _context.SaveChangesAsync();
-
-                //scope.Complete();
-            }
-        }
-
-        public virtual async Task UpdateAsync(DischargeSummary objDischargeSummary, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                //_context.DischargeSummary.Update(objDischargeSummary);
-                _context.Entry(objDischargeSummary).State = EntityState.Modified;
+                _context.Discharges.Add(objDischarge);
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
+
+        public virtual async Task UpdateAsync(Discharge objDischarge, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.Discharges.Update(objDischarge);
+                _context.Entry(objDischarge).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }

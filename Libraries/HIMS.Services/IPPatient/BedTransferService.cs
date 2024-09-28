@@ -34,20 +34,20 @@ namespace HIMS.Services.IPPatient
 
         //}
 
-        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail,  int UserId, string Username)
+        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
            
 
-            string[] rRefundEntity = { "TransferId" };
-            var RefundEntity = objBedTransferDetail.ToDictionary();
-            foreach (var rProperty in rRefundEntity)
+            string[] rEntity = {};
+            var Entity = objBedTransferDetail.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                RefundEntity.Remove(rProperty);
+                Entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_Insert_BedTransferDetails_1", CommandType.StoredProcedure, RefundEntity);
-            await _context.SaveChangesAsync(UserId, Username);
+            odal.ExecuteNonQuery("v_Insert_BedTransferDetails_1", CommandType.StoredProcedure, Entity);
+            //await _context.SaveChangesAsync(UserId, Username);
 
 
 

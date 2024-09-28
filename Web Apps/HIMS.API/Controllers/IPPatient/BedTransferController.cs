@@ -19,25 +19,26 @@ namespace HIMS.API.Controllers.IPPatient
         {
             _IBedTransferService = repository;
         }
-        [HttpPost("BedTransferInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(BedTransferModel obj)
+
+
+        [HttpPost("InsertSp")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSp(BedTransferModel obj)
         {
             TBedTransferDetail model = obj.MapTo<TBedTransferDetail>();
-            
-                model.FromDate = Convert.ToDateTime(obj.FromDate);
+           
                 model.FromTime = Convert.ToDateTime(obj.FromTime);
+                 model.ToTime = Convert.ToDateTime(obj.ToTime);
+                  model.AddedBy = CurrentUserId;
 
-                model.AddedBy = CurrentUserId;
-            await _IBedTransferService.InsertAsyncSP(model,  CurrentUserId, CurrentUserName);
-
-
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer added successfully.", model);
+                await _IBedTransferService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            //}
+            //else
+                //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bed Transfered successfully.");
         }
 
 
-        
 
     }
 }

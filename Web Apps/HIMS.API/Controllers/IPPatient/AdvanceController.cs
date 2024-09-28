@@ -3,13 +3,13 @@ using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.Inventory;
 using HIMS.API.Models.Inventory;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 using HIMS.Services.IPPatient;
+using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {

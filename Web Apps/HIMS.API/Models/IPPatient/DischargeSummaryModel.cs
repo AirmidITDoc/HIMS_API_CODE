@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-namespace HIMS.API.Models.Inventory
+namespace HIMS.API.Models.IPPatient
 {
     public class DischargeSummaryModel
     {
@@ -47,7 +47,7 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.DischargeId).NotNull().NotEmpty().WithMessage("DischargeId is required");
             RuleFor(x => x.AdmissionId).NotNull().NotEmpty().WithMessage("AdmissionId  is required");
-           
+
 
         }
     }
@@ -76,7 +76,7 @@ namespace HIMS.API.Models.Inventory
         //public int? ModifiedBy { get; set; }
         //public DateTime? ModifiedDate { get; set; }
 
-       
+
     }
     public class TIpPrescriptionDischargeModelValidator : AbstractValidator<TIpPrescriptionDischargeModel>
     {

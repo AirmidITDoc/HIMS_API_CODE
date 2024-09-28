@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.IPPatient;
 namespace HIMS.API.Models.OutPatient
 {
     public class RefundAdvanceModel

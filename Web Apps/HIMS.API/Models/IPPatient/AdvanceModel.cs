@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.IPPatient
 {
     public class AdvanceModel
     {
@@ -122,6 +122,6 @@ namespace HIMS.API.Models.OutPatient
         public AdvancePayment AdvancePayment { get; set; }
     }
 }
-    
+
 
 
