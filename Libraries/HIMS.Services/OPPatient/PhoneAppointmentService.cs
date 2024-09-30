@@ -21,11 +21,12 @@ namespace HIMS.Services.OPPatient
             {
                 _context = HIMSDbContext;
             }
+        
 
             public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objPhoneAppointment, int UserId, string Username)
             {
                 DatabaseHelper odal = new();
-                string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedByDate", "UpdatedByDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedByDate",  "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objPhoneAppointment.ToDictionary(); 
                 foreach (var rProperty in rEntity)
                 {

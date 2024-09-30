@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(phoneAppointmentModel obj)
+        public async Task<ApiResponse> Insert(phoneAppointmentModel1 obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
