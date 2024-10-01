@@ -42,24 +42,20 @@ namespace HIMS.Services.IPPatient
 
 
 
-        //public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail,  int CurrentUserId, string CurrentUserName)
-        //{
-        //    //// NEW CODE With EDMX
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Add Registration table records
-        //        _context.TBedTransferDetails.Add(objBedTransferDetail);
-        //        await _context.SaveChangesAsync();
+        
 
-        //        // Update Registration table records
-        //        ConfigSetting objConfigRSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-        //        objConfigRSetting.RegNo = Convert.ToString(Convert.ToInt32(objConfigRSetting.RegNo) + 1);
-        //        _context.ConfigSettings.Update(objConfigRSetting);
-        //        _context.Entry(objConfigRSetting).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-
-        //    }
-        //}
+        public virtual async Task UpdateAsyncSP(Bedmaster objBedMaster, int currentUserId, string currentUserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rBedEntity = { "IsAvailible", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var rAdmissentity1 = objBedMaster.ToDictionary();
+            foreach (var rProperty in rBedEntity)
+            {
+                rAdmissentity1.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("v_update_BedMaster_1", CommandType.StoredProcedure, rAdmissentity1);
+            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+        }
     }
 }

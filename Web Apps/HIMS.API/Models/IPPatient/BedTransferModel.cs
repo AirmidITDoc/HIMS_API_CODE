@@ -35,4 +35,20 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.ToTime).NotNull().NotEmpty().WithMessage("ToTime is required");
         }
     }
+    public  class BedmasterModel1
+    {
+        public long BedId { get; set; }
+        public string? BedName { get; set; }
+        public long? RoomId { get; set; }
+        public bool? IsAvailible { get; set; }
+        public bool? IsActive { get; set; }
+    }
+    public class BedmasterModel1Validator : AbstractValidator<BedmasterModel1>
+    {
+        public BedmasterModel1Validator()
+        {
+            RuleFor(x => x.BedName).NotNull().NotEmpty().WithMessage("BedName is required");
+            RuleFor(x => x.RoomId).NotNull().NotEmpty().WithMessage("RoomId is required");
+        }
+    }
 }

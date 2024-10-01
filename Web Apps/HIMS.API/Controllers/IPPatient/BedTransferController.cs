@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
+using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace HIMS.API.Controllers.IPPatient
             _IBedTransferService = repository;
         }
 
+        
 
         //[HttpPost("Insert")]
         ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
@@ -35,8 +37,8 @@ namespace HIMS.API.Controllers.IPPatient
         //    model.AddedBy = CurrentUserId;
 
         //    await _IBedTransferService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    //}
-        //    //else
+            
+            
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer successfully.");
         //}
@@ -58,6 +60,22 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
+        [HttpPost("AUpdateSP")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> AdmissionUpdateSP(BedmasterModel1 obj)
+        {
+
+            Bedmaster model = obj.MapTo<Bedmaster>();
+            if (obj.BedId == 0)
+            {
+
+
+                await _IBedTransferService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer  Updated successfully.");
+        }
     }
     
 }
