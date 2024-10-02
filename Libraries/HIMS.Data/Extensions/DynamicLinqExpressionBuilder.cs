@@ -13,19 +13,6 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.Extensions
 {
-    public enum OperatorComparer
-    {
-        Contains,
-        StartsWith,
-        EndsWith,
-        Equals = ExpressionType.Equal,
-        GreaterThan = ExpressionType.GreaterThan,
-        GreaterThanOrEqual = ExpressionType.GreaterThanOrEqual,
-        LessThan = ExpressionType.LessThan,
-        LessThanOrEqual = ExpressionType.LessThanOrEqual,
-        NotEqual = ExpressionType.NotEqual,
-        InClause
-    }
     public static class DynamicLinqExpressionBuilder
     {
         public static int ToInt(this object obj)
@@ -65,7 +52,7 @@ namespace HIMS.Data.Extensions
         {
             ParameterExpression parameterExpression = Expression.Parameter(typeof(T), typeof(T).Name);
             //for change between to greater and less (one item to two item)
-            List<SearchGrid> datefilters = objGrid.Filters.Where(x => x.OpType.ToUpper() == "DATERANGE").ToList();
+            List<SearchGrid> datefilters = objGrid.Filters.Where(x => x.OpType == OperatorComparer.DateRange).ToList();
             foreach (SearchGrid objFilter in datefilters)
             {
                 if (!string.IsNullOrEmpty(objFilter.FieldValue))//check first string is null or empty
@@ -73,21 +60,21 @@ namespace HIMS.Data.Extensions
                     // if first date null then we consider second date other wise we go with first date
                     string FirstDate = objFilter?.FieldValue?.Split('-')[0] ?? "";
                     string SecondDate = objFilter.FieldValue.Contains('-') ? objFilter?.FieldValue?.Split('-')[1] ?? "" : "";
-                    objGrid.Filters.Add(new SearchGrid() { FieldName = objFilter.FieldName, FieldValue = !string.IsNullOrWhiteSpace(FirstDate) ? Convert.ToDateTime(FirstDate).ToString("yyyy-MM-dd HH:mm") : "", OpType = "GreaterThanOrEqual" });
+                    objGrid.Filters.Add(new SearchGrid() { FieldName = objFilter.FieldName, FieldValue = !string.IsNullOrWhiteSpace(FirstDate) ? Convert.ToDateTime(FirstDate).ToString("yyyy-MM-dd HH:mm") : "", OpType = OperatorComparer.GreaterThanOrEqual });
                     objFilter.FieldValue = !string.IsNullOrWhiteSpace(SecondDate) ? SecondDate + " 23:59:59" : "";
-                    objFilter.OpType = "LessThanOrEqual";
+                    objFilter.OpType = OperatorComparer.LessThanOrEqual;
                 }
             }
             foreach (SearchGrid objFilter in objGrid.Filters.Where(x => !string.IsNullOrWhiteSpace(x.FieldValue)))
             {
-                if (objFilter.OpType == OperatorComparer.InClause.ToString())
+                if (objFilter.OpType == OperatorComparer.InClause)
                 {
                     Expression<Func<T, bool>> predicate = SelectListContainsPredicate<T>(objFilter.FieldName, objFilter.FieldValue.Replace('|', ','));
                     query = query.Where(predicate);
                 }
                 else
                 {
-                    Expression<Func<T, bool>> predicate = (Expression<Func<T, bool>>)BuildNavigationExpression(parameterExpression, (OperatorComparer)Enum.Parse(typeof(OperatorComparer), objFilter.OpType), objFilter.FieldValue, objFilter.FieldName);
+                    Expression<Func<T, bool>> predicate = (Expression<Func<T, bool>>)BuildNavigationExpression(parameterExpression, objFilter.OpType, objFilter.FieldValue, objFilter.FieldName);
                     query = query.Where(predicate);
                 }
             }

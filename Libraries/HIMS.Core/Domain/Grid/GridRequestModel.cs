@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace HIMS.Core.Domain.Grid
 {
@@ -23,10 +24,24 @@ namespace HIMS.Core.Domain.Grid
     {
         public string FieldName { get; set; }
         public string FieldValue { get; set; }
-        public string OpType { get; set; }
+        public OperatorComparer OpType { get; set; }
     }
     public enum ExportType
     {
         JSON=1,Excel = 2, Pdf = 3
+    }
+    public enum OperatorComparer
+    {
+        Contains,
+        StartsWith,
+        EndsWith,
+        Equals = ExpressionType.Equal,
+        GreaterThan = ExpressionType.GreaterThan,
+        GreaterThanOrEqual = ExpressionType.GreaterThanOrEqual,
+        LessThan = ExpressionType.LessThan,
+        LessThanOrEqual = ExpressionType.LessThanOrEqual,
+        NotEqual = ExpressionType.NotEqual,
+        InClause,
+        DateRange
     }
 }
