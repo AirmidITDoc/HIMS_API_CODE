@@ -11312,6 +11312,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitPurRate).HasColumnType("money");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Issue)
+                    .WithMany(p => p.TIssueToDepartmentDetails)
+                    .HasForeignKey(d => d.IssueId)
+                    .HasConstraintName("FK_T_IssueToDepartmentDetails_T_IssueToDepartmentHeader");
             });
 
             modelBuilder.Entity<TIssueToDepartmentHeader>(entity =>

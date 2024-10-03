@@ -51,6 +51,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
+            services.AddScoped<IIssueToDepService, IssueToDepService>();
+
             services.AddScoped<ITestMasterServices, TestMasterService>();
 
             services.AddScoped<IPaymentService, PaymentService>();

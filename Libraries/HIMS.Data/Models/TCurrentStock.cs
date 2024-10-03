@@ -27,5 +27,6 @@ namespace HIMS.Data.Models
         public long? IstkId { get; set; }
         public float? GrnRetQty { get; set; }
         public float? IssDeptQty { get; set; }
+
     }
 }
