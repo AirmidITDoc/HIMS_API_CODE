@@ -1,57 +1,57 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.API.Models.Radiology;
+using HIMS.Data.Models;
+using HIMS.Data;
+using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Models.IPPatient;
 
-namespace HIMS.API.Controllers.Masters.Radiology
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class RadiologyTemplateController : BaseController
+    public class MlcInformationController : BaseController
     {
-
-        private readonly IGenericService<MRadiologyTemplateMaster> _repository;
-        public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository)
+        private readonly IGenericService<TMlcinformation> _repository;
+        public MlcInformationController(IGenericService<TMlcinformation> repository)
         {
             _repository = repository;
         }
+
         //List API
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MRadiologyTemplateMaster> RadiologyTemplateMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(RadiologyTemplateMasterList.ToGridResponse(objGrid, "RadiologyTemplateMaster List "));
+            IPagedList<TMlcinformation> MlcinformationList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MlcinformationList.ToGridResponse(objGrid, "Mlcinformation List "));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.TemplateId == id);
-            return data.ToSingleResponse<MRadiologyTemplateMaster, RadiologyTemplateModel>("MRadiologyTemplateMaster");
+            var data = await _repository.GetById(x => x.Mlcid == id);
+            return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("MlcinformationList");
         }
         //Add API
         [HttpPost]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(RadiologyTemplateModel obj)
+        public async Task<ApiResponse> Post(MlcInformationModel obj)
         {
-            MRadiologyTemplateMaster model = obj.MapTo<MRadiologyTemplateMaster>();
-            model.IsActive = true;
-            if (obj.TemplateId == 0)
+            TMlcinformation model = obj.MapTo<TMlcinformation>();
+            //model.IsActive = true;
+            if (obj.Mlcid == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -59,16 +59,16 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(RadiologyTemplateModel obj)
+        public async Task<ApiResponse> Edit(MlcInformationModel obj)
         {
-            MRadiologyTemplateMaster model = obj.MapTo<MRadiologyTemplateMaster>();
-            model.IsActive = true;
-            if (obj.TemplateId == 0)
+            TMlcinformation model = obj.MapTo<TMlcinformation>();
+            //model.IsActive = true;
+            if (obj.Mlcid == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -76,24 +76,25 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation  updated successfully.");
         }
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MRadiologyTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);
-            if ((model?.TemplateId ?? 0) > 0)
+            TMlcinformation model = await _repository.GetById(x => x.Mlcid == Id);
+            if ((model?.Mlcid ?? 0) > 0)
             {
-                model.IsActive = false;
+                //model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
     }
 }

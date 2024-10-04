@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TIssueToDepartmentHeader
     {
+        public TIssueToDepartmentHeader()
+        {
+            TIssueToDepartmentDetails = new HashSet<TIssueToDepartmentDetail>();
+        }
+
         public long IssueId { get; set; }
         public long? IssueNo { get; set; }
         public DateTime? IssueDate { get; set; }
@@ -24,5 +29,7 @@ namespace HIMS.Data.Models
         public bool? IsAccepted { get; set; }
         public long? AcceptedBy { get; set; }
         public DateTime? AcceptedDatetime { get; set; }
+
+        public virtual ICollection<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; }
     }
 }

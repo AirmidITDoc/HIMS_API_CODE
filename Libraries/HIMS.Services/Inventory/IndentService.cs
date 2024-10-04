@@ -26,17 +26,7 @@ namespace HIMS.Services.Inventory
             {
                 // //Add header table records
                 DatabaseHelper odal = new();
-                //SqlParameter[] para = new SqlParameter[7];
-                //para[0] = new SqlParameter("@IndentDate", objIndent.IndentDate);
-                //para[1] = new SqlParameter("@IndentTime", objIndent.IndentTime);
-                //para[2] = new SqlParameter("@FromStoreId", objIndent.FromStoreId);
-                //para[3] = new SqlParameter("@ToStoreId", objIndent.ToStoreId);
-                //para[4] = new SqlParameter("@Addedby", objIndent.Addedby);
-                //para[5] = new SqlParameter("@Comments", objIndent.Comments);
-                //para[6] = new SqlParameter("@IndentId", SqlDbType.BigInt);
-                //para[6].Direction = ParameterDirection.Output;
-                //string indentNo = odal.ExecuteNonQuery("m_insert_IndentHeader_1", CommandType.StoredProcedure, "@IndentId", para);
-                //objIndent.IndentId = Convert.ToInt32(indentNo);
+                
 
                 string[] rEntity = {"IndentNo","Isdeleted","Isverify","Isclosed","IsInchargeVerify","IsInchargeVerifyId","IsInchargeVerifyDate","TIndentDetails" };
                 var entity = objIndent.ToDictionary();
@@ -44,7 +34,7 @@ namespace HIMS.Services.Inventory
                 {
                     entity.Remove(rProperty);
                 }
-                string indentNo = odal.ExecuteNonQuery("m_insert_IndentHeader_1", CommandType.StoredProcedure, "IndentId", entity);
+                string indentNo = odal.ExecuteNonQuery("v_insert_IndentHeader_1", CommandType.StoredProcedure, "IndentId", entity);
                 objIndent.IndentId = Convert.ToInt32(indentNo);
 
                 // Add details table records

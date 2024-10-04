@@ -7,25 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\NewFolder1\**" />
-    <Compile Remove="Controllers\Nursing\**" />
-    <Compile Remove="Models\InPatient\**" />
-    <Compile Remove="Models\OutPatient\NewFolder\**" />
     <Compile Remove="Models\Users\**" />
-    <Content Remove="Controllers\NewFolder1\**" />
-    <Content Remove="Controllers\Nursing\**" />
-    <Content Remove="Models\InPatient\**" />
-    <Content Remove="Models\OutPatient\NewFolder\**" />
     <Content Remove="Models\Users\**" />
-    <EmbeddedResource Remove="Controllers\NewFolder1\**" />
-    <EmbeddedResource Remove="Controllers\Nursing\**" />
-    <EmbeddedResource Remove="Models\InPatient\**" />
-    <EmbeddedResource Remove="Models\OutPatient\NewFolder\**" />
     <EmbeddedResource Remove="Models\Users\**" />
-    <None Remove="Controllers\NewFolder1\**" />
-    <None Remove="Controllers\Nursing\**" />
-    <None Remove="Models\InPatient\**" />
-    <None Remove="Models\OutPatient\NewFolder\**" />
     <None Remove="Models\Users\**" />
   </ItemGroup>
 
@@ -62,9 +46,14 @@
 
   <ItemGroup>
     <Folder Include="Controllers\InPatient\" />
+    <Folder Include="Controllers\NewFolder\" />
+    <Folder Include="Controllers\Nursing\" />
     <Folder Include="Controllers\Radiology\" />
-    <Folder Include="Controllers\Pathology\" />
     <Folder Include="DbData\" />
+    <Folder Include="Models\InPatient\" />
+    <Folder Include="Models\NewFolder\" />
+    <Folder Include="Models\Nursing\" />
+    <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 
 </Project>

@@ -23,15 +23,15 @@ namespace HIMS.API.Controllers.OPPatient
             _IPhoneAppointmentService = repository;
         }
 
-        //[HttpPost("InsertSP")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(phoneAppointmentModel obj)
-        //{
-        //    TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
-        //    if (obj.PhoneAppId == 0)
-        //    {
-        //        model.AppDate = Convert.ToDateTime(obj.AppDate);
-        //        model.AppTime = Convert.ToDateTime(obj.AppTime);
+        [HttpPost("InsertSP")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(phoneAppointmentModel1 obj)
+        {
+            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+            if (obj.PhoneAppId == 0)
+            {
+                model.AppDate = Convert.ToDateTime(obj.AppDate);
+                model.AppTime = Convert.ToDateTime(obj.AppTime);
 
         //        model.UpdatedBy = CurrentUserId;
         //        model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
