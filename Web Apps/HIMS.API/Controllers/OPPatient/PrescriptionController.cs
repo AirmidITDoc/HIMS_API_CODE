@@ -2,14 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Masters;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
+using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
 
-namespace HIMS.API.Controllers.Masters
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -64,6 +64,25 @@ namespace HIMS.API.Controllers.Masters
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
+
+
+        [HttpPost("PrescriptionInsertMultiRecord")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PrescriptionModel obj)
+        {
+            TPrescription model = obj.MapTo<TPrescription>();
+            if (obj.PrecriptionId == 0)
+            {
+                model.Date = Convert.ToDateTime(obj.Date);
+                model.Ptime = Convert.ToDateTime(obj.Ptime);
+
+                model.IsAddBy = CurrentUserId;
+                await _IPrescription.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
+        }
         [HttpPost("PrescriptionUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(PrescriptionModel obj)
@@ -82,4 +101,4 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription updated successfully.");
         }
     }
-    }
+}

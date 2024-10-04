@@ -2,12 +2,12 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.IPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
+using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

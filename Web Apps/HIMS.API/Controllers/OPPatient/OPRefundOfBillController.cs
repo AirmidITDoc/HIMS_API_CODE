@@ -3,13 +3,13 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
+using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
 //using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -73,7 +73,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> InsertEDMX(OPRefundOfBillModel obj)
         {
             Refund model = obj.MapTo<Refund>();
-            object returnId=0;
+            object returnId = 0;
             if (obj.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.RefundTime);

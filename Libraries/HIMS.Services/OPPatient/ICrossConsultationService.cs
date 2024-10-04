@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HIMS.Data.Models;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
     public partial interface ICrossConsultationService
     {

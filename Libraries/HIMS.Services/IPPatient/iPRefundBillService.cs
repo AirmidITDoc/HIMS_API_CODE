@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.IPPatient
 {
     public class ipRefundBillService : IipRefundBillService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public ipRefundBillService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.IPPatient
 {
     public partial interface IipRefundBillService
     {

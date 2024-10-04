@@ -12,11 +12,11 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
     public class CrossConsultationService : ICrossConsultationService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public CrossConsultationService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -30,7 +30,7 @@ namespace HIMS.Services.OutPatient
             {
                 entity.Remove(rProperty);
             }
-            string VisitID = odal.ExecuteNonQuery("m_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+            string VisitID = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
 
             await _context.SaveChangesAsync(UserId, Username);

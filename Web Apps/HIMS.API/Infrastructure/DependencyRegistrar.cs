@@ -75,18 +75,18 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
             services.AddScoped<IipRefundBillService, ipRefundBillService>();
             services.AddScoped<IBedTransferService, BedTransferService>();
-
+            services.AddScoped<IPrescription, PrescriptionSer>();
             services.AddScoped<IDischargeService, DischargeService>();
-
-
+            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
+            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService,AdmissionService>();
 
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
-            
 
+            services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

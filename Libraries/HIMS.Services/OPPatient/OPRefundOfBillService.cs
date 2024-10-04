@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
     public class OPRefundOfBillService : IOPRefundOfBillService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public OPRefundOfBillService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -22,7 +22,7 @@ namespace HIMS.Services.OutPatient
 
             DatabaseHelper odal = new();
             string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
- 
+
             var entity = objRefund.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -32,13 +32,13 @@ namespace HIMS.Services.OutPatient
             objRefund.RefundId = Convert.ToInt32(RefundId);
             objTRefundDetail.RefundId = Convert.ToInt32(RefundId);
 
-            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount" , "RefundDetId"};
+            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount", "RefundDetId" };
             var RefundEntity = objTRefundDetail.ToDictionary();
             foreach (var rProperty in rRefundEntity)
             {
                 RefundEntity.Remove(rProperty);
             }
-             odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure,  RefundEntity);
+            odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
 
 
         }
@@ -54,7 +54,7 @@ namespace HIMS.Services.OutPatient
             }
             string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(RefundId);
-           
+
             //// Add details table records
             foreach (var objRefundDet in objRefund.TRefundDetails)
             {
