@@ -22,6 +22,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Core.Infrastructure;
 using LinqToDB;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Extensions
 {
@@ -88,6 +89,25 @@ namespace HIMS.API.Extensions
                 return new GridResponseModel();
             }
         }
+        public static ObjectResult ToResponse<T>(this T obj, string msg, object additionalData = null)
+        {
+            var resObj = GetResponse<T>(obj, msg, additionalData);
+            return new ObjectResult(resObj)
+            {
+                StatusCode = resObj.StatusCode
+            };
+        }
+        private static ApiResponse GetResponse<T>(this T obj, string msg, object additionalData = null)
+        {
+            if (!object.Equals(obj, default(T)))
+            {
+                return new ApiResponse() { StatusCode = (int)ApiStatusCode.Status200OK, StatusText = ApiStatusCode.Status200OK.ToString(), Message = msg, Data = obj, ExtraData = additionalData };
+            }
+            else
+            {
+                return new ApiResponse() { StatusCode = (int)ApiStatusCode.Status404NotFound, StatusText = ApiStatusCode.Status404NotFound.ToString(), Message = "Not Found", Data = obj, ExtraData = null };
+            }
+        }
         public static ApiResponse ToSingleResponse<T>(this T obj, string msg)
         {
             try
@@ -112,22 +132,27 @@ namespace HIMS.API.Extensions
         }
         public static IList<SelectListItem> ToDropDown<T>(this IList<T> drpList, string dropValColName = "Id", string dropDisColName = "Name", string drpGrpColName = "")
         {
-            if (dropValColName.Split('|').Length == 1)
+            var valueProperties = dropValColName.Split('|');
+
+            return drpList.Select(x => new SelectListItem
             {
-                return drpList.Select(x => new SelectListItem() { Value = (typeof(T).GetProperty(dropValColName).GetValue(x)).ToString(), Text = typeof(T).GetProperty(dropDisColName).GetValue(x).ToString(), Group = new SelectListGroup() { Name = !string.IsNullOrEmpty(drpGrpColName) ? typeof(T).GetProperty(drpGrpColName).GetValue(x).ToString() : "" } }).ToList();
-            }
-            else if (dropValColName.Split('|').Length == 2)
-            {
-                return drpList.Select(x => new SelectListItem() { Value = (typeof(T).GetProperty(dropValColName.Split('|')[0]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[1]).GetValue(x)).ToString(), Text = typeof(T).GetProperty(dropDisColName).GetValue(x).ToString(), Group = new SelectListGroup() { Name = !string.IsNullOrEmpty(drpGrpColName) ? typeof(T).GetProperty(drpGrpColName).GetValue(x).ToString() : "" } }).ToList();
-            }
-            else if (dropValColName.Split('|').Length == 4)
-            {
-                return drpList.Select(x => new SelectListItem() { Value = (typeof(T).GetProperty(dropValColName.Split('|')[0]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[1]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[2]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[3]).GetValue(x)).ToString(), Text = typeof(T).GetProperty(dropDisColName).GetValue(x).ToString(), Group = new SelectListGroup() { Name = !string.IsNullOrEmpty(drpGrpColName) ? typeof(T).GetProperty(drpGrpColName).GetValue(x).ToString() : "" } }).ToList();
-            }
-            else
-            {
-                return drpList.Select(x => new SelectListItem() { Value = (typeof(T).GetProperty(dropValColName.Split('|')[0]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[1]).GetValue(x)).ToString() + "|" + (typeof(T).GetProperty(dropValColName.Split('|')[2]).GetValue(x)).ToString(), Text = typeof(T).GetProperty(dropDisColName).GetValue(x).ToString(), Group = new SelectListGroup() { Name = !string.IsNullOrEmpty(drpGrpColName) ? typeof(T).GetProperty(drpGrpColName).GetValue(x).ToString() : "" } }).ToList();
-            }
+                Value = GetConcatenatedValue(x, valueProperties),
+                Text = GetPropertyValue(x, dropDisColName),
+                Group = new SelectListGroup
+                {
+                    Name = !string.IsNullOrEmpty(drpGrpColName) ? GetPropertyValue(x, drpGrpColName) : string.Empty
+                }
+            }).ToList();
+        }
+
+        private static string GetPropertyValue<T>(T item, string propertyName)
+        {
+            var property = typeof(T).GetProperty(propertyName);
+            return property?.GetValue(item)?.ToString() ?? string.Empty;
+        }
+        private static string GetConcatenatedValue<T>(T item, string[] propertyNames)
+        {
+            return string.Join("|", propertyNames.Select(propertyName => GetPropertyValue(item, propertyName)));
         }
         public static List<int> ToIntList(this object a, string separator)
         {
@@ -139,6 +164,23 @@ namespace HIMS.API.Extensions
             {
                 return new List<int>();
             }
+        }
+        public static List<SelectListItem> ToSelectListItems(this Type enumType)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (Enum cur in Enum.GetValues(enumType))
+            {
+                items.Add(new SelectListItem()
+                {
+                    Text = cur.ToString().Replace('_', ' '),
+                    Value = GetEnumValue(cur)
+                });
+            }
+            return items;
+        }
+        public static string GetEnumValue(this Enum EnumType)
+        {
+            return Convert.ToString((int)(object)EnumType);
         }
         public static int ToInt(this object obj)
         {

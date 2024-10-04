@@ -1,4 +1,4 @@
-﻿namespace HIMS.API.Models.OutPatient
+﻿namespace HIMS.API.Models.Nursing
 {
 
     public class NewPrescription
@@ -6,7 +6,7 @@
         public List<IPPrescriptionModel> TIpPrescription { get; set; }
 
         //public IPMedicalRecordModel TPrescription { get; set; }
-    } 
+    }
     public class IPPrescriptionModel
     {
 

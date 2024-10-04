@@ -90,8 +90,8 @@ namespace HIMS.Services.IPPatient
             {
                 rAdmissentity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
-            objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure,rAdmissentity1);
+           // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
         }
     }
 }

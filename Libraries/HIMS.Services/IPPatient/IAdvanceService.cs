@@ -9,7 +9,8 @@ namespace HIMS.Services.IPPatient
 {
     public partial interface IAdvanceService
     {
-        Task InsertAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId, string UserName);
-        Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
+        Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader,AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId, string UserName);
+        Task UpdateAdvanceAsyncSP(AdvanceDetail objAdvanceDetail,int UserId, string UserName);
+        // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
     }
 }

@@ -11,11 +11,11 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.OPPatient
 {
-    public class OPCreditBillService:IOPCreditBillService
+    public class OPCreditBillService : IOPCreditBillService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public OPCreditBillService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;

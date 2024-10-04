@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\NewFolder1\**" />
     <Compile Remove="Models\Users\**" />
-    <Content Remove="Controllers\NewFolder1\**" />
     <Content Remove="Models\Users\**" />
-    <EmbeddedResource Remove="Controllers\NewFolder1\**" />
     <EmbeddedResource Remove="Models\Users\**" />
-    <None Remove="Controllers\NewFolder1\**" />
     <None Remove="Models\Users\**" />
   </ItemGroup>
 
@@ -50,13 +46,14 @@
 
   <ItemGroup>
     <Folder Include="Controllers\InPatient\" />
+    <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Controllers\Nursing\" />
     <Folder Include="Controllers\Radiology\" />
-    <Folder Include="Controllers\Pathology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
+    <Folder Include="Models\NewFolder\" />
     <Folder Include="Models\Nursing\" />
-    <Folder Include="Models\Radiology\" />
+    <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 
 </Project>

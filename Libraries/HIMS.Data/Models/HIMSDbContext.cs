@@ -11312,6 +11312,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitPurRate).HasColumnType("money");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Issue)
+                    .WithMany(p => p.TIssueToDepartmentDetails)
+                    .HasForeignKey(d => d.IssueId)
+                    .HasConstraintName("FK_T_IssueToDepartmentDetails_T_IssueToDepartmentHeader");
             });
 
             modelBuilder.Entity<TIssueToDepartmentHeader>(entity =>
@@ -11518,9 +11523,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BuckleNo).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Mlcno)
                     .HasMaxLength(50)
                     .HasColumnName("MLCNo");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PoliceStation).HasMaxLength(100);
 
@@ -12504,8 +12513,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
-
-                entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>

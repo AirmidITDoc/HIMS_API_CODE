@@ -9,9 +9,7 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IOPSettlementService
     {
-        Task  InsertAsyncSP( Payment  objpayment, int CurrentUserId, string CurrentUserName);
-
-
+        Task InsertAsyncSP(Payment objpayment, int CurrentUserId, string CurrentUserName);
 
 
     }

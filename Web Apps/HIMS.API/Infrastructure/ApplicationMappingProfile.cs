@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using HIMS.API.Controllers.Masters.Personal_Information;
+using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.Pathology;
 using HIMS.API.Models.Pharmacy;
+using HIMS.API.Models.Radiology;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -53,6 +57,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathTestDetailMaster, PathTestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ACustomerInformation, CustomerInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ACustomerPaymentSummary, CustomerPaymentSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MTemplateMaster, PathTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             CreateMap<TGrnheader, SupplierPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -76,7 +82,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<AdvanceHeader, AdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, AdvancePayment>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+           CreateMap<Payment,AdvancePayment>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<Discharge, DischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -84,6 +90,10 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            //Radiology//
+            CreateMap<MRadiologyTemplateMaster, RadiologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             CreateMap<TPrescription, PrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -124,6 +134,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIndentHeader, IndentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentDetail, IndentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentHeader, IndentVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIssueToDepartmentHeader, IssueToDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TCurrentStock, updateissuetoDepartmentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
             CreateMap<MItemManufactureMaster, ItemManufactureModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemGenericNameMaster, ItemGenericNameModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemCategoryMaster, ItemCategoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -136,12 +151,20 @@ namespace HIMS.API.Infrastructure
             CreateMap<VisitDetail, VisitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, RegistrationSaveModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TBedTransferDetail, BedTransferModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Bedmaster, BedmasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
 
             //Appointment
             CreateMap<VisitDetail, AppVisitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, AppReistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, AppReistrationUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
              CreateMap<Payment, OPPaymentdetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TPhoneAppointment, phoneAppointmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhoneAppointment, phoneAppointmentModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             //Admission
             CreateMap<Admission, ADMISSIONModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -149,8 +172,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<AddCharge, OPAddchargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<Payment, OPSettlementPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Bill, OPSettlementCreditModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<Payment, OPSettlementModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<Bill,OPSettlementCreditModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Payment, OPSettlementpayment>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<Discharge, IPDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -160,12 +184,21 @@ namespace HIMS.API.Infrastructure
             CreateMap<BillDetail, CreditBillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, CreditBillChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            //IPBill
-            CreateMap<Bill, IPBillingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<BillDetail, IpBillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, IPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<AddCharge, IpChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //IPBill Draft
+            CreateMap<TDrbill,IPDraftBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDrbillDet,IpDraftBillDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, IpDraftChargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
+            //CreateMap<Payment, IPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            //IPBill
+            CreateMap<Bill,IPBILLModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<BillDetail, IpBillDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Payment, IPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, IpChargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            //OPBill
             CreateMap<Bill,OPBillIngModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<BillDetail, BillDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, ChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -176,13 +209,19 @@ namespace HIMS.API.Infrastructure
             //CreateMap<Payment, AdvancePaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TIpPrescription,NewPrescription>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TPathologyReportHeader, IPLabRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TPathologyReportHeader, IPLabRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescription, IPPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<THlabRequest, IPLabRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDlabRequest, TDLabRequest>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             
+
+
+
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, RegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, PaymentModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Payment, NewPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             //Purchase
@@ -210,6 +249,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MAreaMaster, AreaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<CompanyMaster, CompanyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<CompanyMaster, CompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<CompanyTypeMaster, CompanyTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<GroupMaster, GroupMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSubGroupMaster, SubGroupMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

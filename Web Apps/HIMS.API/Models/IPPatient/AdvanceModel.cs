@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.IPPatient
 {
     public class AdvanceModel
     {
@@ -18,7 +18,7 @@ namespace HIMS.API.Models.OutPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
 
-        //  public virtual ICollection<AdvanceDetail> AdvanceDetails { get; set; }
+         //public virtual ICollection<AdvanceDetailModel> AdvanceDetail { get; set; }
 
     }
 
@@ -122,6 +122,6 @@ namespace HIMS.API.Models.OutPatient
         public AdvancePayment AdvancePayment { get; set; }
     }
 }
-    
+
 
 

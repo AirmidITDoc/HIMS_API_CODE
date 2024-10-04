@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.NursingStation
 {
     public partial interface IIPLabRequestService
     {
-        Task InsertAsyncSP(TPathologyReportHeader objTHlabRequest, int currentUserId, string currentUserName);
+        //TDlabRequest objTDlabRequest,
+        Task InsertAsyncSP(THlabRequest objTHlabRequest, int currentUserId, string currentUserName);
     }
 }

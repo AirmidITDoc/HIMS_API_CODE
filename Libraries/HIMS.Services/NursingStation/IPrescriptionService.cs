@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using HIMS.Data.Models;
 
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.NursingStation
 {
     internal interface IPrescriptionService
     {
-       
+
         Task InsertAsync(TPrescription objPrescription, int UserId, string Username);
         //Task InsertAsyncSP(TPrescription objPrescription, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(TPrescription objPrescription, int UserId, string Username);

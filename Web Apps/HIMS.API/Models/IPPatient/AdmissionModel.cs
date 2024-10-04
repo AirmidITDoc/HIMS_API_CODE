@@ -41,9 +41,9 @@ namespace HIMS.API.Models.IPPatient
         public string? Photo { get; set; }
 
     }
-    public class AdmissionModelValidator : AbstractValidator<AdmissionRegModel>
+    public class AdmissionRegModelValidator : AbstractValidator<AdmissionRegModel>
     {
-        public AdmissionModelValidator()
+        public AdmissionRegModelValidator()
         {
             RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage("Prefix is required");
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
