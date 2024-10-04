@@ -11518,9 +11518,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BuckleNo).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Mlcno)
                     .HasMaxLength(50)
                     .HasColumnName("MLCNo");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PoliceStation).HasMaxLength(100);
 

@@ -18,17 +18,17 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 
-namespace HIMS.Services.OutPatient
+namespace HIMS.Services.NursingStation
 {
     public class PrescriptionService : IPrescriptionService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public PrescriptionService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
 
-      
+
 
         public virtual async Task InsertAsync(TPrescription objPrescription, int UserId, string Username)
         {
@@ -41,7 +41,7 @@ namespace HIMS.Services.OutPatient
             }
         }
 
-       
+
 
         public virtual async Task UpdateAsync(TPrescription objPrescription, int UserId, string Username)
         {
