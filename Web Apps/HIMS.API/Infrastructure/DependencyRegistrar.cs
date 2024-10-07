@@ -20,6 +20,7 @@ using HIMS.Services.Inventory;
 using HIMS.Services.OutPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
+using HIMS.Services.Nursing;
 
 namespace HIMS.API.Infrastructure
 {
@@ -78,6 +79,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBedTransferService, BedTransferService>();
 
             services.AddScoped<IDischargeService, DischargeService>();
+            //services.AddScoped<ILabRequestService, LabRequestService>();
+
 
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();

@@ -47,12 +47,10 @@
   <ItemGroup>
     <Folder Include="Controllers\InPatient\" />
     <Folder Include="Controllers\NewFolder\" />
-    <Folder Include="Controllers\Nursing\" />
     <Folder Include="Controllers\Radiology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
     <Folder Include="Models\NewFolder\" />
-    <Folder Include="Models\Nursing\" />
     <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 
