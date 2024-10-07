@@ -153,7 +153,7 @@ namespace HIMS.API.Models.OutPatient
             //public decimal? ChNeftpayAmount { get; set; }
             //public decimal? ChPayTmamount { get; set; }
             //public string? TranMode { get; set; }
-            //public decimal? Tdsamount { get; set; }
+            public decimal? Tdsamount { get; set; }
         }
         public class PaymentModelValidator : AbstractValidator<PaymentModel2>
         {

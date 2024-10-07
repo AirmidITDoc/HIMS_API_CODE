@@ -31,35 +31,12 @@ namespace HIMS.API.Controllers.OPPatient
                 model.AppTime = Convert.ToDateTime(obj.AppTime);
 
                 model.UpdatedBy = CurrentUserId;
-                await _IPhoneAppointmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment added successfully.");
-
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added successfully.");
         }
-      
-
-        [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(PhoneAppointmentModel obj)
-        {
-            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
-            if (obj.PhoneAppId == 0)
-            {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                //model.IsActive = true;
-                model.AddedBy = CurrentUserId;
-                model.UpdatedBy = CurrentUserId;
-                await _IPhoneAppointmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment   added successfully.");
-        }
-
-
 
         [HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
@@ -76,9 +53,9 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Canceled successfully.");
         }
-
+        
 
     }
 }

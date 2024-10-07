@@ -85,12 +85,24 @@ namespace HIMS.Services.IPPatient
             string[] rRefundEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
 
             var refundentity = objRefund.ToDictionary();
+
+
+            // Define output parameter for RefundId
+            var RefundId = new SqlParameter
+            {
+                SqlDbType = SqlDbType.BigInt,
+                ParameterName = "@RefundId",
+                Direction = ParameterDirection.Output
+            };
+
             foreach (var rProperty in rRefundEntity)
             {
                 refundentity.Remove(rProperty);
             }
-            string RefundId = odal.ExecuteNonQuery("insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", refundentity);
+            odal.ExecuteNonQuery("v_insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", refundentity);
 
+            // Retrieve the output RefundId
+             string refundId = RefundId.Value.ToString();
 
 
             string[] rEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
@@ -122,7 +134,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, BalEntity);
+            odal.ExecuteNonQuery("v_update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, BalEntity);
 
 
 
@@ -134,7 +146,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, PaymentEntity);
+            odal.ExecuteNonQuery("v_m_insert_Payment_1", CommandType.StoredProcedure, PaymentEntity);
 
             objRefund.RefundId = Convert.ToInt32(RefundId);
             objAdvanceHeader.AdvanceId = Convert.ToInt32(RefundId);
@@ -170,5 +182,79 @@ namespace HIMS.Services.IPPatient
             //}
             //odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, PaymentEntity);
         }
+
     }
+    //    {
+    //        DatabaseHelper odal = new();
+
+    //        // Prepare Refund entity
+    //        var refundEntity = objRefund.ToDictionary();
+    //        RemoveUnnecessaryProperties(refundEntity, new[] { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" });
+
+    //        // Define output parameter for RefundId
+    //        var RefundId = new SqlParameter
+    //        {
+    //            SqlDbType = SqlDbType.BigInt,
+    //            ParameterName = "@RefundId",
+    //            Direction = ParameterDirection.Output
+    //        };
+
+    //        // Execute refund insertion and get RefundId
+    //        odal.ExecuteNonQuery("insert_IPAdvRefund_1", CommandType.StoredProcedure, RefundId, refundEntity);
+
+    //        // Retrieve the output RefundId
+    //        string refundId = RefundId.Value.ToString();
+
+    //        // Prepare Advance Header entity
+    //        var advanceHeaderEntity = objAdvanceHeader.ToDictionary();
+    //        RemoveUnnecessaryProperties(advanceHeaderEntity, new[] { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" });
+
+    //        // Execute advance header update
+    //        odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, advanceHeaderEntity);
+
+    //        // Prepare Advance Detail entity
+    //        var advanceDetailEntity = objAdvRefundDetail.ToDictionary();
+    //        RemoveUnnecessaryProperties(advanceDetailEntity, new[] { "IsCancelled", "IsCancelledby", "IsCancelledDate" });
+
+    //        // Execute advance refund detail insertion
+    //        odal.ExecuteNonQuery("insert_AdvRefundDetail_1", CommandType.StoredProcedure, advanceDetailEntity);
+
+    //        // Prepare Advance Detail Balance entity
+    //        var balanceEntity = objAdvanceDetail.ToDictionary();
+    //        RemoveUnnecessaryProperties(balanceEntity, new[] { "IsCancelled", "IsCancelledby", "IsCancelledDate" });
+
+    //        // Execute advance detail balance amount update
+    //        odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, balanceEntity);
+
+    //        // Prepare Payment entity
+    //        var paymentEntity = objPayment.ToDictionary();
+    //        RemoveUnnecessaryProperties(paymentEntity, new[] { "IsCancelled", "IsCancelledBy", "IsCancelledDate" });
+
+    //        // Execute payment insertion
+    //        odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, paymentEntity);
+
+    //        // Update objects with the new RefundId
+    //        UpdateIds(objRefund, objAdvanceHeader, objAdvRefundDetail, objAdvanceDetail, objPayment, refundId);
+    //    }
+
+    //    public void RemoveUnnecessaryProperties(Dictionary<string, object> entity, string[] propertiesToRemove)
+    //    {
+    //        foreach (var property in propertiesToRemove)
+    //        {
+    //            entity.Remove(property);
+    //        }
+    //    }
+
+    //    private void UpdateIds(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, string refundId)
+    //    {
+    //        int parsedRefundId = Convert.ToInt32(refundId);
+
+    //        objRefund.RefundId = parsedRefundId;
+    //        objAdvanceHeader.AdvanceId = parsedRefundId; // Ensure this is the intended mapping
+    //        objAdvRefundDetail.AdvRefId = parsedRefundId;
+    //        objAdvanceDetail.AdvanceDetailId = parsedRefundId;
+    //        objPayment.PaymentId = parsedRefundId;
+    //    }
+    //}
 }
+
