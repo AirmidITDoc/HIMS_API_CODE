@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.AppTime = Convert.ToDateTime(obj.AppTime);
 
                 model.UpdatedBy = CurrentUserId;
-                model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                //model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -21,6 +21,7 @@ using HIMS.Services.OutPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
+using HIMS.Services.NursingStation;
 
 namespace HIMS.API.Infrastructure
 {
@@ -52,9 +53,11 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
-            services.AddScoped<IIssueToDepService, IssueToDepService>();
+            //services.AddScoped<IIssueToDepService, IssueToDepService>();
 
             services.AddScoped<ITestMasterServices, TestMasterService>();
+            services.AddScoped<IPriscriptionService, PriscriptionService>();
+
 
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
@@ -83,6 +86,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService,AdmissionService>();
+            services.AddScoped<ICanteenRequestService, CanteenRequestService>();
+
 
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();

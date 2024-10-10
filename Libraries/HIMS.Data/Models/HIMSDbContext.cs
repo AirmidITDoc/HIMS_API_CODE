@@ -9536,6 +9536,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitMrp)
                     .HasColumnType("money")
                     .HasColumnName("UnitMRP");
+
+                entity.HasOne(d => d.Req)
+                    .WithMany(p => p.TCanteenRequestDetails)
+                    .HasForeignKey(d => d.ReqId)
+                    .HasConstraintName("FK_T_CanteenRequestDetails_T_CanteenRequestHeader");
             });
 
             modelBuilder.Entity<TCanteenRequestHeader>(entity =>
@@ -10474,7 +10479,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdmId).HasColumnName("AdmID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DoctorsNotes).HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Tdate)
                     .HasColumnType("datetime")
@@ -11269,6 +11278,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.BatchNo).HasMaxLength(20);
 
                 entity.Property(e => e.IsClosed).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.PresRe)
+                    .WithMany(p => p.TIpprescriptionReturnDs)
+                    .HasForeignKey(d => d.PresReId)
+                    .HasConstraintName("FK_T_IPPrescriptionReturnD_T_IPPrescriptionReturnH");
             });
 
             modelBuilder.Entity<TIpprescriptionReturnH>(entity =>
@@ -11317,11 +11331,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitPurRate).HasColumnType("money");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
-
-                entity.HasOne(d => d.Issue)
-                    .WithMany(p => p.TIssueToDepartmentDetails)
-                    .HasForeignKey(d => d.IssueId)
-                    .HasConstraintName("FK_T_IssueToDepartmentDetails_T_IssueToDepartmentHeader");
             });
 
             modelBuilder.Entity<TIssueToDepartmentHeader>(entity =>
