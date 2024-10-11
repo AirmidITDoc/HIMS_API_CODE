@@ -9,7 +9,8 @@ namespace HIMS.Services.OPPatient
 {
     public partial interface IOPRefundOfBillService
     {
-        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username);
+        Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username);
         Task<long> InsertAsync(Refund objRefund, int UserId, string Username);
+
     }
 }

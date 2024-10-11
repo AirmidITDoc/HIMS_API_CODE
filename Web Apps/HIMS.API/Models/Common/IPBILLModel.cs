@@ -4,6 +4,7 @@ using HIMS.API.Models.OutPatient;
 namespace HIMS.API.Models.Common
 {
     public class IPBILLModel
+
     {
         public int BillNo { get; set; }
         public int? OPDIPDID { get; set; }

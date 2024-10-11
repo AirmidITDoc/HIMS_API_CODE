@@ -39,11 +39,11 @@ namespace HIMS.Services.Inventory
                 objIssueToDepartment.IssueId = Convert.ToInt32(IssueId);
 
                 // Add details table records
-                foreach (var objIssue in objIssueToDepartment.TIssueToDepartmentDetails)
-                {
-                    objIssue.IssueId = objIssueToDepartment.IssueId;
-                }
-                _context.TIssueToDepartmentDetails.AddRange(objIssueToDepartment.TIssueToDepartmentDetails);
+                //foreach (var objIssue in objIssueToDepartment.TIssueToDepartmentDetails)
+                //{
+                //    objIssue.IssueId = objIssueToDepartment.IssueId;
+                //}
+                //_context.TIssueToDepartmentDetails.AddRange(objIssueToDepartment.TIssueToDepartmentDetails);
                 await _context.SaveChangesAsync(UserId, Username);
             }
             catch (Exception)
