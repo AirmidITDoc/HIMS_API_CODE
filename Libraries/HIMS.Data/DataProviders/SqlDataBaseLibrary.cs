@@ -437,7 +437,7 @@ namespace HIMS.Data.DataProviders
                 connection.Close();
             return retval;
         }
-        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, SqlParameter[] commandParameters = null)
+        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, string v = null, SqlParameter[] commandParameters = null)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
             using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
@@ -903,6 +903,26 @@ namespace HIMS.Data.DataProviders
             objConnection.Close();
             objConnection.Dispose();
             Command.Dispose();
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ExecuteNonQueryAsync(string v, CommandType storedProcedure, string v1, Dictionary<string, object> paymentEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public enum ParamType
