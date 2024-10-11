@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -30,12 +31,27 @@ namespace HIMS.API.Controllers.Nursing
             {
                 model.ReqDate = Convert.ToDateTime(obj.ReqDate);
                 model.ReqTime = Convert.ToDateTime(obj.ReqTime);
-
+                model.IsAddedBy = CurrentUserId;
                 await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.");
+        }
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(LabRequestModel obj)
+        {
+            THlabRequest model = obj.MapTo<THlabRequest>();
+            if (obj.RequestId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ReqDate = Convert.ToDateTime(obj.ReqDate);
+                model.ReqTime = Convert.ToDateTime(obj.ReqTime);
+                await _ILabRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest updated successfully.");
         }
     }
 }

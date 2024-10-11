@@ -9409,6 +9409,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OldBatchNo).HasMaxLength(50);
 
                 entity.Property(e => e.OldExpDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Stk)
+                    .WithMany(p => p.TBatchAdjustments)
+                    .HasForeignKey(d => d.StkId)
+                    .HasConstraintName("FK_T_BatchAdjustment_T_CurrentStock");
             });
 
             modelBuilder.Entity<TBedOccupancy>(entity =>
@@ -10331,7 +10336,7 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Request)
                     .WithMany(p => p.TDlabRequests)
                     .HasForeignKey(d => d.RequestId)
-                    .HasConstraintName("FK_T_DLabRequest_T_HLabRequest1");
+                    .HasConstraintName("constraint_name");
             });
 
             modelBuilder.Entity<TDoctorPatientHandover>(entity =>
@@ -13273,6 +13278,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.HasOne(d => d.Stk)
+                    .WithMany(p => p.TStockAdjustments)
+                    .HasForeignKey(d => d.StkId)
+                    .HasConstraintName("FK_T_StockAdjustment_T_CurrentStock");
             });
 
             modelBuilder.Entity<TStockLedger>(entity =>

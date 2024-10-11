@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -19,6 +20,8 @@ namespace HIMS.API.Models.Inventory
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        public List<TCurrentStockModel> TCurrentStock { get; set; }
+
 
     }
     public class IssueToDepartmentModelValidator : AbstractValidator<IssueToDepartmentModel>
@@ -59,22 +62,29 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    //public class updateissuetoDepartmentStockModel
-    //{
-    //    public int ItemId { get; set; }
-    //    public int IssueQty { get; set; }
-    //    public int StkId { get; set; }
-    //    public int StoreID { get; set; }
-    //}
-    //public class updateissuetoDepartmentStockModelValidator : AbstractValidator<updateissuetoDepartmentStockModel>
-    //{
-    //    public updateissuetoDepartmentStockModelValidator()
-    //    {
-    //        RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
-    //        RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
-    //        RuleFor(x => x.StkId).NotNull().NotEmpty().WithMessage("StkId  is required");
+    public class TCurrentStockModel
+    {
+        public int ItemId { get; set; }
+        public int IssueQty { get; set; }
+        public int StkId { get; set; }
+        public int StoreID { get; set; }
+    }
+    public class TCurrentStockModelValidator : AbstractValidator<TCurrentStockModel>
+    {
+        public TCurrentStockModelValidator()
+        {
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
+            RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
+            RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
 
-    //    }
-    //}
+        }
+    }
+    public class IssueModel
+    {
+        public IssueToDepartmentDetailModel Depissue { get; set; }
+        public TCurrentStockModel curruntissue { get; set; }
+
+    }
 
 }
