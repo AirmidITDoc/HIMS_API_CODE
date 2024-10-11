@@ -2,8 +2,6 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
@@ -14,7 +12,6 @@ namespace HIMS.API.Controllers.OPPatient
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-
     public class PhoneAppointmentController : BaseController
     {
         private readonly IPhoneAppointmentService _IPhoneAppointmentService;
@@ -25,7 +22,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(phoneAppointmentModel1 obj)
+        public async Task<ApiResponse> Insert(PhoneAppointmentModel obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
@@ -62,3 +59,6 @@ namespace HIMS.API.Controllers.OPPatient
 
     }
 }
+
+    
+

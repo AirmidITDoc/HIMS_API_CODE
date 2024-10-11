@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class THlabRequest
     {
+        public THlabRequest()
+        {
+            TDlabRequests = new HashSet<TDlabRequest>();
+        }
+
         public long RequestId { get; set; }
         public DateTime? ReqDate { get; set; }
         public DateTime? ReqTime { get; set; }
@@ -17,5 +22,7 @@ namespace HIMS.Data.Models
         public DateTime? IsCancelledTime { get; set; }
         public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
+
+        public virtual ICollection<TDlabRequest> TDlabRequests { get; set; }
     }
 }
