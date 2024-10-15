@@ -4,14 +4,13 @@ using System.Transactions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using Aspose.Cells.Drawing;
 using HIMS.Services.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.Extensions;
+using System.Dynamic;
+using Microsoft.Data.SqlClient;
+using static LinqToDB.Common.Configuration;
+using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
 
 namespace HIMS.Services.OPPatient
 {
@@ -21,6 +20,32 @@ namespace HIMS.Services.OPPatient
         public VisitDetailsService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<dynamic>> GetListAsync(GridRequestModel model)
+        {
+            //dynamic resultList = _ICommonService.GetDataSetByProc(model);
+                DatabaseHelper odal = new();
+            Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(model.Filters).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            string sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi";
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = property.Value.ToString()
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            DataSet ds = odal.FetchDataSetBySP(sp_Name, para);
+            if (ds.Tables[1].Rows.Count > 0)
+            {
+                return new PagedList<dynamic>((dynamic)ds.Tables[1].ToDynamic(), model.First, model.Rows, Convert.ToInt32(ds.Tables[0].Rows[0]["total_row"]));
+            }
+            return new PagedList<dynamic>((dynamic)ds.Tables[0].ToDynamic(), model.First, model.Rows, Convert.ToInt32(ds.Tables[0].Rows[0]["total_row"]));
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)

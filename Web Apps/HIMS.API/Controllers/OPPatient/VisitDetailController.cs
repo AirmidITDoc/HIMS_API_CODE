@@ -4,6 +4,8 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,13 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _visitDetailsService = repository;
         }
-
+        [HttpPost("AppVisitList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<dynamic> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
+        }
 
         [HttpPost("AppVisitInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
