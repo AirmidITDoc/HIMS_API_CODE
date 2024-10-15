@@ -23,7 +23,22 @@ namespace HIMS.API.Controllers.Nursing
             _IPriscriptionService = repository;
         }
 
-        [HttpPost("InsertSP")]
+        //[HttpPost("InsertSP")]
+        ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertSP(PriscriptionModel obj)
+        //{
+        //    TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
+        //    if (obj.PresReId == 0)
+        //    {
+        //        model.PresTime = Convert.ToDateTime(obj.PresTime);
+        //        model.Addedby = CurrentUserId;
+        //        await _IPriscriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Priscription added successfully.");
+        //}
+        [HttpPost("Insert")]
         //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionModel obj)
         {
@@ -32,7 +47,7 @@ namespace HIMS.API.Controllers.Nursing
             {
                 model.PresTime = Convert.ToDateTime(obj.PresTime);
                 model.Addedby = CurrentUserId;
-                await _IPriscriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IPriscriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -13,7 +13,7 @@ namespace HIMS.API.Models.Nursing
         public long? Addedby { get; set; }
         public long? Isdeleted { get; set; }
         public bool? Isclosed { get; set; }
-        public List<TDlabRequestModel> TIpprescriptionReturnD { get; set; }
+        public List<IpprescriptionReturnDModel> TIpprescriptionReturnD { get; set; }
 
     }
     public class PriscriptionModelValidator : AbstractValidator<PriscriptionModel>

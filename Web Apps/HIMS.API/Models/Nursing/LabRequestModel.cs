@@ -15,9 +15,10 @@ namespace HIMS.API.Models.Nursing
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public string? IsCancelledTime { get; set; }
-        public byte? IsType { get; set; }
+        //public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
-        public List<TDlabRequestModel> TDlabRequest { get; set; }
+        public List<TDlabRequestModel> TDlabRequests { get; set; }
+
 
     }
     public class LabRequestModelValidator : AbstractValidator<LabRequestModel>
@@ -36,19 +37,14 @@ namespace HIMS.API.Models.Nursing
         public long? ServiceId { get; set; }
         public decimal? Price { get; set; }
         public bool? IsStatus { get; set; }
-        public long? AddedBillingId { get; set; }
-        public DateTime? AddedByDate { get; set; }
-        public string? AddedByTime { get; set; }
-        public long? CharId { get; set; }
-        public bool? IsTestCompted { get; set; }
         public bool? IsOnFileTest { get; set; }
     }
     public class TDlabRequestModelValidator : AbstractValidator<TDlabRequestModel>
     {
         public TDlabRequestModelValidator()
         {
-            RuleFor(x => x.AddedByDate).NotNull().NotEmpty().WithMessage("AddedByDate Date is required");
-            RuleFor(x => x.AddedByTime).NotNull().NotEmpty().WithMessage("AddedByTime Time is required");
+            RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId Date is required");
+            RuleFor(x => x.Price).NotNull().NotEmpty().WithMessage("Price Time is required");
 
         }
     }

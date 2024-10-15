@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -16,7 +17,7 @@ namespace HIMS.API.Models.Nursing
         public long? UnitId { get; set; }
         public bool? IsBillGenerated { get; set; }
         public bool? IsPrint { get; set; }
-        public  List<TCanteenRequestDetailModel> canteenRequestDetails { get; set; }
+        //public  List<TCanteenRequestDetailModel> canteenRequestDetails { get; set; }
     }
     public class CanteenRequestModelValidator : AbstractValidator<CanteenRequestModel>
     {
@@ -45,6 +46,12 @@ namespace HIMS.API.Models.Nursing
             RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId Date is required");
             RuleFor(x => x.UnitMrp).NotNull().NotEmpty().WithMessage("UnitMrp Time is required");
 
+        } 
+    }
+        public class CanteenModel
+        {
+            public CanteenRequestModel CanteenR { get; set; }
+            public TCanteenRequestDetailModel CanteenRequest { get; set; }
         }
     }
-}
+

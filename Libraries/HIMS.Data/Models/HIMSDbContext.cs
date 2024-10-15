@@ -10336,7 +10336,7 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Request)
                     .WithMany(p => p.TDlabRequests)
                     .HasForeignKey(d => d.RequestId)
-                    .HasConstraintName("FK_T_DLabRequest_T_HLabRequest1");
+                    .HasConstraintName("constraint_name");
             });
 
             modelBuilder.Entity<TDoctorPatientHandover>(entity =>

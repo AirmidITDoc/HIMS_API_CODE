@@ -9,8 +9,8 @@ namespace HIMS.Services.Nursing
 {
     public partial interface IPriscriptionService
     {
-        //Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
-        Task InsertAsyncSP(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
+        Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
+        //Task InsertAsyncSP(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
 
     }
 }
