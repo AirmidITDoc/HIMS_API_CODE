@@ -54,4 +54,4 @@ namespace HIMS.API.Models.Inventory
     }
 }
 
-}
+

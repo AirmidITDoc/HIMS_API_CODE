@@ -18,7 +18,54 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
+        public virtual async Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
+
+            var entity = objRefund.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RefundId = odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
+            objRefund.RefundId = Convert.ToInt32(RefundId);
+            objTRefundDetail.RefundId = Convert.ToInt32(RefundId);
+            objAddCharge.ChargesId = Convert.ToInt32(RefundId);
+            objPayment.RefundId = Convert.ToInt32(RefundId);
+
+            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount", "RefundDetId" };
+            var RefundEntity = objTRefundDetail.ToDictionary();
+            foreach (var rProperty in rRefundEntity)
+            {
+                RefundEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
+
+
+            string[] rChargeEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo" };
+            var ChargeEntity = objAddCharge.ToDictionary();
+            foreach (var rProperty in rChargeEntity)
+            {
+                ChargeEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
+
+
+            string[] rPayEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount" };
+            var PayEntity = objPayment.ToDictionary();
+            foreach (var rProperty in rPayEntity)
+            {
+                PayEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
+
+
+        }
+
+
+        public virtual async Task InsertAsyncIP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
