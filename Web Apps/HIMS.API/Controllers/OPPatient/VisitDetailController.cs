@@ -9,6 +9,7 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -26,7 +27,7 @@ namespace HIMS.API.Controllers.OPPatient
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<dynamic> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
+            IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
 

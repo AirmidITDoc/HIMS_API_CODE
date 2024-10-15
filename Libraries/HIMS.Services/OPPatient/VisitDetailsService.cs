@@ -11,6 +11,7 @@ using System.Dynamic;
 using Microsoft.Data.SqlClient;
 using static LinqToDB.Common.Configuration;
 using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -21,31 +22,9 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<dynamic>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
         {
-            //dynamic resultList = _ICommonService.GetDataSetByProc(model);
-                DatabaseHelper odal = new();
-            Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(model.Filters).ToDictionary(e => e.FieldName, e => e.FieldValueString);
-            string sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi";
-            int sp_Para = 0;
-            SqlParameter[] para = new SqlParameter[fields.Count];
-            foreach (var property in fields)
-            {
-                var param = new SqlParameter
-                {
-                    ParameterName = "@" + property.Key,
-                    Value = property.Value.ToString()
-                };
-
-                para[sp_Para] = param;
-                sp_Para++;
-            }
-            DataSet ds = odal.FetchDataSetBySP(sp_Name, para);
-            if (ds.Tables[1].Rows.Count > 0)
-            {
-                return new PagedList<dynamic>((dynamic)ds.Tables[1].ToDynamic(), model.First, model.Rows, Convert.ToInt32(ds.Tables[0].Rows[0]["total_row"]));
-            }
-            return new PagedList<dynamic>((dynamic)ds.Tables[0].ToDynamic(), model.First, model.Rows, Convert.ToInt32(ds.Tables[0].Rows[0]["total_row"]));
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
