@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using LinqToDB.Data;
 using Microsoft.Data.SqlClient;
 
 namespace HIMS.Data.DataProviders
@@ -437,7 +440,7 @@ namespace HIMS.Data.DataProviders
                 connection.Close();
             return retval;
         }
-        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, SqlParameter[] commandParameters = null)
+        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, string v = null, SqlParameter[] commandParameters = null)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
             using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
@@ -838,6 +841,71 @@ namespace HIMS.Data.DataProviders
 
         #endregion ExecuteDatasetAsync 
 
+        #region Grid By SP
+        public static async Task<IPagedList<T>> GetGridDataBySp<T>(GridRequestModel objGrid, string procedureName)
+        {
+            List<SqlParameter> parameters = new();
+            foreach (var filter in objGrid.Filters)
+            {
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@" + filter.FieldName,
+                    Value = filter.FieldValue
+                });
+            }
+            if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
+            using var dataContext = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+            var cmd = new SqlCommand
+            {
+                CommandTimeout = 180,
+                CommandText = procedureName,
+                CommandType = CommandType.StoredProcedure,
+                Connection=dataContext
+            };
+            await dataContext.OpenAsync();
+            cmd.Parameters.AddRange(parameters.ToArray());
+            List<T> results = new();
+            int totalRows = 0;
+            using (SqlDataReader dataReader = await cmd.ExecuteReaderAsync())
+            {
+                bool IsSetTotal = false;
+                do
+                {
+                    if (IsSetTotal)
+                    {
+                        results = DataReaderMapToList<T>(dataReader);
+                    }
+                    else
+                    {
+                        if (await dataReader.ReadAsync())
+                        {
+                            string[] fieldNames = Enumerable.Range(0, dataReader.FieldCount).Select(i => dataReader.GetName(i)).ToArray();
+
+                            if (fieldNames[0].ToLower() == "total_row")
+                            {
+                                totalRows = Convert.ToInt32(dataReader.GetValue(0));
+                                IsSetTotal = true;
+                            }
+                        }
+                    }
+                } while (await dataReader.NextResultAsync());
+            }
+            await dataContext.CloseAsync();
+            var data = new PagedList<T>(results, objGrid.First, objGrid.Rows, totalRows);
+            return data;
+        }
+        public static List<T> DataReaderMapToList<T>(SqlDataReader dr)
+        {
+            List<T> list = new();
+            while (dr.Read())
+            {
+                T obj = GetListItem<T>(dr);
+                list.Add(obj);
+            }
+            return list;
+        }
+        #endregion
+
         public DataSet SpExecuteDataSet(string SpName, SqlParameter[] parameter)
         {
             SqlDataAdapter adapter = new();
@@ -903,6 +971,26 @@ namespace HIMS.Data.DataProviders
             objConnection.Close();
             objConnection.Dispose();
             Command.Dispose();
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ExecuteNonQueryAsync(string v, CommandType storedProcedure, string v1, Dictionary<string, object> paymentEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public enum ParamType

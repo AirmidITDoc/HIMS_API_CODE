@@ -12,6 +12,7 @@ using System.Security;
 using HIMS.API.Models.Inventory;
 using HIMS.Api.Controllers;
 using HIMS.Services.Inventory;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -75,5 +76,24 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent verify successfully.");
         }
+
+        
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(IndentCancel obj)
+        {
+            TIndentHeader model = new();
+            if (obj.IndentId != 0)
+            {
+                model.IndentId = obj.IndentId;
+                model.Isclosed = true;
+                //model.IsCancelledDate = DateTime.Now;
+                await _IIndentService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent Canceled successfully.");
+        }
+
     }
 }

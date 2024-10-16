@@ -119,6 +119,21 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+        
 
+        public virtual async Task CancelAsync(TIndentHeader objIndent, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TIndentHeader objind = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
+                objind.Isdeleted = objIndent.Isdeleted;
+                _context.TIndentHeaders.Update(objind);
+                _context.Entry(objind).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
     }
 }

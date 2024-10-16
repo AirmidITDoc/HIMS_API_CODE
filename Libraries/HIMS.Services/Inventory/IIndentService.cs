@@ -8,5 +8,7 @@ namespace HIMS.Services.Inventory
         Task InsertAsyncSP(TIndentHeader objIndent, int UserId, string Username);
         Task UpdateAsync(TIndentHeader objIndent, int UserId, string Username);
         Task VerifyAsync(TIndentHeader objIndent, int UserId, string Username);
+        Task CancelAsync(TIndentHeader objIndent, int UserId, string Username);
+
     }
 }

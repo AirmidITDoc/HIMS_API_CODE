@@ -26,6 +26,7 @@ namespace HIMS.Core.Domain.Grid
         public string FieldValue { get; set; }
         public OperatorComparer OpType { get; set; }
     }
+
     public enum ExportType
     {
         JSON=1,Excel = 2, Pdf = 3

@@ -12,7 +12,9 @@ namespace HIMS.Services.Inventory
         Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username);
         Task InsertAsync(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username);
         Task UpdateAsync(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username);
-        //Task updateissuetoDepartmentStock(TCurrentStock objCurrentStock, int UserId, string Username);
+        Task UpdateAsync(TIssueToDepartmentHeader objIssueToDepartment, TCurrentStock objCurrentStock, int UserId, string Username);
+
+        Task updateStock(TCurrentStock objCurrentStock, int UserId, string Username);
 
 
 

@@ -1,6 +1,4 @@
 ﻿using HIMS.Core.Domain.Grid;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -9,10 +7,10 @@ namespace HIMS.Data.Extensions
 {
     public static class SearchFieldExtension
     {
-        public static List<SearchModel> GetSearchFields(List<SearchFields> model)
+        public static List<SearchModel> GetSearchFields(List<SearchGrid> model)
         {
             List<SearchModel> searchModelList = new();
-            foreach (SearchFields fields in model)
+            foreach (SearchGrid fields in model)
             {
                 if (string.IsNullOrEmpty(fields.FieldName) || fields.FieldValue == null) throw new Exception("Invalid search field.");
 
