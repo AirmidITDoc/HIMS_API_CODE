@@ -95,7 +95,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
-
+            services.AddScoped<IPrefixService, PrefixService>();
 
             services.AddScoped<IStockAdjustmentService, StockAdjustmentService>();
 
