@@ -16,6 +16,7 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using HIMS.Services.OutPatient;
 
 namespace HIMS.Services.IPPatient
 {
@@ -54,25 +55,17 @@ namespace HIMS.Services.IPPatient
 
             string[] rPaymentEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "BillNoNavigation" };
 
-            var PaymentEntity = objpayment.ToDictionary();
-            foreach (var rProperty in rPaymentEntity)
-            {
-                PaymentEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure,  PaymentEntity);
+            //var PaymentEntity = objpayment.ToDictionary();
+            //foreach (var rProperty in rPaymentEntity)
+            //{
+            //    PaymentEntity.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure,  PaymentEntity);
 
             // Payment Code
             int _val = 0;
-            ////foreach (var objPayment in objBill.Payments)
-            ////{
-            ////    if (_val == 0)
-            ////    {
-            //        //objPayment.BillNo = objBill.BillNo;
-            //        _context.Payments.Add(objpayment);
-            //        await _context.SaveChangesAsync();
-            //    //}
-            //    //_val += 1;
-            ////}
+            _context.Payments.Add(objpayment);
+            await _context.SaveChangesAsync();
 
         }
 

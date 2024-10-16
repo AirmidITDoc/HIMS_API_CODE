@@ -33,13 +33,13 @@ namespace HIMS.API.Controllers.OPPatient
                 model.AppDate = Convert.ToDateTime(obj.AppDate);
                 model.AppTime = Convert.ToDateTime(obj.AppTime);
 
-        //        model.UpdatedBy = CurrentUserId;
-        //        model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added successfully.");
-        //}
+                model.UpdatedBy = CurrentUserId;
+                model = await _IPhoneAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added successfully.");
+        }
 
         //[HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
@@ -58,7 +58,8 @@ namespace HIMS.API.Controllers.OPPatient
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Canceled successfully.");
         //}
-        
+
 
     }
 }
+

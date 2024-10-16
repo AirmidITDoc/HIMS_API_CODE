@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("AppVisitInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -48,9 +48,9 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
-        [HttpPost("AppVisitInsertSP")]
+        [HttpPost("Insert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AppVisitInsertSP(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -73,9 +73,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("AppointmentupdateSP")]
+        [HttpPost("Udate")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AppVisitupdateSP(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
-        [HttpPost("AppVisitCancel")]
+        [HttpPost("Cancle")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
