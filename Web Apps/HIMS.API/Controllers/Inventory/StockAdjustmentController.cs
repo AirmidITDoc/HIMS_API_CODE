@@ -20,39 +20,39 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IStockAdjustmentService = repository;
         }
-        [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(StockAdjustmentModel obj)
-        {
-            TIssueToDepartmentDetail model = obj.MapTo<TIssueToDepartmentDetail>();
-            if (obj.IssueDepId == 0)
-            {
+        //[HttpPost("InsertEDMX")]
+        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(StockAdjustmentModel obj)
+        //{
+        //    TIssueToDepartmentDetail model = obj.MapTo<TIssueToDepartmentDetail>();
+        //    if (obj.IssueDepId == 0)
+        //    {
                
-                model.IssueId = CurrentUserId;
+        //        model.IssueId = CurrentUserId;
               
-                await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock to main store added successfully.");
-        }
+        //        await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock to main store added successfully.");
+        //}
 
-        [HttpPut("UpdateEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(StockAdjustmentModel obj)
-        {
-            TIssueToDepartmentDetail model = obj.MapTo<TIssueToDepartmentDetail>();
-            if (obj.IssueDepId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
+        //[HttpPut("UpdateEDMX")]
+        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edit(StockAdjustmentModel obj)
+        //{
+        //    TIssueToDepartmentDetail model = obj.MapTo<TIssueToDepartmentDetail>();
+        //    if (obj.IssueDepId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
 
-                model.IssueId = CurrentUserId;
+        //        model.IssueId = CurrentUserId;
 
-                await _IStockAdjustmentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock  updated successfully.");
-        }
+        //        await _IStockAdjustmentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock  updated successfully.");
+        //}
         [HttpPost("InsertStockAdjustmentEDMX")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(PharStockAdjustmentModel obj)
