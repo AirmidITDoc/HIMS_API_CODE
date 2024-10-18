@@ -78,9 +78,12 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
+
+
             services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
+            //services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
-            services.AddScoped<IipRefundBillService, ipRefundBillService>();
+         
             services.AddScoped<IBedTransferService, BedTransferService>();
             services.AddScoped<IPrescription, PrescriptionSer>();
             services.AddScoped<IDischargeService, DischargeService>();

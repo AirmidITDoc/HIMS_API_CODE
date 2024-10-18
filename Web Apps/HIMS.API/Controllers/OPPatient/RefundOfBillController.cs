@@ -7,7 +7,20 @@ using HIMS.API.Models.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
-//using static HIMS.API.Models.OutPatient.phoneAppModelValidator;
+using Asp.Versioning;
+using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
+using HIMS.API.Models.Common;
+using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.OPPatient;
+using HIMS.Data.Models;
+using HIMS.Services.Common;
+using HIMS.Services.IPPatient;
+using HIMS.Services.OPPatient;
+using HIMS.Services.OutPatient;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -20,6 +33,38 @@ namespace HIMS.API.Controllers.OPPatient
         public RefundOfBillController(IOPRefundOfBillService repository)
         {
             _IRefundOfBillService = repository;
+        }
+
+      
+        [HttpPost("OPInsert")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(RefundBillModel obj)
+        {
+            Refund model = obj.Refund.MapTo<Refund>();
+            TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
+            AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
+            Payment objPayment = obj.Payment.MapTo<Payment>();
+            if (obj.Refund.RefundId == 0)
+            {
+                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+                model.AddedBy = CurrentUserId;
+
+                obj.TRefundDetails.RefundId = obj.Refund.RefundId;
+                objTRefundDetail.AddBy = CurrentUserId;
+                objTRefundDetail.UpdatedBy = CurrentUserId;
+
+                obj.AddCharges.ChargesId = obj.Refund.RefundId;
+
+
+                obj.Payment.RefundId = obj.Refund.RefundId;
+                objPayment.AddBy = CurrentUserId;
+                objPayment.IsCancelledBy = CurrentUserId;
+
+                await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         }
 
         [HttpPost("IPInsert")]
@@ -52,36 +97,22 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         }
-        [HttpPost("OPInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(RefundBillModel obj)
-        {
-            Refund model = obj.Refund.MapTo<Refund>();
-            TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
-            AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
-            Payment objPayment = obj.Payment.MapTo<Payment>();
-            if (obj.Refund.RefundId == 0)
-            {
-                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
-                model.AddedBy = CurrentUserId;
+        //[HttpPost("OPInsert")]
+        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertSP(OPRefundOfBillModel obj)
+        //{
+        //    Refund model = obj.MapTo<Refund>();
+        //    if (obj.RefundId == 0)
+        //    {
+        //        model.RefundDate = Convert.ToDateTime(obj.RefundDate);
+        //        model.AddedBy = CurrentUserId;
+        //        await _IRefundOfBillService.InsertAsyncOP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
+        //}
 
-                obj.TRefundDetails.RefundId = obj.Refund.RefundId;
-                objTRefundDetail.AddBy = CurrentUserId;
-                objTRefundDetail.UpdatedBy = CurrentUserId;
-
-                obj.AddCharges.ChargesId = obj.Refund.RefundId;
-
-
-                obj.Payment.RefundId = obj.Refund.RefundId;
-                objPayment.AddBy = CurrentUserId;
-                objPayment.IsCancelledBy = CurrentUserId;
-
-                await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
-        }
         //[HttpPost("InsertSP")]
         ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> Insert(RefundBillModel obj)
