@@ -65,6 +65,7 @@ namespace HIMS.API.Extensions
            string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
 
                 await response.WriteAsync(errorJson);
+
             }
         }
         private async Task<RequestLog> LogRequest(HttpContext context, RequestLog Log)

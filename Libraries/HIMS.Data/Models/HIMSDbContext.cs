@@ -11227,6 +11227,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Remark).HasMaxLength(200);
 
                 entity.Property(e => e.WardId).HasColumnName("WardID");
+
+                entity.HasOne(d => d.Ipmed)
+                    .WithMany(p => p.TIpPrescriptions)
+                    .HasForeignKey(d => d.IpmedId)
+                    .HasConstraintName("FK_T_IP_Prescription_T_IPMedicalRecord");
             });
 
             modelBuilder.Entity<TIpPrescriptionDischarge>(entity =>
@@ -12499,15 +12504,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_PhoneAppointment");
 
-                entity.Property(e => e.AddedByDate).HasColumnType("datetime");
-
                 entity.Property(e => e.Address).HasMaxLength(100);
 
                 entity.Property(e => e.AppDate).HasColumnType("datetime");
 
                 entity.Property(e => e.AppTime).HasColumnType("datetime");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
@@ -12523,8 +12524,6 @@ namespace HIMS.Data.Models
                     .HasMaxLength(15)
                     .IsFixedLength();
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.PhAppDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PhAppTime).HasColumnType("datetime");
@@ -12532,8 +12531,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
-
-                entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>
