@@ -38,11 +38,7 @@ namespace HIMS.Services.IPPatient
             //await _context.SaveChangesAsync(UserId, Username);
         }
 
-
-
-
-
-        
+                
 
         public virtual async Task UpdateAsyncSP(Bedmaster objBedMaster, int currentUserId, string currentUserName)
         {

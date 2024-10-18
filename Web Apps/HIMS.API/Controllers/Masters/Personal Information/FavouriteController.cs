@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "Favourite", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            List<SearchFields> list = objGrid.Filters.MapTo<List<SearchFields>>();
+            List<SearchGrid> list = objGrid.Filters.MapTo<List<SearchGrid>>();
             IPagedList<FavouriteModel> FavouriteList = await _favouriteService.GetFavouriteModules(objGrid, list);
             return Ok(FavouriteList.ToGridResponse(objGrid, "Favourite List"));
         }

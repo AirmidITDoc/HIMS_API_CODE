@@ -4,9 +4,12 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -20,11 +23,17 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _visitDetailsService = repository;
         }
-
+        [HttpPost("AppVisitList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
+        }
 
         [HttpPost("AppVisitInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -48,9 +57,9 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
-        [HttpPost("AppVisitInsertSP")]
+        [HttpPost("Insert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AppVisitInsertSP(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -73,9 +82,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("AppointmentupdateSP")]
+        [HttpPost("Udate")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AppVisitupdateSP(AppointmentReqDtovisit obj)
+        public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
@@ -101,7 +110,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
-        [HttpPost("AppVisitCancel")]
+        [HttpPost("Cancle")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {

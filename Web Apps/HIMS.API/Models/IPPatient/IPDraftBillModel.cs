@@ -31,7 +31,7 @@ namespace HIMS.API.Models.IPPatient
         public decimal? TaxAmount { get; set; }
 
         //public List<IpDraftChargeModel> DraftAddCharges { get; set; }
-        //public List<IPDraftBillModel> DraftBillDetails { get; set; }
+        public List<IPDraftBillModel> DraftBillDetails { get; set; }
     }
 
     public class IpDraftBillModelValidator : AbstractValidator<IPDraftBillModel>

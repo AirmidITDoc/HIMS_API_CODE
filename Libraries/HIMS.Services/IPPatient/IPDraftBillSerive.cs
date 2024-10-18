@@ -40,6 +40,13 @@ namespace HIMS.Services.IPPatient
                 _context.TDrbillDets.Add(objTDrbillDet);
                 await _context.SaveChangesAsync();
 
+                //foreach (var objItem in objBill.BillDetails)
+                //{
+                //    objItem.BillNo = objBill.BillNo;
+                //    objItem.ChargesId = objItem1?.ChargesId;
+                //    _context.TDrbillDets.Add(objItem);
+                //    await _context.SaveChangesAsync();
+                //}
 
             }
 

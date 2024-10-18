@@ -23,6 +23,7 @@ using HIMS.Data.Models;
 using HIMS.Core.Infrastructure;
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HIMS.API.Extensions
 {
@@ -311,35 +312,26 @@ namespace HIMS.API.Extensions
         public static bool CheckPermission(string pageCode, PagePermission permit)
         {
             ClaimsPrincipal currentUser = HttpContextAccessor.User;
-            if (currentUser.HasClaim(c => c.Type == "RoleId"))
+            if (currentUser.HasClaim(c => c.Type == "RoleId") && currentUser.HasClaim(c => c.Type == "Permissions"))
             {
-                if (currentUser.HasClaim(c => c.Type == "Permissions"))
+                string permissions = EncryptionUtility.DecryptText(currentUser.Claims?.FirstOrDefault(c => c.Type == "Permissions")?.Value ?? "", SecurityKeys.EnDeKey);
+                string[] AllPermissions = permissions.Split(',');
+                var Perms = AllPermissions.Where(x => pageCode.Split('|').Contains(x.Split('|')[0])).Select(x => new { IsAdd = x.Split('|')[1], IsEdit = x.Split('|')[2], IsDelete = x.Split('|')[3], IsView = x.Split('|')[4] });
+                if (permit == PagePermission.Add)
                 {
-                    string permissions = EncryptionUtility.DecryptText(currentUser.Claims.FirstOrDefault(c => c.Type == "Permissions").Value, SecurityKeys.EnDeKey);
-                    string[] AllPermissions = permissions.Split(',');
-                    foreach (string permission in AllPermissions)
-                    {
-                        if (permission.StartsWith(pageCode + "|"))
-                        {
-                            string[] perms = permission.Split('|');
-                            if (permit == PagePermission.Add && perms.Length > 1)
-                            {
-                                return perms[1] == "1";
-                            }
-                            else if (permit == PagePermission.Edit && perms.Length > 2)
-                            {
-                                return perms[2] == "1";
-                            }
-                            else if (permit == PagePermission.Delete && perms.Length > 3)
-                            {
-                                return perms[3] == "1";
-                            }
-                            else if (permit == PagePermission.View && perms.Length > 4)
-                            {
-                                return perms[4] == "1";
-                            }
-                        }
-                    }
+                    return Perms.Any(x => x.IsAdd == "1");
+                }
+                else if (permit == PagePermission.Edit)
+                {
+                    return Perms.Any(x => x.IsEdit == "1");
+                }
+                else if (permit == PagePermission.Delete)
+                {
+                    return Perms.Any(x => x.IsDelete == "1");
+                }
+                else if (permit == PagePermission.View)
+                {
+                    return Perms.Any(x => x.IsView == "1");
                 }
             }
             return false;
