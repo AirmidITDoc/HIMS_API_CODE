@@ -17,7 +17,7 @@ namespace HIMS.API.Models.Nursing
         public long? UnitId { get; set; }
         public bool? IsBillGenerated { get; set; }
         public bool? IsPrint { get; set; }
-        //public  List<TCanteenRequestDetailModel> canteenRequestDetails { get; set; }
+        public List<TCanteenRequestDetailModel> TCanteenRequestDetails { get; set; }
     }
     public class CanteenRequestModelValidator : AbstractValidator<CanteenRequestModel>
     {
@@ -48,10 +48,6 @@ namespace HIMS.API.Models.Nursing
 
         } 
     }
-        public class CanteenModel
-        {
-            public CanteenRequestModel CanteenR { get; set; }
-            public TCanteenRequestDetailModel CanteenRequest { get; set; }
-        }
+        
     }
 

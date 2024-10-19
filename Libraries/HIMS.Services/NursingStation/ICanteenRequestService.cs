@@ -10,7 +10,7 @@ namespace HIMS.Services.NursingStation
     public partial interface ICanteenRequestService
     {
         Task InsertAsync(TCanteenRequestHeader objCanteenRequestHeader, int UserId, string Username);
-        Task InsertAsyncSP(TCanteenRequestHeader objCanteenRequestHeader, TCanteenRequestDetail objTCanteenRequestDetail ,int UserId, string Username);
+        //Task InsertAsyncSP(TCanteenRequestHeader objCanteenRequestHeader, TCanteenRequestDetail objTCanteenRequestDetail ,int UserId, string Username);
 
 
     }

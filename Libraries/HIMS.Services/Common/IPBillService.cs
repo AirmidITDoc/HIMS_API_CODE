@@ -78,17 +78,17 @@ namespace HIMS.Services.Common
 
                     // Payment Code
                     int _val = 0;
-                    foreach (var objPayment in objBill.Payments)
-                    {
-                        if (_val == 0)
-                        {
-                            objPayment.BillNo = objBill.BillNo;
-                            _context.Payments.Add(objPayment);
-                            await _context.SaveChangesAsync();
-                        }
-                        _val += 1;
-                    }
-                    scope.Complete();
+                    //foreach (var objPayment in objBill.Payments)
+                    //{
+                    //    if (_val == 0)
+                    //    {
+                    //        objPayment.BillNo = objBill.BillNo;
+                    //        _context.Payments.Add(objPayment);
+                    //        await _context.SaveChangesAsync();
+                    //    }
+                    //    _val += 1;
+                    //}
+                    //scope.Complete();
 
                 }
 

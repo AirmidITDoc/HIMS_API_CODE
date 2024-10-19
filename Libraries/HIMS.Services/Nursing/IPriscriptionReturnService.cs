@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.Nursing
 {
-    public partial interface IPriscriptionService
+    public partial interface IPriscriptionReturnService
     {
         Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
-        //Task InsertAsyncSP(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
+        Task UpdateAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
 
     }
 }

@@ -2,9 +2,10 @@
 
 namespace HIMS.API.Models.Nursing
 {
-    public class PriscriptionModel
+    public class PriscriptionReturnModel
     {
         public long PresReId { get; set; }
+        public string? PresNo { get; set; }
         public DateTime? PresDate { get; set; }
         public string? PresTime { get; set; }
         public long? ToStoreId { get; set; }
@@ -13,12 +14,12 @@ namespace HIMS.API.Models.Nursing
         public long? Addedby { get; set; }
         public long? Isdeleted { get; set; }
         public bool? Isclosed { get; set; }
-        public List<IpprescriptionReturnDModel> TIpprescriptionReturnD { get; set; }
+        public List<IpprescriptionReturnDModel> TIpprescriptionReturnDs { get; set; }
 
     }
-    public class PriscriptionModelValidator : AbstractValidator<PriscriptionModel>
+    public class PriscriptionReturnModelValidator : AbstractValidator<PriscriptionReturnModel>
     {
-        public PriscriptionModelValidator()
+        public PriscriptionReturnModelValidator()
         {
             RuleFor(x => x.PresDate).NotNull().NotEmpty().WithMessage("PresDate  is required");
             RuleFor(x => x.PresTime).NotNull().NotEmpty().WithMessage("PresTime  is required");

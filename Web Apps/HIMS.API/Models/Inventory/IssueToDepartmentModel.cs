@@ -6,7 +6,6 @@ namespace HIMS.API.Models.Inventory
     public class IssueToDepartmentModel
     {
         public long IssueId { get; set; }
-        //public long? IssueNo { get; set; }
         public DateTime? IssueDate { get; set; }
         public string? IssueTime { get; set; }
         public long? FromStoreId { get; set; }
@@ -19,8 +18,8 @@ namespace HIMS.API.Models.Inventory
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
-        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
-        public List<TCurrentStockModel> TCurrentStock { get; set; }
+
+        //public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
 
 
     }
@@ -37,6 +36,7 @@ namespace HIMS.API.Models.Inventory
     }
     public class IssueToDepartmentDetailModel
     {
+        public long IssueDepId { get; set; }
         public long? IssueId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
@@ -47,7 +47,7 @@ namespace HIMS.API.Models.Inventory
         public decimal? VatAmount { get; set; }
         public decimal? LandedTotalAmount { get; set; }
         public decimal? UnitMrp { get; set; }
-        public decimal? MRPTotalAmount { get; set; }
+        public decimal? MrptotalAmount { get; set; }
         public decimal? UnitPurRate { get; set; }
         public decimal? PurTotalAmount { get; set; }
         public long? StkId { get; set; }
@@ -62,28 +62,29 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    public class TCurrentStockModel
+    public class CurrentStockModel
     {
         public int ItemId { get; set; }
         public int IssueQty { get; set; }
         public int StkId { get; set; }
         public int StoreID { get; set; }
     }
-    public class TCurrentStockModelValidator : AbstractValidator<TCurrentStockModel>
+    public class CurrentStockModelValidator : AbstractValidator<CurrentStockModel>
     {
-        public TCurrentStockModelValidator()
+        public CurrentStockModelValidator()
         {
-            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
             RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
             RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
             RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
 
         }
     }
-    public class IssueModel
+    public class IssueTODepModel
     {
+        public  IssueToDepartmentModel issue { get; set; }
+
         public IssueToDepartmentDetailModel Depissue { get; set; }
-        public TCurrentStockModel curruntissue { get; set; }
+        public CurrentStockModel curruntissue { get; set; }
 
     }
 
