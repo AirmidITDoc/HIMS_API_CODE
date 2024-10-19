@@ -87,5 +87,59 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.");
         }
+
+
+
+        [HttpPost("CrossConsultationInsert")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(CrossConsultationModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+            {
+                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+
+                model.UpdatedBy = CurrentUserId;
+                model = await _IAppointmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CrossConsultation added successfully.", model);
+        }
+
+
+        [HttpPost("ConsultantDoctorUpdate")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> UpdateAsync(ConsRefDoctorModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+                await _IAppointmentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Consultant Doctor updated successfully.");
+        }
+
+
+        [HttpPost("RefDoctorUpdate")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(ConsRefDoctorModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+                await _IAppointmentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RefDoctor updated successfully.");
+        }
     }
 }

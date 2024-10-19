@@ -7,13 +7,13 @@ namespace HIMS.Core.Domain.Grid
         //public SortingField SortingField { get; set; } = new SortingField();
         //public int PageNumber { get; set; } = 1;
         //public int PageSize { get; set; } = 10;
-        public List<SearchFields> SearchFields { get; set; } = new List<SearchFields>();
+        public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
         public string? Mode { get; set; }
       }
 
     public class ReportRequestModel
     {
-        public List<SearchFields> SearchFields { get; set; } = new List<SearchFields>();
+        public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
         public string? Mode { get; set; }
         [JsonIgnore]
         public string BaseUrl { get; set; } = string.Empty;
@@ -25,12 +25,6 @@ namespace HIMS.Core.Domain.Grid
     {
         public string FieldName { get; set; }
         public string Direction { get; set; }
-    }
-    public class SearchFields
-    {
-        public string FieldName { get; set; }
-        public string FieldValue { get; set; }
-        public string OpType { get; set; }
     }
     public class SearchModel
     {

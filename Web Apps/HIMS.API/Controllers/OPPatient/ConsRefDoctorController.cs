@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-                // await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                 await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Consultant Doctor updated successfully.");
         }
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.VisitDate = Convert.ToDateTime(obj.VisitDate);
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-                // await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RefDoctor updated successfully.");
         }

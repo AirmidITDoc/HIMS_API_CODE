@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.Common
+namespace HIMS.API.Controllers.Inventory
 {
-    public class RefundController : Controller
+    public class PurchaseOrderController : Controller
     {
         public IActionResult Index()
         {

@@ -14,7 +14,7 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<FavouriteModel>> GetFavouriteModules(GridRequestModel objGrid,List<SearchFields> list)
+        public virtual async Task<IPagedList<FavouriteModel>> GetFavouriteModules(GridRequestModel objGrid,List<SearchGrid> list)
         {
             List<SearchModel> fields = SearchFieldExtension.GetSearchFields(list);
 

@@ -22,14 +22,16 @@ namespace HIMS.API.Models.OPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public List<TRefundDetailModel>? TRefundDetails { get; set; }
+        public List<AddChargesModell>? AddCharges { get; set; }
+      
+        public List<PaymentModell>? Payments { get; set; }
 
     }
     public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>
     {
         public OPRefundOfBillModelValidator()
         {
-            RuleFor(x => x.RefundDate).NotNull().NotEmpty().WithMessage("RefundDate Date is required");
-            RuleFor(x => x.RefundTime).NotNull().NotEmpty().WithMessage("RefundTime Time is required");
+           
             RuleFor(x => x.RefundNo).NotNull().NotEmpty().WithMessage(" RefundNo is required");
             RuleFor(x => x.BillId).NotNull().NotEmpty().WithMessage(" BillId is required");
             RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage(" AdvanceId is required");
