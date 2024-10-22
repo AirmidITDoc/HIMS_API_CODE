@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class PhoneAppointmentModel
+    public class PhoneAppModel
     {
         public long PhoneAppId { get; set; }
         public DateTime? AppDate { get; set; }
@@ -19,29 +20,14 @@ namespace HIMS.API.Models.OutPatient
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? RegNo { get; set; }
-        
-
     }
-    public class PhoneAppointmentModelValidator : AbstractValidator<PhoneAppointmentModel>
+    public class PhoneAppModelValidator : AbstractValidator<PhoneAppModel>
     {
-        public PhoneAppointmentModelValidator()
+        public PhoneAppModelValidator()
         {
             RuleFor(x => x.AppDate).NotNull().NotEmpty().WithMessage("AppDate is required");
             RuleFor(x => x.AppTime).NotNull().NotEmpty().WithMessage("AppTime is required");
-            RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
-            RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
-            RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address is required");
-
-        }
-    }
-        public class PhoneAppointmentCancel
-        {
-            public int PhoneAppId { get; set; }
         }
     }
 
-
-
-
-
+}

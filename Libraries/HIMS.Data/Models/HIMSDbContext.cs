@@ -8210,11 +8210,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("TDSAmount");
 
                 entity.Property(e => e.TranMode).HasMaxLength(30);
-
-                entity.HasOne(d => d.BillNoNavigation)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.BillNo)
-                    .HasConstraintName("FK_Payment_Bill");
             });
 
             modelBuilder.Entity<PaymentPharmacy>(entity =>

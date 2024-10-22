@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -22,7 +23,10 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, int CurrentUserId, string CurrentUserName)
+       
+       
+
+        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster objBedMaster , Admission objAdmission, int  CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -36,22 +40,43 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("v_Insert_BedTransferDetails_1", CommandType.StoredProcedure, Entity);
             //await _context.SaveChangesAsync(UserId, Username);
-        }
-
-                
-
-        public virtual async Task UpdateAsyncSP(Bedmaster objBedMaster, int currentUserId, string currentUserName)
-        {
+        
+        
             //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] rBedEntity = { "IsAvailible", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            var rAdmissentity1 = objBedMaster.ToDictionary();
+            string[] rBedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var rbedentity = objBedMaster.ToDictionary();
             foreach (var rProperty in rBedEntity)
             {
-                rAdmissentity1.Remove(rProperty);
+                rbedentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_BedMaster_1", CommandType.StoredProcedure, rAdmissentity1);
-            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+            odal.ExecuteNonQuery("v_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
+
+            string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var bedentity = objBedMaster.ToDictionary();
+            foreach (var rProperty in BedEntity)
+            {
+                rbedentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("v_update_BedMaster", CommandType.StoredProcedure, bedentity);
+
+
+            string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId", "DepartmentId", 
+                "RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime",
+                "IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt",
+                "PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient",
+                "HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"};
+            var aentity = objBedMaster.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                rbedentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("v_Update_AdmissionforBedMaster", CommandType.StoredProcedure, aentity);
+
+
+ 
+
+
         }
+
     }
 }
