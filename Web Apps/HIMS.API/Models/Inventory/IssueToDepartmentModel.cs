@@ -19,7 +19,9 @@ namespace HIMS.API.Models.Inventory
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
 
-        //public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        public List<CurrentStockModel> TCurrentStock { get; set; }
+
 
 
     }
@@ -29,8 +31,6 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.IssueDate).NotNull().NotEmpty().WithMessage("IssueDate Date is required");
             RuleFor(x => x.IssueTime).NotNull().NotEmpty().WithMessage("IssueTime Time is required");
-            RuleFor(x => x.FromStoreId).NotNull().NotEmpty().WithMessage("From StoreId is required");
-            RuleFor(x => x.ToStoreId).NotNull().NotEmpty().WithMessage("To StoreId is required");
 
         }
     }
@@ -56,8 +56,6 @@ namespace HIMS.API.Models.Inventory
     {
         public IssueToDepartmentDetailModelValidator()
         {
-            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
-            RuleFor(x => x.BatchNo).NotNull().NotEmpty().WithMessage("BatchNo  is required");
             RuleFor(x => x.BatchExpDate).NotNull().NotEmpty().WithMessage("BatchExpDate  is required");
 
         }
@@ -79,13 +77,13 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    public class IssueTODepModel
-    {
-        public  IssueToDepartmentModel issue { get; set; }
+    //public class IssueTODepModel
+    //{
+    //    public  IssueToDepartmentModel issue { get; set; }
 
-        public IssueToDepartmentDetailModel Depissue { get; set; }
-        public CurrentStockModel curruntissue { get; set; }
+    //    public IssueToDepartmentDetailModel Depissue { get; set; }
+    //    public CurrentStockModel curruntissue { get; set; }
 
-    }
+    //}
 
 }

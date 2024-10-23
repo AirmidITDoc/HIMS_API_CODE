@@ -22,39 +22,62 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IIssueToDepService = repository;
         }
-       
-       
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(IssueTODepModel obj)
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(IssueToDepartmentModel obj)
         {
-            TIssueToDepartmentHeader model = obj.issue.MapTo<TIssueToDepartmentHeader>();
-            TIssueToDepartmentDetail objDep = obj.Depissue.MapTo<TIssueToDepartmentDetail>();
-            TCurrentStock objCurrunt = obj.curruntissue.MapTo<TCurrentStock>();
-            if (obj.issue.IssueId == 0)
+            TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
+            if (obj.IssueId == 0)
             {
-                model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
-                model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
-
+                model.IssueDate = Convert.ToDateTime(obj.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.IssueTime);
                 model.Addedby = CurrentUserId;
-
-                obj.Depissue.IssueId = obj.Depissue.IssueId;
-                //objDep.AddedBy = CurrentUserId;
-
-                obj.curruntissue.ItemId = obj.curruntissue.ItemId;
-
-
-
-                await _IIssueToDepService.InsertAsyncSP(model, objDep, objCurrunt, CurrentUserId, CurrentUserName);
+                await _IIssueToDepService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment added successfully.");
         }
 
-        
 
-        
-       
+
+
+
+        //[HttpPost("InsertSP")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(IssueTODepModel obj)
+        //{
+        //    TIssueToDepartmentHeader model = obj.issue.MapTo<TIssueToDepartmentHeader>();
+
+        //    List<TIssueToDepartmentDetail> objDepList = obj.Depissue.MapTo<List<TIssueToDepartmentDetail>>();
+
+        //    List<TCurrentStock> objCurrentList = obj.curruntissue.MapTo<List<TCurrentStock>>();
+
+        //    if (obj.issue.IssueId == 0)
+        //    {
+        //        model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
+        //        model.Addedby = CurrentUserId;
+
+        //        foreach (var dep in objDepList)
+        //        {
+        //            dep.IssueId = obj.issue.IssueId;
+        //        }
+
+        //        foreach (var stock in objCurrentList)
+        //        {
+        //            stock.ItemId = stock.ItemId; 
+        //        }
+
+        //        await _IIssueToDepService.InsertAsyncSP(model, objDepList, objCurrentList, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment Added successfully.");
+        //}
+
+
+
+
     }
 }

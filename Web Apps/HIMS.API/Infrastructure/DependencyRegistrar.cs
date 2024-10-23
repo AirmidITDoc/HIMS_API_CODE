@@ -22,6 +22,7 @@ using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
 using HIMS.Services.NursingStation;
+using HIMS.Services.Transaction;
 
 namespace HIMS.API.Infrastructure
 {
@@ -74,6 +75,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
+            services.AddScoped<IsmsConfigService, smsConfigService>();
+
 
 
             services.AddScoped<IBillingService, BillingService>();
@@ -81,7 +84,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPhoneAppService, PhoneAppService>();
 
 
-            services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
             //services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
          
@@ -93,6 +95,7 @@ namespace HIMS.API.Infrastructure
 
 
 
+
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService,AdmissionService>();
             services.AddScoped<ICanteenRequestService, CanteenRequestService>();
@@ -101,7 +104,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
-            services.AddScoped<IPrefixService, PrefixService>();
+            //services.AddScoped<IPrefixService, PrefixService>();
 
             services.AddScoped<IStockAdjustmentService, StockAdjustmentService>();
 

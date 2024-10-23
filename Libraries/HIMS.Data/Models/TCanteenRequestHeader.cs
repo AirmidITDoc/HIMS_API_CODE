@@ -26,5 +26,6 @@ namespace HIMS.Data.Models
         public long? UpdatedBy { get; set; }
 
         public virtual ICollection<TCanteenRequestDetail> TCanteenRequestDetails { get; set; }
+
     }
 }

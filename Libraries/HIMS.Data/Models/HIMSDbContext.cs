@@ -11336,6 +11336,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitPurRate).HasColumnType("money");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Issue)
+                    .WithMany(p => p.TIssueToDepartmentDetails)
+                    .HasForeignKey(d => d.IssueId)
+                    .HasConstraintName("FK_T_IssueToDepartmentDetails_T_IssueToDepartmentHeader");
             });
 
             modelBuilder.Entity<TIssueToDepartmentHeader>(entity =>
@@ -12166,6 +12171,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TestName).HasMaxLength(150);
 
                 entity.Property(e => e.UnitName).HasMaxLength(50);
+
+                entity.HasOne(d => d.PathReport)
+                    .WithMany(p => p.TPathologyReportDetails)
+                    .HasForeignKey(d => d.PathReportId)
+                    .HasConstraintName("FK_T_PathologyReportDetails_T_PathologyReportHeader");
             });
 
             modelBuilder.Entity<TPathologyReportHeader>(entity =>
@@ -12224,6 +12234,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PathTemplateDetailsResult).HasColumnType("text");
 
                 entity.Property(e => e.TemplateResultInHtml).HasColumnName("TemplateResultInHTML");
+
+                entity.HasOne(d => d.PathReport)
+                    .WithMany(p => p.TPathologyReportTemplateDetails)
+                    .HasForeignKey(d => d.PathReportId)
+                    .HasConstraintName("FK_T_PathologyReportTemplateDetails_T_PathologyReportHeader");
             });
 
             modelBuilder.Entity<TPatientDetail>(entity =>

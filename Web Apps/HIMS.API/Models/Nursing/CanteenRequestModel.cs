@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -18,6 +17,7 @@ namespace HIMS.API.Models.Nursing
         public bool? IsBillGenerated { get; set; }
         public bool? IsPrint { get; set; }
         public List<TCanteenRequestDetailModel> TCanteenRequestDetails { get; set; }
+
     }
     public class CanteenRequestModelValidator : AbstractValidator<CanteenRequestModel>
     {
@@ -28,16 +28,16 @@ namespace HIMS.API.Models.Nursing
 
         }
     }
-    public  class TCanteenRequestDetailModel
-    { 
-    public long ReqDetId { get; set; }
-    public long? ReqId { get; set; }
-    public long? ItemId { get; set; }
-    public decimal? UnitMrp { get; set; }
-    public double? Qty { get; set; }
-    public decimal? TotalAmount { get; set; }
-    public bool? IsBillGenerated { get; set; }
-    public bool? IsCancelled { get; set; }
+    public class TCanteenRequestDetailModel
+    {
+        public long ReqDetId { get; set; }
+        public long? ReqId { get; set; }
+        public long? ItemId { get; set; }
+        public decimal? UnitMrp { get; set; }
+        public double? Qty { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public bool? IsBillGenerated { get; set; }
+        public bool? IsCancelled { get; set; }
     }
     public class TCanteenRequestDetailModelValidator : AbstractValidator<TCanteenRequestDetailModel>
     {
@@ -46,8 +46,10 @@ namespace HIMS.API.Models.Nursing
             RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId Date is required");
             RuleFor(x => x.UnitMrp).NotNull().NotEmpty().WithMessage("UnitMrp Time is required");
 
-        } 
+        }
     }
-        
-    }
+
+}
+
+
 
