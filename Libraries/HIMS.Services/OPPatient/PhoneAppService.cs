@@ -1,12 +1,14 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.OPPatient
 {
@@ -17,8 +19,11 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-         public virtual async Task InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int UserId, string Username)
-            {
+
+
+
+        public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
+        {
             DatabaseHelper odal = new();
             string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
             var entity = objTPhoneAppointment.ToDictionary();
@@ -26,45 +31,36 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
+            string vPhoneAppId = odal.ExecuteNonQuery("v_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
+            objTPhoneAppointment.PhoneAppId = Convert.ToInt32(vPhoneAppId);
 
-            string PhoneAppId = odal.ExecuteNonQuery("v_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
-            objTPhoneAppointment.PhoneAppId = Convert.ToInt32(PhoneAppId);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
-            await _context.SaveChangesAsync(UserId, Username);
-
-
-            //    public virtual async Task InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int UserId, string Username)
-            //{
-            //    DatabaseHelper odal = new();
-            //    string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
-            //    var entity = objTPhoneAppointment.ToDictionary();
-
-            //    foreach (var rProperty in rEntity)
-            //    {
-            //        entity.Remove(rProperty);
-            //    }
-
-            //    string phoneAppIdString = odal.ExecuteNonQuery("v_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
-
-            //    if (int.TryParse(phoneAppIdString, out int phoneAppId))
-            //    {
-            //        objTPhoneAppointment.PhoneAppId = phoneAppId;
-            //    }
-            //    else
-            //    {
-            //        objTPhoneAppointment.PhoneAppId = 0;
-
-            //        await _context.SaveChangesAsync(UserId, Username);
-            //    }
+            return objTPhoneAppointment;
+        }
 
 
+        public virtual async Task CancelAsync(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TPhoneAppointment objphone = await _context.TPhoneAppointments.FindAsync(objTPhoneAppointment.PhoneAppId);
+                objphone.IsCancelled = objTPhoneAppointment.IsCancelled;
+                objphone.IsCancelledBy = objTPhoneAppointment.IsCancelledBy;
+                objphone.IsCancelledDate = objTPhoneAppointment.IsCancelledDate;
+                _context.TPhoneAppointments.Update(objphone);
+                _context.Entry(objphone).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
-
-
-
+                scope.Complete();
+            }
         }
     }
 }
+
+
+
 
 
 

@@ -20,6 +20,7 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _IPhoneAppService = repository;
         }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppModel obj)
@@ -31,11 +32,31 @@ namespace HIMS.API.Controllers.OPPatient
                 model.AppTime = Convert.ToDateTime(obj.AppTime);
 
                 model.UpdatedBy = CurrentUserId;
-                await _IPhoneAppService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                model = await _IPhoneAppService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment added successfully.", model);
         }
+
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(PhoneAppCancel obj)
+        {
+            TPhoneAppointment model = new();
+            if (obj.PhoneAppId != 0)
+            {
+                model.PhoneAppId = obj.PhoneAppId;
+                model.IsCancelled = true;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = DateTime.Now;
+                await _IPhoneAppService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
+        }
+
     }
 }
+

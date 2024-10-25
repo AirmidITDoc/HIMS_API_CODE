@@ -38,46 +38,5 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment added successfully.");
         }
-
-
-
-
-
-        //[HttpPost("InsertSP")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(IssueTODepModel obj)
-        //{
-        //    TIssueToDepartmentHeader model = obj.issue.MapTo<TIssueToDepartmentHeader>();
-
-        //    List<TIssueToDepartmentDetail> objDepList = obj.Depissue.MapTo<List<TIssueToDepartmentDetail>>();
-
-        //    List<TCurrentStock> objCurrentList = obj.curruntissue.MapTo<List<TCurrentStock>>();
-
-        //    if (obj.issue.IssueId == 0)
-        //    {
-        //        model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
-        //        model.Addedby = CurrentUserId;
-
-        //        foreach (var dep in objDepList)
-        //        {
-        //            dep.IssueId = obj.issue.IssueId;
-        //        }
-
-        //        foreach (var stock in objCurrentList)
-        //        {
-        //            stock.ItemId = stock.ItemId; 
-        //        }
-
-        //        await _IIssueToDepService.InsertAsyncSP(model, objDepList, objCurrentList, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment Added successfully.");
-        //}
-
-
-
-
     }
 }

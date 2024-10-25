@@ -28,6 +28,12 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.AppDate).NotNull().NotEmpty().WithMessage("AppDate is required");
             RuleFor(x => x.AppTime).NotNull().NotEmpty().WithMessage("AppTime is required");
         }
+        
     }
-
+    public class PhoneAppCancel
+    {
+        public int PhoneAppId { get; set; }
+    }
 }
+
+

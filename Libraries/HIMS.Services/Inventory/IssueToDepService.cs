@@ -72,40 +72,6 @@ namespace HIMS.Services.Inventory
 
         }
         
-
-
-        //public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, List<TIssueToDepartmentDetail> objTIssueToDepartmentDetail, List<TCurrentStock> objCurrentStock, int UserId, string Username)
-        //{
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
-        //    var entity = objIssueToDepartment.ToDictionary();
-
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
-
-        //    string IssueId = odal.ExecuteNonQuery("v_Insert_IssueToDepartmentHeader_1_New", CommandType.StoredProcedure, "IssueId", entity);
-        //    objIssueToDepartment.IssueId = Convert.ToInt32(IssueId);
-
-        //    // Insert into IssueToDepartmentDetail table
-        //    foreach (var detail in objTIssueToDepartmentDetail)
-        //    {
-        //        var detailEntity = detail.ToDictionary();
-        //        detailEntity["IssueId"] = IssueId;
-        //        odal.ExecuteNonQuery("v_insert_IssueToDepartmentDetails_1", CommandType.StoredProcedure, detailEntity);
-        //    }
-
-        //    // Update current stock records
-        //    foreach (var stock in objCurrentStock)
-        //    {
-        //        var stockEntity = stock.ToDictionary();
-        //        odal.ExecuteNonQuery("v_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, stockEntity);
-        //    }
-
-        //}
-
-
     }
 }
 
