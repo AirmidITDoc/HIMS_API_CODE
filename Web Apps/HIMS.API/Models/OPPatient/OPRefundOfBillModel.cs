@@ -22,9 +22,9 @@ namespace HIMS.API.Models.OPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public List<TRefundDetailModel>? TRefundDetails { get; set; }
-        public List<AddChargesModell>? AddCharges { get; set; }
+        //public List<AddChargesModell>? AddCharges { get; set; }
       
-        public List<PaymentModell>? Payments { get; set; }
+        //public List<PaymentModell>? Payments { get; set; }
 
     }
     public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>

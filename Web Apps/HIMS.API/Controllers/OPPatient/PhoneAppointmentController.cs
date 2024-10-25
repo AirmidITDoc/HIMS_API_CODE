@@ -14,11 +14,11 @@ namespace HIMS.API.Controllers.OPPatient
     [ApiVersion("1")]
     public class PhoneAppointmentController : BaseController
     {
-        private readonly IPhoneAppointmentService _IPhoneAppointmentService;
-        public PhoneAppointmentController(IPhoneAppointmentService repository)
-        {
-            _IPhoneAppointmentService = repository;
-        }
+        //private readonly IPhoneAppointmentService _IPhoneAppointmentService;
+        //public PhoneAppointmentController(IPhoneAppointmentService repository)
+        //{
+        //    _IPhoneAppointmentService = repository;
+        //}
 
         //[HttpPost("InsertSP")]
         ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -39,23 +39,23 @@ namespace HIMS.API.Controllers.OPPatient
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added successfully.");
         //}
 
-        [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
-        {
-            TPhoneAppointment model = new();
-            if (obj.PhoneAppId != 0)
-            {
-                model.PhoneAppId = obj.PhoneAppId;
-                model.IsCancelled = true;
-                model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = DateTime.Now;
-                await _IPhoneAppointmentService.CancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Canceled successfully.");
-        }
+        //[HttpPost("Cancel")]
+        ////[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        //public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
+        //{
+        //    TPhoneAppointment model = new();
+        //    if (obj.PhoneAppId != 0)
+        //    {
+        //        model.PhoneAppId = obj.PhoneAppId;
+        //        model.IsCancelled = true;
+        //        model.IsCancelledBy = CurrentUserId;
+        //        model.IsCancelledDate = DateTime.Now;
+        //        await _IPhoneAppointmentService.CancelAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Canceled successfully.");
+        //}
 
 
     }

@@ -46,24 +46,36 @@ namespace HIMS.Services.OPPatient
             }
             odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
 
-
-            string[] rChargeEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo" };
-            var ChargeEntity = objAddCharge.ToDictionary();
-            foreach (var rProperty in rChargeEntity)
+            foreach (var objcharge in objRefund.AddCharges)
             {
-                ChargeEntity.Remove(rProperty);
+                string[] rChargeEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo" };
+                var ChargeEntity = objcharge.ToDictionary();
+                foreach (var rProperty in rChargeEntity)
+                {
+                    ChargeEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
             }
-            odal.ExecuteNonQuery("m_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
+
+            //string[] rPayEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount" };
+            //var PayEntity = objPayment.ToDictionary();
+            //foreach (var rProperty in rPayEntity)
+            //{
+            //    PayEntity.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("v_n_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
 
 
-            string[] rPayEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount" };
-            var PayEntity = objPayment.ToDictionary();
-            foreach (var rProperty in rPayEntity)
-            {
-                PayEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("v_n_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
 
+            //foreach (var objpay in objRefund.Payments)
+            //{
+                
+            //        objPayment.BillNo = objpay.BillNo;
+            //        _context.Payments.Add(objPayment);
+            //        await _context.SaveChangesAsync();
+                
+            //}
+            //scope.Complete();
 
         }
 

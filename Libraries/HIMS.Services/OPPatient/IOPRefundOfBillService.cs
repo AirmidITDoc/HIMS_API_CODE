@@ -12,7 +12,7 @@ namespace HIMS.Services.OPPatient
         Task InsertAsyncIP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username);
     
 
-        Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username);
+       // Task InsertAsyncOP(OPRefundOfBillModel ObjRefund, int UserId, string Username);
         Task<long> InsertAsync(Refund objRefund, int UserId, string Username);
 
 
