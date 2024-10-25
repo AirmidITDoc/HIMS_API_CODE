@@ -3,6 +3,7 @@ using HIMS.API.Controllers.Masters.Personal_Information;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
@@ -11,6 +12,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pathology;
 using HIMS.API.Models.Pharmacy;
 using HIMS.API.Models.Radiology;
+using HIMS.API.Models.Transaction;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -58,6 +60,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<ACustomerInformation, CustomerInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ACustomerPaymentSummary, CustomerPaymentSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTemplateMaster, PathTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DoctorMaster, DoctoreMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -141,8 +145,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIssueToDepartmentHeader, IssueToDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<IssueToDepartmentDetailModel, TIssueToDepartmentDetail>();
 
-           
+
+
 
             //CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIssueToDepartmentHeader, IssueToDIndentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -164,6 +170,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TDoctorShareHeader, DoctorShareModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<MDoctorPerMaster, DoctorPerMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<SsSmsConfig, smsConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -312,7 +322,7 @@ namespace HIMS.API.Infrastructure
             //CreateMap<AddCharge, AddChargesModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<Payment, PaymentModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<Payment, PaymentModel2>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-           // CreateMap<TIssueToDepartmentDetail, StockAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TIssueToDepartmentDetail, StockAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<TIssueToDepartmentDetail, StockAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<TCurrentStock, TCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

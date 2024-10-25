@@ -50,7 +50,5 @@ namespace HIMS.Data.Models
         public long? BillNo { get; set; }
 
         public virtual Bill? BillNoNavigation { get; set; }
-
-        public virtual Refund? Refund { get; set; }
     }
 }

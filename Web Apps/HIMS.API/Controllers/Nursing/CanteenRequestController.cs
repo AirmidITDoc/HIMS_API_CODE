@@ -2,20 +2,21 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
-using HIMS.Services.NursingStation;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.Services.Nursing.ICanteenRequestService;
 
 namespace HIMS.API.Controllers.Nursing
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
+
     public class CanteenRequestController : BaseController
     {
+
         private readonly ICanteenRequestService _ICanteenRequestService;
         public CanteenRequestController(ICanteenRequestService repository)
         {
@@ -37,6 +38,6 @@ namespace HIMS.API.Controllers.Nursing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CanteenRequest added successfully.", model);
         }
-        
+
     }
 }

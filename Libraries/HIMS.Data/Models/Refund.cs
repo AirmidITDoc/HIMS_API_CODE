@@ -8,8 +8,6 @@ namespace HIMS.Data.Models
         public Refund()
         {
             TRefundDetails = new HashSet<TRefundDetail>();
-            AddCharges = new HashSet<AddCharge>();
-            Payments = new HashSet<Payment>();
         }
 
         public long RefundId { get; set; }
@@ -35,8 +33,5 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TRefundDetail> TRefundDetails { get; set; }
-        public virtual ICollection<AddCharge> AddCharges { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
-
     }
 }
