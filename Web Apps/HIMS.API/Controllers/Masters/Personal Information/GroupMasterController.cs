@@ -7,9 +7,14 @@ using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers
 {
+
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class GroupMasterController : BaseController
     {
         private readonly IGenericService<GroupMaster> _repository;
@@ -21,14 +26,14 @@ namespace HIMS.API.Controllers
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "GroupMaster", Permission = PagePermission.View)]
+       // [Permission(PageCode = "GroupMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<GroupMaster> GroupMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(GroupMasterList.ToGridResponse(objGrid, "GroupMaster List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "GroupMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GroupMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -41,7 +46,7 @@ namespace HIMS.API.Controllers
 
 
         [HttpPost]
-        [Permission(PageCode = "GroupMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GroupMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(GroupMasterModel obj)
         {
             GroupMaster model = obj.MapTo<GroupMaster>();
@@ -58,7 +63,7 @@ namespace HIMS.API.Controllers
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "GroupMaster", Permission = PagePermission.Edit)]
+       // [Permission(PageCode = "GroupMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GroupMasterModel obj)
         {
             GroupMaster model = obj.MapTo<GroupMaster>();
@@ -75,7 +80,7 @@ namespace HIMS.API.Controllers
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "GroupMaster", Permission = PagePermission.Delete)]
+      //  [Permission(PageCode = "GroupMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             GroupMaster model = await _repository.GetById(x => x.GroupId == Id);

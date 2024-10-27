@@ -31,14 +31,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
+       // [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MBankMaster> BankMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(BankMasterList.ToGridResponse(objGrid, "Bank List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
+       // [Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(BankMasterModel obj)
         {
             MBankMaster model = obj.MapTo<MBankMaster>();
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
+       // [Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MBankMaster model = await _repository.GetById(x => x.BankId == Id);
