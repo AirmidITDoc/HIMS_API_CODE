@@ -33,18 +33,7 @@ namespace HIMS.API.Controllers.Inventory
             List<MRadiologyTestMaster> RadiologyTestMasterList = await _RadiologyTestService.GetAllRadiologyTest();
             return Ok(RadiologyTestMasterList.ToList());
         }
-        //List API Get By Id
-        //[HttpGet("{id?}")]
-        ////[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> Get(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-        //    }
-        //    var data = await _RadiologyTestService.GetByIdRadiologyTest(id);
-        //    return data.ToSingleResponse<MRadiologyTestMaster, RadiologyTestModel>("PatientType");
-        //}
+      
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RadiologyTestModel obj)
@@ -59,7 +48,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest Name added successfully.");
         }
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
@@ -77,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology TestName  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
@@ -92,7 +81,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedDate = DateTime.Now;
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology TestName updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
         }
         [HttpPost("RadilogyCancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
