@@ -18,8 +18,6 @@ namespace HIMS.API.Models.Nursing
         //public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
         public List<TDlabRequestModel> TDlabRequests { get; set; }
-
-
     }
     public class LabRequestModelValidator : AbstractValidator<LabRequestModel>
     {

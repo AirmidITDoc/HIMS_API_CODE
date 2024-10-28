@@ -38,21 +38,6 @@ namespace HIMS.API.Controllers.Nursing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.");
         }
-        [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(LabRequestModel obj)
-        {
-            THlabRequest model = obj.MapTo<THlabRequest>();
-            if (obj.RequestId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.ReqDate = Convert.ToDateTime(obj.ReqDate);
-                model.ReqTime = Convert.ToDateTime(obj.ReqTime);
-                await _ILabRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest updated successfully.");
-        }
     }
 }
 
