@@ -15,7 +15,6 @@ namespace HIMS.API.Models.Masters
         public CashCounterModelValidator()
         {
             RuleFor(x => x.CashCounterName).NotNull().NotEmpty().WithMessage("CashCounter Name is required");
-            //RuleFor(x => x.SexId).GreaterThanOrEqualTo(0).WithMessage("Enter valid sex");
         }
     }
 }

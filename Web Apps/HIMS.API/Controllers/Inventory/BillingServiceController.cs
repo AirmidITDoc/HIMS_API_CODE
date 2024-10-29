@@ -21,15 +21,7 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IBillingService = repository;
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            List<ServiceMaster> ServiceMasterList = await _IBillingService.GetAllRadiologyTest();
-            return Ok(ServiceMasterList.ToList());
-        }
+       
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BillingServiceModel obj)

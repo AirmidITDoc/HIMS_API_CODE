@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers
         public async Task<ApiResponse> Post(SubGroupMasterModel obj)
         {
             MSubGroupMaster model = obj.MapTo<MSubGroupMaster>();
-            model.IsDeleted = true;
+            model.IsActive = true;
             if (obj.SubGroupId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers
         public async Task<ApiResponse> Edit(SubGroupMasterModel obj)
         {
             MSubGroupMaster model = obj.MapTo<MSubGroupMaster>();
-            model.IsDeleted = true;
+            model.IsActive = true;
             if (obj.SubGroupId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers
             MSubGroupMaster model = await _repository.GetById(x => x.SubGroupId == Id);
             if ((model?.SubGroupId ?? 0) > 0)
             {
-                model.IsDeleted = false;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

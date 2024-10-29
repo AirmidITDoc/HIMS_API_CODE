@@ -6,7 +6,6 @@ using HIMS.API.Models.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.Services.Nursing.ICanteenRequestService;
 
 namespace HIMS.API.Controllers.Nursing
 {

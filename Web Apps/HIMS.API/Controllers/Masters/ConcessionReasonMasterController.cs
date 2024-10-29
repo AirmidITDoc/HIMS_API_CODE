@@ -8,9 +8,14 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
 using HIMS.API.Controllers.Masters.Personal_Information;
+using Asp.Versioning;
+using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Masters
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class ConcessionReasonMasterController : BaseController
     {
         private readonly IGenericService<MConcessionReasonMaster> _repository;

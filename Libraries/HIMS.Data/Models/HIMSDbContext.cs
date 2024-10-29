@@ -471,6 +471,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<UserChatMailSystem> UserChatMailSystems { get; set; } = null!;
         public virtual DbSet<UserMailSystemBlog> UserMailSystemBlogs { get; set; } = null!;
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
+        public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
@@ -13777,6 +13778,29 @@ namespace HIMS.Data.Models
                 entity.ToView("v_CheckingBalQty");
 
                 entity.Property(e => e.ItemName).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<VPaymentBillwisesumAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_PAYMENT_BILLWISESUM_AMOUNT");
+
+                entity.Property(e => e.AdvUsedPay).HasColumnType("money");
+
+                entity.Property(e => e.CardPay).HasColumnType("money");
+
+                entity.Property(e => e.CashPay).HasColumnType("money");
+
+                entity.Property(e => e.ChequePay).HasColumnType("money");
+
+                entity.Property(e => e.Neftpay)
+                    .HasColumnType("money")
+                    .HasColumnName("NEFTPay");
+
+                entity.Property(e => e.PayTmpay)
+                    .HasColumnType("money")
+                    .HasColumnName("PayTMPay");
             });
 
             modelBuilder.Entity<View1>(entity =>
