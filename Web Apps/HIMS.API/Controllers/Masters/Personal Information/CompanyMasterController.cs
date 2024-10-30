@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Company added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyMaster added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Company updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyMaster updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Company deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyMaster deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

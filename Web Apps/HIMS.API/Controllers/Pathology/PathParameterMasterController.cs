@@ -1,56 +1,56 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.Data.Models;
+using HIMS.Data;
+using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Models.Pathology;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Controllers.Pathology
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class PathCategoryMasterController : BaseController
+    public class PathParameterMasterController : BaseController
     {
-        private readonly IGenericService<MPathCategoryMaster> _repository;
-        public PathCategoryMasterController(IGenericService<MPathCategoryMaster> repository)
+        private readonly IGenericService<MPathParameterMaster> _repository;
+        public PathParameterMasterController(IGenericService<MPathParameterMaster> repository)
         {
             _repository = repository;
         }
-
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MPathCategoryMaster> PathCategoryMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PathCategoryMasterList.ToGridResponse(objGrid, "PathCategory List"));
+            IPagedList<MPathParameterMaster> PathParameterMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(PathParameterMasterList.ToGridResponse(objGrid, "PathParameterMaster List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.CategoryId == id);
-            return data.ToSingleResponse<MPathCategoryMaster, PathCategoryMasterModel>("PathCategory Master");
+            var data = await _repository.GetById(x => x.ParameterId == id);
+            return data.ToSingleResponse<MPathParameterMaster, PathParameterMasterModel>("PatientType");
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(PathCategoryMasterModel obj)
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(PathParameterMasterModel obj)
         {
-            MPathCategoryMaster model = obj.MapTo<MPathCategoryMaster>();
+            MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
             model.IsActive = true;
-            if (obj.CategoryId == 0)
+            if (obj.ParameterId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -58,16 +58,16 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathCategoryName  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ParameterMaster  added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PathCategoryMasterModel obj)
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PathParameterMasterModel obj)
         {
-            MPathCategoryMaster model = obj.MapTo<MPathCategoryMaster>();
+            MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
             model.IsActive = true;
-            if (obj.CategoryId == 0)
+            if (obj.ParameterId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -75,24 +75,26 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathCategoryName  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ParameterMaster  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MPathCategoryMaster model = await _repository.GetById(x => x.CategoryId == Id);
-            if ((model?.CategoryId ?? 0) > 0)
+            MPathParameterMaster model = await _repository.GetById(x => x.ParameterId == Id);
+            if ((model?.ParameterId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathCategoryName  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ParameterMaster  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
     }
 }
+
