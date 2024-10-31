@@ -30,9 +30,9 @@ namespace HIMS.API.Controllers.Masters.Radiology
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MRadiologyTemplateMaster> RadiologyTemplateMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(RadiologyTemplateMasterList.ToGridResponse(objGrid, "RadiologyTemplateMaster List "));
+            return Ok(RadiologyTemplateMasterList.ToGridResponse(objGrid, "RadiologyTemplate Master List "));
         }
-        //List API Get By Id
+
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplate added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -76,9 +76,9 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplate updated successfully.");
         }
-        //Delete API
+           //Delete API
         [HttpDelete]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)

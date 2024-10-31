@@ -24,15 +24,7 @@ namespace HIMS.API.Controllers.Inventory
         {
             _RadiologyTestService = repository;
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            List<MRadiologyTestMaster> RadiologyTestMasterList = await _RadiologyTestService.GetAllRadiologyTest();
-            return Ok(RadiologyTestMasterList.ToList());
-        }
+      
       
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
