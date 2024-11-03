@@ -25,14 +25,14 @@ namespace HIMS.API.Controllers
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.View)]
+      //  [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorTypeMaster> DoctorTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DoctorTypeMasterList.ToGridResponse(objGrid, "DoctorType List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.View)]
+       // [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers
 
 
         [HttpPost]
-        [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DoctorTypeMasterModel obj)
         {
             DoctorTypeMaster model = obj.MapTo<DoctorTypeMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Edit)]
+       // [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorTypeMasterModel obj)
         {
             DoctorTypeMaster model = obj.MapTo<DoctorTypeMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "DoctorTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             DoctorTypeMaster model = await _repository.GetById(x => x.Id == Id);
