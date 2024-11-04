@@ -7234,6 +7234,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TermsOfPayment).HasMaxLength(500);
             });
 
@@ -8418,6 +8422,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdIpdId1).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType1).HasColumnName("OPD_IPD_Type");
 
                 entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
 

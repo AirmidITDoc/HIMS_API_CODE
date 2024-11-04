@@ -25,9 +25,9 @@ namespace HIMS.API.Models.Inventory
         public string? PanNo { get; set; }
         public string? SupplierTime { get; set; }
         public List<AssignSupplierToStoreModel> MAssignSupplierToStores { get; set; }
-     }
-     public class SupplierModelValidator : AbstractValidator<SupplierModel>
-     {
+    }
+    public class SupplierModelValidator : AbstractValidator<SupplierModel>
+    {
         public SupplierModelValidator()
         {
             RuleFor(x => x.SupplierName).NotNull().NotEmpty().WithMessage("SupplierName is required");
@@ -40,7 +40,7 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.PanNo).NotNull().NotEmpty().WithMessage(" PanNo required");
 
         }
-     }
+    }
 
     public class AssignSupplierToStoreModel
     {
@@ -53,9 +53,12 @@ namespace HIMS.API.Models.Inventory
         public AssignSupplierToStoreModelValidator()
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
-            RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("SupplierId  is required");
-            
+
         }
     }
+    public class SupplierCancel
+    {
+        public long SupplierId { get; set; }
 
+    }
 }

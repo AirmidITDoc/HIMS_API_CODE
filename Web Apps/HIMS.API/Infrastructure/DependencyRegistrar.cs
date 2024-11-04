@@ -58,6 +58,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<ITestMasterServices, TestMasterService>();
             services.AddScoped<IPriscriptionReturnService, PriscriptionReturnService>();
+            services.AddScoped<IPrefixService, PrefixService>();
+
 
 
             services.AddScoped<IPaymentService, PaymentService>();
@@ -82,7 +84,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IPhoneAppService, PhoneAppService>();
-
 
 
             //services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();

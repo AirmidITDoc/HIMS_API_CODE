@@ -70,5 +70,20 @@ namespace HIMS.API.Controllers.Inventory
         }
 
 
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(SupplierCancel obj)
+        {
+            MSupplierMaster model = new();
+            if (obj.SupplierId != 0)
+            {
+                model.SupplierId = obj.SupplierId;
+                await _SupplierService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Canceled successfully.");
+        }
+
     }
 }
