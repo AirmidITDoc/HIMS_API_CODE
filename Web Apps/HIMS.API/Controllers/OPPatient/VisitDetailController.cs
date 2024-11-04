@@ -127,5 +127,28 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.");
         }
+
+
+
+        [HttpPost("OPBillList")]
+        public async Task<IActionResult> OPBillList(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillListDto> OpBilllist = await _visitDetailsService.GetBillListAsync(objGrid);
+            return Ok(OpBilllist.ToGridResponse(objGrid, "OP BILL List"));
+        }
+
+        [HttpPost("OPPaymentList")]
+        public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPaymentListDto> OpPaymentlist = await _visitDetailsService.GeOpPaymentListAsync(objGrid);
+            return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
+        }
+
+        [HttpPost("OPRefundList")]
+        public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRefundListDto> OpRefundlist = await _visitDetailsService.GeOpRefundListAsync(objGrid);
+            return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
+        }
     }
 }

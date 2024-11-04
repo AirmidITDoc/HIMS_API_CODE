@@ -213,5 +213,20 @@ namespace HIMS.Services.OPPatient
             }
         }
 
+      
+        public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+        }
+
+        public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "m_Rtrv_BrowseOPPaymentList");
+        }
+
+        public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "m_Rtrv_BrowseOPDRefundBillList");
+        }
     }
 }
