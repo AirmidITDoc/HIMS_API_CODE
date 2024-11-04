@@ -87,6 +87,19 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+        public virtual async Task CancelAsync(MSupplierMaster objSupplier, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                MSupplierMaster objsup = await _context.MSupplierMasters.FindAsync(objSupplier.SupplierId);
+                _context.MSupplierMasters.Update(objsup);
+                _context.Entry(objsup).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
 
     }
 }
