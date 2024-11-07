@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("Udate")]
+        [HttpPost("Update")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
@@ -106,11 +106,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment  Updated successfully.");
         }
 
-
-
-
-
-        [HttpPost("Cancle")]
+        [HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
