@@ -30,7 +30,7 @@ namespace HIMS.Services.Inventory
 
 
                 string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
-                var entity = objIssueToDepartment.ToDictionary(); 
+                var entity = objIssueToDepartment.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
@@ -39,20 +39,26 @@ namespace HIMS.Services.Inventory
                 objIssueToDepartment.IssueId = Convert.ToInt32(IssueId);
 
                 // Add details table records
-                foreach (var objIssue in objIssueToDepartment.TIssueToDepartmentDetails)
+                foreach (var objissue in objIssueToDepartment.TIssueToDepartmentDetails)
                 {
-                    objIssue.IssueId = objIssueToDepartment.IssueId;
+                    objissue.IssueId = objIssueToDepartment.IssueId;
                 }
                 _context.TIssueToDepartmentDetails.AddRange(objIssueToDepartment.TIssueToDepartmentDetails);
                 await _context.SaveChangesAsync(UserId, Username);
-            }
+
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("v_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure,  entity);
+                  }
             catch (Exception)
             {
                 // Delete header table realted records
-                TIssueToDepartmentHeader? objissue = await _context.TIssueToDepartmentHeaders.FindAsync(objIssueToDepartment.IssueId);
-                if (objissue != null)
+                TIssueToDepartmentHeader? obissue = await _context.TIssueToDepartmentHeaders.FindAsync(objIssueToDepartment.IndentId);
+                if (obissue != null)
                 {
-                    _context.TIssueToDepartmentHeaders.Remove(objissue);
+                    _context.TIssueToDepartmentHeaders.Remove(obissue);
                 }
 
                 // Delete details table realted records
@@ -63,61 +69,11 @@ namespace HIMS.Services.Inventory
                 }
                 await _context.SaveChangesAsync();
             }
-        }
-        public virtual async Task InsertAsync(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update store table records
-                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objIssueToDepartment.FromStoreId);
-                if (StoreInfo != null)
-                {
-                    StoreInfo.IssueToDeptNo = Convert.ToString(Convert.ToInt32(StoreInfo?.IssueToDeptNo ?? "0") + 1);
-                    _context.MStoreMasters.Update(StoreInfo);
-                    await _context.SaveChangesAsync();
-                }
-
-                // Add header & detail table records
-                StoreInfo.IssueToDeptNo = Convert.ToString(Convert.ToInt32(StoreInfo?.IssueToDeptNo ?? "0") + 1);
-                _context.TIssueToDepartmentHeaders.Add(objIssueToDepartment);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-
-
-            }
 
         }
-        public virtual async Task UpdateAsync(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Delete details table realted records
-                var lst = await _context.TIssueToDepartmentDetails.Where(x => x.IssueId == objIssueToDepartment.IssueId).ToListAsync();
-                _context.TIssueToDepartmentDetails.RemoveRange(lst);
-
-                // Update header & detail table records
-                _context.TIssueToDepartmentHeaders.Update(objIssueToDepartment);
-                _context.Entry(objIssueToDepartment).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-        //public virtual async Task updateissuetoDepartmentStock(TCurrentStock objCurrentStock, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header table records
-        //        TCurrentStock? objcurrunt = await _context.TCurrentStocks.FindAsync(objCurrentStock.ItemId);
-        //        objcurrunt.IssueQty = objCurrentStock.IssueQty;
-        //        _context.TCurrentStocks.Update(objcurrunt);
-        //        _context.Entry(objcurrunt).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
+        
     }
 }
+
+
 

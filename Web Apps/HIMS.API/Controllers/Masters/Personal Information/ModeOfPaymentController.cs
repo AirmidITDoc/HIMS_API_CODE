@@ -7,9 +7,13 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class ModeOfPaymentController : BaseController
     {
        

@@ -34,8 +34,7 @@ namespace HIMS.Services.Permissions
                             Key2 = P.RoleId == RoleId
                         } into tmpPermission
                         from P in tmpPermission.DefaultIfEmpty()
-                        where M.IsActive == true
-                            && M.IsActive == true
+                        where M.IsActive
                         orderby M.Id
                         select new PageMasterDto()
                         {

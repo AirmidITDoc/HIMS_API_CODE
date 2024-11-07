@@ -200,9 +200,48 @@ namespace HIMS.Services.OutPatient
         }
 
 
+        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            var entity = objCrossConsultation.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VisitID = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+            objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
 
+            await _context.SaveChangesAsync(UserId, Username);
 
+            return objCrossConsultation;
+        }
 
+        public virtual async Task UpdateAsync(VisitDetail objVisitDetail, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.VisitDetails.Update(objVisitDetail);
+                _context.Entry(objVisitDetail).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task Update(VisitDetail objVisitDetail, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.VisitDetails.Update(objVisitDetail);
+                _context.Entry(objVisitDetail).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
 
     }
 }

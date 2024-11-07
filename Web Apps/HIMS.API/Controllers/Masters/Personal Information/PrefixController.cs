@@ -7,6 +7,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,16 +21,18 @@ namespace HIMS.API.Controllers.Masters
     public class PrefixController : BaseController
     {
         private readonly IGenericService<DbPrefixMaster> _repository;
-        public PrefixController(IGenericService<DbPrefixMaster> repository)
+        private readonly IPrefixService _IPrefixService;
+        public PrefixController(IGenericService<DbPrefixMaster> repository, IPrefixService prefixService)
         {
             _repository = repository;
+            _IPrefixService = prefixService;
         }
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission(PageCode = "PrefixMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<DbPrefixMaster> DocList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<DbPrefixMaster> DocList = await _IPrefixService.GetAllPagedAsync(objGrid);
             return Ok(DocList.ToGridResponse(objGrid, "Prefix List"));
         }
         [HttpGet("{id?}")]

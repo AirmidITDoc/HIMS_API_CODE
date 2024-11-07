@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Models.Inventory.Masters
 {
     public class ConcessionReasonMasterModel
     {

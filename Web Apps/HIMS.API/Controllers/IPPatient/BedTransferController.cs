@@ -5,10 +5,12 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
+using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.IPPatient
@@ -24,58 +26,33 @@ namespace HIMS.API.Controllers.IPPatient
             _IBedTransferService = repository;
         }
 
+        [HttpPost("InsertSP")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(BTransferModel obj)
+        {
+            TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
+            Bedmaster objbed = obj.BedTofreed.MapTo<Bedmaster>();
+            Admission objAdd = obj.Admssion.MapTo<Admission>();
+            if (obj.BedTransfer.TransferId == 0)
+            {
+                model.FromTime = Convert.ToDateTime(obj.BedTransfer.FromTime);
+                model.AddedBy = CurrentUserId;
+
+                obj.BedTofreed.BedId = obj.BedTofreed.BedId;
+                //objbed.AddedBy = CurrentUserId;
+
+                obj.Admssion.AdmissionId = obj.Admssion.AdmissionId;
+
+
+
+                await _IBedTransferService.InsertAsyncSP(model, objbed, objAdd ,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer Updated successfully.");
+        }
+
         
 
-        //[HttpPost("Insert")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertSP(BedTransferModel obj)
-        //{
-        //    TBedTransferDetail model = obj.MapTo<TBedTransferDetail>();
-
-        //    model.FromTime = Convert.ToDateTime(obj.FromTime);
-        //    model.ToTime = Convert.ToDateTime(obj.ToTime);
-        //    model.AddedBy = CurrentUserId;
-
-        //    await _IBedTransferService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            
-            
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer successfully.");
-        //}
-
-        [HttpPost("InsertSP")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(BedTransferModel obj)
-        {
-            TBedTransferDetail model = obj.MapTo<TBedTransferDetail>();
-            if (obj.TransferId == 0)
-            {
-                model.FromTime = Convert.ToDateTime(obj.FromTime);
-                model.AddedBy = CurrentUserId;
-                await _IBedTransferService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer added successfully.");
-        }
-
-
-        [HttpPost("AUpdateSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AdmissionUpdateSP(BedmasterModel1 obj)
-        {
-
-            Bedmaster model = obj.MapTo<Bedmaster>();
-            if (obj.BedId == 0)
-            {
-
-
-                await _IBedTransferService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer  Updated successfully.");
-        }
     }
-    
 }

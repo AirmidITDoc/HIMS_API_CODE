@@ -4,14 +4,14 @@ using System.Transactions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using Aspose.Cells.Drawing;
 using HIMS.Services.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.Extensions;
+using System.Dynamic;
+using Microsoft.Data.SqlClient;
+using static LinqToDB.Common.Configuration;
+using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -21,6 +21,10 @@ namespace HIMS.Services.OPPatient
         public VisitDetailsService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -209,5 +213,20 @@ namespace HIMS.Services.OPPatient
             }
         }
 
+      
+        public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+        }
+
+        public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "m_Rtrv_BrowseOPPaymentList");
+        }
+
+        public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "m_Rtrv_BrowseOPDRefundBillList");
+        }
     }
 }

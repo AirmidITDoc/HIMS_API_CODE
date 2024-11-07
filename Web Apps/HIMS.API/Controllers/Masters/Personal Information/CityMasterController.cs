@@ -25,20 +25,20 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
         }
-        //City List find with state Id - API
-        [HttpGet("CityListWithState/{StateId?}")]
-        //[Permission(PageCode = "CityListWithState", Permission = PagePermission.View)]
-        public async Task<ApiResponse> CityListWithState(int StateId)
-        {
-            var data = await _repository.GetAll(x => x.IsActive == true && x.StateId == StateId);
-            return new ApiResponse { StatusCode = 200, Data = data };
-        }
+        ////City List find with state Id - API
+        //[HttpGet("CityListWithState/{StateId?}")]
+        ////[Permission(PageCode = "CityListWithState", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> CityListWithState(int StateId)
+        //{
+        //    var data = await _repository.GetAll(x => x.IsActive == true && x.StateId == StateId);
+        //    return new ApiResponse { StatusCode = 200, Data = data };
+        //}
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "CityMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CityMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CityMasterModel obj)
         {
             MCityMaster model = obj.MapTo<MCityMaster>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "CityMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CityMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CityMasterModel obj)
         {
             MCityMaster model = obj.MapTo<MCityMaster>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "CityMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CityMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCityMaster model = await _repository.GetById(x => x.CityId == Id);

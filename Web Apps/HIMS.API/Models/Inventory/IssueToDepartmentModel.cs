@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Inventory
 {
     public class IssueToDepartmentModel
     {
         public long IssueId { get; set; }
-        //public long? IssueNo { get; set; }
         public DateTime? IssueDate { get; set; }
         public string? IssueTime { get; set; }
         public long? FromStoreId { get; set; }
@@ -18,7 +18,11 @@ namespace HIMS.API.Models.Inventory
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
+
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        public List<CurrentStockModel> TCurrentStock { get; set; }
+
+
 
     }
     public class IssueToDepartmentModelValidator : AbstractValidator<IssueToDepartmentModel>
@@ -27,13 +31,12 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.IssueDate).NotNull().NotEmpty().WithMessage("IssueDate Date is required");
             RuleFor(x => x.IssueTime).NotNull().NotEmpty().WithMessage("IssueTime Time is required");
-            RuleFor(x => x.FromStoreId).NotNull().NotEmpty().WithMessage("From StoreId is required");
-            RuleFor(x => x.ToStoreId).NotNull().NotEmpty().WithMessage("To StoreId is required");
 
         }
     }
     public class IssueToDepartmentDetailModel
     {
+        public long IssueDepId { get; set; }
         public long? IssueId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
@@ -44,7 +47,7 @@ namespace HIMS.API.Models.Inventory
         public decimal? VatAmount { get; set; }
         public decimal? LandedTotalAmount { get; set; }
         public decimal? UnitMrp { get; set; }
-        public decimal? MRPTotalAmount { get; set; }
+        public decimal? MrptotalAmount { get; set; }
         public decimal? UnitPurRate { get; set; }
         public decimal? PurTotalAmount { get; set; }
         public long? StkId { get; set; }
@@ -53,28 +56,34 @@ namespace HIMS.API.Models.Inventory
     {
         public IssueToDepartmentDetailModelValidator()
         {
-            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
-            RuleFor(x => x.BatchNo).NotNull().NotEmpty().WithMessage("BatchNo  is required");
             RuleFor(x => x.BatchExpDate).NotNull().NotEmpty().WithMessage("BatchExpDate  is required");
 
         }
     }
-    //public class updateissuetoDepartmentStockModel
-    //{
-    //    public int ItemId { get; set; }
-    //    public int IssueQty { get; set; }
-    //    public int StkId { get; set; }
-    //    public int StoreID { get; set; }
-    //}
-    //public class updateissuetoDepartmentStockModelValidator : AbstractValidator<updateissuetoDepartmentStockModel>
-    //{
-    //    public updateissuetoDepartmentStockModelValidator()
-    //    {
-    //        RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
-    //        RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
-    //        RuleFor(x => x.StkId).NotNull().NotEmpty().WithMessage("StkId  is required");
+    public class CurrentStockModel
+    {
+        public int ItemId { get; set; }
+        public int IssueQty { get; set; }
+        public int StkId { get; set; }
+        public int StoreID { get; set; }
+    }
+    public class CurrentStockModelValidator : AbstractValidator<CurrentStockModel>
+    {
+        public CurrentStockModelValidator()
+        {
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
+            RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
+            RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
 
-    //    }
+        }
+    }
+    //public class IssueTODepModel
+    //{
+    //    public  IssueToDepartmentModel issue { get; set; }
+
+    //    public IssueToDepartmentDetailModel Depissue { get; set; }
+    //    public CurrentStockModel curruntissue { get; set; }
+
     //}
 
 }

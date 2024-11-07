@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.IPPatient
@@ -35,20 +36,35 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.ToTime).NotNull().NotEmpty().WithMessage("ToTime is required");
         }
     }
-    public  class BedmasterModel1
+    public  class BedMasterTofreebedModel
     {
         public long BedId { get; set; }
-        public string? BedName { get; set; }
-        public long? RoomId { get; set; }
-        public bool? IsAvailible { get; set; }
-        public bool? IsActive { get; set; }
     }
-    public class BedmasterModel1Validator : AbstractValidator<BedmasterModel1>
+    public class BedMasterTofreebedModelValidator : AbstractValidator<BedMasterTofreebedModel>
     {
-        public BedmasterModel1Validator()
+        public BedMasterTofreebedModelValidator()
         {
-            RuleFor(x => x.BedName).NotNull().NotEmpty().WithMessage("BedName is required");
-            RuleFor(x => x.RoomId).NotNull().NotEmpty().WithMessage("RoomId is required");
+            RuleFor(x => x.BedId).NotNull().NotEmpty().WithMessage("BedName is required");
         }
+    }
+    public class AdmissionforBedModel
+    {
+        public long AdmissionId { get; set; }
+        public long? BedId { get; set; }
+        public long? WardId { get; set; }
+        public long? ClassId { get; set; }
+    }
+    public class AdmissionforBedModelValidator : AbstractValidator<AdmissionforBedModel>
+    {
+        public AdmissionforBedModelValidator()
+        {
+            RuleFor(x => x.WardId).NotNull().NotEmpty().WithMessage("WardId is required");
+        }
+    }
+    public class BTransferModel
+    {
+        public BedTransferModel BedTransfer { get; set; }
+        public BedMasterTofreebedModel BedTofreed { get; set; }
+        public AdmissionforBedModel Admssion { get; set; }
     }
 }

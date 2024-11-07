@@ -50,7 +50,10 @@
     <Folder Include="Controllers\Radiology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
+<<<<<<< HEAD
     <Folder Include="Models\NewFolder\" />
+=======
+>>>>>>> 0654bf44c6c76efe308741edbc1cc28e57140f79
     <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 

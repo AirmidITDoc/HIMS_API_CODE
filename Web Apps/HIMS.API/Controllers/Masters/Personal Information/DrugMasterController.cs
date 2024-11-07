@@ -7,9 +7,13 @@ using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class DrugMasterController : BaseController
     {
         private readonly IGenericService<MDrugMaster> _repository;

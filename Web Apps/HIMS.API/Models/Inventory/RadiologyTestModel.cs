@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Inventory
         public long? ServiceId { get; set; }
         public List<RadiologyTemplateDetailModel> MRadiologyTemplateDetails { get; set; }
     }
-    public class RadiologyTestModelValidator : AbstractValidator<RadiologyTestModel>
+     public class RadiologyTestModelValidator : AbstractValidator<RadiologyTestModel>
     {
         public RadiologyTestModelValidator()
         {

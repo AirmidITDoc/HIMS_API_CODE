@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.Nursing
 {
-    public partial interface ICanteenRequestService
+    public partial  interface ICanteenRequestService
     {
-        Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
-
-
+        
+            Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
     }
 }

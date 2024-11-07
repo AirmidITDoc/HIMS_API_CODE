@@ -53,4 +53,9 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.IsInchargeVerifyId).NotNull().NotEmpty().WithMessage("Incharge verified id is required");
         }
     }
+
+    public class IndentCancel
+    {
+        public long IndentId { get; set; }
+    }
 }
