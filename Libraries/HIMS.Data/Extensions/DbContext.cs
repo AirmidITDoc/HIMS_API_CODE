@@ -31,6 +31,8 @@ namespace HIMS.Data.Models
     }
     public partial class HIMSDbContext : DbContext, IContext
     {
+        public object MDoctorPerMaster { get; set; }
+
         public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
             : base(options)
         {

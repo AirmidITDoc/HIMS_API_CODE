@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Masters
     public class PatientTypeModel
     {
         public int PatientTypeId { get; set; }
-        public string PatientType { get; set;} =  string.Empty;
+        public string PatientType { get; set;}
 
     }
     public class PatientTypeModelValidator : AbstractValidator<PatientTypeModel>

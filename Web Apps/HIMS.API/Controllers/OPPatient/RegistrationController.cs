@@ -8,6 +8,8 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using HIMS.Services.Users;
@@ -28,6 +30,16 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _IRegistrationService = repository;
         }
+
+        [HttpPost("RegistrationList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<RegistrationListDto> RegistrationList = await _IRegistrationService.GetListAsync(objGrid);
+            return Ok(RegistrationList.ToGridResponse(objGrid, "Registration List"));
+        }
+
+
         [HttpPost("RegistrationInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RegistrationModel obj)
