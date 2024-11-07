@@ -1,24 +1,22 @@
 ﻿using Asp.Versioning;
-using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
+using HIMS.API.Models.Masters;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class TaxMasterController : BaseController
+    public class StoreController : BaseController
     {
-        private readonly IGenericService<MTaxNatureMaster> _repository;
-        public TaxMasterController(IGenericService<MTaxNatureMaster> repository)
+        private readonly IGenericService<MStoreMaster> _repository;
+        public StoreController(IGenericService<MStoreMaster> repository)
         {
             _repository = repository;
         }
@@ -28,8 +26,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MTaxNatureMaster> TaxMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(TaxMasterList.ToGridResponse(objGrid, "TaxMaster List"));
+            IPagedList<MStoreMaster> MStoreMastereList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MStoreMastereList.ToGridResponse(objGrid, "StoreMastere List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -40,17 +38,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.Id == id);
-            return data.ToSingleResponse<MTaxNatureMaster, TaxMasterModel>("TaxMaster");
+            var data = await _repository.GetById(x => x.StoreId == id);
+            return data.ToSingleResponse<MStoreMaster, StoreMasterModel>("StoreMastere");
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(TaxMasterModel obj)
+        // [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(StoreMasterModel obj)
         {
-            MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
-           model.IsActive = 1;
-            if (obj.Id == 0)
+            MStoreMaster model = obj.MapTo<MStoreMaster>();
+            model.IsActive = true;
+            if (obj.StoreId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -58,42 +56,40 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Store name  added successfully.");
         }
-        //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(TaxMasterModel obj)
+        public async Task<ApiResponse> Edit(StoreMasterModel obj)
         {
-            MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
-            model.IsActive = 1;
-            if (obj.Id == 0)
+            MStoreMaster model = obj.MapTo<MStoreMaster>();
+            model.IsActive = true;
+            if (obj.StoreId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Store  name updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        // [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MTaxNatureMaster model = await _repository.GetById(x => x.Id == Id);
-            if ((model?.Id ?? 0) > 0)
+            MStoreMaster model = await _repository.GetById(x => x.StoreId == Id);
+            if ((model?.StoreId ?? 0) > 0)
             {
-                model.IsActive = 0;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.IsActive = false;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Store Name  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
     }
 }

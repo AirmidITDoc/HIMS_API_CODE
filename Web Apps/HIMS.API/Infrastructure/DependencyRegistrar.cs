@@ -21,8 +21,6 @@ using HIMS.Services.OutPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
-using HIMS.Services.NursingStation;
-using HIMS.Services.Transaction;
 
 namespace HIMS.API.Infrastructure
 {
@@ -73,6 +71,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIPBillwithCreditService, IPBillwithCreditService>();
             services.AddScoped<IIPAdvanceService, IPAdvanceService>();
             services.AddScoped<IAdvanceService, AdvanceService>();
+            services.AddScoped<IPhoneAppListService, PhoneAppListService>();
 
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
@@ -83,34 +82,34 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<IPhoneAppService, PhoneAppService>();
-
-
-            //services.AddScoped<IPhoneAppointmentService, PhoneAppointmentService>();
+            services.AddScoped<IPhoneAppointment1Service, PhoneAppointment1Service>();
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
          
             services.AddScoped<IBedTransferService, BedTransferService>();
             services.AddScoped<IPrescription, PrescriptionSer>();
             services.AddScoped<IDischargeService, DischargeService>();
-            services.AddScoped<ILabRequestService, LabRequestService>();
-            services.AddScoped<IMPrescriptionService, MPrescriptionService>();
-
-
+            services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
+            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
+            services.AddScoped<IIPBillService, IPBIllService>();
+            services.AddScoped<IIPBILLCreditService,IPBILLCreditService>();
+            services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
+            services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
+            services.AddScoped<IIPInterimBillSerive,IPInterimBillSerive>();
 
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
             services.AddScoped<IAdmissionService,AdmissionService>();
+            services.AddScoped<IPathlogySampleCollectionService, PathlogySampleCollectionService>();
+            services.AddScoped<IDoctorSharePerCalculationService, DoctorSharePerCalculationService>();
             services.AddScoped<ICanteenRequestService, CanteenRequestService>();
 
-
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
+            services.AddScoped<IDoctorShareMasterService, DoctorShareMasterService>();
+
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
-            //services.AddScoped<IPrefixService, PrefixService>();
-
-            services.AddScoped<IStockAdjustmentService, StockAdjustmentService>();
-
-            services.AddScoped<IDischargeServiceSP, DischargeServiceSP>();
+            services.AddScoped<IBillCancellationService, BillCancellationService>();
+            services.AddScoped<IDischargeCancellationService, DischargeCancellationService>();
 
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddHttpContextAccessor();
