@@ -11,7 +11,6 @@ namespace HIMS.Data.DTO.OPPatient
         public string Address { get; set; }
         //public string Address { get; set; }
         //public string Address { get; set; }
-
         public DateTime VisitDate { get; set; }
         public string DVisitDate { get; set; }
     }

@@ -8,12 +8,7 @@ namespace HIMS.Data.DTO.IPPatient
 {
     public class RefundOfAdvanceListDto
     {
-        public long PaymentId { get; set; }
-        public long? BillNo { get; set; }
-        public string? ReceiptNo { get; set; }
-        public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
-        public long? AdvanceId { get; set; }
-        public long? RefundId { get; set; }
+        public string PatientName { get; set; }
+        public long RefundId { get; set; }
     }
 }

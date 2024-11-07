@@ -21,21 +21,21 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _IPhoneAppointment1Service = repository;
         }
-        [HttpPost("InsertSP")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertAsyncSP(phoneAppointmentModel1 obj)
-        {
-            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
-            if (obj.PhoneAppId == 0)
-            {
-                model.AppDate = Convert.ToDateTime(obj.AppDate);
-                model.AppTime = Convert.ToDateTime(obj.AppTime);
-                model.UpdatedBy = CurrentUserId;
-                await _IPhoneAppointment1Service.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added  added successfully.");
-        }
+        //[HttpPost("InsertSP")]
+        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertAsyncSP(phoneAppointmentModel1 obj)
+        //{
+        //    TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+        //    if (obj.PhoneAppId == 0)
+        //    {
+        //        model.AppDate = Convert.ToDateTime(obj.AppDate);
+        //        model.AppTime = Convert.ToDateTime(obj.AppTime);
+        //        model.UpdatedBy = CurrentUserId;
+        //        await _IPhoneAppointment1Service.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp added  added successfully.");
+        //}
     }
 }
