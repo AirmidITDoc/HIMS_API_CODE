@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TCanteenRequestHeader
     {
+        public TCanteenRequestHeader()
+        {
+            TCanteenRequestDetails = new HashSet<TCanteenRequestDetail>();
+        }
+
         public long ReqId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
@@ -19,5 +24,7 @@ namespace HIMS.Data.Models
         public bool? IsPrint { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
+
+        public virtual ICollection<TCanteenRequestDetail> TCanteenRequestDetails { get; set; }
     }
 }

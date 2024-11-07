@@ -24,5 +24,7 @@ namespace HIMS.Data.Models
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
         public string? SampleId { get; set; }
+
+        public virtual TPathologyReportHeader? PathReport { get; set; }
     }
 }

@@ -12,5 +12,7 @@ namespace HIMS.Data.Models
         public DateTime? BatchExpDate { get; set; }
         public double? Qty { get; set; }
         public bool? IsClosed { get; set; }
+
+        public virtual TIpprescriptionReturnH? PresRe { get; set; }
     }
 }

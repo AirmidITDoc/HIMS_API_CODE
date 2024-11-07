@@ -11,5 +11,7 @@ namespace HIMS.Data.Models
         public string? PathTemplateDetailsResult { get; set; }
         public long? TestId { get; set; }
         public string? TemplateResultInHtml { get; set; }
+
+        public virtual TPathologyReportHeader? PathReport { get; set; }
     }
 }
