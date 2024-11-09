@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -22,6 +25,11 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<SupplierListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SupplierListDto>(model, "m_Rtrv_SupplierMasterList_by_Name");
+        }
+
         public virtual async Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username)
         {
             try

@@ -124,7 +124,12 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.");
         }
 
-
+        [HttpPost("OPRegistrationList")]
+        public async Task<IActionResult> OPRegistrationList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRegistrationList> OpReglist = await _visitDetailsService.GeOPRgistrationListAsync(objGrid);
+            return Ok(OpReglist.ToGridResponse(objGrid, "OP Registration List"));
+        }
 
         [HttpPost("OPBillList")]
         public async Task<IActionResult> OPBillList(GridRequestModel objGrid)

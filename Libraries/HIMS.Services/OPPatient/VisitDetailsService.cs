@@ -228,5 +228,11 @@ namespace HIMS.Services.OPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "m_Rtrv_BrowseOPDRefundBillList");
         }
+
+        public virtual async Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel model)
+        {
+           
+            return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "Retrieve_RegistrationList");
+        }
     }
 }

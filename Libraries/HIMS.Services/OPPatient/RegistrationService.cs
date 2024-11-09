@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -19,7 +22,11 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<RegistrationListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "m_Rtrv_RegistrationList");
 
+        }
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
             DatabaseHelper odal = new();

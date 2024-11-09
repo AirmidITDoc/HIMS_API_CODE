@@ -3,6 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +21,13 @@ namespace HIMS.API.Controllers.Inventory
         public SupplierController(ISupplierService repository)
         {
             _SupplierService = repository;
+        }
+        [HttpPost("SupplierList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);
+            return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
         }
 
         [HttpPost("InsertSP")]
