@@ -105,9 +105,6 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-
-
-
             // OLD CODE With SP
             DatabaseHelper odal = new();
             string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };

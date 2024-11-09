@@ -1,5 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
