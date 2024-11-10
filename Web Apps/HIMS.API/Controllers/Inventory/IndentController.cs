@@ -13,6 +13,8 @@ using HIMS.API.Models.Inventory;
 using HIMS.Api.Controllers;
 using HIMS.Services.Inventory;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -28,6 +30,14 @@ namespace HIMS.API.Controllers.Inventory
             _IIndentService = repository;
         }
 
+
+        [HttpPost("IndentList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
+            return Ok(AppList.ToGridResponse(objGrid, "Indent List"));
+        }
         [HttpPost("Insert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IndentModel obj)

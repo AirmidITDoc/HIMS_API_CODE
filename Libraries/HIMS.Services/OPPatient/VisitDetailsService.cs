@@ -234,5 +234,13 @@ namespace HIMS.Services.OPPatient
            
             return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "Retrieve_RegistrationList");
         }
+
+        public virtual async Task<IPagedList<OPPhoneAppointmentList>> GeOPPhoneAppListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPhoneAppointmentList>(model,"Retrieve_PhoneAppList");
+        }
+
+
+       
     }
 }
