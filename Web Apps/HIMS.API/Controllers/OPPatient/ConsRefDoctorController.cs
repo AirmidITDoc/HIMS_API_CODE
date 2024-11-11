@@ -40,8 +40,8 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+                //model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                //model.VisitTime = Convert.ToDateTime(obj.VisitTime);
                  await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Consultant Doctor updated successfully.");
@@ -57,8 +57,8 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                model.VisitTime = Convert.ToDateTime(obj.VisitTime);
+                //model.VisitDate = Convert.ToDateTime(obj.VisitDate);
+                //model.VisitTime = Convert.ToDateTime(obj.VisitTime);
                 await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RefDoctor updated successfully.");
