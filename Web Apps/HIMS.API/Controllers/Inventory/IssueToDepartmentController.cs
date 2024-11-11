@@ -5,6 +5,8 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using HIMS.Services.OPPatient;
@@ -22,6 +24,16 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IIssueToDepService = repository;
         }
+
+        [HttpPost("IssueToDepttList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<IssuetodeptListDto> AppVisitList = await _IIssueToDepService.GetListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Issue To dept  List"));
+        }
+
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(IssueToDepartmentModel obj)

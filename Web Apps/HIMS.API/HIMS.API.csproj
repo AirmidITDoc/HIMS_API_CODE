@@ -50,6 +50,7 @@
     <Folder Include="Controllers\Radiology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
+    <Folder Include="Models\NewFolder\" />
     <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 

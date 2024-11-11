@@ -78,11 +78,11 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
         }
 
 
-        [HttpPost("Udate")]
+        [HttpPost("Update")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
@@ -103,14 +103,10 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment  Updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.");
         }
 
-
-
-
-
-        [HttpPost("Cancle")]
+        [HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
@@ -126,6 +122,41 @@ namespace HIMS.API.Controllers.OPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.");
+        }
+
+        [HttpPost("OPRegistrationList")]
+        public async Task<IActionResult> OPRegistrationList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRegistrationList> OpReglist = await _visitDetailsService.GeOPRgistrationListAsync(objGrid);
+            return Ok(OpReglist.ToGridResponse(objGrid, "OP Registration List"));
+        }
+
+        [HttpPost("OPBillList")]
+        public async Task<IActionResult> OPBillList(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillListDto> OpBilllist = await _visitDetailsService.GetBillListAsync(objGrid);
+            return Ok(OpBilllist.ToGridResponse(objGrid, "OP BILL List"));
+        }
+
+        [HttpPost("OPPaymentList")]
+        public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPaymentListDto> OpPaymentlist = await _visitDetailsService.GeOpPaymentListAsync(objGrid);
+            return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
+        }
+
+        [HttpPost("OPRefundList")]
+        public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRefundListDto> OpRefundlist = await _visitDetailsService.GeOpRefundListAsync(objGrid);
+            return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
+        }
+
+        [HttpPost("PhoneAppointList")]
+        public async Task<IActionResult> OPphAppList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPhoneAppointmentList> OphoneList = await _visitDetailsService.GeOPPhoneAppListAsync(objGrid);
+            return Ok(OphoneList.ToGridResponse(objGrid, "Phone Appointment List"));
         }
     }
 }

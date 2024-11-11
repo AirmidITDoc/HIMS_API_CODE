@@ -105,9 +105,6 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-
-
-
             // OLD CODE With SP
             DatabaseHelper odal = new();
             string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
@@ -213,5 +210,34 @@ namespace HIMS.Services.OPPatient
             }
         }
 
+      
+        public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+        }
+
+        public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "m_Rtrv_BrowseOPPaymentList");
+        }
+
+        public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "m_Rtrv_BrowseOPDRefundBillList");
+        }
+
+        public virtual async Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel model)
+        {
+           
+            return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "Retrieve_RegistrationList");
+        }
+
+        public virtual async Task<IPagedList<OPPhoneAppointmentList>> GeOPPhoneAppListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPhoneAppointmentList>(model,"Retrieve_PhoneAppList");
+        }
+
+
+       
     }
 }

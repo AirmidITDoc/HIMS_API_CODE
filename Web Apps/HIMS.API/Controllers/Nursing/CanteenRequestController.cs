@@ -22,6 +22,7 @@ namespace HIMS.API.Controllers.Nursing
             _ICanteenRequestService = repository;
         }
         [HttpPost("Insert")]
+
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {
