@@ -12,7 +12,7 @@ namespace HIMS.Services.OPPatient
     public partial interface IPhoneAppointment2Service
     {
         Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName);
-        //Task CancelAsync(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName);
+        Task CancelAsync(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel objGrid);
 
     }

@@ -34,9 +34,9 @@ namespace HIMS.API.Models.OPPatient
 
         }
     }
-    //public class PhoneAppointmentCancel
-    //{
-    //    public int PhoneAppId { get; set; }
-    //}
+    public class PhoneAppointmentCancel
+    {
+        public int PhoneAppId { get; set; }
+    }
 
 }
