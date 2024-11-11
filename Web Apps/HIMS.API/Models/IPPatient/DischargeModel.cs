@@ -9,8 +9,7 @@ namespace HIMS.API.Models.IPPatient
         public long DischargeId { get; set; }
         public long? AdmissionId { get; set; }
         public DateTime? DischargeDate { get; set; }
-        public DateTime? DischargeTime { get; set; }
-        //public long? IsCancelled { get; set; }
+        public string? DischargeTime { get; set; }
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
@@ -77,7 +76,7 @@ namespace HIMS.API.Models.IPPatient
         //public long? WardId { get; set; }
         //public long? BedId { get; set; }
         public DateTime? DischargeDate { get; set; }
-        public DateTime? DischargeTime { get; set; }
+        public string? DischargeTime { get; set; }
         public byte? IsDischarged { get; set; }
         //public byte? IsBillGenerated { get; set; }
         //public string? Ipdno { get; set; }

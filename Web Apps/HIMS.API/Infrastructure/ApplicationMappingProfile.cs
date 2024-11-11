@@ -62,7 +62,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MTemplateMaster, PathTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DoctorMaster, DoctoreMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTermsOfPaymentMaster, TermsOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<DbPrefixMaster, PrefixMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DbPrefixMaster, PrefixMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
@@ -89,8 +89,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<AdvanceHeader, AdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            CreateMap<Payment,AdvancePayment>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<Admission, AdmissionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<Bedmaster, BedMasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Admission, AdmissionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Bedmaster, BedMasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Discharge, DischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DischargeSummary, DischargeSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
