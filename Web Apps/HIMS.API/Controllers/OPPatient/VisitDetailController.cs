@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.");
         }
 
 
@@ -103,7 +103,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment  Updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.");
         }
 
         [HttpPost("Cancel")]
@@ -150,6 +150,13 @@ namespace HIMS.API.Controllers.OPPatient
         {
             IPagedList<OPRefundListDto> OpRefundlist = await _visitDetailsService.GeOpRefundListAsync(objGrid);
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
+        }
+
+        [HttpPost("PhoneAppointList")]
+        public async Task<IActionResult> OPphAppList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPhoneAppointmentList> OphoneList = await _visitDetailsService.GeOPPhoneAppListAsync(objGrid);
+            return Ok(OphoneList.ToGridResponse(objGrid, "Phone Appointment List"));
         }
     }
 }

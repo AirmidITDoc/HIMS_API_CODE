@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +15,17 @@ using System.Transactions;
 
 namespace HIMS.Services.OPPatient
 {
-    public class PhoneAppService : IPhoneAppService
+    public class PhoneAppointment2Service : IPhoneAppointment2Service
     {
         private readonly HIMSDbContext _context;
-        public PhoneAppService(HIMSDbContext HIMSDbContext)
+        public PhoneAppointment2Service(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-
-
-
+        public virtual async Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "m_rtrv_PhoneAppList");
+        }
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
@@ -38,8 +42,6 @@ namespace HIMS.Services.OPPatient
 
             return objTPhoneAppointment;
         }
-
-
         public virtual async Task CancelAsync(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -58,10 +60,3 @@ namespace HIMS.Services.OPPatient
         }
     }
 }
-
-
-
-
-
-
-

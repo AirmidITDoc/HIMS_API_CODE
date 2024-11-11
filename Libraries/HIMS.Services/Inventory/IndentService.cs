@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -134,6 +137,11 @@ namespace HIMS.Services.Inventory
 
                 scope.Complete();
             }
+        }
+
+        public virtual async Task<IPagedList<IndentListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndentListDto>(model, "Rtrv_IndentList_by_ID");
         }
     }
 }
