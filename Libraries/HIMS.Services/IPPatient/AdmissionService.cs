@@ -30,34 +30,34 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
-        }
+        //public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
+        //}
 
 
-        public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "m_Rtrv_BrowseIPRefundAdvanceReceipt");
-        }
+        //public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "m_Rtrv_BrowseIPRefundAdvanceReceipt");
+        //}
 
 
-        public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
-        }
+        //public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
+        //}
 
 
-        public virtual async Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
-        }
+        //public virtual async Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
+        //}
 
 
-        public virtual async Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
-        }
+        //public virtual async Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+        //}
 
 
 
