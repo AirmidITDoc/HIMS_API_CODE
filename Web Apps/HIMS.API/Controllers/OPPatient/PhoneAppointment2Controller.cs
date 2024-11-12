@@ -47,24 +47,27 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment added successfully.", model);
         }
-        //[HttpPost("Cancel")]
-        ////[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
-        //public async Task<ApiResponse> Cancel(PhoneAppCancel obj)
-        //{
-        //    TPhoneAppointment model = new();
-        //    if (obj.PhoneAppId != 0)
-        //    {
-        //        model.PhoneAppId = obj.PhoneAppId;
-        //        model.IsCancelled = true;
-        //        model.IsCancelledBy = CurrentUserId;
-        //        model.IsCancelledDate = DateTime.Now;
-        //        await _IPhoneAppService.CancelAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
-        //}
-
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
+        {
+            TPhoneAppointment model = new();
+            if (obj.PhoneAppId != 0)
+            {
+                model.PhoneAppId = obj.PhoneAppId;
+                model.IsCancelled = true;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = DateTime.Now;
+                await _IPhoneAppointment2Service.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
+        }
 
     }
+
+
+
 }
+

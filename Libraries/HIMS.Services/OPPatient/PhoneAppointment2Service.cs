@@ -47,12 +47,12 @@ namespace HIMS.Services.OPPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                TPhoneAppointment objphone = await _context.TPhoneAppointments.FindAsync(objTPhoneAppointment.PhoneAppId);
-                objphone.IsCancelled = objTPhoneAppointment.IsCancelled;
-                objphone.IsCancelledBy = objTPhoneAppointment.IsCancelledBy;
-                objphone.IsCancelledDate = objTPhoneAppointment.IsCancelledDate;
-                _context.TPhoneAppointments.Update(objphone);
-                _context.Entry(objphone).State = EntityState.Modified;
+                TPhoneAppointment objphoneApp = await _context.TPhoneAppointments.FindAsync(objTPhoneAppointment.PhoneAppId);
+                objphoneApp.IsCancelled = objTPhoneAppointment.IsCancelled;
+                objphoneApp.IsCancelledBy = objTPhoneAppointment.IsCancelledBy;
+                objphoneApp.IsCancelledDate = objTPhoneAppointment.IsCancelledDate;
+                _context.TPhoneAppointments.Update(objphoneApp);
+                _context.Entry(objphoneApp).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
