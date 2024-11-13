@@ -10,6 +10,8 @@ using HIMS.API.Models.Inventory;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 using HIMS.Services.IPPatient;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -22,6 +24,22 @@ namespace HIMS.API.Controllers.IPPatient
         public AdvanceController(IAdvanceService repository)
         {
             _IAdvanceService = repository;
+        }
+        [HttpPost("AdvanceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
+        {
+            IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
+            return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
+        }
+
+
+        [HttpPost("RefundOfAdvanceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> RefundAdvanceList(GridRequestModel objGrid)
+        {
+            IPagedList<RefundOfAdvanceListDto> RefundAdvanceList = await _IAdvanceService.GetRefundOfAdvanceListAsync(objGrid);
+            return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
         }
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
