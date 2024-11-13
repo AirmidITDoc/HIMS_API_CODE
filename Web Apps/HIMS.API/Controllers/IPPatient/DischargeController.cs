@@ -37,20 +37,20 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge  added successfully.");
         }
 
-        [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DischargeModel obj)
-        {
-            Discharge model = obj.MapTo<Discharge>();
-            if (obj.DischargeId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.DischargeDate = Convert.ToDateTime(obj.DischargeDate);
-                await _IDischargeService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge  updated successfully.");
-        }
+        //[HttpPut("Edit/{id:int}")]
+        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edit(DischargeModel obj)
+        //{
+        //    Discharge model = obj.MapTo<Discharge>();
+        //    if (obj.DischargeId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+        //        model.DischargeDate = Convert.ToDateTime(obj.DischargeDate);
+        //        await _IDischargeService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge  updated successfully.");
+        //}
 
     }
 }
