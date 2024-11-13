@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -19,7 +21,22 @@ namespace HIMS.Services.Common
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
+        }
 
+
+        public virtual async Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
+        }
+
+
+        public virtual async Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+        }
         public virtual async Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
 
