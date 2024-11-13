@@ -5,6 +5,8 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.IPPatient;
@@ -43,7 +45,31 @@ namespace HIMS.API.Controllers.Common
             _iPInterimBillSerive = iPInterimBill;
         }
 
+        [HttpPost("IPBillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BillList(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListDto> IPBillList = await _IPBillService.GetIPBillListListAsync(objGrid);
+            return Ok(IPBillList.ToGridResponse(objGrid, "IP Bill List"));
+        }
 
+
+        [HttpPost("IPPaymentList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<IPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
+            return Ok(IPPaymentList.ToGridResponse(objGrid, "IP Payment List List"));
+        }
+
+
+        [HttpPost("IPRefundBillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
+        {
+            IPagedList<IPRefundBillListDto> IPRefundBillList = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
+            return Ok(IPRefundBillList.ToGridResponse(objGrid, "IP Refund Bill List"));
+        }
 
         [HttpPost("OPAddchargesInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

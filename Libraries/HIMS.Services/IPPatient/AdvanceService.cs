@@ -17,6 +17,8 @@ using System.Linq;
 using System.Transactions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using HIMS.Services.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.IPPatient
 {
@@ -27,6 +29,17 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
+        }
+
+
+        public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "m_Rtrv_BrowseIPRefundAdvanceReceipt");
+        }
+
         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail,Payment objpayment, int UserId, string UserName)
         {
 
