@@ -7,6 +7,7 @@ using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.IPPatient;
 using HIMS.Services.IPPatient;
+using HIMS.API.Models.Nursing;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -22,25 +23,24 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(DischargeSummaryModel obj)
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(DischargeSummaryModel obj)
         {
             DischargeSummary model = obj.MapTo<DischargeSummary>();
             if (obj.DischargeSummaryId == 0)
             {
+                model.DischargeSummaryDate = Convert.ToDateTime(obj.DischargeSummaryDate);
                 model.DischargeSummaryTime = Convert.ToDateTime(obj.DischargeSummaryTime);
                 model.AddedBy = CurrentUserId;
-
                 await _IDischargeSummaryService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.");
         }
-
-        [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+         [HttpPut("Update")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DischargeSummaryModel obj)
         {
             DischargeSummary model = obj.MapTo<DischargeSummary>();
@@ -48,6 +48,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.DischargeSummaryDate = Convert.ToDateTime(obj.DischargeSummaryDate);
                 model.DischargeSummaryTime = Convert.ToDateTime(obj.DischargeSummaryTime);
                 await _IDischargeSummaryService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
