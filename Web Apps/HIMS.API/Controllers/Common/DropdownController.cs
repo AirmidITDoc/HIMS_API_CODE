@@ -35,12 +35,19 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MClassMaster> _IMClassService;
         private readonly IGenericService<CompanyMaster> _IMCompanysService;
         private readonly IGenericService<MSubTpacompanyMaster> _IMSubCompanysService;
+        private readonly IGenericService<Bedmaster> _IMBedService;
+        private readonly IGenericService<RoomMaster> _IMRoomService;
+        private readonly IGenericService<MRelationshipMaster> _IMRelationshipService;
+        private readonly IGenericService<ServiceMaster> _IMServiceService;
+        private readonly IGenericService<MItemMaster> _IMItemService;
+
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster, 
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster, 
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
             , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<MClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
-                                  , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster)
+                                  , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
+                                 IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster)
         {
             _IAreaService = areaservice;
             _IPrefixService = iPrefixService;
@@ -59,6 +66,12 @@ namespace HIMS.API.Controllers.Common
             _IMClassService = iMDoClassMaster;
             _IMCompanysService = iMDoCompanyMaster;
             _IMSubCompanysService = iMDoSubCompanyMaster;
+
+            _IMBedService = iMDoBedMaster;
+            _IMRoomService = iMDoRoomMaster;
+            _IMRelationshipService = iMDoRelationshipMaster;
+            _IMServiceService = iMDoServiceMaster;
+            _IMItemService = iMDoItemMaster;
 
         }
 
@@ -91,11 +104,16 @@ namespace HIMS.API.Controllers.Common
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
                 "ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
                 "Class" => (await _IMClassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ClassMaster.ClassId), nameof(ClassMaster.ClassName)),
+                "Bed" => (await _IMBedService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(Bedmaster.BedId), nameof(Bedmaster.BedName)),
+                "Room" => (await _IMRoomService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(RoomMaster.RoomId), nameof(RoomMaster.RoomName)),
 
                 "Company" => (await _IMCompanysService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CompanyMaster.CompanyId), nameof(CompanyMaster.CompanyName)),
                 "SubCompany" => (await _IMSubCompanysService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubTpacompanyMaster.SubCompanyId), nameof(MSubTpacompanyMaster.CompanyName)),
+                "RelationShip" => (await _IMRelationshipService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
+                "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
 
-               // "Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
+                // "Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };
