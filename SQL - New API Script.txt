@@ -1,0 +1,10 @@
+alter table LoginManager
+Add	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL
+	
+	
+Alter table MenuMaster
+add [PermissionCode] [nvarchar](50) NULL,
+	[TableNames] [nvarchar](max) NULL

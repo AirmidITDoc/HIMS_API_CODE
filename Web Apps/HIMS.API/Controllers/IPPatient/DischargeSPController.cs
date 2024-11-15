@@ -37,6 +37,7 @@ namespace HIMS.API.Controllers.IPPatient
             Admission objAdmission = obj.DischargeAdmissionModel.MapTo<Admission>();
             if (obj.DischargeModel.DischargeId == 0)
             {
+                model.DischargeDate = Convert.ToDateTime(obj.DischargeModel.DischargeDate);
                 model.DischargeTime = Convert.ToDateTime(obj.DischargeModel.DischargeTime);
                 model.AddedBy = CurrentUserId;
 

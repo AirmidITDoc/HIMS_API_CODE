@@ -87,6 +87,7 @@ namespace HIMS.API.Infrastructure
 
 
 
+
             CreateMap<AdvanceHeader, AdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            CreateMap<Payment,AdvancePayment>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -99,6 +100,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, DischargeADMISSIONModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Discharge, IPDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bedmaster, BedReleaseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+            
 
             CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSubTpacompanyMaster, SubTpaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

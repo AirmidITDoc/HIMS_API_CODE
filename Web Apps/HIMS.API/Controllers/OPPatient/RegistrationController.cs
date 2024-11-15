@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
-               // await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.");
         }
