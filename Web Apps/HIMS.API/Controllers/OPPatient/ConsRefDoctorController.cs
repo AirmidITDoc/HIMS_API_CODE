@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("RefDoctorUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(ConsRefDoctorModel obj)
+        public async Task<ApiResponse> Update(RefDoctorModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
             if (obj.VisitId == 0)
