@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
@@ -21,7 +24,10 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<PrescriptionReturnDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDto>(model, "Rtrv_IPPrescReturnItemDet");
+        }
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

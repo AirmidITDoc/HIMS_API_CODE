@@ -3,6 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using HIMS.Services.NursingStation;
@@ -27,9 +30,22 @@ namespace HIMS.API.Controllers.NursingStation
             _IMPrescriptionService = repository1;
             _IPriscriptionReturnService = repository2;
             _ICanteenRequestService = repository3;
-
-
         }
+        [HttpPost("LabRequestList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<LabRequestListDto> LabRequestList = await _ILabRequestService.GetListAsync(objGrid);
+            return Ok(LabRequestList.ToGridResponse(objGrid, "LabRequestList "));
+        }
+        [HttpPost("LabRequestDetailsList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.GetListAsyncD(objGrid);
+            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestList "));
+        }
+
         [HttpPost("InsertLab")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LabRequestModel obj)
@@ -62,6 +78,14 @@ namespace HIMS.API.Controllers.NursingStation
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
+        }
+
+        [HttpPost("PrescriptionReturnList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionReturnList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionReturnDto> PrescriptionReturnList = await _IPriscriptionReturnService.GetListAsync(objGrid);
+            return Ok(PrescriptionReturnList.ToGridResponse(objGrid, "PrescriptionReturnList "));
         }
 
         [HttpPost("PrescriptionReturnInsert")]

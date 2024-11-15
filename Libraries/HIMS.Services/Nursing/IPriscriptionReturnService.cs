@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,8 @@ namespace HIMS.Services.Nursing
     {
         Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
         Task UpdateAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
+        Task<IPagedList<PrescriptionReturnDto>> GetListAsync(GridRequestModel objGrid);
+
 
     }
 }
