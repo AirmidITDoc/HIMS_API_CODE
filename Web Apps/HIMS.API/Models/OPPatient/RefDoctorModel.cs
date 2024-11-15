@@ -10,7 +10,7 @@ namespace HIMS.API.Models.OPPatient
       
         public long? RefDocId { get; set; }
       
-        public long? DepartmentId { get; set; }
+        //public long? DepartmentId { get; set; }
        
     }
     public class RefDoctorModelValidator : AbstractValidator<RefDoctorModel>
@@ -20,7 +20,7 @@ namespace HIMS.API.Models.OPPatient
             RuleFor(x => x.VisitId).NotNull().NotEmpty().WithMessage("VisitId is required");
          
             RuleFor(x => x.RefDocId).NotNull().NotEmpty().WithMessage("RefDocId is required");
-            RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId is required");
+            //RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId is required");
            
         }
     }
