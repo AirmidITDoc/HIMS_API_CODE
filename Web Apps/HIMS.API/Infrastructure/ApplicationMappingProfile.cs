@@ -324,6 +324,8 @@ namespace HIMS.API.Infrastructure
           
             CreateMap<VisitDetail, ConsRefDoctorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<VisitDetail, RefDoctorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<Refund, RefundAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceHeader, AdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvRefundDetail, AdvRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
