@@ -2,6 +2,8 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
@@ -22,6 +24,10 @@ namespace HIMS.Services.Nursing
         public PriscriptionReturnService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<PrescriptionReturnDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDto>(model, "Rtrv_IPPrescReturnItemDet");
         }
         public virtual async Task<IPagedList<PrescriptionListDto>> GetListAsync(GridRequestModel model)
         {
