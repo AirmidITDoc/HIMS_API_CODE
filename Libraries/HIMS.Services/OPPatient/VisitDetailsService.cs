@@ -24,7 +24,7 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model,"m_Rtrv_VisitDetailsList_1_Pagi");
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
