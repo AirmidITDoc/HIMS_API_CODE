@@ -30,6 +30,27 @@ namespace HIMS.API.Controllers.NursingStation
             _IPriscriptionReturnService = repository2;
             _ICanteenRequestService = repository3;
         }
+        [HttpPost("PrescriptionList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionListDto> PrescriptiontList = await _IPriscriptionReturnService.GetPrescriptionListAsync(objGrid);
+            return Ok(PrescriptiontList.ToGridResponse(objGrid, "Prescription App List "));
+        }
+        [HttpPost("PrescriptionReturnList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionReturnListDto> PrescriptiontReturnList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
+            return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn App List "));
+        }
+        [HttpPost("PrescriptionDetailList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListDetail(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionDetailListDto> PrescriptiontDetailList = await _IPriscriptionReturnService.GetListAsyncDetail(objGrid);
+            return Ok(PrescriptiontDetailList.ToGridResponse(objGrid, "PrescriptionDetail App List "));
+        }
         //[HttpPost("LabRequestList")]
         ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         //public async Task<IActionResult> List(GridRequestModel objGrid)
