@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -18,7 +21,11 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<PathologySampleCollectionDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathologySampleCollectionDto>(model, "Rtrv_PathSamPatList");
 
+        }
         public virtual async Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)
         {
             DatabaseHelper odal = new();

@@ -26,7 +26,7 @@ namespace HIMS.Services.Nursing
             return await DatabaseHelper.GetGridDataBySp<LabRequestListDto>(model, "m_Rtrv_LabRequest_Nursing");
 
         }
-        public virtual async Task<IPagedList<LabRequestDetailsListDto>> GetListAsyncD(GridRequestModel model)
+        public virtual async Task<IPagedList<LabRequestDetailsListDto>> SPGetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<LabRequestDetailsListDto>(model, "m_Rtrv_NursingLabRequestDetails");
 
