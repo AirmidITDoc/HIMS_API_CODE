@@ -3,6 +3,8 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using HIMS.Services.NursingStation;
@@ -29,6 +31,27 @@ namespace HIMS.API.Controllers.NursingStation
             _ICanteenRequestService = repository3;
 
 
+        }
+        [HttpPost("Prescription List")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionListDto> PrescriptionAppList = await _IPriscriptionReturnService.GetListAsync(objGrid);
+            return Ok(PrescriptionAppList.ToGridResponse(objGrid, "Prescription App List"));
+        }
+        [HttpPost("PrescriptionReturn List")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> ReturnList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionReturnListDto> PrescriptionReturnAppList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
+            return Ok(PrescriptionReturnAppList.ToGridResponse(objGrid, "PrescriptionReturn App List"));
+        }
+        [HttpPost("PrescriptionDetail List")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DetailList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionDetailListDto> PrescriptionDeatilAppList = await _IPriscriptionReturnService.GetListAsyncDetail(objGrid);
+            return Ok(PrescriptionDeatilAppList.ToGridResponse(objGrid, "Prescriptiondetail App List"));
         }
         [HttpPost("InsertLab")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
