@@ -29,7 +29,7 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDto>(model, "Rtrv_IPPrescReturnItemDet");
         }
-        public virtual async Task<IPagedList<PrescriptionListDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PrescriptionListDto>> GetPrescriptionListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PrescriptionListDto>(model, "Retrieve_PrescriptionListFromWard");
         }
