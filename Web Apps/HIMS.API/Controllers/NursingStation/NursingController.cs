@@ -33,21 +33,21 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionListDto> PrescriptiontList = await _IPriscriptionReturnService.GetPrescriptionListAsync(objGrid);
-            return Ok(PrescriptiontList.ToGridResponse(objGrid, "Prescription App List "));
+            return Ok(PrescriptiontList.ToGridResponse(objGrid, "Prescription  List "));
         }
-        [HttpPost("ListReturn")]
+        [HttpPost("PrescriptionWardList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnListDto> PrescriptiontReturnList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
-            return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn App List "));
+            return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionWard  List "));
         }
         [HttpPost("PrescriptionDetailList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> ListDetail(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionDetailListDto> PrescriptiontDetailList = await _IPriscriptionReturnService.GetListAsyncDetail(objGrid);
-            return Ok(PrescriptiontDetailList.ToGridResponse(objGrid, "PrescriptionDetail App List "));
+            return Ok(PrescriptiontDetailList.ToGridResponse(objGrid, "PrescriptionDetail  List "));
         }
 
         [HttpPost("LabRequestList")]
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
-            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestList "));
+            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
 
     
