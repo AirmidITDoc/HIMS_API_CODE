@@ -10,6 +10,7 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
+using HIMS.Data.DTO.Master;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -22,7 +23,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _IDoctorMasterService = repository;
         }
-
+        [HttpPost("DoctorList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<DoctoreMasterDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
+        }
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorMasterModel obj)
