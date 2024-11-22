@@ -15,8 +15,7 @@ using HIMS.API.Models.Masters;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
 
-
-    [Route("api/v{version:apiVersion}/[controller]")]
+ [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
     public class AreaMasterController : BaseController
@@ -64,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Area added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AreaMaster added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -81,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Area updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AreaMaster updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -95,13 +94,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Area deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AreaMaster deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
-
     }
 }

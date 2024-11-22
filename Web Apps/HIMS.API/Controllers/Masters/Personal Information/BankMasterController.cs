@@ -14,8 +14,6 @@ using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
-
-
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
@@ -27,7 +25,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _repository = repository;
         }
-
         //List API
         [HttpPost]
         [Route("[action]")]
@@ -48,8 +45,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             var data = await _repository.GetById(x => x.BankId == id);
             return data.ToSingleResponse<MBankMaster, BankMasterModel>("BankMaster");
         }
-
-
         [HttpPost]
         //[Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(BankMasterModel obj)
@@ -100,9 +95,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
-
     }
 }
 
