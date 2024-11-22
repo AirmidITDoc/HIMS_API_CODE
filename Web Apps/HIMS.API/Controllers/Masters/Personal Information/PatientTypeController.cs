@@ -24,7 +24,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _repository = repository;
         }
-
         //List API
         [HttpPost]
         [Route("[action]")]
