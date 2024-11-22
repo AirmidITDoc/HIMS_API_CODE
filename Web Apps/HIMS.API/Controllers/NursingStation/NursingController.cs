@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(LabRequestList.ToGridResponse(objGrid, "LabRequestList "));
         }
 
-        [HttpPost("LabRequestDetailsList")]
+        [HttpPost("LabRequestDetailsList")] 
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {

@@ -39,7 +39,7 @@ namespace HIMS.Services.Nursing
         }
         public virtual async Task<IPagedList<PrescriptionDetailListDto>> GetListAsyncDetail(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailListDto>(model, "Rtrv_IP_Prescriptio_Det");
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailListDto>(model, "m_Rtrv_IP_Prescriptio_Det");
         }
 
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
