@@ -19,11 +19,7 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.RoomName).NotNull().NotEmpty().WithMessage("RoomName  is required");
             RuleFor(x => x.RoomType).NotNull().NotEmpty().WithMessage(" RoomType is required");
             RuleFor(x => x.LocationId).NotNull().NotEmpty().WithMessage(" LocationId is required");
-            RuleFor(x => x.IsAvailible).NotNull().NotEmpty().WithMessage(" IsAvailible is required");
             RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
-
-
-
         }
     }
 }

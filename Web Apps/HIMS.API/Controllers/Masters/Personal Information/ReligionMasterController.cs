@@ -78,8 +78,7 @@ namespace HIMS.API.Controllers.Masters
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ReligionName updated successfully.");
         }
-
-        //Delete API
+         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
