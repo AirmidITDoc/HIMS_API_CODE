@@ -9,20 +9,25 @@ namespace HIMS.Data.DTO.OPPatient
     public class OPBillservicedetailListDto
     {
         public long ChargesId { get; set; }
-        //public string ChargesDate { get; set; }
+        public string ChargesDate { get; set; }
         public long ServiceId { get; set; }
         public string ServiceName { get; set; }
-        //public double Price { get; set; }
-        
-        //public int Qty { get; set; }
-        //public double TotalAmt { get; set; }
-        //public double NetAmount { get; set; }
-        //public long DoctorId { get; set; }
-        //public string ChargesDocName { get; set; }
-        //public int OPD_IPD_Type { get; set; }
+        public double Price { get; set; }
+
+        public double Qty { get; set; }
+        public double TotalAmt { get; set; }
+        public decimal NetAmount { get; set; }
+        public long DoctorId { get; set; }
+        public string ChargesDocName { get; set; }
+        public int OPD_IPD_Type { get; set; }
         //public bool IsCancelled { get; set; }
-        //public double RefundAmount { get; set; }
-        //public int BillNo { get; set; }
+        public double RefundAmount { get; set; }
+
+        public decimal BalAmt { get; set; }
+        
+        public decimal BalanceAmount { get; set; }
+        
+        public long BillNo { get; set; }
      
     }
 }

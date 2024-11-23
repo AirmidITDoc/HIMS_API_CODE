@@ -46,7 +46,11 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MBankMaster> _IMbankService;
         private readonly IGenericService<MStoreMaster> _IMStoreService;
         private readonly IGenericService<MTermsOfPaymentMaster> _IMTermofpaymentService;
+        private readonly IGenericService<CashCounter> _IMCashcounterService;
+        private readonly IGenericService<DoctorTypeMaster> _IMDoctorTypeService;
         
+
+
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster, 
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster, 
@@ -55,7 +59,8 @@ namespace HIMS.API.Controllers.Common
                                   , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
             , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster, IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
-            , IGenericService<MBankMaster> iMDoBankMaster, IGenericService<MStoreMaster> iMDoStoreMaster, IGenericService<MTermsOfPaymentMaster> iMDoTemofpaymentMaster)
+            , IGenericService<MBankMaster> iMDoBankMaster, IGenericService<MStoreMaster> iMDoStoreMaster, IGenericService<MTermsOfPaymentMaster> iMDoTemofpaymentMaster
+            , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster)
         {
             _IAreaService = areaservice;
             _IPrefixService = iPrefixService;
@@ -86,6 +91,8 @@ namespace HIMS.API.Controllers.Common
             _IMbankService = iMDoBankMaster;
             _IMStoreService = iMDoStoreMaster;
             _IMTermofpaymentService = iMDoTemofpaymentMaster;
+            _IMCashcounterService = iMDoCashcounterMaster;
+            _IMDoctorTypeService = iMDoDoctorTyperMaster;
 
         }
 
@@ -116,6 +123,8 @@ namespace HIMS.API.Controllers.Common
                 "Department" => (await _IMDepartmentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDepartmentMaster.DepartmentId), nameof(MDepartmentMaster.DepartmentName)),
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
                 "ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
+                "DoctorType" => (await _IMDoctorMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DoctorTypeMaster.Id), nameof(DoctorTypeMaster.DoctorType)),
+
                 "PathologyDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
 
                 "Class" => (await _IMClassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ClassMaster.ClassId), nameof(ClassMaster.ClassName)),
@@ -134,7 +143,8 @@ namespace HIMS.API.Controllers.Common
                 "Store" => (await _IMStoreService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),
 
                 "PaymentMode" => (await _IMModeofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfPayment.Id), nameof(MModeOfPayment.ModeOfPayment)),
-
+                "CashCounter" => (await _IMModeofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
+                
                 // "Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
