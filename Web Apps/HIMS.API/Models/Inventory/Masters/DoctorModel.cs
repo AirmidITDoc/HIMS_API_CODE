@@ -2,14 +2,14 @@
 
 namespace HIMS.API.Models.Masters
 {
-    public class DoctorMasterModel
+    public class DoctorModel
     {
         public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public string? DateofBirth { get; set; }
+        public DateTime? DateofBirth { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? Pin { get; set; }
@@ -19,6 +19,7 @@ namespace HIMS.API.Models.Masters
         public string? Education { get; set; }
         public bool? IsConsultant { get; set; }
         public bool? IsRefDoc { get; set; }
+        public bool? IsActive { get; set; }
         public long DoctorTypeId { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
@@ -26,9 +27,9 @@ namespace HIMS.API.Models.Masters
         public string? PassportNo { get; set; }
         public string? Esino { get; set; }
         public string? RegNo { get; set; }
-        public string? RegDate { get; set; }
+        public DateTime? RegDate { get; set; }
         public string? MahRegNo { get; set; }
-        public string? MahRegDate { get; set; }
+        public DateTime? MahRegDate { get; set; }
         public string? RefDocHospitalName { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
@@ -36,16 +37,13 @@ namespace HIMS.API.Models.Masters
         public string? AadharCardNo { get; set; }
         public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
     }
-    public class DoctorMasterModelValidator : AbstractValidator<DoctorMasterModel>
+    public class DoctorModelValidator : AbstractValidator<DoctorModel>
     {
-        public DoctorMasterModelValidator()
+        public DoctorModelValidator()
         {
-            RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage("PrefixId is required");
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
             RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            RuleFor(x => x.GenderId).NotNull().NotEmpty().WithMessage("GenderId is required");
-            //RuleFor(x => x.RegNo).NotNull().NotEmpty().WithMessage("FirstName is required");
             RuleFor(x => x.DoctorTypeId).NotNull().NotEmpty().WithMessage("DoctorTypeId is required");
         }
     }
@@ -55,19 +53,14 @@ namespace HIMS.API.Models.Masters
         public long? DoctorId { get; set; }
         public long? DepartmentId { get; set; }
     }
-
-
-    public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
+public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
     {
         public MDoctorDepartmentDetValidator()
         {
-            RuleFor(x => x.DoctorId).NotNull().NotEmpty().WithMessage("DoctorId  is required");
             RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId  is required");
            
         }
     }
-
-
 }
 
 
