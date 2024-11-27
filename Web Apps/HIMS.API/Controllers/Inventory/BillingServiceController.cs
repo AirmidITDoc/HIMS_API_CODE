@@ -4,10 +4,11 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -21,7 +22,15 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IBillingService = repository;
         }
-       
+
+        [HttpPost("BillingList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<BillingServiceDto> BillingList = await _IBillingService.GetListAsync(objGrid);
+            return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
+        }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BillingServiceModel obj)

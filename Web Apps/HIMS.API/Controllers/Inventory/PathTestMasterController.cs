@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Inventory
             _ITestmasterService = repository;
         }
        
-          [HttpPost("Insert")]
+         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathTestMasterModel obj)
         {
