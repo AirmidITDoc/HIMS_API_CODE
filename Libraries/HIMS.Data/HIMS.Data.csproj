@@ -21,4 +21,11 @@
     <ProjectReference Include="..\HIMS.Core\HIMS.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\NewFolder1\" />
+    <Folder Include="DTO\NewFolder2\" />
+    <Folder Include="DTO\NewFolder3\" />
+    <Folder Include="DTO\NewFolder\" />
+  </ItemGroup>
+
 </Project>

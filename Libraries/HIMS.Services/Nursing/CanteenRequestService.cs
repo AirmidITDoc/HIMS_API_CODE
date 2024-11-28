@@ -1,4 +1,8 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +18,14 @@ namespace HIMS.Services.Nursing
         public CanteenRequestService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenRequestListDto>(model, "m_Rtrv_CanteenRequestDet");
+        }
+        public virtual async Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "m_Rtrv_CanteenRequestListFromWard");
         }
         public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
         {
