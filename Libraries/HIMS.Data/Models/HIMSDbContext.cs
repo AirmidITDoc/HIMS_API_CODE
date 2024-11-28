@@ -661,8 +661,6 @@ namespace HIMS.Data.Models
 
                 entity.HasIndex(e => new { e.DocNameId, e.IsDischarged, e.IsCancelled }, "Admis_Cond");
 
-                entity.Property(e => e.AdmissionId).HasColumnName("AdmissionID");
-
                 entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
 
                 entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
@@ -1598,11 +1596,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MrdreceivedUserId).HasColumnName("MRDReceivedUserID");
 
                 entity.Property(e => e.UpdatedBy).HasDefaultValueSql("((0))");
-
-                entity.HasOne(d => d.Admission)
-                    .WithMany(p => p.Discharges)
-                    .HasForeignKey(d => d.AdmissionId)
-                    .HasConstraintName("FK_Discharge_Admission");
             });
 
             modelBuilder.Entity<DischargeSummary>(entity =>
@@ -1672,11 +1665,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UpdatedByDate).HasColumnType("datetime");
 
                 entity.Property(e => e.WarningSymptoms).HasColumnType("text");
-
-                entity.HasOne(d => d.Admission)
-                    .WithMany(p => p.DischargeSummaries)
-                    .HasForeignKey(d => d.AdmissionId)
-                    .HasConstraintName("FK_DischargeSummary_Admission");
             });
 
             modelBuilder.Entity<DischargeTypeMaster>(entity =>
@@ -11263,11 +11251,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("PTime");
 
                 entity.Property(e => e.Remark).HasMaxLength(200);
-
-                entity.HasOne(d => d.OpdIpd)
-                    .WithMany(p => p.TIpPrescriptionDischarges)
-                    .HasForeignKey(d => d.OpdIpdId)
-                    .HasConstraintName("FK_T_IP_Prescription_Discharge_Admission");
             });
 
             modelBuilder.Entity<TIpmedicalRecord>(entity =>

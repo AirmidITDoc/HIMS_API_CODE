@@ -11,6 +11,8 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using System.Threading.Tasks;
 using System.Transactions;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -21,6 +23,24 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
+
+        public virtual async Task<IPagedList<OpBilllistforRefundDto>> GeOpbilllistforrefundAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OpBilllistforRefundDto>(model, "m_OPBillListforRefund");
+        }
+
+        public virtual async Task<IPagedList<OPBillservicedetailListDto>> GetBillservicedetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillservicedetailListDto>(model, "m_rtrv_OPBill_For_Refund");
+        }
+
+        //public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
+        //}
+
+
+
         public virtual async Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
         {
 

@@ -8,6 +8,9 @@ using HIMS.API.Extensions;
 using HIMS.Services.Inventory;
 using Asp.Versioning;
 using HIMS.Services.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -20,6 +23,13 @@ namespace HIMS.API.Controllers.Inventory
         public ItemMasterController(IItemMasterService repository)
         {
             _ItemMasterServices = repository;
+        }
+        [HttpPost("ItemMasterList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<ItemMasterListDto> ItemMasterList = await _ItemMasterServices.GetItemMasterListAsync(objGrid);
+            return Ok(ItemMasterList.ToGridResponse(objGrid, "ItemMaster App  List "));
         }
 
         [HttpPost("InsertSP")]

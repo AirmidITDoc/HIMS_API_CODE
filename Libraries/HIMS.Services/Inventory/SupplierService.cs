@@ -29,7 +29,6 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<SupplierListDto>(model, "m_Rtrv_SupplierMasterList_by_Name");
         }
-
         public virtual async Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username)
         {
             try
@@ -108,7 +107,6 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-
     }
 }
 

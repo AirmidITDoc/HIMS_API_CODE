@@ -1,4 +1,8 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +21,23 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
-      
+        public virtual async Task<IPagedList<LabRequestListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabRequestListDto>(model, "m_Rtrv_LabRequest_Nursing");
+
+        }
+        public virtual async Task<IPagedList<LabRequestDetailsListDto>> SPGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabRequestDetailsListDto>(model, "m_Rtrv_NursingLabRequestDetails");
+
+        }
+        public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestListDto>(model, "Rtrv_LabOrRadRequestList");
+
+        }
+
+
         public virtual async Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

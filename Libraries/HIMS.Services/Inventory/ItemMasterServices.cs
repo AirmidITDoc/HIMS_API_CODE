@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +21,10 @@ namespace HIMS.Services.Inventory
         public ItemMasterServices(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemMasterListDto>(model, "m_Rtrv_ItemMaster_by_Name_Pagi");
         }
         public virtual async Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username)
         {

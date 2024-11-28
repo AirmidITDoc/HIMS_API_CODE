@@ -31,14 +31,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             IPagedList<MStateMaster> StateMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(StateMasterList.ToGridResponse(objGrid, "StateMaster List"));
         }
-        //State List find with country Id - API
-        [HttpGet("StateListWithCountry/{CountryId?}")]
-        //[Permission(PageCode = "StateListWithCountry", Permission = PagePermission.View)]
-        public async Task<ApiResponse> StateListWithCountry(int CountryId)
-        {
-            var data = await _repository.GetAll(x => x.IsActive == true && x.CountryId == CountryId);
-            return new ApiResponse { StatusCode = 200, Data = data };
-        }
+
+        //[HttpGet("StateListWithCountry/{CountryId?}")]
+        ////[Permission(PageCode = "StateListWithCountry", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> StateListWithCountry(int CountryId)
+        //{
+        //    var data = await _repository.GetAll(x => x.IsActive == true && x.CountryId == CountryId);
+        //    return new ApiResponse { StatusCode = 200, Data = data };
+        //}
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]

@@ -23,6 +23,9 @@ using System.Linq;
 using System.Transactions;
 using LinqToDB;
 using Aspose.Cells.Charts;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Master;
 
 namespace HIMS.Services.Masters
 {
@@ -33,8 +36,10 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-
-
+        public virtual async Task<IPagedList<DoctoreMasterDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctoreMasterDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
+        }
         public virtual async Task InsertAsyncSP(DoctorMaster objDoctor, int UserId, string Username)
         {
 
@@ -82,9 +87,6 @@ namespace HIMS.Services.Masters
                
             }
         }
-
-
-       
         public virtual async Task InsertAsync(DoctorMaster objDoctor, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -108,8 +110,6 @@ namespace HIMS.Services.Masters
                 scope.Complete();
             }
         }
-
-       
 
     }
 }

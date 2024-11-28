@@ -103,7 +103,5 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
     }
 }

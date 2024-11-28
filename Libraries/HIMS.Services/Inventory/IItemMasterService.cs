@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,7 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
+        Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel objGrid);
 
     }
 }

@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -27,6 +29,10 @@ namespace HIMS.Services.OPPatient
         public PrescriptionSer(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<PatietWiseMatetialListDto>> PatietWiseMatetialList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PatietWiseMatetialListDto>(model, "Rtrv_PatMaterialConsumption_ByName");
         }
         public virtual async Task InsertAsyncSP(TPrescription objPrescription, int UserId, string Username)
         {

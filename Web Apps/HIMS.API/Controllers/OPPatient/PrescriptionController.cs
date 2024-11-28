@@ -8,6 +8,7 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
@@ -28,6 +29,13 @@ namespace HIMS.API.Controllers.OPPatient
         public PrescriptionController(IPrescription repository)
         {
             _IPrescription = repository;
+        }
+        [HttpPost("PatietWiseMatetialList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<PatietWiseMatetialListDto> PatietWiseMatetialList = await _IPrescription.PatietWiseMatetialList(objGrid);
+            return Ok(PatietWiseMatetialList.ToGridResponse(objGrid, "PatietWiseMatetial App List"));
         }
 
         [HttpPost("PrescriptionInsertEDMX")]

@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
@@ -21,6 +24,10 @@ namespace HIMS.Services.Inventory
             {
                 _context = HIMSDbContext;
             }
+        public virtual async Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BillingServiceDto>(model, "m_Rtrv_ServiceList_Pagn");
+        }
         public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
         {
             try

@@ -902,7 +902,8 @@ namespace HIMS.Data.DataProviders
                 T obj = GetListItem<T>(dr);
                 list.Add(obj);
             }
-            return list;
+            
+           return list;
         }
         #endregion
 

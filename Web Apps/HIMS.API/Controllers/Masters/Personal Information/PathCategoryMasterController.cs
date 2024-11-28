@@ -60,7 +60,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathCategoryName  added successfully.");
         }
-        //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathCategoryMasterModel obj)

@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-      //  [Permission(PageCode = "Bed", Permission = PagePermission.Add)]
+         //  [Permission(PageCode = "Bed", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(BedMasterModel obj)
         {
             Bedmaster model = obj.MapTo<Bedmaster>();

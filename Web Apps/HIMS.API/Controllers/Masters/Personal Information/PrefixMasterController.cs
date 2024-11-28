@@ -22,8 +22,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _repository = repository;
         }
-
-        //List API
+         //List API
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]

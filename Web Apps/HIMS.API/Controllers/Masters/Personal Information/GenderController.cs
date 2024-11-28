@@ -43,8 +43,7 @@ namespace HIMS.API.Controllers.Masters
             var data = await _repository.GetById(x => x.GenderId == id);
             return data.ToSingleResponse<DbGenderMaster, GenderModel>("Gender");
         }
-
-        [HttpPost]
+         [HttpPost]
         [Permission(PageCode = "Gender", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(GenderModel obj)
         {
