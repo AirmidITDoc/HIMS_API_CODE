@@ -14,11 +14,14 @@ namespace HIMS.API.Models.Pathology
         public bool? IsPrintDisSummary { get; set; }
 
     }
-    public class PatientTypeModelValidator : AbstractValidator<PatientTypeModel>
+    public class PathParameterMasterModelValidator : AbstractValidator<PathParameterMasterModel>
     {
-        public PatientTypeModelValidator()
+        public PathParameterMasterModelValidator()
         {
-            RuleFor(x => x.PatientType).NotNull().NotEmpty().WithMessage("Patient Type is required");
+            RuleFor(x => x.ParameterShortName).NotNull().NotEmpty().WithMessage("ParameterShortName Type is required");
+            RuleFor(x => x.ParameterName).NotNull().NotEmpty().WithMessage("ParameterName Type is required");
+            RuleFor(x => x.PrintParameterName).NotNull().NotEmpty().WithMessage("PrintParameterName Type is required");
+
         }
     }
 }

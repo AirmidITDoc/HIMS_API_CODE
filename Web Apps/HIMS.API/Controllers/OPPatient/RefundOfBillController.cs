@@ -20,6 +20,8 @@ using HIMS.Services.IPPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.OPPatient;
 
 
 namespace HIMS.API.Controllers.OPPatient
@@ -35,7 +37,28 @@ namespace HIMS.API.Controllers.OPPatient
             _IRefundOfBillService = repository;
         }
 
-      
+
+        [HttpPost("AppOPBilllistforrefundList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<OpBilllistforRefundDto> BillList = await _IRefundOfBillService.GeOpbilllistforrefundAsync(objGrid);
+            return Ok(BillList.ToGridResponse(objGrid, "App Op Bill List for Refund List"));
+        }
+
+
+
+        [HttpPost("AppOPBillservicedetailList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
+            return Ok(Servicelist.ToGridResponse(objGrid, "App Op Bill Refund Service Detail  List"));
+        }
+
+
+
+
         [HttpPost("OPInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(RefundBillModel obj)

@@ -1,4 +1,6 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,11 @@ namespace HIMS.Services.OPPatient
         Task<long> InsertAsync(Refund objRefund, int UserId, string Username);
 
 
+
+        Task<IPagedList<OpBilllistforRefundDto>> GeOpbilllistforrefundAsync(GridRequestModel objGrid);
+
+
+        Task<IPagedList<OPBillservicedetailListDto>> GetBillservicedetailListAsync(GridRequestModel objGrid);
 
     }
 }

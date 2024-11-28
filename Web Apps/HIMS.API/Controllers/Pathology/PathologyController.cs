@@ -40,7 +40,15 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
         {
             IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _ILabRequestService.LGetListAsync(objGrid);
-            return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "PrescriptionReturnList "));
+            return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
+        }
+
+        [HttpPost("PatientList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PatientList(GridRequestModel objGrid)
+        {
+            IPagedList<PatientListDto> PatientList = await _IPathlogySampleCollectionService.PGetListAsync(objGrid);
+            return Ok(PatientList.ToGridResponse(objGrid, "PatientList "));
         }
 
     }

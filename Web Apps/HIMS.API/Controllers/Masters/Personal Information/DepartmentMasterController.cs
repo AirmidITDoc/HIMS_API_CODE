@@ -45,10 +45,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             var data = await _repository.GetById(x => x.DepartmentId == id);
             return data.ToSingleResponse<MDepartmentMaster, DepartmentMasterModel>("DepartmentMaster ");
         }
-
-        //Add API
         [HttpPost]
-     //   [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Add)]
+        //   [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DepartmentMasterModel obj)
         {
             MDepartmentMaster model = obj.MapTo<MDepartmentMaster>();

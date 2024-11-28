@@ -14,6 +14,7 @@ namespace HIMS.Services.IPPatient
     {
         Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username);
         Task<IPagedList<PathologySampleCollectionDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PatientListDto>> PGetListAsync(GridRequestModel objGrid);
 
     }
 }

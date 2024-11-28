@@ -16,10 +16,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class DoctorMasterController : BaseController
+    public class DoctorController : BaseController
     {
         private readonly IDoctorMasterService _IDoctorMasterService;
-        public DoctorMasterController(IDoctorMasterService repository)
+        public DoctorController(IDoctorMasterService repository)
         {
             _IDoctorMasterService = repository;
         }
@@ -30,61 +30,59 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             IPagedList<DoctoreMasterDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
+       
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(DoctorMasterModel obj)
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.IsActive = true;
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
+                model.RegDate = Convert.ToDateTime(obj.RegDate);
+                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
                 model.Addedby = CurrentUserId;
-                model.UpdatedBy = CurrentUserId;
+                model.IsActive = true;
                 await _IDoctorMasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
-
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(DoctorMasterModel obj)
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.IsActive = true;
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);            
+                model.RegDate = Convert.ToDateTime(obj.RegDate);
+                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
                 model.Addedby = CurrentUserId;
-                model.UpdatedBy = CurrentUserId;
+                model.IsActive = true;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
-
+      
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DoctorMasterModel obj)
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.IsActive = true;
-                model.Addedby = CurrentUserId;
-                model.UpdatedBy = CurrentUserId;
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
+                model.RegDate = Convert.ToDateTime(obj.RegDate);
+                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name updated successfully.");
         }
     }
 }
