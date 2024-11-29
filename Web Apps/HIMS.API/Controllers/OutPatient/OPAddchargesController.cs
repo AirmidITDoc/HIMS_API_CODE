@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Addc Charges added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharges added successfully.");
         }
 
         [HttpPost("OPAddchargesDelete")]
@@ -46,12 +46,12 @@ namespace HIMS.API.Controllers.OutPatient
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.ChargesId != 0)
             {
-               
+
                 await _IOPAddchargesService.DeleteAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Addc Charges Deleted successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharges  Deleted successfully.");
         }
     }
 }

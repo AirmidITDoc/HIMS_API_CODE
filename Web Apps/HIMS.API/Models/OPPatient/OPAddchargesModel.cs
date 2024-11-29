@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using FluentValidation;
+using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -26,12 +29,41 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? IsCancelledDate { get; set; }
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
-        public long? PackageMainChargeId { get; set; }
+        public long? IsDoctorShareGenerated { get; set; }
+        public byte? IsInterimBillFlag { get; set; }
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
         public string? ChargesTime { get; set; }
-        //public long? BillNo { get; set; }
+        public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
+        public decimal? RefundAmount { get; set; }
+        public decimal? CPrice { get; set; }
+        public float? CQty { get; set; }
+        public decimal? CTotalAmount { get; set; }
+        public bool? IsComServ { get; set; }
+        public bool? IsPrintCompSer { get; set; }
+        public string? ServiceName { get; set; }
+        public decimal? ChPrice { get; set; }
+        public float? ChQty { get; set; }
+        public decimal? ChTotalAmount { get; set; }
+        public bool? IsBillableCharity { get; set; }
+        public long? SalesId { get; set; }
+        public long? BillNo { get; set; }
+        public List<DeleteChargesModel> DeleteCharges { get; set; }
+        public class OPAddchargesModelValidator : AbstractValidator<OPAddchargesModel>
+        {
+            public OPAddchargesModelValidator()
+            {
+                RuleFor(x => x.ChargesDate).NotNull().NotEmpty().WithMessage("ChargesDate is required");
+                RuleFor(x => x.IsCancelledDate).NotNull().NotEmpty().WithMessage("IsCancelledDate  is required");
+
+            }
+        }
+ }
+    public class DeleteChargesModel
+    {
+        public long ChargesId { get; set; }
+        public long UserId { get; set; }
     }
 }
