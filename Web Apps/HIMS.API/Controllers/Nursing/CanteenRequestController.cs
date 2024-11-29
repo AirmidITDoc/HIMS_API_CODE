@@ -3,6 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +24,21 @@ namespace HIMS.API.Controllers.Nursing
         {
             _ICanteenRequestService = repository;
         }
+        [HttpPost("CanteenRequestList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<CanteenRequestListDto> CanteenRequestList = await _ICanteenRequestService.CanteenRequestsList(objGrid);
+            return Ok(CanteenRequestList.ToGridResponse(objGrid, "CanteenRequest App List"));
+        }
+        [HttpPost("CanteenRequestHeaderList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> HeaderList(GridRequestModel objGrid)
+        {
+            IPagedList<CanteenRequestHeaderListDto> CanteenRequestHeaderList = await _ICanteenRequestService.CanteenRequestHeaderList(objGrid);
+            return Ok(CanteenRequestHeaderList.ToGridResponse(objGrid, "CanteenRequestHeader App List"));
+        }
+
         [HttpPost("Insert")]
 
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

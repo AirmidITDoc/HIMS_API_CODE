@@ -7,6 +7,9 @@ using HIMS.API.Models.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -20,6 +23,13 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IStockAdjustmentService = repository;
         }
+        [HttpPost("StockAdjustmentList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<StockAdjustmentListDto> StockAdjustmentList = await _IStockAdjustmentService.StockAdjustmentList(objGrid);
+            return Ok(StockAdjustmentList.ToGridResponse(objGrid, "StockAdjustment App List"));
+        }
         //[HttpPost("InsertEDMX")]
         ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> InsertEDMX(StockAdjustmentModel obj)
@@ -27,9 +37,9 @@ namespace HIMS.API.Controllers.Inventory
         //    TIssueToDepartmentDetail model = obj.MapTo<TIssueToDepartmentDetail>();
         //    if (obj.IssueDepId == 0)
         //    {
-               
+
         //        model.IssueId = CurrentUserId;
-              
+
         //        await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
         //    }
         //    else
