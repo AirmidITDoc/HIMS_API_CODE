@@ -18,6 +18,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.Services.Inventory
 {
@@ -27,6 +30,10 @@ namespace HIMS.Services.Inventory
         public StockAdjustmentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<StockAdjustmentListDto>> StockAdjustmentList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<StockAdjustmentListDto>(model, "m_Rtrv_BatchNoForMrpAdj");
         }
         public virtual async Task InsertAsync(TIssueToDepartmentDetail objStock, int UserId, string Username)
         {

@@ -59,6 +59,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPrefixService, PrefixService>();
             services.AddScoped<ILabRequestService, LabRequestService>();
             services.AddScoped<IMPrescriptionService, MPrescriptionService>();
+            services.AddScoped<IStockAdjustmentService, StockAdjustmentService>();
 
 
 
