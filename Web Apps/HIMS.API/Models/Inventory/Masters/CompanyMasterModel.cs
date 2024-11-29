@@ -11,7 +11,9 @@ namespace HIMS.API.Models.Masters
         public string? City { get; set; }
         public string? PinNo { get; set; }
         public string? PhoneNo { get; set; }
-        
+        public string? MobileNo { get; set; }
+        public string? FaxNo { get; set; }
+        public long? TraiffId { get; set; }
     }
     public class CompanyMasterModelValidator : AbstractValidator<CompanyMasterModel>
     {
@@ -22,10 +24,6 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.City).NotNull().NotEmpty().WithMessage("City is required");
             RuleFor(x => x.PinNo).NotNull().NotEmpty().WithMessage("PinNo is required");
             RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
-
-
-
-
         }
     }
 }
