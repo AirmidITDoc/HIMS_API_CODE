@@ -8,6 +8,8 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
@@ -27,6 +29,13 @@ namespace HIMS.API.Controllers.IPPatient
         public DischargeSPController(IDischargeServiceSP repository)
         {
             _IPDischargeService = repository;
+        }
+        [HttpPost("DischargeList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<DischargeDateListDto> DischargeList = await _IPDischargeService.GetListAsync(objGrid);
+            return Ok(DischargeList.ToGridResponse(objGrid, "DischargeList "));
         }
 
         [HttpPost("IPDischargeInsert")]

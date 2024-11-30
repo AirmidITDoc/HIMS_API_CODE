@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Aspose.Cells.Drawing;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 
 
 namespace HIMS.Services.OutPatient
@@ -22,7 +25,10 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<DischargeDateListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DischargeDateListDto>(model, "m_rtrv_AdmtdWithDischargeDate_Ptnt_Dtls");
+        }
         public virtual async Task InsertAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName)
         {
             // throw new NotImplementedException();
