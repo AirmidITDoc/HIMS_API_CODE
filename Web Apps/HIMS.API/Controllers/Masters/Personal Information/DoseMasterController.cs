@@ -42,9 +42,7 @@ namespace HIMS.API.Controllers
             var data = await _repository.GetById(x => x.DoseId == id);
             return data.ToSingleResponse<MDoseMaster, DoseMasterModel>("DoseMaster");
         }
-
-
-        [HttpPost]
+         [HttpPost]
        // [Permission(PageCode = "DoseMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DoseMasterModel obj)
         {
