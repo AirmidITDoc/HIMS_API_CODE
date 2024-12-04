@@ -8,8 +8,8 @@ namespace HIMS.Data.DTO.Pathology
 {
     public class PatientListDto
     {
-        //public string  RegNo { get; set; }
-        public string? PatientName { get; set; }
+        public string  RegNo { get; set; }
+        //public string? PatientName { get; set; }
         //public long? OP_IP_No { get; set; }
         //public DateTime? VADate { get; set; }
         //public DateTime? DOA { get; set; }
