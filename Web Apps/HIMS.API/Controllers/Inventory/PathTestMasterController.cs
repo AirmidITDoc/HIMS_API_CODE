@@ -9,7 +9,8 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -23,8 +24,15 @@ namespace HIMS.API.Controllers.Inventory
         {
             _ITestmasterService = repository;
         }
-       
-         [HttpPost("Insert")]
+        [HttpPost("TestMasterList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TestMasterDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
+            return Ok(TestMasterList.ToGridResponse(objGrid, "TestMasterList"));
+        }
+
+        [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathTestMasterModel obj)
         {

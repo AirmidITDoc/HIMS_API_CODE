@@ -1,4 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,6 +14,8 @@ namespace HIMS.Services.Inventory
 {
     public partial interface IRadiologyTestService
     {
+        Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
+
         Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task InsertAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task CancelAsync(MRadiologyTestMaster objRadio, int CurrentUserId, string CurrentUserName);
@@ -19,6 +23,4 @@ namespace HIMS.Services.Inventory
         Task<List<MRadiologyTestMaster>> GetAllRadiologyTest();
         //Task<MRadiologyTestMaster> GetByIdRadiologyTest(long Id);
     }
-
-
 }

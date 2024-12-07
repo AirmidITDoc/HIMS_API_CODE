@@ -1,6 +1,8 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,10 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
+        }
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
