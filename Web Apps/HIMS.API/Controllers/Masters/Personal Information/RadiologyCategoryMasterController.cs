@@ -14,10 +14,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class CategoryMasterController : BaseController
+    public class RadiologyCategoryMasterController : BaseController
     {
-        private readonly IGenericService<MItemCategoryMaster> _repository;
-        public CategoryMasterController(IGenericService<MItemCategoryMaster> repository)
+        private readonly IGenericService<MRadiologyCategoryMaster> _repository;
+        public RadiologyCategoryMasterController(IGenericService<MRadiologyCategoryMaster> repository)
         {
             _repository = repository;
         }
@@ -28,8 +28,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MItemCategoryMaster> PatientTypeList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientTypeList.ToGridResponse(objGrid, "Categoty List"));
+            IPagedList<MRadiologyCategoryMaster> RadiologyCategoryMaster = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(RadiologyCategoryMaster.ToGridResponse(objGrid, "Categoty List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -40,17 +40,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.ItemCategoryId == id);
-            return data.ToSingleResponse<MItemCategoryMaster, CategoryMasterModel>("CategoryMaster");
+            var data = await _repository.GetById(x => x.CategoryId == id);
+            return data.ToSingleResponse<MRadiologyCategoryMaster, RadiologyCategoryModel>("MRadiologyCategoryMaster");
         }
         //Add API
         [HttpPost]
         //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(CategoryMasterModel obj)
+        public async Task<ApiResponse> Post(RadiologyCategoryModel obj)
         {
-            MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
+            MRadiologyCategoryMaster model = obj.MapTo<MRadiologyCategoryMaster>();
             model.IsActive = true;
-            if (obj.ItemCategoryId == 0)
+            if (obj.CategoryId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -58,16 +58,16 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemCategory added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyCategoryMaster added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(CategoryMasterModel obj)
+        public async Task<ApiResponse> Edit(RadiologyCategoryModel obj)
         {
-            MItemCategoryMaster model = obj.MapTo<MItemCategoryMaster>();
+            MRadiologyCategoryMaster model = obj.MapTo<MRadiologyCategoryMaster>();
             model.IsActive = true;
-            if (obj.ItemCategoryId == 0)
+            if (obj.CategoryId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Item Category updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " RadiologyCategoryMaster updated successfully.");
         }
 
         //Delete API
@@ -83,14 +83,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "RadiologyCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MItemCategoryMaster model = await _repository.GetById(x => x.ItemCategoryId == Id);
-            if ((model?.ItemCategoryId ?? 0) > 0)
+            MRadiologyCategoryMaster model = await _repository.GetById(x => x.CategoryId == Id);
+            if ((model?.CategoryId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Category deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyCategoryMaster deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

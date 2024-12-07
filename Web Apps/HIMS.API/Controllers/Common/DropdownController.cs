@@ -48,7 +48,12 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MTermsOfPaymentMaster> _IMTermofpaymentService;
         private readonly IGenericService<CashCounter> _IMCashcounterService;
         private readonly IGenericService<DoctorTypeMaster> _IMDoctorTypeService;
-        
+        private readonly IGenericService<MPathCategoryMaster> _IMpathCateggoryService;
+        private readonly IGenericService<MRadiologyCategoryMaster> _IMradioCateggoryService;
+        private readonly IGenericService<MPathUnitMaster> _IMpathunitService;
+        private readonly IGenericService<CompanyTypeMaster> _IMcompanytypeService;
+        private readonly IGenericService<GroupMaster> _IMgroupService;
+        private readonly IGenericService<MSubGroupMaster> _IMsubgroupService;
 
 
 
@@ -60,7 +65,9 @@ namespace HIMS.API.Controllers.Common
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
             , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster, IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
             , IGenericService<MBankMaster> iMDoBankMaster, IGenericService<MStoreMaster> iMDoStoreMaster, IGenericService<MTermsOfPaymentMaster> iMDoTemofpaymentMaster
-            , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster)
+            , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster, IGenericService<MPathCategoryMaster> iMDopathcateMaster,
+             IGenericService<MRadiologyCategoryMaster> iMDoradiologycateMaster, IGenericService<MPathUnitMaster> iMDpathunitMaster,IGenericService<CompanyTypeMaster> iMDcompanytypeMaster,
+              IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster)
         {
             _IAreaService = areaservice;
             _IPrefixService = iPrefixService;
@@ -93,6 +100,12 @@ namespace HIMS.API.Controllers.Common
             _IMTermofpaymentService = iMDoTemofpaymentMaster;
             _IMCashcounterService = iMDoCashcounterMaster;
             _IMDoctorTypeService = iMDoDoctorTyperMaster;
+            _IMradioCateggoryService = iMDoradiologycateMaster;
+            _IMpathCateggoryService = iMDopathcateMaster;
+            _IMpathunitService = iMDpathunitMaster;
+            _IMcompanytypeService = iMDcompanytypeMaster;
+            _IMgroupService = iMDgroupMaster;
+            _IMsubgroupService   = iMDsubgroupMaster;
 
         }
 
@@ -116,36 +129,36 @@ namespace HIMS.API.Controllers.Common
                 "State" => (await _IMStateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStateMaster.StateId), nameof(MStateMaster.StateName)),
                 "StateByCity" => (await _IMStateService.GetAll(x => x.IsActive.Value && x.StateId == Id.Value)).ToList().ToDropDown(nameof(MStateMaster.StateId), nameof(MStateMaster.StateId)),
                 "CountryByState" => (await _IMCountryService.GetAll(x => x.CountryId == Id.Value)).ToList().ToDropDown(nameof(MCountryMaster.CountryId), nameof(MCountryMaster.CountryId)),
-
                 "Religion" => (await _IMreligionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MReligionMaster.ReligionId), nameof(MReligionMaster.ReligionName)),
                 "PatientType" => (await _IPatientTypeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(PatientTypeMaster.PatientTypeId), nameof(PatientTypeMaster.PatientType)),
                 "Tariff" => (await _TariffMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(TariffMaster.TariffId), nameof(TariffMaster.TariffName)),
                 "Department" => (await _IMDepartmentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDepartmentMaster.DepartmentId), nameof(MDepartmentMaster.DepartmentName)),
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
                 "ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
-                "DoctorType" => (await _IMDoctorMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DoctorTypeMaster.Id), nameof(DoctorTypeMaster.DoctorType)),
-
+                //"DoctorType" => (await _IMDoctorTypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DoctorTypeMaster.Id), nameof(DoctorTypeMaster.DoctorType)),
                 "PathologyDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
-
                 "Class" => (await _IMClassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ClassMaster.ClassId), nameof(ClassMaster.ClassName)),
                 "Bed" => (await _IMBedService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(Bedmaster.BedId), nameof(Bedmaster.BedName)),
                 "Room" => (await _IMRoomService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(RoomMaster.RoomId), nameof(RoomMaster.RoomName)),
-                                    
                 "Company" => (await _IMCompanysService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CompanyMaster.CompanyId), nameof(CompanyMaster.CompanyName)),
                 "SubCompany" => (await _IMSubCompanysService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubTpacompanyMaster.SubCompanyId), nameof(MSubTpacompanyMaster.CompanyName)),
+                "CompanyType" => (await _IMcompanytypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CompanyTypeMaster.CompanyTypeId), nameof(CompanyTypeMaster.TypeName)),
                 "RelationShip" => (await _IMRelationshipService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
                 "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
                 "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
                 "DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
-
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
                 "TermofPayment" => (await _IMTermofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTermsOfPaymentMaster.Id), nameof(MTermsOfPaymentMaster.TermsOfPayment)),
                 "Store" => (await _IMStoreService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),
-
                 "PaymentMode" => (await _IMModeofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfPayment.Id), nameof(MModeOfPayment.ModeOfPayment)),
                 "CashCounter" => (await _IMModeofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
-                
-                // "Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
+                "PathCategory" => (await _IMpathCateggoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathCategoryMaster.CategoryId), nameof(MPathCategoryMaster.CategoryName)),
+                "RadioCategory" => (await _IMradioCateggoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyCategoryMaster.CategoryId), nameof(MPathCategoryMaster.CategoryName)),
+                "Unit" => (await _IMpathunitService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathUnitMaster.UnitId), nameof(MPathUnitMaster.UnitName)),
+                "GroupName" => (await _IMgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(GroupMaster.GroupId), nameof(GroupMaster.GroupName)),
+                "SubGroupName" => (await _IMsubgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubGroupMaster.SubGroupId), nameof(MSubGroupMaster.SubGroupName)),
+
+                //"Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };

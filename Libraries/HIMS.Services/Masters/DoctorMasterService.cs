@@ -42,38 +42,34 @@ namespace HIMS.Services.Masters
         }
         public virtual async Task InsertAsyncSP(DoctorMaster objDoctor, int UserId, string Username)
         {
-
             try
-            
             {
                 //Add header table records
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RefDocHospitalName", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MDoctorDepartmentDets" };
+                string[] rEntity = { "RefDocHospitalName","CreatedBy", "CreatedDate", "ModifiedBy","ModifiedDate"};
                 var entity = objDoctor.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
-                string DoctorId = odal.ExecuteNonQuery("Insert_DoctorMaster_1", CommandType.StoredProcedure, "DoctorId", entity);
-                objDoctor.DoctorId = Convert.ToInt32(DoctorId);
+                string vDoctorId = odal.ExecuteNonQuery("insert_DoctorMaster_1", CommandType.StoredProcedure, "DoctorId", entity);
+                objDoctor.DoctorId = Convert.ToInt32(vDoctorId);
 
-                // Add details table records
+                 // Add details table records
                 foreach (var objItem in objDoctor.MDoctorDepartmentDets)
                 {
                     objItem.DoctorId = objDoctor.DoctorId;
                 }
                 _context.MDoctorDepartmentDets.AddRange(objDoctor.MDoctorDepartmentDets);
                 await _context.SaveChangesAsync();
-            
-
             }
             catch (Exception)
             {
                 // Delete header table realted records
-                DoctorMaster? objdoctor = await _context.DoctorMasters.FindAsync(objDoctor.DoctorId);
-                if (objDoctor != null)
+                DoctorMaster? objSup = await _context.DoctorMasters.FindAsync(objDoctor.DoctorId);
+                if (objSup != null)
                 {
-                    _context.DoctorMasters.Remove(objdoctor);
+                    _context.DoctorMasters.Remove(objSup);
                 }
 
                 // Delete details table realted records
@@ -83,8 +79,6 @@ namespace HIMS.Services.Masters
                     _context.MDoctorDepartmentDets.RemoveRange(lst);
                 }
                 await _context.SaveChangesAsync();
-
-               
             }
         }
         public virtual async Task InsertAsync(DoctorMaster objDoctor, int UserId, string Username)
