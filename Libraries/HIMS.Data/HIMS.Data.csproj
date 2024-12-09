@@ -1,10 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DTO\NewFolder2\**" />
+    <Compile Remove="DTO\NewFolder3\**" />
+    <Compile Remove="DTO\NewFolder\**" />
+    <EmbeddedResource Remove="DTO\NewFolder2\**" />
+    <EmbeddedResource Remove="DTO\NewFolder3\**" />
+    <EmbeddedResource Remove="DTO\NewFolder\**" />
+    <None Remove="DTO\NewFolder2\**" />
+    <None Remove="DTO\NewFolder3\**" />
+    <None Remove="DTO\NewFolder\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
@@ -23,9 +35,6 @@
 
   <ItemGroup>
     <Folder Include="DTO\NewFolder1\" />
-    <Folder Include="DTO\NewFolder2\" />
-    <Folder Include="DTO\NewFolder3\" />
-    <Folder Include="DTO\NewFolder\" />
   </ItemGroup>
 
 </Project>
