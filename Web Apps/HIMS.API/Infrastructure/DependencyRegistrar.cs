@@ -64,6 +64,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IItemMovementService, ItemMovementService>();
             services.AddScoped<IStockReportDayWiseService, StockReportDayWiseService>();
             services.AddScoped<ICurrentStockService, CurrentStockService>();
+            services.AddScoped<IItemWiseService, ItemWiseService>();
 
 
 
