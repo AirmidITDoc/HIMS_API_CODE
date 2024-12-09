@@ -54,6 +54,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<CompanyTypeMaster> _IMcompanytypeService;
         private readonly IGenericService<GroupMaster> _IMgroupService;
         private readonly IGenericService<MSubGroupMaster> _IMsubgroupService;
+        private readonly IGenericService<MTemplateMaster> _IMtemplateService;
 
 
 
@@ -67,7 +68,7 @@ namespace HIMS.API.Controllers.Common
             , IGenericService<MBankMaster> iMDoBankMaster, IGenericService<MStoreMaster> iMDoStoreMaster, IGenericService<MTermsOfPaymentMaster> iMDoTemofpaymentMaster
             , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster, IGenericService<MPathCategoryMaster> iMDopathcateMaster,
              IGenericService<MRadiologyCategoryMaster> iMDoradiologycateMaster, IGenericService<MPathUnitMaster> iMDpathunitMaster,IGenericService<CompanyTypeMaster> iMDcompanytypeMaster,
-              IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster)
+              IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster, IGenericService<MTemplateMaster> iMDtemplateMaster)
         {
             _IAreaService = areaservice;
             _IPrefixService = iPrefixService;
@@ -106,6 +107,7 @@ namespace HIMS.API.Controllers.Common
             _IMcompanytypeService = iMDcompanytypeMaster;
             _IMgroupService = iMDgroupMaster;
             _IMsubgroupService   = iMDsubgroupMaster;
+            _IMtemplateService = iMDtemplateMaster;
 
         }
 
@@ -157,6 +159,7 @@ namespace HIMS.API.Controllers.Common
                 "Unit" => (await _IMpathunitService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathUnitMaster.UnitId), nameof(MPathUnitMaster.UnitName)),
                 "GroupName" => (await _IMgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(GroupMaster.GroupId), nameof(GroupMaster.GroupName)),
                 "SubGroupName" => (await _IMsubgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubGroupMaster.SubGroupId), nameof(MSubGroupMaster.SubGroupName)),
+                "Template" => (await _IMtemplateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTemplateMaster.TemplateId), nameof(MTemplateMaster.TemplateName)),
 
                 //"Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
