@@ -67,9 +67,10 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.SubTestId).NotNull().NotEmpty().WithMessage("SubTestId required");
             RuleFor(x => x.ParameterId).NotNull().NotEmpty().WithMessage("ParameterId is required");
         }
+    }
         public class PathTestDetDelete
         {
             public long TestId { get; set; }
         }
-    }
 }
+

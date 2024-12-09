@@ -1,5 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -21,6 +24,10 @@ namespace HIMS.Services.Inventory
         public TestMasterService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<TestMasterDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TestMasterDto>(model, "Rtrv_PathTestForUpdate");
         }
         public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
         {

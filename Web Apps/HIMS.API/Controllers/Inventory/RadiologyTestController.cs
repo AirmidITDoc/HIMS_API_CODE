@@ -11,6 +11,8 @@ using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -24,8 +26,14 @@ namespace HIMS.API.Controllers.Inventory
         {
             _RadiologyTestService = repository;
         }
-      
-      
+        [HttpPost("RadiologyList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
+            return Ok(RadiologyList.ToGridResponse(objGrid, "RadiologyList "));
+        }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RadiologyTestModel obj)

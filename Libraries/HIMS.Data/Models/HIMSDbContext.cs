@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace HIMS.Data.Models
+namespace HIMS.Data.Models 
 {
     public partial class HIMSDbContext : DbContext
     {
@@ -246,6 +246,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MRelationshipMaster> MRelationshipMasters { get; set; } = null!;
         public virtual DbSet<MReligionMaster> MReligionMasters { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
+        public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
         public virtual DbSet<MSiteDescriptionMaster> MSiteDescriptionMasters { get; set; } = null!;
         public virtual DbSet<MSmsmappingTemplate> MSmsmappingTemplates { get; set; } = null!;
@@ -6883,6 +6884,15 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportSection).HasMaxLength(100);
 
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MReportTemplateConfig>(entity =>
+            {
+                entity.HasKey(e => e.TemplateId);
+
+                entity.ToTable("M_ReportTemplateConfig");
+
+                entity.Property(e => e.TemplateName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<MSalesTypeMaster>(entity =>

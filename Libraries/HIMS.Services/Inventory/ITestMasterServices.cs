@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,7 @@ namespace HIMS.Services.Inventory
 {
     public partial interface ITestMasterServices
     {
-
+        Task<IPagedList<TestMasterDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
