@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTO\NewFolder1\**" />
     <Compile Remove="DTO\NewFolder2\**" />
     <Compile Remove="DTO\NewFolder3\**" />
-    <Compile Remove="DTO\NewFolder\**" />
+    <EmbeddedResource Remove="DTO\NewFolder1\**" />
     <EmbeddedResource Remove="DTO\NewFolder2\**" />
     <EmbeddedResource Remove="DTO\NewFolder3\**" />
-    <EmbeddedResource Remove="DTO\NewFolder\**" />
+    <None Remove="DTO\NewFolder1\**" />
     <None Remove="DTO\NewFolder2\**" />
     <None Remove="DTO\NewFolder3\**" />
-    <None Remove="DTO\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HIMS.Core\HIMS.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\NewFolder1\" />
   </ItemGroup>
 
 </Project>

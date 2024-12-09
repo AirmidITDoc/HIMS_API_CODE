@@ -35,6 +35,7 @@ namespace HIMS.API.Models.Masters
         public bool? IsOnCallDoctor { get; set; }
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
+        public string? Signature { get; set; }
         public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
     }
     public class DoctorModelValidator : AbstractValidator<DoctorModel>
@@ -44,7 +45,6 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
             RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            RuleFor(x => x.DoctorTypeId).NotNull().NotEmpty().WithMessage("DoctorTypeId is required");
         }
     }
     public class MDoctorDepartmentDetModel

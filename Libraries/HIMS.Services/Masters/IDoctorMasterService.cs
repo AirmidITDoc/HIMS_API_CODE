@@ -12,9 +12,9 @@ namespace HIMS.Services.Masters
 {
     public partial interface IDoctorMasterService
     {
-        Task InsertAsync(DoctorMaster objDoctor, int UserId, string Username);
-        Task InsertAsyncSP(DoctorMaster objDoctor, int UserId, string Username);
-        Task UpdateAsync(DoctorMaster objDoctor, int UserId, string Username);
+        Task InsertAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
+        Task InsertAsyncSP(DoctorMaster objDoctorMaster, int UserId, string Username);
+        Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
         Task<IPagedList<DoctoreMasterDto>> GetListAsync(GridRequestModel objGrid);
 
     }
