@@ -10,7 +10,6 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
-using HIMS.Data.DTO.Master;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -27,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<DoctoreMasterDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
+            IPagedList<DoctorMaster> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
         [HttpGet("{id?}")]
