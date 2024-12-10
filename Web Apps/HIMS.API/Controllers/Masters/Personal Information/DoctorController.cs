@@ -30,7 +30,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             IPagedList<DoctoreMasterDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
-       
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _IDoctorMasterService.GetById(id);
+            return data.ToSingleResponse<DoctorMaster, DoctorModel>("Doctor Master");
+        }
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
@@ -56,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
-                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);            
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
                 model.Addedby = CurrentUserId;
@@ -67,7 +77,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
-      
+
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorModel obj)
