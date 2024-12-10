@@ -41,6 +41,10 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctoreMasterDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
         }
+        public virtual async Task<DoctorMaster> GetById(int Id)
+        {
+            return await this._context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).FirstOrDefaultAsync(x => x.DoctorId == Id);
+        }
         public virtual async Task InsertAsyncSP(DoctorMaster objDoctorMaster, int UserId, string Username)
         {
 
@@ -48,7 +52,7 @@ namespace HIMS.Services.Masters
             {
                 //Add header table records
                 DatabaseHelper odal = new();
-                string[] rEntity = {"CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var entity = objDoctorMaster.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
