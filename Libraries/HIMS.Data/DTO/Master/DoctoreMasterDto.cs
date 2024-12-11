@@ -27,7 +27,8 @@ namespace HIMS.Data.DTO.Master
         public DateTime? RegDate { get; set; }
         public DateTime? MahRegDate { get; set; }
         public bool? IsRefDoc { get; set; }
-        //public byte DoctorType { get; set; }
+        public bool? IsActive { get; set; }
+        public string? DoctorType { get; set; }
         public long DoctorTypeId { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
@@ -37,5 +38,7 @@ namespace HIMS.Data.DTO.Master
         public string? MAHREGNO { get; set; }
         public string? PANCARDNO { get; set; }
         public string AADHARCARDNO { get; set; }
+        public string? Signature { get; set; }
+
     }
 }
