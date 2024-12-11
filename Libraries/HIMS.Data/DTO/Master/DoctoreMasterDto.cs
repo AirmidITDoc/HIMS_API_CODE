@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.Master
+namespace HIMS.Data.Models
 {
-    public  class DoctoreMasterDto
+    public partial class DoctorMaster
     {
         public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
