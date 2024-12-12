@@ -9,6 +9,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.Services.Masters;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -18,9 +19,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     public class DoctoreMasterController : BaseController
     {
         private readonly IGenericService<DoctorMaster> _repository;
-        public DoctoreMasterController(IGenericService<DoctorMaster> repository)
+        private readonly IDoctorMasterService _IDoctorService;
+        public DoctoreMasterController(IGenericService<DoctorMaster> repository,IDoctorMasterService doctorMasterService)
         {
             _repository = repository;
+            _IDoctorService = doctorMasterService;
         }
         //List API
         [HttpPost]
@@ -28,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<DoctorMaster> DoctorMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<DoctorMaster> DoctorMasterList = await _IDoctorService.GetAllPagedAsync(objGrid);
             return Ok(DoctorMasterList.ToGridResponse(objGrid, "DoctorMaster List "));
         }
         //List API Get By Id

@@ -10,15 +10,25 @@ namespace HIMS.Data.DTO.IPPatient
     {
         public long AdmissionId { get; set; }
         public long? RegId { get; set; }
-        public DateTime? AdmissionDate { get; set; }
-        public DateTime? AdmissionTime { get; set; }
+        public bool? IsOpToIpconv { get; set; }
+        public long PrefixId { get; set; }
         public string? PatientName { get; set; }
-        public long? GenderId { get; set; }
-        public string? GenderName { get; set; }
         public long? MaritalStatusId { get; set; }
+        public string? FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public long? GenderId { get; set; }
         public string? AadharCardNo { get; set; }
         public string? DateofBirth { get; set; }
+        public string? GenderName { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public string? DOA { get; set; }
+        public DateTime? AdmissionTime { get; set; }
         public long? PatientTypeID { get; set; }
+        public string? PatientType { get; set; }
+        public long? HospitalID { get; set; }
+        public string? HospitalName { get; set; }
+        public long? AreaId { get; set; }
         public string? RoomName { get; set; }
         public string? BedName { get; set; }
         public long? DocNameId { get; set; }
@@ -41,10 +51,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string? Address { get; set; }
         public long? CityId { get; set; }
         public long? ReligionId { get; set; }
-        public long? AreaId { get; set; }
         public string? City { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
+        public string? PinNo { get; set; }
+        public string? Expr1 { get; set; }
         public string? RelativeName { get; set; }
         public string? RelatvieMobileNo { get; set; }
         public long? DepartmentId { get; set; }
@@ -56,7 +67,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? AdmittedDoctor2ID { get; set; }
         public string? AdmittedDoctor2 { get; set; }
         public bool? IsMLC { get; set; }
-        public string? SubTpaComId { get; set; }
+        public long? SubTpaComId { get; set; }
         public string? PolicyNo { get; set; }
         public decimal? EstimatedAmount { get; set; }
         public decimal? ApprovedAmount { get; set; }

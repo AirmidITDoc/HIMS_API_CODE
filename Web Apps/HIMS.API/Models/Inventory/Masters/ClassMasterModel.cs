@@ -6,6 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long ClassId { get; set; }
         public string? ClassName { get; set; }
+        public double? ClassRate { get; set; }
     }
     public class ClassMasterModelValidator : AbstractValidator<ClassMasterModel>
     {
@@ -14,5 +15,4 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.ClassName).NotNull().NotEmpty().WithMessage("Class  is required");
         }
     }
-
 }

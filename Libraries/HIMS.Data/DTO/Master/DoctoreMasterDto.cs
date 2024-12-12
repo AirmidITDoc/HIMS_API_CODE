@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.Master
+namespace HIMS.Data.Models
 {
-    public  class DoctoreMasterDto
+    public partial class DoctorMaster
     {
         public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
@@ -27,7 +28,8 @@ namespace HIMS.Data.DTO.Master
         public DateTime? RegDate { get; set; }
         public DateTime? MahRegDate { get; set; }
         public bool? IsRefDoc { get; set; }
-        //public byte DoctorType { get; set; }
+        public bool? IsActive { get; set; }
+        public string? DoctorType { get; set; }
         public long DoctorTypeId { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
@@ -37,5 +39,7 @@ namespace HIMS.Data.DTO.Master
         public string? MAHREGNO { get; set; }
         public string? PANCARDNO { get; set; }
         public string AADHARCARDNO { get; set; }
+        public string? Signature { get; set; }
+
     }
 }

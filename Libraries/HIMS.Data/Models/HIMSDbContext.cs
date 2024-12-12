@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace HIMS.Data.Models 
+namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
