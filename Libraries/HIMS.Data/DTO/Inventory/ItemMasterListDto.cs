@@ -27,7 +27,7 @@ namespace HIMS.Data.DTO.Inventory
         public long CurrencyId { get; set; }
         public string CurrencyName { get; set; }
         public double TaxPer { get; set; }
-        public bool Isactive { get; set; }
+        public bool Isdeleted { get; set; }
         public long Addedby { get; set; }
         public bool IsBatchRequired { get; set; }
         public float MinQty { get; set; }
