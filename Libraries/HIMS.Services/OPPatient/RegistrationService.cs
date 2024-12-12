@@ -47,6 +47,18 @@ namespace HIMS.Services.OPPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header & detail table records
+                Registration objReg = _context.Registrations.Where(x => x.RegId == objRegistration.RegId).FirstOrDefault();
+                if (objReg != null)
+                    _context.Entry(objReg).State = EntityState.Detached;
+
+                objRegistration.RegNo = objReg.RegNo;
+                objRegistration.RegPrefix = objReg.RegPrefix;
+                objRegistration.AddedBy = objReg.AddedBy;
+                objRegistration.UpdatedBy = objReg.UpdatedBy;
+                objRegistration.AnnualIncome = objReg.AnnualIncome;
+                objRegistration.IsIndientOrWeaker = objReg.IsIndientOrWeaker;
+                objRegistration.RationCardNo = objReg.RationCardNo;
+                objRegistration.IsMember = objReg.IsMember;
                 _context.Registrations.Update(objRegistration);
                 _context.Entry(objRegistration).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
