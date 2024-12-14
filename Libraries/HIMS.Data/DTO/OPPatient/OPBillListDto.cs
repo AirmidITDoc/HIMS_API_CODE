@@ -27,16 +27,16 @@ namespace HIMS.Data.DTO.OPPatient
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
         public long OPD_IPD_ID { get; set; }
-        public decimal? PaidAmt { get; set; }
+        //public decimal? PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
-        public decimal CashPay { get; set; }
-        public decimal ChequePay { get; set; }
-        public decimal CardPay { get; set; }
-        public decimal AdvUsedPay { get; set; }
-        public decimal OnlinePay { get; set; }
-        public Double PayCount { get; set; }
+        public decimal? CashPay { get; set; }
+        public decimal? ChequePay { get; set; }
+        public decimal? CardPay { get; set; }
+        public decimal? AdvUsedPay { get; set; }
+        public decimal? OnlinePay { get; set; }
+        public int? PayCount { get; set; }
         public decimal? RefundAmount { get; set; }
-        public decimal? RefundCount { get; set; }
+        public int? RefundCount { get; set; }
         public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
     }
