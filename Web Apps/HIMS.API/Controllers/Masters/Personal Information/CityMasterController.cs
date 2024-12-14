@@ -31,15 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
         }
-        ////City List find with state Id - API
-        //[HttpGet("CityListWithState/{StateId?}")]
-        ////[Permission(PageCode = "CityListWithState", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> CityListWithState(int StateId)
-        //{
-        //    var data = await _repository.GetAll(x => x.IsActive == true && x.StateId == StateId);
-        //    return new ApiResponse { StatusCode = 200, Data = data };
-        //}
-        //List API Get By Id
+       
         [HttpGet("{id?}")]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -66,7 +58,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CityName added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CityMaster added successfully.");
         }
 
         //Edit API
@@ -84,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "City updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CityMaster updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -98,7 +90,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CityName deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CityMaster deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

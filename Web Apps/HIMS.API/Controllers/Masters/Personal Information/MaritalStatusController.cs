@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MMaritalStatusMaster> MaritalStatusMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-       // [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MaritalStatusModel obj)
         {
             MMaritalStatusMaster model = obj.MapTo<MMaritalStatusMaster>();
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MaritalStatusModel obj)
         {
             MMaritalStatusMaster model = obj.MapTo<MMaritalStatusMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MaritalStatusMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MMaritalStatusMaster model = await _repository.GetById(x => x.MaritalStatusId == Id);
