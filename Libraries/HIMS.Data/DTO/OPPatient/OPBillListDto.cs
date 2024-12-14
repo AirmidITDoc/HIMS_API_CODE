@@ -19,10 +19,10 @@ namespace HIMS.Data.DTO.OPPatient
         public string DepartmentName { get; set; }
         public decimal TotalAmt { get; set; }
         //public Double ConcessionAmt { get; set; }
-
+        //public long PatientType { get; set; }
         public decimal NetPayableAmt { get; set; }
 
-       // public int OPD_IPD_ID { get; set; }
+        // public int OPD_IPD_ID { get; set; }
         //public decimal PaidAmt { get; set; }
 
         //public decimal BalanceAmt { get; set; }
@@ -36,6 +36,10 @@ namespace HIMS.Data.DTO.OPPatient
         //public decimal OnlinePay { get; set; }
 
 
-       // public Double PayCount { get; set; }
+        // public Double PayCount { get; set; }
+        public int IsCancelled { get; set; }
+
+
+        
     }
 }

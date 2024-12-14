@@ -11,6 +11,8 @@ namespace HIMS.Data.DTO.OPPatient
         public long? RegId { get; set; }
         public DateTime? RegTime { get; set; }
         public long? PrefixId { get; set; }
+        public string? PrefixName { get; set; }
+        
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }

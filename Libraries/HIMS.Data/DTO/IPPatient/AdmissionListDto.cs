@@ -13,6 +13,11 @@ namespace HIMS.Data.DTO.IPPatient
         public DateTime? AdmissionDate { get; set; }
         public DateTime? AdmissionTime { get; set; }
         public string? PatientName { get; set; }
+        public string? FirstName { get; set; }
+
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+
         public long? GenderId { get; set; }
         public string? GenderName { get; set; }
         public long? MaritalStatusId { get; set; }

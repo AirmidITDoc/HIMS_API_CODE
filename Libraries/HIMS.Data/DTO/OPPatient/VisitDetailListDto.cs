@@ -11,6 +11,7 @@ namespace HIMS.Data.DTO.OPPatient
         public long RegId { get; set; }
         public string PatientName { get; set; }
         public long PrefixId { get; set; }
+        public string PrefixName { get; set; }
         public string AadharCardNo { get; set; }
         public DateTime DateofBirth { get; set; }
         public string Address { get; set; }
@@ -34,7 +35,12 @@ namespace HIMS.Data.DTO.OPPatient
         public long CompanyId { get; set; }
         public string CompanyName { get; set; }
 
+        public long PhoneAppId { get; set; }
 
+        public int CrossConsulFlag { get; set; }
+
+        public int MPbillNo { get; set; }
+        public int PatientOldNew { get; set; }
 
     }
 }
