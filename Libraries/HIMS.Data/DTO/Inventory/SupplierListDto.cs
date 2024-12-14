@@ -8,6 +8,7 @@ namespace HIMS.Data.DTO.Inventory
 {
     public class SupplierListDto
     {
+        public string? SupplierId { get; set; }
         public string? SupplierName { get; set; }
         public string? ContactPerson { get; set; }
         public string? Address { get; set; }
@@ -25,6 +26,7 @@ namespace HIMS.Data.DTO.Inventory
         public long? CurrencyId { get; set; }
         public long? Octroi { get; set; }
         public long? Freight { get; set; }
+        public bool? IsDeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? CityName { get; set; }

@@ -19,7 +19,9 @@ namespace HIMS.Data.DTO.IPPatient
         public long GenderId { get; set; }
         public string? GenderName { get; set; }
         public DateTime AdmissionDate { get; set; }
-        public string AdmissionTime { get; set; }
+        public string? DOA { get; set; }
+        public string? AdmissionTime { get; set; }
+        public string? DOT { get; set; }
         public long PatientTypeID { get; set; }
         public long HospitalID { get; set; }
         public string HospitalName { get; set; }
@@ -35,6 +37,8 @@ namespace HIMS.Data.DTO.IPPatient
         public byte? IsBillGenerated { get; set; }
         public DateTime DischargeDate { get; set; }
         public string DischargeTime { get; set; }
+        public string AdmDateTime { get; set; }
+        public string DischDateTime { get; set; }
         public long TariffId { get; set; }
         public long ClassId { get; set; }
         public string?TariffName { get; set; }
@@ -44,5 +48,10 @@ namespace HIMS.Data.DTO.IPPatient
         public long ReligionId { get; set; }
         public long AreaId { get; set; }
         public long CompanyId { get; set; }
+        public bool? IsMarkForDisNur { get; set; }
+        public bool? IsCovidFlag { get; set; }
+        public decimal? ApprovedAmount { get; set; }
+
+
     }
 }
