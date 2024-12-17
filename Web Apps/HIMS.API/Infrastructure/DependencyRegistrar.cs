@@ -21,6 +21,7 @@ using HIMS.Services.OutPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
+using HIMS.Services.Administration;
 
 namespace HIMS.API.Infrastructure
 {
@@ -65,6 +66,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IStockReportDayWiseService, StockReportDayWiseService>();
             services.AddScoped<ICurrentStockService, CurrentStockService>();
             services.AddScoped<IItemWiseService, ItemWiseService>();
+            
 
 
 
