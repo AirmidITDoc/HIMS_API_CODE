@@ -20,7 +20,7 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<PaymentModeDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PaymentModeDto>(model, "m_Rtrv_SupplierMasterList_by_Name");
+            return await DatabaseHelper.GetGridDataBySp<PaymentModeDto>(model, "Retrieve_BrowseIPAdvPaymentReceipt");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathCategoryMaster> PathCategoryMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathCategoryMasterModel obj)
         {
             MPathCategoryMaster model = obj.MapTo<MPathCategoryMaster>();
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathCategoryName  added successfully.");
         }
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathCategoryMasterModel obj)
         {
             MPathCategoryMaster model = obj.MapTo<MPathCategoryMaster>();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "PathCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathCategoryMaster model = await _repository.GetById(x => x.CategoryId == Id);
