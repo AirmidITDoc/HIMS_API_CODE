@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-       // [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MItemClassMaster> MItemClassMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ItemClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ItemClassMasterModel obj)
         {
             MItemClassMaster model = obj.MapTo<MItemClassMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemClassMasterModel obj)
         {
             MItemClassMaster model = obj.MapTo<MItemClassMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemClassMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MItemClassMaster model = await _repository.GetById(x => x.ItemClassId == Id);
