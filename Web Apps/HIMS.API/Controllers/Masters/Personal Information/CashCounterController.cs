@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         [Route("[action]")]
-       // [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
+        [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CashCounter> DocList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters
         }
        
         [HttpGet("{id?}")]
-       // [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
+        [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters
         }
 
         [HttpPost]
-       // [Permission(PageCode = "CashCounter", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CashCounter", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CashCounterModel obj)
         {
             CashCounter model = obj.MapTo<CashCounter>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter added successfully.");
         }
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "CashCounter", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CashCounter", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CashCounterModel obj)
         {
             CashCounter model = obj.MapTo<CashCounter>();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter updated successfully.");
         }
         [HttpDelete]
-       // [Permission(PageCode = "CashCounter", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CashCounter", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             CashCounter model = await _repository.GetById(x => x.CashCounterId == Id);

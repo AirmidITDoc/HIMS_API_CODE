@@ -27,14 +27,14 @@ namespace HIMS.API.Controllers.Masters
         //List API
         [HttpPost]
         [Route("[action]")]
-       // [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MConcessionReasonMaster> ConcessionReasonMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(ConcessionReasonMasterList.ToGridResponse(objGrid, "ConcessionReason List"));
         }
         [HttpGet("{id?}")]
-       // [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters
 
 
         [HttpPost]
-        //[Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ConcessionReasonMasterModel obj)
         {
             MConcessionReasonMaster model = obj.MapTo<MConcessionReasonMaster>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters
         }
         //Edit API
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ConcessionReasonMasterModel obj)
         {
             MConcessionReasonMaster model = obj.MapTo<MConcessionReasonMaster>();
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ConcessionReasonMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MConcessionReasonMaster model = await _repository.GetById(x => x.ConcessionId == Id);

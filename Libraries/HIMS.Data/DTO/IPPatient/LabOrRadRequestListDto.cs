@@ -16,7 +16,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long OP_IP_ID { get; set; }
         public long OP_IP_Type { get; set; }
         public string AdmDate { get; set; }
-        public string RoomName { get; set; }
+       // public string RoomName { get; set; }
         public string WardName { get; set; }
         public string BedName { get; set; }
         public byte IsType { get; set; }

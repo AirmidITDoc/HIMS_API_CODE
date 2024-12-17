@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "LocationMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "LocationMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LocationMaster> LocationMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "LocationMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "LocationMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add APID
         [HttpPost]
-        //[Permission(PageCode = "LocationMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LocationMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(LocationMasterModel obj)
         {
             LocationMaster model = obj.MapTo<LocationMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "LocationMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "LocationMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LocationMasterModel obj)
         {
             LocationMaster model = obj.MapTo<LocationMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "LocationMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "LocationMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             LocationMaster model = await _repository.GetById(x => x.LocationId == Id);
