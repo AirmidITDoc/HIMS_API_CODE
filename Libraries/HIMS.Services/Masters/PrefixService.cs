@@ -32,6 +32,7 @@ using System.Linq;
 using System.Transactions;
 using System.Data.Common;
 using HIMS.Core.Domain.Grid;
+using static LinqToDB.Sql;
 
 namespace HIMS.Services.Masters
 {
@@ -46,7 +47,7 @@ namespace HIMS.Services.Masters
         {
             var qry = from p in _context.DbPrefixMasters
                       join s in _context.DbGenderMasters on p.SexId equals s.GenderId
-                      select new DbPrefixMaster() { PrefixId = p.PrefixId, PrefixName = p.PrefixName, IsActive = p.IsActive, GenderName = s.GenderName };
+                      select new DbPrefixMaster() { PrefixId = p.PrefixId, PrefixName = p.PrefixName, IsActive = p.IsActive, GenderName = s.GenderName, SexId = p.SexId };
             return await qry.BuildPredicate(objGrid);
         }
     }
