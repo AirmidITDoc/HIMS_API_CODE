@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
       
         //Add API
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter name updated successfully.");
         }
         [HttpPost("ParameterCancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelParameter obj)
         {
             MPathParameterMaster model = new();
