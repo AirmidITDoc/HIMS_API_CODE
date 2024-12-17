@@ -65,9 +65,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
-                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
-                model.RegDate = Convert.ToDateTime(obj.RegDate);
-                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
+                //model.DateofBirth = Convert.ToDateTime(obj.DateofBirth).Date;
+                //model.RegDate = Convert.ToDateTime(obj.RegDate).Date;
+                //model.MahRegDate = Convert.ToDateTime(obj.MahRegDate).Date;
                 model.Addedby = CurrentUserId;
                 model.IsActive = true;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);

@@ -20,7 +20,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     {
         private readonly IGenericService<DoctorMaster> _repository;
         private readonly IDoctorMasterService _IDoctorService;
-        public DoctoreMasterController(IGenericService<DoctorMaster> repository,IDoctorMasterService doctorMasterService)
+        public DoctoreMasterController(IGenericService<DoctorMaster> repository, IDoctorMasterService doctorMasterService)
         {
             _repository = repository;
             _IDoctorService = doctorMasterService;

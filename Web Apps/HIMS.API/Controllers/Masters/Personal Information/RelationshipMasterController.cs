@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MRelationshipMaster> RelationshipMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-       // [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(RelationshipMasterModel obj)
         {
             MRelationshipMaster model = obj.MapTo<MRelationshipMaster>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(RelationshipMasterModel obj)
         {
             MRelationshipMaster model = obj.MapTo<MRelationshipMaster>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MRelationshipMaster model = await _repository.GetById(x => x.RelationshipId == Id);
