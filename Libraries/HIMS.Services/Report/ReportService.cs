@@ -33,7 +33,30 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_RegistrationReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport", "RegistrationReport", Orientation.Portrait, PaperKind.A4);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport1", "RegistrationReport1", Orientation.Portrait, PaperKind.A4);
+                        break;
+                    }
+                #endregion
+                #region :: RegistrationReport1 ::
+                case "RegistrationReport1":
+                    {
+                        string[] colList = { "RegID", "PatientName","Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_RegistrationReport1.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport1", "RegistrationReport1", Orientation.Portrait, PaperKind.A4);
+                        break;
+                    }
+                #endregion
+
+                #region :: CreditReports ::
+                case "CreditReports":
+                    {
+                        string[] colList = {"PBillNo","RegNo"};
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CommanReport_CreditReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOP_IP_CreditBills", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CreditReports", "CreditReports", Orientation.Portrait, PaperKind.A4);
                         break;
                     }
                 #endregion
@@ -46,6 +69,17 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport", "AppointmentListReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: AppointmentListReport1 ::
+                case "AppointmentListReport1":
+                    {
+                        string[] colList = { "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_AppoitnmentListReport1.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport1", "AppointmentListReport1", Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -390,6 +424,8 @@ namespace HIMS.Services.Report
             switch (model.Mode)
             {
                 case "RegistrationReport":
+                case "CreditReports":
+
                 case "AppointmentListReport":
                 case "DepartmentWisecountSummury":
                 case "OPDoctorWiseVisitCountSummary":

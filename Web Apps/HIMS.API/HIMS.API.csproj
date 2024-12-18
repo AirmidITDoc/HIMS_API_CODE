@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -52,6 +52,13 @@
     <Folder Include="Models\InPatient\" />
     <Folder Include="Models\NewFolder\" />
     <Folder Include="Models\OutPatient\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\PdfTemplates\CommanReport_DailyCollectionSummaryReport1.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
