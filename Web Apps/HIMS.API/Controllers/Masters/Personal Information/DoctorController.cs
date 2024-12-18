@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -86,12 +86,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
-                model.RegDate = Convert.ToDateTime(obj.RegDate);
-                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
+                //model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
+                //model.RegDate = Convert.ToDateTime(obj.RegDate);
+                //model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");
         }
     }
 }
