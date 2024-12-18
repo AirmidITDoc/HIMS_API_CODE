@@ -143,7 +143,6 @@ namespace HIMS.Services.Masters
             // Update header & detail table records
             var lstDelete = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
             _context.MDoctorDepartmentDets.RemoveRange(lstDelete);
-            await _context.SaveChangesAsync();
             _context.DoctorMasters.Update(objDoctorMaster);
             _context.Entry(objDoctorMaster).State = EntityState.Modified;
             await _context.SaveChangesAsync();
