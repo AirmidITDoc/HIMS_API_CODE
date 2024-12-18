@@ -11,5 +11,9 @@ namespace HIMS.Data.Models
         public string? City { get; set; }
         public string? Pin { get; set; }
         public string? Phone { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
