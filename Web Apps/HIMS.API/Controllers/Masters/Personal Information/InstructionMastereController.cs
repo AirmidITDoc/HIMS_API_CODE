@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "InstructionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "InstructionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MInstructionMaster> InstructionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "InstructionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "InstructionMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "InstructionMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "InstructionMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(InstructionMasterModel obj)
         {
             MInstructionMaster model = obj.MapTo<MInstructionMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "InstructionMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "InstructionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(InstructionMasterModel obj)
         {
             MInstructionMaster model = obj.MapTo<MInstructionMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "InstructionMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "InstructionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MInstructionMaster model = await _repository.GetById(x => x.InstructionId == Id);

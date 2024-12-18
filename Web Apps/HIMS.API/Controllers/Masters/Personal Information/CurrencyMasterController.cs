@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "CurrencyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CurrencyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCurrencyMaster> CurrencyMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "CurrencyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CurrencyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CurrencyMasterModel obj)
         {
             MCurrencyMaster model = obj.MapTo<MCurrencyMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CurrencyMasterModel obj)
         {
             MCurrencyMaster model = obj.MapTo<MCurrencyMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CurrencyMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCurrencyMaster model = await _repository.GetById(x => x.CurrencyId == Id);

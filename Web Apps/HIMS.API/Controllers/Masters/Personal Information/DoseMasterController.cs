@@ -25,14 +25,14 @@ namespace HIMS.API.Controllers
         //List API
         [HttpPost]
         [Route("[action]")]
-       // [Permission(PageCode = "DoseMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MDoseMaster> DoseMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DoseMasterList.ToGridResponse(objGrid, "Dose List"));
         }
         [HttpGet("{id?}")]
-       // [Permission(PageCode = "DoseMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers
             return data.ToSingleResponse<MDoseMaster, DoseMasterModel>("DoseMaster");
         }
          [HttpPost]
-       // [Permission(PageCode = "DoseMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DoseMasterModel obj)
         {
             MDoseMaster model = obj.MapTo<MDoseMaster>();
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers
         }
         //Edit API
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "DoseMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoseMasterModel obj)
         {
             MDoseMaster model = obj.MapTo<MDoseMaster>();
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers
         }
         //Delete API
         [HttpDelete]
-      //  [Permission(PageCode = "DoseMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MDoseMaster model = await _repository.GetById(x => x.DoseId == Id);

@@ -10,5 +10,6 @@ namespace HIMS.Services.Users
     public partial interface ISalesService
     {
         Task InsertAsync(TSalesHeader user, Payment objPayment, int UserId, string Username);
+        string GetFilePath();
     }
 }
