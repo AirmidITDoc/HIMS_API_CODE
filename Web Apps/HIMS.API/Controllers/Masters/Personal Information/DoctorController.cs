@@ -20,7 +20,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     {
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IFileUtility _FileUtility;
-        public DoctorController(IDoctorMasterService repository,IFileUtility fileUtility)
+        public DoctorController(IDoctorMasterService repository, IFileUtility fileUtility)
         {
             _IDoctorMasterService = repository;
             _FileUtility = fileUtility;
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
             {
                 if (!string.IsNullOrWhiteSpace(obj.Signature))
-                    obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
+                    model.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
                 //model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
                 //model.RegDate = Convert.ToDateTime(obj.RegDate);
                 //model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
@@ -103,6 +103,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor updated successfully.");
+        }
+        [HttpGet("get-file")]
+        public async Task<ApiResponse> DownloadFiles(string FileName)
+        {
+            return new ApiResponse() { Data = await _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName), StatusCode = 200, Message = "Image fetch successfully." };
         }
     }
 }

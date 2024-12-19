@@ -29,8 +29,8 @@ namespace HIMS.API.Utility
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + Folder))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + Folder);
+            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
             string NewFileName = Path.Combine(FilePath, (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + System.IO.Path.GetExtension(objFile.FileName));
             if (File.Exists(NewFileName))
@@ -56,7 +56,7 @@ namespace HIMS.API.Utility
         {
             if (!File.Exists(filePath))
                 return "";
-            byte[] imageArray = System.IO.File.ReadAllBytes(filePath);
+            byte[] imageArray = await System.IO.File.ReadAllBytesAsync(filePath);
             return Convert.ToBase64String(imageArray);
         }
 
@@ -76,22 +76,22 @@ namespace HIMS.API.Utility
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + Folder))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + Folder);
+            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
             string FileName = Guid.NewGuid().ToString() + ".png";
             File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
             return FileName;
         }
-        public string GetBase64FromFolder(string Folder, string filename)
+        public async Task<string> GetBase64FromFolder(string Folder, string filename)
         {
             var DestinationPath = _Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
-            if (!File.Exists(FilePath + "\\" + filename))
+            if (!File.Exists($"{FilePath}\\{filename}"))
                 return "";
-            byte[] imageArray = System.IO.File.ReadAllBytes(FilePath + "\\" + filename);
+            byte[] imageArray = await System.IO.File.ReadAllBytesAsync($"{FilePath}\\{filename}");
             return "data:image/png;base64," + Convert.ToBase64String(imageArray);
         }
 
