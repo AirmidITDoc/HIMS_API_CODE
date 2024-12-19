@@ -22,6 +22,7 @@ using HIMS.Services.OPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
 using HIMS.Services.Administration;
+using HIMS.API.Utility;
 
 namespace HIMS.API.Infrastructure
 {
@@ -41,6 +42,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IMenuMasterService, MenuMasterService>();
+
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<ISalesService, SalesService>();
             services.AddScoped<IPurchaseService, PurchaseService>();
@@ -132,6 +135,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDischargeCancellationService, DischargeCancellationService>();
 
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
+            services.AddScoped<IFileUtility, FileUtility>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

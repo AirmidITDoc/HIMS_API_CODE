@@ -140,14 +140,13 @@ namespace HIMS.Services.Masters
         public virtual async Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.DoctorMasters.Update(objDoctorMaster);
-                _context.Entry(objDoctorMaster).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
+            // Update header & detail table records
+            var lstDelete = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+            _context.MDoctorDepartmentDets.RemoveRange(lstDelete);
+            _context.DoctorMasters.Update(objDoctorMaster);
+            _context.Entry(objDoctorMaster).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            scope.Complete();
         }
 
     }

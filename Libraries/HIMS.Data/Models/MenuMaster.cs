@@ -20,6 +20,10 @@ namespace HIMS.Data.Models
         public bool IsDisplay { get; set; }
         public string? PermissionCode { get; set; }
         public string? TableNames { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<PermissionMaster> PermissionMasters { get; set; }
     }

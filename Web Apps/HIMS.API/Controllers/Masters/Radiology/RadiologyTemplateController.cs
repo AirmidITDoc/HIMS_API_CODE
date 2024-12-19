@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MRadiologyTemplateMaster> RadiologyTemplateMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(RadiologyTemplateModel obj)
         {
             MRadiologyTemplateMaster model = obj.MapTo<MRadiologyTemplateMaster>();
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(RadiologyTemplateModel obj)
         {
             MRadiologyTemplateMaster model = obj.MapTo<MRadiologyTemplateMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
            //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MRadiologyTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);
