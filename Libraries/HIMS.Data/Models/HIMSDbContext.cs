@@ -7286,15 +7286,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.Icon).HasMaxLength(250);
 
                 entity.Property(e => e.LinkAction).HasMaxLength(250);
 
                 entity.Property(e => e.LinkName).HasMaxLength(250);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PermissionCode).HasMaxLength(50);
             });
