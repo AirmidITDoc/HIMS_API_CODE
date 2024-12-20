@@ -19,7 +19,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? DoctorName { get; set; }
         public string? RefDoctorName { get; set; }
         public string? HospitalName { get; set; }
-        public string? PatientType { get; set; }
+        public long PatientType { get; set; }
         public string? TariffName { get; set; }
         public string? CompanyName { get; set; }
         public string? DepartmentName { get; set; }
@@ -39,5 +39,10 @@ namespace HIMS.Data.DTO.OPPatient
         public int? RefundCount { get; set; }
         public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
+
+        public long IsCancelled { get; set; }
+
+
+        
     }
 }
