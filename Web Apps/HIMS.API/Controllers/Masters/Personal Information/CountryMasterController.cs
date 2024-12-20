@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "CountryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CountryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCountryMaster> CountryMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "CountryMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CountryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
        
         [HttpPost]
-        //[Permission(PageCode = "CountryMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CountryMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CountryMasterModel obj)
         {
             MCountryMaster model = obj.MapTo<MCountryMaster>();
@@ -61,11 +61,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryName added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryMaster added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "CountryMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CountryMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CountryMasterModel obj)
         {
             MCountryMaster model = obj.MapTo<MCountryMaster>();
@@ -78,12 +78,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryName   updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryMaster   updated successfully.");
         }
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "CountryMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CountryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCountryMaster model = await _repository.GetById(x => x.CountryId == Id);
@@ -93,13 +93,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryName   deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CountryMaster   deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
 
     }
 }

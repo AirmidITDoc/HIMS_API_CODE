@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathUnitMaster> PathUnitMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathUnitMasterModel obj)
         {
             MPathUnitMaster model = obj.MapTo<MPathUnitMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathUnitMasterModel obj)
         {
             MPathUnitMaster model = obj.MapTo<MPathUnitMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathUnitMaster model = await _repository.GetById(x => x.UnitId == Id);

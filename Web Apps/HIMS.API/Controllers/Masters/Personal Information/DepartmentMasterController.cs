@@ -26,16 +26,25 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-       // [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MDepartmentMaster> MDepartmentMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MDepartmentMasterList.ToGridResponse(objGrid, "Department List"));
         }
+        //List API
+        [HttpGet]
+        [Route("get-departments")]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department dropdown", MDepartmentMasterList.Select(x => new { x.DepartmentName, x.DepartmentId }));
+        }
 
         //List API Get By Id
         [HttpGet("{id?}")]
-       // [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +55,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return data.ToSingleResponse<MDepartmentMaster, DepartmentMasterModel>("DepartmentMaster ");
         }
         [HttpPost]
-        //   [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DepartmentMasterModel obj)
         {
             MDepartmentMaster model = obj.MapTo<MDepartmentMaster>();
@@ -64,7 +73,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-      //  [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DepartmentMasterModel obj)
         {
             MDepartmentMaster model = obj.MapTo<MDepartmentMaster>();
@@ -82,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-       // [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MDepartmentMaster model = await _repository.GetById(x => x.DepartmentId == Id);
@@ -103,4 +112,3 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 }
 
 
- 

@@ -21,6 +21,16 @@ namespace HIMS.Services.Users
         {
             _context = HIMSDbContext;
         }
+        public string GetFilePath()
+        {
+            // for live
+            //var dt = GetDataTableQuery("SELECT TOP 1 FilePathLocation FROM ConfigSetting order by ConfigId DESC", null);
+            // for local
+            var dt = new DataTable();
+            dt.Columns.Add("s");
+            dt.Rows.Add("");
+            return Convert.ToString(dt.Rows[0][0]);
+        }
         public virtual async Task InsertAsync(TSalesHeader objSales, Payment objPayment, int UserId, string Username)
         {
             objSales.RoundOff = objSales.PaidAmount - objSales.NetAmount;

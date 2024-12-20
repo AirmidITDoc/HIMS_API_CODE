@@ -25,14 +25,14 @@ namespace HIMS.API.Controllers
         //List API
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CompanyTypeMaster> CompanyTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(CompanyTypeMasterList.ToGridResponse(objGrid, "CompanyType List"));
         }
         [HttpGet("{id?}")]
-       // [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers
 
 
         [HttpPost]
-       // [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CompanyTypeMasterModel obj)
         {
             CompanyTypeMaster model = obj.MapTo<CompanyTypeMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers
         }
         //Edit API
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CompanyTypeMasterModel obj)
         {
             CompanyTypeMaster model = obj.MapTo<CompanyTypeMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             CompanyTypeMaster model = await _repository.GetById(x => x.CompanyTypeId == Id);

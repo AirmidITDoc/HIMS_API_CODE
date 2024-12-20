@@ -30,14 +30,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MAreaMaster> AreaMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(AreaMasterList.ToGridResponse(objGrid, "Area List"));
         }
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost]
-       // [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(AreaMasterModel obj)
         {
             MAreaMaster model = obj.MapTo<MAreaMaster>();
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(AreaMasterModel obj)
         {
             MAreaMaster model = obj.MapTo<MAreaMaster>();
@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-       // [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MAreaMaster? model = await _repository.GetById(x => x.AreaId == Id);

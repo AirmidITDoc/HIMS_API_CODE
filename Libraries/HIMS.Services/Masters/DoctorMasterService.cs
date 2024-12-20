@@ -25,7 +25,6 @@ using LinqToDB;
 using Aspose.Cells.Charts;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Master;
 using System.Net.NetworkInformation;
 
 namespace HIMS.Services.Masters
@@ -37,9 +36,47 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<DoctoreMasterDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<DoctorMaster>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctoreMasterDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<DoctorMaster>(model, "m_Rtrv_DoctorMasterList_Pagi");
+        }
+        public virtual async Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid)
+        {
+            var qry = from d in _context.DoctorMasters
+                      join p in _context.DbPrefixMasters on d.PrefixId equals p.PrefixId
+                      join t in _context.DoctorTypeMasters on d.DoctorTypeId equals t.Id
+                      select new DoctorMaster()
+                      {
+                          DoctorId = d.DoctorId,
+                          PrefixName = p.PrefixName,
+                          FirstName = d.FirstName,
+                          MiddleName = d.MiddleName,
+                          LastName = d.LastName,
+                          DateofBirth = d.DateofBirth,
+                          Address = d.Address,
+                          City = d.City,
+                          Pin = d.Pin,
+                          Phone = d.Phone,
+                          Mobile = d.Mobile,
+                          Education = d.Education,
+                          IsConsultant = d.IsConsultant,
+                          IsRefDoc = d.IsRefDoc,
+                          DoctorTypeName = t.DoctorType,
+                          AgeYear = d.AgeYear,
+                          AgeMonth = d.AgeMonth,
+                          AgeDay = d.AgeDay,
+                          PassportNo = d.PassportNo,
+                          Esino = d.Esino,
+                          RegNo = d.RegNo,
+                          RegDate = d.RegDate,
+                          MahRegDate = d.MahRegDate,
+                          MahRegNo = d.MahRegNo,
+                          RefDocHospitalName = d.RefDocHospitalName,
+                          IsInHouseDoctor = d.IsInHouseDoctor,
+                          PanCardNo = d.PanCardNo,
+                          AadharCardNo = d.AadharCardNo
+                      };
+            return await qry.BuildPredicate(objGrid);
         }
         public virtual async Task<DoctorMaster> GetById(int Id)
         {
@@ -103,14 +140,13 @@ namespace HIMS.Services.Masters
         public virtual async Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.DoctorMasters.Update(objDoctorMaster);
-                _context.Entry(objDoctorMaster).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
+            // Update header & detail table records
+            var lstDelete = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+            _context.MDoctorDepartmentDets.RemoveRange(lstDelete);
+            _context.DoctorMasters.Update(objDoctorMaster);
+            _context.Entry(objDoctorMaster).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            scope.Complete();
         }
 
     }

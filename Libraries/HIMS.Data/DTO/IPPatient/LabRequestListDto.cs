@@ -18,7 +18,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string AdmDate { get; set; }
         public string WardName { get; set; }
         public string BedName { get; set; }
-        //public byte RequestType { get; set; }
+        public string RequestType { get; set; }
         public bool IsOnFileTest { get; set; }
         public bool IsCancelled { get; set; }
 
