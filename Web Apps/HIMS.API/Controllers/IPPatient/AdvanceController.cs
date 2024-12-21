@@ -25,6 +25,16 @@ namespace HIMS.API.Controllers.IPPatient
         {
             _IAdvanceService = repository;
         }
+
+        [HttpPost("AdvanceDetail List")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> AdvanceDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<AdvanceDetailListDto> AdvanceDetailList = await _IAdvanceService.AdvanceDetailListAsync(objGrid);
+            return Ok(AdvanceDetailList.ToGridResponse(objGrid, "AdvanceDetail List"));
+        }
+
+
         [HttpPost("AdvanceList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)

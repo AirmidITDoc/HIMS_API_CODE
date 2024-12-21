@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
@@ -20,7 +21,19 @@ namespace HIMS.API.Controllers.Administration
             {
                 _IAdministrationService = repository;
             }
-          
-
+        [HttpPost("PaymentModeList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<PaymentModeDto> PaymentModeList = await _IAdministrationService.GetListAsync(objGrid);
+            return Ok(PaymentModeList.ToGridResponse(objGrid, "PaymentMode App List"));
+        }
+        [HttpPost("MenuMasterList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> MenuMasterList(GridRequestModel objGrid)
+        {
+            IPagedList<MenuMasterListDto> MenuMasterList = await _IAdministrationService.MenuMasterList(objGrid);
+            return Ok(MenuMasterList.ToGridResponse(objGrid, "MenuMaster App List"));
+        }
     }
 }

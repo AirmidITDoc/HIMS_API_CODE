@@ -29,6 +29,11 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<AdvanceDetailListDto>> AdvanceDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AdvanceDetailListDto>(model, "Rtrv_T_AdvanceList");
+        }
+
         public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
