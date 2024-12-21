@@ -42,7 +42,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IMenuMasterService, MenuMasterService>();
 
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<ISalesService, SalesService>();

@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.HospitalId == id);
-            return data.ToSingleResponse<HospitalMaster, MenuMasterModel>("HospitalMaster");
+            return data.ToSingleResponse<HospitalMaster, HospitalMasterModel>("HospitalMaster");
         }
         //Add API
         [HttpPost]
