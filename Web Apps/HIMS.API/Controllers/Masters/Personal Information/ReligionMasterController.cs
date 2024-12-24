@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReligionMaster> ReligionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ReligionMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,11 +45,11 @@ namespace HIMS.API.Controllers.Masters
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ReligionMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReligionMasterModel obj)
         {
             MReligionMaster model = obj.MapTo<MReligionMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.ReligionId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Masters
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ReligionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReligionMasterModel obj)
         {
             MReligionMaster model = obj.MapTo<MReligionMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters
         }
          //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "ReligionMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ReligionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReligionMaster model = await _repository.GetById(x => x.ReligionId == Id);

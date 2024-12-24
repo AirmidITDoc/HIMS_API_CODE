@@ -18,5 +18,6 @@ namespace HIMS.Services.IPPatient
 
         Task<IPagedList<AdvanceDetailListDto>> AdvanceDetailListAsync(GridRequestModel objGrid);
         // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
+    
     }
 }

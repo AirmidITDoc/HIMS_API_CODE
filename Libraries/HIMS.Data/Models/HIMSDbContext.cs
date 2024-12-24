@@ -354,6 +354,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCurrentStockPkFinal> TCurrentStockPkFinals { get; set; } = null!;
         public virtual DbSet<TCurrentStockPkOrginalBkp> TCurrentStockPkOrginalBkps { get; set; } = null!;
         public virtual DbSet<TCurrentstock09oct23> TCurrentstock09oct23s { get; set; } = null!;
+        public virtual DbSet<TCustomerAmcinformation> TCustomerAmcinformations { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
@@ -2661,9 +2662,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.City).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.HospitalAddress).HasMaxLength(500);
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -10199,6 +10204,29 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatPercentage).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TCustomerAmcinformation>(entity =>
+            {
+                entity.ToTable("T_CustomerAMCInformation");
+
+                entity.Property(e => e.Amcamount)
+                    .HasColumnType("money")
+                    .HasColumnName("AMCAmount");
+
+                entity.Property(e => e.Amcduration).HasColumnName("AMCDuration");
+
+                entity.Property(e => e.AmcendDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("AMCEndDate");
+
+                entity.Property(e => e.AmcpaidDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("AMCPaidDate");
+
+                entity.Property(e => e.AmcstartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("AMCStartDate");
             });
 
             modelBuilder.Entity<TDeathCertificate>(entity =>

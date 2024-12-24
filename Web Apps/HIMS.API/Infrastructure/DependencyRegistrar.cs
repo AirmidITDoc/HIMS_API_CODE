@@ -23,6 +23,7 @@ using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
 using HIMS.Services.Administration;
 using HIMS.Services.Pathlogy;
+using HIMS.API.Utility;
 
 namespace HIMS.API.Infrastructure
 {
@@ -55,6 +56,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<IIssueToDepService, IssueToDepService>();
+
 
             services.AddScoped<ITestMasterServices, TestMasterService>();
             services.AddScoped<IPriscriptionReturnService, PriscriptionReturnService>();
