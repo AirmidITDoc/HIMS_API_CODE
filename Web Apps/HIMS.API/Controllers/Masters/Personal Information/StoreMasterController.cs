@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MStoreMaster> MStoreMastereList = await _repository.GetAllPagedAsync(objGrid);
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-        [Permission(PageCode = "StoreMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StoreMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(StoreMasterModel obj)
         {
             MStoreMaster model = obj.MapTo<MStoreMaster>();
@@ -63,8 +63,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "StoreMaster  added successfully.");
         }
 
+        //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "StoreMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(StoreMasterModel obj)
         {
             MStoreMaster model = obj.MapTo<MStoreMaster>();
@@ -73,28 +74,28 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "StoreMaster updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "StoreMaster  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-         [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "StoreMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MStoreMaster model = await _repository.GetById(x => x.StoreId == Id);
             if ((model?.StoreId ?? 0) > 0)
             {
                 model.IsActive = false;
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "StoreMaster   deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "StoreMaster  deleted successfully.");
             }
             else
-              return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
         //List API
         [HttpGet]

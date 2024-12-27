@@ -6999,6 +6999,8 @@ namespace HIMS.Data.Models
                     .HasMaxLength(10)
                     .IsFixedLength();
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PharSalCountId).HasColumnName("PharSalCountID");
 
                 entity.Property(e => e.PharSalRecCountId).HasColumnName("PharSalRecCountID");
