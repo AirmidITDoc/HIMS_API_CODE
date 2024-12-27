@@ -2662,13 +2662,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.City).HasMaxLength(50);
 
-                //entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.HospitalAddress).HasMaxLength(500);
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
 
-                //entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -6979,7 +6979,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.HospitalEmailId).HasMaxLength(500);
 
-                entity.Property(e => e.HospitalMobileNo).HasMaxLength(20);
+                entity.Property(e => e.HospitalMobileNo).HasMaxLength(200);
 
                 entity.Property(e => e.IndentNo)
                     .HasMaxLength(50)
@@ -7029,9 +7029,7 @@ namespace HIMS.Data.Models
                     .HasMaxLength(100)
                     .HasColumnName("SMSTemplateId");
 
-                entity.Property(e => e.StoreAddress)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.StoreAddress).HasMaxLength(500);
 
                 entity.Property(e => e.StoreName).HasMaxLength(100);
 
