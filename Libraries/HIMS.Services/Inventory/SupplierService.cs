@@ -29,6 +29,13 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<SupplierListDto>(model, "m_Rtrv_SupplierMasterList_by_Name");
         }
+
+        public virtual async Task<MSupplierMaster> GetById(int Id)
+        {
+            return await this._context.MSupplierMasters.Include(x => x.MAssignSupplierToStores).FirstOrDefaultAsync(x => x.SupplierId == Id);
+        }
+
+
         public virtual async Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username)
         {
             try

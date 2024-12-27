@@ -32,6 +32,20 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(ItemMasterList.ToGridResponse(objGrid, "ItemMaster App  List "));
         }
 
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _ItemMasterServices.GetById(id);
+            return data.ToSingleResponse<MItemMaster, ItemMasterModel>("Item Master");
+        }
+
+
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ItemMasterModel obj)

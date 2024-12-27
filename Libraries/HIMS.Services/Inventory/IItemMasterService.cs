@@ -18,5 +18,7 @@ namespace HIMS.Services.Inventory
         Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel objGrid);
 
+        Task<MItemMaster> GetById(int Id);
+
     }
 }

@@ -26,6 +26,12 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<ItemMasterListDto>(model, "m_Rtrv_ItemMaster_by_Name_Pagi");
         }
+
+        public virtual async Task<MItemMaster> GetById(int Id)
+        {
+            return await this._context.MItemMasters.Include(x => x.MAssignItemToStores).FirstOrDefaultAsync(x => x.ItemId == Id);
+        }
+
         public virtual async Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username)
         {
             try

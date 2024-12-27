@@ -96,6 +96,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
               return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
+        //List API
+        [HttpGet]
+        [Route("get-store")]
+        [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MStoreMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Store dropdown", MStoreMasterList.Select(x => new { x.StoreName, x.StoreId }));
+        }
     }
 }

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
@@ -29,7 +30,17 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);
             return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
         }
-
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _SupplierService.GetById(id);
+            return data.ToSingleResponse<MSupplierMaster, SupplierModel>("Supplier Master");
+        }
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierModel obj)

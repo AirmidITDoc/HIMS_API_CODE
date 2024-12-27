@@ -2662,13 +2662,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.City).HasMaxLength(50);
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                //entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.HospitalAddress).HasMaxLength(500);
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+                //entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 

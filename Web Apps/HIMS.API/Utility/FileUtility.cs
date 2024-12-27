@@ -24,7 +24,8 @@ namespace HIMS.API.Utility
         }
         public async Task<string> UploadDocument(IFormFile objFile, string Folder, string FileName)
         {
-            var DestinationPath = _Sales.GetFilePath();
+            var DestinationPath = "";
+                //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
@@ -71,7 +72,8 @@ namespace HIMS.API.Utility
         }
         public string SaveImageFromBase64(string Base64, string Folder)
         {
-            var DestinationPath = _Sales.GetFilePath();
+            var DestinationPath = "";
+                //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
@@ -85,7 +87,8 @@ namespace HIMS.API.Utility
         }
         public async Task<string> GetBase64FromFolder(string Folder, string filename)
         {
-            var DestinationPath = _Sales.GetFilePath();
+            var DestinationPath = "";
+                //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBasePath");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
