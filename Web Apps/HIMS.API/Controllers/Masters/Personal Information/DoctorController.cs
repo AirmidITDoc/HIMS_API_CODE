@@ -86,12 +86,30 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
-                model.RegDate = Convert.ToDateTime(obj.RegDate);
-                model.MahRegDate = Convert.ToDateTime(obj.MahRegDate);
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
+                if (model.RegDate.HasValue)
+                    model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime());
+                if (model.MahRegDate.HasValue)
+                    model.MahRegDate = Convert.ToDateTime(obj.MahRegDate.Value.ToLocalTime());
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name updated successfully.");
+        }
+        [HttpDelete]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            DoctorMaster model = await _IDoctorMasterService.GetById(Id);
+            if ((model?.DoctorId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorMaster  deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
 }
