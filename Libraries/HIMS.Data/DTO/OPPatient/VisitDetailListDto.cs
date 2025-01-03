@@ -7,18 +7,18 @@ namespace HIMS.Data.DTO.OPPatient
     public class VisitDetailListDto
     {
 
-             public long VisitId { get; set; }
+        public long VisitId { get; set; }
         public long RegId { get; set; }
-        public string PatientName { get; set; }
+        public string? PatientName { get; set; }
         public long PrefixId { get; set; }
-        public string PrefixName { get; set; }
-        public string AadharCardNo { get; set; }
+        public string? PrefixName { get; set; }
+        public string? AadharCardNo { get; set; }
         public DateTime DateofBirth { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public long MaritalStatusId { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
         public DateTime VisitDate { get; set; }
         public string DVisitDate { get; set; }
         public string VisitTime { get; set; }
@@ -29,18 +29,15 @@ namespace HIMS.Data.DTO.OPPatient
         public string VistDateTime { get; set; }
         public string OPDNo { get; set; }
         public long TariffId { get; set; }
-        public string TariffName { get; set; }
+        public string? TariffName { get; set; }
         public long DepartmentId { get; set; }
         public long AppPurposeId { get; set; }
         public long CompanyId { get; set; }
-        public string CompanyName { get; set; }
-
+        public string? CompanyName { get; set; }
         public long PhoneAppId { get; set; }
-
-        public int CrossConsulFlag { get; set; }
-
-        public int MPbillNo { get; set; }
-        public int PatientOldNew { get; set; }
+        public int? CrossConsulFlag { get; set; }
+        public string? MPbillNo { get; set; }
+        public long? PatientOldNew { get; set; }
 
     }
 }
