@@ -95,5 +95,13 @@ namespace HIMS.API.Controllers.Masters
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+        [HttpGet]
+        [Route("get-prefixs")]
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix dropdown", MDepartmentMasterList.Select(x => new { x.PrefixId, x.SexId, x.PrefixName }));
+        }
     }
 }
