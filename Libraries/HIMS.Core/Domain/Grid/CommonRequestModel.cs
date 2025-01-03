@@ -19,6 +19,8 @@ namespace HIMS.Core.Domain.Grid
         public string BaseUrl { get; set; } = string.Empty;
         [JsonIgnore]
         public string StorageBaseUrl { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string RepoertName { get; set; } = string.Empty;
     }
 
     public class SortingField

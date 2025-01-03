@@ -29,10 +29,12 @@ namespace HIMS.Services.Report
                 #region :: RegistrationReport ::
                 case "RegistrationReport":
                     {
+                        model.RepoertName = "Registration List";
+                        string[] headerList = { "Sr.No", "UHID", "Patient Name", "Address", "City", "Pin Code", "Age", "Gender Name", "Mobile No" };
                         string[] colList = {"RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport", "RegistrationReport", Orientation.Portrait, PaperKind.A4);
                         break;
                     }
@@ -41,10 +43,13 @@ namespace HIMS.Services.Report
                 #region :: AppointmentListReport ::
                 case "AppointmentListReport":
                     {
+
+                        model.RepoertName = "Appoitnment List";
+                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name", "Age year", "OPD No", "Doctor Name", "RefDoctor Name", "Company Name" };
                         string[] colList = { "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport", "AppointmentListReport", Orientation.Portrait);
                         break;
                     }
@@ -77,10 +82,12 @@ namespace HIMS.Services.Report
                 #region :: DepartmentWiseCountSummury ::
                 case "DepartmentWisecountSummury":
                     {
+                        model.RepoertName = "Department Wise Count Summury";
+                        string[] headerList = { "Sr.No", "Department Name", "Count" };
                         string[] colList = { "DepartmentName", "Lbl" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("Rtrv_OPDepartSumry", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("Rtrv_OPDepartSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseCountSummury", "DepartmentWiseCountSummury", Orientation.Portrait);
                         break;
                     }
@@ -89,10 +96,12 @@ namespace HIMS.Services.Report
                 #region :: OPDoctorWiseVisitCountSummary ::
                 case "OPDoctorWiseVisitCountSummary":
                     {
+                        model.RepoertName = "Doctor Wise Count List";
+                        string[] headerList = { "Sr.No", "Total Count", "Doctor Name" };
                         string[] colList = { "DocName", "Lbl" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("Rtrv_OPDocSumry", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("Rtrv_OPDocSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDoctorWiseVisitCountSummary", "OPDoctorWiseVisitCountSummary", Orientation.Portrait);
                         break;
                     }
@@ -101,10 +110,12 @@ namespace HIMS.Services.Report
                 #region :: OPAppoinmentListWithServiseAvailed ::
                 case "OPAppoinmentListWithServiseAvailed":
                     {
+                        model.RepoertName = "ViewAppoinment List With Service";
+                        string[] headerList = { "Sr.No", "Reg NO", "Patient Name", "Doctor Name", "RefDoctor Name", "Medical", "Pathology", "Radiology" };
                         string[] colList = { "RegNO", "PatientName", "DoctorName", "RefDoctorName", "Medical", "Pathology", "Radiology" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptAppointListWithService", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptAppointListWithService", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPAppoinmentListWithServiseAvailed", "OPAppoinmentListWithServiseAvailed", Orientation.Portrait);
                         break;
                     }
@@ -113,10 +124,12 @@ namespace HIMS.Services.Report
                 #region :: CrossConsultationReport ::
                 case "CrossConsultationReport":
                     {
+                        model.RepoertName = "Cross Consultation Report";
+                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name", "Doctor Name", "OPD NO", "Department Name" };
                         string[] colList = { "RegNO", "VisitDate", "PatientName", "DoctorName", "OPDNo", "DepartmentName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPCrossConsultationReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptOPCrossConsultationReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CrossConsultationReport", "CrossConsultationReport", Orientation.Portrait);
                         break;
                     }
@@ -125,10 +138,12 @@ namespace HIMS.Services.Report
                 #region :: OPDoctorWiseNewOldPatientReport ::
                 case "OPDoctorWiseNewOldPatientReport":
                     {
+                        model.RepoertName = "Doctor Wise New And Old Patient Report";
+                        string[] headerList = { "Sr.No", "Visit Date", "UHID", "Patient Name", "Doctor Name", "OPD NO" };
                         string[] colList = { "VisitDate", "RegNO", "PatientName", "DepartmentName", "DoctorName", "OPDNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDocWiseNewOldPatient", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptOPDocWiseNewOldPatient", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDoctorWiseNewAndOldPatientReport", "OPDoctorWiseNewAndOldPatientReport", Orientation.Portrait);
                         break;
                     }
@@ -356,7 +371,7 @@ namespace HIMS.Services.Report
             return byteFile;
         }
 
-        private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList )
+        private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -381,14 +396,17 @@ namespace HIMS.Services.Report
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
             DateTime ToDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValue ?? null);
 
+            StringBuilder HeaderItems = new("");
             StringBuilder items = new("");
             double T_Count = 0;
             switch (model.Mode)
             {
+                // Simple Report Format
                 case "RegistrationReport":
                 case "AppointmentListReport":
                 case "DepartmentWisecountSummury":
@@ -397,6 +415,15 @@ namespace HIMS.Services.Report
                 case "CrossConsultationReport":
                 case "OPDoctorWiseNewOldPatientReport":
                     {
+                        HeaderItems.Append("<tr>");
+                            foreach (var hr in headerList)
+                            {
+                                HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                                HeaderItems.Append(hr.ConvertToString());
+                                HeaderItems.Append("</th>");
+                            }
+                        HeaderItems.Append("</tr>");
+
                         int k = 0;
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -451,6 +478,7 @@ namespace HIMS.Services.Report
             if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary")
                 html = html.Replace("{{T_Count}}", T_Count.ToString());
 
+            html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
             html = html.Replace("{{Items}}", items.ToString());
             html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
             html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
