@@ -10,9 +10,6 @@ namespace HIMS.API.Models.Masters
         public string? PrintParameterName { get; set; }
         public long? UnitId { get; set; }
         public long? IsNumeric { get; set; }
-        public bool? IsActive { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public bool? IsPrintDisSummary { get; set; }
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
         public List<MPathParaRangeMasterModel>? MPathParaRangeMasters { get; set; }
@@ -34,8 +31,6 @@ namespace HIMS.API.Models.Masters
         public long? ParameterId { get; set; }
         public string? ParameterValues { get; set; }
         public bool? IsDefaultValue { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public string? DefaultValue { get; set; }
     }
     public class MParameterDescriptiveMasterModelValidator : AbstractValidator<MParameterDescriptiveMasterModel>
@@ -54,9 +49,6 @@ namespace HIMS.API.Models.Masters
         public long? SexId { get; set; }
         public string? MinValue { get; set; }
         public string? Maxvalue { get; set; }
-        public bool? IsDeleted { get; set; }
-        public long? Addedby { get; set; }
-        public long? Updatedby { get; set; }
     }
     public class MPathParaRangeMasterModelValidator : AbstractValidator<MPathParaRangeMasterModel>
     {

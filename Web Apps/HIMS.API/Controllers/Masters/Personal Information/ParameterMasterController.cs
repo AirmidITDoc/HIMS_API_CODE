@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster Name added successfully.");
         }
 
         //Edit API
@@ -61,10 +61,10 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster  updated successfully.");
         }
         [HttpPost("ParameterCancel")]
-        [Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelParameter obj)
         {
             MPathParameterMaster model = new();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Deleted successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster Deleted successfully.");
         }
 
     }

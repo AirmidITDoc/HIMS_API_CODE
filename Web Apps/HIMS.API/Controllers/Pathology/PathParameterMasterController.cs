@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.ParameterId == id);
-            return data.ToSingleResponse<MPathParameterMaster, PathParameterMasterModel>("PatientType");
+            return data.ToSingleResponse<MPathParameterMaster, PathParameterMasterModel>("PathParameterMaster");
         }
         //Add API
         [HttpPost]

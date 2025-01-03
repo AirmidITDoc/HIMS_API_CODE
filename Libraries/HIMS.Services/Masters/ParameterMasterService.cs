@@ -41,22 +41,7 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-
-        
-
-        //public virtual async Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.MPathParameterMasters.Add(objPara);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
         public virtual async Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username)
-        
-        
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -90,20 +75,16 @@ namespace HIMS.Services.Masters
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                MPathParameterMaster objRadiology = await _context.MPathParameterMasters.FindAsync(objPara.ParameterId);
-                objRadiology.IsActive = false;
-                objRadiology.CreatedDate = objPara.CreatedDate;
-                objRadiology.CreatedBy = objPara.CreatedBy;
-                _context.MPathParameterMasters.Update(objRadiology);
-                _context.Entry(objRadiology).State = EntityState.Modified;
+                MPathParameterMaster objpathology = await _context.MPathParameterMasters.FindAsync(objPara.ParameterId);
+                objpathology.IsActive = false;
+                objpathology.CreatedDate = objPara.CreatedDate;
+                objpathology.CreatedBy = objPara.CreatedBy;
+                _context.MPathParameterMasters.Update(objpathology);
+                _context.Entry(objpathology).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
-
-
-
-
     }
 }
