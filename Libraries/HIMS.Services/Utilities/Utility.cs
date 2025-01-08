@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -163,6 +164,20 @@ namespace HIMS.Services.Utilities
             {
                 return "";
             }
+        }
+
+        public static dynamic CreateInstance(Dictionary<string, double> objectFromFile)
+        {
+            dynamic instance = new ExpandoObject();
+
+            var instanceDict = (IDictionary<string, object>)instance;
+
+            foreach (var pair in objectFromFile)
+            {
+                instanceDict.Add(pair.Key, pair.Value);
+            }
+
+            return instance;
         }
     }
 }
