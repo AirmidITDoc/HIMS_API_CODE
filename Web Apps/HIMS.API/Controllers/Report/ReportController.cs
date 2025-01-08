@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Report
             {
                 #region"OP Reports"
 
-                case "Registrationreport":
+                case "RegistrationReport":
                 case "AppointmentListReport":
                 case "DoctorWiseVisitReport":
                 case "RefDoctorWiseReport":
