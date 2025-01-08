@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
@@ -26,9 +27,11 @@ namespace HIMS.API.Controllers.OPPatient
     public class OutPatientController : BaseController
     {
         private readonly IRegistrationService _IRegistrationService;
-        public OutPatientController(IRegistrationService repository)
+        private readonly IGenericService<Registration> _repository;
+        public OutPatientController(IRegistrationService repository, IGenericService<Registration> repository1)
         {
             _IRegistrationService = repository;
+            _repository = repository1;
         }
 
         [HttpPost("RegistrationList")]
@@ -39,6 +42,21 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(RegistrationList.ToGridResponse(objGrid, "Registration List"));
         }
 
+
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            //if (id == 0)
+            //{
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            //}
+            //var data = await _repository.GetById(id);
+            //return data.ToSingleResponse<MSupplierMaster, SupplierModel>("Supplier Master");
+
+            var data = await _repository.GetById(x => x.RegId == id);
+            return data.ToSingleResponse<Registration, RegistrationModel>("Registration");
+        }
 
         [HttpPost("RegistrationInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

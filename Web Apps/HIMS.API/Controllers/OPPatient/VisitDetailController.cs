@@ -10,6 +10,7 @@ using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -19,9 +20,11 @@ namespace HIMS.API.Controllers.OPPatient
     public class VisitDetailController : BaseController
     {
         private readonly IVisitDetailsService _visitDetailsService;
-        public VisitDetailController(IVisitDetailsService repository)
+        private readonly IGenericService<VisitDetail> _repository;
+        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1)
         {
             _visitDetailsService = repository;
+            _repository = repository1;
         }
         [HttpPost("AppVisitList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -30,6 +33,19 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
+
+
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+         
+            var data1 = await _repository.GetById(x => x.VisitId == id);
+            return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
+        }
+
+
+
 
         [HttpPost("AppVisitInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]

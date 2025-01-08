@@ -27,6 +27,7 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "m_Rtrv_RegistrationList");
 
         }
+
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
             DatabaseHelper odal = new();

@@ -41,7 +41,5 @@ namespace HIMS.Data.Models
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
         public byte? IsNormalOrDeath { get; set; }
-
-        public virtual Admission? Admission { get; set; }
     }
 }
