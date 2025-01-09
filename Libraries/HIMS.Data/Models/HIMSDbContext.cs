@@ -6108,7 +6108,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_DrugMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DrugName).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MExaminationMaster>(entity =>

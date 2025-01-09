@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Inventory
             _RadiologyTestService = repository;
         }
         [HttpPost("RadiologyList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest Name added successfully.");
         }
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
         }
         [HttpPost("RadilogyCancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
         {
             MRadiologyTestMaster model = new();

@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Inventory
             _ITestmasterService = repository;
         }
         [HttpPost("TestMasterList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TestMasterDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name  updated successfully.");
         }
         [HttpPost("PathTestCanceled")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
         {
             MPathTestMaster model = new();
