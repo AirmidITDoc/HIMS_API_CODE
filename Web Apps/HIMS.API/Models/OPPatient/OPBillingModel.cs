@@ -1,14 +1,9 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Models.OPPatient
 {
-    //public class OPBillIngModel
-    //{
-    //    public BillModel Bill { get; set; }
-    //    public ChargesModel AddCharge { get; set; }
-    //    public BillDetailsModel BillDet { get; set; }
-    //    //public OPPaymentModel Payment { get; set; }
-    //}
+
 
     public class OPBillIngModel
     {
@@ -151,39 +146,11 @@ namespace HIMS.API.Models.OPPatient
     {
         public OPPaymentModelValidator()
         {
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("ClassId is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 
-    //public class InsertPathologyReportHeader
-    //{
-    //    public DateTime PathDate { get; set; }
-    //    public DateTime PathTime { get; set; }
-    //    public Boolean OPD_IPD_Type { get; set; }
-    //    public int OPD_IPD_Id { get; set; }
-    //    public int PathTestID { get; set; }
-    //    public int AddedBy { get; set; }
-    //    public int ChargeID { get; set; }
-    //    public Boolean IsCompleted { get; set; }
-    //    public Boolean IsPrinted { get; set; }
-    //    public Boolean IsSampleCollection { get; set; }
-    //    public Boolean TestType { get; set; }
-    //}
 
-    //public class InsertRadiologyReportHeader
-    //{
-    //    public DateTime RadDate { get; set; }
-    //    public DateTime RadTime { get; set; }
-    //    public Boolean OPD_IPD_Type { get; set; }
-    //    public int OPD_IPD_Id { get; set; }
-    //    public int RadTestID { get; set; }
-    //    public int AddedBy { get; set; }
-    //    public Boolean IsCancelled { get; set; }
-    //    public int ChargeID { get; set; }
-    //    public Boolean IsPrinted { get; set; }
-    //    public Boolean IsCompleted { get; set; }
-    //    public Boolean TestType { get; set; }
-    //}
 
     //public class OPoctorShareGroupAdmChargeDoc
     //{
@@ -196,4 +163,15 @@ namespace HIMS.API.Models.OPPatient
     //    public int BillNo { get; set; }
 
     //}
+
+
+    public class NewOpBill
+    {
+        public OPBillIngModel OPBillIngModels { get; set; }
+        public ChargesModel ChargesModels { get; set; }
+
+        public BillDetailsModel BillDetailsModels { get; set; }
+
+        public PaymentModell PaymentModells { get; set; }
+    }
 }

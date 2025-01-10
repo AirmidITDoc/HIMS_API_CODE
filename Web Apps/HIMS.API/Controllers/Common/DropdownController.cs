@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MItemManufactureMaster> _IMItemManufService;
         private readonly IGenericService<MUnitofMeasurementMaster> _IMUnitOfMeasurmentService;
 
-        //private readonly IGenericService<MItemDrugTypeMaster> _IMItemDrugtypeService;
+        private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MItemClassMaster> iMDItemClassMaster, IGenericService<MItemCategoryMaster> iMDItemCategoryMaster, IGenericService<MItemTypeMaster> iMDItemTypeMaster
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
-
+            , IGenericService<MConcessionReasonMaster> iMDConcessionMaster
               )
         {
             _IAreaService = areaservice;
@@ -131,7 +131,7 @@ namespace HIMS.API.Controllers.Common
             _IMItemDrugtypeService = iMDItemdrugtypeMaster;
             _IMItemManufService = iMDItemanufMaster;
             _IMUnitOfMeasurmentService = iMDunitofmeasurementMaster;
-
+            _IMConcessService = iMDConcessionMaster;
         }
 
         [HttpGet]
@@ -194,8 +194,8 @@ namespace HIMS.API.Controllers.Common
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
 
-                
-                //"Purpose" => (await _IMDoPurposeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
+
+                "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };
