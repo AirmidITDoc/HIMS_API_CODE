@@ -77,6 +77,7 @@ namespace HIMS.API.Controllers.Report
                 case "CrossConsultationReport":
                 case "OPDoctorWiseNewOldPatientReport":
 
+
                     {
                         if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
                             return Unauthorized("You don't have permission to access this report.");
@@ -93,7 +94,7 @@ namespace HIMS.API.Controllers.Report
                 case "OPDRefundOfBill":
                 case "OPDailyCollectionReport":
                 case "OPCollectionSummary":
-              
+
                     {
                         if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
                             return Unauthorized("You don't have permission to access this report.");
