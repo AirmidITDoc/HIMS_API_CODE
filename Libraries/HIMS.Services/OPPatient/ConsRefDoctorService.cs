@@ -24,30 +24,37 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
+       
         public virtual async Task UpdateAsync(VisitDetail objVisitDetail, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
+            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId" };
+            var entity = objVisitDetail.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                // Update header & detail table records
-                _context.VisitDetails.Update(objVisitDetail);
-                _context.Entry(objVisitDetail).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                entity.Remove(rProperty);
             }
+             odal.ExecuteNonQuery("Update_ConsultationDoctor", CommandType.StoredProcedure, entity);
+
+            await _context.SaveChangesAsync(UserId, Username);
+
         }
 
         public virtual async Task Update(VisitDetail objVisitDetail, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId","DepartmentId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
+            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId" };
+            var entity = objVisitDetail.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                // Update header & detail table records
-                _context.VisitDetails.Update(objVisitDetail);
-                _context.Entry(objVisitDetail).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                entity.Remove(rProperty);
             }
+             odal.ExecuteNonQuery("Update_RefranceDoctor", CommandType.StoredProcedure, entity);
+
+            await _context.SaveChangesAsync(UserId, Username);
+
         }
     }
 }

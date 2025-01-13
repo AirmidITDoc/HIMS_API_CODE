@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.OPPatient
         {
             _IConsRefDoctorServic = repository;
         }
-        [HttpPost("ConsultantDoctorUpdate")]
+        [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdateAsync(ConsRefDoctorModel obj)
         {
@@ -40,11 +40,9 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                //model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-                 await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Consultant Doctor updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsultantDoctor updated successfully.");
         }
 
 
@@ -57,9 +55,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.VisitDate = Convert.ToDateTime(obj.VisitDate);
-                //model.VisitTime = Convert.ToDateTime(obj.VisitTime);
-                await _IConsRefDoctorServic.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            await _IConsRefDoctorServic.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RefDoctor updated successfully.");
         }
