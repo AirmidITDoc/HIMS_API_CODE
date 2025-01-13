@@ -36,7 +36,7 @@ namespace HIMS.API.Models.OPPatient
         public long? CashCounterId { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
-        public List<OPPaymentModel> Payments { get; set; }
+       // public List<OPPaymentModel> Payments { get; set; }
     }
     public class BillModelValidator : AbstractValidator<OPBillIngModel>
     {
