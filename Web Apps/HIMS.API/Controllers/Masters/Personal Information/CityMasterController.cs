@@ -67,7 +67,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(CityMasterModel obj)
         {
             MCityMaster model = obj.MapTo<MCityMaster>();
-            model.IsActive = true;
             if (obj.CityId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
