@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -22,6 +23,7 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
+       
         public virtual async Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "m_rtrv_PhoneAppList");

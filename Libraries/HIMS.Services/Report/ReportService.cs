@@ -46,9 +46,9 @@ namespace HIMS.Services.Report
                 case "AppointmentListReport":
                     {
 
-                        model.RepoertName = "Appoitnment List";
+                        model.RepoertName = "Appointment List";
                         string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name", "Age year", "OPD No", "Doctor Name", "RefDoctor Name", "Company Name" };
-                        string[] colList = { "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
+                        string[] colList = { "Sr.No", "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -60,10 +60,12 @@ namespace HIMS.Services.Report
                 #region :: DoctorWiseVisitReport ::
                 case "DoctorWiseVisitReport":
                     {
-                        string[] colList = { "RegID", "VisitTime", "PatientName", "DoctorName", "RefDoctorName" };
+                        model.RepoertName = "DoctorWiseVisit Report ";
+                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "DoctorName", "RefDoctorName" };
+                        string[] colList = { "RegID","PatientName", "DoctorName", "RefDoctorName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDoctorWiseVisitDetails", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptDoctorWiseVisitDetails", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorWiseVisitReport", "DoctorWiseVisitReport", Orientation.Portrait);
                         break;
                     }
@@ -72,10 +74,12 @@ namespace HIMS.Services.Report
                 #region :: RefDoctorWiseReport ::
                 case "RefDoctorWiseReport":
                     {
-                        string[] colList = { "RegNO", "PatientName", "AdmittedDoctorName", "RefDoctorName" };
+                        model.RepoertName = "RefDoctorWise Report  ";
+                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName","AgeYear" };
+                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear"};
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RefDoctorWiseReport", "RefDoctorWiseReport", Orientation.Portrait);
                         break;
                     }
@@ -459,7 +463,7 @@ namespace HIMS.Services.Report
             {
                 // Simple Report Format
                 case "RegistrationReport":
-                case "AppointmentListReport":
+                //case "AppointmentListReport":
                 case "DepartmentWisecountSummury":
                 case "OPDoctorWiseVisitCountSummary":
                 case "OPAppoinmentListWithServiseAvailed":
@@ -551,36 +555,37 @@ namespace HIMS.Services.Report
                     }
 
                     break;
-                //case "AppointmentListReport":
-                //    {
-                //        HeaderItems.Append("<tr>");
-                //        foreach (var hr in headerList)
-                //        {
-                //            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                //            HeaderItems.Append(hr.ConvertToString());
-                //            HeaderItems.Append("</th>");
-                //        }
-                //        HeaderItems.Append("</tr>");
+               
+                case "AppointmentListReport":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
 
-                //        int k = 0;
-                //        foreach (DataRow dr in dt.Rows)
-                //        {
-                //            k++;
+                        int k = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            k++;
 
-                //            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
-                //            foreach (var colName in colList)
-                //            {
-                //                items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
-                //            }
-                //            if (model.Mode == "AppointmentListReport" || model.Mode == "AppointmentListReport")
-                //                T_Count += dr["PatientOldNew"].ConvertToDouble();
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+                            if (model.Mode == "AppointmentListReport" || model.Mode == "AppointmentListReport")
+                                T_Count += dr["PatientOldNew"].ConvertToDouble();
 
-                //        }
-                //        html = html.Replace("{{T_Count}}", T_Count.ToString());
+                        }
+                        html = html.Replace("{{T_Count}}", T_Count.ToString());
 
-                //    }
+                    }
 
-                //    break;
+                    break;
 
 
                 case "DepartmentWiseOPDCount":
@@ -909,10 +914,19 @@ namespace HIMS.Services.Report
 
 
                 case "DoctorWiseVisitReport":
-                case "RefDoctorWiseReport":
                     {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
                         string previousLabel = string.Empty;
-                        int i = 0, j = 0;
+                        int i = 0, j = 0, D = 0;
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++; j++;
@@ -920,23 +934,81 @@ namespace HIMS.Services.Report
                             {
                                 String Label;
                                 Label = dr["RefDoctorName"].ConvertToString();
-                                items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td>");
-                                items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(j).Append("</td></tr>");
+                                items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                                // items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(j).Append("</td></tr>");
                             }
 
-                            if (previousLabel != "" && previousLabel != dr["DoctorName"].ConvertToString())
+                            if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
                             {
                                 j = 1;
-                                items.Append("<tr style='border:1px solid black;color:#241571;background-color:#63C5DA'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">").Append("</td></tr>");
-                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"14\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
-                            }
+                                  items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                 .Append(D.ToString()).Append("</td></tr>");
 
+
+
+                                D = 0;
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
+                            }
+                            D = D + 1;
                             previousLabel = dr["RefDoctorName"].ConvertToString();
 
-                            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
                             foreach (var colName in colList)
                             {
-                                items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                                items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+
+                        }
+                    }
+                    break;
+                case "RefDoctorWiseReport":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
+                        string previousLabel = string.Empty;
+                        int i = 0, j = 0,D=0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++; j++;
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["RefDoctorName"].ConvertToString();
+                                items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                               // items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(j).Append("</td></tr>");
+                            }
+
+                            if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
+                            {
+                                j = 1;
+                                //items.Append("<tr style='border:1px solid black;color:#0000;'><td colspan='3' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">").Append("</td>");
+                                //items.Append("<td style=\"border: 1px solid #0000; padding: 6px;text-align:center;\">").Append(D).Append("</td></tr>");
+
+
+
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                 .Append(D.ToString()).Append("</td></tr>");
+
+
+                                D = 0;
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
+                            }
+                            D = D + 1;
+                            previousLabel = dr["RefDoctorName"].ConvertToString();
+
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
 
                         }

@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PhoneAppointment2ListDto> PhoneAppList = await _IPhoneAppointment2Service.GetListAsync(objGrid);
-            return Ok(PhoneAppList.ToGridResponse(objGrid, "Phone App List"));
+            return Ok(PhoneAppList.ToGridResponse(objGrid, "PhoneApp List"));
         }
 
         [HttpPost("InsertSP")]
