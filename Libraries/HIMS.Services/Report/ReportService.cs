@@ -983,18 +983,13 @@ namespace HIMS.Services.Report
                                 String Label;
                                 Label = dr["RefDoctorName"].ConvertToString();
                                 items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
-                               // items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(j).Append("</td></tr>");
+                              
                             }
 
                             if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
                             {
                                 j = 1;
-                                //items.Append("<tr style='border:1px solid black;color:#0000;'><td colspan='3' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">").Append("</td>");
-                                //items.Append("<td style=\"border: 1px solid #0000; padding: 6px;text-align:center;\">").Append(D).Append("</td></tr>");
-
-
-
-
+                               
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                                  .Append(D.ToString()).Append("</td></tr>");
 
@@ -1009,6 +1004,15 @@ namespace HIMS.Services.Report
                             foreach (var colName in colList)
                             {
                                 items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+
+                                     .Append(D.ToString()).Append("</td></tr>");
+
                             }
 
                         }
