@@ -49,8 +49,8 @@ namespace HIMS.API.Controllers.Login
             }
             else
             {
-                //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
-                //{
+                if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                {
                 LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
                 if (user == null)
                 {
@@ -66,16 +66,16 @@ namespace HIMS.API.Controllers.Login
                         user.UserToken,
                         user.WebRoleId,
                         Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
-                        Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 30, permissionString),
+                        Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
                         UserName = user.FirstName + " " + user.LastName,
                         user.UserId
                     });
                 }
-                //}
-                //else
-                //{
-                //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
-                //}
+                }
+                else
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                }
             }
         }
         [NonAction]
