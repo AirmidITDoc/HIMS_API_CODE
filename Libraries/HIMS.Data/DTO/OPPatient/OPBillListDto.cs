@@ -27,7 +27,7 @@ namespace HIMS.Data.DTO.OPPatient
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
         public long OPD_IPD_ID { get; set; }
-        //public decimal? PaidAmt { get; set; }
+        public long PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
         public decimal? CashPay { get; set; }
         public decimal? ChequePay { get; set; }

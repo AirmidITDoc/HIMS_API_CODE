@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
@@ -73,8 +74,10 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.",model);
         }
+
+       
 
         [HttpPost("RegistrationUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -89,7 +92,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.", model);
         }
 
 
