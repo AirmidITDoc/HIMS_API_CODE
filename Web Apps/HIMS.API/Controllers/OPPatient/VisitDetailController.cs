@@ -168,11 +168,11 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
 
-        [HttpPost("PhoneAppointList")]
-        public async Task<IActionResult> OPphAppList(GridRequestModel objGrid)
-        {
-            IPagedList<OPPhoneAppointmentList> OphoneList = await _visitDetailsService.GeOPPhoneAppListAsync(objGrid);
-            return Ok(OphoneList.ToGridResponse(objGrid, "Phone Appointment List"));
-        }
+        //[HttpPost("PhoneAppointList")]
+        //public async Task<IActionResult> OPphAppList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<OPPhoneAppointmentList> OphoneList = await _visitDetailsService.GeOPPhoneAppListAsync(objGrid);
+        //    return Ok(OphoneList.ToGridResponse(objGrid, "Phone Appointment List"));
+        //}
     }
 }

@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
 
         Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel objGrid);
 
-        Task<IPagedList<OPPhoneAppointmentList>> GeOPPhoneAppListAsync(GridRequestModel objGrid);
+        //Task<IPagedList<OPPhoneAppointmentList>> GeOPPhoneAppListAsync(GridRequestModel objGrid);
 
         
 
