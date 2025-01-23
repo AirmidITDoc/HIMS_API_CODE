@@ -47,6 +47,8 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment added successfully.", model);
         }
+
+
         [HttpPost("Cancel")]
         //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)

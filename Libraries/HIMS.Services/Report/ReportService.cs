@@ -48,7 +48,7 @@ namespace HIMS.Services.Report
 
                         model.RepoertName = "Appointment List";
                         string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name", "Age year", "OPD No", "Doctor Name", "RefDoctor Name", "Company Name" };
-                        string[] colList = { "Sr.No", "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
+                        string[] colList = { "RegNO", "VisitDate", "PatientName", "AgeYear", "OPDNo", "DoctorName", "RefDocName", "CompanyName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);

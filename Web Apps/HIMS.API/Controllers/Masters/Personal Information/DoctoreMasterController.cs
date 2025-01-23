@@ -46,6 +46,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             var data = await _repository.GetById(x => x.DoctorId == id);
             return data.ToSingleResponse<DoctorMaster, DoctoreMasterModel>("DoctorMaster");
         }
+
+      
+
         //Add API
         [HttpPost]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
