@@ -68,7 +68,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<DoctorMaster, DoctorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MTermsOfPaymentMaster, TermsOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<DbPrefixMaster, PrefixMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<DbPrefixMaster, PrefixMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
