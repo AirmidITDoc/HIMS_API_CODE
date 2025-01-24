@@ -88,7 +88,6 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<Refund, OPRefundOfBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TRefundDetail, TRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MPathParameterMaster, PathParameterMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            
 
 
