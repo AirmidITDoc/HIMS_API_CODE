@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.IPPatient;
 using HIMS.Services.IPPatient;
 using HIMS.API.Models.Nursing;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -24,7 +25,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DischargeSummaryModel obj)
         {
             DischargeSummary model = obj.MapTo<DischargeSummary>();
@@ -40,7 +41,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.");
         }
          [HttpPut("Update")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DischargeSummaryModel obj)
         {
             DischargeSummary model = obj.MapTo<DischargeSummary>();
