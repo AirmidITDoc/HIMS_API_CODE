@@ -74,10 +74,10 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.", model);
         }
 
-       
+
 
         [HttpPost("RegistrationUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -94,7 +94,13 @@ namespace HIMS.API.Controllers.OPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.", model);
         }
-
+        [HttpGet("auto-complete")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        {
+            var data = await _IRegistrationService.SearchRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id }));
+        }
 
     }
 }

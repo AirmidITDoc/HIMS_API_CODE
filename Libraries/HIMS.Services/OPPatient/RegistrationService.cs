@@ -27,6 +27,10 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "m_Rtrv_RegistrationList");
 
         }
+        public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
+        {
+            return await this._context.Registrations.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str) || x.RegNo.ToLower().Contains(str) || x.MobileNo.ToLower().Contains(str)).Take(25).Select(x => new RegistrationAutoCompleteDto() { FirstName = x.FirstName, Id = x.RegId, LastName = x.LastName, Mobile = x.MobileNo, RegNo = x.RegNo }).OrderBy(x => x.FirstName).ToListAsync();
+        }
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {

@@ -23,7 +23,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? Address { get; set; }
         public long? GenderId { get; set; }
         public string? GenderName { get; set; }
-        
+
         public string? City { get; set; }
         public long? CityId { get; set; }
         public long? StateId { get; set; }
@@ -46,5 +46,14 @@ namespace HIMS.Data.DTO.OPPatient
         public string? RegNo { get; set; }
         public string? RegNoWithPrefix { get; set; }
 
+    }
+
+    public class RegistrationAutoCompleteDto
+    {
+        public long Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string RegNo { get; set; }
+        public string Mobile { get; set; }
     }
 }
