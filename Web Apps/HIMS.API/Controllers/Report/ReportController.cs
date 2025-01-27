@@ -78,11 +78,11 @@ namespace HIMS.API.Controllers.Report
                 case "OPDoctorWiseNewOldPatientReport":
 
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 
@@ -95,11 +95,11 @@ namespace HIMS.API.Controllers.Report
                 case "OPDailyCollectionReport":
                 case "OPCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 
@@ -118,11 +118,11 @@ namespace HIMS.API.Controllers.Report
                 case "DepartmentServiceGroupWiseCollectionDetails":
                 case "DepartmentServiceGroupWiseCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
                 default:
                     break;
@@ -130,6 +130,17 @@ namespace HIMS.API.Controllers.Report
             model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetReportSetByProc(model);
+            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+        }
+
+        [HttpPost("NewViewReport")]
+        public IActionResult NewViewReport(ReportNewRequestModel model)
+        {
+            //if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+            //    return Unauthorized("You don't have permission to access this report.");
+            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
+            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            string byteFile = _reportService.GetNewReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
     }

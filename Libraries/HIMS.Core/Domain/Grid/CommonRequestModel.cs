@@ -23,6 +23,25 @@ namespace HIMS.Core.Domain.Grid
         public string RepoertName { get; set; } = string.Empty;
     }
 
+    public class ReportNewRequestModel
+    {
+        public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
+        public string? Mode { get; set; }
+        [JsonIgnore]
+        public string BaseUrl { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string StorageBaseUrl { get; set; } = string.Empty;
+        public string RepoertName { get; set; } = string.Empty;
+        public string[] headerList { get; set; } = null;
+        public string[] colList { get; set; } = null;
+        public string htmlFilePath { get; set; } = string.Empty;
+        public string htmlHeaderFilePath { get; set; } = string.Empty;
+        public string SPName { get; set; } = string.Empty;
+        public string FolderName { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+
+    }
+
     public class SortingField
     {
         public string FieldName { get; set; }

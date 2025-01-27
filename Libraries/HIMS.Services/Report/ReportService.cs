@@ -33,7 +33,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Registration List";
                         string[] headerList = { "Sr.No", "UHID", "Patient Name", "Address", "City", "Pin Code", "Age", "Gender Name", "Mobile No" };
-                        string[] colList = {"RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
+                        string[] colList = { "RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -42,7 +42,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-              #region :: AppointmentListReport ::
+                #region :: AppointmentListReport ::
                 case "AppointmentListReport":
                     {
 
@@ -62,7 +62,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "DoctorWiseVisit Report ";
                         string[] headerList = { "Sr.No", "RegNO", "PatientName", "DoctorName", "RefDoctorName" };
-                        string[] colList = { "RegID","PatientName", "DoctorName", "RefDoctorName" };
+                        string[] colList = { "RegID", "PatientName", "DoctorName", "RefDoctorName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDoctorWiseVisitDetails", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -75,8 +75,8 @@ namespace HIMS.Services.Report
                 case "RefDoctorWiseReport":
                     {
                         model.RepoertName = "RefDoctorWise Report  ";
-                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName","AgeYear" };
-                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear"};
+                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName", "AgeYear" };
+                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -162,7 +162,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "OP Bill Summary";
                         string[] headerList = { "Sr.No", "Bill No", "Bill Date", "UHID", "Patient Name", "Total Amount", "Con Amt", "Net Amount", "Paid Amount", "Bal Amt", "Cash Pay", "Cheque Pay", "Card Pay", "NEFT Pay", "Online Pa" };
-                        string[] colList = { "BillNo", "BillDate", "RegId", "PatientName", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay" , "ChequePay", "CardPay" , "NeftPay", "PayTMPay" };
+                        string[] colList = { "BillNo", "BillDate", "RegId", "PatientName", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
                         string[] totalColList = { "", "", "", "", "lableTotal", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -215,7 +215,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "OP DAILY COLLECTION REPORT";
                         string[] headerList = { "Sr.No", "Bill No", "Date", "UHID", "Patient Name", "Receipt No", "Net Amt", "Cash Amt", "Cheque Amt", "Card Amt", "Online Amt", "User Name" };
-                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt" , "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "UserName" };
+                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "UserName" };
                         string[] totalColList = { "", "", "", "", "", "lableTotal", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "" };
                         string groupByCol = "Type";
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MultiTotalReportFormat.html");
@@ -257,8 +257,8 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Day Wise Opd Details";
                         string[] headerList = { "Sr.No", "UHID", "Patient Name", "Age Year", "City Name", "Mobile No", "Department Name", "Doctor Name", "RefDoctor Name", "Company Name" };
-                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName"};
-                        string[] totalColList = { "", "lableTotal", "PatientName", "", "", "", "", "", "", ""};
+                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName" };
+                        string[] totalColList = { "", "lableTotal", "PatientName", "", "", "", "", "", "", "" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList);
@@ -286,7 +286,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Department WiseCount Details ";
                         string[] headerList = { "Sr.No", "PatientName", "DoctorName", "MobileNo" };
-                        string[] colList = {  "PatientName", "DoctorName", "MobileNo" };
+                        string[] colList = { "PatientName", "DoctorName", "MobileNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -313,8 +313,8 @@ namespace HIMS.Services.Report
                 case "DrWiseOPDCountDetail":
                     {
                         model.RepoertName = "DrWise OPD CountDetail  ";
-                        string[] headerList = { "Sr.No","Department Name", " PatientName","AgeYear","CityName","MobileNo", "RefDoctorName", "CompanyName" };
-                        string[] colList = { "DepartmentName","PatientName","AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
+                        string[] headerList = { "Sr.No", "Department Name", " PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
+                        string[] colList = { "DepartmentName", "PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -327,7 +327,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Doctor Wise Opd Count Summary";
                         string[] headerList = { "Sr.No", "Doctor Name", "Count" };
-                        string[] colList = { "DoctorName" ,"Count" };
+                        string[] colList = { "DoctorName", "Count" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseDoctoropdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
@@ -410,7 +410,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Department Service Group Wise Collection Summary";
                         string[] headerList = { "Sr.No", "Description", "Net Amount" };
-                        string[] colList = { "GroupName" , "NetPayableAmt" };
+                        string[] colList = { "GroupName", "NetPayableAmt" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptservicegroupwisecollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -422,8 +422,29 @@ namespace HIMS.Services.Report
                 default:
                     break;
 
-                 
+
             }
+            string byteFile = Convert.ToBase64String(tuple.Item1);
+            return byteFile;
+
+        }
+
+        public string GetNewReportSetByProc(ReportNewRequestModel model)
+        {
+            ReportRequestModel ReqModel = new ReportRequestModel();
+            ReqModel.SearchFields = model.SearchFields;
+            ReqModel.Mode = model.Mode;
+            ReqModel.BaseUrl = model.BaseUrl;
+            ReqModel.StorageBaseUrl = model.StorageBaseUrl;
+            ReqModel.RepoertName = model.RepoertName;
+
+            var tuple = new Tuple<byte[], string>(null, string.Empty);
+            string[] headerList = model.headerList;
+            string[] colList = model.colList;
+            string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
+            string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
+            var html = GetHTMLView(model.SPName, ReqModel, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+            tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
@@ -474,12 +495,12 @@ namespace HIMS.Services.Report
                 case "CrossConsultationReport":
                     {
                         HeaderItems.Append("<tr>");
-                            foreach (var hr in headerList)
-                            {
-                                HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                HeaderItems.Append(hr.ConvertToString());
-                                HeaderItems.Append("</th>");
-                            }
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
                         HeaderItems.Append("</tr>");
 
                         int k = 0;
@@ -493,7 +514,7 @@ namespace HIMS.Services.Report
                                 items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
                             if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary")
-                                if ( model.Mode == "OPDoctorWiseVisitCountSummary")
+                                if (model.Mode == "OPDoctorWiseVisitCountSummary")
                                     T_Count += dr["Lbl"].ConvertToDouble();
                         }
                         html = html.Replace("{{T_Count}}", T_Count.ToString());
@@ -527,7 +548,7 @@ namespace HIMS.Services.Report
                         }
                     }
                     break;
-            
+
 
 
                 case "DayWiseOpdCountSummry":
@@ -562,7 +583,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                    //Sir Code//
+                //Sir Code//
                 //case "DepartmentWiseOPDCount":
                 //    {
                 //        HeaderItems.Append("<tr>");
@@ -892,7 +913,7 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-                
+
                 case "DepartmentWiseOpdCollectionSummary":
                     {
                         HeaderItems.Append("<tr>");
@@ -1081,7 +1102,7 @@ namespace HIMS.Services.Report
 
                         int k = 0;
                         string previousLabel = string.Empty;
-                        int i = 0, j = 0,D=0;
+                        int i = 0, j = 0, D = 0;
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++; j++;
@@ -1090,13 +1111,13 @@ namespace HIMS.Services.Report
                                 String Label;
                                 Label = dr["RefDoctorName"].ConvertToString();
                                 items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
-                              
+
                             }
 
                             if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
                             {
                                 j = 1;
-                               
+
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                                  .Append(D.ToString()).Append("</td></tr>");
 
@@ -1198,7 +1219,7 @@ namespace HIMS.Services.Report
                                 }
                             }
                         }
-                        if(totalColList != null)
+                        if (totalColList != null)
                         {
                             ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
                             foreach (var colName in totalColList)
@@ -1245,9 +1266,9 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
                             foreach (var colName in colList)
                             {
-                                if(colName.ToLower().IndexOf("date") == -1)
+                                if (colName.ToLower().IndexOf("date") == -1)
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
-                                else 
+                                else
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
                             }
                             items.Append("</tr>");
@@ -1266,7 +1287,7 @@ namespace HIMS.Services.Report
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                             else if (!string.IsNullOrEmpty(colName))
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
-                            else 
+                            else
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                         }
                         ItemsTotal.Append("</tr>");
