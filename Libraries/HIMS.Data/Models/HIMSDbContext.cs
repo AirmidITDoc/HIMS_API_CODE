@@ -245,6 +245,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MRefBySubCategoryMaster> MRefBySubCategoryMasters { get; set; } = null!;
         public virtual DbSet<MRelationshipMaster> MRelationshipMasters { get; set; } = null!;
         public virtual DbSet<MReligionMaster> MReligionMasters { get; set; } = null!;
+        public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -6878,6 +6879,43 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ReligionName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<MReportConfig>(entity =>
+            {
+                entity.HasKey(e => e.ReportId);
+
+                entity.ToTable("M_ReportConfig");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ReportBodyFile).HasMaxLength(100);
+
+                entity.Property(e => e.ReportColumn).HasMaxLength(500);
+
+                entity.Property(e => e.ReportFileName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportFolderName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportHeader).HasMaxLength(500);
+
+                entity.Property(e => e.ReportHeaderFile).HasMaxLength(100);
+
+                entity.Property(e => e.ReportName).HasMaxLength(200);
+
+                entity.Property(e => e.ReportPageOrientation).HasMaxLength(100);
+
+                entity.Property(e => e.ReportPageSize).HasMaxLength(100);
+
+                entity.Property(e => e.ReportSection).HasMaxLength(100);
+
+                entity.Property(e => e.ReportSpname)
+                    .HasMaxLength(100)
+                    .HasColumnName("ReportSPName");
+
+                entity.Property(e => e.ReportTitle).HasMaxLength(200);
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MReportConfiguration>(entity =>

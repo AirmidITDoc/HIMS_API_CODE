@@ -76,13 +76,21 @@ namespace HIMS.API.Controllers.Report
                 case "OPAppoinmentListWithServiseAvailed":
                 case "CrossConsultationReport":
                 case "OPDoctorWiseNewOldPatientReport":
+                case "OPRefundReceipt":
+                case "OPPaymentReceipt":
+                case "AppointmentReceipt":
+                case "OpBillReceipt":
 
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+
+
+
+
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 
@@ -95,13 +103,14 @@ namespace HIMS.API.Controllers.Report
                 case "OPDailyCollectionReport":
                 case "OPCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
+               
 
                 #region"OP MIS Reports"
 
