@@ -10,5 +10,6 @@ namespace HIMS.Services.Report
     public partial interface IReportService
     {
         string GetReportSetByProc(ReportRequestModel model);
+        string GetNewReportSetByProc(ReportNewRequestModel model);
     }
 }

@@ -4,7 +4,7 @@ namespace HIMS.API.Models.IPPatient
 {
     public class AdmissionRegModel
     {
-      
+
         public long RegId { get; set; }
         public string? RegDate { get; set; }
         public string? RegTime { get; set; }
@@ -32,7 +32,7 @@ namespace HIMS.API.Models.IPPatient
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
         public bool? IsCharity { get; set; }
-     
+
         public long? ReligionId { get; set; }
         public long? AreaId { get; set; }
         public bool? IsSeniorCitizen { get; set; }
@@ -157,6 +157,10 @@ namespace HIMS.API.Models.IPPatient
         public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel ADMISSION { get; set; }
     }
+    public class BedMaster
+    {
+        public long BedId { get; set; }
 
+    }
 }
 

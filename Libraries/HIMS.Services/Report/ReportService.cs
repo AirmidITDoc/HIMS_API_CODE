@@ -33,7 +33,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Registration List";
                         string[] headerList = { "Sr.No", "UHID", "Patient Name", "Address", "City", "Pin Code", "Age", "Gender Name", "Mobile No" };
-                        string[] colList = {"RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
+                        string[] colList = { "RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -42,7 +42,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-              #region :: AppointmentListReport ::
+                #region :: AppointmentListReport ::
                 case "AppointmentListReport":
                     {
 
@@ -56,13 +56,14 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+              
 
                 #region :: DoctorWiseVisitReport ::
                 case "DoctorWiseVisitReport":
                     {
                         model.RepoertName = "DoctorWiseVisit Report ";
                         string[] headerList = { "Sr.No", "RegNO", "PatientName", "DoctorName", "RefDoctorName" };
-                        string[] colList = { "RegID","PatientName", "DoctorName", "RefDoctorName" };
+                        string[] colList = { "RegID", "PatientName", "DoctorName", "RefDoctorName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDoctorWiseVisitDetails", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -75,8 +76,8 @@ namespace HIMS.Services.Report
                 case "RefDoctorWiseReport":
                     {
                         model.RepoertName = "RefDoctorWise Report  ";
-                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName","AgeYear" };
-                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear"};
+                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName", "AgeYear" };
+                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -162,7 +163,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "OP Bill Summary";
                         string[] headerList = { "Sr.No", "Bill No", "Bill Date", "UHID", "Patient Name", "Total Amount", "Con Amt", "Net Amount", "Paid Amount", "Bal Amt", "Cash Pay", "Cheque Pay", "Card Pay", "NEFT Pay", "Online Pa" };
-                        string[] colList = { "BillNo", "BillDate", "RegId", "PatientName", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay" , "ChequePay", "CardPay" , "NeftPay", "PayTMPay" };
+                        string[] colList = { "BillNo", "BillDate", "RegId", "PatientName", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
                         string[] totalColList = { "", "", "", "", "lableTotal", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -210,12 +211,100 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: OPRefundReceipt ::
+                case "OPRefundReceipt":
+                    {
+                        string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPRefundReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rptOPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: OPPaymentReceipt ::
+                case "OPPaymentReceipt":
+                    {
+                        string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPaymentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rptOPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPaymentReceipt", "OPPaymentReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+              
+                #region :: AppointmentReceipt ::
+                case "AppointmentReceipt":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList );
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport", "AppointmentListReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: OpBillReceipt ::
+                case "OpBillReceipt":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpBillingReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: DoctorNotesReceipt ::
+                case "DoctorNotesReceipt":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorNoteReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: NursingNotesReceipt ::
+                case "NursingNotesReceipt":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NursingNoteReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rpt_T_NursingNotesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: DoctorPatientHandoverReceipt ::
+                case "DoctorPatientHandoverReceipt":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorPatientHandoverReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rpt_T_Doctor_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorPatientHandoverReceipt", "DoctorPatientHandoverReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+
                 #region :: OPDailyCollectionReport ::
                 case "OPDailyCollectionReport":
                     {
                         model.RepoertName = "OP DAILY COLLECTION REPORT";
                         string[] headerList = { "Sr.No", "Bill No", "Date", "UHID", "Patient Name", "Receipt No", "Net Amt", "Cash Amt", "Cheque Amt", "Card Amt", "Online Amt", "User Name" };
-                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt" , "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "UserName" };
+                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "UserName" };
                         string[] totalColList = { "", "", "", "", "", "lableTotal", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "" };
                         string groupByCol = "Type";
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MultiTotalReportFormat.html");
@@ -257,8 +346,8 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Day Wise Opd Details";
                         string[] headerList = { "Sr.No", "UHID", "Patient Name", "Age Year", "City Name", "Mobile No", "Department Name", "Doctor Name", "RefDoctor Name", "Company Name" };
-                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName"};
-                        string[] totalColList = { "", "lableTotal", "PatientName", "", "", "", "", "", "", ""};
+                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName" };
+                        string[] totalColList = { "", "lableTotal", "PatientName", "", "", "", "", "", "", "" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList);
@@ -286,7 +375,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Department WiseCount Details ";
                         string[] headerList = { "Sr.No", "PatientName", "DoctorName", "MobileNo" };
-                        string[] colList = {  "PatientName", "DoctorName", "MobileNo" };
+                        string[] colList = { "PatientName", "DoctorName", "MobileNo" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -313,8 +402,8 @@ namespace HIMS.Services.Report
                 case "DrWiseOPDCountDetail":
                     {
                         model.RepoertName = "DrWise OPD CountDetail  ";
-                        string[] headerList = { "Sr.No","Department Name", " PatientName","AgeYear","CityName","MobileNo", "RefDoctorName", "CompanyName" };
-                        string[] colList = { "DepartmentName","PatientName","AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
+                        string[] headerList = { "Sr.No", "Department Name", " PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
+                        string[] colList = { "DepartmentName", "PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -327,7 +416,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Doctor Wise Opd Count Summary";
                         string[] headerList = { "Sr.No", "Doctor Name", "Count" };
-                        string[] colList = { "DoctorName" ,"Count" };
+                        string[] colList = { "DoctorName", "Count" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptDaywiseDoctoropdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
@@ -410,7 +499,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Department Service Group Wise Collection Summary";
                         string[] headerList = { "Sr.No", "Description", "Net Amount" };
-                        string[] colList = { "GroupName" , "NetPayableAmt" };
+                        string[] colList = { "GroupName", "NetPayableAmt" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptservicegroupwisecollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -422,8 +511,29 @@ namespace HIMS.Services.Report
                 default:
                     break;
 
-                 
+
             }
+            string byteFile = Convert.ToBase64String(tuple.Item1);
+            return byteFile;
+
+        }
+
+        public string GetNewReportSetByProc(ReportNewRequestModel model)
+        {
+            ReportRequestModel ReqModel = new ReportRequestModel();
+            ReqModel.SearchFields = model.SearchFields;
+            ReqModel.Mode = model.Mode;
+            ReqModel.BaseUrl = model.BaseUrl;
+            ReqModel.StorageBaseUrl = model.StorageBaseUrl;
+            ReqModel.RepoertName = model.RepoertName;
+
+            var tuple = new Tuple<byte[], string>(null, string.Empty);
+            string[] headerList = model.headerList;
+            string[] colList = model.colList;
+            string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
+            string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
+            var html = GetHTMLView(model.SPName, ReqModel, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+            tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
@@ -474,12 +584,12 @@ namespace HIMS.Services.Report
                 case "CrossConsultationReport":
                     {
                         HeaderItems.Append("<tr>");
-                            foreach (var hr in headerList)
-                            {
-                                HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                HeaderItems.Append(hr.ConvertToString());
-                                HeaderItems.Append("</th>");
-                            }
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
                         HeaderItems.Append("</tr>");
 
                         int k = 0;
@@ -493,7 +603,7 @@ namespace HIMS.Services.Report
                                 items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
                             if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary")
-                                if ( model.Mode == "OPDoctorWiseVisitCountSummary")
+                                if (model.Mode == "OPDoctorWiseVisitCountSummary")
                                     T_Count += dr["Lbl"].ConvertToDouble();
                         }
                         html = html.Replace("{{T_Count}}", T_Count.ToString());
@@ -527,7 +637,7 @@ namespace HIMS.Services.Report
                         }
                     }
                     break;
-            
+
 
 
                 case "DayWiseOpdCountSummry":
@@ -562,7 +672,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                    //Sir Code//
+                //Sir Code//
                 //case "DepartmentWiseOPDCount":
                 //    {
                 //        HeaderItems.Append("<tr>");
@@ -892,7 +1002,7 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-                
+
                 case "DepartmentWiseOpdCollectionSummary":
                     {
                         HeaderItems.Append("<tr>");
@@ -1081,7 +1191,7 @@ namespace HIMS.Services.Report
 
                         int k = 0;
                         string previousLabel = string.Empty;
-                        int i = 0, j = 0,D=0;
+                        int i = 0, j = 0, D = 0;
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++; j++;
@@ -1090,13 +1200,13 @@ namespace HIMS.Services.Report
                                 String Label;
                                 Label = dr["RefDoctorName"].ConvertToString();
                                 items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
-                              
+
                             }
 
                             if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
                             {
                                 j = 1;
-                               
+
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
                                  .Append(D.ToString()).Append("</td></tr>");
 
@@ -1198,7 +1308,7 @@ namespace HIMS.Services.Report
                                 }
                             }
                         }
-                        if(totalColList != null)
+                        if (totalColList != null)
                         {
                             ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
                             foreach (var colName in totalColList)
@@ -1212,6 +1322,438 @@ namespace HIMS.Services.Report
                             }
                             ItemsTotal.Append("</tr>");
                         }
+                    }
+                    break;
+                case "OPPaymentReceipt":
+                    {
+                      
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ChequeDate}}", dt.GetColValue("ChequeDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+
+                            html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{CardDate}}", dt.GetColValue("CardDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo"));
+                            html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName"));
+                            html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo"));
+                            html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
+                            html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
+                            html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                            html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
+                            html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | HH:mm tt"));
+
+
+                            html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDoctorName"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                            html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                            html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+
+
+                            html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkcardflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
+
+
+
+
+                            string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+
+
+                    }
+                    break;
+                case "OpBillReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                            html = html.Replace("{{NewHeader}}", htmlHeader);
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                            html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
+                            html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
+                            html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                            html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+
+                            double T_NetAmount = 0;
+                            {
+                                i++;
+                                items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:15;\"><td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                                items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                                items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
+                                items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                                items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                                items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+                                T_NetAmount += dr["NetAmount"].ConvertToDouble();
+                            }
+                            T_NetAmount = Math.Round(T_NetAmount);
+
+                            html = html.Replace("{{Items}}", items.ToString());
+
+
+                            html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().To2DecimalPlace());
+
+                            html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{Price}}", dt.GetColValue("Price").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{TotalGst}}", dt.GetColValue("TotalGst").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
+                            html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
+                            html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments").ConvertToString());
+
+
+                            html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            //html = html.Replace("{{chkRefdrflag}}", Bills.GetColValue("chkRefdrflag").ConvertToDouble() != ' ' ? "table-row " : "none");
+                            //html = html.Replace("{{chkCompanyflag}}", Bills.GetColValue("PaidAmount").ConvertToDouble() != ' ' ? "table-row " : "none");
+
+
+                            string finalamt = conversion(T_NetAmount.ToString());
+                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                            return html;
+
+                        }
+
+
+
+
+                    }
+                    break;
+                case "AppointmentReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+
+                            html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                            html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+
+                            html = html.Replace("{{DOT}}", dt.GetColValue("DOT").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+
+                            html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                            html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+
+
+                            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
+                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+
+                            html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                            html = html.Replace("{{RelativePhoneNo}}", dt.GetColValue("RelativePhoneNo"));
+
+                            html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                            html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+                            html = html.Replace("{{AdmittedDoctor1}}", dt.GetColValue("AdmittedDoctor1"));
+
+                            html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
+                            html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
+
+                            return html;
+
+
+
+                            string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+
+
+                    }
+                    break;
+
+                case "DoctorNotesReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
+
+                        }
+                        html = html.Replace("{{Items}}", items.ToString());
+                            html = html.Replace("{{AdmID}}", dt.GetColValue("AdmId"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{BedNo}}", dt.GetColValue("BedNo"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+                            return html;
+
+
+                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+                 break;
+
+                case "NursingNotesReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["NursingNotes"].ConvertToString()).Append("</td></tr>");
+
+                            html = html.Replace("{{Items}}", items.ToString());
+                            html = html.Replace("{{AdmId}}", dt.GetColValue("AdmId"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            //   html = html.Replace("{{AdmId}}", Bills.GetColValue("AdmId"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{TTime}}", dt.GetColValue("TTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{BedNo}}", dt.GetColValue("BedNo"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+                            return html;
+
+
+                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+
+
+                    }
+                    break;
+                case "DoctorPatientHandoverReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ShiftInfo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PatHand_I"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PatHand_S"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PatHand_B"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PatHand_A"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PatHand_R"].ConvertToString()).Append("</td></tr>");
+
+                        }
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{AdmID}}", dt.GetColValue("AdmId"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{BedNo}}", dt.GetColValue("BedNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+
+                        return html;
+
+
+
+                    }
+
+
+                    break;
+                case "OPRefundReceipt":
+                    {
+                        
+                        int i = 0, j = 0;
+                        var Bills = dt;
+
+                        html = html.Replace("{{BillNo}}", Bills.GetColValue("BillNo"));
+                        html = html.Replace("{{PatientName}}", Bills.GetColValue("PatientName"));
+                        html = html.Replace("{{RegNo}}", Bills.GetColValue("RegNo"));
+                        html = html.Replace("{{CashPayAmount}}", Bills.GetColValue("CashPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{ChequePayAmount}}", Bills.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{ChequeDate}}", Bills.GetColValue("ChequeDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{ChequeNo}}", Bills.GetColValue("ChequeNo"));
+
+                        html = html.Replace("{{CardPayAmount}}", Bills.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CardDate}}", Bills.GetColValue("CardDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{CardNo}}", Bills.GetColValue("CardNo"));
+                        html = html.Replace("{{CardBankName}}", Bills.GetColValue("CardBankName"));
+                        html = html.Replace("{{NEFTPayAmount}}", Bills.GetColValue("NEFTPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NEFTNo}}", Bills.GetColValue("NEFTNo"));
+                        html = html.Replace("{{NEFTBankMaster}}", Bills.GetColValue("NEFTBankMaster"));
+                        html = html.Replace("{{PayTMAmount}}", Bills.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{PayTMTranNo}}", Bills.GetColValue("PayTMTranNo"));
+                        html = html.Replace("{{PaidAmount}}", Bills.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{BillDate}}", Bills.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ReceiptNo}}", Bills.GetColValue("ReceiptNo"));
+                        html = html.Replace("{{UserName}}", Bills.GetColValue("UserName"));
+                        html = html.Replace("{{Remark}}", Bills.GetColValue("Remark"));
+                        html = html.Replace("{{PaymentTime}}", Bills.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | HH:mm tt"));
+
+
+                        html = html.Replace("{{ConsultantDocName}}", Bills.GetColValue("DoctorName"));
+                        html = html.Replace("{{DepartmentName}}", Bills.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDocName}}", Bills.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{AgeYear}}", Bills.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", Bills.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", Bills.GetColValue("AgeDay"));
+                        html = html.Replace("{{GenderName}}", Bills.GetColValue("GenderName"));
+                        html = html.Replace("{{Date}}", Bills.GetDateColValue("Date").ConvertToDateString());
+                        html = html.Replace("{{VisitDate}}", Bills.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{TotalAmt}}", Bills.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{ConcessionAmt}}", Bills.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NetPayableAmt}}", Bills.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+
+
+                        html = html.Replace("{{chkcashflag}}", Bills.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkcardflag}}", Bills.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkchequeflag}}", Bills.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkneftflag}}", Bills.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkpaytmflag}}", Bills.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkremarkflag}}", Bills.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
+
+                        //string finalamt = conversion(Bills.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+
                     }
                     break;
 
@@ -1245,9 +1787,9 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
                             foreach (var colName in colList)
                             {
-                                if(colName.ToLower().IndexOf("date") == -1)
+                                if (colName.ToLower().IndexOf("date") == -1)
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
-                                else 
+                                else
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
                             }
                             items.Append("</tr>");
@@ -1266,7 +1808,7 @@ namespace HIMS.Services.Report
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                             else if (!string.IsNullOrEmpty(colName))
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
-                            else 
+                            else
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                         }
                         ItemsTotal.Append("</tr>");
@@ -1288,6 +1830,72 @@ namespace HIMS.Services.Report
             html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
             return html;
 
+        }
+
+
+
+        public string conversion(string amount)
+        {
+            double m = Convert.ToInt64(Math.Floor(Convert.ToDouble(amount)));
+            double l = Convert.ToDouble(amount);
+
+            double j = (l - m) * 100;
+            //string Word = " ";
+
+            var beforefloating = ConvertNumbertoWords(Convert.ToInt64(m));
+            var afterfloating = ConvertNumbertoWords(Convert.ToInt64(j));
+
+            // Word = beforefloating + '.' + afterfloating;
+
+            var Content = beforefloating + ' ' + " RUPEES" + ' ' + " only";
+
+            return Content;
+        }
+
+        public string ConvertNumbertoWords(long number)
+        {
+            if (number == 0) return "ZERO";
+            if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));
+            string words = "";
+            if ((number / 1000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100000) + " LAKES ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000) + " THOUSAND ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100) + " HUNDRED ";
+                number %= 100;
+            }
+            //if ((number / 10) > 0)  
+            //{  
+            // words += ConvertNumbertoWords(number / 10) + " RUPEES ";  
+            // number %= 10;  
+            //}  
+            if (number > 0)
+            {
+                if (words != "") words += "AND ";
+                var unitsMap = new[]
+           {
+            "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"
+        };
+                var tensMap = new[]
+           {
+            "ZERO", "TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY"
+        };
+                if (number < 20) words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0) words += " " + unitsMap[number % 10];
+                }
+            }
+            return words;
         }
 
     }

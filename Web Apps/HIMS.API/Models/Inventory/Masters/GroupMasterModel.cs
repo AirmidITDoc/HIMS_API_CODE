@@ -6,6 +6,8 @@ namespace HIMS.API.Models.Masters
     {
         public long GroupId { get; set; }
         public string? GroupName { get; set; }
+        public bool? Isconsolidated { get; set; }
+        public bool? IsConsolidatedDr { get; set; }
     }
 
     public class GroupMasterModelValidator : AbstractValidator<GroupMasterModel>

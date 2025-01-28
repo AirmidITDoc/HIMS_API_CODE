@@ -245,6 +245,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MRefBySubCategoryMaster> MRefBySubCategoryMasters { get; set; } = null!;
         public virtual DbSet<MRelationshipMaster> MRelationshipMasters { get; set; } = null!;
         public virtual DbSet<MReligionMaster> MReligionMasters { get; set; } = null!;
+        public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -402,11 +403,12 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMrpstockAdjestment> TMrpstockAdjestments { get; set; } = null!;
         public virtual DbSet<TNeroSurgeryOtnote> TNeroSurgeryOtnotes { get; set; } = null!;
         public virtual DbSet<TNurNote> TNurNotes { get; set; } = null!;
-        public virtual DbSet<TNurPatientHandover> TNurPatientHandovers { get; set; } = null!;
         public virtual DbSet<TNursingCaseSheet> TNursingCaseSheets { get; set; } = null!;
         public virtual DbSet<TNursingChart> TNursingCharts { get; set; } = null!;
         public virtual DbSet<TNursingFluidChart> TNursingFluidCharts { get; set; } = null!;
         public virtual DbSet<TNursingMedicationChart> TNursingMedicationCharts { get; set; } = null!;
+        public virtual DbSet<TNursingNote> TNursingNotes { get; set; } = null!;
+        public virtual DbSet<TNursingPatientHandover> TNursingPatientHandovers { get; set; } = null!;
         public virtual DbSet<TOpeningTransaction> TOpeningTransactions { get; set; } = null!;
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
@@ -6880,6 +6882,43 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReligionName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<MReportConfig>(entity =>
+            {
+                entity.HasKey(e => e.ReportId);
+
+                entity.ToTable("M_ReportConfig");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ReportBodyFile).HasMaxLength(100);
+
+                entity.Property(e => e.ReportColumn).HasMaxLength(500);
+
+                entity.Property(e => e.ReportFileName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportFolderName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportHeader).HasMaxLength(500);
+
+                entity.Property(e => e.ReportHeaderFile).HasMaxLength(100);
+
+                entity.Property(e => e.ReportName).HasMaxLength(200);
+
+                entity.Property(e => e.ReportPageOrientation).HasMaxLength(100);
+
+                entity.Property(e => e.ReportPageSize).HasMaxLength(100);
+
+                entity.Property(e => e.ReportSection).HasMaxLength(100);
+
+                entity.Property(e => e.ReportSpname)
+                    .HasMaxLength(100)
+                    .HasColumnName("ReportSPName");
+
+                entity.Property(e => e.ReportTitle).HasMaxLength(200);
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MReportConfiguration>(entity =>
             {
                 entity.HasKey(e => e.ReportId);
@@ -11768,47 +11807,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("TTime");
             });
 
-            modelBuilder.Entity<TNurPatientHandover>(entity =>
-            {
-                entity.HasKey(e => e.PatHandId);
-
-                entity.ToTable("T_Nur_PatientHandover");
-
-                entity.Property(e => e.AdmId).HasColumnName("AdmID");
-
-                entity.Property(e => e.Comments).HasMaxLength(500);
-
-                entity.Property(e => e.PatHandA)
-                    .HasMaxLength(500)
-                    .HasColumnName("PatHand_A");
-
-                entity.Property(e => e.PatHandB)
-                    .HasMaxLength(500)
-                    .HasColumnName("PatHand_B");
-
-                entity.Property(e => e.PatHandI)
-                    .HasMaxLength(500)
-                    .HasColumnName("PatHand_I");
-
-                entity.Property(e => e.PatHandR)
-                    .HasMaxLength(500)
-                    .HasColumnName("PatHand_R");
-
-                entity.Property(e => e.PatHandS)
-                    .HasMaxLength(500)
-                    .HasColumnName("PatHand_S");
-
-                entity.Property(e => e.ShiftInfo).HasMaxLength(50);
-
-                entity.Property(e => e.Tdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TDate");
-
-                entity.Property(e => e.Ttime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TTime");
-            });
-
             modelBuilder.Entity<TNursingCaseSheet>(entity =>
             {
                 entity.HasKey(e => e.NursingCaseSheetId);
@@ -11965,6 +11963,74 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.NurseName).HasMaxLength(50);
 
                 entity.Property(e => e.Route).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TNursingNote>(entity =>
+            {
+                entity.HasKey(e => e.DocNoteId);
+
+                entity.ToTable("T_Nursing_Notes");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.NursingNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.Tdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TDate");
+
+                entity.Property(e => e.Ttime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TTime");
+            });
+
+            modelBuilder.Entity<TNursingPatientHandover>(entity =>
+            {
+                entity.HasKey(e => e.PatHandId);
+
+                entity.ToTable("T_Nursing_PatientHandover");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PatHandA)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_A");
+
+                entity.Property(e => e.PatHandB)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_B");
+
+                entity.Property(e => e.PatHandI)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_I");
+
+                entity.Property(e => e.PatHandR)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_R");
+
+                entity.Property(e => e.PatHandS)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_S");
+
+                entity.Property(e => e.ShiftInfo).HasMaxLength(50);
+
+                entity.Property(e => e.Tdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TDate");
+
+                entity.Property(e => e.Ttime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TTime");
             });
 
             modelBuilder.Entity<TOpeningTransaction>(entity =>

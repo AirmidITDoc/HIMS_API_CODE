@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long AreaId { get; set; }
         public string? AreaName { get; set; }
-        public long? TalukaId { get; set; }
+        public long? CityId { get; set; }
 
     }
     public class AreaMasterModelValidator : AbstractValidator<AreaMasterModel>
@@ -14,6 +14,8 @@ namespace HIMS.API.Models.Masters
         public AreaMasterModelValidator()
         {
             RuleFor(x => x.AreaName).NotNull().NotEmpty().WithMessage("Area is required");
+            RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("Area is required");
+
         }
     }
 }

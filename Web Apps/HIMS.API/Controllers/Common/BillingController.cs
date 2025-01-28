@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Common
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
             IPagedList<IPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
-            return Ok(IPPaymentList.ToGridResponse(objGrid, "IP Payment List List"));
+            return Ok(IPPaymentList.ToGridResponse(objGrid, "IP Payment  List"));
         }
 
 

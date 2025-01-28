@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -20,9 +21,11 @@ namespace HIMS.API.Controllers.IPPatient
     {
 
         private readonly IAdmissionService _IAdmissionService;
-        public AdmissionController(IAdmissionService repository)
+        private readonly IGenericService<Admission> _repository1;
+        public AdmissionController(IAdmissionService repository, IGenericService<Admission> repository1)
         {
             _IAdmissionService = repository;
+            _repository1 = repository1;
         }
 
 
@@ -32,6 +35,15 @@ namespace HIMS.API.Controllers.IPPatient
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
+        }
+
+        [HttpGet("{id?}")]
+        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+          
+            var data = await _repository1.GetById(x => x.AdmissionId == id);
+            return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
 
 
