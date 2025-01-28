@@ -83,11 +83,11 @@ namespace HIMS.API.Controllers.Report
 
 
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                    {
+                        if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
                 #endregion
 
 
@@ -100,11 +100,11 @@ namespace HIMS.API.Controllers.Report
                 case "OPDailyCollectionReport":
                 case "OPCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                    {
+                        if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
                 #endregion
 
                 #region"Nursing Reports"
@@ -116,11 +116,11 @@ namespace HIMS.API.Controllers.Report
 
 
 
-                //{
-                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
+                    {
+                        if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
                 #endregion
 
 
@@ -141,11 +141,11 @@ namespace HIMS.API.Controllers.Report
                 case "DepartmentServiceGroupWiseCollectionDetails":
                 case "DepartmentServiceGroupWiseCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                    {
+                        if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
+                            return Unauthorized("You don't have permission to access this report.");
+                        break;
+                    }
                 #endregion
                 default:
                     break;
