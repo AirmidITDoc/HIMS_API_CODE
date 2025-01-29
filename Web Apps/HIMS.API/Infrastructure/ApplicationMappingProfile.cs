@@ -190,7 +190,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<TPrescription, OPDPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPrescription, OPDPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
