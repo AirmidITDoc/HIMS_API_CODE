@@ -9,11 +9,13 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.Report;
+using HIMS.Services.Utilities;
 using LinqToDB.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Security;
 using WkHtmlToPdfDotNet;
 
@@ -29,14 +31,16 @@ namespace HIMS.API.Controllers.Report
         private readonly IGenericService<DoctorMaster> _doctorRepository;
         private readonly IReportService _reportService;
         public readonly IConfiguration _configuration;
+        public readonly IPdfUtility _pdfUtility;
         public ReportController(IGenericService<MReportConfiguration> reportlistRepository, IGenericService<LoginManager> userRepository, IGenericService<DoctorMaster> doctorRepository,
-            IReportService reportService, IConfiguration configuration)
+            IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
         {
             _reportlistRepository = reportlistRepository;
             _userRepository = userRepository;
             _doctorRepository = doctorRepository;
             _reportService = reportService;
             _configuration = configuration;
+            _pdfUtility = pdfUtility;
         }
 
         [HttpPost("ReportList")]
@@ -147,6 +151,28 @@ namespace HIMS.API.Controllers.Report
                         break;
                     }
                 #endregion
+
+
+
+
+                #region"IP Reports"
+
+                case "IpCasepaperReport":
+                case "IptemplateCasepaperReport":
+                case "AdmissionList":
+                case "IpFinalBill":
+                case "IpPaymentReceipt":
+                case "IpAdvanceRefundReceipt":
+                case "IpBillRefundReceipt":
+
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
+                #endregion
+
+
                 default:
                     break;
             }
@@ -154,6 +180,9 @@ namespace HIMS.API.Controllers.Report
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+
+
+
         }
 
         [HttpPost("NewViewReport")]
@@ -165,6 +194,31 @@ namespace HIMS.API.Controllers.Report
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetNewReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+        }
+
+        [HttpGet("view-AdmissionTemplate")]
+        public IActionResult viewAdmissionTemplate(int AdmissionId)
+        {
+            // string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PrimeAdmissionPaper.html");
+
+
+            // Hospital Header 
+            //string Hospitalheader = _pdfUtility.GetHeader(1, 1);// hospital header
+            //Hospitalheader = Hospitalheader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
+
+            ////Report content
+            //string Admissiontemplate = _pdfUtility.GetTemplateHeader(2);// Admission header
+            //Admissiontemplate = Admissiontemplate.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
+
+            //DataTable dt = _Admission.GetDataForReport(AdmissionId);
+            //var html = _Admission.ViewAdmissiontemplatePaper(dt, Admissiontemplate, Hospitalheader);
+            //html = html.Replace("{{NewHeader}}", Hospitalheader);
+
+            //var tuple = _pdfUtility.GeneratePdfFromHtml(html, "IPAdmission", "IPAdmission" + AdmissionId, Wkhtmltopdf.NetCore.Options.Orientation.Portrait);
+
+            //return Ok(new { base64 = Convert.ToBase64String(tuple.Item1) });
+            return Ok();
+
         }
     }
 }

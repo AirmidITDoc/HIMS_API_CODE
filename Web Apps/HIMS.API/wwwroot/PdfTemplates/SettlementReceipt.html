@@ -30,35 +30,75 @@
                 </tr>
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Receipt No : </span>
+                                    <span style="font-weight:bold;">Receipt No:</span>
                                     <span>{{ReceiptNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span> Date : </span>
-                                    <span> {{AdmissionTime}}</span>
+                                    <span style="font-weight:bold;">IPD No:</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">PaymentDate|Time:</span>
+                                    <span>{{PaymentTime}}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Reg No : </span>
+                                    <span style="font-weight:bold;">UHID No:</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>IPDNo : </span>
-                                    <span>{{IPDNo}}</span>
+                                    <span style="font-weight:bold;">Age|Gender:</span>
+                                    <span> {{Age}}Y|{{AgeMonth}}M|{{AgeDay}}D|{{GenderName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOA | Time:</span>
+                                    <span>{{AdmissionTime}}</span>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Patient Name : </span>
+                                    <span style="font-weight:bold;">Patient Name:</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Payment Date : </span>
-                                    <span> {{PaymentDate}}</span>
+                                    <span style="font-weight:bold;">Patient Type:</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOD | Time:</span>
+                                    <span>{{DischargeDate}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Doctor Name:</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Department :</span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ward|Bed Name : </span>
+                                    <span>{{RoomName}} | {{BedName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ref.Doctor Name :</span>
+                                    <span>{{RefDocName}}</span>
+                                </td>
+                                <td></td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Company Name :</span>
+                                    <span>{{CompanyName}}</span>
                                 </td>
                             </tr>
 
@@ -73,7 +113,7 @@
                             <tr>
                                 <td>
                                     <table style="text-align:center; border-collapse: collapse; width: 100%;">
-                                        <thead style="font-size: 14px;">
+                                        <thead style="font-size: 22px;">
                                             <tr>
                                                 <th style=" border: 1px solid #d4c3c3; text-align: center;" colspan="2">
                                                     <h4 style="margin: 12px 0px; font-size: 15px;">
@@ -83,7 +123,7 @@
                                             </tr>
 
                                         </thead>
-                                        <tbody style="font-size: 14px;">
+                                        <tbody style="font-size: 22px;">
                                             <tr>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
                                                     Bill No
@@ -108,23 +148,6 @@
                                                     {{TotalAmt}}
                                                 </td>
                                             </tr>
-
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table style="text-align: center; border-collapse: collapse; width: 100%;">
-                                        <thead style="font-size: 14px;">
-                                            <tr>
-                                                <th style=" border: 1px solid #d4c3c3; text-align: center;" colspan="2">
-                                                    <h4 style="margin: 12px 0px; font-size: 15px;">
-                                                        Payment Information
-                                                    </h4>
-                                                </th>
-                                            </tr>
-
-                                        </thead>
-                                        <tbody style="font-size: 14px;">
                                             <tr>
                                                 <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
                                                     Paid Amount
@@ -142,26 +165,70 @@
                                                     {{Remark}}
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
-                                                    Cash Pay
-                                                </td> <!-- <div></div> -->
-                                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{CashPayAmount}}
-                                                </td>
-                                            </tr>
-
                                         </tbody>
                                     </table>
                                 </td>
+
                             </tr>
                         </table>
                     </td>
                 </tr>
+
+                <tr>
+                    <th style=" text-align: left;" colspan="5">
+                        <h4 style="margin: 12px 0px;font-size: 22px;" ">
+                            Payment Information
+                        </h4>
+                    </th>
+                </tr>
+                <td colspan="2">
+                    <table style="text-align: center; border-collapse: collapse; width: 100%;">
+                        <thead style="font-size: 22px;">
+
+                            <tr>
+                                <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Cash Amount
+                                </th>
+                                <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Card amount
+                                </th>
+                                <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Cheque Amount
+                                </th>
+
+                                <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    Online amount
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 20px;">
+                            <tr>
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    {{CashPayAmount}}
+                                </td>
+
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    {{CardPayAmount}}
+                                </td>
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    {{ChequePayAmount}}
+                                </td>
+
+
+                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    {{OnlinePayAmount}}
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </td>
+
                 <tr>
                     <td style="padding: 6px; text-align: left; font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
                 </tr>
-               
+
                 <tr style="padding: 6px; text-align: right;">
                     <td>
 

@@ -52,7 +52,6 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Post(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
-            model.IsActive = true;
             if (obj.PrefixId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -68,7 +67,6 @@ namespace HIMS.API.Controllers.Masters
         public async Task<ApiResponse> Edit(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
-            model.IsActive = true;
             if (obj.PrefixId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
