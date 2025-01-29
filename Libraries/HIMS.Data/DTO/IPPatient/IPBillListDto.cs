@@ -60,12 +60,5 @@ namespace HIMS.Data.DTO.IPPatient
 
 
 
-
-
-
-
-
-
-
     }
 }
