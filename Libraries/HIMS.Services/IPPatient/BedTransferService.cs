@@ -23,9 +23,6 @@ namespace HIMS.Services.IPPatient
         }
 
 
-       
-       
-
         public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster objBedMaster , Admission objAdmission, int  CurrentUserId, string CurrentUserName)
         {
 
