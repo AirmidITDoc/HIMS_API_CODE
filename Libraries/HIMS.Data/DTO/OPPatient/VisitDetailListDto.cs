@@ -34,6 +34,14 @@ namespace HIMS.Data.DTO.OPPatient
         public long AppPurposeId { get; set; }
         public long CompanyId { get; set; }
         public string? CompanyName { get; set; }
+        public long ClassId {  get; set; }
+        public string? ClassName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public long DoctorId {  get; set; }
+        public string? Doctorname { get; set; }
+        public long RefDocId { get; set; }
+        public string? RefDocName { get; set; }
         public long PhoneAppId { get; set; }
         public int? CrossConsulFlag { get; set; }
         public string? MPbillNo { get; set; }
