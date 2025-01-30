@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
@@ -30,7 +31,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
@@ -38,7 +39,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
           
@@ -94,7 +95,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionInsertSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionInsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
@@ -119,7 +120,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionRegisteredInsertSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionRegisteredInsertSP(NewAdmission obj)
         {
 
@@ -131,8 +132,9 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        [HttpPost("AdmissionUpdateSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[HttpPost("AdmissionUpdateSP")]
+        [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
         {
            

@@ -18,10 +18,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportSpname { get; set; }
         public string? ReportPageOrientation { get; set; }
         public string? ReportPageSize { get; set; }
-     //  public DateTime? CreatedOn { get; set; }
-  //      public long? UpdateBy { get; set; }
- //       public DateTime? UpdatedOn { get; set; }
-
+     
     }
     public class MReportConfigModelModelValidator : AbstractValidator<MReportConfigModel>
     {
