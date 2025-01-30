@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -26,13 +27,13 @@ namespace HIMS.API.Controllers.Report
     [ApiVersion("1")]
     public class ReportController : BaseController
     {
-        private readonly IGenericService<MReportConfiguration> _reportlistRepository;
+        private readonly IGenericService<MReportConfig> _reportlistRepository;
         private readonly IGenericService<LoginManager> _userRepository;
         private readonly IGenericService<DoctorMaster> _doctorRepository;
         private readonly IReportService _reportService;
         public readonly IConfiguration _configuration;
         public readonly IPdfUtility _pdfUtility;
-        public ReportController(IGenericService<MReportConfiguration> reportlistRepository, IGenericService<LoginManager> userRepository, IGenericService<DoctorMaster> doctorRepository,
+        public ReportController(IGenericService<MReportConfig> reportlistRepository, IGenericService<LoginManager> userRepository, IGenericService<DoctorMaster> doctorRepository,
             IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
         {
             _reportlistRepository = reportlistRepository;
@@ -47,7 +48,7 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> ReportList(GridRequestModel objGrid)
         {
-            IPagedList<MReportConfiguration> ReportList = await _reportlistRepository.GetAllPagedAsync(objGrid);
+            IPagedList<MReportConfig> ReportList = await _reportlistRepository.GetAllPagedAsync(objGrid);
             return Ok(ReportList.ToGridResponse(objGrid, "Report List"));
         }
         [HttpPost("UserList")]
@@ -63,6 +64,18 @@ namespace HIMS.API.Controllers.Report
         {
             IPagedList<DoctorMaster> DoctorList = await _doctorRepository.GetAllPagedAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor List"));
+        }
+        [HttpGet("{mode?}")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(string mode)
+        {
+            if (string.IsNullOrEmpty(mode))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _reportlistRepository.GetAll(x => x.IsActive.Value);
+            var sdata = data.Where(x => x.ReportMode == mode).FirstOrDefault();
+            return sdata.ToSingleResponse<MReportConfig, MReportConfig>("Report");
         }
         [HttpPost("ViewReport")]
         public IActionResult ViewReport(ReportRequestModel model)

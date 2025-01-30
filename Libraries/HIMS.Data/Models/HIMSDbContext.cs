@@ -6921,6 +6921,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ReportHeaderFile).HasMaxLength(100);
 
+                entity.Property(e => e.ReportMode).HasMaxLength(100);
+
                 entity.Property(e => e.ReportName).HasMaxLength(200);
 
                 entity.Property(e => e.ReportPageOrientation).HasMaxLength(100);
