@@ -71,31 +71,6 @@ namespace HIMS.Services.Inventory
             }
         }
 
-        //public virtual async Task UpdatePasswordAsync(LoginManager objLogin, int currentUserId, string currentUserName)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required,
-        //      new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted } TransactionScopeAsyncFlowOption.Enabled);
-
-        //    try
-        //    {
-        //        LoginManager user = await _context.LoginManagers.FindAsync(objLogin.UserId);
-
-        //        if (user == null)
-        //        {
-
-        //        }
-
-        //        user.Password = objLogin.Password; 
-        //        user.ModifiedDate = DateTime.Now;
-        //        user.ModifiedBy = currentUserId;
-
-        //        _context.LoginManagers.Update(user);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-           
-        //}
 
     }
 }

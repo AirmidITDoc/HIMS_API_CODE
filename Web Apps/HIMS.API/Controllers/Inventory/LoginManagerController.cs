@@ -53,8 +53,8 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                 model.AddedBy = CurrentUserId;
-                 model.CreatedDate = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager updated successfully.");
