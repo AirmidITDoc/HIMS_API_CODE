@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using HIMS.Services.Masters;
@@ -23,7 +24,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> InsertEDMX(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
@@ -39,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Menu", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
