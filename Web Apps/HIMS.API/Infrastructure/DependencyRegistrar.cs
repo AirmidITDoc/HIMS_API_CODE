@@ -73,6 +73,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<IReportTemplateService, ReportTemplateService>();
             services.AddScoped<IOPDPrescriptionService, OPDPrescriptionService>();
+            services.AddScoped<IMenuMasterService, MenuMasterService>();
+
 
 
 

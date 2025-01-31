@@ -90,7 +90,10 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<Refund, OPRefundOfBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TRefundDetail, TRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-           
+            CreateMap<MenuMaster, MenuMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<PermissionMaster, PermissionMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

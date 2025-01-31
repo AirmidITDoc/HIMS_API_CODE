@@ -7364,8 +7364,6 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("MenuMaster");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Icon).HasMaxLength(250);
 
                 entity.Property(e => e.LinkAction).HasMaxLength(250);

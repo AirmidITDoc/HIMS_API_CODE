@@ -20,6 +20,8 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel objGrid);
         Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel objGrid);
+        Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel objGrid);
+
 
 
         Task<List<ServiceMaster>> GetAllRadiologyTest();
