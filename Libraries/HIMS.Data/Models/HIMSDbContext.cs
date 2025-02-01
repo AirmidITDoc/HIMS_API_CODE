@@ -217,6 +217,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MModeOfPayment> MModeOfPayments { get; set; } = null!;
         public virtual DbSet<MNursingTemplateMaster> MNursingTemplateMasters { get; set; } = null!;
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
+        public virtual DbSet<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasters { get; set; } = null!;
         public virtual DbSet<MOtcomplicationsMaster> MOtcomplicationsMasters { get; set; } = null!;
         public virtual DbSet<MOthistopathologyMaster> MOthistopathologyMasters { get; set; } = null!;
         public virtual DbSet<MOtnotesTemplateMaster> MOtnotesTemplateMasters { get; set; } = null!;
@@ -264,6 +265,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MTermsOfPaymentMaster> MTermsOfPaymentMasters { get; set; } = null!;
         public virtual DbSet<MUnitofMeasurementMaster> MUnitofMeasurementMasters { get; set; } = null!;
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
+        public virtual DbSet<MVillage> MVillages { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
         public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
         public virtual DbSet<MisBillDateWiseBillPaymentSummary> MisBillDateWiseBillPaymentSummaries { get; set; } = null!;
@@ -274,6 +276,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisPharmacySale> MisPharmacySales { get; set; } = null!;
         public virtual DbSet<MisRefreshProcessLog> MisRefreshProcessLogs { get; set; } = null!;
+        public virtual DbSet<Mvillage1> Mvillages1 { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
@@ -412,6 +415,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpeningTransaction> TOpeningTransactions { get; set; } = null!;
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
+        public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
         public virtual DbSet<TOtbooking> TOtbookings { get; set; } = null!;
         public virtual DbSet<TOtbookingRequest> TOtbookingRequests { get; set; } = null!;
         public virtual DbSet<TOtcathLabBooking> TOtcathLabBookings { get; set; } = null!;
@@ -6285,6 +6289,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DoseName).HasMaxLength(100);
+
                 entity.Property(e => e.DrugTypeName).HasMaxLength(100);
 
                 entity.Property(e => e.Hsncode)
@@ -6292,6 +6298,8 @@ namespace HIMS.Data.Models
                     .HasColumnName("HSNcode");
 
                 entity.Property(e => e.Igst).HasColumnName("IGST");
+
+                entity.Property(e => e.Instruction).HasMaxLength(250);
 
                 entity.Property(e => e.IsCreatedBy).HasColumnType("datetime");
 
@@ -6430,6 +6438,17 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Octroi).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<MOpcasepaperDignosisMaster>(entity =>
+            {
+                entity.ToTable("M_OPCasepaperDignosisMaster");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MOtcomplicationsMaster>(entity =>
@@ -6902,6 +6921,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ReportHeaderFile).HasMaxLength(100);
 
+                entity.Property(e => e.ReportMode).HasMaxLength(100);
+
                 entity.Property(e => e.ReportName).HasMaxLength(200);
 
                 entity.Property(e => e.ReportPageOrientation).HasMaxLength(100);
@@ -7311,6 +7332,22 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UploadCategoryId).ValueGeneratedOnAdd();
             });
 
+            modelBuilder.Entity<MVillage>(entity =>
+            {
+                entity.HasKey(e => e.VillageId)
+                    .HasName("PK__M_Villag__1A7F53988CDA72B7");
+
+                entity.ToTable("M_Village");
+
+                entity.Property(e => e.VillageId).ValueGeneratedNever();
+
+                entity.Property(e => e.AddedByName).HasMaxLength(100);
+
+                entity.Property(e => e.TalukaName).HasMaxLength(100);
+
+                entity.Property(e => e.VillageName).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<Mdimenu>(entity =>
             {
                 entity.HasKey(e => e.MenuId)
@@ -7326,8 +7363,6 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<MenuMaster>(entity =>
             {
                 entity.ToTable("MenuMaster");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Icon).HasMaxLength(250);
 
@@ -7850,6 +7885,22 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Task).HasMaxLength(500);
 
                 entity.Property(e => e.TaskStage).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Mvillage1>(entity =>
+            {
+                entity.HasKey(e => e.VillageId)
+                    .HasName("PK__MVillage__1A7F5398B2D9C676");
+
+                entity.ToTable("MVillage");
+
+                entity.Property(e => e.VillageId).ValueGeneratedNever();
+
+                entity.Property(e => e.AddedByName).HasMaxLength(100);
+
+                entity.Property(e => e.TalukaName).HasMaxLength(100);
+
+                entity.Property(e => e.VillageName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<NeroOtdetail>(entity =>
@@ -12087,6 +12138,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VisitId).HasColumnName("VisitID");
             });
 
+            modelBuilder.Entity<TOprequestList>(entity =>
+            {
+                entity.HasKey(e => e.RequestTranId);
+
+                entity.ToTable("T_OPRequestList");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+            });
+
             modelBuilder.Entity<TOtbooking>(entity =>
             {
                 entity.HasKey(e => e.OtbookingId);
@@ -12716,23 +12780,39 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_Prescription");
 
+                entity.Property(e => e.Advice).HasMaxLength(500);
+
+                entity.Property(e => e.Bmi)
+                    .HasMaxLength(20)
+                    .HasColumnName("BMI");
+
                 entity.Property(e => e.Bp)
-                    .HasMaxLength(50)
+                    .HasMaxLength(10)
                     .HasColumnName("BP");
 
                 entity.Property(e => e.Bsl)
-                    .HasMaxLength(50)
+                    .HasMaxLength(20)
                     .HasColumnName("BSL");
 
-                entity.Property(e => e.ChiefComplaint).HasMaxLength(100);
+                entity.Property(e => e.ChiefComplaint).HasMaxLength(500);
 
                 entity.Property(e => e.ClassId).HasColumnName("ClassID");
 
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Diagnosis).HasMaxLength(500);
+
+                entity.Property(e => e.Examination).HasMaxLength(500);
+
+                entity.Property(e => e.Height).HasMaxLength(10);
 
                 entity.Property(e => e.Instruction).HasMaxLength(200);
 
                 entity.Property(e => e.IsClosed).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.OpdIpdIp).HasColumnName("OPD_IPD_IP");
 
@@ -12742,15 +12822,17 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("PTime");
 
-                entity.Property(e => e.Pulse).HasMaxLength(50);
+                entity.Property(e => e.Pulse).HasMaxLength(10);
 
                 entity.Property(e => e.Pweight)
-                    .HasMaxLength(50)
+                    .HasMaxLength(20)
                     .HasColumnName("PWeight");
 
                 entity.Property(e => e.Remark).HasMaxLength(200);
 
-                entity.Property(e => e.SpO2).HasMaxLength(50);
+                entity.Property(e => e.SpO2).HasMaxLength(20);
+
+                entity.Property(e => e.Temp).HasMaxLength(10);
             });
 
             modelBuilder.Entity<TPurchaseDetail>(entity =>

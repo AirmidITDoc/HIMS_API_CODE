@@ -38,6 +38,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
         }
+        public virtual async Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+        }
         public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
         {
             try

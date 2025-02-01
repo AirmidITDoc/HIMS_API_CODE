@@ -12,6 +12,7 @@ using HIMS.Services.IPPatient;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -26,8 +27,8 @@ namespace HIMS.API.Controllers.IPPatient
             _IAdvanceService = repository;
         }
 
-        [HttpPost("AdvanceDetail List")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [HttpPost("AdvanceDetailList")]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceDetailList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceDetailListDto> AdvanceDetailList = await _IAdvanceService.AdvanceDetailListAsync(objGrid);
@@ -36,7 +37,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdvanceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
@@ -45,14 +46,14 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("RefundOfAdvanceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvanceListDto> RefundAdvanceList = await _IAdvanceService.GetRefundOfAdvanceListAsync(objGrid);
             return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
         }
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPAdvance obj)
         {
             AdvanceHeader model = obj.AdvanceModel.MapTo<AdvanceHeader>();
@@ -79,15 +80,13 @@ namespace HIMS.API.Controllers.IPPatient
 
 
 
-
-        [HttpPost("Update")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(IPAdvance obj)
         {
             AdvanceDetail model = obj.AdvanceDetailModel.MapTo<AdvanceDetail>();
             if (obj.AdvanceDetailModel.AdvanceId != 0)
             {
-               // model.Date = Convert.ToDateTime(obj.Date);
                 model.AddedBy = CurrentUserId;
 
                 await _IAdvanceService.UpdateAdvanceAsyncSP(model, CurrentUserId, CurrentUserName);

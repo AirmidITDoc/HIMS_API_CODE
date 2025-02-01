@@ -9,6 +9,7 @@ namespace HIMS.Data.Models
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
         public long? Parentid { get; set; }
+        public string? ReportMode { get; set; }
         public string? ReportTitle { get; set; }
         public string? ReportHeader { get; set; }
         public string? ReportColumn { get; set; }

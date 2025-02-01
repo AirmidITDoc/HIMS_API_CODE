@@ -37,16 +37,16 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? AdvanceUsedAmount { get; set; }
         public long? IsCancelled { get; set; }
         public byte? OpdIpdType { get; set; }
-        //public decimal PaidAmt { get; set; }
+        public long PaidAmt { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal CashPay { get; set; }
         public decimal ChequePay { get; set; }
         public decimal CardPay { get; set; }
         public decimal AdvUsedPay { get; set; }
         public decimal? OnlinePay { get; set; }
-        //public decimal PayCount { get; set; }
+        public long PayCount { get; set; }
         public decimal? RefundAmount { get; set; }
-        //public decimal? RefundCount { get; set; }
+        public long RefundCount { get; set; }
         public string? CashCounterName { get; set; }
         public long? InterimOrFinal { get; set; }
         public string? BillPrefix { get; set; }

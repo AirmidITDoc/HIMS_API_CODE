@@ -24,7 +24,7 @@ namespace HIMS.Data.Models
         public bool? IsPatientInfo { get; set; }
         public bool? IsDateInterval { get; set; }
         public int? IsDateIntervalDays { get; set; }
-        public string? MailId { get; set; }
+        public string MailId { get; set; } = null!;
         public string? MailDomain { get; set; }
         public bool? LoginStatus { get; set; }
         public bool? AddChargeIsDelete { get; set; }
@@ -39,7 +39,7 @@ namespace HIMS.Data.Models
         public int? PharIpopt { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

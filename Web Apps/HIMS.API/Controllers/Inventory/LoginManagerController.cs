@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using HIMS.Services.OutPatient;
@@ -24,10 +25,10 @@ namespace HIMS.API.Controllers.Inventory
         public LoginManagerController(ILoginService repository)
         {
             _ILoginService = repository;
-        }
+        } 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -44,7 +45,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -53,15 +54,15 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                 model.AddedBy = CurrentUserId;
-                 model.CreatedDate = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager updated successfully.");
         }
 
         [HttpPost("LoginCanceled")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(loginCancel obj)
         {
             LoginManager model = new();
@@ -77,7 +78,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager Canceled successfully.");
         }
         [HttpPost("updatepassword")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
         {
             LoginManager model = new();

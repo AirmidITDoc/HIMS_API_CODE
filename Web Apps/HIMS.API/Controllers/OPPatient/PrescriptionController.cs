@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
-                model.IsAddBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _IPrescription.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
-                model.IsAddBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _IPrescription.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
-                model.IsAddBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _IPrescription.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -102,8 +102,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
-
-                model.IsAddBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _IPrescription.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription updated successfully.");

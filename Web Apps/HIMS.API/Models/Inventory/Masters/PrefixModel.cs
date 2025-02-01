@@ -7,6 +7,7 @@ namespace HIMS.API.Models.Masters
         public long PrefixId { get; set; }
         public string? PrefixName { get; set; }
         public long? SexId { get; set; }
+        public bool IsActive { get; set; }
     }
     public class PrefixModelValidator : AbstractValidator<PrefixModel>
     {

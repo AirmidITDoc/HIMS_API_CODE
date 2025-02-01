@@ -9,6 +9,7 @@ namespace HIMS.Data.DTO.OPPatient
 
         public long VisitId { get; set; }
         public long RegId { get; set; }
+        public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public long PrefixId { get; set; }
         public string? PrefixName { get; set; }
@@ -34,10 +35,32 @@ namespace HIMS.Data.DTO.OPPatient
         public long AppPurposeId { get; set; }
         public long CompanyId { get; set; }
         public string? CompanyName { get; set; }
-        public long PhoneAppId { get; set; }
-        public int? CrossConsulFlag { get; set; }
+        public long ClassId {  get; set; }
+        public string? ClassName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public string? RegNoWithPrefix { get; set; }
+        public long CityId { get; set; }
+        public long ReligionId { get; set; }
+        public long AreaId { get; set; }
+        public string? FollowupDate { get; set; }
+        public bool? IsMark { get; set; }
         public string? MPbillNo { get; set; }
         public long? PatientOldNew { get; set; }
+        public long OldPatCnt { get; set; }
+        public string? NewPatCnt { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long CrossConsulCnt { get; set; }
+        public string? MobileNo { get; set; }
+        public string? DepartmentName { get; set; }
+        public long DoctorId { get; set; }
+        public string? Doctorname { get; set; }
+        public long RefDocId { get; set; }
+        public string? RefDocName { get; set; }
+        public long PhoneAppId { get; set; }
+        public int? CrossConsulFlag { get; set; }
+       
 
     }
 }
