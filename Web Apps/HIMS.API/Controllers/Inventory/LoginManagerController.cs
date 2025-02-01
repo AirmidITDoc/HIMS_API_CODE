@@ -7,6 +7,8 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using HIMS.Services.OutPatient;
@@ -25,8 +27,14 @@ namespace HIMS.API.Controllers.Inventory
         public LoginManagerController(ILoginService repository)
         {
             _ILoginService = repository;
-        } 
-
+        }
+        [HttpPost("LoginList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<LoginManagerListDto> LoginManagerList= await _ILoginService.GetListAsync(objGrid);
+            return Ok(LoginManagerList.ToGridResponse(objGrid, "Supplier List"));
+        }
         [HttpPost("Insert")]
         [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)

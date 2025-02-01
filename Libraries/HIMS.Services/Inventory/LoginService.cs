@@ -1,4 +1,8 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +20,11 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<LoginManagerListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginManagerListDto>(model, "RtrvUserList");
+        }
+
         public virtual async Task InsertAsync(LoginManager objLogin, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
