@@ -65,5 +65,43 @@ namespace HIMS.Services.IPPatient
             }
         }
 
+
+        public virtual async Task InsertAsync(TOtbooking objOTBooking, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TOtbookings.Add(objOTBooking);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TOtbooking objOTBooking, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.TOtbookings.Update(objOTBooking);
+                _context.Entry(objOTBooking).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task CancelAsync(TOtbooking objOTBooking, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TOtbookingRequest objOTBook = await _context.TOtbookingRequests.FindAsync(objOTBooking.OtbookingId);
+                _context.TOtbookings.Update(objOTBooking);
+                _context.Entry(objOTBooking).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }

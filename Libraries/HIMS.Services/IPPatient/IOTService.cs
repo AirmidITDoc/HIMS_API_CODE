@@ -16,7 +16,10 @@ namespace HIMS.Services.IPPatient
         Task InsertAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
         Task UpdateAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
         Task CancelAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
-     //   Task<TOtbookingRequest> GetById(int Id);
+
+        Task InsertAsync(TOtbooking objOTBooking, int UserId, string Username);
+        Task UpdateAsync(TOtbooking objOTBooking, int UserId, string Username);
+        Task CancelAsync(TOtbooking objOTBooking, int UserId, string Username);
 
 
     }
