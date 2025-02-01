@@ -13,11 +13,11 @@ namespace HIMS.Data.DTO.OPPatient
         public string? AgeYear { get; set; }
         public string? DoctorName { get; set; }
         public string? RefDoctorName { get; set; }
+        public string? MobileNo { get; set; }
+        public string? OPDNo { get; set; }
         public string? CompanyName { get; set; }
         public string? HospitalName { get; set; }
         public DateTime? VisitDate { get; set; }
-        public string? MobileNo { get; set; }
-        public string? OPDNo { get; set; }
         public string? PBillNo { get; set; }
         public decimal BillAmount { get; set; }
         public decimal BalanceAmt { get; set; }
@@ -31,9 +31,10 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal? AdvanceUsedAmount { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public decimal? PayTmamount { get; set; }
+        public decimal OnlinePay { get; set; }
         public long PaymentId { get; set; }
         public string? UserName { get; set; }
-        public decimal OnlinePay { get; set; }
+      
 
 
 
