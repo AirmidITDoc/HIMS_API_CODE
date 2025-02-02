@@ -603,7 +603,119 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
+
+                #region :: IPDCurrentwardwisecharges ::
+                case "IPDCurrentwardwisecharges":
+                    {
+                        model.RepoertName = "Current Ward Wise Charges Report ";
+                        string[] headerList = { "Sr.No", "UHID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
+                        string[] colList = { "RegID","IPDNo", "RoomName", "PatientName","AdmissionTime","DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptCurrentAdmittedListReportwithCharges", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "wardWisechargesReport", "wardWisechargesReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: IPDRefrancefDoctorwise ::
+                case "IPDRefrancefDoctorwise":
+                    {
+                        model.RepoertName = "Ref DoctorWiseVisit Report ";
+                        string[] headerList = { "Sr.No", "UHID", "IPDNo", "PatientName","Age", "AdmissionDate", "AdmittedDoctorName" };
+                        string[] colList = { "RegNo", "IPDNo","PatientName", "AgeYear" , "AdmissionDate", "AdmittedDoctorName"};
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDrefDoctorwiseReport", "IPDrefDoctorwiseReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: IPDCurrentrefDoctorAdmissionList ::
+                case "IPDCurrentrefDoctorAdmissionList":
+                    {
+                        model.RepoertName = "RefDoctorWise Report  ";
+                        string[] headerList = { "Sr.No","AdmissionId", "UHID", "PatientName", "DoctorName", "Admission Date" };
+                        string[] colList = { "AdmissionID", "RegNo", "PatientName", "DoctorName", "AdmissionDate" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("RptCurrentRefAdmittedReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDRefDoctorWiseReport", "IPDRefDoctorWiseReport", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: IPDoctorWiseCountSummary ::
+                case "IPDoctorWiseCountSummary":
+                    {
+                        model.RepoertName = "Doctor Wise Count List";
+                        string[] headerList = { "Sr.No", "Doctor Name", "Total Count" };
+                        string[] colList = { "DocName", "Lbl" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("Rtrv_IPDocWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDoctorWiseVisitCountSummary", "IPDoctorWiseVisitCountSummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: Dischargetypewise ::
+                case "Dischargetypewise":
+                    {
+                        model.RepoertName = "Dischargetype wise List";
+                        string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis"};
+                        string[] colList = { "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeReport", "IPDDischargeTypeReport", Orientation.Landscape);
+                        break;
+                    }
+                #endregion
+                #region :: Dischargetypecompanywise ::
+                case "Dischargetypecompanywise":
+                    {
+                        model.RepoertName = "Dischargetype Company wise List";
+                        string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
+                        string[] colList = { "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeCompanywiseReport", "IPDDischargeTypeCompanywiseReport", Orientation.Landscape);
+                        break;
+                    }
+                #endregion
+
+                #region :: DepartmentwiseCount ::
+                case "DepartmentwiseCount":
+                    {
+                        model.RepoertName = "IPD Department Wise Count List";
+                        string[] headerList = { "Sr.No", "Department Name" ,"Total Count", };
+                        string[] colList = { "DepartmentName", "Lbl" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("Rtrv_IPDepartWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDepartmentwisecountsummary", "IPDDepartmentwisecountsummary", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: IPDDischargewithmarkstatus ::
+                case "IPDDischargewithmarkstatus":
+                    {
+                        model.RepoertName = "Discharge Report With Mark Status List";
+                        string[] headerList = { "Sr.No", "UHID", "PatientName", "DOA", "DOT", "Mark Date-Time", "DOD", "DOT","Time In Hr" };
+                        string[] colList = { "RegNo", "PatientName", "AdmissionDate", "AdmissionTime", "MarkStatus", "DischargeDate", "DischargeTime", "DiffTimeInHr" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("rptIPDischargeMarkStatusReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargewithmarkstatus", "IPDDischargewithmarkstatus", Orientation.Landscape);
+                        break;
+                    }
+                #endregion
                 default:
+
+               
                     break;
 
 
@@ -2433,11 +2545,200 @@ namespace HIMS.Services.Report
 
                     break;
 
+
+                case "IPDCurrentwardwisecharges":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int i = 0, j = 0;
+                        string previousLabel = "";
+                        double TotalCollection = 0;
+                        double T_ChargesAmount = 0, T_BalAmount = 0, T_AdvAmount = 0, G_ChargesAmount = 0, G_BalAmount = 0, G_AdvAmount = 0;
+                        double FinalTotal = 0;
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            i++; j++;
+
+
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["RoomName"].ConvertToString();
+                               // items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(j).Append("</td>");
+                                items.Append("<tr style=\"font-size:20px;border: 1px;\"><td colspan=\"12\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                            }
+                            if (previousLabel != "" && previousLabel != dr["RoomName"].ConvertToString())
+                            {
+                                j = 1;
+                                items.Append("<tr style='border:1px solid black;'><td colspan='11' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                               .Append(T_ChargesAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                               .Append(T_AdvAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+
+                               .Append(T_BalAmount.To2DecimalPlace()).Append("</td></tr>");
+                                T_ChargesAmount = 0; T_BalAmount = 0; T_AdvAmount = 0;
+
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;\"><td colspan=\"12\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RoomName"].ConvertToString()).Append("</td></tr>");
+
+                            }
+
+
+                            T_ChargesAmount += dr["ChargesAmount"].ConvertToDouble();
+                            T_AdvAmount += dr["AdvanceAmount"].ConvertToDouble();
+                            T_BalAmount += dr["BalPayAmt"].ConvertToDouble();
+
+
+                            previousLabel = dr["RoomName"].ConvertToString();
+                          
+                            items.Append("<tr style=\"font-size:15px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-bottom: 1px;\"><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(j).Append("</td>");
+                          
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["RegID"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["IPDNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["RoomName"].ConvertToString()).Append("</td>");
+                            
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: right;\">").Append(dr["PatientName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["AdmissionTime"].ConvertToDateString("dd/MM/yy")).Append("</td>");
+
+                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["DoctorName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["BedName"].ConvertToString()).Append("</td>");
+                            
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["ChargesAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["AdvanceAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BalPayAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+                                items.Append("<tr style='border:1px solid black; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='10' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle;margin-center:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(T_ChargesAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                    .Append(T_AdvAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;border-bottom:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                      .Append(T_BalAmount.To2DecimalPlace()).Append("</td></tr>");
+
+                            }
+
+
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+                        html = html.Replace("{{T_ChargesAmount}}", T_ChargesAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_AdvAmount}}", T_AdvAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_BalAmount}}", T_BalAmount.To2DecimalPlace());
+
+                    }
+                    break;
+                case "IPDRefrancefDoctorwise":
+                    {
+                      
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
+                        string previousLabel = string.Empty;
+                        int i = 0, j = 0, D = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++; j++;
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["RefDoctorName"].ConvertToString();
+                                items.Append("<tr style=\"font-size:20px;border: 1;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"7\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+
+                            }
+
+                            if (previousLabel != "" && previousLabel != dr["RefDoctorName"].ConvertToString())
+                            {
+                                j = 1;
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='6' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                 .Append(D.ToString()).Append("</td></tr>");
+
+
+                                D = 0;
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"7\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
+                            }
+                            D = D + 1;
+                            previousLabel = dr["RefDoctorName"].ConvertToString();
+
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='6' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+
+                                     .Append(D.ToString()).Append("</td></tr>");
+
+                            }
+
+                        }
+
+
+                    }
+                    break;
+
+
+                  
+                case "IPDDischargewithmarkstatus":
+
+                case "DepartmentwiseCount":
+                case "Dischargetypewise":
+                case "IPDDoctorWiseCountSummaryList":
+                case "IPDCurrentrefDoctorAdmissionList":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            k++;
+
+                            items.Append("<tr style=\"text-align: left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+                         }
+
+                    }
+                    break;
+
+
             }
-
-            if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary" || model.Mode == "OPDoctorWiseNewOldPatientReport")
+             
+            if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary" || model.Mode == "OPDoctorWiseNewOldPatientReport" || model.Mode == "IPDCurrentrefDoctorAdmissionList" || model.Mode == "IPDDoctorWiseCountSummaryList" || model.Mode == "Dischargetypewise" || model.Mode == "Dischargetypecompanywise" || model.Mode == "DepartmentwiseCount" || model.Mode == "IPDDischargewithmarkstatus")
                 html = html.Replace("{{T_Count}}", T_Count.ToString());
-
+             
             html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
             html = html.Replace("{{Items}}", items.ToString());
             html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
