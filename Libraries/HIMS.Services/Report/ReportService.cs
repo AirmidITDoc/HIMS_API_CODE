@@ -1596,23 +1596,27 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
                         foreach (DataRow dr in dt.Rows)
                         {
+
+
                             html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                             html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                             html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                             html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                            html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
 
                             html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                            html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1"));
                             html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
-
-                            html = html.Replace("{{DOT}}", dt.GetColValue("DOT").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
 
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
-                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
 
                             html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                             html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
@@ -1623,17 +1627,10 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
                             html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                             html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
-                            html = html.Replace("{{AdmittedDoctor1}}", dt.GetColValue("AdmittedDoctor1"));
 
                             html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                             html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
-
-                            return html;
-
-
-
-                            string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+;
 
                         }
 
