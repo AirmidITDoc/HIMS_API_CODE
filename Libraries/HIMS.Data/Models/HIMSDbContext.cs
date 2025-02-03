@@ -276,7 +276,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<MisPharmacySale> MisPharmacySales { get; set; } = null!;
         public virtual DbSet<MisRefreshProcessLog> MisRefreshProcessLogs { get; set; } = null!;
-        public virtual DbSet<Mvillage1> Mvillages1 { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
@@ -6354,11 +6353,15 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_ManufactureMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.ManufName).HasMaxLength(50);
 
                 entity.Property(e => e.ManufShortName)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MMaritalStatusMaster>(entity =>
@@ -6594,7 +6597,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DescriptiveId).HasColumnName("DescriptiveID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DefaultValue).HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ParameterValues).HasMaxLength(500);
 
@@ -7887,22 +7894,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TaskStage).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<Mvillage1>(entity =>
-            {
-                entity.HasKey(e => e.VillageId)
-                    .HasName("PK__MVillage__1A7F5398B2D9C676");
-
-                entity.ToTable("MVillage");
-
-                entity.Property(e => e.VillageId).ValueGeneratedNever();
-
-                entity.Property(e => e.AddedByName).HasMaxLength(100);
-
-                entity.Property(e => e.TalukaName).HasMaxLength(100);
-
-                entity.Property(e => e.VillageName).HasMaxLength(100);
-            });
-
             modelBuilder.Entity<NeroOtdetail>(entity =>
             {
                 entity.HasNoKey();
@@ -8641,6 +8632,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.RoleId);
 
                 entity.ToTable("RoleTemplateMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RoleName).HasMaxLength(100);
             });

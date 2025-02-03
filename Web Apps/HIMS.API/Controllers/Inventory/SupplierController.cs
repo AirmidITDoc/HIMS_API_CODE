@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
@@ -24,14 +25,14 @@ namespace HIMS.API.Controllers.Inventory
             _SupplierService = repository;
         }
         [HttpPost("SupplierList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);
             return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
         }
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -42,7 +43,7 @@ namespace HIMS.API.Controllers.Inventory
             return data.ToSingleResponse<MSupplierMaster, SupplierModel>("Supplier Master");
         }
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -59,7 +60,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -76,7 +77,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -92,7 +93,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(SupplierCancel obj)
         {
             MSupplierMaster model = new();

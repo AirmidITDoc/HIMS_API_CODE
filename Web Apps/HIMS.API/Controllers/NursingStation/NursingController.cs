@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -110,7 +111,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("PrescriptionReturnInsert")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
@@ -126,7 +127,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("PrescriptionReturnUpdate")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();

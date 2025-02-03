@@ -96,6 +96,9 @@ namespace HIMS.API.Infrastructure
 
 
 
+            CreateMap<MManufactureMaster, ManufactureMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<RoleTemplateMaster, RoleTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
