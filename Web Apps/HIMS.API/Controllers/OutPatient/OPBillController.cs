@@ -8,9 +8,11 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +28,21 @@ namespace HIMS.API.Controllers.OutPatient
     {
         private readonly IOPBillingService _oPBillingService;
         private readonly IOPCreditBillService _IOPCreditBillService;
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1)
+        private readonly IOPSettlementService _IOPSettlementService;
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
+            _IOPSettlementService= repository2;
         }
+        [HttpPost("OPBillListSettlementList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
+            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "OPBillListSettlement App List"));
+        }
+
         [HttpPost("OPBillingInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)

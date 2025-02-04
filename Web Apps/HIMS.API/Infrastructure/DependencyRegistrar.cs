@@ -119,6 +119,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPrescription, PrescriptionSer>();
             services.AddScoped<IDischargeService, DischargeService>();
             services.AddScoped<IDischargeServiceSP, DischargeServiceSP>();
+            services.AddScoped<IOPSettlementService, OPSettlementService>();
 
 
 
