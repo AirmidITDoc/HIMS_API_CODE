@@ -98,6 +98,10 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<MManufactureMaster, ManufactureMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RoleTemplateMaster, RoleTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<ConfigSetting, ConfigSettingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, paymentpharmacyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

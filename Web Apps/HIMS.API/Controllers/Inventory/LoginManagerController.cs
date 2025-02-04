@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LoginManagerListDto> LoginManagerList= await _ILoginService.GetListAsync(objGrid);
-            return Ok(LoginManagerList.ToGridResponse(objGrid, "Supplier List"));
+            return Ok(LoginManagerList.ToGridResponse(objGrid, "LoginList "));
         }
         [HttpPost("Insert")]
         [Permission(PageCode = "Login", Permission = PagePermission.Add)]
