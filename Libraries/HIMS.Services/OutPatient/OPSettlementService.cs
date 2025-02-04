@@ -1,5 +1,7 @@
 ﻿using Aspose.Cells.Drawing;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System;
@@ -18,6 +20,11 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<OPBillListSettlementListDto>> OPBillListSettlementList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "m_Rtrv_OP_Bill_List_Settlement");
+        }
+
         public virtual async Task InsertAsyncSP(Payment objpayment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
