@@ -9,7 +9,7 @@ using HIMS.Data.Models;
 
 namespace HIMS.Services.OPPatient
 {
-    public partial interface IPrescription
+    public partial interface IIPrescriptionService
     {
         Task InsertAsyncSP(TPrescription objPrescription, int UserId, string Username);
         Task UpdateAsync(TPrescription objPrescription, int UserId, string Username);

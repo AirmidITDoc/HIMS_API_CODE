@@ -5917,6 +5917,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TemplateDescName).HasColumnType("text");
             });
 
             modelBuilder.Entity<MComplaintMaster>(entity =>
