@@ -24,6 +24,20 @@ namespace HIMS.API.Controllers.Nursing
         {
             _ICanteenRequestService = repository;
         }
+        [HttpPost("DoctorNoteList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DoctorNoteList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorNoteListDto> DoctorNoteList = await _ICanteenRequestService.DoctorNoteList(objGrid);
+            return Ok(DoctorNoteList.ToGridResponse(objGrid, "DoctorNote App List"));
+        }
+        [HttpPost("TDoctorPatientHandoverList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> TDoctorPatientHandoverList(GridRequestModel objGrid)
+        {
+            IPagedList<TDoctorPatientHandoverListDto> TDoctorPatientHandoverList = await _ICanteenRequestService.TDoctorPatientHandoverList(objGrid);
+            return Ok(TDoctorPatientHandoverList.ToGridResponse(objGrid, "TDoctorPatientHandover App List"));
+        }
         [HttpPost("CanteenRequestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
