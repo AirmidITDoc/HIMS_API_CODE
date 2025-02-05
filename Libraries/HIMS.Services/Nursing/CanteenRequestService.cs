@@ -19,6 +19,14 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorNoteListDto>(model, "Rtrv_DoctorsNotesList");
+        }
+        public virtual async Task<IPagedList<TDoctorPatientHandoverListDto>> TDoctorPatientHandoverList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TDoctorPatientHandoverListDto>(model, "m_Rtrv_T_Doctor_PatientHandoverList");
+        }
         public virtual async Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestListDto>(model, "m_Rtrv_CanteenRequestDet");
