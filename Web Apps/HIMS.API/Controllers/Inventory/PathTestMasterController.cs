@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Inventory
             _ITestmasterService = repository;
         }
         [HttpPost("TestMasterList")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TestMasterDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
         }
 
         [HttpPost("InsertEDMX")]
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.TestTime = Convert.ToDateTime(obj.TestTime);
                 await _ITestmasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test Name  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest   updated successfully.");
         }
         [HttpPost("PathTestCanceled")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]

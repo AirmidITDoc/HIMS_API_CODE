@@ -11,13 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
-
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    [ApiVersion("1")]
-
-    public class PriscriptionclassController : BaseController
-    {
+      //SHILPA ///
+        [Route("api/v{version:apiVersion}/[controller]")]
+        [ApiController]
+        [ApiVersion("1")]   
+        public class PriscriptionclassController : BaseController
+        {
         private readonly IGenericService<MClassMaster> _repository;
         public PriscriptionclassController(IGenericService<MClassMaster> repository)
         {
@@ -27,15 +26,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PrescriptionClass", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MClassMaster> MClassMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MClassMasterList.ToGridResponse(objGrid, "PriscriptionclassMaster List"));
+            return Ok(MClassMasterList.ToGridResponse(objGrid, "Priscriptionclass List"));
         }
-        //List API Get By Id
+        //List API Get By Id 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MClassMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "PrescriptionClass", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "MClassMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PrescriptionClass", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PriscriptionclassModel obj)
         {
             MClassMaster model = obj.MapTo<MClassMaster>();
@@ -60,11 +59,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " ClassName added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " PrescriptionClass added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MClassMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PrescriptionClass", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PriscriptionclassModel obj)
         {
             MClassMaster model = obj.MapTo<MClassMaster>();
@@ -77,11 +76,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " ClassName updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " PrescriptionClass updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MClassMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "PrescriptionClass", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MClassMaster model = await _repository.GetById(x => x.ClassId == Id);
@@ -91,7 +90,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ClassName deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionClass deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

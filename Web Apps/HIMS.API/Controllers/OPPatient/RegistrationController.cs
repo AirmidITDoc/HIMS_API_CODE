@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RegistrationListDto> RegistrationList = await _IRegistrationService.GetListAsync(objGrid);
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             //if (id == 0)
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("RegistrationUpdate")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.", model);
         }
         [HttpGet("auto-complete")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IRegistrationService.SearchRegistration(Keyword);
