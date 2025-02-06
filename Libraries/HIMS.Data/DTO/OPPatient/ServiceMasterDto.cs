@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HIMS.Data.Models
+{
+    public partial class ServiceMaster
+    {
+        public decimal? ClassRate { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
+    }
+}

@@ -194,8 +194,31 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> DeptDoctorList(int DeptId)
         {
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value=x.DoctorId, text = x.FirstName + " " + x.LastName }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-
+        [HttpGet("GetServiceListwithTraiff")]
+        public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new
+            {
+                x.ServiceId,
+                x.GroupId,
+                x.ServiceShortDesc,
+                x.ServiceName,
+                x.ClassRate,
+                x.TariffId,
+                x.ClassId,
+                x.IsEditable,
+                x.CreditedtoDoctor,
+                x.IsPathology,
+                x.IsRadiology,
+                x.IsActive,
+                x.PrintOrder,
+                x.IsPackage,
+                x.DoctorId,
+                x.IsDocEditable
+            }));
+        }
     }
 }
