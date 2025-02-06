@@ -23,10 +23,10 @@ using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.OPPatient
 {
-    public class PrescriptionSer : IPrescription
+    public class IPPrescriptionService : IIPrescriptionService
     {
         private readonly HIMSDbContext _context;
-        public PrescriptionSer(HIMSDbContext HIMSDbContext)
+        public IPPrescriptionService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
@@ -37,7 +37,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task InsertAsyncSP(TPrescription objPrescription, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "ChiefComplaint", "IsAddBy", "SpO2", "DoseOption2" , "DaysOption2", "DoseOption3", "DaysOption3" };
+            string[] rEntity = { "ChiefComplaint", "IsAddBy", "SpO2", "DoseOption2", "DaysOption2", "DoseOption3", "DaysOption3" };
             var entity = objPrescription.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -48,6 +48,7 @@ namespace HIMS.Services.OPPatient
 
             await _context.SaveChangesAsync(UserId, Username);
         }
+        
 
         public virtual async Task InsertAsyncSP(TPrescription objPrescription, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUsername)
         {
@@ -58,14 +59,7 @@ namespace HIMS.Services.OPPatient
                 _context.TPrescriptions.Add(objPrescription);
                 await _context.SaveChangesAsync();
 
-                //// Update Registration table records
-                //ConfigSetting objConfigRSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                //objConfigRSetting.RegNo = Convert.ToString(Convert.ToInt32(objConfigRSetting.RegNo) + 1);
-                //_context.ConfigSettings.Update(objConfigRSetting);
-                //_context.Entry(objConfigRSetting).State = EntityState.Modified;
-                //await _context.SaveChangesAsync();
-
-                // Add VisitDetail table records
+               // Add VisitDetail table records
                 objVisitDetail.RegId = objPrescription.PrecriptionId;
                 _context.VisitDetails.Add(objVisitDetail);
                 await _context.SaveChangesAsync();
@@ -104,10 +98,6 @@ namespace HIMS.Services.OPPatient
 
 
         }
-
-
-
-
         public virtual async Task InsertAsync(TPrescription objPrescription, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -118,9 +108,6 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
-
-
-
         public virtual async Task UpdateAsync(TPrescription objPrescription, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -133,7 +120,5 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
-
-
     }
 }

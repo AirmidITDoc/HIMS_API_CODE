@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
@@ -42,6 +43,11 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
         }
+        public virtual async Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "Rtrv_BillListForDocShr");
+        }
+
         public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
         {
             try

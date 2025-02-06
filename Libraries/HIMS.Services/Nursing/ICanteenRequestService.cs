@@ -16,5 +16,7 @@ namespace HIMS.Services.Nursing
             Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
             Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel objGrid);
            Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel objGrid);
+           Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel objGrid);
+          Task<IPagedList<TDoctorPatientHandoverListDto>> TDoctorPatientHandoverList(GridRequestModel objGrid);
     }
 }

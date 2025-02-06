@@ -72,5 +72,9 @@ namespace HIMS.Data.Models
         public bool? GIsIppaperSetting { get; set; }
         public string? GIpprintName { get; set; }
         public string? GIppaperName { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

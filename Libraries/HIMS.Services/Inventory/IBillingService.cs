@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
@@ -21,11 +22,9 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel objGrid);
         Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel objGrid);
         Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel objGrid);
-
-
+        Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel objGrid);
 
         Task<List<ServiceMaster>> GetAllRadiologyTest();
 
     }
 }
-

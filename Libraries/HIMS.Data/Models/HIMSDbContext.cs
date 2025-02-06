@@ -1333,6 +1333,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ChkPharmacyDue).HasColumnName("chkPharmacyDue");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.FilePathLocation).HasMaxLength(100);
 
                 entity.Property(e => e.GIppaperName)
@@ -1404,6 +1406,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.LabSampleNo)
                     .HasMaxLength(20)
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NeroSurgeonId).HasDefaultValueSql("((0))");
 
@@ -5913,6 +5917,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TemplateDescName).HasColumnType("text");
             });
 
             modelBuilder.Entity<MComplaintMaster>(entity =>
@@ -6315,6 +6321,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ItemTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ItemTypeId).HasColumnName("ItemTypeID");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ProdLocation).HasMaxLength(100);
 

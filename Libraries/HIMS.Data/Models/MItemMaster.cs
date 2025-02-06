@@ -53,6 +53,8 @@ namespace HIMS.Data.Models
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
         public string? Instruction { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }
     }

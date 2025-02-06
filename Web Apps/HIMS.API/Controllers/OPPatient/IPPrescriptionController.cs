@@ -23,24 +23,24 @@ namespace HIMS.API.Controllers.OPPatient
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class PrescriptionController : BaseController
+    public class IPPrescriptionController : BaseController
     {
-        private readonly IPrescription _IPrescription;
-        public PrescriptionController(IPrescription repository)
+        private readonly IIPrescriptionService _IPPrescriptionService;
+        public IPPrescriptionController(IIPrescriptionService repository)
         {
-            _IPrescription = repository;
+            _IPPrescriptionService = repository;
         }
         [HttpPost("PatietWiseMatetialList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<PatietWiseMatetialListDto> PatietWiseMatetialList = await _IPrescription.PatietWiseMatetialList(objGrid);
+            IPagedList<PatietWiseMatetialListDto> PatietWiseMatetialList = await _IPPrescriptionService.PatietWiseMatetialList(objGrid);
             return Ok(PatietWiseMatetialList.ToGridResponse(objGrid, "PatietWiseMatetial App List"));
         }
 
         [HttpPost("PrescriptionInsertEDMX")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(PrescriptionModel obj)
+        public async Task<ApiResponse> InsertEDMX(IPPrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
             if (obj.PrecriptionId == 0)
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
                 model.CreatedBy = CurrentUserId;
-                await _IPrescription.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IPPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("PrescriptionInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(PrescriptionModel obj)
+        public async Task<ApiResponse> InsertSP(IPPrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
             if (obj.PrecriptionId == 0)
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
                 model.CreatedBy = CurrentUserId;
-                await _IPrescription.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("PrescriptionInsertMultiRecord")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PrescriptionModel obj)
+        public async Task<ApiResponse> Insert(IPPrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
             if (obj.PrecriptionId == 0)
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
 
                 model.CreatedBy = CurrentUserId;
-                await _IPrescription.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("PrescriptionUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(PrescriptionModel obj)
+        public async Task<ApiResponse> Update(IPPrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
             if (obj.PrecriptionId == 0)
@@ -103,7 +103,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Ptime = Convert.ToDateTime(obj.Ptime);
                 model.CreatedBy = CurrentUserId;
-                await _IPrescription.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IPPrescriptionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription updated successfully.");
         }

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace HIMS.API.Models.OutPatient
+namespace HIMS.API.Models.OPPatient
 {
-    public class OPDPrescriptionModel
+    public class IPPrescriptionModel
     {
         public long PrecriptionId { get; set; }
         public long? OpdIpdIp { get; set; }
@@ -19,7 +19,7 @@ namespace HIMS.API.Models.OutPatient
         public double? TotalQty { get; set; }
         public string? Instruction { get; set; }
         public string? Remark { get; set; }
-        public bool? IsClosed { get; set; }
+        //public bool? IsClosed { get; set; }
         public bool? IsEnglishOrIsMarathi { get; set; }
         public string? Pweight { get; set; }
         public string? Pulse { get; set; }
@@ -33,17 +33,36 @@ namespace HIMS.API.Models.OutPatient
         public long? DaysOption2 { get; set; }
         public long? DoseOption3 { get; set; }
         public long? DaysOption3 { get; set; }
-    }
-    public class OPDPrescriptionModelValidator : AbstractValidator<OPDPrescriptionModel>
+        public List<VisitDetailsModel> VisitDetails { get; set; }
 
+
+    }
+ public class PrescriptionMasterModelValidator : AbstractValidator<IPPrescriptionModel>
     {
-        public OPDPrescriptionModelValidator()
+        public PrescriptionMasterModelValidator()
         {
-            RuleFor(x => x.OpdIpdIp).NotNull().NotEmpty().WithMessage("OpdIpdIp is required");
+            RuleFor(x => x.OpdIpdIp).NotNull().NotEmpty().WithMessage("OpdIpdIp  is required");
             RuleFor(x => x.OpdIpdType).NotNull().NotEmpty().WithMessage("OpdIpdType  is required");
-            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage(" Date required");
-            RuleFor(x => x.Ptime).NotNull().NotEmpty().WithMessage("Ptime is required");
-           
+            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date  is required");
+            RuleFor(x => x.Ptime).NotNull().NotEmpty().WithMessage("Ptime  is required");
+            RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId  is required");
+            RuleFor(x => x.GenericId).NotNull().NotEmpty().WithMessage("GenericId  is required");
+            RuleFor(x => x.DrugId).NotNull().NotEmpty().WithMessage("DrugId  is required");
+            RuleFor(x => x.DoseId).NotNull().NotEmpty().WithMessage("DoseId  is required");
         }
     }
+
+    public class VisitDetailsModel
+    {
+        public long VisitId { get; set; }
+        public DateTime? FollowupDate { get; set; }
+    }
+     public class VisitDetailsModelValidator : AbstractValidator<VisitDetailsModel>
+     {
+        public VisitDetailsModelValidator()
+        {
+           
+            RuleFor(x => x.FollowupDate).NotNull().NotEmpty().WithMessage("FollowupDate  is required");
+        }
+     }
 }

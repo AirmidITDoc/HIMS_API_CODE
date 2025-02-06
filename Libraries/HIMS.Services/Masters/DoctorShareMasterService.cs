@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DataProviders;    
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;    
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -21,7 +22,6 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        
         public virtual async Task InsertAsync(MDoctorPerMaster objMDoctorPerMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -45,6 +45,7 @@ namespace HIMS.Services.Masters
                 scope.Complete();
             }
         }
+
 
         //public virtual async Task UpdateAsync(MDoctorPerMaster objMDoctorPerMaster, int userid, string username)
         //{

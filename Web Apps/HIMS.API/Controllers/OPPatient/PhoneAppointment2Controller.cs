@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -23,7 +24,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IPhoneAppointment2Service = repository;
         }
         [HttpPost("PhoneAppList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PhoneAppointment2ListDto> PhoneAppList = await _IPhoneAppointment2Service.GetListAsync(objGrid);
@@ -31,7 +32,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
@@ -50,7 +51,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
         {
             TPhoneAppointment model = new();
@@ -68,8 +69,5 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
     }
-
-
-
 }
 
