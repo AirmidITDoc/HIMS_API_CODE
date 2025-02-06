@@ -51,4 +51,7 @@ namespace HIMS.Data.Models
 
         public virtual ICollection<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; }
     }
+
+
+   
 }
