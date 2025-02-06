@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
+    //SHILPA//
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
@@ -23,17 +24,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _IMenuMasterService = repository;
         }
 
-        [HttpPost("InsertEDMX")]
+        [HttpPost("Insert")]
         [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
 
-        public async Task<ApiResponse> InsertEDMX(MenuMasterModel obj)
+        public async Task<ApiResponse> Insert(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
             if (obj.Id == 0)
             {
 
                 model.IsActive = true;
-                await _IMenuMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IMenuMasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
