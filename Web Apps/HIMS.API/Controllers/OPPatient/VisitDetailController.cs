@@ -11,6 +11,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data;
+using HIMS.Services.Common;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -34,13 +35,6 @@ namespace HIMS.API.Controllers.OPPatient
         {
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
-        }
-
-        [HttpPost("GetDepartmentWiseDoctorList")]
-        public ApiResponse GetDepartmentWiseDoctorList(DDLRequestModel model)
-        {
-            dynamic resultList = _ICommonService.GetDDLByIdWithProc(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", (dynamic)resultList);
         }
 
         [HttpGet("{id?}")]
@@ -187,12 +181,19 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
+        //[HttpPost("DeptDoctorList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
+        //    return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
+        //}
+
         [HttpPost("DeptDoctorList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
+        public ApiResponse DeptDoctorList(DDLRequestModel model)
         {
-            IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
-            return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
+            dynamic resultList = _ICommonService.GetDDLByIdWithProc(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", (dynamic)resultList);
         }
 
     }

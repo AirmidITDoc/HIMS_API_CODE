@@ -25,7 +25,7 @@ namespace HIMS.Services.Common
             int sp_Para = 0;
             switch (model.Mode)
             {
-                case "DepartmentWiseDoctor": sp_Name = "ps_getDepartmentWiseDoctorList"; para_Name = "DepartmentId"; break;
+                case "DeptDoctorList": sp_Name = "ps_getDepartmentWiseDoctorList"; para_Name = "DepartmentId"; break;
                 default: break;
             }
             var param = new SqlParameter
