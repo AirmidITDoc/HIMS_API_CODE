@@ -29,5 +29,12 @@ namespace HIMS.Services.OutPatient
         Task InsertAsync(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
+
+
+        List<DeptDoctorListDoT> GetDoctor(int DepartmentId);
+
+
+        Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel objGrid);
+
     }
 }

@@ -237,7 +237,19 @@ namespace HIMS.Services.OPPatient
         //    return await DatabaseHelper.GetGridDataBySp<OPPhoneAppointmentList>(model,"Retrieve_PhoneAppList");
         //}
 
+        public List<DeptDoctorListDoT> GetDoctor(int DepartementId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@DepartmentId", DepartementId);
+            List<DeptDoctorListDoT> lstMenu = sql.FetchListByQuery<DeptDoctorListDoT>("SELECT  dbo.DoctorMaster.DoctorId, dbo.DoctorMaster.FirstName FROM     dbo.M_DoctorDepartmentDet INNER JOIN  dbo.DoctorMaster ON dbo.M_DoctorDepartmentDet.DoctorId = dbo.DoctorMaster.DoctorId  where dbo.M_DoctorDepartmentDet.DepartmentId=@DepartmentId", para);
+            return lstMenu;
+        }
 
-       
+
+        public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DeptDoctorListDoT>(model, "ps_getDepartmentWiseDoctorList");
+        }
     }
 }
