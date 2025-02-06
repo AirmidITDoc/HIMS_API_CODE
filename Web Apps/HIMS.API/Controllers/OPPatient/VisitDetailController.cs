@@ -11,6 +11,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data;
+using HIMS.Services.OPPatient;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -168,11 +169,24 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
 
-        //[HttpPost("PhoneAppointList")]
-        //public async Task<IActionResult> OPphAppList(GridRequestModel objGrid)
+        //[HttpGet]
+        //[Route("get-DeptDoctor")]
+        //[Permission]
+        //public ApiResponse GetdetDoc()
         //{
-        //    IPagedList<OPPhoneAppointmentList> OphoneList = await _visitDetailsService.GeOPPhoneAppListAsync(objGrid);
-        //    return Ok(OphoneList.ToGridResponse(objGrid, "Phone Appointment List"));
+        //    //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Successfully.", _visitDetailsService.GetDoctor(DepartementId));
+        //    //return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
         //}
+
+
+
+        [HttpPost("DeptDoctorList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
+        {
+            IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
+        }
+
     }
 }

@@ -10,6 +10,7 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
+using HIMS.Data.DTO.OPPatient;
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -112,6 +113,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+
+        [HttpPost("DocList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<LvwDoctorMasterList> List = await _IDoctorMasterService.GetListAsync1(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Doctor List"));
         }
     }
 }
