@@ -16,7 +16,30 @@ namespace HIMS.Services.Common
         public CommonService()
         {
         }
-
+        public dynamic GetDDLByIdWithProc(DDLRequestModel model)
+        {
+            DatabaseHelper odal = new();
+            string sp_Name = string.Empty;
+            string para_Name = string.Empty;
+            SqlParameter[] para = new SqlParameter[1];
+            int sp_Para = 0;
+            switch (model.Mode)
+            {
+                case "DepartmentWiseDoctor": sp_Name = "ps_getDepartmentWiseDoctorList"; para_Name = "DepartmentId"; break;
+                default: break;
+            }
+            var param = new SqlParameter
+            {
+                ParameterName = "@" + para_Name,
+                Value = model.Id.ToString()
+            };
+            para[sp_Para] = param;
+            DataTable dt = odal.FetchDataTableBySP(sp_Name, para);
+            dynamic result = new ExpandoObject();
+            if (dt.Rows.Count > 0)
+                result = dt.ToDynamic();
+            return result;
+        }
         public dynamic GetDataSetByProc(ListRequestModel model)
         {
             DatabaseHelper odal = new();
@@ -54,9 +77,9 @@ namespace HIMS.Services.Common
             dynamic result = new ExpandoObject();
             foreach (DataTable dt in ds.Tables)
             {
-                var dict = (IDictionary<string, object>)result;
+                //var dict = (IDictionary<string, object>)result;
                 if (dt.Rows.Count > 0)
-                    dict[dt.TableName] = dt.ToDynamic();
+                    result = dt.ToDynamic();
             }
             return result;
         }

@@ -11,6 +11,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data;
+using HIMS.Services.Common;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -21,10 +22,12 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IVisitDetailsService _visitDetailsService;
         private readonly IGenericService<VisitDetail> _repository;
-        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1)
+        private readonly ICommonService _ICommonService;
+        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1, ICommonService commonRepository)
         {
             _visitDetailsService = repository;
             _repository = repository1;
+            _ICommonService = commonRepository;
         }
         [HttpPost("AppVisitList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -34,6 +37,12 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
 
+        [HttpPost("GetDepartmentWiseDoctorList")]
+        public ApiResponse GetDepartmentWiseDoctorList(DDLRequestModel model)
+        {
+            dynamic resultList = _ICommonService.GetDDLByIdWithProc(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", (dynamic)resultList);
+        }
 
         [HttpGet("{id?}")]
         // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
