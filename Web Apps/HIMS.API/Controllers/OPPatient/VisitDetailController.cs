@@ -11,7 +11,8 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data;
-using HIMS.Services.OPPatient;
+using HIMS.Services.Common;
+using HIMS.Services.Masters;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -22,10 +23,12 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IVisitDetailsService _visitDetailsService;
         private readonly IGenericService<VisitDetail> _repository;
-        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1)
+        private readonly IDoctorMasterService _IDoctorMasterService;
+        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1, IDoctorMasterService doctorMasterService)
         {
             _visitDetailsService = repository;
             _repository = repository1;
+            _IDoctorMasterService = doctorMasterService;
         }
         [HttpPost("AppVisitList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -35,12 +38,11 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
 
-
         [HttpGet("{id?}")]
         // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
-         
+
             var data1 = await _repository.GetById(x => x.VisitId == id);
             return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
         }
@@ -69,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.", model);
         }
 
 
@@ -95,7 +97,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.", model);
         }
 
 
@@ -120,7 +122,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.", model);
         }
 
         [HttpPost("Cancel")]
@@ -138,7 +140,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.", model);
         }
 
         [HttpPost("OPRegistrationList")]
@@ -180,13 +182,43 @@ namespace HIMS.API.Controllers.OPPatient
 
 
 
-        [HttpPost("DeptDoctorList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
-        {
-            IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
-            return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
-        }
+        //[HttpPost("DeptDoctorList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
+        //    return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
+        //}
 
+        [HttpGet("DeptDoctorList")]
+        public async Task<ApiResponse> DeptDoctorList(int DeptId)
+        {
+            var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
+        }
+        [HttpGet("GetServiceListwithTraiff")]
+        public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new
+            {
+                x.ServiceId,
+                x.GroupId,
+                x.ServiceShortDesc,
+                x.ServiceName,
+                x.ClassRate,
+                x.TariffId,
+                x.ClassId,
+                x.IsEditable,
+                x.CreditedtoDoctor,
+                x.IsPathology,
+                x.IsRadiology,
+                x.IsActive,
+                x.PrintOrder,
+                x.IsPackage,
+                x.DoctorId,
+                x.IsDocEditable
+            }));
+        }
     }
 }

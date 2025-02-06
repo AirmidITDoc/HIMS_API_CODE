@@ -59,4 +59,10 @@ namespace HIMS.Core.Domain.Grid
         public string? HtmlHeaderFilePath { get; set; }
         public List<SearchModel>? Fields { get; set; }
     }
+
+    public class DDLRequestModel
+    {
+        public string? Mode { get; set; }
+        public int Id { get; set; } = 0;
+    }
 }

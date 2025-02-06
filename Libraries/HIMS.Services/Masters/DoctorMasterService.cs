@@ -155,5 +155,10 @@ namespace HIMS.Services.Masters
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId)
+        {
+            return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
+        }
     }
 }
