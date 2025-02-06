@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data;
 using HIMS.Services.Common;
+using HIMS.Services.Masters;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -22,12 +23,12 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IVisitDetailsService _visitDetailsService;
         private readonly IGenericService<VisitDetail> _repository;
-        private readonly ICommonService _ICommonService;
-        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1, ICommonService commonRepository)
+        private readonly IDoctorMasterService _IDoctorMasterService;
+        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1, IDoctorMasterService doctorMasterService)
         {
             _visitDetailsService = repository;
             _repository = repository1;
-            _ICommonService = commonRepository;
+            _IDoctorMasterService = doctorMasterService;
         }
         [HttpPost("AppVisitList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -41,7 +42,7 @@ namespace HIMS.API.Controllers.OPPatient
         // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
-         
+
             var data1 = await _repository.GetById(x => x.VisitId == id);
             return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
         }
@@ -70,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.", model);
         }
 
 
@@ -96,7 +97,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.", model);
         }
 
 
@@ -121,7 +122,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.", model);
         }
 
         [HttpPost("Cancel")]
@@ -139,7 +140,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.", model);
         }
 
         [HttpPost("OPRegistrationList")]
@@ -189,11 +190,11 @@ namespace HIMS.API.Controllers.OPPatient
         //    return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
         //}
 
-        [HttpPost("DeptDoctorList")]
-        public ApiResponse DeptDoctorList(DDLRequestModel model)
+        [HttpGet("DeptDoctorList")]
+        public async Task<ApiResponse> DeptDoctorList(int DeptId)
         {
-            dynamic resultList = _ICommonService.GetDDLByIdWithProc(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", (dynamic)resultList);
+            var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value=x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
 
     }
