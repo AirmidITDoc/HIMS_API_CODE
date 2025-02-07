@@ -38,22 +38,27 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("AppOPBilllistforrefundList")]
+        [HttpPost("OPBilllistforrefundList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OpBilllistforRefundDto> BillList = await _IRefundOfBillService.GeOpbilllistforrefundAsync(objGrid);
-            return Ok(BillList.ToGridResponse(objGrid, "App Op Bill List for Refund List"));
+            return Ok(BillList.ToGridResponse(objGrid, " PBilllistforrefund List"));
         }
-
-
-
-        [HttpPost("AppOPBillservicedetailList")]
+        [HttpPost("OPBillservicedetailList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
-            return Ok(Servicelist.ToGridResponse(objGrid, "App Op Bill Refund Service Detail  List"));
+            return Ok(Servicelist.ToGridResponse(objGrid, " OPBillservicedetail List"));
+        }
+
+        [HttpPost("RefundAgainstBillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
+            return Ok(Servicelist.ToGridResponse(objGrid, "RefundAgainstBill List "));
         }
 
 
