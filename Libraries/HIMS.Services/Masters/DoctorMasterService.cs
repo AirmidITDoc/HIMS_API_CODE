@@ -26,6 +26,7 @@ using Aspose.Cells.Charts;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using System.Net.NetworkInformation;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.Services.Masters
 {
@@ -150,5 +151,14 @@ namespace HIMS.Services.Masters
             }
         }
 
+        public Task<IPagedList<LvwDoctorMasterList>> GetListAsync1(GridRequestModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId)
+        {
+            return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
+        }
     }
 }

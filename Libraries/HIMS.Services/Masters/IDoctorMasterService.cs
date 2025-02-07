@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.Masters
@@ -16,7 +17,10 @@ namespace HIMS.Services.Masters
         Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
         Task<IPagedList<DoctorMaster>> GetListAsync(GridRequestModel objGrid);
         Task<DoctorMaster> GetById(int Id);
+
         Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid);
+        Task<IPagedList<LvwDoctorMasterList>> GetListAsync1(GridRequestModel model);
+        Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId);
 
     }
 }

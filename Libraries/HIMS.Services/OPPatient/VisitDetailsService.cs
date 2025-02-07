@@ -24,7 +24,7 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model,"m_Rtrv_VisitDetailsList_1_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -210,7 +210,7 @@ namespace HIMS.Services.OPPatient
             }
         }
 
-      
+
         public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
@@ -228,7 +228,7 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel model)
         {
-           
+
             return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "Retrieve_RegistrationList");
         }
 
@@ -237,7 +237,46 @@ namespace HIMS.Services.OPPatient
         //    return await DatabaseHelper.GetGridDataBySp<OPPhoneAppointmentList>(model,"Retrieve_PhoneAppList");
         //}
 
+        public List<DeptDoctorListDoT> GetDoctor(int DepartementId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@DepartmentId", DepartementId);
+            List<DeptDoctorListDoT> lstMenu = sql.FetchListByQuery<DeptDoctorListDoT>("SELECT  dbo.DoctorMaster.DoctorId, dbo.DoctorMaster.FirstName FROM     dbo.M_DoctorDepartmentDet INNER JOIN  dbo.DoctorMaster ON dbo.M_DoctorDepartmentDet.DoctorId = dbo.DoctorMaster.DoctorId  where dbo.M_DoctorDepartmentDet.DepartmentId=@DepartmentId", para);
+            return lstMenu;
+        }
 
-       
+
+        public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DeptDoctorListDoT>(model, "ps_getDepartmentWiseDoctorList");
+        }
+
+        public virtual async Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            var qry = from s in _context.ServiceMasters
+                      join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+                      where s.IsActive.Value && (s.ServiceName == ServiceName || ServiceName == "")
+                      select new ServiceMaster()
+                      {
+                          ServiceId = s.ServiceId,
+                          GroupId = s.GroupId,
+                          ServiceShortDesc = s.ServiceShortDesc,
+                          ServiceName = s.ServiceName,
+                          ClassRate = d.ClassRate,
+                          TariffId = d.TariffId,
+                          ClassId = d.ClassId,
+                          IsEditable = s.IsEditable,
+                          CreditedtoDoctor = s.CreditedtoDoctor,
+                          IsPathology = s.IsPathology,
+                          IsRadiology = s.IsRadiology,
+                          IsActive = s.IsActive,
+                          PrintOrder = s.PrintOrder,
+                          IsPackage = s.IsPackage,
+                          DoctorId = s.DoctorId,
+                          IsDocEditable = s.IsDocEditable
+                      };
+            return await qry.ToListAsync();
+        }
     }
 }
