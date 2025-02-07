@@ -34,10 +34,10 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<OPBillservicedetailListDto>(model, "m_rtrv_OPBill_For_Refund");
         }
 
-        //public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
-        //}
+        public virtual async Task<IPagedList<RefundAgainstBillListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RefundAgainstBillListDto>(model, "m_rtrv_OPDRefundAgainstBillList");
+        }
 
 
 
