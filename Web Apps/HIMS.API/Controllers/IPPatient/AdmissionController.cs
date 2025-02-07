@@ -150,5 +150,12 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission  Updated successfully.");
         }
+        [HttpGet("search-patient")]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchPatient(string Keyword)
+        {
+            var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission data",data);
+        }
     }
 }
