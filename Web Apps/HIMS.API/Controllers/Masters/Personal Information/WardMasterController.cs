@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
          //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RoomMaster> RoomMasterList = await _repository.GetAllPagedAsync(objGrid);

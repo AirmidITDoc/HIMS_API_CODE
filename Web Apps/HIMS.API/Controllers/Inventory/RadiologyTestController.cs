@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Inventory
             _RadiologyTestService = repository;
         }
         [HttpPost("RadiologyList")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);

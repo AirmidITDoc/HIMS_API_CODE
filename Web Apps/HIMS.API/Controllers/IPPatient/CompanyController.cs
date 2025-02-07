@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(CompanyMasterList.ToGridResponse(objGrid, "Company List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+       // [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
