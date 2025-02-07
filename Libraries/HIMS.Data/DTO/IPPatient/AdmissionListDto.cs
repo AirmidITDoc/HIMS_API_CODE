@@ -77,4 +77,34 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? RadiApreAmt { get; set; }
         public byte? AdmissionType { get; set; }
     }
+
+    public class PatientAdmittedListSearchDto
+    {
+        public string? FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public string? RegNo { get; set; }
+        public long AdmissionID { get; set; }
+        public long RegID { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public DateTime? AdmissionTime { get; set; }
+        public long? PatientTypeID { get; set; }
+        public long? HospitalID { get; set; }
+        public long? DocNameID { get; set; }
+        public long? RefDocNameID { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public byte? IsDischarged { get; set; }
+        public string? MobileNo { get; set; }
+        public string? IPDNo { get; set; }
+        public string? CompanyName { get; set; }
+        public string? TariffName { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
+        public string? DoctorName { get; set; }
+        public string? RoomName { get; set; }
+        public string? BedName { get; set; }
+        public string? Age { get; set; }
+        public string? GenderName { get; set; }
+    }
 }

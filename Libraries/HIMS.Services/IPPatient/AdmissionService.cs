@@ -14,6 +14,7 @@ using Aspose.Cells.Drawing;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.IPPatient;
+using System.Text.RegularExpressions;
 
 namespace HIMS.Services.IPPatient
 {
@@ -28,7 +29,7 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "m_rtrv_Admtd_Ptnt_Dtls");
         }
-        
+
 
         //public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
         //{
@@ -129,9 +130,54 @@ namespace HIMS.Services.IPPatient
             {
                 rAdmissentity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure,rAdmissentity1);
-           // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
+            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
         }
 
+        public virtual async Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword)
+        {
+            var qry = from r in _context.Registrations
+                      join a in _context.Admissions on r.RegId equals a.RegId
+                      join t in _context.TariffMasters on a.TariffId equals t.TariffId
+                      join rm in _context.RoomMasters on a.WardId equals rm.RoomId
+                      join b in _context.Bedmasters on a.BedId equals b.BedId
+                      join g in _context.DbGenderMasters on r.GenderId equals g.GenderId
+                      join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
+                      join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
+                      from c in comp.DefaultIfEmpty()
+                      where a.IsDischarged == 0 &&
+                      ((r.FirstName + " " + r.LastName).Contains(Keyword) || (r.MobileNo ?? "").Contains(Keyword) || (r.RegNo ?? "").Contains(Keyword))
+                      orderby r.FirstName
+                      select new PatientAdmittedListSearchDto()
+                      {
+                          FirstName = r.FirstName,
+                          MiddleName = r.MiddleName,
+                          LastName = r.LastName,
+                          RegNo = r.RegNo,
+                          AdmissionID = a.AdmissionId,
+                          RegID = r.RegId,
+                          AdmissionDate = a.AdmissionDate,
+                          AdmissionTime = a.AdmissionTime,
+                          PatientTypeID = a.PatientTypeId,
+                          HospitalID = a.HospitalId,
+                          DocNameID = a.DocNameId,
+                          RefDocNameID = a.RefDocNameId,
+                          WardId = a.WardId,
+                          BedId = a.BedId,
+                          IsDischarged = a.IsDischarged,
+                          MobileNo = a.MobileNo,
+                          IPDNo = a.Ipdno,
+                          CompanyName = c.CompanyName,
+                          TariffName = t.TariffName,
+                          TariffId = a.TariffId,
+                          ClassId = a.ClassId,
+                          DoctorName = d.FirstName + " " + d.LastName,
+                          RoomName = rm.RoomName,
+                          BedName = b.BedName,
+                          Age = r.Age,
+                          GenderName = g.GenderName
+                      };
+            return await qry.Take(25).ToListAsync();
+        }
     }
 }
