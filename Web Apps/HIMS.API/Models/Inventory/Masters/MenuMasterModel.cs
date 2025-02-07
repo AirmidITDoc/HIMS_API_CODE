@@ -13,7 +13,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public bool IsDisplay { get; set; }
         public string? PermissionCode { get; set; }
         public string? TableNames { get; set; }
-        public List<PermissionMasterModel>? PermissionMaster { get; set; }
+        //public List<PermissionMasterModel>? PermissionMaster { get; set; }
 
     }
     public class MenuMasterModelValidator : AbstractValidator<MenuMasterModel>
@@ -27,24 +27,24 @@ namespace HIMS.API.Models.Inventory.Masters
 
         }
     }
-    public class PermissionMasterModel
-    {
-        public int Id { get; set; }
-        public int RoleId { get; set; }
-        public int MenuId { get; set; }
-        public bool IsView { get; set; }
-        public bool IsAdd { get; set; }
-        public bool IsEdit { get; set; }
-        public bool IsDelete { get; set; }
+    //public class PermissionMasterModel
+    //{
+    //    public int Id { get; set; }
+    //    public int RoleId { get; set; }
+    //    public int MenuId { get; set; }
+    //    public bool IsView { get; set; }
+    //    public bool IsAdd { get; set; }
+    //    public bool IsEdit { get; set; }
+    //    public bool IsDelete { get; set; }
 
-    }
-    public class PermissionMasterModelValidator : AbstractValidator<PermissionMasterModel>
-    {
-        public PermissionMasterModelValidator()
-        {
-            RuleFor(x => x.RoleId).NotNull().NotEmpty().WithMessage("RoleId is required");
+    //}
+    //public class PermissionMasterModelValidator : AbstractValidator<PermissionMasterModel>
+    //{
+    //    public PermissionMasterModelValidator()
+    //    {
+    //        RuleFor(x => x.RoleId).NotNull().NotEmpty().WithMessage("RoleId is required");
 
 
-        }
-    }
+    //    }
+    //}
 }

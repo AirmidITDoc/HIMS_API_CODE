@@ -9,7 +9,7 @@ namespace HIMS.Services.Masters
 {
     public partial  interface IMenuMasterService
     {
-        Task InsertAsync(MenuMaster objMenuMaster, int UserId, string Username);
+        Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username);
         Task UpdateAsync(MenuMaster objMenuMaster, int UserId, string Username);
     }
 }

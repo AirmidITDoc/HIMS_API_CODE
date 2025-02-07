@@ -39,7 +39,7 @@ namespace HIMS.API.Infrastructure
         {
             // services.AddScoped<IDataProvider, MsSqlDataProvider>();
             //services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
-            services.AddScoped<IOTService, OTService>();
+       //     services.AddScoped<IOTBookingRequestService, OTBookingRequestService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
@@ -74,9 +74,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IReportTemplateService, ReportTemplateService>();
             //services.AddScoped<IOPDPrescriptionMedicalService, OPDPrescriptionMedicalService>();
             services.AddScoped<IMenuMasterService, MenuMasterService>();
-            //services.AddScoped<IConfigSettingService, ConfigSettingService>();
             services.AddScoped<IPaymentpharmacyService, paymentpharmacyService>();
-            //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 
 
             services.AddScoped<IPaymentService, PaymentService>();

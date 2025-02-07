@@ -29,6 +29,7 @@ namespace HIMS.API.Infrastructure
         {
 
             // Master 
+            CreateMap<MReportConfiguration, MReportConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OTBookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbookingRequest, OTBookingRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfig, MReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -100,7 +101,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<RoleTemplateMaster, RoleTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<ConfigSetting, ConfigSettingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PaymentPharmacy, paymentpharmacyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<TIpPrescription, TIPmedicalRecordModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIpmedicalRecord, TIPmedicalRecordModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIpPrescription, IpPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
@@ -199,7 +203,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+         //   CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

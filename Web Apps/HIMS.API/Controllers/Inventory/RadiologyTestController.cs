@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Inventory
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.ModifiedDate = DateTime.Now;
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.TestId = obj.TestId;
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.ModifiedDate = DateTime.Now;
                 await _RadiologyTestService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
