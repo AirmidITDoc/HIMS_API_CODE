@@ -59,8 +59,8 @@ namespace HIMS.Data.DTO.OPPatient
         public long RefDocId { get; set; }
         public string? RefDocName { get; set; }
         public long PhoneAppId { get; set; }
-        public int? CrossConsulFlag { get; set; }
-       
+        public long CrossConsulFlag { get; set; }
+
 
     }
 }
