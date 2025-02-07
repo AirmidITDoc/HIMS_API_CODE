@@ -31,6 +31,9 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 using System.Data.Common;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.Services.Masters
 {
@@ -41,6 +44,11 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<MPathParameterMasterListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MPathParameterMasterListDto>(model, "m_Rtrv_PathParameterMaster_by_Name");
+        }
+
         public virtual async Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

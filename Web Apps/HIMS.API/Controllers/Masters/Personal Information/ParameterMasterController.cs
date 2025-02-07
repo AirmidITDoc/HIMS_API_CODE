@@ -10,6 +10,7 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.Masters;
 using HIMS.API.Models.OutPatient;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -24,8 +25,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _IParameterMasterService = repository;
         }
+        [HttpPost("MPathParameter List")]
+        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MPathParameterMasterListDto> MPathParameterList = await _IParameterMasterService.GetListAsync(objGrid);
+            return Ok(MPathParameterList.ToGridResponse(objGrid, "MPathParameter List"));
+        }
 
-      
         //Add API
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]

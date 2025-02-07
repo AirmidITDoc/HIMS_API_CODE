@@ -29,6 +29,7 @@ namespace HIMS.API.Infrastructure
         {
 
             // Master 
+            CreateMap<MReportConfiguration, MReportConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OTBookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbookingRequest, OTBookingRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfig, MReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -203,7 +204,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+         //   CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
