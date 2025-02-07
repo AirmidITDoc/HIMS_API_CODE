@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
