@@ -16,5 +16,6 @@ namespace HIMS.Data.Models
         public string? PatHandA { get; set; }
         public string? PatHandR { get; set; }
         public long? IsAddedBy { get; set; }
+        public int? CreatedBy { get; set; }
     }
 }

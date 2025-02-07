@@ -6667,7 +6667,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Formula).HasMaxLength(250);
+
+                entity.Property(e => e.IsBoldFlag).HasMaxLength(1);
+
                 entity.Property(e => e.IsPrintDisSummary).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.MethodName).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -6929,6 +6935,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportColumn).HasMaxLength(500);
 
                 entity.Property(e => e.ReportFileName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportFilter).HasMaxLength(1024);
 
                 entity.Property(e => e.ReportFolderName).HasMaxLength(100);
 
@@ -7298,6 +7306,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.TemplateId);
 
                 entity.ToTable("M_TemplateMaster");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(50)
+                    .HasColumnName("category");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
