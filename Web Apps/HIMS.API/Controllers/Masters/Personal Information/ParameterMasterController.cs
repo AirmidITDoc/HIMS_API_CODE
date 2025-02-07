@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _IParameterMasterService = repository;
         }
-        [HttpPost("MPathParameter List")]
+        [HttpPost("MPathParameterList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
