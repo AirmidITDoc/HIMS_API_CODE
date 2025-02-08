@@ -16,6 +16,7 @@ namespace HIMS.Services.Common
         Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel objGrid);
         Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
+        Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel objGrid);
     }
 }
 
