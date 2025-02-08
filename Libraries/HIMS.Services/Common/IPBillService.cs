@@ -37,6 +37,10 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
         }
+        public virtual async Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ServiceClassdetailListDto>(model, "m_Rtrv_ServiceClassdetail");
+        }
         public virtual async Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
 

@@ -9,6 +9,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
+using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
@@ -26,7 +27,7 @@ namespace HIMS.API.Controllers.Common
             private readonly IOPAddchargesService _IOPAddchargesService;
              private readonly IOPBillingService _oPBillingService;
            private readonly IOPSettlementCreditService _IOPCreditBillService;
-
+        
         private readonly IIPBillService _IPBillService;
        // private readonly IIPBILLCreditService _iPBILLCreditService;
         private readonly IIPDraftBillSerive _iPDraftBillSerive;
@@ -38,6 +39,7 @@ namespace HIMS.API.Controllers.Common
                 _IOPAddchargesService = repository;
             _oPBillingService = repository1;
             _IOPCreditBillService = repository2;
+           
 
             _IPBillService = iPBIllwithpay;
             //_iPBILLCreditService = iPBILLCreditService;
@@ -70,6 +72,14 @@ namespace HIMS.API.Controllers.Common
             IPagedList<IPRefundBillListDto> IPRefundBillList = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
             return Ok(IPRefundBillList.ToGridResponse(objGrid, "IP Refund Bill List"));
         }
+        [HttpPost("ServiceClassdetaillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> ServiceDetaillList(GridRequestModel objGrid)
+        {
+            IPagedList<ServiceClassdetailListDto> ServiceClassdetailList = await _IPBillService.ServiceClassdetailList(objGrid);
+            return Ok(ServiceClassdetailList.ToGridResponse(objGrid, "ServiceClassdetail App List"));
+        }
+
 
         [HttpPost("OPAddchargesInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
