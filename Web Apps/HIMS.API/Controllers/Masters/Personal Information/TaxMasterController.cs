@@ -23,9 +23,9 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _repository = repository;
         }
         //List API
-        [HttpPost]
+        [HttpPost] 
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MTaxNatureMaster> TaxMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,11 +45,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
-           model.IsActive = 1;
+            model.IsActive = true;
             if (obj.Id == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -62,11 +62,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
-            model.IsActive = 1;
+            model.IsActive = true;
             if (obj.Id == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -79,13 +79,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MTaxNatureMaster model = await _repository.GetById(x => x.Id == Id);
             if ((model?.Id ?? 0) > 0)
             {
-                model.IsActive = 0;
+                model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

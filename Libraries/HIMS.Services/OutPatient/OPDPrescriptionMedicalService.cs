@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
         {
 
             ////Add header table records
-            //DatabaseHelper odal = new();
+            DatabaseHelper odal = new();
             //string[] PEntity = { "PrecriptionId", "OpdIpdIp", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction",
             //    "Remark","IsClosed","IsEnglishOrIsMarathi","Pweight","Pulse","Bp","Bsl","ChiefComplaint","IsAddBy","SpO2","StoreId","DoseOption2","DaysOption2","DoseOption3","DaysOption3"};
             //var pentity = objTPrescription.ToDictionary();
@@ -31,15 +31,15 @@ namespace HIMS.Services.OutPatient
             //}
             //odal.ExecuteNonQuery("m_delete_OPPrescription_1", CommandType.StoredProcedure, pentity);
 
-            //string[] rEntity = { "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
+            string[] rEntity = { "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
 
-            //var entity = objTPrescription.ToDictionary();
-            //foreach (var rProperty in rEntity)
-            //{
-            //    entity.Remove(rProperty);
-            //}
-            //string vPrecriptionId = odal.ExecuteNonQuery("v_insert_OPPrescription_1", CommandType.StoredProcedure, "PrecriptionId", entity);
-            ////objTPrescription.PrecriptionId = Convert.ToInt32(vPrecriptionId);
+            var entity = objTPrescription.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string vPrecriptionId = odal.ExecuteNonQuery("v_insert_OPPrescription_1", CommandType.StoredProcedure, "PrecriptionId", entity);
+            objTPrescription.PrecriptionId = Convert.ToInt32(vPrecriptionId);
 
 
         }

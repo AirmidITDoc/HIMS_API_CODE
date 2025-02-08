@@ -35,7 +35,7 @@ namespace HIMS.Services.OutPatient
 
 
         Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel objGrid);
-        Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
+        //Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
 
     }
 }
