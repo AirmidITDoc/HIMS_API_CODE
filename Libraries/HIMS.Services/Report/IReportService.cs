@@ -1,9 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Report
 {
@@ -11,5 +7,8 @@ namespace HIMS.Services.Report
     {
         string GetReportSetByProc(ReportRequestModel model);
         string GetNewReportSetByProc(ReportNewRequestModel model);
+        Task<List<ServiceMasterDTO>> SearchService(string str);
+        Task<List<MDepartmentMaster>> SearchDepartment(string str);
+        Task<List<CashCounter>> SearchCashCounter(string str);
     }
 }

@@ -9,6 +9,8 @@ using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
+using HIMS.Services.Masters;
+using HIMS.Services.OPPatient;
 using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using LinqToDB.Common;
@@ -27,18 +29,19 @@ namespace HIMS.API.Controllers.Report
     [ApiVersion("1")]
     public class ReportController : BaseController
     {
+        private readonly IRegistrationService _IRegistrationService;
+        private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MReportConfig> _reportlistRepository;
-        private readonly IGenericService<LoginManager> _userRepository;
-        private readonly IGenericService<DoctorMaster> _doctorRepository;
         private readonly IReportService _reportService;
         public readonly IConfiguration _configuration;
         public readonly IPdfUtility _pdfUtility;
-        public ReportController(IGenericService<MReportConfig> reportlistRepository, IGenericService<LoginManager> userRepository, IGenericService<DoctorMaster> doctorRepository,
+        public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
+            IGenericService<MReportConfig> reportlistRepository,
             IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
         {
+            _IRegistrationService = repository;
+            _IDoctorMasterService = doctorRepository;
             _reportlistRepository = reportlistRepository;
-            _userRepository = userRepository;
-            _doctorRepository = doctorRepository;
             _reportService = reportService;
             _configuration = configuration;
             _pdfUtility = pdfUtility;
@@ -51,20 +54,42 @@ namespace HIMS.API.Controllers.Report
             IPagedList<MReportConfig> ReportList = await _reportlistRepository.GetAllPagedAsync(objGrid);
             return Ok(ReportList.ToGridResponse(objGrid, "Report List"));
         }
-        [HttpPost("UserList")]
+        [HttpGet("UserList/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
-        public async Task<IActionResult> UserList(GridRequestModel objGrid)
+        public async Task<ApiResponse> GetUserListAutoComplete(string Keyword)
         {
-            IPagedList<LoginManager> UserList = await _userRepository.GetAllPagedAsync(objGrid);
-            return Ok(UserList.ToGridResponse(objGrid, "User List"));
+            var data = await _IRegistrationService.SearchRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.Id }));
         }
-        [HttpPost("DoctorList")]
-        [Permission(PageCode = "Report", Permission = PagePermission.View)]
-        public async Task<IActionResult> DoctorList(GridRequestModel objGrid)
+        [HttpGet("DoctorList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDoctorListAutoComplete(string Keyword)
         {
-            IPagedList<DoctorMaster> DoctorList = await _doctorRepository.GetAllPagedAsync(objGrid);
-            return Ok(DoctorList.ToGridResponse(objGrid, "Doctor List"));
+            var data = await _IDoctorMasterService.SearchDoctor(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
         }
+        [HttpGet("ServiceList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetServiceListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchService(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Data.", data.Select(x => new { Text = x.ServiceName, Value = x.ServiceId }));
+        }
+        [HttpGet("DepartmentList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDepartmentListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchDepartment(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department Data.", data.Select(x => new { Text = x.DepartmentName, Value = x.DepartmentId }));
+        }
+        [HttpGet("CashCounterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetCashCounterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchCashCounter(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter Data.", data.Select(x => new { Text = x.CashCounterName, Value = x.CashCounterId }));
+        }
+
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)

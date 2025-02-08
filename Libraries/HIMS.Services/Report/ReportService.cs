@@ -2,26 +2,39 @@
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
-using HIMS.Services.Report.OPReports;
 using Microsoft.AspNetCore.Hosting;
 using System.Data;
 using System.Text;
 using WkHtmlToPdfDotNet;
+using HIMS.Data;
 using Microsoft.Data.SqlClient;
-using Aspose.Cells;
-using Aspose.Cells.Drawing;
-using HIMS.Core;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.Services.Report
 {
     public class ReportService : IReportService
     {
+        private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
-        public ReportService(IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
+        public ReportService(HIMSDbContext HIMSDbContext,IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
         {
+            _context = HIMSDbContext;
             _hostingEnvironment = hostingEnvironment;
             _pdfUtility = pdfUtility;
+        }
+
+        public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
+        {
+            return await this._context.ServiceMasters.Where(x => (x.ServiceName).ToLower().Contains(str)).Take(25).Select(s => new ServiceMasterDTO() { ServiceId = s.ServiceId, ServiceName = s.ServiceName }).ToListAsync();
+        }
+        public virtual async Task<List<MDepartmentMaster>> SearchDepartment(string str)
+        {
+            return await this._context.MDepartmentMasters.Where(x => (x.DepartmentName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+        public virtual async Task<List<CashCounter>> SearchCashCounter(string str)
+        {
+            return await this._context.CashCounters.Where(x => (x.CashCounterName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
         public string GetReportSetByProc(ReportRequestModel model)
@@ -2747,8 +2760,6 @@ namespace HIMS.Services.Report
             return html;
 
         }
-
-
 
         public string conversion(string amount)
         {

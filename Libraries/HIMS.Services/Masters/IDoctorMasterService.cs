@@ -21,6 +21,7 @@ namespace HIMS.Services.Masters
         Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid);
         Task<IPagedList<LvwDoctorMasterList>> GetListAsync1(GridRequestModel model);
         Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId);
+        Task<List<DoctorMaster>> SearchDoctor(string str);
 
     }
 }

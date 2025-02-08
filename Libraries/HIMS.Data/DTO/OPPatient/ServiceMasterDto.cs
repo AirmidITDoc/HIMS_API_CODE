@@ -12,4 +12,10 @@ namespace HIMS.Data.Models
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
     }
+
+    public class ServiceMasterDTO
+    {
+        public long ServiceId { get; set; }
+        public string ServiceName { get; set; }
+    }
 }
