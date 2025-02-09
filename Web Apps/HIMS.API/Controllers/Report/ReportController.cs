@@ -211,6 +211,8 @@ namespace HIMS.API.Controllers.Report
                 case "Dischargetypecompanywise":
                 case "DepartmentwiseCount":
                 case "IPDDischargewithmarkstatus":
+                case "IpMLCCasePaperPrint":
+                    
                 //case "IpBillRefundReceipt":
 
                 //{
