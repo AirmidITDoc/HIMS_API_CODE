@@ -7,7 +7,7 @@ namespace HIMS.Data.Models
     {
         public long Id { get; set; }
         public string? TaxNature { get; set; }
-        public long? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
