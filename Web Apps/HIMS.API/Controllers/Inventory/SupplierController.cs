@@ -100,6 +100,8 @@ namespace HIMS.API.Controllers.Inventory
             if (obj.SupplierId != 0)
             {
                 model.SupplierId = obj.SupplierId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _SupplierService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else

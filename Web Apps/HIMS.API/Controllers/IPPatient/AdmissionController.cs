@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //[HttpPost("AdmissionUpdateSP")]
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
         {
            

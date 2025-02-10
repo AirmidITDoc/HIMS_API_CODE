@@ -6720,7 +6720,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PathTestFormula");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Formula).HasMaxLength(300);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ParameterName).HasMaxLength(200);
             });

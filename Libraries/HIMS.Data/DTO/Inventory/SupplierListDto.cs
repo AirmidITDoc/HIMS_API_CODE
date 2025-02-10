@@ -26,7 +26,7 @@ namespace HIMS.Data.DTO.Inventory
         public long CurrencyId { get; set; }
         public long Octroi { get; set; }
         public long Freight { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
         public long AddedBy { get; set; }
         public long UpdatedBy { get; set; }
         public string CityName { get; set; }

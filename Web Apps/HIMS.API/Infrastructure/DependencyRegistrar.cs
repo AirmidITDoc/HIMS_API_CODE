@@ -41,6 +41,7 @@ namespace HIMS.API.Infrastructure
             //services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
        //     services.AddScoped<IOTBookingRequestService, OTBookingRequestService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+            services.AddScoped<IMParameterDescriptiveMasterService, MParameterDescriptiveMasterService>();
             services.AddScoped<IContext, HIMSDbContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();

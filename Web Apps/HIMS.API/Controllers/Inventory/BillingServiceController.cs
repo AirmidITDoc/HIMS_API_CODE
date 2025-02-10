@@ -17,17 +17,17 @@ namespace HIMS.API.Controllers.Inventory
     [ApiVersion("1")]
         public class BillingServiceController : BaseController
         {
-        private readonly IBillingService _IBillingService;
+        private readonly IBillingService _BillingService;
         public BillingServiceController(IBillingService repository)
         {
-            _IBillingService = repository;
+            _BillingService = repository;
         }
 
         [HttpPost("BillingList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<BillingServiceDto> BillingList = await _IBillingService.GetListAsync(objGrid);
+            IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
 
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.CreatedDate = DateTime.Now;
                 model.IsActive = true;
-                await _IBillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _BillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
-                await _IBillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
-                await _IBillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name updated successfully.");
         }
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.ServiceId = obj.ServiceId;
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-                await _IBillingService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                await _BillingService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

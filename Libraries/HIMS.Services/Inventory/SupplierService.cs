@@ -107,6 +107,9 @@ namespace HIMS.Services.Inventory
             {
                 // Update header table records
                 MSupplierMaster objsup = await _context.MSupplierMasters.FindAsync(objSupplier.SupplierId);
+                objsup.IsActive = false;
+                objsup.CreatedDate = objSupplier.CreatedDate;
+                objsup.CreatedBy = objSupplier.CreatedBy;
                 _context.MSupplierMasters.Update(objsup);
                 _context.Entry(objsup).State = EntityState.Modified;
                 await _context.SaveChangesAsync();

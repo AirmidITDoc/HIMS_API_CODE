@@ -7,7 +7,7 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public long Id { get; set; }
         public string? TaxNature { get; set; }
-        public long? IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
     public class TaxMasterModelValidator : AbstractValidator<TaxMasterModel>
     {

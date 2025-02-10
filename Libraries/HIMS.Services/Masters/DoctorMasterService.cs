@@ -160,5 +160,10 @@ namespace HIMS.Services.Masters
         {
             return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
         }
+
+        public virtual async Task<List<DoctorMaster>> SearchDoctor(string str)
+        {
+            return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
     }
 }
