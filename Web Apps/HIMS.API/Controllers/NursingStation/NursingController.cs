@@ -29,19 +29,19 @@ namespace HIMS.API.Controllers.NursingStation
             _IPriscriptionReturnService = repository2;
             _ICanteenRequestService = repository3;
         }
-        [HttpPost("PrescriptionList")]
+        [HttpPost("PrescriptionWard List")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionListDto> PrescriptiontList = await _IPriscriptionReturnService.GetPrescriptionListAsync(objGrid);
-            return Ok(PrescriptiontList.ToGridResponse(objGrid, "Prescription  List "));
+            return Ok(PrescriptiontList.ToGridResponse(objGrid, "PrescriptionWard  List "));
         }
-        [HttpPost("PrescriptionWardList")]
+        [HttpPost("PrescriptionReturn List")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnListDto> PrescriptiontReturnList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
-            return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionWard  List "));
+            return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn  List "));
         }
         [HttpPost("PrescriptionDetailList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
