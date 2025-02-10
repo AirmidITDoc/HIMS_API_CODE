@@ -63,4 +63,17 @@ namespace HIMS.Data.DTO.OPPatient
 
 
     }
+    public class VisitDetailsListSearchDto
+    {
+        public string? FirstName {  get; set; }
+        public string? RegNo { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public long VisitId { get; set; }
+        public long RegId { get; set; }
+
+
+
+
+    }
 }

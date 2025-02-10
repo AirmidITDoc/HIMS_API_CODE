@@ -142,6 +142,13 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.", model);
         }
+        [HttpGet("search-patient")]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchPatient(string Keyword)
+        {
+            var data = await _visitDetailsService.VisitDetailsListSearchDto(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Visit data", data);
+        }
 
         [HttpPost("OPRegistrationList")]
         public async Task<IActionResult> OPRegistrationList(GridRequestModel objGrid)

@@ -12,10 +12,13 @@ using Microsoft.Data.SqlClient;
 using static LinqToDB.Common.Configuration;
 using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.IPPatient;
+using SkiaSharp;
+using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.OPPatient
 {
-    public class VisitDetailsService : IVisitDetailsService
+    public  class VisitDetailsService : IVisitDetailsService
     {
         private readonly HIMSDbContext _context;
         public VisitDetailsService(HIMSDbContext HIMSDbContext)
@@ -253,6 +256,34 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<DeptDoctorListDoT>(model, "ps_getDepartmentWiseDoctorList");
         }
 
+        public virtual async Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword)
+        {
+            var qry = from r in _context.Registrations
+                      join a in _context.VisitDetails on r.RegId equals a.RegId
+                      //join t in _context.TariffMasters on a.TariffId equals t.TariffId
+                      //join rm in _context.RoomMasters on a.WardId equals rm.RoomId
+                      //join b in _context.Bedmasters on a.BedId equals b.BedId
+                      //join g in _context.DbGenderMasters on r.GenderId equals g.GenderId
+                      //join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
+                      //join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
+
+                     
+                      //where a.VisitDate ==  + "'"+ 2025-02-10 00:00:00.000 &&
+                    where ((r.FirstName + " " + r.LastName).Contains(Keyword)  || (r.RegNo ?? "").Contains(Keyword))
+
+                      orderby r.FirstName
+                      select new VisitDetailsListSearchDto()
+                      {
+                          FirstName = r.FirstName,
+                          MiddleName = r.MiddleName,
+                          LastName = r.LastName,
+                          RegNo = r.RegNo,
+                          RegId = r.RegId,
+                         
+                      };
+            return await qry.Take(25).ToListAsync();
+        }
+
         //public virtual async Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         //{
         //    var qry = from s in _context.ServiceMasters
@@ -280,5 +311,8 @@ namespace HIMS.Services.OPPatient
         //    return await qry.ToListAsync();
         //}
     }
+    
 }
+
+
 
