@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Inventory;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.OutPatient
         public long? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
         public decimal? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
@@ -47,19 +48,35 @@ namespace HIMS.API.Models.OutPatient
         public string? TranMode { get; set; }
         public decimal? Tdsamount { get; set; }
 
-        public virtual Bill? BillNoNavigation { get; set; }
+        //public virtual Bill? BillNoNavigation { get; set; }
+        public List<BilModel> Bill { get; set; }
+
     }
     public class OPSettlementModelValidator : AbstractValidator<OPSettlementModel>
     {
         public OPSettlementModelValidator()
         {
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo is required");
-            //RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo is required");
+            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.PaymentTime).NotNull().NotEmpty().WithMessage("PaymentTime is required");
+
+        }
+    }
+    public class BilModel
+    {
+        public long BillNo { get; set; }
+        public decimal? BalanceAmt { get; set; }
+
+
+    }
+    public class BilModelValidator : AbstractValidator<BilModel>
+    {
+        public BilModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
 
         }
     }
 }
+
