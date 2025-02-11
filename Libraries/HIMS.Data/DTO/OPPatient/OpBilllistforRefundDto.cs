@@ -15,12 +15,13 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal? NetPayableAmt { get; set; }
         public string? PBillNo { get; set; }
         public decimal? RefundAmount { get; set; }
-        public byte? OpdIpdType { get; set; }
-        public long? OpdIpdId { get; set; }
+        public long OPD_IPD_Type { get; set; }
+        public long OPD_IPD_ID { get; set; }
         public DateTime? BillDate { get; set; }
         public decimal? BalanceAmt { get; set; }
         public long RegId { get; set; }
         public long VisitId { get; set; }
+        public string BilDate { get; set; }
 
     }
 }

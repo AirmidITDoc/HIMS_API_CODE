@@ -19,11 +19,11 @@ namespace HIMS.Data.DTO.OPPatient
         public long DoctorId { get; set; }
         public decimal BalanceAmount { get; set; }
         public string? ChargesDocName { get; set; }
-        public byte? OpdIpdType { get; set; }
-        public bool? IsCancelled { get; set; }
-        public double RefundAmount { get; set; }
+        public byte OPD_IPD_Type { get; set; }
+        public long? IsCancelled { get; set; }
+        public decimal RefundAmount { get; set; }
         public decimal BalAmt { get; set; }
         public long BillNo { get; set; }
-     
+
     }
 }
