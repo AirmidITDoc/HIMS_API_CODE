@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.NursingStation
             _IPriscriptionReturnService = repository2;
             _ICanteenRequestService = repository3;
         }
-        [HttpPost("PrescriptionWard List")]
+        [HttpPost("PrescriptionWardList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
