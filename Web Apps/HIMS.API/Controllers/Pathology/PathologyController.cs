@@ -8,6 +8,7 @@ using HIMS.Services.Common;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
 using HIMS.Services.OPPatient;
+using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology
@@ -19,15 +20,40 @@ namespace HIMS.API.Controllers.Pathology
     {
         private readonly IPathlogySampleCollectionService _IPathlogySampleCollectionService;
         private readonly ILabRequestService _ILabRequestService;
+        private readonly IPathlogyService _IPathlogyService;
 
-        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1)
+
+        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2)
         {
             _IPathlogySampleCollectionService = repository;
             _ILabRequestService = repository1;
+            _IPathlogyService = repository2;
+
+
 
 
         }
-
+        [HttpPost("PathParaFillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)
+        {
+            IPagedList<PathParaFillListDto> PathParaFillList = await _IPathlogyService.PathParaFillList(objGrid);
+            return Ok(PathParaFillList.ToGridResponse(objGrid, "PathParaFillList App List"));
+        }
+        [HttpPost("PathSubtestFillList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathSubtestFillList(GridRequestModel objGrid)
+        {
+            IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
+            return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
+        }
+        [HttpPost("PathologyTestList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathologyTestList(GridRequestModel objGrid)
+        {
+            IPagedList<PathologyTestListDto> PathologyTestList = await _IPathlogyService.PathologyTestList(objGrid);
+            return Ok(PathologyTestList.ToGridResponse(objGrid, "PathologyTest App List"));
+        }
         [HttpPost("SampleCollectionList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SampleCollectionList(GridRequestModel objGrid)
