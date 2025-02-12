@@ -284,32 +284,32 @@ namespace HIMS.Services.OPPatient
             return await qry.Take(25).ToListAsync();
         }
 
-        //public virtual async Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
-        //{
-        //    var qry = from s in _context.ServiceMasters
-        //              join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
-        //              where s.IsActive.Value && (s.ServiceName == ServiceName || ServiceName == "")
-        //              select new ServiceMaster()
-        //              {
-        //                  ServiceId = s.ServiceId,
-        //                  GroupId = s.GroupId,
-        //                  ServiceShortDesc = s.ServiceShortDesc,
-        //                  ServiceName = s.ServiceName,
-        //                  ClassRate = d.ClassRate,
-        //                  TariffId = d.TariffId,
-        //                  ClassId = d.ClassId,
-        //                  IsEditable = s.IsEditable,
-        //                  CreditedtoDoctor = s.CreditedtoDoctor,
-        //                  IsPathology = s.IsPathology,
-        //                  IsRadiology = s.IsRadiology,
-        //                  IsActive = s.IsActive,
-        //                  PrintOrder = s.PrintOrder,
-        //                  IsPackage = s.IsPackage,
-        //                  DoctorId = s.DoctorId,
-        //                  IsDocEditable = s.IsDocEditable
-        //              };
-        //    return await qry.ToListAsync();
-        //}
+        public virtual async Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            var qry = from s in _context.ServiceMasters
+                      join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+                      where s.IsActive.Value && (s.ServiceName == ServiceName || ServiceName == "")
+                      select new ServiceMaster()
+                      {
+                          ServiceId = s.ServiceId,
+                          GroupId = s.GroupId,
+                          ServiceShortDesc = s.ServiceShortDesc,
+                          ServiceName = s.ServiceName,
+                          ClassRate = d.ClassRate,
+                          TariffId = d.TariffId,
+                          ClassId = d.ClassId,
+                          IsEditable = s.IsEditable,
+                          CreditedtoDoctor = s.CreditedtoDoctor,
+                          IsPathology = s.IsPathology,
+                          IsRadiology = s.IsRadiology,
+                          IsActive = s.IsActive,
+                          PrintOrder = s.PrintOrder,
+                          IsPackage = s.IsPackage,
+                          DoctorId = s.DoctorId,
+                          IsDocEditable = s.IsDocEditable
+                      };
+            return await qry.ToListAsync();
+        }
     }
     
 }

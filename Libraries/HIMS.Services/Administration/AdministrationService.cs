@@ -24,7 +24,7 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<MenuMasterListDto>> MenuMasterList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "m_Rtrv_Menu_master");
+            return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "ps_Rtrv_Menu_master");
         }
     }
 }
