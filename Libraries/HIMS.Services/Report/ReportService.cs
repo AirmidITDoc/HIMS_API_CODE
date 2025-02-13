@@ -777,7 +777,7 @@ namespace HIMS.Services.Report
                 var param = new SqlParameter
                 {
                     ParameterName = "@" + property.Key,
-                    Value = property.Value.ToString()
+                    Value = ((property.Key == "FromDate" || property.Key == "ToDate") ? Convert.ToDateTime(property.Value) : property.Value.ToString())
                 };
 
                 para[sp_Para] = param;

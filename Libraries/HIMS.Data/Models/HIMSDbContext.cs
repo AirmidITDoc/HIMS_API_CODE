@@ -8655,6 +8655,10 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("RoleMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.RoleName).HasMaxLength(250);
             });
 
