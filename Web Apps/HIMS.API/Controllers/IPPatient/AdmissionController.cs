@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionInsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
@@ -120,7 +120,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionRegisteredInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionRegisteredInsertSP(NewAdmission obj)
         {
 
@@ -157,5 +157,8 @@ namespace HIMS.API.Controllers.IPPatient
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission data",data);
         }
+
+
+
     }
 }

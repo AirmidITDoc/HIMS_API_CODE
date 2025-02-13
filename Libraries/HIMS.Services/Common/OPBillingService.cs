@@ -102,16 +102,16 @@ namespace HIMS.Services.Common
 
 
 
-                    //string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
-                    //Payment objPayment = new Payment();
-                    //objPayment.BillNo = objBill.BillNo;
-                    //var entity2 = objPayment.ToDictionary();
-                    //foreach (var rProperty in rPaymentEntity)
-                    //{
-                    //    entity2.Remove(rProperty);
-                    //}
-                    //string PaymentId = odal.ExecuteNonQuery("v_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
-                    //objPayment.PaymentId = Convert.ToInt32(PaymentId);
+                    string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
+                    Payment objPayment = new Payment();
+                    objPayment.BillNo = objBill.BillNo;
+                    var entity2 = objPayment.ToDictionary();
+                    foreach (var rProperty in rPaymentEntity)
+                    {
+                        entity2.Remove(rProperty);
+                    }
+                    string PaymentId = odal.ExecuteNonQuery("v_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    objPayment.PaymentId = Convert.ToInt32(PaymentId);
                 
                     scope.Complete();
                 }

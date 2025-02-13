@@ -34,18 +34,16 @@ namespace HIMS.Services.Permissions
                             Key2 = P.RoleId == RoleId
                         } into tmpPermission
                         from P in tmpPermission.DefaultIfEmpty()
-                        where M.IsActive
+                        where M.IsActive && !string.IsNullOrWhiteSpace(M.PermissionCode)
                         orderby M.Id
                         select new PageMasterDto()
                         {
                             PageName = M.LinkName,
                             PageCode = M.PermissionCode,
-                            RoleId = RoleId,
                             IsAdd = P.IsAdd,
                             IsDelete = P.IsDelete,
                             IsEdit = P.IsEdit,
-                            IsView = P.IsView,
-                            PermissionId = P.Id
+                            IsView = P.IsView
                         };
 
             return await query.ToListAsync();

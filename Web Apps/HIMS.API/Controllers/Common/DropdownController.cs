@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MCityMaster> _IMCityService;
         private readonly IGenericService<MStateMaster> _IMStateService;
         private readonly IGenericService<MCountryMaster> _IMCountryService;
-        private readonly IGenericService<MClassMaster> _IMClassService;
+        private readonly IGenericService<ClassMaster> _IMClassService;
         private readonly IGenericService<CompanyMaster> _IMCompanysService;
         private readonly IGenericService<MSubTpacompanyMaster> _IMSubCompanysService;
         private readonly IGenericService<Bedmaster> _IMBedService;
@@ -69,12 +69,13 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
         private readonly IGenericService<TNursingNote> _IMNurNoteervice;
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
+        private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
-            , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<MClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
+            , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<ClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
                                   , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
             , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster, IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
@@ -86,6 +87,7 @@ namespace HIMS.API.Controllers.Common
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
+            , IGenericService<RoleMaster> iMDrolerMaster
               )
         {
             _IAreaService = areaservice;
@@ -138,6 +140,7 @@ namespace HIMS.API.Controllers.Common
             _IMConcessService = iMDConcessionMaster;
             _IMNurNoteervice = iMDnurNoteMaster;
             _IMparameterservice = iMDparameterMaster;
+            _IMRoleMasterservice = iMDrolerMaster;
         }
 
         [HttpGet]
@@ -207,6 +210,11 @@ namespace HIMS.API.Controllers.Common
 
                 
                 "Parameter" => (await _IMparameterservice.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathParameterMaster.ParameterId), nameof(MPathParameterMaster.ParameterName)),
+
+
+                "Role" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
+                "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
+
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
