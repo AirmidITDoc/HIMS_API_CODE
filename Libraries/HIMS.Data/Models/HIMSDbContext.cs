@@ -228,6 +228,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPastHistoryMaster> MPastHistoryMasters { get; set; } = null!;
         public virtual DbSet<MPathCategoryMaster> MPathCategoryMasters { get; set; } = null!;
         public virtual DbSet<MPathParaRangeMaster> MPathParaRangeMasters { get; set; } = null!;
+        public virtual DbSet<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasters { get; set; } = null!;
         public virtual DbSet<MPathParameterMaster> MPathParameterMasters { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail> MPathTemplateDetails { get; set; } = null!;
         public virtual DbSet<MPathTestDetailMaster> MPathTestDetailMasters { get; set; } = null!;
@@ -6657,6 +6658,21 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_M_PathParaRangeMaster_M_PathParameterMaster");
             });
 
+            modelBuilder.Entity<MPathParaRangeWithAgeMaster>(entity =>
+            {
+                entity.HasKey(e => e.PathparaRangeId);
+
+                entity.ToTable("M_PathParaRangeWithAgeMaster");
+
+                entity.Property(e => e.AgeType)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<MPathParameterMaster>(entity =>
             {
                 entity.HasKey(e => e.ParameterId);
@@ -8638,6 +8654,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.RoleId);
 
                 entity.ToTable("RoleMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RoleName).HasMaxLength(250);
             });

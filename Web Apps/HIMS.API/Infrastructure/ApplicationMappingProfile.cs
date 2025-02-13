@@ -296,6 +296,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDoctorsNote, DoctorNoteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpprescriptionReturnH, PriscriptionReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpprescriptionReturnD, IpprescriptionReturnDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<RoleMaster, RoleMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
