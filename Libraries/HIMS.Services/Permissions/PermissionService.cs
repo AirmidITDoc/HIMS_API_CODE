@@ -40,12 +40,10 @@ namespace HIMS.Services.Permissions
                         {
                             PageName = M.LinkName,
                             PageCode = M.PermissionCode,
-                            RoleId = RoleId,
                             IsAdd = P.IsAdd,
                             IsDelete = P.IsDelete,
                             IsEdit = P.IsEdit,
-                            IsView = P.IsView,
-                            PermissionId = P.Id
+                            IsView = P.IsView
                         };
 
             return await query.ToListAsync();

@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IOpBillCancellationService = repository;
         }
         [HttpPut("OPCancelBill")]
-        [Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> CancelOP(OpBillCancellationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPut("IPCancelBill")]
-        [Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> CancelIp(OpBillCancellationModel obj)
         {
             Bill model = obj.MapTo<Bill>();

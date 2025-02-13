@@ -8,7 +8,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public long RefundId { get; set; }
         public DateTime? RefundDate { get; set; }
-        public string? RefundTime { get; set; }
+        public DateTime? RefundTime { get; set; }
         public string? RefundNo { get; set; }
         public long? BillId { get; set; }
         public long? AdvanceId { get; set; }
