@@ -548,6 +548,20 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+                #region :: IpMLCCasePaperPrint ::
+                case "IpMLCCasePaperPrint":
+                    {
+                        model.RepoertName = "MLC Case Paper ";
+                        string[] headerList = { };
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_MLCReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail", Orientation.Landscape);
+                        break;
+                    }
+                #endregion
+
                 #region :: IpFinalBill ::
                 case "IpFinalBill":
                     {
@@ -1860,6 +1874,8 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+
                 case "DoctorPatientHandoverReceipt":
                     {
 
@@ -2742,6 +2758,78 @@ namespace HIMS.Services.Report
                                 items.Append("<td style=\"text-align: left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
                          }
+
+                    }
+                    break;
+
+                case "IpMLCCasePaperPrint":
+                    {
+
+
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            html = html.Replace("{{reason}}", dt.GetColValue("reason"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
+                            html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
+
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{ReportingDate}}", dt.GetColValue("ReportingTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+
+
+                            html = html.Replace("{{MLCNo}}", dt.GetColValue("MLCNo").ConvertToString());
+
+                            html = html.Replace("{{AuthorityName}}", dt.GetColValue("AuthorityName").ConvertToString());
+                            html = html.Replace("{{BuckleNo}}", dt.GetColValue("BuckleNo").ConvertToString());
+                            html = html.Replace("{{PoliceStation}}", dt.GetColValue("PoliceStation").ConvertToString());
+
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                            html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                            //html = html.Replace("{{Remark}}", Bills.GetColValue("Remark"));
+                            //html = html.Replace("{{DetailGiven}}", Bills.GetColValue("DetailGiven"));
+
+
+                            //html = html.Replace("{{chkRemarkflag}}", Bills.GetColValue("Remark") != null ? "table-row " : "none");
+
+                            //html = html.Replace("{{chkgivenflag}}", Bills.GetColValue("DetailGiven").ConvertToString() != "" ? "table -row " : "none");
+
+                            html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkcardflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                            html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+
+                            return html;
+
+
+                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+
 
                     }
                     break;

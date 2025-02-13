@@ -34,14 +34,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.Mlcid == id);
+            var data = await _repository.GetById(x => x.AdmissionId == id);
             return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("MlcinformationList");
         }
         //Add API

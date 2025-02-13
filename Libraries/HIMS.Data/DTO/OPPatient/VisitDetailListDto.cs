@@ -72,6 +72,25 @@ namespace HIMS.Data.DTO.OPPatient
         public long VisitId { get; set; }
         public long RegId { get; set; }
 
+        public string? MobileNo { get; set; }
+
+        public long? PatientTypeId { get; set; }
+        public long? ConsultantDocId { get; set; }
+        public long? RefDocId { get; set; }
+        public string? OPDNo { get; set; }
+
+        public long? TariffId { get; set; }
+
+        public long? ClassId { get; set; }
+
+        public string? TariffName { get; set; }
+
+        public long? CompanyId { get; set; }
+
+        public string? CompanyName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? RefDoctorName { get; set; }
+        public string? DoctorName { get; set; }
 
 
 

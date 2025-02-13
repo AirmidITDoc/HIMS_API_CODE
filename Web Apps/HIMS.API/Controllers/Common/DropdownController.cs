@@ -69,6 +69,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
         private readonly IGenericService<TNursingNote> _IMNurNoteervice;
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
+        private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -86,6 +87,7 @@ namespace HIMS.API.Controllers.Common
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
+            , IGenericService<RoleMaster> iMDrolerMaster
               )
         {
             _IAreaService = areaservice;
@@ -138,6 +140,7 @@ namespace HIMS.API.Controllers.Common
             _IMConcessService = iMDConcessionMaster;
             _IMNurNoteervice = iMDnurNoteMaster;
             _IMparameterservice = iMDparameterMaster;
+            _IMRoleMasterservice = iMDrolerMaster;
         }
 
         [HttpGet]
@@ -207,6 +210,11 @@ namespace HIMS.API.Controllers.Common
 
                 
                 "Parameter" => (await _IMparameterservice.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathParameterMaster.ParameterId), nameof(MPathParameterMaster.ParameterName)),
+
+
+                "Role" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
+                "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
+
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),

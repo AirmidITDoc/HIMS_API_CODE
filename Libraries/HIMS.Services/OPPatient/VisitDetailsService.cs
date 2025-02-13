@@ -279,8 +279,21 @@ namespace HIMS.Services.OPPatient
                           LastName = r.LastName,
                           RegNo = r.RegNo,
                           RegId = r.RegId,
-                         
-                      };
+                          MobileNo = r.MobileNo,
+                          PatientTypeId = a.PatientTypeId,
+                          ConsultantDocId = a.ConsultantDocId,
+                          RefDocId = a.RefDocId,
+                          TariffId = a.TariffId,
+                          ClassId = a.ClassId,
+                          //TariffName = a.TariffName,
+                          //CompanyId = a.CompanyId,
+                          //CompanyName = a.CompanyName,
+                          //RefDoctorName = a.RefDoctorName,
+                          //DoctorName = a.DoctorName,
+                          //DepartmentName = a.DepartmentName,
+                       
+
+    };
             return await qry.Take(25).ToListAsync();
         }
 
