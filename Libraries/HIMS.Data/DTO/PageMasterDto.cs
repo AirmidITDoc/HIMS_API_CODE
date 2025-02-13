@@ -10,12 +10,10 @@ namespace HIMS.Data.Models
     {
         public string PageName { get; set; }
         public string PageCode { get; set; }
-        public long RoleId { get; set; }
-        public bool IsAdd { get; set; }
-        public bool IsDelete { get; set; }
-        public bool IsEdit { get; set; }
-        public bool IsView { get; set; }
-        public int PermissionId { get; set; }
+        public bool? IsAdd { get; set; }
+        public bool? IsDelete { get; set; }
+        public bool? IsEdit { get; set; }
+        public bool? IsView { get; set; }
         public bool PageType { get; set; }
     }
     public partial class MenuMaster

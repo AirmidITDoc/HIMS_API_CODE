@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OutPatient
             _IOPSettlementService= repository2;
         }
         [HttpPost("OPBillListSettlementList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.OutPatient
         }
 
         [HttpPost("OPBillingInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.OutPatient
 
 
         [HttpPost("OPCreditBillingInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.OutPatient
 
 
         [HttpPost("OPSettlementCreditPayment")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPSettlementCreditPayment(OPSettlementpayment obj)
         {
             Bill model = obj.MapTo<Bill>();
