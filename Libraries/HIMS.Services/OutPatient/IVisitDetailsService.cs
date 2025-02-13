@@ -28,7 +28,7 @@ namespace HIMS.Services.OutPatient
         Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         List<DeptDoctorListDoT> GetDoctor(int DepartmentId);
         Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel objGrid);
-        //Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
+        Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
         Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword);
 
 
