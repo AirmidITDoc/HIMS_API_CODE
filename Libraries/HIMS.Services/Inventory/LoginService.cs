@@ -22,7 +22,7 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task<IPagedList<LoginManagerListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<LoginManagerListDto>(model, "RtrvUserList");
+            return await DatabaseHelper.GetGridDataBySp<LoginManagerListDto>(model, "ps_RtrvUserList");
         }
 
         public virtual async Task InsertAsync(LoginManager objLogin, int UserId, string Username)

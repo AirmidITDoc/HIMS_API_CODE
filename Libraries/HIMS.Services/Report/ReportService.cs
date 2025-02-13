@@ -754,24 +754,208 @@ namespace HIMS.Services.Report
 
         public string GetNewReportSetByProc(ReportNewRequestModel model)
         {
-            ReportRequestModel ReqModel = new ReportRequestModel();
-            ReqModel.SearchFields = model.SearchFields;
-            ReqModel.Mode = model.Mode;
-            ReqModel.BaseUrl = model.BaseUrl;
-            ReqModel.StorageBaseUrl = model.StorageBaseUrl;
-            ReqModel.RepoertName = model.RepoertName;
-
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
-            var html = GetHTMLView(model.SPName, ReqModel, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
             tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
         }
+
+        private string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        {
+            Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            DatabaseHelper odal = new();
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = property.Value.ToString()
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            var dt = odal.FetchDataTableBySP(sp_Name, para);
+
+
+            //string htmlHeader = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+
+            string html = File.ReadAllText(htmlFilePath);
+            //html = html.Replace("{{HospitalHeader}}", htmlHeader);
+            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{RepoertName}}", model.RepoertName);
+
+            DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
+            DateTime ToDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValue ?? null);
+
+            StringBuilder HeaderItems = new("");
+            StringBuilder items = new("");
+            StringBuilder ItemsTotal = new("");
+            double T_Count = 0;
+            switch (model.htmlFilePath)
+            {
+                // Simple Report Format
+                case "SimpleReportFormat.html":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            k++;
+
+                            items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+                        }
+                        html = html.Replace("{{T_Count}}", T_Count.ToString());
+                    }
+                    break;
+                case "SimpleTotalReportFormat.html":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int k = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            k++;
+
+                            items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+                            T_Count += dr["Lbl"].ConvertToDouble();
+                        }
+                        html = html.Replace("{{T_Count}}", T_Count.ToString());
+                    }
+                    break;
+                case "MultiTotalReportFormat.html":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                            HeaderItems.Append(hr.ConvertToString());
+                            HeaderItems.Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        if (totalColList != null)
+                        {
+                            foreach (var colName in totalColList)
+                            {
+                                if (!string.IsNullOrEmpty(colName))
+                                {
+                                    dynamicVariable.Add(colName, 0);
+                                }
+                            }
+                        }
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++; j++;
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr[groupByCol].ConvertToString();
+                                items.Append("<tr style=\"font-size:20px;border: 1px;color:black;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                            }
+                            if (previousLabel != "" && previousLabel != dr[groupByCol].ConvertToString())
+                            {
+                                j = 1;
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                   .Append(Dcount.ToString()).Append("</td></tr>");
+                                Dcount = 0;
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["PatientOldAndNew"].ConvertToString()).Append("</td></tr>");
+                            }
+
+                            Dcount = Dcount + 1;
+                            T_Count = T_Count + 1;
+
+                            previousLabel = dr[groupByCol].ConvertToString();
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            foreach (var colName in colList)
+                            {
+                                items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
+                            }
+                            items.Append("</tr>");
+                            if (totalColList != null)
+                            {
+                                foreach (var colName in totalColList)
+                                {
+                                    if (!string.IsNullOrEmpty(colName) && colName != "lableTotal")
+                                        dynamicVariable[colName] += dr[colName].ConvertToDouble();
+                                }
+                            }
+                            //T_Count += dr["PatientName"].ConvertToDouble();
+                            if (totalColList == null)
+                            {
+                                if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                                {
+                                    items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount.ToString()).Append("</td></tr>");
+                                }
+                            }
+                        }
+                        if (totalColList != null)
+                        {
+                            ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
+                            foreach (var colName in totalColList)
+                            {
+                                if (colName == "lableTotal")
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
+                                else if (!string.IsNullOrEmpty(colName))
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
+                                else
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
+                            }
+                            ItemsTotal.Append("</tr>");
+                        }
+                    }
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(T_Count.ToString()))
+                html = html.Replace("{{T_Count}}", T_Count.ToString());
+
+            html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
+            html = html.Replace("{{Items}}", items.ToString());
+            html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
+            html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+            html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+            return html;
+
+        }
+
 
         private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
