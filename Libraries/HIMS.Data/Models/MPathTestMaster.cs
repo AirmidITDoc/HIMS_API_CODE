@@ -31,6 +31,7 @@ namespace HIMS.Data.Models
         public DateTime? TestDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? Isdeleted { get; set; }
 
         public virtual ICollection<MPathTemplateDetail> MPathTemplateDetails { get; set; }
         public virtual ICollection<MPathTestDetailMaster> MPathTestDetailMasters { get; set; }
