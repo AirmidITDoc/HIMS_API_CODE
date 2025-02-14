@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -21,34 +23,34 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        //public virtual async Task InsertAsync(MenuMaster objMenuMaster, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        //// remove conditional records
-        //        _context.Entry(objMenuMaster).Collection(m => m.PermissionMasters).IsLoaded = false;
+        public virtual async Task<IPagedList<MenuMasterListDto>> MenuMasterList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "m_Rtrv_Menu_master");
+        }
+        public virtual async Task InsertAsync(MenuMaster objMenuMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
 
-        //        objMenuMaster.PermissionMasters = null;
-        //        _context.MenuMasters.Add(objMenuMaster);
-        //        await _context.SaveChangesAsync();
+                _context.MenuMasters.Add(objMenuMaster);
+                await _context.SaveChangesAsync();
 
-        //        scope.Complete();
+                scope.Complete();
 
 
-        //    }
-        //}
-
+            }
+        }
         public virtual async Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {"PermissionMaster", "IsView" , "IsEdit", "IsDelete", "IsAdd", "RoleId" };
+            string[] rEntity = {  "IsView", "IsEdit", "IsDelete", "IsAdd", "RoleId" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            string vId = odal.ExecuteNonQuery("m_Insert_MenuMaster_New", CommandType.StoredProcedure, "Id", entity);
-            objMenuMaster.Id = Convert.ToInt32(vId);
+           odal.ExecuteNonQuery("m_Insert_MenuMaster_New", CommandType.StoredProcedure, entity);
+            //objMenuMaster.Id = Convert.ToInt32(vId);
 
             await _context.SaveChangesAsync(UserId, Username);
 

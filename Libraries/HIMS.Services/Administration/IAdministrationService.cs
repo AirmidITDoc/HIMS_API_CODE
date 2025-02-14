@@ -12,7 +12,6 @@ namespace HIMS.Services.Administration
     public partial interface IAdministrationService
     {
         Task<IPagedList<PaymentModeDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<MenuMasterListDto>> MenuMasterList(GridRequestModel objGrid);
 
     }
 }

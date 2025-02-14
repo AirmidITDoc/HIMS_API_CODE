@@ -8419,12 +8419,6 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<PermissionMaster>(entity =>
             {
                 entity.ToTable("PermissionMaster");
-
-                entity.HasOne(d => d.Menu)
-                    .WithMany(p => p.PermissionMasters)
-                    .HasForeignKey(d => d.MenuId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PermissionMaster_MenuMaster");
             });
 
             modelBuilder.Entity<PharTotalSalesV>(entity =>
@@ -8654,6 +8648,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.RoleId);
 
                 entity.ToTable("RoleMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RoleName).HasMaxLength(250);
             });

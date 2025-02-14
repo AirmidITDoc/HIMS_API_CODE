@@ -47,6 +47,8 @@ namespace HIMS.API.Controllers
         public async Task<ApiResponse> InsertEDMX(OPSettlementModel obj)
         {
             Payment model = obj.MapTo<Payment>();
+            Bill Billmodel = obj.MapTo<Bill>();
+
             if (obj.PaymentId == 0)
             {
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
@@ -54,7 +56,7 @@ namespace HIMS.API.Controllers
 
                 model.AddBy = CurrentUserId;
                 //model.IsActive = true;
-                await _OPSettlementService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _OPSettlementService.InsertAsync(model, Billmodel, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -78,21 +80,21 @@ namespace HIMS.API.Controllers
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement update successfully.", model);
         }
 
-        //[HttpPut("Edit")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> UPDATE(BilModel obj)
-        //{
-        //    Bill model = obj.MapTo<Bill>();
-        //    if (obj.BillNo != 0)
-        //    {
+        [HttpPut("Edit")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> UPDATE(BilModel obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            if (obj.BillNo != 0)
+            {
 
-        //        //model.AddBy = CurrentUserId;
-        //        await _OPSettlementService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+                //model.AddBy = CurrentUserId;
+                await _OPSettlementService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
 
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement update successfully.", model);
-        //}
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement update successfully.", model);
+        }
     }
 }

@@ -28,12 +28,5 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<PaymentModeDto> PaymentModeList = await _IAdministrationService.GetListAsync(objGrid);
             return Ok(PaymentModeList.ToGridResponse(objGrid, "PaymentMode App List"));
         }
-        [HttpPost("MenuMasterList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> MenuMasterList(GridRequestModel objGrid)
-        {
-            IPagedList<MenuMasterListDto> MenuMasterList = await _IAdministrationService.MenuMasterList(objGrid);
-            return Ok(MenuMasterList.ToGridResponse(objGrid, "MenuMaster App List"));
-        }
     }
 }

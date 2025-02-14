@@ -42,15 +42,47 @@ namespace HIMS.Services.OutPatient
             string PaymentId = odal.ExecuteNonQuery("v_insert_Payment_OPIP_1", CommandType.StoredProcedure, "PaymentId", payentity);
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
         }
-        public virtual async Task InsertAsync(Payment objpayment, int UserId, string Username)
+        public virtual async Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                DatabaseHelper odal = new();
+
                 _context.Payments.Add(objpayment);
                 await _context.SaveChangesAsync();
-                
+
+                string[] rAdmissEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt ","BalanceAmt","",
+                 "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
+                "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
+                "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+                var rAdmissentity1 = objpayment.ToDictionary();
+
+
+                foreach (var rProperty in rAdmissEntity)
+                {
+                    rAdmissentity1.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+
                 scope.Complete();
             }
+        }
+        public virtual async Task UpdateAsyncSP(Bill objBill, int currentUserId, string currentUserName)
+        {
+
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rAdmissEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt ","BalanceAmt","",
+            "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
+                "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
+                "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+            var rAdmissentity1 = objBill.ToDictionary();
+            foreach (var rProperty in rAdmissEntity)
+            {
+                rAdmissentity1.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
         }
         public virtual async Task UpdateAsync(Bill objBill, int UserId, string Username)
         {
@@ -64,23 +96,7 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
-        //public virtual async Task UpdateAsyncSP(Bill objBill, int currentUserId, string currentUserName)
-        //{
 
-        //    //throw new NotImplementedException();
-        //    DatabaseHelper odal = new();
-        //    string[] rAdmissEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt ","BalanceAmt","",
-        //    "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
-        //        "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
-        //        "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
-        //    var rAdmissentity1 = objBill.ToDictionary();
-        //    foreach (var rProperty in rAdmissEntity)
-        //    {
-        //        rAdmissentity1.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
-        //    // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
-        //}
     }
 
 }
