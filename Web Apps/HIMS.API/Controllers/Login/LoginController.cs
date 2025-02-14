@@ -51,26 +51,26 @@ namespace HIMS.API.Controllers.Login
             {
                 if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
                 {
-                LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
-                if (user == null)
-                {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
-                }
-                else
-                {
-                    user.UserToken = Guid.NewGuid().ToString();
-                    await _userService.UpdateAsync(user, 0, "");
-                    (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
+                    LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
+                    if (user == null)
                     {
-                        user.UserToken,
-                        user.WebRoleId,
-                        Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
-                        Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
-                        UserName = user.FirstName + " " + user.LastName,
-                        user.UserId
-                    });
-                }
+                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+                    }
+                    else
+                    {
+                        user.UserToken = Guid.NewGuid().ToString();
+                        await _userService.UpdateAsync(user, 0, "");
+                        (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
+                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
+                        {
+                            user.UserToken,
+                            user.WebRoleId,
+                            Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
+                            Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
+                            UserName = user.FirstName + " " + user.LastName,
+                            user.UserId
+                        });
+                    }
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Login
             StringBuilder permissionString = new();
             foreach (PageMasterDto objPage in permissions)
             {
-                permissionString.Append(objPage.PageCode).Append('|').Append(objPage.IsAdd ? 1 : 0).Append('|').Append(objPage.IsEdit ? 1 : 0).Append('|').Append(objPage.IsDelete ? 1 : 0).Append('|').Append(objPage.IsView ? 1 : 0).Append(',');
+                permissionString.Append(objPage.PageCode).Append('|').Append((objPage.IsAdd.HasValue && objPage.IsAdd.Value) ? 1 : 0).Append('|').Append((objPage.IsEdit.HasValue && objPage.IsEdit.Value) ? 1 : 0).Append('|').Append((objPage.IsDelete.HasValue && objPage.IsDelete.Value) ? 1 : 0).Append('|').Append((objPage.IsView.HasValue && objPage.IsView.Value) ? 1 : 0).Append(',');
             }
             return (permissionString.ToString(), permissions);
         }
