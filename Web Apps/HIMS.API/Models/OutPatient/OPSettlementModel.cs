@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class OPSettlementModel
+    public class OPCreditPaymentModel
     {
+
         public long PaymentId { get; set; }
         public long? BillNo { get; set; }
-        public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
@@ -29,9 +30,7 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? CashCounterId { get; set; }
-        public byte? IsSelfOrcompany { get; set; }
-        public long? CompanyId { get; set; }
+        public int? OPDIPDType { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -39,38 +38,28 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? ChCashPayAmount { get; set; }
-        public decimal? ChChequePayAmount { get; set; }
-        public decimal? ChCardPayAmount { get; set; }
-        public decimal? ChAdvanceUsedAmount { get; set; }
-        public decimal? ChNeftpayAmount { get; set; }
-        public decimal? ChPayTmamount { get; set; }
-        public string? TranMode { get; set; }
-        public decimal? Tdsamount { get; set; }
 
-        //public virtual Bill? BillNoNavigation { get; set; }
-        public List<BilModel> Bill { get; set; }
+        //public List<BilModel> Bill { get; set; }
 
     }
-    public class OPSettlementModelValidator : AbstractValidator<OPSettlementModel>
+    public class OPSettlementModelValidator : AbstractValidator<OPCreditPaymentModel>
     {
         public OPSettlementModelValidator()
         {
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo is required");
+            //RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo is required");
             RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
             RuleFor(x => x.PaymentTime).NotNull().NotEmpty().WithMessage("PaymentTime is required");
 
         }
     }
-    public class BilModel
+    public class BillUpdateModel
     {
         public long BillNo { get; set; }
         public decimal? BalanceAmt { get; set; }
 
-
     }
-    public class BilModelValidator : AbstractValidator<BilModel>
+    public class BilModelValidator : AbstractValidator<BillUpdateModel>
     {
         public BilModelValidator()
         {
@@ -78,5 +67,12 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
+
+    public class OPSettlementModel
+    {
+        public OPCreditPaymentModel OPCreditPayment { get; set; }
+        public BillUpdateModel BillUpdate { get; set; }
+    }
+
 }
 
