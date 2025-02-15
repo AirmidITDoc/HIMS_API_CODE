@@ -10,18 +10,18 @@ using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
     public class OPSettlementController : BaseController
     {
-            private readonly IOPSettlementService _OPSettlementService;
-            public OPSettlementController(IOPSettlementService repository)
-            {
+        private readonly IOPSettlementService _OPSettlementService;
+        public OPSettlementController(IOPSettlementService repository)
+        {
             _OPSettlementService = repository;
-            }
+        }
 
         [HttpPost("SettlementInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
