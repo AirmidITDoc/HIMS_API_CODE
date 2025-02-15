@@ -27,19 +27,20 @@ namespace HIMS.API.Controllers.OPPatient
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
-            Payment model = obj.MapTo<Payment>();
-            if (obj.PaymentId == 0)
+            Payment model = obj.OPCreditPayment.MapTo<Payment>();
+            Bill BillUpdateModel = obj.BillUpdate.MapTo<Bill>();
+            if (obj.OPCreditPayment.PaymentId == 0)
             {
-                model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
-                model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
+                model.PaymentDate = Convert.ToDateTime(obj.OPCreditPayment.PaymentDate);
+                model.PaymentTime = Convert.ToDateTime(obj.OPCreditPayment.PaymentTime);
 
                 model.AddBy = CurrentUserId;
-                await _OPSettlementService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _OPSettlementService.InsertAsyncSP(model, BillUpdateModel, CurrentUserId, CurrentUserName);
 
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement added successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
         [HttpPost("InsertEDMX")]
@@ -49,10 +50,10 @@ namespace HIMS.API.Controllers.OPPatient
             Payment model = obj.MapTo<Payment>();
             Bill Billmodel = obj.MapTo<Bill>();
 
-            if (obj.PaymentId == 0)
+            if (obj.OPCreditPayment.PaymentId == 0)
             {
-                model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
-                model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
+                model.PaymentTime = Convert.ToDateTime(obj.OPCreditPayment.PaymentTime);
+                model.PaymentDate = Convert.ToDateTime(obj.OPCreditPayment.PaymentDate);
 
                 model.AddBy = CurrentUserId;
                 //model.IsActive = true;
@@ -60,41 +61,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement   added successfully.");
-        }
-
-        [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Edit(BilModel obj)
-        {
-            Bill model = obj.MapTo<Bill>();
-            if (obj.BillNo != 0)
-            {
-
-                //model.AddBy = CurrentUserId;
-                await _OPSettlementService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement update successfully.", model);
-        }
-
-        [HttpPut("Edit")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> UPDATE(BilModel obj)
-        {
-            Bill model = obj.MapTo<Bill>();
-            if (obj.BillNo != 0)
-            {
-
-                //model.AddBy = CurrentUserId;
-                await _OPSettlementService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
-
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPSettlement update successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
     }
 }

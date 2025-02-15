@@ -29,18 +29,36 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "m_Rtrv_OP_Bill_List_Settlement");
         }
 
-        public virtual async Task InsertAsyncSP(Payment objpayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
+            // Insert In Payment 
             string[] rpayEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount",
-                "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount",};
+                                    "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount",};
             var payentity = objpayment.ToDictionary();
             foreach (var rProperty in rpayEntity)
             {
                 payentity.Remove(rProperty);
             }
-            string PaymentId = odal.ExecuteNonQuery("v_insert_Payment_OPIP_1", CommandType.StoredProcedure, "PaymentId", payentity);
+            // Add the new parameter
+            payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+
+            string PaymentId = odal.ExecuteNonQuery("ps_insert_Payment_OPIP_1", CommandType.StoredProcedure, "PaymentId", payentity);
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
+
+            //Udpate Bill Table 
+            string[] rBillEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt",
+                                    "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
+                                    "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
+                                    "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+            var rAdmissentity1 = objBill.ToDictionary();
+            foreach (var rProperty in rBillEntity)
+            {
+                rAdmissentity1.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
         }
         public virtual async Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {
@@ -49,48 +67,6 @@ namespace HIMS.Services.OutPatient
                 DatabaseHelper odal = new();
 
                 _context.Payments.Add(objpayment);
-                await _context.SaveChangesAsync();
-
-                string[] rAdmissEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt ","BalanceAmt","",
-                 "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
-                "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
-                "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
-                var rAdmissentity1 = objpayment.ToDictionary();
-
-
-                foreach (var rProperty in rAdmissEntity)
-                {
-                    rAdmissentity1.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
-
-                scope.Complete();
-            }
-        }
-        public virtual async Task UpdateAsyncSP(Bill objBill, int currentUserId, string currentUserName)
-        {
-
-            //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] rAdmissEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt ","BalanceAmt","",
-            "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
-                "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
-                "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
-            var rAdmissentity1 = objBill.ToDictionary();
-            foreach (var rProperty in rAdmissEntity)
-            {
-                rAdmissentity1.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
-            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
-        }
-        public virtual async Task UpdateAsync(Bill objBill, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.Bills.Update(objBill);
-                _context.Entry(objBill).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
