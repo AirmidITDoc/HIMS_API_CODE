@@ -31,28 +31,21 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-
                 _context.MenuMasters.Add(objMenuMaster);
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
-
-
             }
         }
         public virtual async Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {  "IsView", "IsEdit", "IsDelete", "IsAdd", "RoleId" };
+            string[] rEntity = { "Id", "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-           odal.ExecuteNonQuery("m_Insert_MenuMaster_New", CommandType.StoredProcedure, entity);
-            //objMenuMaster.Id = Convert.ToInt32(vId);
-
-            await _context.SaveChangesAsync(UserId, Username);
+            odal.ExecuteNonQuery("ps_Insert_MenuMaster_1", CommandType.StoredProcedure, entity);
 
         }
         public virtual async Task UpdateAsync(MenuMaster objMenuMaster, int UserId, string Username)

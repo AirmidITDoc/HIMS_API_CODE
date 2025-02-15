@@ -13,7 +13,6 @@ namespace HIMS.API.Models.Inventory.Masters
         public bool IsDisplay { get; set; }
         public string? PermissionCode { get; set; }
         public string? TableNames { get; set; }
-        //public List<PermissionMasterModel>? PermissionMaster { get; set; }
 
     }
     public class MenuMasterModelValidator : AbstractValidator<MenuMasterModel>
