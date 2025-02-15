@@ -8,8 +8,8 @@ namespace HIMS.Data.DTO.Administration
 {
     public  class LoginManagerListDto
     {
-        public long UserId { get; set; }     
-        public string? FirstName {  get; set; }
+        public long UserId { get; set; }
+        public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? UserLoginName { get; set; }
         public bool? IsActive { get; set; }
@@ -22,8 +22,8 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsDoctorType { get; set; }
         public long DoctorID { get; set; }
         public string? DoctorName { get; set; }
-        public bool? IsPoverify { get; set; }
-        public bool? IsGrnverify { get; set; }
+        public bool? IsPOVerify { get; set; }
+        public bool? IsGRNVerify { get; set; }
         public bool? IsCollection { get; set; }
         public bool? IsBedStatus { get; set; }
         public bool? IsCurrentStk { get; set; }
@@ -35,5 +35,15 @@ namespace HIMS.Data.DTO.Administration
         public bool? AddChargeIsDelete { get; set; }
         public bool? IsIndentVerify { get; set; }
         public bool? IsInchIndVfy { get; set; }
+        public string? PharExtOpt { get; set; }
+        public string? PharOPOpt { get; set; }
+        public string? PharIPOpt { get; set; }
+        public long UnitId { get; set; }
+        public long MobileNo { get; set; }
+        public long WebRoleId { get; set; }
+        public long isDiscApply { get; set; }
+        public long DiscApplyPer { get; set; }
+        public string password { get; set; }
+
     }
 }
