@@ -39,6 +39,7 @@ namespace HIMS.API.Infrastructure
         {
             // services.AddScoped<IDataProvider, MsSqlDataProvider>();
             //services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
+            services.AddScoped<IMPathParaRangeWithAgeMasterService, MPathParaRangeWithAgeMasterService>();
             services.AddScoped<IOTBookingRequestService, OTBookingRequestService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<IMParameterDescriptiveMasterService, MParameterDescriptiveMasterService>();

@@ -12,6 +12,7 @@ using HIMS.Services.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -26,14 +27,20 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             _MParameterDescriptiveMasterService = repository;
         }
-        [HttpPost("MParameterDescriptiveMasterList")]
-        //   [Permission(PageCode = "MParameterDescriptiveMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _MParameterDescriptiveMasterService.GetListAsync(objGrid);
-            return Ok(MParameterDescriptiveMasterList.ToGridResponse(objGrid, "MParameterDescriptiveMasterList List"));
-        }
+        //[HttpPost("MParameterDescriptiveMasterList")]
+        ////   [Permission(PageCode = "MParameterDescriptiveMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> List(GridRequestModel objGrid)
+        //{
+        //    IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _MParameterDescriptiveMasterService.GetListAsync(objGrid);
+        //    return Ok(MParameterDescriptiveMasterList.ToGridResponse(objGrid, "MParameterDescriptiveMasterList List"));
+        //}
 
-      
+        [HttpPost("MParameterDescriptiveMasterList")]
+        //[Permission(PageCode = "MParameterDescriptiveMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> MParameterDescriptiveMasterList(GridRequestModel objGrid)
+        {
+            IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _MParameterDescriptiveMasterService.GetListAsync1(objGrid);
+            return Ok(MParameterDescriptiveMasterList.ToGridResponse(objGrid, "MParameterDescriptiveMaster  List"));
+        }
     }
 }

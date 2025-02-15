@@ -8,6 +8,10 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Inventory;
 using HIMS.Core.Domain.Grid;
 using HIMS.API.Models.Pathology;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Services.Nursing;
+using HIMS.Services.Pathlogy;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -16,21 +20,31 @@ namespace HIMS.API.Controllers.Pathology
     [ApiVersion("1")]
     public class MPathParaRangeWithAgeMasterController : BaseController
     {
-        private readonly IGenericService<MPathParaRangeWithAgeMaster> _repository;
-        public MPathParaRangeWithAgeMasterController(IGenericService<MPathParaRangeWithAgeMaster> repository)
+        private readonly IMPathParaRangeWithAgeMasterService _IMPathParaRangeWithAgeMasterService;
+        public MPathParaRangeWithAgeMasterController(IMPathParaRangeWithAgeMasterService repository)
         {
-            _repository = repository;
+            
+            _IMPathParaRangeWithAgeMasterService = repository;
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+     ////   List API
+     //   [HttpPost]
+     //   [Route("[action]")]
+     //   //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
+     //   public async Task<IActionResult> List(GridRequestModel objGrid)
+     //   {
+     //       IPagedList<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasterList = await _IMPathParaRangeWithAgeMasterService.GetAllPagedAsync(objGrid);
+     //       return Ok(MPathParaRangeWithAgeMasterList.ToGridResponse(objGrid, "MPathParaRangeWithAgeMaster List"));
+     //   }
+
+        [HttpPost("MPathParaRangeWithAgeMasterList")]
+        //[Permission(PageCode = "MPathParaRangeWithAgeMasterList", Permission = PagePermission.View)]
+        public async Task<IActionResult> MPathParaRangeWithAgeMasterList(GridRequestModel objGrid)
         {
-            IPagedList<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<MPathParaRangeWithAgeMasterListDto> MPathParaRangeWithAgeMasterList = await _IMPathParaRangeWithAgeMasterService.MPathParaRangeWithAgeMasterList(objGrid);
             return Ok(MPathParaRangeWithAgeMasterList.ToGridResponse(objGrid, "MPathParaRangeWithAgeMaster List"));
         }
-        //List API Get By Id
+
+        ////  List API Get By Id
         //[HttpGet("{id?}")]
         ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         //public async Task<ApiResponse> Get(int id)
@@ -39,27 +53,27 @@ namespace HIMS.API.Controllers.Pathology
         //    {
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
         //    }
-        //    var data = await _repository.GetById(x => x.TemplateId == id);
-        //    return data.ToSingleResponse<MTemplateMaster, PathTemplateModel>("TemplateMaster");
+        //    var data = await _repository.GetById(x => x.PathparaRangeId == id);
+        //    return data.ToSingleResponse<MPathParaRangeWithAgeMaster, MPathParaRangeWithAgeMasterModel>("TemplateMaster");
         //}
 
-        //Add API
-        [HttpPost]
-        // [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(MPathParaRangeWithAgeMasterModel obj)
-        {
-            MPathParaRangeWithAgeMaster model = obj.MapTo<MPathParaRangeWithAgeMaster>();
-          //  model.IsActive = true;
-            if (obj.PathparaRangeId == 0)
-            {
-              //  model.CreatedBy = CurrentUserId;
-               // model.CreatedDate = DateTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MPathParaRangeWithAgeMaster  added successfully.");
-        }
+        ////Add API
+        //[HttpPost]
+        //// [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Post(MPathParaRangeWithAgeMasterModel obj)
+        //{
+        //    MPathParaRangeWithAgeMaster model = obj.MapTo<MPathParaRangeWithAgeMaster>();
+        //  //  model.IsActive = true;
+        //    if (obj.PathparaRangeId == 0)
+        //    {
+        //      //  model.CreatedBy = CurrentUserId;
+        //       // model.CreatedDate = DateTime.Now;
+        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MPathParaRangeWithAgeMaster  added successfully.");
+        //}
 
         ////Edit API
         //[HttpPut("{id:int}")]
