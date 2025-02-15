@@ -12,7 +12,9 @@ namespace HIMS.API.Models.Masters
     {
         public ClassMasterModelValidator()
         {
-            RuleFor(x => x.ClassName).NotNull().NotEmpty().WithMessage("Class  is required");
+            RuleFor(x => x.ClassName).NotNull().NotEmpty().WithMessage("ClassName  is required");
+            RuleFor(x => x.ClassRate).NotNull().NotEmpty().WithMessage("ClassRate  is required");
+
         }
     }
 }

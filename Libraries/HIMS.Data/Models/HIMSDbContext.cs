@@ -8419,12 +8419,6 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<PermissionMaster>(entity =>
             {
                 entity.ToTable("PermissionMaster");
-
-                entity.HasOne(d => d.Menu)
-                    .WithMany(p => p.PermissionMasters)
-                    .HasForeignKey(d => d.MenuId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PermissionMaster_MenuMaster");
             });
 
             modelBuilder.Entity<PharTotalSalesV>(entity =>

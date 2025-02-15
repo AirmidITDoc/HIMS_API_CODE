@@ -22,9 +22,6 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<PaymentModeDto>(model, "Retrieve_BrowseIPAdvPaymentReceipt");
         }
-        public virtual async Task<IPagedList<MenuMasterListDto>> MenuMasterList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "ps_Rtrv_Menu_master");
-        }
+      
     }
 }
