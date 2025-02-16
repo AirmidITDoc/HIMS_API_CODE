@@ -34,7 +34,7 @@ namespace HIMS.Data.DTO.IPPatient
         public double? ConcessionAmt { get; set; }
         public decimal? CompDiscAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
-        public decimal? AdvanceUsedAmount { get; set; }
+        public string? AdvanceUsedAmount { get; set; }
         public long? IsCancelled { get; set; }
         public byte? OpdIpdType { get; set; }
         public long PaidAmt { get; set; }

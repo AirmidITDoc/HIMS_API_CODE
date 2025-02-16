@@ -8,39 +8,39 @@ namespace HIMS.Data.DTO.IPPatient
 {
     public class IPPaymentListDto
     {
-        public long PaymentId { get; set; }
+        public string PaymentId { get; set; }
         public long? BillNo { get; set; }
-        public long? RegNo { get; set; }
+        public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? PrefixName { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public long? NetPayableAmt { get; set; }
-        public long? BalanceAmt { get; set; }
-        public long? Remark { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
+        public string? Remark { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? HospitalName { get; set; }
         public string? HospitalAddress { get; set; }
         public string? City { get; set; }
-        public long? Pin { get; set; }
-        public long? Phone { get; set; }
-        public long? IsCancelled { get; set; }
-        public long? IPDNo { get; set; }
-        public long? PBillNo { get; set; }
-        public long? CashPayAmount { get; set; }
-        public long? ChequePayAmount { get; set; }
-        public long? CardPayAmount { get; set; }
-        public long? AdvanceUsedAmount { get; set; }
+        public string? Pin { get; set; }
+        public string? Phone { get; set; }
+        public bool? IsCancelled { get; set; }
+        public string? IPDNo { get; set; }
+        public string? PBillNo { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public decimal? CardPayAmount { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
         public long? TransactionType { get; set; }
-        public long? ReceiptNo { get; set; }
+        public string? ReceiptNo { get; set; }
         public long? AdvanceId { get; set; }
         public long? RefundId { get; set; }
         public string? UserName { get; set; }
-        public DateTime? PayDate { get; set; }
-        public long? PaidAmount { get; set; }
-        public long? TotalAmt { get; set; }
-        public long? NEFTPayAmount { get; set; }
-        public long? PayTMAmount { get; set; }
+        public string? PayDate { get; set; }
+        public string? PaidAmount { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public decimal? NEFTPayAmount { get; set; }
+        public decimal? PayTMAmount { get; set; }
     }
 }

@@ -36,13 +36,14 @@ namespace HIMS.Data.DTO.IPPatient
         public string? CardBankName { get; set; }
         public DateTime? CardDate { get; set; }
         public long? TransactionType { get; set; }
-        public byte? AddedBy { get; set; }
+        public string? AddedBy { get; set; }
         public string? UserName { get; set; }
         public string? HospitalName { get; set; }
         public string? HospitalAddress { get; set; }
         public string? HospitalCity { get; set; }
         public string? Phone { get; set; }
         public bool? IsCancelled { get; set; }
+        public string? Pin { get; set; }
 
     }
 }
