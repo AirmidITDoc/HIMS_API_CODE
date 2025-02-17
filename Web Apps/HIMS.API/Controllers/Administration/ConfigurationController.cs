@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConfigSetting> ConfigSettingList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ConfigurationModel obj)
         {
             ConfigSetting model = obj.MapTo<ConfigSetting>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ConfigurationModel obj)
         {
             ConfigSetting model = obj.MapTo<ConfigSetting>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             ConfigSetting model = await _repository.GetById(x => x.ConfigId == Id);

@@ -210,8 +210,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<Bedmaster, BedMasterTofreebedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
             CreateMap<TMlcinformation, MlcInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-         //   CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //   CreateMap<TPrescription, OPDPrescriptionMedicalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<Bill, OPBillModelShilpa>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<BillDetail, BillDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, AddChargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
