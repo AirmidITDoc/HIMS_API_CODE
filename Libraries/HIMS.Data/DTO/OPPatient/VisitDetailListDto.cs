@@ -35,7 +35,7 @@ namespace HIMS.Data.DTO.OPPatient
         public long AppPurposeId { get; set; }
         public long CompanyId { get; set; }
         public string? CompanyName { get; set; }
-        public long ClassId {  get; set; }
+        public long ClassId { get; set; }
         public string? ClassName { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
@@ -65,13 +65,13 @@ namespace HIMS.Data.DTO.OPPatient
     }
     public class VisitDetailsListSearchDto
     {
-        public string? FirstName {  get; set; }
+        public string? FirstName { get; set; }
         public string? RegNo { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public long VisitId { get; set; }
         public long RegId { get; set; }
-
+        public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.MobileNo + " | " + this.RegNo; } }
         public string? MobileNo { get; set; }
 
         public long? PatientTypeId { get; set; }
