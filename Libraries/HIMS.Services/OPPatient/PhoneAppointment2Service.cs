@@ -26,7 +26,7 @@ namespace HIMS.Services.OPPatient
        
         public virtual async Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "m_rtrv_PhoneAppList");
+            return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "Retrieve_PhoneAppList");
         }
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {

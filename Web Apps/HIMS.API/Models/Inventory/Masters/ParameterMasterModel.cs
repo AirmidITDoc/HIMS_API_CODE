@@ -11,6 +11,8 @@ namespace HIMS.API.Models.Masters
         public long? UnitId { get; set; }
         public long? IsNumeric { get; set; }
         public bool? IsPrintDisSummary { get; set; }
+        public string? MethodName { get; set; }
+        public string? Formula { get; set; }
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
         public List<MPathParaRangeMasterModel>? MPathParaRangeMasters { get; set; }
     }

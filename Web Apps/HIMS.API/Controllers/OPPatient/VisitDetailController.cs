@@ -147,7 +147,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _visitDetailsService.VisitDetailsListSearchDto(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Visit data", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Visit data", data.Select(x => new { x.FormattedText, x.RegId }));
         }
 
         [HttpPost("OPRegistrationList")]

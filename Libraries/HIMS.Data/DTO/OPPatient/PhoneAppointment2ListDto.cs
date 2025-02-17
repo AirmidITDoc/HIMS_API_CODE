@@ -22,6 +22,6 @@ namespace HIMS.Data.DTO.OPPatient
         public long DoctorId { get; set; }
         public string? DoctorName {  get; set; }
         public bool? IsCancelled { get; set; }
-        public string? UserName { get; set; }
+        public string? AddedByName { get; set; }
     }
 }

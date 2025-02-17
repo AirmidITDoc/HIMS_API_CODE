@@ -18,7 +18,7 @@ using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.OPPatient
 {
-    public  class VisitDetailsService : IVisitDetailsService
+    public class VisitDetailsService : IVisitDetailsService
     {
         private readonly HIMSDbContext _context;
         public VisitDetailsService(HIMSDbContext HIMSDbContext)
@@ -267,9 +267,9 @@ namespace HIMS.Services.OPPatient
                       //join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
                       //join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
 
-                     
+
                       //where a.VisitDate ==  + "'"+ 2025-02-10 00:00:00.000 &&
-                    where ((r.FirstName + " " + r.LastName).Contains(Keyword)  || (r.RegNo ?? "").Contains(Keyword))
+                      where ((r.FirstName + " " + r.LastName).Contains(Keyword) || (r.RegNo ?? "").Contains(Keyword))
 
                       orderby r.FirstName
                       select new VisitDetailsListSearchDto()
@@ -291,9 +291,9 @@ namespace HIMS.Services.OPPatient
                           //RefDoctorName = a.RefDoctorName,
                           //DoctorName = a.DoctorName,
                           //DepartmentName = a.DepartmentName,
-                       
 
-    };
+
+                      };
             return await qry.Take(25).ToListAsync();
         }
 
@@ -301,7 +301,7 @@ namespace HIMS.Services.OPPatient
         {
             var qry = from s in _context.ServiceMasters
                       join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
-                      where s.IsActive.Value && (s.ServiceName == ServiceName || ServiceName == "")
+                      where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
                       select new ServiceMaster()
                       {
                           ServiceId = s.ServiceId,
@@ -321,10 +321,10 @@ namespace HIMS.Services.OPPatient
                           DoctorId = s.DoctorId,
                           IsDocEditable = s.IsDocEditable
                       };
-            return await qry.ToListAsync();
+            return await qry.Take(50).ToListAsync();
         }
     }
-    
+
 }
 
 
