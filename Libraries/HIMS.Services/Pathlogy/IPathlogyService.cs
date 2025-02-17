@@ -10,6 +10,8 @@ namespace HIMS.Services.Pathlogy
 {
     public partial interface IPathlogyService
     {
+        Task<IPagedList<PathTestForUpdateListdto>> PathTestForUpdateList(GridRequestModel objGrid);
+        Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateForUpdateList(GridRequestModel objGrid);
         Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel objGrid);
         Task<IPagedList<PathSubtestFillListDto>> PathSubtestFillList(GridRequestModel objGrid);
         Task<IPagedList<PathologyTestListDto>> PathologyTestList(GridRequestModel objGrid);

@@ -33,6 +33,23 @@ namespace HIMS.API.Controllers.Pathology
 
 
         }
+        [HttpPost("PathTemplateForUpdateList")]
+        //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathTemplateForUpdateList(GridRequestModel objGrid)
+        {
+            IPagedList<PathTemplateForUpdateListDto> PathTestForUpdateList = await _IPathlogyService.PathTemplateForUpdateList(objGrid);
+            return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdate List"));
+        }
+
+
+        [HttpPost("PathTestForUpdateList")]
+        //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathTestForUpdateList(GridRequestModel objGrid)
+        {
+            IPagedList<PathTestForUpdateListdto> PathTestForUpdateList= await _IPathlogyService.PathTestForUpdateList(objGrid);
+            return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTestForUpdate List"));
+        }
+
         [HttpPost("PathParaFillList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)

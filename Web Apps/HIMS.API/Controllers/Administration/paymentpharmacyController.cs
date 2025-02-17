@@ -10,6 +10,9 @@ using HIMS.Services.Administration;
 using HIMS.API.Models.Masters;
 using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -23,6 +26,34 @@ namespace HIMS.API.Controllers.Administration
         {
             _paymentpharmacyService = repository;
         }
+
+
+
+        [HttpPost("IPDPaymentReceiptList")]
+        //  [Permission(PageCode = "IPDPaymentReceiptList", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseIPDPaymentReceiptListDto> IPDPaymentReceiptList = await _paymentpharmacyService.GetListAsync(objGrid);
+            return Ok(IPDPaymentReceiptList.ToGridResponse(objGrid, "IPDPaymentReceipt List"));
+        }
+
+        [HttpPost("OPDPaymentReceiptList")]
+        //  [Permission(PageCode = "OPDPaymentReceiptList", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseOPDPaymentReceiptListDto> OPDPaymentReceiptList = await _paymentpharmacyService.GetListAsync1(objGrid);
+            return Ok(OPDPaymentReceiptList.ToGridResponse(objGrid, "OPDPaymentReceipt List"));
+        }
+
+
+        [HttpPost("IPAdvPaymentReceiptList")]
+        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        public async Task<IActionResult> List2(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseIPAdvPaymentReceiptListDto> IPAdvPaymentReceiptList = await _paymentpharmacyService.GetListAsync2(objGrid);
+            return Ok(IPAdvPaymentReceiptList.ToGridResponse(objGrid, "IPAdvPaymentReceiptList"));
+        }
+
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(paymentpharmacyModel obj)

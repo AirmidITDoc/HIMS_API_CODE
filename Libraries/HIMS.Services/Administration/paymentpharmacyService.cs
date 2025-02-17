@@ -1,4 +1,8 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +19,19 @@ namespace HIMS.Services.Administration
         public paymentpharmacyService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+
+        public virtual async Task<IPagedList<BrowseOPDPaymentReceiptListDto>> GetListAsync1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDPaymentReceiptListDto>(model, "Retrieve_BrowseOPDPaymentReceipt");
+        }
+        public virtual async Task<IPagedList<BrowseIPDPaymentReceiptListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPDPaymentReceiptListDto>(model, "Retrieve_BrowseIPDPaymentReceipt");
+        }
+        public virtual async Task<IPagedList<BrowseIPAdvPaymentReceiptListDto>> GetListAsync2(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPAdvPaymentReceiptListDto>(model, "Retrieve_BrowseIPAdvPaymentReceipt");
         }
         public virtual async Task InsertAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
         {
