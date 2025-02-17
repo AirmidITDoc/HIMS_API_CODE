@@ -1,4 +1,7 @@
-﻿namespace HIMS.API.Models.Inventory.Masters
+﻿using FluentValidation;
+using HIMS.API.Models.Masters;
+
+namespace HIMS.API.Models.Inventory.Masters
 {
     public class ConfigurationModel
     {
@@ -69,5 +72,15 @@
         public bool? GIsIppaperSetting { get; set; }
         public string? GIpprintName { get; set; }
         public string? GIppaperName { get; set; }
+    }
+    public class ConfigurationModelValidator : AbstractValidator<ConfigurationModel>
+    {
+        public ConfigurationModelValidator()
+        {
+            RuleFor(x => x.PrintRegAfterReg).NotNull().NotEmpty().WithMessage("PrintRegAfterReg Type is required");
+            RuleFor(x => x.Ipdprefix).NotNull().NotEmpty().WithMessage("Ipdprefix Type is required");
+            RuleFor(x => x.Otcharges).NotNull().NotEmpty().WithMessage("Otcharges Type is required");
+
+        }
     }
 }
