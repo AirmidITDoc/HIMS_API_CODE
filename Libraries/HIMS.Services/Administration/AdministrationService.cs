@@ -18,6 +18,15 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
+        
+        public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+        }
+        public virtual async Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPAdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
+        }
         public virtual async Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<IPRefundAdvanceReceiptListDto>(model, "Retrieve_BrowseIPRefundAdvanceReceipt");
