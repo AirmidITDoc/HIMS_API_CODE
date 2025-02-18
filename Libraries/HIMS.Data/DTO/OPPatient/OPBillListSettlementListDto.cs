@@ -17,9 +17,9 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal BalanceAmt { get; set; }
         public DateTime BillDate { get; set; }
         public byte OPD_IPD_Type { get; set; }
-        public string PaidAmount { get; set; }
+        public string?PaidAmount { get; set; }
         public long IsCancelled { get; set; }
-        public string PBillNo { get; set; }
+        public string? PBillNo { get; set; }
         public long TransactionType { get; set; }
         public long AdvanceId { get; set; }
         public long RefundId { get; set; }
@@ -33,10 +33,10 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal NeftPay { get; set; }
         public decimal PayTMPay { get; set; }
         public decimal AdvUsdPay { get; set; }
-        public string CompanyName { get; set; }
-        public string PatientType { get; set; }
-        public string OPDNo { get; set; }
-        public string DepartmentName { get; set; }
+        public string? CompanyName { get; set; }
+        public string? PatientType { get; set; }
+        public string? OPDNo { get; set; }
+        public string? DepartmentName { get; set; }
 
 
     }
