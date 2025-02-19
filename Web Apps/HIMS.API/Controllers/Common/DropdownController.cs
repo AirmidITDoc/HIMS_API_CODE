@@ -70,6 +70,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<TNursingNote> _IMNurNoteervice;
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
         private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
+        private readonly IGenericService<MenuMaster> _IMmenuMasterService;
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -87,7 +88,8 @@ namespace HIMS.API.Controllers.Common
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
-            , IGenericService<RoleMaster> iMDrolerMaster
+            , IGenericService<RoleMaster> iMDrolerMaster,   
+              IGenericService<MenuMaster> iMDmenuMaster
               )
         {
             _IAreaService = areaservice;
@@ -141,6 +143,7 @@ namespace HIMS.API.Controllers.Common
             _IMNurNoteervice = iMDnurNoteMaster;
             _IMparameterservice = iMDparameterMaster;
             _IMRoleMasterservice = iMDrolerMaster;
+            _IMmenuMasterService = iMDmenuMaster;
         }
 
         [HttpGet]
@@ -208,7 +211,7 @@ namespace HIMS.API.Controllers.Common
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "NurNote" => (await _IMNurNoteervice.GetAll()).ToList().ToDropDown(nameof(TNursingNote.DocNoteId), nameof(TNursingNote.NursingNotes)),
                 "Parameter" => (await _IMparameterservice.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathParameterMaster.ParameterId), nameof(MPathParameterMaster.ParameterName)),
-
+                "MenuMain" => (await _IMmenuMasterService.GetAll()).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
 
                 "Role" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
                 "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),

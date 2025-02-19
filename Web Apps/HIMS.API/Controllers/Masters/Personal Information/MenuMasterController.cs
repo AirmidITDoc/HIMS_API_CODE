@@ -26,33 +26,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _MenuMasterService = repository;
         }
         [HttpPost("MenuMasterList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> MenuMasterList(GridRequestModel objGrid)
         {
             IPagedList<MenuMasterListDto> MenuMasterList = await _MenuMasterService.MenuMasterList(objGrid);
-            return Ok(MenuMasterList.ToGridResponse(objGrid, "MenuMaster App List"));
+            return Ok(MenuMasterList.ToGridResponse(objGrid, "Menu Master List"));
         }
 
-        [HttpPost("Insert")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Add)]
-
-        public async Task<ApiResponse> Insert(MenuMasterModel obj)
-        {
-            MenuMaster model = obj.MapTo<MenuMaster>();
-            if (obj.Id == 0)
-            {
-
-                model.IsActive = true;
-                await _MenuMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MenuMaster added successfully.");
-        }
+        
 
         [HttpPost("Insertsp")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Add)]
-
+        [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
@@ -64,21 +48,22 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MenuMaster added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Menu added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Menu", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
+            model.IsActive = true;
             if (obj.Id == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                await _MenuMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _MenuMasterService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MenuMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Menu updated successfully.");
         }
 
     }

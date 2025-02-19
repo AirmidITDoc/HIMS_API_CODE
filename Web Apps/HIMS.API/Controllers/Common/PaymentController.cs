@@ -3,7 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
@@ -43,5 +45,20 @@ namespace HIMS.API.Controllers.Common
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
 
         }
+        [HttpPut("Edit/{id:int}")]
+     //   [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(NewPaymentModel obj)
+        {
+            Payment model = obj.MapTo<Payment>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
+                await _IPaymentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment  updated successfully.");
+        }
+
     }
 }
