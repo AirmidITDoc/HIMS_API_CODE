@@ -58,5 +58,12 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<PaymentModeDto> PaymentModeList = await _IAdministrationService.GetListAsync(objGrid);
             return Ok(PaymentModeList.ToGridResponse(objGrid, "PaymentMode App List"));
         }
+        [HttpPost("BrowseIPAdvPayPharReceiptList1")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseIPAdvPayPharReceiptListDto> BrowseIPAdvPayPharReceiptList = await _IAdministrationService.BrowseIPAdvPayPharReceiptList(objGrid);
+            return Ok(BrowseIPAdvPayPharReceiptList.ToGridResponse(objGrid, "BrowseIPAdvPayPharReceipt1 App List"));
+        }
     }
 }

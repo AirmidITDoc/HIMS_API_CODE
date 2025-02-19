@@ -16,7 +16,8 @@ namespace HIMS.Services.Administration
         Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel objGrid);
         Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel objGrid);
         Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid);
-        
+        Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
+
 
     }
 }
