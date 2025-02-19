@@ -44,15 +44,16 @@ namespace HIMS.API.Controllers.OutPatient
         }
 
         [HttpPost("OPBillingInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
+            Payment objPayment = obj.Payments.MapTo<Payment>();
             if (obj.BillNo == 0)
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
-                await _oPBillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncSP(model, objPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -22,7 +22,7 @@ namespace HIMS.Services.Common
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -103,8 +103,9 @@ namespace HIMS.Services.Common
 
 
                     string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
-                    Payment objPayment = new Payment();
-                    objPayment.BillNo = objBill.BillNo;
+                    Payment objPay = new Payment();
+                    objPay = objPayment;
+                    objPay.BillNo = objBill.BillNo;
                     var entity2 = objPayment.ToDictionary();
                     foreach (var rProperty in rPaymentEntity)
                     {
