@@ -5,35 +5,35 @@ namespace HIMS.API.Models.OPPatient
 {
     public class OPBillModelShilpa
     {
-        public int BillNo { get; set; }
-        public int? OPDIPDID { get; set; }
-        public float? TotalAmt { get; set; }
-        public float? ConcessionAmt { get; set; }
-        public float? NetPayableAmt { get; set; }
-        public float? PaidAmt { get; set; }
-        public float? BalanceAmt { get; set; }
-        public string? BillDate { get; set; }
-        public int? OPDIPDType { get; set; }
-        public int? AddedBy { get; set; }
-        public float? TotalAdvanceAmount { get; set; }
+        public long? OpdIpdId { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public decimal? ConcessionAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        public decimal? PaidAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
+        public DateTime? BillDate { get; set; }
+        public byte? OpdIpdType { get; set; }
+        public long? AddedBy { get; set; }
+        public decimal? TotalAdvanceAmount { get; set; }
         public string? BillTime { get; set; }
-        public int? ConcessionReasonId { get; set; }
+        public long? ConcessionReasonId { get; set; }
         public bool? IsSettled { get; set; }
         public bool? IsPrinted { get; set; }
         public bool? IsFree { get; set; }
-        public int? CompanyId { get; set; }
-        public int? TariffId { get; set; }
-        public int? UnitId { get; set; }
-        public int? InterimOrFinal { get; set; }
-        public int? CompanyRefNo { get; set; }
-        public int? ConcessionAuthorizationName { get; set; }
-        public float? SpeTaxPer { get; set; }
-        public float? SpeTaxAmt { get; set; }
-        public int? CompDiscAmt { get; set; }
+        public long? CompanyId { get; set; }
+        public long? TariffId { get; set; }
+        public long? UnitId { get; set; }
+        public long? InterimOrFinal { get; set; }
+        public string? CompanyRefNo { get; set; }
+        public long? ConcessionAuthorizationName { get; set; }
+        public double? SpeTaxPer { get; set; }
+        public decimal? SpeTaxAmt { get; set; }
         public string? DiscComments { get; set; }
-        public long? CashCounterId { get; set; }
+        public decimal? CompDiscAmt { get; set; }
+        public long BillNo { get; set; }
+
         public List<BillDetailModel> BillDetails { get; set; }
-        public List<AddChargeModel> AddCharges { get; set; }
+        //public List<AddChargeModel> AddCharges { get; set; }
 
 
     }
@@ -41,11 +41,9 @@ namespace HIMS.API.Models.OPPatient
     {
         public OPBillModelShilpaValidator()
         {
-            RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
+            RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
             RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
             RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
         }
     }
     public class BillDetailModel

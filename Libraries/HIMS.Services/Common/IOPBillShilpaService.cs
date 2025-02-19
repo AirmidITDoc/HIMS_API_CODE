@@ -10,6 +10,8 @@ namespace HIMS.Services.Common
     public partial interface IOPBillShilpaService
     {
         Task InsertAsyncSP(Bill objBill,int UserId, string Username);
+        Task InsertAsyncSP1(Bill objBill, int UserId, string Username);
+
 
     }
 }

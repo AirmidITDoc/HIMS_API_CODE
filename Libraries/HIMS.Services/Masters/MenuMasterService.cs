@@ -27,15 +27,7 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "m_Rtrv_Menu_master");
         }
-        public virtual async Task InsertAsync(MenuMaster objMenuMaster, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.MenuMasters.Add(objMenuMaster);
-                await _context.SaveChangesAsync();
-                scope.Complete();
-            }
-        }
+       
         public virtual async Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
@@ -48,17 +40,16 @@ namespace HIMS.Services.Masters
             odal.ExecuteNonQuery("ps_Insert_MenuMaster_1", CommandType.StoredProcedure, entity);
 
         }
-
         public virtual async Task UpdateAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete" };
+            string[] rEntity = { "Id", "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionCode", "TableNames" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_Update_MenuMaster_1", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("m_Update_MenuMaster_New", CommandType.StoredProcedure, entity);
 
         }
         //public virtual async Task UpdateAsync(MenuMaster objMenuMaster, int UserId, string Username)
@@ -75,3 +66,4 @@ namespace HIMS.Services.Masters
         //}
     }
 }
+///////////////////// NEW PROCEDURE CREATE [p_Update_MenuMaster_1]
