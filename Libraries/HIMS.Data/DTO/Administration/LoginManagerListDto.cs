@@ -15,12 +15,12 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public string? RoleName { get; set; }
-        public long RoleId { get; set; }
+        public long? RoleId { get; set; }
         public string? UserName { get; set; }
-        public long StoreId { get; set; }
+        public long? StoreId { get; set; }
         public string? StoreName { get; set; }
         public bool? IsDoctorType { get; set; }
-        public long DoctorID { get; set; }
+        public long? DoctorID { get; set; }
         public string? DoctorName { get; set; }
         public bool? IsPOVerify { get; set; }
         public bool? IsGRNVerify { get; set; }
@@ -38,12 +38,12 @@ namespace HIMS.Data.DTO.Administration
         public string? PharExtOpt { get; set; }
         public string? PharOPOpt { get; set; }
         public string? PharIPOpt { get; set; }
-        public long UnitId { get; set; }
-        public long MobileNo { get; set; }
-        public long WebRoleId { get; set; }
-        public long isDiscApply { get; set; }
-        public long DiscApplyPer { get; set; }
-        public string password { get; set; }
+        public long? UnitId { get; set; }
+        public long? MobileNo { get; set; }
+        public long? WebRoleId { get; set; }
+        public long? isDiscApply { get; set; }
+        public long? DiscApplyPer { get; set; }
+        public string? password { get; set; }
 
     }
 }
