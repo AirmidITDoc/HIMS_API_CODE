@@ -5,6 +5,7 @@ namespace HIMS.API.Models.Inventory.Masters
     public class MReportConfigModel 
     {
         public long ReportId { get; set; }
+      //  public int? MenuId { get; set; }
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
         public long? Parentid { get; set; }
