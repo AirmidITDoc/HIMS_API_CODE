@@ -207,8 +207,6 @@ namespace HIMS.API.Controllers.Common
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "NurNote" => (await _IMNurNoteervice.GetAll()).ToList().ToDropDown(nameof(TNursingNote.DocNoteId), nameof(TNursingNote.NursingNotes)),
-
-                
                 "Parameter" => (await _IMparameterservice.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathParameterMaster.ParameterId), nameof(MPathParameterMaster.ParameterName)),
 
 
