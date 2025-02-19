@@ -126,7 +126,7 @@ namespace HIMS.API.Controllers.Common
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
-                await _oPBillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncSP1(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
