@@ -54,6 +54,14 @@ namespace HIMS.API.Controllers.Administration
             return Ok(IPAdvPaymentReceiptList.ToGridResponse(objGrid, "IPAdvPaymentReceiptList"));
         }
 
+        [HttpPost("BrowsePharmacyPayReceiptList")]
+        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        public async Task<IActionResult> List3(GridRequestModel objGrid)
+        {
+            IPagedList<BrowsePharmacyPayReceiptListDto> PharmacyPayReceiptList = await _paymentpharmacyService.GetListAsync3(objGrid);
+            return Ok(PharmacyPayReceiptList.ToGridResponse(objGrid, "BrowsePharmacyPayReceiptList"));
+        }
+
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(paymentpharmacyModel obj)

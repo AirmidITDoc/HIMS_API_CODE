@@ -33,6 +33,10 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<BrowseIPAdvPaymentReceiptListDto>(model, "Retrieve_BrowseIPAdvPaymentReceipt");
         }
+        public virtual async Task<IPagedList<BrowsePharmacyPayReceiptListDto>> GetListAsync3(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyPayReceiptListDto>(model, "Rtrv_BrowsePharmacyPayReceipt");
+        }
         public virtual async Task InsertAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

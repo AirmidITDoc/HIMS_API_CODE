@@ -15,6 +15,7 @@ namespace HIMS.Services.Administration
         Task<IPagedList<BrowseIPDPaymentReceiptListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<BrowseOPDPaymentReceiptListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPAdvPaymentReceiptListDto>> GetListAsync2(GridRequestModel objGrid);
+        Task<IPagedList<BrowsePharmacyPayReceiptListDto>> GetListAsync3(GridRequestModel objGrid);
         Task InsertAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username);
 
         Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username);

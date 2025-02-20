@@ -32,11 +32,11 @@ namespace HIMS.Data.DTO.Administration
         public string PBillNo { get; set; }
         public string ReceiptNo { get; set; }
         public long TransactionType { get; set; }
-        public DateTime PayDate { get; set; }
+        public string PayDate { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal NEFTPayAmount { get; set; }
         public decimal PayTMAmount { get; set; }
-      
+
 
     }
 }
