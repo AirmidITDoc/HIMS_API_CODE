@@ -27,6 +27,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
         }
+        public virtual async Task<IPagedList<RadiologyTestListDto>> RadiologyTestList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadiologyTestListDto>(model, "m_Rtrv_RadiologyTestList");
+        }
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
