@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+     //   [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyModel obj)
         {
             PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();

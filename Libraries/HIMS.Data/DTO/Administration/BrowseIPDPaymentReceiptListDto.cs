@@ -9,7 +9,8 @@ namespace HIMS.Data.DTO.Administration
     public class BrowseIPDPaymentReceiptListDto
     {
 
-    
+
+
         public long PaymentId { get; set; }
         public long BillNo { get; set; }
         public string RegNo { get; set; }
@@ -39,7 +40,7 @@ namespace HIMS.Data.DTO.Administration
         public long AdvanceId { get; set; }
         public long RefundId { get; set; }
         public string UserName { get; set; }
-        public DateTime PayDate { get; set; }
+        public string PayDate { get; set; }
         public decimal PaidAmount { get; set; }
 
         public decimal TotalAmt { get; set; }
