@@ -44,9 +44,9 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<MPathParameterMasterListDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<MPathParameterListDto>> MPathParameterList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MPathParameterMasterListDto>(model, "m_Rtrv_PathParameterMaster_by_Name");
+            return await DatabaseHelper.GetGridDataBySp<MPathParameterListDto>(model, "m_Rtrv_PathParameterMaster_by_Name");
         }
 
         public virtual async Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username)

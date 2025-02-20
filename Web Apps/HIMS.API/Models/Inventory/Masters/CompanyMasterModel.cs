@@ -14,6 +14,16 @@ namespace HIMS.API.Models.Masters
         public string? MobileNo { get; set; }
         public string? FaxNo { get; set; }
         public long? TraiffId { get; set; }
+        public bool? IsActive { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
     public class CompanyMasterModelValidator : AbstractValidator<CompanyMasterModel>
     {
@@ -24,6 +34,9 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.City).NotNull().NotEmpty().WithMessage("City is required");
             RuleFor(x => x.PinNo).NotNull().NotEmpty().WithMessage("PinNo is required");
             RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
+            RuleFor(x => x.MobileNo).NotNull().NotEmpty().WithMessage("MobileNo is required");
+            RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
+            RuleFor(x => x.TraiffId).NotNull().NotEmpty().WithMessage("TraiffId is required");
         }
     }
 }
