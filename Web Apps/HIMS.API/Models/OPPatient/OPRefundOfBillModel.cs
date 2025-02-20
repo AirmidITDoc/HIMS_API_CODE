@@ -41,7 +41,7 @@ namespace HIMS.API.Models.OPPatient
     }
     public class TRefundDetailModel
     {
-        public long RefundDetId { get; set; }
+        //public long RefundDetId { get; set; }
         public long? RefundId { get; set; }
         public long? ServiceId { get; set; }
         public decimal? ServiceAmount { get; set; }
@@ -84,12 +84,10 @@ namespace HIMS.API.Models.OPPatient
 
     public class PaymentModell
     {
-        public long PaymentId { get; set; }
-
         public long? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
         public decimal? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
@@ -115,6 +113,7 @@ namespace HIMS.API.Models.OPPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
+        public decimal? Tdsamount { get; set; }
     }
     public class PaymentModellValidator : AbstractValidator<PaymentModell>
     {
@@ -128,8 +127,8 @@ namespace HIMS.API.Models.OPPatient
     {
         public OPRefundOfBillModel Refund { get; set; }
         public TRefundDetailModel TRefundDetails { get; set; }
-        //public AddChargesModell AddCharges { get; set; }
-        //public PaymentModell Payment { get; set; }
+        public AddChargesModell AddCharges { get; set; }
+        public PaymentModell Payment { get; set; }
     }
 }
 
