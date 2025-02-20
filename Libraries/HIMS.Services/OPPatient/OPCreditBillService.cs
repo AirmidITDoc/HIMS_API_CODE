@@ -23,14 +23,9 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
-            //      m_insert_Bill_1
-            //      m_insert_OPAddCharges_1
-            //      m_insert_BillDetails_1
-            //      m_insert_PathologyReportHeader_1
-            //      m_insert_RadiologyReportHeader_1
-
             try
             {
+                // Bill Code
                 DatabaseHelper odal = new();
                 string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
                 var entity = objBill.ToDictionary();
@@ -61,7 +56,6 @@ namespace HIMS.Services.OPPatient
                             _context.BillDetails.Add(objItem);
                             await _context.SaveChangesAsync();
                         }
-
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
                         {
@@ -103,12 +97,13 @@ namespace HIMS.Services.OPPatient
 
                     }
 
+
                     scope.Complete();
                 }
-
             }
 
-            catch (Exception ex)
+
+            catch (Exception)
             {
                 Bill? objBills = await _context.Bills.FindAsync(objBill.BillNo);
                 _context.Bills.Remove(objBills);

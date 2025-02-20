@@ -22,5 +22,6 @@ namespace HIMS.Services.Inventory
         Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task<List<MRadiologyTestMaster>> GetAllRadiologyTest();
         //Task<MRadiologyTestMaster> GetByIdRadiologyTest(long Id);
+        Task<IPagedList<RadiologyTestListDto>> RadiologyTestList(GridRequestModel objGrid);
     }
 }
