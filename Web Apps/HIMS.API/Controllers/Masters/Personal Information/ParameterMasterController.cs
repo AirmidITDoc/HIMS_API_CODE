@@ -27,12 +27,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             _IParameterMasterService = repository;
             _IMParameterDescriptiveMasterService = repository1;
         }
-        [HttpPost("MParameterDescriptiveMasterList")]
+        [HttpPost("MPathParameterList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _IMParameterDescriptiveMasterService.GetListAsync1(objGrid);
-            return Ok(MParameterDescriptiveMasterList.ToGridResponse(objGrid, "MParameterDescriptiveMaster List"));
+            IPagedList<MPathParameterListDto> MPathParameterList = await _IParameterMasterService.MPathParameterList(objGrid);
+            return Ok(MPathParameterList.ToGridResponse(objGrid, "MPathParameter List"));
         }
 
         //Add API

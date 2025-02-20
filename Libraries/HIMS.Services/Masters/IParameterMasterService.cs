@@ -12,7 +12,7 @@ namespace HIMS.Services.Masters
 {
     public partial interface IParameterMasterService
     {
-        Task<IPagedList<MPathParameterMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<MPathParameterListDto>> MPathParameterList(GridRequestModel objGrid);
         Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username);
         //Task InsertAsyncSP(MPathParameterMaster objPara, int UserId, string Username);
         Task UpdateAsync(MPathParameterMaster objPara, int UserId, string Username);

@@ -188,6 +188,7 @@ namespace HIMS.API.Controllers.Common
                 "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
                 "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
                 "DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
+                //"DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
                 "TermofPayment" => (await _IMTermofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTermsOfPaymentMaster.Id), nameof(MTermsOfPaymentMaster.TermsOfPayment)),
                 "Store" => (await _IMStoreService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),

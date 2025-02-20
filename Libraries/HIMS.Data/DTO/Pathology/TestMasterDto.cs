@@ -8,8 +8,8 @@ namespace HIMS.Data.DTO.Pathology
 {
     public  class TestMasterDto
     {
-        public  long SubTestID { get; set; }
-        public long ParameterID { get; set; }
+        public  long? SubTestID { get; set; }
+        public long? ParameterID { get; set; }
         public string? ParameterName { get; set; }
         public string? IsSubTest { get; set; }
         public long? TestId { get; set; }

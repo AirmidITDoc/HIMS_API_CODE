@@ -6,24 +6,24 @@ namespace HIMS.API.Models.OPPatient
 {
     public class OPRefundOfBillModel
     {
-        public long RefundId { get; set; }
+
         public DateTime? RefundDate { get; set; }
-        public DateTime? RefundTime { get; set; }
+        public string? RefundTime { get; set; }
         public string? RefundNo { get; set; }
         public long? BillId { get; set; }
         public long? AdvanceId { get; set; }
-        public bool? Opdipdtype { get; set; }
+        public long? Opdipdtype { get; set; }
         public long? Opdipdid { get; set; }
         public decimal? RefundAmount { get; set; }
         public string? Remark { get; set; }
         public long? TransactionId { get; set; }
-        public long? AddedBy { get; set; }
-        public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
+        public long AddedBy { get; set; }
+        public int IsCancelled { get; set; }
+        public long IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public List<TRefundDetailModel>? TRefundDetails { get; set; }
+        public long RefundId { get; set; }
+        //public List<TRefundDetailModel>? TRefundDetails { get; set; }
         //public List<AddChargesModell>? AddCharges { get; set; }
-      
         //public List<PaymentModell>? Payments { get; set; }
 
     }
@@ -31,20 +31,17 @@ namespace HIMS.API.Models.OPPatient
     {
         public OPRefundOfBillModelValidator()
         {
-           
             RuleFor(x => x.RefundNo).NotNull().NotEmpty().WithMessage(" RefundNo is required");
             RuleFor(x => x.BillId).NotNull().NotEmpty().WithMessage(" BillId is required");
             RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage(" AdvanceId is required");
             RuleFor(x => x.Opdipdtype).NotNull().NotEmpty().WithMessage(" Opdipdtype is required");
             RuleFor(x => x.Opdipdid).NotNull().NotEmpty().WithMessage("Opdipdid is required");
             RuleFor(x => x.RefundAmount).NotNull().NotEmpty().WithMessage(" RefundAmount is required");
-
-
         }
     }
     public class TRefundDetailModel
     {
-        public long RefundDetId { get; set; }
+        //public long RefundDetId { get; set; }
         public long? RefundId { get; set; }
         public long? ServiceId { get; set; }
         public decimal? ServiceAmount { get; set; }
@@ -65,13 +62,9 @@ namespace HIMS.API.Models.OPPatient
             RuleFor(x => x.DoctorId).NotNull().NotEmpty().WithMessage(" DoctorId is required");
             RuleFor(x => x.Remark).NotNull().NotEmpty().WithMessage(" Remark is required");
             RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage(" ChargesId is required");
-
-
         }
     }
 
-
-   
 
 
     public class AddChargesModell
@@ -91,12 +84,10 @@ namespace HIMS.API.Models.OPPatient
 
     public class PaymentModell
     {
-        public long PaymentId { get; set; }
-
         public long? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
         public decimal? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
@@ -122,6 +113,7 @@ namespace HIMS.API.Models.OPPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
+        public decimal? Tdsamount { get; set; }
     }
     public class PaymentModellValidator : AbstractValidator<PaymentModell>
     {
