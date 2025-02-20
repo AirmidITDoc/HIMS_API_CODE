@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfig> MReportConfigList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        [Permission(PageCode = "Configuration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "Configuration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "Configuration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReportConfig model = await _repository.GetById(x => x.ReportId == Id);
