@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfig> MReportConfigList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfigList "));
+            return Ok(MReportConfigList.ToGridResponse(objGrid, "Report List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MReportConfig  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.UpdatedOn = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "UpdateBy", "UpdatedOn" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MReportConfig  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.UpdateBy = CurrentUserId;
                 model.UpdatedOn = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MReportConfig  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
