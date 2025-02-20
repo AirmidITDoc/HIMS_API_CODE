@@ -31,9 +31,6 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public long? OpdIpdType1 { get; set; }
-        public long? AddBy { get; set; }
-        public long? OpdIpdId1 { get; set; }
 
         public virtual ICollection<TRefundDetail> TRefundDetails { get; set; }
     }

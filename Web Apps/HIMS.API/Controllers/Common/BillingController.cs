@@ -122,6 +122,7 @@ namespace HIMS.API.Controllers.Common
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
+            Payment objPayment = obj.Payments.MapTo<Payment>();
             if (obj.BillNo == 0)
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);

@@ -43,14 +43,14 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OpBilllistforRefundDto> BillList = await _IRefundOfBillService.GeOpbilllistforrefundAsync(objGrid);
-            return Ok(BillList.ToGridResponse(objGrid, " PBilllistforrefund List"));
+            return Ok(BillList.ToGridResponse(objGrid, "OP Bill list for refund List"));
         }
         [HttpPost("OPBillservicedetailList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
-            return Ok(Servicelist.ToGridResponse(objGrid, " OPBillservicedetail List"));
+            return Ok(Servicelist.ToGridResponse(objGrid, " OP Bill service detail List"));
         }
 
         [HttpPost("RefundAgainstBillList")]
@@ -58,11 +58,8 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
-            return Ok(Servicelist.ToGridResponse(objGrid, "RefundAgainstBill List "));
+            return Ok(Servicelist.ToGridResponse(objGrid, "Refund Against Bill List "));
         }
-
-
-
 
         [HttpPost("OPInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
@@ -70,8 +67,8 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Refund model = obj.Refund.MapTo<Refund>();
             TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
-            AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
-            Payment objPayment = obj.Payment.MapTo<Payment>();
+            //AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
+            //Payment objPayment = obj.Payment.MapTo<Payment>();
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
@@ -81,50 +78,49 @@ namespace HIMS.API.Controllers.OPPatient
                 objTRefundDetail.AddBy = CurrentUserId;
                 objTRefundDetail.UpdatedBy = CurrentUserId;
 
-                obj.AddCharges.ChargesId = obj.Refund.RefundId;
+                //obj.AddCharges.ChargesId = obj.Refund.RefundId;
 
+                //obj.Payment.RefundId = obj.Refund.RefundId;
+                //objPayment.AddBy = CurrentUserId;
+                //objPayment.IsCancelledBy = CurrentUserId;
 
-                obj.Payment.RefundId = obj.Refund.RefundId;
-                objPayment.AddBy = CurrentUserId;
-                objPayment.IsCancelledBy = CurrentUserId;
-
-               // await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+                await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail,  CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         }
 
-        [HttpPost("IPInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(RefundBillModel obj)
-        {
-            Refund model = obj.Refund.MapTo<Refund>();
-            TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
-            AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
-            Payment objPayment = obj.Payment.MapTo<Payment>();
-            if (obj.Refund.RefundId == 0)
-            {
-                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
-                model.AddedBy = CurrentUserId;
+        //[HttpPost("IPInsert")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(RefundBillModel obj)
+        //{
+        //    Refund model = obj.Refund.MapTo<Refund>();
+        //    TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
+        //    AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
+        //    Payment objPayment = obj.Payment.MapTo<Payment>();
+        //    if (obj.Refund.RefundId == 0)
+        //    {
+        //        model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+        //        model.AddedBy = CurrentUserId;
 
-                obj.TRefundDetails.RefundId = obj.Refund.RefundId;
-                objTRefundDetail.AddBy = CurrentUserId;
-                objTRefundDetail.UpdatedBy = CurrentUserId;
+        //        obj.TRefundDetails.RefundId = obj.Refund.RefundId;
+        //        objTRefundDetail.AddBy = CurrentUserId;
+        //        objTRefundDetail.UpdatedBy = CurrentUserId;
 
-                obj.AddCharges.ChargesId = obj.Refund.RefundId;
+        //        obj.AddCharges.ChargesId = obj.Refund.RefundId;
 
 
-                obj.Payment.RefundId = obj.Refund.RefundId;
-                objPayment.AddBy = CurrentUserId;
-                objPayment.IsCancelledBy = CurrentUserId;
+        //        obj.Payment.RefundId = obj.Refund.RefundId;
+        //        objPayment.AddBy = CurrentUserId;
+        //        objPayment.IsCancelledBy = CurrentUserId;
 
-                await _IRefundOfBillService.InsertAsyncIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
-        }
+        //        await _IRefundOfBillService.InsertAsyncIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
+        //}
         //[HttpPost("OPInsert")]
         ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> InsertSP(OPRefundOfBillModel obj)

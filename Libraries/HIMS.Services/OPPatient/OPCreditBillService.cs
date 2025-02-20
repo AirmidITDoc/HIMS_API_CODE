@@ -3,6 +3,7 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
@@ -37,30 +38,28 @@ namespace HIMS.Services.OPPatient
                 {
                     entity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                string vBillNo = odal.ExecuteNonQuery("v_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
-
-
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 {
                     foreach (var objItem1 in objBill.AddCharges)
                     {
+                        // Add Charges Code
                         objItem1.BillNo = objBill.BillNo;
                         objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
                         objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
                         objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
-
                         _context.AddCharges.Add(objItem1);
                         await _context.SaveChangesAsync();
 
+                        // Bill Details Code
                         foreach (var objItem in objBill.BillDetails)
                         {
                             objItem.BillNo = objBill.BillNo;
                             objItem.ChargesId = objItem1?.ChargesId;
                             _context.BillDetails.Add(objItem);
                             await _context.SaveChangesAsync();
-
                         }
 
                         // Pathology Code
@@ -101,16 +100,17 @@ namespace HIMS.Services.OPPatient
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
                         }
+
                     }
 
                     scope.Complete();
                 }
+
             }
 
-
-            catch (Exception)
+            catch (Exception ex)
             {
-                Bill objBills = await _context.Bills.FindAsync(objBill.BillNo);
+                Bill? objBills = await _context.Bills.FindAsync(objBill.BillNo);
                 _context.Bills.Remove(objBills);
                 await _context.SaveChangesAsync();
             }
