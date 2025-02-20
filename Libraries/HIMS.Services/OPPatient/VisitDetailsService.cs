@@ -285,7 +285,8 @@ namespace HIMS.Services.OPPatient
                           RefDocId = a.RefDocId,
                           TariffId = a.TariffId,
                           ClassId = a.ClassId,
-                          //TariffName = a.TariffName,
+                          VisitId = a.VisitId
+
                           //CompanyId = a.CompanyId,
                           //CompanyName = a.CompanyName,
                           //RefDoctorName = a.RefDoctorName,
