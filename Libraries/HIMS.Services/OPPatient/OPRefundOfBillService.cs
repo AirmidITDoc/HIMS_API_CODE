@@ -41,7 +41,7 @@ namespace HIMS.Services.OPPatient
 
 
 
-        public virtual async Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
+        public virtual async Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -52,19 +52,19 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
-            //objRefund.RefundId = Convert.ToInt32(RefundId);
-            //objTRefundDetail.RefundId = Convert.ToInt32(RefundId);
-            //objAddCharge.ChargesId = Convert.ToInt32(RefundId);
-            //objPayment.RefundId = Convert.ToInt32(RefundId);
+            string vRefundId= odal.ExecuteNonQuery("ps_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
+            objRefund.RefundId = Convert.ToInt32(vRefundId);
+            objTRefundDetail.RefundId = Convert.ToInt32(vRefundId);
+            //objAddCharge.ChargesId = Convert.ToInt32(vRefundId);
+            //objPayment.RefundId = Convert.ToInt32(vRefundId);
 
-            string[] rRefundEntity = { "UpdatedBy", "RefundDetailsTime", "HospitalAmount", "DoctorAmount", "RefundDetId" };
+            string[] rRefundEntity = { "HospitalAmount", "DoctorAmount", "refundDetId","UpdatedBy", "Refund" };
             var RefundEntity = objTRefundDetail.ToDictionary();
             foreach (var rProperty in rRefundEntity)
             {
                 RefundEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
+            odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
 
             //foreach (var objcharge in objRefund.AddCharges)
             //{
@@ -86,14 +86,13 @@ namespace HIMS.Services.OPPatient
             //odal.ExecuteNonQuery("v_n_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
 
 
-
             //foreach (var objpay in objRefund.Payments)
             //{
-                
-            //        objPayment.BillNo = objpay.BillNo;
-            //        _context.Payments.Add(objPayment);
-            //        await _context.SaveChangesAsync();
-                
+
+            //    objPayment.BillNo = objpay.BillNo;
+            //    _context.Payments.Add(objPayment);
+            //    await _context.SaveChangesAsync();
+
             //}
             //scope.Complete();
 

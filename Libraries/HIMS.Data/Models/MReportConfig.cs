@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class MReportConfig
     {
         public long ReportId { get; set; }
-   //     public int? MenuId { get; set; }
+        public int? MenuId { get; set; }
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
         public long? Parentid { get; set; }

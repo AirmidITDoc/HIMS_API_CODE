@@ -3,6 +3,7 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
@@ -40,16 +41,13 @@ namespace HIMS.Services.OPPatient
                     foreach (var objItem1 in objBill.AddCharges)
                     {
                         // Add Charges Code
+                        objItem1.BillNo = objBill.BillNo;
+                        objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
+                        objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
+                        objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
+                        _context.AddCharges.Add(objItem1);
+                        await _context.SaveChangesAsync();
 
-                        foreach (var objItem in objBill.AddCharges)
-                        {
-                            objItem1.BillNo = objBill.BillNo;
-                            objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
-                            objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
-                            objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
-                            _context.AddCharges.Add(objItem1);
-                            await _context.SaveChangesAsync();
-                        }
                         // Bill Details Code
                         foreach (var objItem in objBill.BillDetails)
                         {
@@ -96,13 +94,16 @@ namespace HIMS.Services.OPPatient
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
                         }
+
                     }
 
 
                     scope.Complete();
                 }
             }
-            catch (Exception ex)
+
+
+            catch (Exception)
             {
                 Bill? objBills = await _context.Bills.FindAsync(objBill.BillNo);
                 _context.Bills.Remove(objBills);
