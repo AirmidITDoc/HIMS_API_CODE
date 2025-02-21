@@ -10,8 +10,6 @@ namespace HIMS.Data.Models
         public long ReportId { get; set; }
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
-        public bool? IsActive { get; set; }
-        public long? Parentid { get; set; }
     }
     public class MReportConfigurationModelValidator : AbstractValidator<MReportConfigurationModel>
     {

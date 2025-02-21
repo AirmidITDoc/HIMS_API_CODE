@@ -17,11 +17,6 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
-
-
-
-
-
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -39,7 +34,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MReportConfiguration, MReportConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OTBookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbookingRequest, OTBookingRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MReportConfig, MReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MReportConfig, ReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DbPrefixMaster, PrefixModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DbGenderMaster, GenderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<CashCounter, CashCounterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -128,7 +123,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, DischargeADMISSIONModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Discharge, IPDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bedmaster, BedReleaseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MReportConfiguration, MReportConfiguration>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ConfigSetting, ConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 

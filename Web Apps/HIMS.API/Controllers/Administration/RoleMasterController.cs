@@ -7,6 +7,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.Services.Administration;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -16,9 +17,11 @@ namespace HIMS.API.Controllers.Administration
     public class RoleMasterController : BaseController
     {
         private readonly IGenericService<RoleMaster> _repository;
-        public RoleMasterController(IGenericService<RoleMaster> repository)
+        private readonly IRoleService _IRoleService;
+        public RoleMasterController(IGenericService<RoleMaster> repository,IRoleService roleService)
         {
             _repository = repository;
+            _IRoleService = roleService;
         }
         //List API
         [HttpPost]
@@ -91,6 +94,12 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+        [HttpGet]
+        [Route("get-permissions")]
+        public ApiResponse GetPermission(int RoleId)
+        {
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleMaster  deleted successfully.", _IRoleService.GetPermisison(RoleId));
         }
     }
 }

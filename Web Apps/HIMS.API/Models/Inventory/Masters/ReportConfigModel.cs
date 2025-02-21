@@ -2,7 +2,7 @@
 
 namespace HIMS.API.Models.Inventory.Masters
 {
-    public class MReportConfigModel 
+    public class ReportConfigModel
     {
         public long ReportId { get; set; }
         public int? MenuId { get; set; }
@@ -21,15 +21,15 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportPageOrientation { get; set; }
         public string? ReportPageSize { get; set; }
         public string? ReportFilter { get; set; }
-
     }
-    public class MReportConfigModelModelValidator : AbstractValidator<MReportConfigModel>
+    public class ReportConfigModelModelValidator : AbstractValidator<ReportConfigModel>
     {
-        public MReportConfigModelModelValidator()
+        public ReportConfigModelModelValidator()
         {
             RuleFor(x => x.ReportSection).NotNull().NotEmpty().WithMessage("ReportSection is required");
-            RuleFor(x => x.ReportName).NotNull().NotEmpty().WithMessage("ReportName is required");  
+            RuleFor(x => x.ReportName).NotNull().NotEmpty().WithMessage("ReportName is required");
 
         }
     }
+
 }

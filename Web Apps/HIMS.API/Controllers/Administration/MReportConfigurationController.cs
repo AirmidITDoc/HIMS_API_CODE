@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ReportConfiguration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfiguration> MReportConfigurationList = await _repository.GetAllPagedAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Administration
 
         //List API Get By Id
         [HttpGet("{id?}")]
-     //   [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ReportConfiguration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -51,8 +51,8 @@ namespace HIMS.API.Controllers.Administration
         }
         //Add API
         [HttpPost]
-         //   [Permission(PageCode = "Configuration", Permission = PagePermission.Add)]
-            public async Task<ApiResponse> Post(MReportConfigurationModel obj)
+        //[Permission(PageCode = "ReportConfiguration", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(MReportConfigurationModel obj)
             {
             MReportConfiguration model = obj.MapTo<MReportConfiguration>();
                  model.IsActive = true;
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Administration
             }
 
         [HttpPut("{id:int}")]
-       // [Permission(PageCode = "Configuration", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "ReportConfiguration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MReportConfigurationModel obj)
         {
             MReportConfiguration model = obj.MapTo<MReportConfiguration>();
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Delete API
         [HttpDelete]
-     //   [Permission(PageCode = "Configuration", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "ReportConfiguration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReportConfiguration model = await _repository.GetById(x => x.ReportId == Id);
@@ -103,8 +103,5 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
-
-
-
-    }
+}
 
