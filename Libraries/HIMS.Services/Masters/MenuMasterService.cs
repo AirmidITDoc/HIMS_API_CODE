@@ -43,7 +43,7 @@ namespace HIMS.Services.Masters
         public virtual async Task UpdateAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Id", "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionCode", "TableNames" };
+            string[] rEntity = { "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
