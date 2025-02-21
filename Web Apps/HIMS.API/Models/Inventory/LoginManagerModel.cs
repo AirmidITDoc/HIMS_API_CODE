@@ -35,6 +35,10 @@ namespace HIMS.API.Models.Inventory
         public int? PharExtOpt { get; set; }
         public int? PharOpopt { get; set; }
         public int? PharIpopt { get; set; }
+        public long? UnitId { get; set; }
+        public long? MobileNo { get; set; }
+        public int? IsDiscApply { get; set; }
+        public int? DiscApplyPer { get; set; }
     }
     public class LoginManagerModelValidator : AbstractValidator<LoginManagerModel>
     {
