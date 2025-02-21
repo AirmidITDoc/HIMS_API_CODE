@@ -13,12 +13,12 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-        [HttpGet]
-        [Route("get-permissions")]
-        public IActionResult GetPermission(int RoleId)
-        {
-            return Ok(_IroleService.GetPermisison(RoleId));
-        }
+        //[HttpGet]
+        //[Route("get-permissions")]
+        //public IActionResult GetPermission(int RoleId)
+        //{
+        //    return Ok(_IroleService.GetPermisison(RoleId));
+        //}
         //[HttpPost]
         //[Route("save-permission")]
         //public IActionResult PostPermission(List<PermissionModel> obj)
