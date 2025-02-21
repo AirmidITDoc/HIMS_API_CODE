@@ -15,7 +15,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 
-namespace HIMS.API.Controllers.Inventory
+namespace HIMS.API.Controllers.Login
 {
 
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -32,8 +32,8 @@ namespace HIMS.API.Controllers.Inventory
         [Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<LoginManagerListDto> LoginManagerList= await _ILoginService.GetListAsync(objGrid);
-            return Ok(LoginManagerList.ToGridResponse(objGrid, "LoginList "));
+            IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);
+            return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("Insert")]
         [Permission(PageCode = "Login", Permission = PagePermission.Add)]
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedDate = DateTime.Now;
                 await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User updated successfully.");
         }
 
         [HttpPost("LoginCanceled")]
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LoginManager Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
         [HttpPost("updatepassword")]
         [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "updatepassword successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "password Updated successfully.");
         }
 
     }

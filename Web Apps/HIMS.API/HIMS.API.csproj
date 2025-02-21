@@ -7,12 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\InPatient\**" />
+    <Compile Remove="Controllers\NewFolder\**" />
+    <Compile Remove="Controllers\Radiology\**" />
     <Compile Remove="Models\OutPatient\NewFolder\**" />
     <Compile Remove="Models\Users\**" />
+    <Content Remove="Controllers\InPatient\**" />
+    <Content Remove="Controllers\NewFolder\**" />
+    <Content Remove="Controllers\Radiology\**" />
     <Content Remove="Models\OutPatient\NewFolder\**" />
     <Content Remove="Models\Users\**" />
+    <EmbeddedResource Remove="Controllers\InPatient\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\Radiology\**" />
     <EmbeddedResource Remove="Models\OutPatient\NewFolder\**" />
     <EmbeddedResource Remove="Models\Users\**" />
+    <None Remove="Controllers\InPatient\**" />
+    <None Remove="Controllers\NewFolder\**" />
+    <None Remove="Controllers\Radiology\**" />
     <None Remove="Models\OutPatient\NewFolder\**" />
     <None Remove="Models\Users\**" />
   </ItemGroup>
@@ -49,9 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\InPatient\" />
-    <Folder Include="Controllers\NewFolder\" />
-    <Folder Include="Controllers\Radiology\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
     <Folder Include="Models\NewFolder\" />
