@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\OutPatient\NewFolder\**" />
     <Compile Remove="Models\Users\**" />
+    <Content Remove="Models\OutPatient\NewFolder\**" />
     <Content Remove="Models\Users\**" />
+    <EmbeddedResource Remove="Models\OutPatient\NewFolder\**" />
     <EmbeddedResource Remove="Models\Users\**" />
+    <None Remove="Models\OutPatient\NewFolder\**" />
     <None Remove="Models\Users\**" />
   </ItemGroup>
 
@@ -51,7 +55,6 @@
     <Folder Include="DbData\" />
     <Folder Include="Models\InPatient\" />
     <Folder Include="Models\NewFolder\" />
-    <Folder Include="Models\OutPatient\NewFolder\" />
   </ItemGroup>
 
 </Project>
