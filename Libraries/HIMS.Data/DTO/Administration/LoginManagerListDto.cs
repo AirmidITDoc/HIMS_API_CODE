@@ -41,8 +41,8 @@ namespace HIMS.Data.DTO.Administration
         public long? UnitId { get; set; }
         public long? MobileNo { get; set; }
         public long? WebRoleId { get; set; }
-        public long? isDiscApply { get; set; }
-        public long? DiscApplyPer { get; set; }
+        public int? isDiscApply { get; set; }
+        public int? DiscApplyPer { get; set; }
         public string? password { get; set; }
 
     }
