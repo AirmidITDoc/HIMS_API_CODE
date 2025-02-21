@@ -10,7 +10,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.API.Models.Inventory.Masters;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Controllers.Administration
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
