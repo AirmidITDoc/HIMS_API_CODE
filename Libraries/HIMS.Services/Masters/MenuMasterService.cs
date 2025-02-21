@@ -49,21 +49,8 @@ namespace HIMS.Services.Masters
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Update_MenuMaster_New", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_Update_MenuMaster_1", CommandType.StoredProcedure, entity);
 
         }
-        //public virtual async Task UpdateAsync(MenuMaster objMenuMaster, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header & detail table records
-        //        _context.MenuMasters.Update(objMenuMaster);
-        //        _context.Entry(objMenuMaster).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
     }
 }
-///////////////////// NEW PROCEDURE CREATE [p_Update_MenuMaster_1]
