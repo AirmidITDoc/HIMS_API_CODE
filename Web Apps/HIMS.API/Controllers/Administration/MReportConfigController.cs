@@ -41,12 +41,12 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.ReportId == id);
-            return data.ToSingleResponse<MReportConfig, MReportConfigModel>("MReportConfig");
+            return data.ToSingleResponse<MReportConfig, ReportConfigModel>("MReportConfig");
         }
         //Add API
         [HttpPost]
         [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(MReportConfigModel obj)
+        public async Task<ApiResponse> Post(ReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
             model.IsActive = true;
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Administration
         //Edit API
         [HttpPut("{id:int}")]
         [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(MReportConfigModel obj)
+        public async Task<ApiResponse> Edit(ReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
             model.IsActive = true;
