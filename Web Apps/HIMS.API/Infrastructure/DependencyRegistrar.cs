@@ -143,6 +143,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDischargeCancellationService, DischargeCancellationService>();
 
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }

@@ -12,7 +12,7 @@ namespace HIMS.Services.Administration
 {
     public partial interface IRoleService    
     {
-        //List<MenuModel> GetPermisison(int RoleId);
+        List<MenuModel> GetPermisison(int RoleId);
         //void SavePermission(List<PermissionModel> lst);
     }
 }
