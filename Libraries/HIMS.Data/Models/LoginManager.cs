@@ -41,5 +41,9 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public long? UnitId { get; set; }
+        public long? MobileNo { get; set; }
+        public int? IsDiscApply { get; set; }
+        public int? DiscApplyPer { get; set; }
     }
 }

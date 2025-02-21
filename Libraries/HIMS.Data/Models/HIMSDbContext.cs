@@ -3093,6 +3093,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
 
+                entity.Property(e => e.IsDiscApply).HasColumnName("isDiscApply");
+
                 entity.Property(e => e.IsGrnverify)
                     .HasColumnName("IsGRNVerify")
                     .HasDefaultValueSql("((0))");
