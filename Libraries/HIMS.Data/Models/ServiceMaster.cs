@@ -31,6 +31,9 @@ namespace HIMS.Data.Models
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? AddedBy { get; set; }
+        public double? ClassRate { get; set; }
+        public long? ClassId { get; set; }
+        public long? TariffId { get; set; }
 
         public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }

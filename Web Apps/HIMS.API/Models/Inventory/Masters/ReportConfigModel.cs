@@ -5,7 +5,6 @@ namespace HIMS.API.Models.Inventory.Masters
     public class ReportConfigModel
     {
         public long ReportId { get; set; }
-        public int? MenuId { get; set; }
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
         public long? Parentid { get; set; }
@@ -21,6 +20,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportPageOrientation { get; set; }
         public string? ReportPageSize { get; set; }
         public string? ReportFilter { get; set; }
+        public long? MenuId { get; set; }
     }
     public class ReportConfigModelModelValidator : AbstractValidator<ReportConfigModel>
     {
