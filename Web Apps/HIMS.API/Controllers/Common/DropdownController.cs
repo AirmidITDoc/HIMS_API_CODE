@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.Common
 
 
 
-                "DoctorType" => (await _IMDoctorTypeService.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DoctorTypeMaster.Id), nameof(DoctorTypeMaster.DoctorType)),
+                //"DoctorType" => (await _IMDoctorTypeService.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DoctorTypeMaster.Id), nameof(DoctorTypeMaster.DoctorType)),
                 //"PathologyDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
                 "Class" => (await _IMClassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ClassMaster.ClassId), nameof(ClassMaster.ClassName)),
                 "Bed" => (await _IMBedService.GetAll(x => x.IsAvailible.Value)).ToList().ToDropDown(nameof(Bedmaster.BedId), nameof(Bedmaster.BedName)),

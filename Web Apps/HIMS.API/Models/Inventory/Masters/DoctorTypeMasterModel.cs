@@ -6,7 +6,6 @@ namespace HIMS.API.Models.Masters
     {
         public long Id { get; set; }
         public string? DoctorType { get; set; }
-        public long? IsActive { get; set; }
     }
     public class DoctorTypeMasterModelValidator : AbstractValidator<DoctorTypeMasterModel>
     {
