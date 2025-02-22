@@ -16,7 +16,7 @@ namespace HIMS.Data.Models
         public bool? IsView { get; set; }
         public bool PageType { get; set; }
     }
-    public partial class MenuMaster
+    public class MenuMasterDTO : MenuMaster
     {
         public int RoleId { get; set; }
         public bool IsView { get; set; }
