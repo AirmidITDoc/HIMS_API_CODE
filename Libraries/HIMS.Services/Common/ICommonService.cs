@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,5 +15,7 @@ namespace HIMS.Services.Common
         dynamic GetDDLByIdWithProc(DDLRequestModel model);
         dynamic GetDataSetByProc(ListRequestModel model);
         List<T> GetSingleListByProc<T>(ListRequestModel model);
+
+        Task<IPagedList<dynamic>> CommonList(GridRequestModel objGrid, string SP_Name);
     }
 }

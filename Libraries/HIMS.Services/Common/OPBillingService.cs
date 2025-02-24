@@ -50,13 +50,11 @@ namespace HIMS.Services.Common
                         await _context.SaveChangesAsync();
 
                         // Bill Details Code
-                        foreach (var objItem in objBill.BillDetails)
-                        {
-                            objItem.BillNo = objBill.BillNo;
-                            objItem.ChargesId = objItem1?.ChargesId;
-                            _context.BillDetails.Add(objItem);
+                            BillDetail objBillDet = new BillDetail();
+                            objBillDet.BillNo = objBill.BillNo;
+                            objBillDet.ChargesId = objItem1?.ChargesId;
+                            _context.BillDetails.Add(objBillDet);
                             await _context.SaveChangesAsync();
-                        }
 
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
@@ -151,15 +149,14 @@ namespace HIMS.Services.Common
                         objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
                         _context.AddCharges.Add(objItem1);
                         await _context.SaveChangesAsync();
-
+                        
                         // Bill Details Code
-                        foreach (var objItem in objBill.BillDetails)
-                        {
-                            objItem.BillNo = objBill.BillNo;
-                            objItem.ChargesId = objItem1?.ChargesId;
-                            _context.BillDetails.Add(objItem);
-                            await _context.SaveChangesAsync();
-                        }
+                        BillDetail objBillDet = new BillDetail();
+                        objBillDet.BillNo = objBill.BillNo;
+                        objBillDet.ChargesId = objItem1?.ChargesId;
+                        _context.BillDetails.Add(objBillDet);
+                        await _context.SaveChangesAsync();
+
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
                         {
@@ -200,19 +197,7 @@ namespace HIMS.Services.Common
                         }
                     }
 
-                    // Payment Code
-                    int _val = 0;
-                    //foreach (var objPayment in objBill.Payments)
-                    //{
-                    //    if (_val == 0)
-                    //    {
-                    //        objPayment.BillNo = objBill.BillNo;
-                    //        _context.Payments.Add(objPayment);
-                    //        await _context.SaveChangesAsync();
-                    //    }
-                    //    _val += 1;
-                    //}
-                    scope.Complete();
+                   scope.Complete();
                 }
             }
             catch (Exception ex)

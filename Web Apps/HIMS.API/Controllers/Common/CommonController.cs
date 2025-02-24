@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Services.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +18,21 @@ namespace HIMS.API.Controllers.Common
         public CommonController(ICommonService commonRepository)
         {
             _ICommonService = commonRepository;
+        }
+
+        [HttpPost("CommonList")]
+        public async Task<IActionResult> CommonList(CommonRequestModel objModel)
+        {
+            GridRequestModel objGrid = new GridRequestModel();
+            objGrid.First = objModel.First;
+            objGrid.Rows = objModel.Rows;
+            objGrid.SortField = objModel.SortField;
+            objGrid.SortOrder = objModel.SortOrder;
+            objGrid.Filters = objModel.Filters;
+            objGrid.ExportType = objModel.ExportType;
+
+            IPagedList<dynamic> OpRefundlist = await _ICommonService.CommonList(objGrid,objModel.SPName);
+            return Ok(OpRefundlist.ToGridResponse(objGrid,  "List"));
         }
 
         [HttpPost]

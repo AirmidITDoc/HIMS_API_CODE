@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IPhoneAppointment2Service = repository;
         }
         [HttpPost("PhoneAppList")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PhoneAppointment2ListDto> PhoneAppList = await _IPhoneAppointment2Service.GetListAsync(objGrid);
