@@ -126,8 +126,8 @@ namespace HIMS.API.Models.OPPatient
     public class RefundBillModel
     {
         public OPRefundOfBillModel Refund { get; set; }
-        public TRefundDetailModel TRefundDetails { get; set; }
-        public AddChargesModell AddCharges { get; set; }
+        public List<TRefundDetailModel> TRefundDetails { get; set; }
+        public List<AddChargesModell> AddCharges { get; set; }
         public PaymentModell Payment { get; set; }
     }
 }
