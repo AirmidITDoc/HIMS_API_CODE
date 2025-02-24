@@ -5,7 +5,6 @@ namespace HIMS.API.Models.IPPatient
 {
     public class AdvanceModel
     {
-        public long AdvanceId { get; set; }
         public DateTime? Date { get; set; }
         public long? RefId { get; set; }
         public byte? OpdIpdType { get; set; }
@@ -17,31 +16,22 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-
-         //public virtual ICollection<AdvanceDetailModel> AdvanceDetail { get; set; }
-
+        public long AdvanceId { get; set; }
     }
-
     public class AdvanceModelValidator : AbstractValidator<AdvanceModel>
     {
         public AdvanceModelValidator()
         {
-            RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
-            //RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
-            //RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            //RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            //RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
+            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
+            RuleFor(x => x.RefId).NotNull().NotEmpty().WithMessage("RefId is required");
+          
         }
     }
-
-
     public class AdvanceDetailModel
     {
-        public long AdvanceDetailId { get; set; }
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
         public long? AdvanceId { get; set; }
-        //public string? AdvanceNo { get; set; }
         public long? RefId { get; set; }
         public long? TransactionId { get; set; }
         public long? OpdIpdId { get; set; }
@@ -56,6 +46,8 @@ namespace HIMS.API.Models.IPPatient
         public long? IsCancelledby { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public string? Reason { get; set; }
+        public long AdvanceDetailId { get; set; }
+
     }
 
     public class AdvanceDetailModelValidator : AbstractValidator<AdvanceDetailModel>
@@ -114,11 +106,11 @@ namespace HIMS.API.Models.IPPatient
         }
     }
 
-    public class IPAdvance
+    public class ModelAdvance1
     {
 
-        public AdvanceModel AdvanceModel { get; set; }
-        public AdvanceDetailModel AdvanceDetailModel { get; set; }
+        public AdvanceModel Advance{ get; set; }
+        public AdvanceDetailModel AdvanceDetail{ get; set; }
         public AdvancePayment AdvancePayment { get; set; }
     }
 }

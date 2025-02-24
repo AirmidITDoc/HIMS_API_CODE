@@ -38,14 +38,52 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
         }
-
-
         public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "m_Rtrv_BrowseIPRefundAdvanceReceipt");
         }
 
-        public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail,Payment objpayment, int UserId, string UserName)
+        //SHILPA CODE////
+        public virtual async Task InsertAdvanceAsyncSP1(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objPayment ,int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "AdvanceDetails" };
+            var entity = objAdvanceHeader.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string vAdvanceId = odal.ExecuteNonQuery("sp_insert_AdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
+            objAdvanceHeader.AdvanceId = Convert.ToInt32(vAdvanceId);
+            objAdvanceDetail.AdvanceId = Convert.ToInt32(vAdvanceId);
+
+            string[] rDetailEntity = { "AdvanceNo", "Advance" };
+
+            var AdvanceEntity = objAdvanceDetail.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                AdvanceEntity.Remove(rProperty);
+            }
+            string AdvanceDetailId = odal.ExecuteNonQuery("sp_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
+
+            string[] PDetailEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "BillNoNavigation" };
+            var PAdvanceEntity = objPayment.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                PAdvanceEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("sp_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
+
+        }
+
+
+
+
+
+
+
+        public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId , string UserName)
         {
 
             DatabaseHelper odal = new();
