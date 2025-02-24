@@ -27,15 +27,15 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<BrowseIPDPaymentReceiptListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPDPaymentReceiptListDto>(model, "Retrieve_BrowseIPDPaymentReceipt");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPDPaymentReceiptListDto>(model, "ps_Rtrv_BrowseIPDPaymentReceipt");
         }
         public virtual async Task<IPagedList<BrowseIPAdvPaymentReceiptListDto>> GetListAsync2(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPAdvPaymentReceiptListDto>(model, "Retrieve_BrowseIPAdvPaymentReceipt");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPAdvPaymentReceiptListDto>(model, "ps_Rtrv_BrowseIPAdvPaymentReceipt");
         }
         public virtual async Task<IPagedList<BrowsePharmacyPayReceiptListDto>> GetListAsync3(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyPayReceiptListDto>(model, "Rtrv_BrowsePharmacyPayReceipt");
+            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyPayReceiptListDto>(model, "ps_Rtrv_BrowsePharmacyPayReceipt");
         }
         public virtual async Task InsertAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
         {
