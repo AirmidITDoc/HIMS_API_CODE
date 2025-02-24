@@ -8963,6 +8963,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IsEmergency).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.ServiceName).HasMaxLength(200);
 
                 entity.Property(e => e.ServiceShortDesc).HasMaxLength(200);
