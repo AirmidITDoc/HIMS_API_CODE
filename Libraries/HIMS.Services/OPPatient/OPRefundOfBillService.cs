@@ -41,7 +41,7 @@ namespace HIMS.Services.OPPatient
 
 
 
-        public virtual async Task InsertAsyncOP(Refund objRefund, TRefundDetail objTRefundDetail, AddCharge objAddCharge, Payment objPayment, int UserId, string Username)
+        public virtual async Task InsertAsyncOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -54,28 +54,31 @@ namespace HIMS.Services.OPPatient
             }
             string vRefundId= odal.ExecuteNonQuery("ps_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(vRefundId);
-            objTRefundDetail.RefundId = Convert.ToInt32(vRefundId);
-            //objAddCharge.ChargesId = Convert.ToInt32(vRefundId);
             objPayment.RefundId = Convert.ToInt32(vRefundId);
 
-            string[] rRefundEntity = { "HospitalAmount", "DoctorAmount", "RefundDetId", "UpdatedBy", "Refund" };
-            var RefundEntity = objTRefundDetail.ToDictionary();
-            foreach (var rProperty in rRefundEntity)
+            foreach (var item in objTRefundDetail)
             {
-                RefundEntity.Remove(rProperty);
+                item.RefundId = Convert.ToInt32(vRefundId);
+                string[] rRefundEntity = { "HospitalAmount", "DoctorAmount", "RefundDetId", "UpdatedBy", "Refund" };
+                var RefundEntity = item.ToDictionary();
+                foreach (var rProperty in rRefundEntity)
+                {
+                    RefundEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
             }
-            odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
 
-            //foreach (var objcharge in objAddCharge.ToDictionary())
-            //{
-            string[] rChargeEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo" , "IsHospMrk", "BillNoNavigation" };
-            var ChargeEntity = objAddCharge.ToDictionary();
-            foreach (var rProperty in rChargeEntity)
-             {
-               ChargeEntity.Remove(rProperty);
-             }
-            odal.ExecuteNonQuery("ps_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
-            //}
+
+            foreach (var item in objAddCharge)
+            {
+                string[] rChargeEntity = { "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "CPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo" , "IsHospMrk", "BillNoNavigation" };
+                var ChargeEntity = item.ToDictionary();
+                foreach (var rProperty in rChargeEntity)
+                 {
+                   ChargeEntity.Remove(rProperty);
+                 }
+                odal.ExecuteNonQuery("ps_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
+            }
 
             string[] rPayEntity = { "PaymentId","CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode"};
             var PayEntity = objPayment.ToDictionary();

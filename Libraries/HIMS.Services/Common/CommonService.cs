@@ -2,6 +2,7 @@
 using HIMS.Core.Domain.Logging;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -16,6 +17,13 @@ namespace HIMS.Services.Common
         public CommonService()
         {
         }
+
+
+        public virtual async Task<IPagedList<dynamic>> CommonList(GridRequestModel objGrid, string SP_Name)
+        {
+            return await DatabaseHelper.GetGridDataBySp<dynamic>(objGrid, SP_Name);
+        }
+
         public dynamic GetDDLByIdWithProc(DDLRequestModel model)
         {
             DatabaseHelper odal = new();

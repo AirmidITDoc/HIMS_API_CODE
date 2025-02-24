@@ -23,10 +23,10 @@ namespace HIMS.Services.Users
             DatabaseHelper sql=new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@RoleId", RoleId);
-            List<MenuMaster> lstMenu = sql.FetchListByQuery<MenuMaster>("SELECT M.Id,ISNULL(M.UpId,0) UpId,M.LinkName,M.Icon,M.LinkAction,M.SortOrder,M.IsActive,M.IsDisplay,M.PermissionCode,M.TableNames,P.IsView,P.IsAdd,P.IsEdit,P.IsDelete FROM MenuMaster M LEFT JOIN PermissionMaster P ON M.Id=P.MenuId AND P.RoleId=@RoleId\r\nWHERE IsActive=1 AND IsDisplay=1", para);
+            List<MenuMasterDTO> lstMenu = sql.FetchListByQuery<MenuMasterDTO>("SELECT M.Id,ISNULL(M.UpId,0) UpId,M.LinkName,M.Icon,M.LinkAction,M.SortOrder,M.IsActive,M.IsDisplay,M.PermissionCode,M.TableNames,P.IsView,P.IsAdd,P.IsEdit,P.IsDelete FROM MenuMaster M LEFT JOIN PermissionMaster P ON M.Id=P.MenuId AND P.RoleId=@RoleId\r\nWHERE IsActive=1 AND IsDisplay=1", para);
             return PrepareMenu(lstMenu, isActiveMenuOnly);
         }
-        public static List<MenuModel> PrepareMenu(List<MenuMaster> lstMenu, bool isActiveMenuOnly)
+        public static List<MenuModel> PrepareMenu(List<MenuMasterDTO> lstMenu, bool isActiveMenuOnly)
         {
             List<MenuModel> finalList = new();
             try
@@ -115,7 +115,7 @@ namespace HIMS.Services.Users
             }
             return finalList;
         }
-        private static List<MenuModel> AddChildtems(List<MenuMaster> Data, MenuModel obj, bool isActiveMenuOnly)
+        private static List<MenuModel> AddChildtems(List<MenuMasterDTO> Data, MenuModel obj, bool isActiveMenuOnly)
         {
             List<MenuModel> lstChilds = new();
             try

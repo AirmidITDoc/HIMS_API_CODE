@@ -15,14 +15,14 @@ namespace HIMS.Services.Inventory
     public partial interface IBillingService
     {
          Task InsertAsync(ServiceMaster objService, int UserId, string Username);
-        Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username);
+        //Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username);
         Task UpdateAsync(ServiceMaster objService, int UserId, string Username);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel objGrid);
-        Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel objGrid);
-        Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel objGrid);
-        Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel objGrid);
+        //Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel objGrid);
+        //Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel objGrid);
+        //Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel objGrid);
+        //Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel objGrid);
 
         Task<List<ServiceMaster>> GetAllRadiologyTest();
 

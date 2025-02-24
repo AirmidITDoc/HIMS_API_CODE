@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.Models
 {
-    public partial class ServiceMaster
-    {
-        public decimal? ClassRate { get; set; }
-        public long? TariffId { get; set; }
-        public long? ClassId { get; set; }
-    }
+    //public partial class ServiceMasterList
+    //{
+    //    public decimal? ClassRate { get; set; }
+    //    public long? TariffId { get; set; }
+    //    public long? ClassId { get; set; }
+    //}
 
-    public class ServiceMasterDTO
+    public class ServiceMasterDTO:ServiceMaster
     {
         public long ServiceId { get; set; }
         public string ServiceName { get; set; }
+        public decimal? ClassRate { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
     }
 }

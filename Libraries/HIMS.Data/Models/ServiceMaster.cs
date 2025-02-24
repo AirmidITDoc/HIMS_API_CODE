@@ -30,7 +30,8 @@ namespace HIMS.Data.Models
         public bool? IsDocEditable { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public int? AddedBy { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }

@@ -61,24 +61,20 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(Servicelist.ToGridResponse(objGrid, "Refund Against Bill List "));
         }
 
-        [HttpPost("OPInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [HttpPost("OPInsert")]//[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
-            TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
-            AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
+            List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
+            List<AddCharge> objAddCharge = obj.AddCharges.MapTo<List<AddCharge>>();
             Payment objPayment = obj.Payment.MapTo<Payment>();
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
                 model.AddedBy = CurrentUserId;
 
-                obj.TRefundDetails.RefundId = obj.Refund.RefundId;
-                objTRefundDetail.AddBy = CurrentUserId;
-                objTRefundDetail.UpdatedBy = CurrentUserId;
-
-                obj.AddCharges.ChargesId = obj.Refund.RefundId;
+                objTRefundDetail.ForEach(x => { x.RefundId = obj.Refund.RefundId; x.AddBy = CurrentUserId; x.UpdatedBy = CurrentUserId; });
+                obj.AddCharges.ForEach(x => { x.ChargesId = obj.Refund.RefundId; });
 
                 obj.Payment.RefundId = obj.Refund.RefundId;
                 objPayment.PaymentTime = Convert.ToDateTime(objPayment.PaymentTime);

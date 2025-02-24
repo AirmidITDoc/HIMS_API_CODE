@@ -22,7 +22,7 @@ namespace HIMS.Services.Administration
             _context = HIMSDbContext;
         }
 
-        public List<MenuModel> PrepareMenu(List<MenuMaster> lstMenu, bool isActiveMenuOnly)
+        public List<MenuModel> PrepareMenu(List<MenuMasterDTO> lstMenu, bool isActiveMenuOnly)
         {
             List<MenuModel> finalList = new();
             try
@@ -111,7 +111,7 @@ namespace HIMS.Services.Administration
             }
             return finalList;
         }
-        private List<MenuModel> AddChildtems(List<MenuMaster> Data, MenuModel obj, bool isActiveMenuOnly)
+        private List<MenuModel> AddChildtems(List<MenuMasterDTO> Data, MenuModel obj, bool isActiveMenuOnly)
         {
             List<MenuModel> lstChilds = new List<MenuModel>();
             try
@@ -169,7 +169,7 @@ namespace HIMS.Services.Administration
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@RoleId", RoleId);
-            List<MenuMaster> lstMenu = sql.FetchListBySP<MenuMaster>("GET_PERMISSION", para);
+            List<MenuMasterDTO> lstMenu = sql.FetchListBySP<MenuMasterDTO>("GET_PERMISSION", para);
             return PrepareMenu(lstMenu, false);
         }
         //public void SavePermission(List<PermissionModel> lst)

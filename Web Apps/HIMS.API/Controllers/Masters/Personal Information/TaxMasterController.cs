@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost] 
         [Route("[action]")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MTaxNatureMaster> TaxMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MTaxNatureMaster model = await _repository.GetById(x => x.Id == Id);
