@@ -13,6 +13,12 @@ namespace HIMS.API.Models.IPPatient
         public string? AuthorityName { get; set; }
         public string? BuckleNo { get; set; }
         public string? PoliceStation { get; set; }
+
+
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
     public class MlcInformationModelValidator : AbstractValidator<MlcInformationModel>
     {

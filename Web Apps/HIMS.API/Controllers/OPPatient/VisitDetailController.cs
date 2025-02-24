@@ -178,6 +178,13 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
 
+        [HttpPost("OPprevDoctorVisitList")]
+        public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
+        {
+            IPagedList<PrevDrVisistListDto> OpRefundlist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
+            return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Previoud Dr Visit List"));
+        }
+
         //[HttpGet]
         //[Route("get-DeptDoctor")]
         //[Permission]
