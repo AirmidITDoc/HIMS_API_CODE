@@ -298,12 +298,12 @@ namespace HIMS.Services.OPPatient
             return await qry.Take(25).ToListAsync();
         }
 
-        public virtual async Task<List<ServiceMaster>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var qry = from s in _context.ServiceMasters
                       join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
                       where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
-                      select new ServiceMaster()
+                      select new ServiceMasterDTO()
                       {
                           ServiceId = s.ServiceId,
                           GroupId = s.GroupId,

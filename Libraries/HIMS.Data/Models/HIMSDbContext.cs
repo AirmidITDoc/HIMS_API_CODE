@@ -7392,6 +7392,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AddedByName).HasMaxLength(100);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TalukaName).HasMaxLength(100);
 
                 entity.Property(e => e.VillageName).HasMaxLength(100);

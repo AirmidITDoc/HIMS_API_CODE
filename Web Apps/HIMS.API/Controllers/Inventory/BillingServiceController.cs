@@ -3,6 +3,8 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
@@ -24,30 +26,16 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("BillingList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
 
-        [HttpPost("Insert")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(BillingServiceModel obj)
-        {
-            ServiceMaster model = obj.MapTo<ServiceMaster>();
-            if (obj.ServiceId == 0)
-            {
-                model.CreatedDate = DateTime.Now;
-                model.IsActive = true;
-                await _BillingService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name added successfully.");
-        }
+      
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
@@ -64,7 +52,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
@@ -72,14 +60,15 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name updated successfully.");
         }
-        [HttpPost("ServiceCanceled")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+
+         [HttpPost("ServiceCanceled")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(BillingServiceModel obj)
         {
             ServiceMaster model = new();

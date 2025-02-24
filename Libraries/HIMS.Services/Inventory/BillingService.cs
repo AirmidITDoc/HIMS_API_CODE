@@ -30,67 +30,67 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<BillingServiceDto>(model, "m_Rtrv_ServiceList_Pagn");
         }
-        public virtual async Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
-        }
+        //public virtual async Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
+        //}
       
-        public virtual async Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
-        }
-        public virtual async Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
-        }
-        public virtual async Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "Rtrv_BillListForDocShr");
-        }
+        //public virtual async Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
+        //}
+        //public virtual async Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+        //}
+        //public virtual async Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "Rtrv_BillListForDocShr");
+        //}
 
-        public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
-        {
-            try
-            {
-                //Add header table records
-                DatabaseHelper odal = new();
-                string[] rEntity = { " SubGroupId  ", "DoctorId", "IsEmergency ", "EmgAmt", " EmgPer", " IsDocEditable", "  CreatedBy ", " CreatedDate", "AddedBy ", "ServiceDetail" };
-                var entity = objService.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string VServiceId = odal.ExecuteNonQuery("m_insert_ServiceMaster_1", CommandType.StoredProcedure, "ServiceId", entity);
-                objService.ServiceId = Convert.ToInt32(VServiceId);
+        //public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
+        //{
+        //    try
+        //    {
+        //        //Add header table records
+        //        DatabaseHelper odal = new();
+        //        string[] rEntity = { " SubGroupId  ", "DoctorId", "IsEmergency ", "EmgAmt", " EmgPer", " IsDocEditable", "  CreatedBy ", " CreatedDate", "AddedBy ", "ServiceDetail" };
+        //        var entity = objService.ToDictionary();
+        //        foreach (var rProperty in rEntity)
+        //        {
+        //            entity.Remove(rProperty);
+        //        }
+        //        string VServiceId = odal.ExecuteNonQuery("m_insert_ServiceMaster_1", CommandType.StoredProcedure, "ServiceId", entity);
+        //        objService.ServiceId = Convert.ToInt32(VServiceId);
 
 
 
-                // Add details table records
-                foreach (var objTemplate in objService.ServiceDetails)
-                {
-                    objTemplate.ServiceId = objService.ServiceId;
-                }
-                _context.ServiceDetails.AddRange(objService.ServiceDetails);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                // Delete header table realted records
-                ServiceMaster? objBill = await _context.ServiceMasters.FindAsync(objService.ServiceId);
-                if (objBill != null)
-                {
-                    _context.ServiceMasters.Remove(objBill);
-                }
+        //        // Add details table records
+        //        foreach (var objTemplate in objService.ServiceDetails)
+        //        {
+        //            objTemplate.ServiceId = objService.ServiceId;
+        //        }
+        //        _context.ServiceDetails.AddRange(objService.ServiceDetails);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // Delete header table realted records
+        //        ServiceMaster? objBill = await _context.ServiceMasters.FindAsync(objService.ServiceId);
+        //        if (objBill != null)
+        //        {
+        //            _context.ServiceMasters.Remove(objBill);
+        //        }
 
-                // Delete details table realted records
-                var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync(); 
-                if (lst.Count > 0)
-                {
-                    _context.ServiceDetails.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
-            }
-        }
+        //        // Delete details table realted records
+        //        var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync(); 
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.ServiceDetails.RemoveRange(lst);
+        //        }
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
         public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
             {
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -105,11 +105,17 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // Delete details table realted records
+                var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.ServiceDetails.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
                 // Update header & detail table records
                 _context.ServiceMasters.Update(objService);
                 _context.Entry(objService).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
         }
