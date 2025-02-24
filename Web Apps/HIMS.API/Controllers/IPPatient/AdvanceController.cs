@@ -13,6 +13,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Core;
+using HIMS.Services.OutPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -64,13 +65,12 @@ namespace HIMS.API.Controllers.IPPatient
                 model.Date = Convert.ToDateTime(obj.Advance.Date);
                 model.AddedBy = CurrentUserId;
 
-                if (obj.Advance.AdvanceId == 0)
-                {
-                    objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
-                    objAdvanceDetail.AddedBy = CurrentUserId;
-                }
+                objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
+                objAdvanceDetail.AddedBy = CurrentUserId;
+                objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
+                objpayment.AddBy = CurrentUserId;
 
-                await _IAdvanceService.InsertAdvanceAsyncSP1(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+               await _IAdvanceService.InsertAdvanceAsyncSP1(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

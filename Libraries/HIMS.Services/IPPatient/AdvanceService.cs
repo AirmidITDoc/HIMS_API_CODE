@@ -67,9 +67,9 @@ namespace HIMS.Services.IPPatient
             }
             string AdvanceDetailId = odal.ExecuteNonQuery("sp_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
 
-            string[] PDetailEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDate", "BillNoNavigation" };
+            string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
             var PAdvanceEntity = objPayment.ToDictionary();
-            foreach (var rProperty in rDetailEntity)
+            foreach (var rProperty in PayEntity)
             {
                 PAdvanceEntity.Remove(rProperty);
             }
@@ -83,7 +83,9 @@ namespace HIMS.Services.IPPatient
 
 
 
-        public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId , string UserName)
+
+
+         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId , string UserName)
         {
 
             DatabaseHelper odal = new();
