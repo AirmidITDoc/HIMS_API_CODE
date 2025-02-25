@@ -11,6 +11,7 @@ using HIMS.Services.OutPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -25,7 +26,7 @@ namespace HIMS.API.Controllers.Inventory
             _ItemMasterServices = repository;
         }
         [HttpPost("ItemMasterList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemMasterListDto> ItemMasterList = await _ItemMasterServices.GetItemMasterListAsync(objGrid);
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +48,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -64,7 +65,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -83,7 +84,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
          [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -97,7 +98,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
         }
         [HttpPost("ItemCanceled")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
         {
             MItemMaster model = new();
