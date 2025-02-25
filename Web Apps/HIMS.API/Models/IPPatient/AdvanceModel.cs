@@ -89,6 +89,7 @@ namespace HIMS.API.Models.IPPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime PayTmdate { get; set; }
+        public decimal TDSAmount { get; set; }
     }
 
     public class AdvancePaymentValidator : AbstractValidator<AdvancePayment>
