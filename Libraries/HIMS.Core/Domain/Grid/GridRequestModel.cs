@@ -45,15 +45,4 @@ namespace HIMS.Core.Domain.Grid
         InClause,
         DateRange
     }
-
-    public class CommonRequestModel
-    {
-        public int First { get; set; }
-        public int Rows { get; set; }
-        public string SortField { get; set; }  = string.Empty; 
-        public int SortOrder { get; set; }
-        public List<SearchGrid> Filters { get; set; }
-        public ExportType ExportType { get; set; }
-        public string SPName { get; set; } = string.Empty;
-    }
 }

@@ -19,11 +19,6 @@ namespace HIMS.Services.Common
         }
 
 
-        public virtual async Task<IPagedList<dynamic>> CommonList(GridRequestModel objGrid, string SP_Name)
-        {
-            return await DatabaseHelper.GetGridDataBySp<dynamic>(objGrid, SP_Name);
-        }
-
         public dynamic GetDDLByIdWithProc(DDLRequestModel model)
         {
             DatabaseHelper odal = new();

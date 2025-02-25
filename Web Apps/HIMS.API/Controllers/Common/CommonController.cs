@@ -20,21 +20,6 @@ namespace HIMS.API.Controllers.Common
             _ICommonService = commonRepository;
         }
 
-        [HttpPost("CommonList")]
-        public async Task<IActionResult> CommonList(CommonRequestModel objModel)
-        {
-            GridRequestModel objGrid = new GridRequestModel();
-            objGrid.First = objModel.First;
-            objGrid.Rows = objModel.Rows;
-            objGrid.SortField = objModel.SortField;
-            objGrid.SortOrder = objModel.SortOrder;
-            objGrid.Filters = objModel.Filters;
-            objGrid.ExportType = objModel.ExportType;
-
-            IPagedList<dynamic> OpRefundlist = await _ICommonService.CommonList(objGrid,objModel.SPName);
-            return Ok(OpRefundlist.ToGridResponse(objGrid,  "List"));
-        }
-
         [HttpPost]
         public ApiResponse GetByProc(ListRequestModel model)
         {
