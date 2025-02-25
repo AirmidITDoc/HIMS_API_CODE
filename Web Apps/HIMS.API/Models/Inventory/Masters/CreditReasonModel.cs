@@ -6,6 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long CreditId { get; set; }
         public string? CreditReason { get; set; }
+        public bool? IsActive { get; set; }
     }
 
     public class CreditReasonModelValidator : AbstractValidator<CreditReasonModel>

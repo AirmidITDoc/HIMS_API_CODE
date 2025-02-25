@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster  updated successfully.");
         }
-        [HttpPost("ParameterCancel")]
+        [HttpDelete("ParameterCancel")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelParameter obj)
         {
