@@ -9,6 +9,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Common;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +60,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name  added successfully.");
         }
 
+       
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(SupplierModel obj)
@@ -66,8 +68,8 @@ namespace HIMS.API.Controllers.Inventory
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
             if (obj.SupplierId == 0)
             {
-                model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
-                model.AddedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 await _SupplierService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -75,6 +77,7 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name  added successfully.");
         }
+
 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
@@ -85,12 +88,12 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.SupplierTime = Convert.ToDateTime(obj.SupplierTime);
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 await _SupplierService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name updated successfully.");
         }
-
 
         [HttpPost("Cancel")]
         [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]

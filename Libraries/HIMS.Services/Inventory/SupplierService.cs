@@ -93,6 +93,13 @@ namespace HIMS.Services.Inventory
          {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // Delete details table realted records
+                var lst = await _context.MAssignSupplierToStores.Where(x => x.SupplierId == objSupplier.SupplierId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MAssignSupplierToStores.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
                 // Update header & detail table records
                 _context.MSupplierMasters.Update(objSupplier);
                 _context.Entry(objSupplier).State = EntityState.Modified;
