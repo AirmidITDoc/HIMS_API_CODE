@@ -13,6 +13,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Core;
+using HIMS.Services.OutPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -53,25 +54,23 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
         }
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(IPAdvance obj)
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(ModelAdvance1 obj)
         {
-            AdvanceHeader model = obj.AdvanceModel.MapTo<AdvanceHeader>();
-            AdvanceDetail objAdvanceDetail = obj.AdvanceDetailModel.MapTo<AdvanceDetail>();
+            AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
+            AdvanceDetail objAdvanceDetail = obj.AdvanceDetail.MapTo<AdvanceDetail>();
             Payment objpayment = obj.AdvancePayment.MapTo<Payment>();
-            if (obj.AdvanceModel.AdvanceId == 0)
+            if (obj.Advance.AdvanceId == 0)
             {
-                model.Date = Convert.ToDateTime(obj.AdvanceModel.Date);
+                model.Date = Convert.ToDateTime(obj.Advance.Date);
                 model.AddedBy = CurrentUserId;
 
-                if (obj.AdvanceModel.AdvanceId == 0)
-                {
-                    objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceModel.Date);
-                    objAdvanceDetail.AddedBy = CurrentUserId;
-                   // objVisitDetail.UpdatedBy = CurrentUserId;
-                }
+                objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
+                objAdvanceDetail.AddedBy = CurrentUserId;
+                objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
+                objpayment.AddBy = CurrentUserId;
 
-                 await _IAdvanceService.InsertAdvanceAsyncSP(model,objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+               await _IAdvanceService.InsertAdvanceAsyncSP1(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -80,21 +79,44 @@ namespace HIMS.API.Controllers.IPPatient
 
 
 
-        [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Update(IPAdvance obj)
-        {
-            AdvanceDetail model = obj.AdvanceDetailModel.MapTo<AdvanceDetail>();
-            if (obj.AdvanceDetailModel.AdvanceId != 0)
-            {
-                model.AddedBy = CurrentUserId;
+        //[HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Update(IPAdvance obj)
+        //{
+        //    AdvanceDetail model = obj.AdvanceDetailModel.MapTo<AdvanceDetail>();
+        //    if (obj.AdvanceDetailModel.AdvanceId != 0)
+        //    {
+        //        model.AddedBy = CurrentUserId;
 
-                await _IAdvanceService.UpdateAdvanceAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Updated successfully.");
-        }
+        //        await _IAdvanceService.UpdateAdvanceAsyncSP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Updated successfully.");
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

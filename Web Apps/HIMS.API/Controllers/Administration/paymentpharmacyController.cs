@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPAdvPaymentReceiptList")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        //  [Permission(PageCode = "OPDPaymentReceiptList", Permission = PagePermission.View)]
         public async Task<IActionResult> List2(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPAdvPaymentReceiptListDto> IPAdvPaymentReceiptList = await _paymentpharmacyService.GetListAsync2(objGrid);

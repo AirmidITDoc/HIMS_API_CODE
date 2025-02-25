@@ -9,7 +9,7 @@ namespace HIMS.Data.Models
         public string? VillageName { get; set; }
         public string? TalukaName { get; set; }
         public string? AddedByName { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

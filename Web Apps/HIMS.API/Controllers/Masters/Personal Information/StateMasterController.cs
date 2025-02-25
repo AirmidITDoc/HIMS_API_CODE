@@ -102,5 +102,15 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
+        [HttpGet]
+        [Route("get-state")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MstateMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "State dropdown", MstateMasterList.Select(x => new { x.StateId, x.CountryId, x.StateName }));
+        }
+
     }
 }

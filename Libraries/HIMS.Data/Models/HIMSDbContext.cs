@@ -7383,12 +7383,9 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<MVillage>(entity =>
             {
-                entity.HasKey(e => e.VillageId)
-                    .HasName("PK__M_Villag__1A7F53988CDA72B7");
+                entity.HasKey(e => e.VillageId);
 
                 entity.ToTable("M_Village");
-
-                entity.Property(e => e.VillageId).ValueGeneratedNever();
 
                 entity.Property(e => e.AddedByName).HasMaxLength(100);
 
