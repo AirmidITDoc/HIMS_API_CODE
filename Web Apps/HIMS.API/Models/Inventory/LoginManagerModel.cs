@@ -39,6 +39,7 @@ namespace HIMS.API.Models.Inventory
         public long? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
+        public bool? IsActive { get; set; }
     }
     public class LoginManagerModelValidator : AbstractValidator<LoginManagerModel>
     {
