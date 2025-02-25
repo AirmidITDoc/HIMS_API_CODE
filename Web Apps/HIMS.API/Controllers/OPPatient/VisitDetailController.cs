@@ -208,7 +208,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", resultList.Select(x => new
             {
                 x.ServiceId,
                 x.GroupId,
