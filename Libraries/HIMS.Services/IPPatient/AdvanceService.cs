@@ -77,15 +77,8 @@ namespace HIMS.Services.IPPatient
 
         }
 
-
-
-
-
-
-
-
-
-         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId , string UserName)
+        
+        public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objpayment, int UserId , string UserName)
         {
 
             DatabaseHelper odal = new();
