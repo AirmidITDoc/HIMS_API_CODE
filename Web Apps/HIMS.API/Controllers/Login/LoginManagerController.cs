@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.Login
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
-            model.IsActive = true;
+            //model.IsActive = true;
             if (obj.UserId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
