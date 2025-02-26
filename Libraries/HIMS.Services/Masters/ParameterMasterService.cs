@@ -69,21 +69,22 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // remove conditional records
                 if (objPara.IsNumeric == 0)
-                    // Delete details table realted records
-                //  var lst = await _context.MParameterDescriptiveMasters.Where(x => x.ParameterId == objPara.ParameterId).ToListAsync();
+                {
+                    //Delete details table realted records
+                    var lst = await _context.MParameterDescriptiveMasters.Where(x => x.ParameterId == objPara.ParameterId).ToListAsync();
+                    if (lst != null && lst.Count > 0)
+                    {
+                        _context.MParameterDescriptiveMasters.RemoveRange(lst);
+                        await _context.SaveChangesAsync(); // Save deletions before proceeding
+                    }
 
-                //if (lst != null && lst.Count > 0)
-                //{
-                //    _context.MParameterDescriptiveMasters.RemoveRange(lst);
-                //    await _context.SaveChangesAsync(); // Save deletions before proceeding
-                //}
-
-                objPara.MParameterDescriptiveMasters = null; // Prevent re-inserting deleted records
-            
+                    objPara.MParameterDescriptiveMasters = null; // Prevent re-inserting deleted records
+                }
                 else
-                    objPara.MPathParaRangeWithAgeMasters = null;
+                { 
+                objPara.MPathParaRangeWithAgeMasters = null;
+                }
                 // Add header table records
                 // Update header & detail table records
                 _context.MPathParameterMasters.Update(objPara);
