@@ -40,11 +40,11 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
-            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "OPBillListSettlement App List"));
+            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "OP Patient Bill List "));
         }
 
         [HttpPost("OPBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -60,9 +60,8 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.");
         }
 
-
         [HttpPost("OPCreditBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();

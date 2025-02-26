@@ -48,14 +48,14 @@ namespace HIMS.Services.OPPatient
                         _context.AddCharges.Add(objItem1);
                         await _context.SaveChangesAsync();
 
+
                         // Bill Details Code
-                        foreach (var objItem in objBill.BillDetails)
-                        {
-                            objItem.BillNo = objBill.BillNo;
-                            objItem.ChargesId = objItem1?.ChargesId;
-                            _context.BillDetails.Add(objItem);
-                            await _context.SaveChangesAsync();
-                        }
+                        BillDetail objBillDet = new BillDetail();
+                        objBillDet.BillNo = objBill.BillNo;
+                        objBillDet.ChargesId = objItem1?.ChargesId;
+                        _context.BillDetails.Add(objBillDet);
+                        await _context.SaveChangesAsync();
+
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
                         {
