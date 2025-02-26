@@ -14074,6 +14074,18 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AppPurposeId).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.Bmi)
+                    .HasMaxLength(20)
+                    .HasColumnName("BMI");
+
+                entity.Property(e => e.Bp)
+                    .HasMaxLength(10)
+                    .HasColumnName("BP");
+
+                entity.Property(e => e.Bsl)
+                    .HasMaxLength(20)
+                    .HasColumnName("BSL");
+
                 entity.Property(e => e.Comments).HasMaxLength(500);
 
                 entity.Property(e => e.FirstFollowupVisit).HasDefaultValueSql("((0))");
@@ -14081,6 +14093,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.FollowupDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(((1)/(1))/(1900))");
+
+                entity.Property(e => e.Height).HasMaxLength(10);
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
@@ -14094,7 +14108,17 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PatientOldNew).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.Pulse).HasMaxLength(10);
+
+                entity.Property(e => e.Pweight)
+                    .HasMaxLength(20)
+                    .HasColumnName("PWeight");
+
                 entity.Property(e => e.RegId).HasColumnName("RegID");
+
+                entity.Property(e => e.SpO2).HasMaxLength(20);
+
+                entity.Property(e => e.Temp).HasMaxLength(10);
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 

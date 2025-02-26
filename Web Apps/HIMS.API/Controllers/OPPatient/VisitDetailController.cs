@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IDoctorMasterService = doctorMasterService;
         }
         [HttpPost("AppVisitList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        // [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("AppVisitInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -234,6 +234,23 @@ namespace HIMS.API.Controllers.OPPatient
                 x.DoctorId,
                 x.IsDocEditable
             }));
+        }
+
+
+        //Edit EditVital
+        [HttpPut("EditVital/{id:int}")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId != 0)
+            {
+                model.VisitId = obj.VisitId;
+                await _visitDetailsService.UpdateVitalAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Formula update successfully.");
         }
     }
 }
