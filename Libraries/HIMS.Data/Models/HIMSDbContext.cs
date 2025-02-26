@@ -6673,6 +6673,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MaxValue).HasMaxLength(50);
 
                 entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.HasOne(d => d.Para)
+                    .WithMany(p => p.MPathParaRangeWithAgeMasters)
+                    .HasForeignKey(d => d.ParaId)
+                    .HasConstraintName("FK_M_PathParaRangeWithAgeMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPathParameterMaster>(entity =>
