@@ -9,6 +9,7 @@ namespace HIMS.Data.Models
         {
             MParameterDescriptiveMasters = new HashSet<MParameterDescriptiveMaster>();
             MPathParaRangeMasters = new HashSet<MPathParaRangeMaster>();
+            MPathParaRangeWithAgeMasters = new HashSet<MPathParaRangeWithAgeMaster>();
         }
 
         public long ParameterId { get; set; }
@@ -32,5 +33,6 @@ namespace HIMS.Data.Models
 
         public virtual ICollection<MParameterDescriptiveMaster> MParameterDescriptiveMasters { get; set; }
         public virtual ICollection<MPathParaRangeMaster> MPathParaRangeMasters { get; set; }
+        public virtual ICollection<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasters { get; set; }
     }
 }
