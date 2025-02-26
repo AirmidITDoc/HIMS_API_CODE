@@ -54,7 +54,7 @@ namespace HIMS.Services.Masters
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // remove conditional records
-                if (objPara.IsNumeric == 0)
+                if (objPara.IsNumeric == 1)
                     objPara.MParameterDescriptiveMasters = null; 
                 else
                     objPara.MPathParaRangeWithAgeMasters = null;
@@ -69,21 +69,34 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                if (objPara.IsNumeric == 0)
+                if (objPara.IsNumeric == 1)
                 {
-                    //Delete details table realted records
+                    // Delete record from Parameter range table IsNumeric : 0
+                    var lst1 = await _context.MPathParaRangeWithAgeMasters.Where(x => x.ParaId == objPara.ParameterId).ToListAsync();
+                    if (lst1 != null && lst1.Count > 0)
+                    {
+                        _context.MPathParaRangeWithAgeMasters.RemoveRange(lst1);
+                    }
+                    await _context.SaveChangesAsync(); // Save deletions before proceeding
+                }
+                else
+                {
+                    //Delete details table realted records // Delete record from Parameter Descriptive table IsNumeric : 1
                     var lst = await _context.MParameterDescriptiveMasters.Where(x => x.ParameterId == objPara.ParameterId).ToListAsync();
                     if (lst != null && lst.Count > 0)
                     {
                         _context.MParameterDescriptiveMasters.RemoveRange(lst);
-                        await _context.SaveChangesAsync(); // Save deletions before proceeding
                     }
+                    await _context.SaveChangesAsync(); // Save deletions before proceeding
+                }
 
+                if (objPara.IsNumeric == 1)
+                {
                     objPara.MParameterDescriptiveMasters = null; // Prevent re-inserting deleted records
                 }
                 else
-                { 
-                objPara.MPathParaRangeWithAgeMasters = null;
+                {
+                    objPara.MPathParaRangeWithAgeMasters = null;
                 }
                 // Add header table records
                 // Update header & detail table records
@@ -104,6 +117,21 @@ namespace HIMS.Services.Masters
                 objpathology.IsActive = false;
                 objpathology.CreatedDate = objPara.CreatedDate;
                 objpathology.CreatedBy = objPara.CreatedBy;
+                _context.MPathParameterMasters.Update(objpathology);
+                _context.Entry(objpathology).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateFormulaAsync(MPathParameterMaster objPara, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                MPathParameterMaster objpathology = await _context.MPathParameterMasters.FindAsync(objPara.ParameterId);
+                objpathology.Formula = objPara.Formula;
                 _context.MPathParameterMasters.Update(objpathology);
                 _context.Entry(objpathology).State = EntityState.Modified;
                 await _context.SaveChangesAsync();

@@ -6608,11 +6608,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DescriptiveId).HasColumnName("DescriptiveID");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.DefaultValue).HasMaxLength(500);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ParameterValues).HasMaxLength(500);
 

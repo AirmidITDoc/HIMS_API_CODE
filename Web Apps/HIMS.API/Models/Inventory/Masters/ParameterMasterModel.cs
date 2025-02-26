@@ -9,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? ParameterName { get; set; }
         public string? PrintParameterName { get; set; }
         public long? UnitId { get; set; }
-        public long? IsNumeric { get; set; }
+        public int? IsNumeric { get; set; }
         public bool? IsPrintDisSummary { get; set; }
         public string? MethodName { get; set; }
         public string? Formula { get; set; }
@@ -69,5 +69,11 @@ namespace HIMS.API.Models.Masters
     public class CancelParameter
     {
         public long ParameterId { get; set; }
+    }
+
+    public class UpdateParameterFormulaModel
+    {
+        public long ParameterId { get; set; }
+        public string? Formula { get; set; }
     }
 }
