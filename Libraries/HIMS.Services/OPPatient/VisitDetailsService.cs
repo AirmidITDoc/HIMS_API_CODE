@@ -121,7 +121,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -176,7 +176,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
