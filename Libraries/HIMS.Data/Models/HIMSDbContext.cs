@@ -979,17 +979,13 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("AuditLog");
 
-                entity.Property(e => e.ActionByName).HasMaxLength(50);
-
-                entity.Property(e => e.AdditionalInfo).HasMaxLength(500);
+                entity.Property(e => e.ActionByName).HasMaxLength(250);
 
                 entity.Property(e => e.CreatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Description).HasMaxLength(500);
-
-                entity.Property(e => e.EntityName).HasMaxLength(50);
+                entity.Property(e => e.EntityName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Bedmaster>(entity =>

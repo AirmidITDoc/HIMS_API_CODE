@@ -23,20 +23,8 @@ namespace HIMS.API.Controllers.Administration
             }
         
         
-        [HttpPost("IPAdvanceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> IPAdvanceList(GridRequestModel objGrid)
-        {
-            IPagedList<IPAdvanceListDto> IPAdvanceList = await _IAdministrationService.IPAdvanceList(objGrid);
-            return Ok(IPAdvanceList.ToGridResponse(objGrid, "IPAdvance App List"));
-        }
-        [HttpPost("IPRefundAdvanceReceiptList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> IPRefundAdvanceReceiptList(GridRequestModel objGrid)
-        {
-            IPagedList<IPRefundAdvanceReceiptListDto> IPRefundAdvanceReceiptList = await _IAdministrationService.IPRefundAdvanceReceiptList(objGrid);
-            return Ok(IPRefundAdvanceReceiptList.ToGridResponse(objGrid, "IPRefundAdvanceReceipt App List"));
-        }
+        
+        
         [HttpPost("RoleMasterList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> RoleMasterList(GridRequestModel objGrid)

@@ -13,8 +13,8 @@ namespace HIMS.Services.Administration
     {
         Task<IPagedList<PaymentModeDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel objGrid);
-        Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel objGrid);
-        Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel objGrid);
+        
+        
         Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
 

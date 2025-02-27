@@ -21,16 +21,10 @@ namespace HIMS.Services.Administration
         
         public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
         }
-        public virtual async Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPAdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
-        }
-        public virtual async Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<IPRefundAdvanceReceiptListDto>(model, "Retrieve_BrowseIPRefundAdvanceReceipt");
-        }
+        
+        
         public virtual async Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<RoleMasterListDto>(model, "m_Rtrv_Rolemaster");

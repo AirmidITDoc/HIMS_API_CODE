@@ -15,6 +15,7 @@ using HIMS.Data.DTO.IPPatient;
 using HIMS.Core;
 using HIMS.Services.OutPatient;
 using static HIMS.API.Models.IPPatient.UpdateAdvanceModelValidator;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -28,13 +29,12 @@ namespace HIMS.API.Controllers.IPPatient
         {
             _IAdvanceService = repository;
         }
-
-        [HttpPost("AdvanceDetailList")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
-        public async Task<IActionResult> AdvanceDetailList(GridRequestModel objGrid)
+        [HttpPost("PatientWiseAdvanceList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> PatientWiseAdvanceList(GridRequestModel objGrid)
         {
-            IPagedList<AdvanceDetailListDto> AdvanceDetailList = await _IAdvanceService.AdvanceDetailListAsync(objGrid);
-            return Ok(AdvanceDetailList.ToGridResponse(objGrid, "AdvanceDetail List"));
+            IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
+            return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "PatientWiseAdvance List"));
         }
 
 

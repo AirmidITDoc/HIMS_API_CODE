@@ -20,6 +20,7 @@ using HIMS.Services.OutPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using static LinqToDB.Common.Configuration;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.Services.IPPatient
 {
@@ -30,18 +31,18 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<AdvanceDetailListDto>> AdvanceDetailListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PatientWiseAdvanceListDto>> PatientWiseAdvanceList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<AdvanceDetailListDto>(model, "Rtrv_T_AdvanceList");
+            return await DatabaseHelper.GetGridDataBySp<PatientWiseAdvanceListDto>(model, "ps_Rtrv_T_PatientWiseAdvanceList");
         }
 
         public virtual async Task<IPagedList<AdvanceListDto>> GetAdvanceListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
+            return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "ps_Rtrv_BrowseIPAdvanceList");
         }
         public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "m_Rtrv_BrowseIPRefundAdvanceReceipt");
+            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "ps_Rtrv_BrowseIPRefundAdvanceReceipt");
         }
 
         //SHILPA CODE////
