@@ -24,7 +24,7 @@ namespace HIMS.API.Models.IPPatient
         {
             RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
             RuleFor(x => x.IsCancelledDate).NotNull().NotEmpty().WithMessage("IsCancelledDate is required");
-          
+
         }
     }
     public class AdvanceDetailModel
@@ -55,7 +55,7 @@ namespace HIMS.API.Models.IPPatient
         {
             RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
             RuleFor(x => x.Time).NotNull().NotEmpty().WithMessage("Time is required");
-            
+
         }
     }
     public class AdvancePayment
@@ -102,11 +102,68 @@ namespace HIMS.API.Models.IPPatient
 
     public class ModelAdvance1
     {
-        public AdvanceModel Advance{ get; set; }
-        public AdvanceDetailModel AdvanceDetail{ get; set; }
+        public AdvanceModel Advance { get; set; }
+        public AdvanceDetailModel AdvanceDetail { get; set; }
         public AdvancePayment AdvancePayment { get; set; }
     }
+
+    public class UpdateAdvanceModel
+    {
+        public long AdvanceId {  get; set; }   
+        public double? AdvanceAmount {  get; set; }
+    }
+    public class UpdateAdvanceModelValidator : AbstractValidator<UpdateAdvanceModel>
+    {
+        public UpdateAdvanceModelValidator()
+        {
+            RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage("AdvanceId is required");
+            RuleFor(x => x.AdvanceAmount).NotNull().NotEmpty().WithMessage("AdvanceAmount is required");
+
+        }
+    }
+        public class AdvanceDetailModel2
+        {
+            public DateTime Date { get; set; }
+            public string? Time { get; set; }
+            public long? AdvanceId { get; set; }
+            public long? RefId { get; set; }
+            public long? TransactionId { get; set; }
+            public long? OpdIpdId { get; set; }
+            public byte? OpdIpdType { get; set; }
+            public decimal? AdvanceAmount { get; set; }
+            public decimal? UsedAmount { get; set; }
+            public decimal? BalanceAmount { get; set; }
+            public decimal? RefundAmount { get; set; }
+            public long? ReasonOfAdvanceId { get; set; }
+            public long? AddedBy { get; set; }
+            public bool? IsCancelled { get; set; }
+            public long? IsCancelledby { get; set; }
+            public DateTime IsCancelledDate { get; set; }
+            public string? Reason { get; set; }
+            public long AdvanceDetailId { get; set; }
+
+        }
+    public class UpdateAdvanceModel2Validator : AbstractValidator<AdvanceDetailModel2>
+    {
+        public UpdateAdvanceModel2Validator()
+        {
+            RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage("AdvanceId is required");
+            RuleFor(x => x.AdvanceAmount).NotNull().NotEmpty().WithMessage("AdvanceAmount is required");
+
+        }
+    }
+    public class UpdateAdvance
+    {
+        public UpdateAdvanceModel Advance { get; set; }
+        public AdvanceDetailModel2 AdvanceDetail { get; set; }
+        public AdvancePayment AdvancePayment { get; set; }
+    }
+
 }
+
+
+
+
 
 
 
