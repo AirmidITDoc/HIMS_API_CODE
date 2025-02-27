@@ -8,8 +8,10 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
 using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
@@ -29,11 +31,21 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IOPBillingService _oPBillingService;
         private readonly IOPCreditBillService _IOPCreditBillService;
         private readonly IOPSettlementService _IOPSettlementService;
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2)
+        private readonly IAdministrationService _IAdministrationService;
+
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService= repository2;
+            _IAdministrationService = repository3;
+        }
+        [HttpPost("BrowseOPDBillPagiList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
+            return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "BrowseOPDBillPagi App List"));
         }
         [HttpPost("OPBillListSettlementList")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
