@@ -9,7 +9,8 @@ namespace HIMS.Services.OutPatient
 {
     public partial  interface IOPDPrescriptionMedicalService
     {
-        Task InsertAsyncSP(TPrescription objTPrescription, int UserId, string Username);
+    
+        Task InsertPrescriptionAsyncSP(TPrescription objTPrescription,List<TOprequestList> objTOprequestList ,MOpcasepaperDignosisMaster objmOpcasepaperDignosisMaster, int UserId, string UserName);
 
 
     }
