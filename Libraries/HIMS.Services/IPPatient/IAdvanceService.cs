@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 
@@ -19,7 +20,9 @@ namespace HIMS.Services.IPPatient
 
 
         Task<IPagedList<AdvanceDetailListDto>> AdvanceDetailListAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel objGrid);
+        Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel objGrid);
         // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
-    
+
     }
 }

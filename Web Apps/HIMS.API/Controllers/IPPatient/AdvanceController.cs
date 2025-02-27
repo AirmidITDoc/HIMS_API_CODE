@@ -14,6 +14,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Core;
 using HIMS.Services.OutPatient;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -26,6 +27,20 @@ namespace HIMS.API.Controllers.IPPatient
         public AdvanceController(IAdvanceService repository)
         {
             _IAdvanceService = repository;
+        }
+        [HttpPost("IPRefundAdvanceReceiptList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPRefundAdvanceReceiptList(GridRequestModel objGrid)
+        {
+            IPagedList<IPRefundAdvanceReceiptListDto> IPRefundAdvanceReceiptList = await _IAdvanceService.IPRefundAdvanceReceiptList(objGrid);
+            return Ok(IPRefundAdvanceReceiptList.ToGridResponse(objGrid, "IPRefundAdvanceReceipt App List"));
+        }
+        [HttpPost("IPAdvanceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPAdvanceList(GridRequestModel objGrid)
+        {
+            IPagedList<IPAdvanceListDto> IPAdvanceList = await _IAdvanceService.IPAdvanceList(objGrid);
+            return Ok(IPAdvanceList.ToGridResponse(objGrid, "IPAdvance App List"));
         }
 
         [HttpPost("AdvanceDetailList")]

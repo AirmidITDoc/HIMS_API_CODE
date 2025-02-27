@@ -19,6 +19,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using HIMS.Services.OutPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.Services.IPPatient
 {
@@ -28,6 +29,14 @@ namespace HIMS.Services.IPPatient
         public AdvanceService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<IPRefundAdvanceReceiptListDto>> IPRefundAdvanceReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPRefundAdvanceReceiptListDto>(model, "Retrieve_BrowseIPRefundAdvanceReceipt");
+        }
+        public virtual async Task<IPagedList<IPAdvanceListDto>> IPAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPAdvanceListDto>(model, "m_Rtrv_BrowseIPAdvanceList");
         }
         public virtual async Task<IPagedList<AdvanceDetailListDto>> AdvanceDetailListAsync(GridRequestModel model)
         {

@@ -18,6 +18,7 @@ namespace HIMS.Data.DTO.Administration
         public DateTime RefundDate { get; set; }
         public DateTime? RefundTime { get; set; }
         public string RefundNo { get; set; }
+        public decimal RefundAmount { get; set; }
         public string Remark { get; set; }
         public long PaymentId { get; set; }
         public string ReceiptNo { get; set; }
