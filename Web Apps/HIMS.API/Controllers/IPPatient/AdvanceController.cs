@@ -14,6 +14,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Core;
 using HIMS.Services.OutPatient;
+using static HIMS.API.Models.IPPatient.UpdateAdvanceModelValidator;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -70,104 +71,33 @@ namespace HIMS.API.Controllers.IPPatient
                 objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
                 objpayment.AddBy = CurrentUserId;
 
-               await _IAdvanceService.InsertAdvanceAsyncSP1(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+               await _IAdvanceService.InsertAdvanceAsyncSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.");
         }
+        [HttpPut("Edit")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateAdvance obj)
+        {
+            AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
+            AdvanceDetail objAdvanceDetail = obj.AdvanceDetail.MapTo<AdvanceDetail>();
+            Payment objpayment = obj.AdvancePayment.MapTo<Payment>();
 
+            if (obj.Advance.AdvanceId != 0)
+            {
+                model.AddedBy = CurrentUserId;
+                objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
+                objAdvanceDetail.AddedBy = CurrentUserId;
+                objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
+                objpayment.AddBy = CurrentUserId;
 
-
-        //[HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Update(IPAdvance obj)
-        //{
-        //    AdvanceDetail model = obj.AdvanceDetailModel.MapTo<AdvanceDetail>();
-        //    if (obj.AdvanceDetailModel.AdvanceId != 0)
-        //    {
-        //        model.AddedBy = CurrentUserId;
-
-        //        await _IAdvanceService.UpdateAdvanceAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Updated successfully.");
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpPost("RefundAdvanceInsertSP")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertSP(RefundAdvance obj)
-        //{
-        //    Refund model = obj.RefundAdvanceModel.MapTo<Refund>();
-        //    AdvRefundDetail objAdvRefundDetail = obj.AdvRefundDetailModel.MapTo<AdvRefundDetail>();
-        //    AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderModel.MapTo<AdvanceHeader>();
-        //    AdvanceDetail objAdvanceDetail = obj.AdvanceDetailModel1.MapTo<AdvanceDetail>();
-        //    Payment objPayment = obj.PaymentModel2.MapTo<Payment>();
-        //    if (obj.RefundAdvanceModel.RefundId == 0)
-        //    {
-        //        model.RefundDate = Convert.ToDateTime(obj.RefundAdvanceModel.RefundDate);
-        //        model.AddedBy = CurrentUserId;
-
-        //        if (obj.AdvanceHeaderModel.AdvanceId == 0)
-        //        {
-        //            //objAdvanceHeader.Date = Convert.ToDateTime(obj.AdvanceHeaderModel.Date);
-        //            objAdvanceHeader.AddedBy = CurrentUserId;
-        //            // objVisitDetail.UpdatedBy = CurrentUserId;
-        //        }
-
-        //        if (obj.AdvRefundDetailModel.AdvRefId == 0)
-        //        {
-        //            objAdvRefundDetail.RefundDate = Convert.ToDateTime(obj.AdvRefundDetailModel.RefundDate);
-
-        //            // objVisitDetail.UpdatedBy = CurrentUserId;
-        //        }
-        //        if (obj.AdvanceDetailModel1.AdvanceDetailId == 0)
-        //        {
-
-        //            objAdvanceDetail.AddedBy = CurrentUserId;
-        //            // objVisitDetail.UpdatedBy = CurrentUserId;
-        //        }
-
-        //        if (obj.PaymentModel2.PaymentId == 0)
-        //        {
-        //            objPayment.PaymentDate = Convert.ToDateTime(obj.PaymentModel2.PaymentDate);
-
-
-        //        }
-        //        await _IAdvanceService.InsertAsyncSP(model, objAdvanceHeader, objAdvRefundDetail, objAdvanceDetail, objPayment, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund of Advance added successfully.");
-        //}
-
-
-
+            await _IAdvanceService.UpdateAdvanceSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.");
+        }
     }
 }
