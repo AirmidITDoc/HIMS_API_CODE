@@ -11,9 +11,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
         public string? RegNo { get; set; }
-        public decimal? AdvanceAmount { get; set; }
-        public decimal? AdvanceUsedAmount { get; set; }
-        public decimal? BalanceAmount { get; set; }
+        public double? AdvanceAmount { get; set; }
+        public double? AdvanceUsedAmount { get; set; }
+        public double? BalanceAmount { get; set; }
         public long? RefundId { get; set; }
         public DateTime? RefundDate { get; set; }
         public DateTime? RefundTime { get; set; }
@@ -34,7 +34,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? CardBankName { get; set; }
         public DateTime? CardDate { get; set; }
         public long? TransactionType { get; set; }
-        public long? AddedBy { get; set; }
+        public string? AddedBy { get; set; }
         public string? UserName { get; set; }
         public string? HospitalName { get; set; }
         public string? HospitalAddress { get; set; }
