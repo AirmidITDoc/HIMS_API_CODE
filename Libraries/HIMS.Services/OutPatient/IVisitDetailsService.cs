@@ -35,6 +35,6 @@ namespace HIMS.Services.OutPatient
         Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword);
 
 
-
+        Task UpdateVitalAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
     }
 }

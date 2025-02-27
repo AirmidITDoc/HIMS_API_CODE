@@ -28,9 +28,7 @@ namespace HIMS.API.Models.OPPatient
             RuleFor(x => x.AppDate).NotNull().NotEmpty().WithMessage("AppDate is required");
             RuleFor(x => x.AppTime).NotNull().NotEmpty().WithMessage("AppTime is required");
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
-            RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address is required");
 
         }
     }

@@ -9,12 +9,12 @@ namespace HIMS.API.Models.Masters
         public string? ParameterName { get; set; }
         public string? PrintParameterName { get; set; }
         public long? UnitId { get; set; }
-        public long? IsNumeric { get; set; }
+        public int? IsNumeric { get; set; }
         public bool? IsPrintDisSummary { get; set; }
         public string? MethodName { get; set; }
         public string? Formula { get; set; }
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
-        public List<MPathParaRangeMasterModel>? MPathParaRangeMasters { get; set; }
+        public List<MPathParaRangeWithAgeMasterModel>? MPathParaRangeWithAgeMasters { get; set; }
     }
     public class ParameterMasterModelValidator : AbstractValidator<ParameterMasterModel>
     {
@@ -44,17 +44,23 @@ namespace HIMS.API.Models.Masters
 
         }
     }
-    public class MPathParaRangeMasterModel
+    public class MPathParaRangeWithAgeMasterModel
     {
         public long PathparaRangeId { get; set; }
         public long? ParaId { get; set; }
         public long? SexId { get; set; }
+        public int? MinAge { get; set; }
+        public int? MaxAge { get; set; }
+        public string? AgeType { get; set; }
         public string? MinValue { get; set; }
-        public string? Maxvalue { get; set; }
+        public string? MaxValue { get; set; }
+        public bool? IsDeleted { get; set; }
+        public long? Addedby { get; set; }
+        public long? Updatedby { get; set; }
     }
-    public class MPathParaRangeMasterModelValidator : AbstractValidator<MPathParaRangeMasterModel>
+    public class MPathParaRangeWithAgeMasterModelValidator : AbstractValidator<MPathParaRangeWithAgeMasterModel>
     {
-        public MPathParaRangeMasterModelValidator()
+        public MPathParaRangeWithAgeMasterModelValidator()
         {
             RuleFor(x => x.SexId).NotNull().NotEmpty().WithMessage("SexId  is required");
            
@@ -63,5 +69,11 @@ namespace HIMS.API.Models.Masters
     public class CancelParameter
     {
         public long ParameterId { get; set; }
+    }
+
+    public class UpdateParameterFormulaModel
+    {
+        public long ParameterId { get; set; }
+        public string? Formula { get; set; }
     }
 }

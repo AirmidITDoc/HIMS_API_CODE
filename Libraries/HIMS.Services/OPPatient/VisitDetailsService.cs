@@ -121,7 +121,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -176,7 +176,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -324,6 +324,29 @@ namespace HIMS.Services.OPPatient
                           IsDocEditable = s.IsDocEditable
                       };
             return await qry.Take(50).ToListAsync();
+        }
+
+        public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                VisitDetail objVisit = await _context.VisitDetails.FindAsync(objPara.VisitId);
+                objVisit.Height = objPara?.Height;
+                objVisit.Pweight = objPara?.Pweight;
+                objVisit.Bmi = objPara?.Bmi;
+                objVisit.Bsl = objPara?.Bsl;
+                objVisit.SpO2 = objPara?.SpO2;
+                objVisit.Temp = objPara?.Temp;
+                objVisit.Pulse = objPara?.Pulse;
+                objVisit.Bp = objPara?.Bp;
+
+                _context.VisitDetails.Update(objVisit);
+                _context.Entry(objVisit).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
         }
     }
 

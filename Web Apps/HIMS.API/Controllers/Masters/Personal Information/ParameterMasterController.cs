@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathParameterListDto> MPathParameterList = await _IParameterMasterService.MPathParameterList(objGrid);
-            return Ok(MPathParameterList.ToGridResponse(objGrid, "MPathParameter List"));
+            return Ok(MPathParameterList.ToGridResponse(objGrid, "Pathology Parameter List"));
         }
 
         //Add API
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter added successfully.");
         }
 
         //Edit API
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter updated successfully.");
         }
         [HttpDelete("ParameterCancel")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
@@ -87,7 +87,25 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathParameterMaster Deleted successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Deleted successfully.");
+        }
+
+        //Edit API
+        [HttpPut("EditFormula/{id:int}")]
+        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(UpdateParameterFormulaModel obj)
+        {
+            MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
+            if (obj.ParameterId != 0)
+            {
+                model.ParameterId = obj.ParameterId;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _IParameterMasterService.UpdateFormulaAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Formula update successfully.");
         }
 
     }
