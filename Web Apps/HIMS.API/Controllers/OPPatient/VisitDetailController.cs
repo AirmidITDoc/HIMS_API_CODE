@@ -164,12 +164,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpBilllist.ToGridResponse(objGrid, "OP BILL List"));
         }
 
-        [HttpPost("OPPaymentList")]
-        public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
-        {
-            IPagedList<OPPaymentListDto> OpPaymentlist = await _visitDetailsService.GeOpPaymentListAsync(objGrid);
-            return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
-        }
+   
 
         [HttpPost("OPRefundList")]
         public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)

@@ -32,13 +32,14 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IOPCreditBillService _IOPCreditBillService;
         private readonly IOPSettlementService _IOPSettlementService;
         private readonly IAdministrationService _IAdministrationService;
-
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3)
+        private readonly IVisitDetailsService _IVisitDetailsService;
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService= repository2;
             _IAdministrationService = repository3;
+            _IVisitDetailsService = repository4;
         }
         [HttpPost("BrowseOPDBillPagiList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -46,6 +47,12 @@ namespace HIMS.API.Controllers.OutPatient
         {
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "BrowseOPDBillPagi App List"));
+        }
+        [HttpPost("OPPaymentList")]
+        public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
+            return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
         }
         [HttpPost("OPBillListSettlementList")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
