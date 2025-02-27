@@ -43,6 +43,10 @@ namespace HIMS.Data.DTO.OPPatient
         public string AddedBy { get; set; }
         public string RefDoctorName { get; set; }
         public string HospitalName { get; set; }
+        public string DoctorName { get; set; }
+        public string PatientType { get; set; }
+        public string TariffName { get; set; }
+
 
 
 

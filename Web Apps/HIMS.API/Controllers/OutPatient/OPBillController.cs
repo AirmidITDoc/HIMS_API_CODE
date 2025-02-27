@@ -41,6 +41,12 @@ namespace HIMS.API.Controllers.OutPatient
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
         }
+        [HttpPost("OPRefundList")]
+        public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid);
+            return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
+        }
         [HttpPost("BrowseOPDBillPagiList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
