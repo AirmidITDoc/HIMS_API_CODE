@@ -21,7 +21,7 @@ namespace HIMS.Services.Administration
         
         public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
         }
         
         
