@@ -3,6 +3,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.User;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
 using System;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Services.Administration
 {
-    public  class RoleService: IRoleService
+    public class RoleService : IRoleService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public RoleService(HIMSDbContext HIMSDbContext)
@@ -27,7 +28,7 @@ namespace HIMS.Services.Administration
             List<MenuModel> finalList = new();
             try
             {
-                var distinct = lstMenu.Where(x => x.UpId == 0);
+                var distinct = lstMenu.Where(x => x.UpId == 0 || x.UpId == null);
                 foreach (var ItemData in distinct)
                 {
                     MenuModel obj = new()
@@ -172,25 +173,26 @@ namespace HIMS.Services.Administration
             List<MenuMasterDTO> lstMenu = sql.FetchListBySP<MenuMasterDTO>("GET_PERMISSION", para);
             return PrepareMenu(lstMenu, false);
         }
-        //public void SavePermission(List<PermissionModel> lst)
-        //{
-        //    DataTable dt = new DataTable();
-        //    dt.Columns.Add("RoleID", typeof(int));
-        //    dt.Columns.Add("MenuId", typeof(int));
-        //    dt.Columns.Add("IsView", typeof(int));
-        //    dt.Columns.Add("IsAdd", typeof(int));
-        //    dt.Columns.Add("IsEdit", typeof(int));
-        //    dt.Columns.Add("IsDelete", typeof(int));
-        //    foreach (var item in lst)
-        //        dt.Rows.Add(item.RoleId, item.MenuId, item.IsView, item.IsAdd, item.IsEdit, item.IsDelete);
-        //    SqlParameter[] para = new SqlParameter[1];
-        //    para[0] = new SqlParameter("@tbl", SqlDbType.Structured)
-        //    {
-        //        Value = dt,
-        //        TypeName = "dbo.Permission"
-        //    };
-        //    object dd = ExecuteObjectBySP("Insert_Permission", para);
-        //}
+        public void SavePermission(List<PermissionModel> lst)
+        {
+            DataTable dt = new();
+            dt.Columns.Add("RoleID", typeof(int));
+            dt.Columns.Add("MenuId", typeof(int));
+            dt.Columns.Add("IsView", typeof(int));
+            dt.Columns.Add("IsAdd", typeof(int));
+            dt.Columns.Add("IsEdit", typeof(int));
+            dt.Columns.Add("IsDelete", typeof(int));
+            foreach (var item in lst)
+                dt.Rows.Add(item.RoleId, item.MenuId, item.IsView, item.IsAdd, item.IsEdit, item.IsDelete);
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@tbl", SqlDbType.Structured)
+            {
+                Value = dt,
+                TypeName = "dbo.Permission"
+            };
+            sql.ExecuteNonQuery("Insert_Permission", CommandType.StoredProcedure, para);
+        }
 
     }
 }

@@ -8,6 +8,7 @@ using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.Services.Administration;
+using HIMS.Data.DTO.User;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -99,7 +100,14 @@ namespace HIMS.API.Controllers.Administration
         [Route("get-permissions")]
         public ApiResponse GetPermission(int RoleId)
         {
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleMaster  deleted successfully.", _IRoleService.GetPermisison(RoleId));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Fetch Permission successfully.", _IRoleService.GetPermisison(RoleId));
+        }
+        [HttpPost]
+        [Route("save-permission")]
+        public ApiResponse PostPermission(List<PermissionModel> obj)
+        {
+            _IRoleService.SavePermission(obj);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Permission  updated successfully.");
         }
     }
 }

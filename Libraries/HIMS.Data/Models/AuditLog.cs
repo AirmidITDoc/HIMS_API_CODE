@@ -11,7 +11,7 @@ namespace HIMS.Data.Models
         public string? ActionByName { get; set; }
         public int? EntityId { get; set; }
         public string? EntityName { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
         public string? AdditionalInfo { get; set; }
         public int LogTypeId { get; set; }
         public int LogSourceId { get; set; }
