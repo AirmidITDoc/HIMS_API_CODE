@@ -331,20 +331,30 @@ namespace HIMS.Services.OPPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                VisitDetail objVisit = await _context.VisitDetails.FindAsync(objPara.VisitId);
-                objVisit.Height = objPara?.Height;
-                objVisit.Pweight = objPara?.Pweight;
-                objVisit.Bmi = objPara?.Bmi;
-                objVisit.Bsl = objPara?.Bsl;
-                objVisit.SpO2 = objPara?.SpO2;
-                objVisit.Temp = objPara?.Temp;
-                objVisit.Pulse = objPara?.Pulse;
-                objVisit.Bp = objPara?.Bp;
+                //VisitDetail objVisit = await _context.VisitDetails.FindAsync(objPara.VisitId);
+                //objVisit.Height = objPara?.Height;
+                //objVisit.Pweight = objPara?.Pweight;
+                //objVisit.Bmi = objPara?.Bmi;
+                //objVisit.Bsl = objPara?.Bsl;
+                //objVisit.SpO2 = objPara?.SpO2;
+                //objVisit.Temp = objPara?.Temp;
+                //objVisit.Pulse = objPara?.Pulse;
+                //objVisit.Bp = objPara?.Bp;
 
-                _context.VisitDetails.Update(objVisit);
-                _context.Entry(objVisit).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
+                //_context.VisitDetails.Update(objVisit);
+                //_context.Entry(objVisit).State = EntityState.Modified;
+                //await _context.SaveChangesAsync();
+
+                DatabaseHelper odal = new();
+                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId"};
+                var entity = objPara.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_vitalInformation", CommandType.StoredProcedure, entity);
+               
                 scope.Complete();
             }
         }
