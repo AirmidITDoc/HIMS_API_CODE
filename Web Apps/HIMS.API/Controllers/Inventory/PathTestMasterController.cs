@@ -11,6 +11,7 @@ using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -19,10 +20,12 @@ namespace HIMS.API.Controllers.Inventory
     [ApiVersion("1")]
     public class PathTestMasterController : BaseController
     {
+        private readonly IGenericService<MPathTestMaster> _repository;
         private readonly ITestMasterServices _ITestmasterService;
-        public PathTestMasterController(ITestMasterServices repository)
+        public PathTestMasterController(ITestMasterServices repository, IGenericService<MPathTestMaster> repository1)
         {
             _ITestmasterService = repository;
+            _repository = repository1;
         }
         [HttpPost("TestMasterList")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
@@ -80,21 +83,22 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest   updated successfully.");
         }
-        [HttpPost("PathTestCanceled")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
-        {
-            MPathTestMaster model = new();
-            if (obj.TestId != 0)
+        [HttpPost("PathTestDelete")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {       
+
+            MPathTestMaster model = await _repository.GetById(x => x.TestId == Id);
+            if ((model?.TestId ?? 0) > 0)
             {
-                model.TestId = obj.TestId;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _ITestmasterService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest Canceled successfully.");
         }
     }
 }

@@ -19,13 +19,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [ApiVersion("1")]
     public class ParameterMasterController : BaseController
     {
-
+        private readonly IGenericService<MPathParameterMaster> _repository;
         private readonly IParameterMasterService _IParameterMasterService;
         private readonly IMParameterDescriptiveMasterService _IMParameterDescriptiveMasterService;
-        public ParameterMasterController(IParameterMasterService repository, IMParameterDescriptiveMasterService repository1)
+        public ParameterMasterController(IParameterMasterService repository, IMParameterDescriptiveMasterService repository1, IGenericService<MPathParameterMaster> repository2)
         {
             _IParameterMasterService = repository;
             _IMParameterDescriptiveMasterService = repository1;
+            _repository = repository2;
         }
         [HttpPost("MPathParameterList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
@@ -74,16 +75,16 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         [HttpDelete("ParameterCancel")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(CancelParameter obj)
+        public async Task<ApiResponse> Delete(int Id)
         {
-            MPathParameterMaster model = new();
-            if (obj.ParameterId != 0)
+            MPathParameterMaster model = await _repository.GetById(x => x.ParameterId == Id);
+            if ((model?.ParameterId ?? 0) > 0)
             {
-                model.ParameterId = obj.ParameterId;
-               
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _IParameterMasterService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
