@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Login
             {
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-                model.IsActive = true;
+                //model.IsActive = true;
                 await _ILoginService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
