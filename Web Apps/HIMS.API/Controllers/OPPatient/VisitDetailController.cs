@@ -240,7 +240,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter Formula update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Vital  Information update successfully.");
         }
     }
 }
