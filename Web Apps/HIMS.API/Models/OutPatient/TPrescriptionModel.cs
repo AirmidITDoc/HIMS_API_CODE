@@ -60,7 +60,7 @@ namespace HIMS.API.Models.OutPatient
         public class TOPRequestListModel
         {
 
-            public long? OPIPID { get; set; }
+            public long? OpIpId { get; set; }
             public long? ServiceId { get; set; }
         }
         public class TOPRequestListModelValidator : AbstractValidator<TOPRequestListModel>
@@ -86,8 +86,6 @@ namespace HIMS.API.Models.OutPatient
                 RuleFor(x => x.DescriptionType).NotNull().NotEmpty().WithMessage("DescriptionType is required");
                 RuleFor(x => x.DescriptionName).NotNull().NotEmpty().WithMessage("DescriptionName is required");
 
-
-
             }
         }
 
@@ -95,10 +93,13 @@ namespace HIMS.API.Models.OutPatient
         {
             public TPrescriptionModel TPrescription { get; set; }
             public List<TOPRequestListModel> TOPRequestList { get; set; }
-         //   public TOPRequestListModel TOPRequestList { get; set; }
-            public MOPCasepaperDignosisMasterModel MOPCasepaperDignosisMaster { get; set; }
+            public List<MOPCasepaperDignosisMasterModel> MOPCasepaperDignosisMaster { get; set; }
 
 
         }
+        //public class deleteOPPrescription
+        //{
+        //    public long? OPIPID { get; set; }
+        //}
     }
 }
