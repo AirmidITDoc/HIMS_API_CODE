@@ -71,6 +71,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
         private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
         private readonly IGenericService<MenuMaster> _IMmenuMasterService;
+        private readonly IGenericService<MDoseMaster> _IMDoseMaster;
+        private readonly IGenericService<MPresTemplateH> _IMPresTemplateH;
+        private readonly IGenericService<MOpcasepaperDignosisMaster> _IMOPCasepaperDignosisMaster;
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -89,7 +92,11 @@ namespace HIMS.API.Controllers.Common
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
             , IGenericService<RoleMaster> iMDrolerMaster,   
-              IGenericService<MenuMaster> iMDmenuMaster
+              IGenericService<MenuMaster> iMDmenuMaster,
+              IGenericService<MDoseMaster> IMDdoseMaster,
+              IGenericService<MPresTemplateH> IMDPresTemplateH,
+              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster
+            
               )
         {
             _IAreaService = areaservice;
@@ -144,6 +151,9 @@ namespace HIMS.API.Controllers.Common
             _IMparameterservice = iMDparameterMaster;
             _IMRoleMasterservice = iMDrolerMaster;
             _IMmenuMasterService = iMDmenuMaster;
+            _IMDoseMaster = IMDdoseMaster;
+            _IMPresTemplateH = IMDPresTemplateH;
+            _IMOPCasepaperDignosisMaster = _IMOPCasepaperDignosisMaster;
         }
 
         [HttpGet]
@@ -213,6 +223,9 @@ namespace HIMS.API.Controllers.Common
                 "Role" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
                 "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
 
+                "DoseMaster" => (await _IMDoseMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDoseMaster.DoseId), nameof(MDoseMaster.DoseName)),
+                "PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
+                "CasepaperDignosis" => (await _IMOPCasepaperDignosisMaster.GetAll()).ToList().ToDropDown(nameof(MOpcasepaperDignosisMaster.DescriptionType), nameof(MOpcasepaperDignosisMaster.DescriptionName)),
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
