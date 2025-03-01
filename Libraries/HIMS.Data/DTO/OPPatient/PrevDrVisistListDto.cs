@@ -10,9 +10,9 @@ namespace HIMS.Data.DTO.OPPatient
     {
         public string? DepartmentName { get; set; }
         public string? DoctorName { get; set; }
-        public int? RegID { get; set; }
-        public int? DepartmentId { get; set; }
-        public int? ConsultantDocId { get; set; }
+        public long? RegID { get; set; }
+        public long? DepartmentId { get; set; }
+        public long? ConsultantDocId { get; set; }
         public DateTime VisitDate { get; set; }
     }
 }

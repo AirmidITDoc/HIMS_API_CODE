@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace HIMS.Services.Common
         Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel objGrid);
+
+        Task<IPagedList<IPBillListSettlementListDto>> IPBillListSettlementList(GridRequestModel objGrid);
+
     }
 }
 

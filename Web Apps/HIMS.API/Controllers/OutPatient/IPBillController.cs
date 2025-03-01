@@ -8,7 +8,10 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
@@ -26,11 +29,13 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IIPBIllwithpaymentService _IPBillService;
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
-        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2)
+        private readonly IIPBillService _IIPBillService;
+        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2, IIPBillService IIPBillService)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
             _IIPAdvanceService = repository2;
+            _IIPBillService = IIPBillService;
         }
 
 
@@ -94,7 +99,13 @@ namespace HIMS.API.Controllers.OutPatient
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.");
         //}
 
-
+        [HttpPost("IPBillListSettlementList")]
+        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListSettlementListDto> OPBillListSettlementList = await _IIPBillService.IPBillListSettlementList(objGrid);
+            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "IP Patient Bill List "));
+        }
 
     }
 }

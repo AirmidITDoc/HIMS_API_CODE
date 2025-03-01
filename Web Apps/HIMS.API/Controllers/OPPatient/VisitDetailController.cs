@@ -165,34 +165,14 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
    
-
-        
-
         [HttpPost("OPprevDoctorVisitList")]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
-            IPagedList<PrevDrVisistListDto> OpRefundlist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
-            return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Previoud Dr Visit List"));
+            IPagedList<PrevDrVisistListDto> Oplist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
+            return Ok(Oplist.ToGridResponse(objGrid, "OP Previoud Dr Visit List"));
         }
 
-        //[HttpGet]
-        //[Route("get-DeptDoctor")]
-        //[Permission]
-        //public ApiResponse GetdetDoc()
-        //{
-        //    //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Successfully.", _visitDetailsService.GetDoctor(DepartementId));
-        //    //return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
-        //}
-
-
-
-        //[HttpPost("DeptDoctorList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> DeptDoctorList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<DeptDoctorListDoT> AppVisitList = await _visitDetailsService.GetListAsyncDoc(objGrid);
-        //    return Ok(AppVisitList.ToGridResponse(objGrid, "Doctor List"));
-        //}
+       
 
         [HttpGet("DeptDoctorList")]
         public async Task<ApiResponse> DeptDoctorList(int DeptId)

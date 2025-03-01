@@ -71,6 +71,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
         private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
         private readonly IGenericService<MenuMaster> _IMmenuMasterService;
+        private readonly IGenericService<MDoseMaster> _IMDoseMasterService;
+
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -88,7 +90,7 @@ namespace HIMS.API.Controllers.Common
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
-            , IGenericService<RoleMaster> iMDrolerMaster,   
+            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoseMaster> iMDoseMaster,
               IGenericService<MenuMaster> iMDmenuMaster
               )
         {
@@ -144,6 +146,7 @@ namespace HIMS.API.Controllers.Common
             _IMparameterservice = iMDparameterMaster;
             _IMRoleMasterservice = iMDrolerMaster;
             _IMmenuMasterService = iMDmenuMaster;
+            _IMDoseMasterService = iMDoseMaster;
         }
 
         [HttpGet]
@@ -202,6 +205,7 @@ namespace HIMS.API.Controllers.Common
                 "ItemType" => (await _IMItemtypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemTypeMaster.ItemTypeId), nameof(MItemTypeMaster.ItemTypeName)),
                 "Currency" => (await _IMCurrencyeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCurrencyMaster.CurrencyId), nameof(MCurrencyMaster.CurrencyName)),
                 "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
+                "DoseName" => (await _IMDoseMasterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDoseMaster.DoseId), nameof(MDoseMaster.DoseName)),
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
