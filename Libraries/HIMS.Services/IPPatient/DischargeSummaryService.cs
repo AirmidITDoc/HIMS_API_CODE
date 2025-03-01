@@ -41,19 +41,18 @@ namespace HIMS.Services.IPPatient
             ObjDischargeSummary.DischargeSummaryId = Convert.ToInt32(VDischargeSummaryId);
 
             foreach (var item in ObjTIpPrescriptionDischarge)
-            { 
-
-            string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
-            var pentity = item.ToDictionary();
-            foreach (var Property in DEntity)
             {
-                pentity.Remove(Property);
-            }
-            odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+
+                string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+                var pentity = item.ToDictionary();
+                foreach (var Property in DEntity)
+                {
+                    pentity.Remove(Property);
+                }
+                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
 
             }
         }
-
         public virtual async Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, TIpPrescriptionDischarge ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
@@ -80,12 +79,35 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
 
         }
+        public virtual async Task InsertAsyncTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "History", "Diagnosis", "Investigation", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "DischargeSummaryDate", "OpDate","Optime","DischargeSummaryTime","DoctorAssistantName","ClaimNumber","PreOthNumber","AddedByDate",
+                                 "UpdatedBy","UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","ClinicalFinding" };
+            var Tentity = ObjDischargeTemplate.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                Tentity.Remove(rProperty);
+            }
+            // Add the new parameter
+            Tentity["TemplateDescriptionHtml"] = 0; // Ensure objpayment 
+
+            string TDischargeSummaryId = odal.ExecuteNonQuery("ps_insert_DischargeSummaryTemplate", CommandType.StoredProcedure, "DischargeSummaryId", Tentity);
+            ObjDischargeTemplate.DischargeSummaryId = Convert.ToInt32(TDischargeSummaryId);
+
+            foreach (var item in ObjTIpPrescriptionTemplate)
+            { 
+            string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+            var pentity = item.ToDictionary();
+            foreach (var Property in DEntity)
+            {
+                pentity.Remove(Property);
+            }
+            odal.ExecuteNonQuery("v_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+            }
+        }
     }
 }
-
-
-
-
 
 
 

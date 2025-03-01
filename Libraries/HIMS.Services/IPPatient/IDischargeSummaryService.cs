@@ -11,7 +11,7 @@ namespace HIMS.Services.IPPatient
     {
         Task InsertAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username);
         Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, TIpPrescriptionDischarge ObjTIpPrescriptionDischarge, int UserId, string Username);
-
+        Task InsertAsyncTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username);
 
     }
 }

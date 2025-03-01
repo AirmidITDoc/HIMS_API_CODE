@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("DischargeInsert")]
-        [Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
         {
             DischargeSummary model = obj.DischargModel.MapTo <DischargeSummary>();
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("DischargeUpdate")]
-        [Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
@@ -70,6 +70,26 @@ namespace HIMS.API.Controllers.IPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary Update successfully.");
+        }
+        [HttpPost("DischargeTemplateInsert")]
+        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> DischargeTemplateInsert(DischargeTemplate obj)
+        {
+            DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
+            List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
+
+
+            if (obj.Discharge.DischargeSummaryId == 0)
+            {
+                model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
+                model.AddedBy = CurrentUserId;
+                Prescription.ForEach(x => { x.OpdIpdId = obj.Discharge.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
+
+                await _IDischargeSummaryService.InsertAsyncTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate added successfully.");
         }
 
     }
