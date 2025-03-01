@@ -3,7 +3,6 @@ namespace HIMS.API.Models.IPPatient
 {
     public class DischargeSummaryModel
     {
-        public long DischargeSummaryId { get; set; }
         public long? AdmissionId { get; set; }
         public long? DischargeId { get; set; }
         public string? History { get; set; }
@@ -25,8 +24,7 @@ namespace HIMS.API.Models.IPPatient
         public string? DoctorAssistantName { get; set; }
         public string? ClaimNumber { get; set; }
         public string? PreOthNumber { get; set; }
-        public DateTime? AddedByDate { get; set; }
-        public DateTime? UpdatedByDate { get; set; }
+        public long? AddedBy { get; set; }
         public string? SurgeryProcDone { get; set; }
         public string? Icd10code { get; set; }
         public string? ClinicalConditionOnAdmisssion { get; set; }
@@ -37,6 +35,8 @@ namespace HIMS.API.Models.IPPatient
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
         public byte? IsNormalOrDeath { get; set; }
+        public long DischargeSummaryId { get; set; }
+
     }
     public class DischargeSummaryModelValidator : AbstractValidator<DischargeSummaryModel>
     {
@@ -45,7 +45,41 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.DischargeSummaryDate).NotNull().NotEmpty().WithMessage("DischargeSummaryDate is required");
             RuleFor(x => x.DischargeSummaryTime).NotNull().NotEmpty().WithMessage("DischargeSummaryTime  is required");
 
+        }
+    }
+    public class PrescriptionDischargeModel
+    {
+        public long? OpdIpdId { get; set; }
+        public byte? OpdIpdType { get; set; }
+        public DateTime? Date { get; set; }
+        public string? Ptime { get; set; }
+        public long? ClassId { get; set; }
+        public long? GenericId { get; set; }
+        public long? DrugId { get; set; }
+        public long? DoseId { get; set; }
+        public long? Days { get; set; }
+        public long? InstructionId { get; set; }
+        public double? QtyPerDay { get; set; }
+        public double? TotalQty { get; set; }
+        public string? Instruction { get; set; }
+        public string? Remark { get; set; }
+        public bool? IsEnglishOrIsMarathi { get; set; }
+        public long? StoreId { get; set; }
+        public int? CreatedBy { get; set; }
+    }
+    public class PrescriptionDischargeModelValidator : AbstractValidator<PrescriptionDischargeModel>
+    {
+        public PrescriptionDischargeModelValidator()
+        {
+            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
+            RuleFor(x => x.Ptime).NotNull().NotEmpty().WithMessage("Ptime  is required");
 
         }
+    }
+    public class DischargeSumModel
+    {
+        public  DischargeSummaryModel DischargModel {  get; set; }
+        public PrescriptionDischargeModel PrescriptionDischarge { get; set; }
+
     }
 }

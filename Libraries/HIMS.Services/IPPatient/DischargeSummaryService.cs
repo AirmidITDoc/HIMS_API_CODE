@@ -38,6 +38,40 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
+       
+
+        public virtual async Task InsertAsyncSP(DischargeSummary OBJDischargeSummary, TIpPrescriptionDischarge OBJTIpPrescriptionDischarge, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "AddedByDate", "UpdatedBy", "UpdatedByDate" };
+            var entity = OBJDischargeSummary.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VDischargeSummaryId = odal.ExecuteNonQuery("sp_insert_DischargeSummary_1", CommandType.StoredProcedure, "DischargeSummaryId", entity);
+            OBJDischargeSummary.DischargeSummaryId = Convert.ToInt32(VDischargeSummaryId);
+
+            
+
+                string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+                var pentity = OBJTIpPrescriptionDischarge.ToDictionary();
+                foreach (var Property in DEntity)
+                {
+                    pentity.Remove(Property);
+                }
+                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+            
+        }
+
+
+
+
+
+
+
+
+
         public virtual async Task UpdateAsync(DischargeSummary OBJDischargeSummary, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

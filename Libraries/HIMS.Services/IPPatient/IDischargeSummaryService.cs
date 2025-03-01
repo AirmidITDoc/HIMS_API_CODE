@@ -10,6 +10,8 @@ namespace HIMS.Services.IPPatient
     public partial interface IDischargeSummaryService
     {
         Task InsertAsync(DischargeSummary OBJDischargeSummary, int UserId, string Username);
+        Task InsertAsyncSP(DischargeSummary OBJDischargeSummary, TIpPrescriptionDischarge OBJTIpPrescriptionDischarge, int UserId, string Username);
+
         Task UpdateAsync(DischargeSummary OBJDischargeSummary, int UserId, string Username);
     }
 }
