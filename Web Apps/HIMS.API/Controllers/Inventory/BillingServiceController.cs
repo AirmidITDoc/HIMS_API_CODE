@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -17,12 +18,14 @@ namespace HIMS.API.Controllers.Inventory
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-        public class BillingServiceController : BaseController
-        {
+    public class BillingServiceController : BaseController
+    {
+        private readonly IGenericService<ServiceMaster> _repository;
         private readonly IBillingService _BillingService;
-        public BillingServiceController(IBillingService repository)
+        public BillingServiceController(IBillingService repository, IGenericService<ServiceMaster> repository1)
         {
             _BillingService = repository;
+            _repository = repository1;
         }
 
         [HttpPost("BillingList")]
@@ -33,7 +36,7 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
 
-      
+
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
@@ -67,7 +70,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name updated successfully.");
         }
 
-         [HttpPost("ServiceCanceled")]
+        [HttpPost("ServiceCanceled")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(BillingServiceModel obj)
         {
@@ -83,6 +86,25 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Canceled successfully.");
         }
-        
+        [HttpDelete("ServicDelete")]
+        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            ServiceMaster model = await _repository.GetById(x => x.ServiceId == Id);
+            if ((model?.ServiceId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Servic deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+        }
+
     }
 }
+
+

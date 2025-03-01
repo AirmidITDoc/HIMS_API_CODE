@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -20,10 +21,12 @@ namespace HIMS.API.Controllers.Inventory
     [ApiVersion("1")]
     public class SupplierController : BaseController
     {
+        private readonly IGenericService<MSupplierMaster> _repository;
         private readonly ISupplierService _SupplierService;
-        public SupplierController(ISupplierService repository)
+        public SupplierController(ISupplierService repository, IGenericService<MSupplierMaster> repository1)
         {
             _SupplierService = repository;
+            _repository = repository1;
         }
         [HttpPost("SupplierList")]
         [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
@@ -110,6 +113,23 @@ namespace HIMS.API.Controllers.Inventory
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Canceled successfully.");
+        }
+        [HttpDelete("SupplierDelete")]
+        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            MSupplierMaster model = await _repository.GetById(x => x.SupplierId == Id);
+            if ((model?.SupplierId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
         }
 
     }
