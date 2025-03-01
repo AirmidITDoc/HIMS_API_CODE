@@ -14,6 +14,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<IPPreviousBillListDto>> GetIPPreviousBillAsync(GridRequestModel objGrid);
         Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel objGrid);
         Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel objGrid);
+        Task InsertAsync(AddCharge objAddCharge, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
     }
 }

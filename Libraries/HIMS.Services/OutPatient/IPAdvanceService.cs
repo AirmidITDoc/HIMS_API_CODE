@@ -15,7 +15,7 @@ using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
-    public class IPAdvanceService:IIPAdvanceService
+    public class IPAdvanceService : IIPAdvanceService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public IPAdvanceService(HIMSDbContext HIMSDbContext)
@@ -35,8 +35,17 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillList>(model, "m_Rtrv_IP_Bill_List_Settlement");
         }
+        public virtual async Task InsertAsync(AddCharge objAddCharge, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.AddCharges.Add(objAddCharge);
+                await _context.SaveChangesAsync();
 
-        public virtual async Task paymentAsyncSP(Payment objPayment, Bill ObjBill,List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int UserId, string UserName)
+                scope.Complete();
+            }
+        }
+        public virtual async Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -64,17 +73,17 @@ namespace HIMS.Services.OutPatient
             odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BillEntity);
 
             foreach (var item in objadvanceDetailList)
-            { 
-
-            string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
-
-            var AdvanceDetailEntity = item.ToDictionary();
-            foreach (var rProperty in ADetailEntity)
             {
-                AdvanceDetailEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
-     
+
+                string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+
+                var AdvanceDetailEntity = item.ToDictionary();
+                foreach (var rProperty in ADetailEntity)
+                {
+                    AdvanceDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+
             }
 
 
@@ -94,69 +103,7 @@ namespace HIMS.Services.OutPatient
 
 
 
-        //string[] rDetailEntity = { "AdvanceNo", "Advance" };
-
-        //var AdvanceEntity = objAdvanceDetail.ToDictionary();
-        //foreach (var rProperty in rDetailEntity)
-        //{
-        //    AdvanceEntity.Remove(rProperty);
-        //}
-        //string AdvanceDetailId = odal.ExecuteNonQuery("sp_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
-        //objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
-
-
-        //string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
-        //var PAdvanceEntity = objPayment.ToDictionary();
-        //foreach (var rProperty in PayEntity)
-        //{
-        //    PAdvanceEntity.Remove(rProperty);
-        //}
-        //odal.ExecuteNonQuery("sp_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
-
-
-        public virtual async Task InsertAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail advanceDetail, Payment objpayment, int CurrentUserId, string CurrentUserName)
-        {
-            try
-            {
-              
-                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-                {
-
-                    //AdHeader
-                    ConfigSetting objConfigRSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-
-                    _context.AdvanceHeaders.Add(objAdvanceHeader);
-                    await _context.SaveChangesAsync();
-
-
-                    // Add AdvDetail table records
-                       //await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                    advanceDetail.AdvanceId = objAdvanceHeader.AdvanceId;
-                    _context.AdvanceDetails.Add(advanceDetail);
-                    //_context.ConfigSettings.Update(objConfigRSetting);
-                    //_context.Entry(objConfigRSetting).State = EntityState.Modified;
-                    await _context.SaveChangesAsync();
-
-
-                    // Add AdvDetail table records
-                      //await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                    objpayment.AdvanceId = objAdvanceHeader.AdvanceId;
-                    //_context.ConfigSettings.Update(objConfigRSetting);
-                    //_context.Entry(objConfigRSetting).State = EntityState.Modified;
-                    _context.Payments.Add(objpayment);
-
-                    await _context.SaveChangesAsync();
-
-
-                    scope.Complete();
-                }
-            }
-            catch (Exception ex)
-            {
-                AdvanceHeader? objAdvanceHeader1 = await _context.AdvanceHeaders.FindAsync(objAdvanceHeader.AdvanceId);
-                _context.AdvanceHeaders.Remove(objAdvanceHeader1);
-                await _context.SaveChangesAsync();
-            }
-        }
+    
+        
     }
 }
