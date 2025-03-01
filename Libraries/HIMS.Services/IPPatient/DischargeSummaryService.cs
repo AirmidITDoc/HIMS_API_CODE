@@ -106,6 +106,34 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("v_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
             }
         }
+        public virtual async Task UpdateAsyncTemplate(DischargeSummary ObjDischargeTemplate, TIpPrescriptionDischarge ObjTIpPrescriptionTemplate, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "AdmissionId","History", "Diagnosis", "Investigation", "ClinicalFinding", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "OpDate", "Optime", "DischargeSummaryTime", "DoctorAssistantName", "ClaimNumber", "PreOthNumber", "AddedBy",
+                                 "AddedByDate","UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","DischargeSummaryDate"};
+            var Sentity = ObjDischargeTemplate.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                Sentity.Remove(rProperty);
+                // Add the new parameter
+                Sentity["TemplateDescriptionHtml"] = 0; // Ensure objpayment 
+            }
+            odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
+            var tokensObj = new
+            {
+                OPDIPDID = Convert.ToInt32(ObjTIpPrescriptionTemplate.OpdIpdId)
+            };
+            odal.ExecuteNonQuery("PS_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
+
+            string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+            var ventity = ObjTIpPrescriptionTemplate.ToDictionary();
+            foreach (var Property in DEntity)
+            {
+                ventity.Remove(Property);
+            }
+            odal.ExecuteNonQuery("S_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, ventity);
+
+        }
     }
 }
 
