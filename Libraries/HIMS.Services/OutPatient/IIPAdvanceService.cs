@@ -1,4 +1,6 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,9 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IIPAdvanceService
     {
-        Task InsertAsyncSP(AdvanceHeader objAdvanceHeader,AdvanceDetail advanceDetail,Payment objpayment, int CurrentUserId, string CurrentUserName);
+        Task<IPagedList<IPPreviousBillListDto>> GetIPPreviousBillAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel objGrid);
+        Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
     }
 }
