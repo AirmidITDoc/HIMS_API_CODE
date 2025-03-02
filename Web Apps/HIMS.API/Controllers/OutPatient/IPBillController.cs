@@ -10,6 +10,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
@@ -28,11 +29,13 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IIPBIllwithpaymentService _IPBillService;
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
-        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2)
+        private readonly IIPBillService _IIPBillService;
+        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2, IIPBillService iIPBillService)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
             _IIPAdvanceService = repository2;
+            _IIPBillService = iIPBillService;
         }
 
         [HttpPost("IPPreviousBillList")]
@@ -69,7 +72,13 @@ namespace HIMS.API.Controllers.OutPatient
                 model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
+<<<<<<< HEAD
               
+=======
+
+
+
+>>>>>>> 49a3ebdf8c039b51c08e9bb77661cc4650f1765a
                 await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
@@ -77,41 +86,13 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
+        [HttpPost("IPBillListSettlementList")]
+        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListSettlementListDto> OPBillListSettlementList = await _IIPBillService.IPBillListSettlementList(objGrid);
+            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "IP Patient Bill List "));
+        }
 
 
     }

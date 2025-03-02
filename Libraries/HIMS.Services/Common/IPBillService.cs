@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -295,6 +296,15 @@ namespace HIMS.Services.Common
                 await _context.SaveChangesAsync();
             }
         }
+
+
+
+        public virtual async Task<IPagedList<IPBillListSettlementListDto>> IPBillListSettlementList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillListSettlementListDto>(objGrid, "m_Rtrv_IP_Bill_List_Settlement");
+        }
+
+
     }
 
 }
