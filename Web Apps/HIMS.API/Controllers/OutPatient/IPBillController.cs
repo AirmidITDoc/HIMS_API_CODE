@@ -9,7 +9,6 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
@@ -18,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
+using static HIMS.API.Models.OutPatient.PaymentModel11;
 
 namespace HIMS.API.Controllers.OutPatient
 {
@@ -30,74 +30,57 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
         private readonly IIPBillService _IIPBillService;
-        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2, IIPBillService IIPBillService)
+        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2, IIPBillService iIPBillService)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
             _IIPAdvanceService = repository2;
-            _IIPBillService = IIPBillService;
+            _IIPBillService = iIPBillService;
         }
 
+        [HttpPost("IPPreviousBillList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
+            return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
+        }
+        [HttpPost("IPAddchargesList")]
+        public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
+            return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
+        }
+
+        [HttpPost("IPBillList")]
+        public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillList> IPBill = await _IIPAdvanceService.GetIPBillListAsync(objGrid);
+            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
+        }
+
+        [HttpPost("PaymentSettelment")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(ModelPayment obj)
+        {
+            Payment model = obj.Payment.MapTo<Payment>();
+            Bill objBillModel = obj.Billupdate.MapTo<Bill>();
+            List<AdvanceDetail> objAdvanceDetail = obj.AdvanceDetailupdate.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderupdate.MapTo<AdvanceHeader>();
+            if (obj.Payment.PaymentId == 0)
+            {
+                model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
+                model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
+                model.AddBy = CurrentUserId;
 
 
-        //[HttpPost("IPBIllInsertSP")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> IPBIllInsertSP(IPBillingModel obj)
-        //{
-        //    Bill model = obj.MapTo<Bill>();
-        //    //BillDetail objBillDetail = obj.IPBillDetailsModel.MapTo<BillDetail>();
-        //    //Payment objpayment = obj.IpPayment.MapTo<Payment>();
 
-        //    if (obj.BillNo == 0)
-        //    {
-        //        model.BillTime = Convert.ToDateTime(obj.BillTime);
-        //        model.AddedBy = CurrentUserId;
-        //        await _IPBillService.InsertAsyncSP(model,CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Bill added successfully.");
-        //}
-
-
-
-
-        //[HttpPost("IPBIllCreditInsertSP")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> IPBIllCreditInsertSP(IPBillModel obj)
-        //{
-        //    Bill model = obj.MapTo<Bill>();
-
-        //    if (obj.BillNo == 0)
-        //    {
-        //        model.BillTime = Convert.ToDateTime(obj.BillTime);
-        //        model.AddedBy = CurrentUserId;
-        //        await _IPCreditBillService.InsertAsyncSP(model,CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Ip Bill added successfully.");
-        //}
-
-        //[HttpPost("IPAdvanceInsert")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(NewIPAdvance obj)
-        //{
-        //    AdvanceHeader model = obj.IPAdvanceHeader.MapTo<AdvanceHeader>();
-        //    AdvanceDetail ObjAdvanceDetail = obj.IPAdvanceDetail.MapTo<AdvanceDetail>();
-        //    Payment Objpayment = obj.IPPayments.MapTo<Payment>();
-
-        //    if (obj.IPAdvanceHeader.AdvanceId == 0)
-        //    {
-        //        ObjAdvanceDetail.Time = Convert.ToDateTime(ObjAdvanceDetail.Time);
-        //        Objpayment.PaymentTime = Convert.ToDateTime(Objpayment.PaymentTime);
-        //        model.AddedBy = CurrentUserId;
-        //        await _IIPAdvanceService.InsertAsyncSP(model,ObjAdvanceDetail,Objpayment, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.");
-        //}
+                await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
+        }
 
         [HttpPost("IPBillListSettlementList")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
@@ -106,6 +89,7 @@ namespace HIMS.API.Controllers.OutPatient
             IPagedList<IPBillListSettlementListDto> OPBillListSettlementList = await _IIPBillService.IPBillListSettlementList(objGrid);
             return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "IP Patient Bill List "));
         }
+
 
     }
 }
