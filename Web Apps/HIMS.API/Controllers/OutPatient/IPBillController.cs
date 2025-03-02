@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.OutPatient
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
 
-        [HttpPost("PaymentSettelment")]
+        [HttpPost("PaymentSettelmentInsert")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
@@ -70,8 +70,6 @@ namespace HIMS.API.Controllers.OutPatient
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
               
-
-
                 await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
