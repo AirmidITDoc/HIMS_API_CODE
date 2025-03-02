@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.OutPatient
         //    return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         //}
 
-        [HttpPost("PaymentSettelment")]
+        [HttpPost("PaymentSettelmentInsert")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
@@ -72,10 +72,14 @@ namespace HIMS.API.Controllers.OutPatient
                 model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
+<<<<<<< HEAD
+              
+=======
 
 
 
-                //await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+>>>>>>> 49a3ebdf8c039b51c08e9bb77661cc4650f1765a
+                await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
