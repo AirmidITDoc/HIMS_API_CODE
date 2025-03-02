@@ -38,26 +38,26 @@ namespace HIMS.API.Controllers.OutPatient
             _IIPBillService = iIPBillService;
         }
 
-        [HttpPost("IPPreviousBillList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
-            return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
-        }
-        [HttpPost("IPAddchargesList")]
-        public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
-            return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
-        }
+        //[HttpPost("IPPreviousBillList")]
+        ////[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        //public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
+        //    return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
+        //}
+        //[HttpPost("IPAddchargesList")]
+        //public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
+        //    return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
+        //}
 
-        [HttpPost("IPBillList")]
-        public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPBillList> IPBill = await _IIPAdvanceService.GetIPBillListAsync(objGrid);
-            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
-        }
+        //[HttpPost("IPBillList")]
+        //public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<IPBillList> IPBill = await _IIPAdvanceService.GetIPBillListAsync(objGrid);
+        //    return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
+        //}
 
         [HttpPost("PaymentSettelment")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.OutPatient
 
 
 
-                await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                //await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

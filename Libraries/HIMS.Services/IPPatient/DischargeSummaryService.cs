@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.IPPatient
 {
@@ -54,7 +56,9 @@ namespace HIMS.Services.IPPatient
             }
         }
 
-        public virtual async Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, TIpPrescriptionDischarge ObjTIpPrescriptionDischarge, int UserId, string Username)
+       
+
+        public virtual async Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "AdmissionId", "DischargeSummaryDate", "DischargeSummaryTime", "AddedBy", "AddedByDate", "UpdatedByDate" };
@@ -64,21 +68,48 @@ namespace HIMS.Services.IPPatient
                 Uentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("sp_update_DischargeSummary_1", CommandType.StoredProcedure, Uentity);
+        
+            
+            //foreach (var item in ObjTIpPrescriptionDischarge)
+            //{
+            //    var tokensObj = new
+            //    {
+            //        OPDIPDID = Convert.ToInt32(item.OpdIpdId)
+            //    };
+            //    odal.ExecuteNonQuery("sp_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            //}
+                                //string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+                                //var pentity = ObjTIpPrescriptionDischarge.ToDictionary();
+                                //foreach (var Property in DEntity)
+                                //{
+                                //    pentity.Remove(Property);
+                                //}
+                                //odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
 
-            var tokensObj = new
-            {
-                OPDIPDID = Convert.ToInt32(ObjTIpPrescriptionDischarge.OpdIpdId)
-            };
-            odal.ExecuteNonQuery("sp_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
 
-            string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
-            var pentity = ObjTIpPrescriptionDischarge.ToDictionary();
-            foreach (var Property in DEntity)
-            {
-                pentity.Remove(Property);
-            }
-            odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+            //foreach (var item in ObjTIpPrescriptionDischarge)
+            //{
 
+            //    string[] DEntity1 = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
+            //    var pentity1 = item.ToDictionary();
+            //    foreach (var Property in DEntity1)
+            //    {
+            //        pentity1.Remove(Property);
+            //    }
+            //    odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity1);
+
+            //}
+
+        }
+
+        public virtual async Task<IPagedList<DischrageSummaryListDTo>> IPDischargesummaryList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DischrageSummaryListDTo>(objGrid, "v_Rtrv_T_DischargeSummary");
+        }
+
+        public virtual async Task<IPagedList<IPPrescriptiononDischargeListDto>> IPPrescriptionDischargesummaryList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPPrescriptiononDischargeListDto>(objGrid, "v_Rtrv_IP_Prescription_Discharge");
         }
     }
 }
