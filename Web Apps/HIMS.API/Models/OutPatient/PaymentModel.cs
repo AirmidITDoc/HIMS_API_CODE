@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Models.OutPatient
 {
-    public class PaymentModel11
+    public class PaymentsModel
     {
 
 
@@ -43,11 +43,11 @@ namespace HIMS.API.Models.OutPatient
         public decimal? TDSAmount { get; set; }
 
 
+    }
 
-
-        public class PaymentModel11Validator : AbstractValidator<PaymentModel11>
+        public class PaymentsModelValidator : AbstractValidator<PaymentsModel>
         {
-            public PaymentModel11Validator()
+            public PaymentsModelValidator()
             {
                 RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
             }
@@ -90,9 +90,17 @@ namespace HIMS.API.Models.OutPatient
             public decimal? BalanceAmount { get; set; }
 
         }
+        public class AdvanceHeadersModelValidator : AbstractValidator<AdvanceHeadersModel>
+        {
+            public AdvanceHeadersModelValidator()
+            {
+                RuleFor(x => x.AdvanceUsedAmount).NotNull().NotEmpty().WithMessage("AdvanceUsedAmount is required");
+                RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
+            }
+        }
         public class ModelPayment
         {
-            public PaymentModel11 Payment { get; set; }
+            public PaymentsModel Payment { get; set; }
             public BillModel Billupdate { get; set; }
             public List<AdvanceDetailsModel> AdvanceDetailupdate { get; set; }
             public AdvanceHeadersModel AdvanceHeaderupdate { get; set; }
@@ -100,4 +108,3 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
-}

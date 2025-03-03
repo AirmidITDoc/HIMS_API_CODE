@@ -9,6 +9,7 @@ using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.IPPatient;
 using HIMS.API.Models.IPPatient;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -18,9 +19,12 @@ namespace HIMS.API.Controllers.IPPatient
     public class IPMedicalRecordController : BaseController
     {
         private readonly IMedicalRecordService _MedicalRecordService;
+       
+        
         public IPMedicalRecordController(IMedicalRecordService repository)
         {
             _MedicalRecordService = repository;
+            
         }
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
@@ -53,7 +57,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MedicalRecord  updated successfully.");
         }
 
-        
+       
     }
 }
 

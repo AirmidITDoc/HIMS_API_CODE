@@ -239,7 +239,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
         {
 
-            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "m_Rtrv_PreviousDoctorVisitList");
+            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "v_Rtrv_PreviousDoctorVisitList");
         }
 
 

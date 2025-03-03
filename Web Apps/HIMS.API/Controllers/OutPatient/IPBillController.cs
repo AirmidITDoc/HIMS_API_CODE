@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
@@ -10,13 +11,15 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
-using static HIMS.API.Models.OutPatient.PaymentModel11;
+
+
 
 namespace HIMS.API.Controllers.OutPatient
 {
@@ -25,10 +28,10 @@ namespace HIMS.API.Controllers.OutPatient
     [ApiVersion("1")]
     public class IPBillController : BaseController
     {
-        private readonly IIPBIllwithpaymentService _IPBillService;
+        private readonly IIPBillService _IPBillService;
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
-        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2)
+        public IPBillController(IIPBillService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
@@ -39,22 +42,39 @@ namespace HIMS.API.Controllers.OutPatient
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
         {
-            IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
+            IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IPBillService.GetIPPreviousBillAsync(objGrid);
             return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
         }
         [HttpPost("IPAddchargesList")]
         public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
         {
-            IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
+            IPagedList<IPAddchargesListDto> IPAddchargesList = await _IPBillService.GetIPAddchargesAsync(objGrid);
             return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
         }
 
         [HttpPost("IPBillList")]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
-            IPagedList<IPBillList> IPBill = await _IIPAdvanceService.GetIPBillListAsync(objGrid);
+            IPagedList<IPBillList> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
+        [HttpPost("InsertEDMX")]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
+        {
+            AddCharge model = obj.MapTo<AddCharge>();
+            if (obj.ChargesId == 0)
+            {
+             //   model.CreatedDate = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+              //  model.IsActive = true;
+                await _IPBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharge  added successfully.");
+        }
+
 
         [HttpPost("PaymentSettelment")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -69,10 +89,7 @@ namespace HIMS.API.Controllers.OutPatient
                 model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
-              
-
-
-                await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                await _IPBillService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

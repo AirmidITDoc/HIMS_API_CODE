@@ -11,9 +11,6 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IIPAdvanceService
     {
-        Task<IPagedList<IPPreviousBillListDto>> GetIPPreviousBillAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel objGrid);
-        Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
+     
     }
 }

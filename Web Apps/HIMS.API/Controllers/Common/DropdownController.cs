@@ -76,6 +76,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOpcasepaperDignosisMaster> _IMOPCasepaperDignosisMaster;
 
 
+
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -224,7 +225,7 @@ namespace HIMS.API.Controllers.Common
                 "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
 
                 "DoseMaster" => (await _IMDoseMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDoseMaster.DoseId), nameof(MDoseMaster.DoseName)),
-                "PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
+                //"PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
                 "CasepaperDignosis" => (await _IMOPCasepaperDignosisMaster.GetAll()).ToList().ToDropDown(nameof(MOpcasepaperDignosisMaster.DescriptionType), nameof(MOpcasepaperDignosisMaster.DescriptionName)),
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
