@@ -52,12 +52,7 @@ namespace HIMS.API.Controllers.OutPatient
             return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
         }
 
-        [HttpPost("IPBillList")]
-        public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPBillList> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
-            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
-        }
+        
         [HttpPost("InsertEDMX")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)

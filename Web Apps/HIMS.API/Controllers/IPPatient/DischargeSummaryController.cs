@@ -31,8 +31,6 @@ namespace HIMS.API.Controllers.IPPatient
             _IDischargeSummaryService = repository;
             _repository = repository1;
         }
-
-
         [HttpPost("IPDischargeSummaryData")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
@@ -58,7 +56,7 @@ namespace HIMS.API.Controllers.IPPatient
             return data1.ToSingleResponse<Discharge, DischargeModel>("Discharge");
         }
 
-        [HttpPost("DischargeInsert")]
+        [HttpPost("DischargeSummaryInsert")]
         //[Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
         {
@@ -77,7 +75,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.");
         }
-        [HttpPost("DischargeUpdate")]
+        [HttpPost("DischargeSummaryUpdate")]
         //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
         {

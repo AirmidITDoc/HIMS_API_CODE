@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.IPPatient
 {
-    public class IPPaymentListDto
+    public class BrowseIPPaymentListDto
     {
         public string PaymentId { get; set; }
         public long? BillNo { get; set; }
