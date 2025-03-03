@@ -140,7 +140,6 @@ namespace HIMS.API.Infrastructure
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
             services.AddScoped<IBillCancellationService, BillCancellationService>();
-            services.AddScoped<IDischargeCancellationService, DischargeCancellationService>();
 
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddScoped<IRoleService, RoleService>();
