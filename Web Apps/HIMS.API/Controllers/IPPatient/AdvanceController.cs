@@ -16,6 +16,8 @@ using HIMS.Core;
 using HIMS.Services.OutPatient;
 using static HIMS.API.Models.IPPatient.UpdateAdvanceModelValidator;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Models.Masters;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -25,9 +27,11 @@ namespace HIMS.API.Controllers.IPPatient
     public class AdvanceController : BaseController
     {
         private readonly IAdvanceService _IAdvanceService;
-        public AdvanceController(IAdvanceService repository)
+        private readonly IGenericService<AdvanceHeader> _repository1;
+        public AdvanceController(IAdvanceService repository,IGenericService<AdvanceHeader> AdvanceHeaderrepository)
         {
             _IAdvanceService = repository;
+            _repository1 = AdvanceHeaderrepository;
         }
         [HttpPost("PatientWiseAdvanceList")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
@@ -45,7 +49,18 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
-
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data1 = await _repository1.GetById(x => x.OpdIpdId == id);
+            return data1.ToSingleResponse<AdvanceHeader, AdvanceHeaderModel>("Advance Details ");
+        }
 
         [HttpPost("RefundOfAdvanceList")]
         [Permission(PageCode = "Advance", Permission = PagePermission.View)]
