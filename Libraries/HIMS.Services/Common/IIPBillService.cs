@@ -23,7 +23,6 @@ namespace HIMS.Services.Common
         Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel objGrid);
         Task InsertAsync(AddCharge objAddCharge, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
-
     }
 }
 
