@@ -36,19 +36,19 @@ namespace HIMS.API.Controllers.OutPatient
             _IIPAdvanceService = repository2;
         }
 
-        [HttpPost("IPPreviousBillList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
-            return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
-        }
-        [HttpPost("IPAddchargesList")]
-        public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
-        {
-            IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
-            return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
-        }
+        //[HttpPost("IPPreviousBillList")]
+        ////[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        //public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IIPAdvanceService.GetIPPreviousBillAsync(objGrid);
+        //    return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
+        //}
+        //[HttpPost("IPAddchargesList")]
+        //public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<IPAddchargesListDto> IPAddchargesList = await _IIPAdvanceService.GetIPAddchargesAsync(objGrid);
+        //    return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
+        //}
 
         [HttpPost("IPBillList")]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
@@ -90,6 +90,7 @@ namespace HIMS.API.Controllers.OutPatient
               
 
 
+>>>>>>> 49a3ebdf8c039b51c08e9bb77661cc4650f1765a
                 await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
