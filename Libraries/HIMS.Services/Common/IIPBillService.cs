@@ -18,7 +18,6 @@ namespace HIMS.Services.Common
         Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel objGrid);
-
         Task<IPagedList<IPBillListSettlementListDto>> IPBillListSettlementList(GridRequestModel objGrid);
 
     }

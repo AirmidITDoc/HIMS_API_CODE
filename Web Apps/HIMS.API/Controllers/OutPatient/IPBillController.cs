@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
@@ -10,14 +11,13 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.Common;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
-using static HIMS.API.Models.OutPatient.PaymentModel11;
+//using static HIMS.API.Models.OutPatient.PaymentModel11;
 
 namespace HIMS.API.Controllers.OutPatient
 {
@@ -29,13 +29,11 @@ namespace HIMS.API.Controllers.OutPatient
         private readonly IIPBIllwithpaymentService _IPBillService;
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
-        private readonly IIPBillService _IIPBillService;
-        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2, IIPBillService iIPBillService)
+        public IPBillController(IIPBIllwithpaymentService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
             _IIPAdvanceService = repository2;
-            _IIPBillService = iIPBillService;
         }
 
         [HttpPost("IPPreviousBillList")]
@@ -58,6 +56,23 @@ namespace HIMS.API.Controllers.OutPatient
             IPagedList<IPBillList> IPBill = await _IIPAdvanceService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
+        [HttpPost("InsertEDMX")]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
+        {
+            AddCharge model = obj.MapTo<AddCharge>();
+            if (obj.ChargesId == 0)
+            {
+             //   model.CreatedDate = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+              //  model.IsActive = true;
+                await _IIPAdvanceService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharge  added successfully.");
+        }
+
 
         [HttpPost("PaymentSettelment")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -72,7 +87,7 @@ namespace HIMS.API.Controllers.OutPatient
                 model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
-
+              
 
 
                 await _IIPAdvanceService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
@@ -82,13 +97,41 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
         }
 
-        [HttpPost("IPBillListSettlementList")]
-        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
-        public async Task<IActionResult> List1(GridRequestModel objGrid)
-        {
-            IPagedList<IPBillListSettlementListDto> OPBillListSettlementList = await _IIPBillService.IPBillListSettlementList(objGrid);
-            return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "IP Patient Bill List "));
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
 
 
     }
