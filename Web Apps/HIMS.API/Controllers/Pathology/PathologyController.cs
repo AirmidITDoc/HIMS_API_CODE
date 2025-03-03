@@ -28,10 +28,6 @@ namespace HIMS.API.Controllers.Pathology
             _IPathlogySampleCollectionService = repository;
             _ILabRequestService = repository1;
             _IPathlogyService = repository2;
-
-
-
-
         }
         [HttpPost("PathTemplateForUpdateList")]
         //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
@@ -86,12 +82,12 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
         }
 
-        [HttpPost("PatientList")]
+        [HttpPost("PathologyPatientTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
         {
-            IPagedList<PatientListDto> PatientList = await _IPathlogySampleCollectionService.PGetListAsync(objGrid);
-            return Ok(PatientList.ToGridResponse(objGrid, "PatientList "));
+            IPagedList<PatientTestListDto> PatientList = await _IPathlogySampleCollectionService.PGetListAsync(objGrid);
+            return Ok(PatientList.ToGridResponse(objGrid, "PathologyPatientTestList "));
         }
 
     }
