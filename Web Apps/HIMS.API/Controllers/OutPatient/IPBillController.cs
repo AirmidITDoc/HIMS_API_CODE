@@ -43,31 +43,29 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
         {
             IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IPBillService.GetIPPreviousBillAsync(objGrid);
-            return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
+            return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IP Previous Bill List"));
         }
         [HttpPost("IPAddchargesList")]
         public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
         {
             IPagedList<IPAddchargesListDto> IPAddchargesList = await _IPBillService.GetIPAddchargesAsync(objGrid);
-            return Ok(IPAddchargesList.ToGridResponse(objGrid, "IPAddcharges List"));
+            return Ok(IPAddchargesList.ToGridResponse(objGrid, "I PAdd charges List"));
         }
 
         [HttpPost("IPBillList")]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
             IPagedList<IPBillList> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
-            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
+            return Ok(IPBill.ToGridResponse(objGrid, "IP Bill List For Settlement"));
         }
-        [HttpPost("InsertEDMX")]
+        [HttpPost("AddChargesInsert")]
      //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.ChargesId == 0)
             {
-             //   model.CreatedDate = DateTime.Now;
                 model.AddedBy = CurrentUserId;
-              //  model.IsActive = true;
                 await _IPBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
