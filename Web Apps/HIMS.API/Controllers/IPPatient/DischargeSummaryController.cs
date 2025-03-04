@@ -135,7 +135,56 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate Update successfully.");
         }
+        [HttpPost("DischargeInsert")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> IPDischargeInsert(DischargeModels obj)
+        {
+            Discharge model = obj.Discharge.MapTo<Discharge>();
+            Admission ObjAdmission = obj.Admission.MapTo<Admission>();
+            Bedmaster ObjBed = obj.Bed.MapTo<Bedmaster>();
 
+            if (obj.Discharge.DischargeId == 0)
+            {
+                model.DischargeDate = Convert.ToDateTime(obj.Discharge.DischargeDate);
+                model.DischargeTime = Convert.ToDateTime(obj.Discharge.DischargeTime);
+                model.AddedBy = CurrentUserId;
+
+                if (obj.Discharge.DischargeId == 0)
+                {
+                    ObjAdmission.DischargeTime = Convert.ToDateTime(obj.Admission.DischargeTime);
+                    ObjAdmission.AddedBy = CurrentUserId;
+                    ObjBed.CreatedBy = CurrentUserId;
+                }
+                await _IDischargeSummaryService.InsertDischargeSP(model, ObjAdmission, ObjBed, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.");
+        }
+        [HttpPost("DischargeUpdate")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
+        {
+            Discharge model = obj.Discharge.MapTo<Discharge>();
+            Admission ObjAdmission = obj.Admission.MapTo<Admission>();
+
+            if (obj.Discharge.DischargeId != 0)
+            {
+                model.DischargeDate = Convert.ToDateTime(obj.Discharge.DischargeDate);
+                model.DischargeTime = Convert.ToDateTime(obj.Discharge.DischargeTime);
+                model.AddedBy = CurrentUserId;
+
+                if (obj.Discharge.DischargeId != 0)
+                {
+                    ObjAdmission.DischargeTime = Convert.ToDateTime(obj.Admission.DischargeTime);
+                    ObjAdmission.AddedBy = CurrentUserId;
+                }
+                await _IDischargeSummaryService.UpdateDischargeSP(model, ObjAdmission ,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Updated successfully.");
+        }
     }
 }
 

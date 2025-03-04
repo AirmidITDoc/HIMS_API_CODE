@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Controllers\IPPatient\DischargeController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="6.4.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="EPPlus" Version="7.0.0" />
