@@ -55,14 +55,12 @@ namespace HIMS.API.Controllers.Common
             IPagedList<BrowseIPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
             return Ok(IPPaymentList.ToGridResponse(objGrid, "BrowseIPPaymentList"));
         }
-
-
-        [HttpPost("IPRefundBillList")]
+        [HttpPost("BrowseIPRefundlist")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
         {
-            IPagedList<IPRefundBillListDto> IPRefundBillList = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
-            return Ok(IPRefundBillList.ToGridResponse(objGrid, "IP Refund Bill List"));
+            IPagedList<BrowseIPRefundListDto> BrowseIPRefundlist = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
+            return Ok(BrowseIPRefundlist.ToGridResponse(objGrid, " BrowseIPRefundlist "));
         }
         [HttpPost("ServiceClassdetaillList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]

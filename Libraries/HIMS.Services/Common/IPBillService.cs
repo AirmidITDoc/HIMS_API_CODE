@@ -30,9 +30,9 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<BrowseIPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
         }
-        public virtual async Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<BrowseIPRefundListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPRefundListDto>(model, "m_Rtrv_IPRefundBillList");
         }
         public virtual async Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel model)
         {
