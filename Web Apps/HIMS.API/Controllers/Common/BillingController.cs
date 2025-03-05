@@ -22,12 +22,9 @@ namespace HIMS.API.Controllers.Common
     [ApiVersion("1")]
     public class BillingController : BaseController
     {
-       
-        
-            private readonly IOPAddchargesService _IOPAddchargesService;
-             private readonly IOPBillingService _oPBillingService;
-           private readonly IOPSettlementCreditService _IOPCreditBillService;
-        
+        private readonly IOPAddchargesService _IOPAddchargesService;
+        private readonly IOPBillingService _oPBillingService;
+        private readonly IOPSettlementCreditService _IOPCreditBillService;
         private readonly IIPBillService _IPBillService;
        // private readonly IIPBILLCreditService _iPBILLCreditService;
         private readonly IIPDraftBillSerive _iPDraftBillSerive;
@@ -36,41 +33,34 @@ namespace HIMS.API.Controllers.Common
         public BillingController(IOPAddchargesService repository, IOPBillingService repository1, IOPSettlementCreditService repository2, IIPBillService iPBIllwithpay, IIPBILLCreditService iPBILLCreditService,
             IIPInterimBillSerive iPInterimBill,IIPDraftBillSerive iPDraftBill)
             {
-                _IOPAddchargesService = repository;
+            _IOPAddchargesService = repository;
             _oPBillingService = repository1;
             _IOPCreditBillService = repository2;
-           
-
             _IPBillService = iPBIllwithpay;
             //_iPBILLCreditService = iPBILLCreditService;
             _iPDraftBillSerive = iPDraftBill;
             _iPInterimBillSerive = iPInterimBill;
         }
 
-        [HttpPost("IPBillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> BillList(GridRequestModel objGrid)
+        [HttpPost("BrowseIPBillList")]
+        public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
-            IPagedList<IPBillListDto> IPBillList = await _IPBillService.GetIPBillListListAsync(objGrid);
-            return Ok(IPBillList.ToGridResponse(objGrid, "IP Bill List"));
+            IPagedList<BrowseIPDBillListDto> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
+            return Ok(IPBill.ToGridResponse(objGrid, "BrowseIPDBill List"));
         }
-
-
-        [HttpPost("IPPaymentList")]
+        [HttpPost("BrowseIPPaymentList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
-            IPagedList<IPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
-            return Ok(IPPaymentList.ToGridResponse(objGrid, "IP Payment  List"));
+            IPagedList<BrowseIPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
+            return Ok(IPPaymentList.ToGridResponse(objGrid, "BrowseIPPaymentList"));
         }
-
-
-        [HttpPost("IPRefundBillList")]
+        [HttpPost("BrowseIPRefundlist")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
         {
-            IPagedList<IPRefundBillListDto> IPRefundBillList = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
-            return Ok(IPRefundBillList.ToGridResponse(objGrid, "IP Refund Bill List"));
+            IPagedList<BrowseIPRefundListDto> BrowseIPRefundlist = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
+            return Ok(BrowseIPRefundlist.ToGridResponse(objGrid, " BrowseIPRefundlist "));
         }
         [HttpPost("ServiceClassdetaillList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]

@@ -13,8 +13,8 @@ namespace HIMS.Services.Common
     public partial interface IIPBillService
     {
         Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel objGrid);
+        Task<IPagedList<BrowseIPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel objGrid);
+        Task<IPagedList<BrowseIPRefundListDto>> GetIPRefundBillListListAsync(GridRequestModel objGrid);
         Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel objGrid);

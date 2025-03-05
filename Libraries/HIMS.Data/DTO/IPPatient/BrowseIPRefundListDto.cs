@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.IPPatient
 {
-    public class IPRefundBillListDto
+    public class BrowseIPRefundListDto
     {
         public long RefundId { get; set; }
         public string? RegNo { get; set; }

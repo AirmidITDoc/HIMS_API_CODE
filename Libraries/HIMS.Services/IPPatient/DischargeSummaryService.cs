@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using System.Transactions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
 
 namespace HIMS.Services.IPPatient
 {
@@ -155,6 +157,73 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("S_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, ventity);
 
         }
+        public virtual async Task InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName)
+        {
+            // throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "Admission" };
+            var entity = ObjDischarge.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string DischargeId = odal.ExecuteNonQuery("v_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
+            ObjDischarge.DischargeId = Convert.ToInt32(DischargeId);
+            //ObjAdmission.AdmissionId = Convert.ToInt32(ObjDischarge.AdmissionId);
+
+            string[] AEntity = { "RegId","AdmissionDate","AdmissionTime","PatientTypeId","HospitalId","DocNameId","RefDocNameId","WardId","BedId","IsBillGenerated","Ipdno","IsCancelled","CompanyId","TariffId","ClassId",
+            "DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod",
+            "IsPharClearance","Ipnumber","EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
+            "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"};
+            var Admientity = ObjAdmission.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Admientity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_Admission_3", CommandType.StoredProcedure, Admientity);
+
+            string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var Bentity = ObjBedmaster.ToDictionary();
+            foreach (var rProperty in BEntity)
+            {
+                Bentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
+
+        }
+        public virtual async Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
+        {
+            // throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "AdmissionId", "IsCancelled", "AddedBy", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName" };
+            var Dentity = ObjDischarge.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                Dentity.Remove(rProperty);
+                // Add the new parameter
+                Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
+                Dentity["ModifiedBy"] = 0; // Ensure objpayment 
+            }
+            odal.ExecuteNonQuery("m_update_Discharge_1", CommandType.StoredProcedure, Dentity);
+
+            string[] AEntity = { "RegId","AdmissionDate","AdmissionTime","PatientTypeId","HospitalId","DocNameId","RefDocNameId","WardId","BedId","IsBillGenerated","Ipdno","IsCancelled","CompanyId","TariffId","ClassId",
+            "DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod",
+            "IsPharClearance","Ipnumber","EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
+            "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"}; 
+            var Aentity = ObjAdmission.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Aentity.Remove(rProperty);
+               
+            }
+            odal.ExecuteNonQuery("update_Admission_3", CommandType.StoredProcedure, Aentity);
+        }
 
     }
 }
+
+
+
+

@@ -27,17 +27,13 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
         }
-
-
-        public virtual async Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<BrowseIPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
         }
-
-
-        public virtual async Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<BrowseIPRefundListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPRefundBillListDto>(model, "m_Rtrv_IPRefundBillList");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPRefundListDto>(model, "m_Rtrv_IPRefundBillList");
         }
         public virtual async Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel model)
         {
@@ -308,9 +304,9 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<IPAddchargesListDto>(model, "ps_Rtrv_AddChargesList");
         }
-        public virtual async Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<BrowseIPDBillListDto>> GetIPBillListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPBillList>(model, "m_Rtrv_IP_Bill_List_Settlement");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPDBillListDto>(model, "m_Rtrv_IP_Bill_List_Settlement");
         }
         public virtual async Task InsertAsync(AddCharge objAddCharge, int UserId, string Username)
         {

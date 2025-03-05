@@ -31,8 +31,6 @@ namespace HIMS.API.Controllers.IPPatient
             _IDischargeSummaryService = repository;
             _repository = repository1;
         }
-
-
         [HttpPost("IPDischargeSummaryData")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
@@ -58,7 +56,7 @@ namespace HIMS.API.Controllers.IPPatient
             return data1.ToSingleResponse<Discharge, DischargeModel>("Discharge");
         }
 
-        [HttpPost("DischargeInsert")]
+        [HttpPost("DischargeSummaryInsert")]
         //[Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
         {
@@ -77,7 +75,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.");
         }
-        [HttpPost("DischargeUpdate")]
+        [HttpPost("DischargeSummaryUpdate")]
         //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
         {
@@ -137,7 +135,56 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate Update successfully.");
         }
+        [HttpPost("DischargeInsert")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> IPDischargeInsert(DischargeModels obj)
+        {
+            Discharge model = obj.Discharge.MapTo<Discharge>();
+            Admission ObjAdmission = obj.Admission.MapTo<Admission>();
+            Bedmaster ObjBed = obj.Bed.MapTo<Bedmaster>();
 
+            if (obj.Discharge.DischargeId == 0)
+            {
+                model.DischargeDate = Convert.ToDateTime(obj.Discharge.DischargeDate);
+                model.DischargeTime = Convert.ToDateTime(obj.Discharge.DischargeTime);
+                model.AddedBy = CurrentUserId;
+
+                if (obj.Discharge.DischargeId == 0)
+                {
+                    ObjAdmission.DischargeTime = Convert.ToDateTime(obj.Admission.DischargeTime);
+                    ObjAdmission.AddedBy = CurrentUserId;
+                    ObjBed.CreatedBy = CurrentUserId;
+                }
+                await _IDischargeSummaryService.InsertDischargeSP(model, ObjAdmission, ObjBed, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.");
+        }
+        [HttpPost("DischargeUpdate")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
+        {
+            Discharge model = obj.Discharge.MapTo<Discharge>();
+            Admission ObjAdmission = obj.Admission.MapTo<Admission>();
+
+            if (obj.Discharge.DischargeId != 0)
+            {
+                model.DischargeDate = Convert.ToDateTime(obj.Discharge.DischargeDate);
+                model.DischargeTime = Convert.ToDateTime(obj.Discharge.DischargeTime);
+                model.AddedBy = CurrentUserId;
+
+                if (obj.Discharge.DischargeId != 0)
+                {
+                    ObjAdmission.DischargeTime = Convert.ToDateTime(obj.Admission.DischargeTime);
+                    ObjAdmission.AddedBy = CurrentUserId;
+                }
+                await _IDischargeSummaryService.UpdateDischargeSP(model, ObjAdmission ,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Updated successfully.");
+        }
     }
 }
 

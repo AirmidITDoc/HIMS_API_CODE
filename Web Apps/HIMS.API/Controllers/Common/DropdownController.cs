@@ -74,6 +74,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MDoseMaster> _IMDoseMaster;
         private readonly IGenericService<MPresTemplateH> _IMPresTemplateH;
         private readonly IGenericService<MOpcasepaperDignosisMaster> _IMOPCasepaperDignosisMaster;
+        private readonly IGenericService<MReportTemplateConfig> _IMReportConfTemplate;
 
 
 
@@ -96,8 +97,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MenuMaster> iMDmenuMaster,
               IGenericService<MDoseMaster> IMDdoseMaster,
               IGenericService<MPresTemplateH> IMDPresTemplateH,
-              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster
-            
+              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig
+
               )
         {
             _IAreaService = areaservice;
@@ -155,6 +156,7 @@ namespace HIMS.API.Controllers.Common
             _IMDoseMaster = IMDdoseMaster;
             _IMPresTemplateH = IMDPresTemplateH;
             _IMOPCasepaperDignosisMaster = _IMOPCasepaperDignosisMaster;
+            _IMReportConfTemplate = IMReportTemplateConfig;
         }
 
         [HttpGet]
@@ -227,6 +229,7 @@ namespace HIMS.API.Controllers.Common
                 "DoseMaster" => (await _IMDoseMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDoseMaster.DoseId), nameof(MDoseMaster.DoseName)),
                 //"PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
                 "CasepaperDignosis" => (await _IMOPCasepaperDignosisMaster.GetAll()).ToList().ToDropDown(nameof(MOpcasepaperDignosisMaster.DescriptionType), nameof(MOpcasepaperDignosisMaster.DescriptionName)),
+                "DischargeTemplate" => (await _IMReportConfTemplate.GetAll()).ToList().ToDropDown(nameof(MReportTemplateConfig.TemplateId), nameof(MReportTemplateConfig.TemplateName)),
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),

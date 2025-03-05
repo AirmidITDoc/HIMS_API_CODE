@@ -5,8 +5,10 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -37,8 +39,6 @@ namespace HIMS.API.Controllers.OutPatient
             _Examination = MExaminationMasterrepository;
             _MComplaintMaster = MComplaintMasterrepository;
         }
-
-
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
@@ -61,9 +61,21 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
 
+        [HttpPost("GetVisitList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<GetVisitInfoListDto> GetVisitList = await _OPDPrescriptionService.GetListAsync(objGrid);
+            return Ok(GetVisitList.ToGridResponse(objGrid, "GetVisitList "));
+        }
 
-
-
+        [HttpPost("PrescriptionDetailsVisitList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListP(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionDetailsVisitWiseListDto> GetVisitList = await _OPDPrescriptionService.GetListAsyncL(objGrid);
+            return Ok(GetVisitList.ToGridResponse(objGrid, "PrescriptionDetailsVisitList "));
+        }
         //List API
         [HttpGet]
         [Route("get-Service")]
@@ -102,41 +114,6 @@ namespace HIMS.API.Controllers.OutPatient
             var MChiefComplaintMasterList = await _MComplaintMaster.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ChiefComplaint dropdown", MChiefComplaintMasterList.Select(x => new { x.ComplaintId, x.ComplaintDescr }));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ////Ashu//
-        //[HttpPost("InsertSP")]
-        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(ModelTPrescription obj)
-        //{
-        //    TPrescription model = obj.MapTo<TPrescription>();
-        //    if (obj.PrecriptionId == 0)
-        //    {
-        //        model.Ptime = Convert.ToDateTime(obj.Ptime);
-        //        model.CreatedBy = CurrentUserId;
-        //        //model.IsActive = true;
-        //        await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPDPrescription   added successfully.");
-        //}
-
-
-
-
-
 
     }
 }

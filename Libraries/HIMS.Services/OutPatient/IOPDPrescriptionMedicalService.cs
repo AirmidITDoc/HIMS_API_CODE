@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +12,9 @@ namespace HIMS.Services.OutPatient
 {
     public partial  interface IOPDPrescriptionMedicalService
     {
-    
-        Task InsertPrescriptionAsyncSP(TPrescription objTPrescription,List<TOprequestList> objTOprequestList ,List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName);
+     Task InsertPrescriptionAsyncSP(TPrescription objTPrescription,List<TOprequestList> objTOprequestList ,List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName);
+        Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PrescriptionDetailsVisitWiseListDto>> GetListAsyncL(GridRequestModel objGrid);
 
 
     }

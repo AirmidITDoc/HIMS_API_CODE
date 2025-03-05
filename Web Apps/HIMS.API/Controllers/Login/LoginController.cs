@@ -39,18 +39,19 @@ namespace HIMS.API.Controllers.Login
         [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
         public async Task<ApiResponse> Authenticate([FromBody] AuthenticateModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.CaptchaCode))
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
-            }
-            else if (string.IsNullOrWhiteSpace(model.Username))
+            //if (string.IsNullOrWhiteSpace(model.CaptchaCode))
+            //{
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
+            //}
+            //else 
+            if (string.IsNullOrWhiteSpace(model.Username))
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
             }
             else
             {
-                if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
-                {
+                //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                //{
                     LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
                     if (user == null)
                     {
@@ -71,11 +72,11 @@ namespace HIMS.API.Controllers.Login
                             user.UserId
                         });
                     }
-                }
-                else
-                {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
-                }
+                //}
+                //else
+                //{
+                //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                //}
             }
         }
         [NonAction]
