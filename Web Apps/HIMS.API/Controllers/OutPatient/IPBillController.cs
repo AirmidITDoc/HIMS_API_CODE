@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.OutPatient
         [HttpPost("IPBillList")]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
-            IPagedList<IPBillList> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
+            IPagedList<BrowseIPDBillListDto> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
         [HttpPost("AddChargeInsert")]

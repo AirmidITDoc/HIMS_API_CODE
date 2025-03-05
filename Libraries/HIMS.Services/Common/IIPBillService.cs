@@ -20,15 +20,13 @@ namespace HIMS.Services.Common
         Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel objGrid);
         Task<IPagedList<IPPreviousBillListDto>> GetIPPreviousBillAsync(GridRequestModel objGrid);
         Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel objGrid);
-        Task<IPagedList<IPBillList>> GetIPBillListAsync(GridRequestModel objGrid);
+        Task<IPagedList<BrowseIPDBillListDto>> GetIPBillListAsync(GridRequestModel objGrid);
         Task InsertAsync(AddCharge objAddCharge,  int UserId, string Username);
         //   Task DeleteAsync(AddCharge ObjAddCharge, int UserId, string Username);
         Task IPbillAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
         Task IPbillCreditAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
-
-
-
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
+      
 
     }
 }
