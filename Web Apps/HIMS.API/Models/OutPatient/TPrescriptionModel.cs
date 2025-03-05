@@ -97,9 +97,6 @@ namespace HIMS.API.Models.OutPatient
 
 
         }
-        //public class deleteOPPrescription
-        //{
-        //    public long? OPIPID { get; set; }
-        //}
+       
     }
 }

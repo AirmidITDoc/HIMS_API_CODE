@@ -17,6 +17,10 @@ namespace HIMS.Services.IPPatient
         Task UpdateAsyncTemplate(DischargeSummary ObjDischargeTemplate, TIpPrescriptionDischarge ObjTIpPrescriptionTemplate, int UserId, string Username);
         Task InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName);
         Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission ,int currentUserId, string currentUserName);
+        Task InsertAsync(InitiateDischarge ObjInitiateDischarge, int UserId, string Username);
+        Task UpdateAsync(InitiateDischarge ObjInitiateDischarge, int UserId, string Username);
+
+
         Task<IPagedList<DischrageSummaryListDTo>> IPDischargesummaryList(GridRequestModel objGrid);
         Task<IPagedList<IPPrescriptiononDischargeListDto>> IPPrescriptionDischargesummaryList(GridRequestModel objGrid);
 
