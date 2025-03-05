@@ -58,16 +58,15 @@ namespace HIMS.API.Controllers.OutPatient
             IPagedList<IPBillList> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
-        [HttpPost("InsertEDMX")]
+        [HttpPost("AddChargeInsert")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.ChargesId == 0)
             {
-                //   model.CreatedDate = DateTime.Now;
+                
                 model.AddedBy = CurrentUserId;
-                //  model.IsActive = true;
                 await _IPBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -75,6 +74,14 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharge  added successfully.");
         }
 
+        //[HttpDelete("IPAddchargesdelete")]
+        //public async Task<ApiResponse> IPAddchargesdelete(AddChargesDeleteModel obj)
+        //{
+        //    var RPAP = _IPBillService.DeleteAsync(obj);
+        //    return Ok(RPAP);
+        //}
+
+       
 
         [HttpPost("PaymentSettelment")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -95,6 +102,61 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
         }
+        [HttpPost("IPBilllwithCashCounterInsert")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insertsp(BillingModel obj)
+        {
+
+            Bill Model = obj.Bill.MapTo<Bill>();
+            BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
+            AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
+            Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
+            Payment paymentModel = obj.payment.MapTo<Payment>();
+            Bill BillModel = obj.Bills.MapTo<Bill>();
+            List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+            if (obj.Bill.BillNo == 0)
+            {
+                Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
+                Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
+                paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
+                paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.IPbillAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPBilll with Cash Counter added successfully.");
+        }
+
+        [HttpPost("IPBilllCreditInsert")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertCreditSP(BillingModel obj)
+        {
+
+            Bill Model = obj.Bill.MapTo<Bill>();
+            BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
+            AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
+            Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
+         //   Payment paymentModel = obj.payment.MapTo<Payment>();
+            Bill BillModel = obj.Bills.MapTo<Bill>();
+            List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+            if (obj.Bill.BillNo == 0)
+            {
+                Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
+                Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
+              //  paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
+             //   paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.IPbillCreditAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel,  BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPBilll Credit added successfully.");
+        }
+
+
 
 
     }
