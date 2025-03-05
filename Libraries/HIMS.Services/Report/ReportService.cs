@@ -20,7 +20,7 @@ namespace HIMS.Services.Report
         private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
-        public ReportService(HIMSDbContext HIMSDbContext,IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
+        public ReportService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
         {
             _context = HIMSDbContext;
             _hostingEnvironment = hostingEnvironment;
@@ -73,7 +73,7 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-              
+
 
                 #region :: DoctorWiseVisitReport ::
                 case "DoctorWiseVisitReport":
@@ -250,7 +250,7 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-              
+
                 #region :: AppointmentReceipt ::
                 case "AppointmentReceipt":
                     {
@@ -258,7 +258,7 @@ namespace HIMS.Services.Report
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList );
+                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport", "AppointmentListReport", Orientation.Portrait);
                         break;
                     }
@@ -432,7 +432,6 @@ namespace HIMS.Services.Report
                 case "DoctorWiseOpdCountSummary":
                     {
                         model.RepoertName = "Doctor Wise Opd Count Summary";
-                        string[] headerList = { "Sr.No", "Doctor Name", "Count" };
                         string[] colList = { "DoctorName", "Count" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -526,7 +525,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-                    //Ipsection
+                //Ipsection
                 #region :: IpCasepaperReport ::
                 case "IpCasepaperReport":
                     {
@@ -555,8 +554,8 @@ namespace HIMS.Services.Report
                 case "IpMLCCasePaperPrint":
                     {
                         model.RepoertName = "MLC Case Paper ";
-                        string[] headerList = { };
-                        string[] colList = { };
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_MLCReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -581,7 +580,7 @@ namespace HIMS.Services.Report
                 case "IpPaymentReceipt":
                     {
 
-                        string[] colList = { };
+                        string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SettlementReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("m_rptOPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
@@ -594,8 +593,8 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "Appointment List";
-                        string[] headerList = { "Sr.No", "UHID", "AdmissionDate", "IPDNo", "Patient Name", "Age", "GenderName", "RoomName", "BedName","AdmittedDoctorName", "RefDocName", "ChargesAmount", "AdvanceAmount", "BalPayAmt"};
-                        string[] colList = { "RegNo", "AdmissionDate", "IPDNo", "PatientName" , "Age", "GenderName", "RoomName", "BedName","AdmittedDoctorName", "RefDocName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
+                        string[] headerList = { "Sr.No", "UHID", "AdmissionDate", "IPDNo", "Patient Name", "Age", "GenderName", "RoomName", "BedName", "AdmittedDoctorName", "RefDocName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
+                        string[] colList = { "RegNo", "AdmissionDate", "IPDNo", "PatientName", "Age", "GenderName", "RoomName", "BedName", "AdmittedDoctorName", "RefDocName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -624,8 +623,8 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "Appointment List";
-                        string[] headerList = { };
-                        string[] colList = { };
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPRefundBillReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptIPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -641,7 +640,7 @@ namespace HIMS.Services.Report
                     {
                         model.RepoertName = "Current Ward Wise Charges Report ";
                         string[] headerList = { "Sr.No", "UHID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
-                        string[] colList = { "RegID","IPDNo", "RoomName", "PatientName","AdmissionTime","DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
+                        string[] colList = { "RegID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptCurrentAdmittedListReportwithCharges", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -653,8 +652,8 @@ namespace HIMS.Services.Report
                 case "IPDRefrancefDoctorwise":
                     {
                         model.RepoertName = "Ref DoctorWiseVisit Report ";
-                        string[] headerList = { "Sr.No", "UHID", "IPDNo", "PatientName","Age", "AdmissionDate", "AdmittedDoctorName" };
-                        string[] colList = { "RegNo", "IPDNo","PatientName", "AgeYear" , "AdmissionDate", "AdmittedDoctorName"};
+                        string[] headerList = { "Sr.No", "UHID", "IPDNo", "PatientName", "Age", "AdmissionDate", "AdmittedDoctorName" };
+                        string[] colList = { "RegNo", "IPDNo", "PatientName", "AgeYear", "AdmissionDate", "AdmittedDoctorName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -666,7 +665,7 @@ namespace HIMS.Services.Report
                 case "IPDCurrentrefDoctorAdmissionList":
                     {
                         model.RepoertName = "RefDoctorWise Report  ";
-                        string[] headerList = { "Sr.No","AdmissionId", "UHID", "PatientName", "DoctorName", "Admission Date" };
+                        string[] headerList = { "Sr.No", "AdmissionId", "UHID", "PatientName", "DoctorName", "Admission Date" };
                         string[] colList = { "AdmissionID", "RegNo", "PatientName", "DoctorName", "AdmissionDate" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -693,7 +692,7 @@ namespace HIMS.Services.Report
                 case "Dischargetypewise":
                     {
                         model.RepoertName = "Dischargetype wise List";
-                        string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis"};
+                        string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
                         string[] colList = { "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -720,7 +719,7 @@ namespace HIMS.Services.Report
                 case "DepartmentwiseCount":
                     {
                         model.RepoertName = "IPD Department Wise Count List";
-                        string[] headerList = { "Sr.No", "Department Name" ,"Total Count", };
+                        string[] headerList = { "Sr.No", "Department Name", "Total Count", };
                         string[] colList = { "DepartmentName", "Lbl" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -734,7 +733,7 @@ namespace HIMS.Services.Report
                 case "IPDDischargewithmarkstatus":
                     {
                         model.RepoertName = "Discharge Report With Mark Status List";
-                        string[] headerList = { "Sr.No", "UHID", "PatientName", "DOA", "DOT", "Mark Date-Time", "DOD", "DOT","Time In Hr" };
+                        string[] headerList = { "Sr.No", "UHID", "PatientName", "DOA", "DOT", "Mark Date-Time", "DOD", "DOT", "Time In Hr" };
                         string[] colList = { "RegNo", "PatientName", "AdmissionDate", "AdmissionTime", "MarkStatus", "DischargeDate", "DischargeTime", "DiffTimeInHr" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -745,7 +744,7 @@ namespace HIMS.Services.Report
                 #endregion
                 default:
 
-               
+
                     break;
 
 
@@ -757,19 +756,18 @@ namespace HIMS.Services.Report
 
         public string GetNewReportSetByProc(ReportNewRequestModel model)
         {
-            var tuple = new Tuple<byte[], string>(null, string.Empty);
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-            tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
         }
 
-        private string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -897,13 +895,13 @@ namespace HIMS.Services.Report
                             {
                                 j = 1;
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                   .Append(Dcount.ToString()).Append("</td></tr>");
+                                   .Append(Dcount).Append("</td></tr>");
                                 Dcount = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["PatientOldAndNew"].ConvertToString()).Append("</td></tr>");
                             }
 
-                            Dcount = Dcount + 1;
-                            T_Count = T_Count + 1;
+                            Dcount++;
+                            T_Count++;
 
                             previousLabel = dr[groupByCol].ConvertToString();
                             items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
@@ -925,7 +923,7 @@ namespace HIMS.Services.Report
                             {
                                 if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                                 {
-                                    items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount.ToString()).Append("</td></tr>");
+                                    items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount).Append("</td></tr>");
                                 }
                             }
                         }
@@ -937,7 +935,7 @@ namespace HIMS.Services.Report
                                 if (colName == "lableTotal")
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                                 else if (!string.IsNullOrEmpty(colName))
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
                                 else
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                             }
@@ -960,7 +958,7 @@ namespace HIMS.Services.Report
         }
 
 
-        private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        private static string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -1156,13 +1154,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='3' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;font-weight:bold;vertical-align:middle\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["DepartmentName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -1176,7 +1174,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='3' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -1277,13 +1275,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='7' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"8\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;font-weight:bold;vertical-align:middle\">").Append(dr["DoctorName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["DoctorName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -1297,7 +1295,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='7' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -1511,7 +1509,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
                             foreach (var colName in colList)
                             {
-                                if (colName.ToLower().IndexOf("date") == -1)
+                                if (!colName.ToLower().Contains("date", StringComparison.CurrentCulture))
                                     items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                                 else
                                     items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
@@ -1531,7 +1529,7 @@ namespace HIMS.Services.Report
                             if (colName == "lableTotal")
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                             else if (!string.IsNullOrEmpty(colName))
-                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
+                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
                             else
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                         }
@@ -1572,13 +1570,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["RefDoctorName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -1592,7 +1590,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -1629,13 +1627,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["RefDoctorName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -1649,7 +1647,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='4' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -1697,13 +1695,13 @@ namespace HIMS.Services.Report
                             {
                                 j = 1;
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                   .Append(Dcount.ToString()).Append("</td></tr>");
+                                   .Append(Dcount).Append("</td></tr>");
                                 Dcount = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["PatientOldAndNew"].ConvertToString()).Append("</td></tr>");
                             }
 
-                            Dcount = Dcount + 1;
-                            T_Count = T_Count + 1;
+                            Dcount++;
+                            T_Count++;
 
                             previousLabel = dr[groupByCol].ConvertToString();
                             items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
@@ -1725,7 +1723,7 @@ namespace HIMS.Services.Report
                             {
                                 if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                                 {
-                                    items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount.ToString()).Append("</td></tr>");
+                                    items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount).Append("</td></tr>");
                                 }
                             }
                         }
@@ -1737,7 +1735,7 @@ namespace HIMS.Services.Report
                                 if (colName == "lableTotal")
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                                 else if (!string.IsNullOrEmpty(colName))
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
                                 else
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                             }
@@ -1747,7 +1745,7 @@ namespace HIMS.Services.Report
                     break;
                 case "OPPaymentReceipt":
                     {
-                      
+
 
                         int i = 0, j = 0;
                         double Dcount = 0;
@@ -1956,7 +1954,7 @@ namespace HIMS.Services.Report
 
                             html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                             html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
-;
+                            ;
 
                         }
 
@@ -1984,33 +1982,33 @@ namespace HIMS.Services.Report
 
                         }
                         html = html.Replace("{{Items}}", items.ToString());
-                            html = html.Replace("{{AdmID}}", dt.GetColValue("AdmId"));
-                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                            html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                            html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-                            html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
-                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                            html = html.Replace("{{BedNo}}", dt.GetColValue("BedNo"));
-                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
-                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{AdmID}}", dt.GetColValue("AdmId"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{BedNo}}", dt.GetColValue("BedNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
-                            return html;
-
-
-                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-
-                        }
+                        return html;
 
 
-                 break;
+                        //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                    }
+
+
+                    break;
 
                 case "NursingNotesReceipt":
                     {
@@ -2114,7 +2112,7 @@ namespace HIMS.Services.Report
                     break;
                 case "OPRefundReceipt":
                     {
-                        
+
                         int i = 0, j = 0;
                         var Bills = dt;
 
@@ -2207,7 +2205,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
                             foreach (var colName in colList)
                             {
-                                if (colName.ToLower().IndexOf("date") == -1)
+                                if (!colName.ToLower().Contains("date", StringComparison.CurrentCulture))
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                                 else
                                     items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
@@ -2227,7 +2225,7 @@ namespace HIMS.Services.Report
                             if (colName == "lableTotal")
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                             else if (!string.IsNullOrEmpty(colName))
-                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName].ToString()).Append("</td>");
+                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
                             else
                                 ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
                         }
@@ -2316,7 +2314,7 @@ namespace HIMS.Services.Report
 
                         string htmlHeade = "";
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        
+
                         int i = 0;
 
                         html = html.Replace("{{DataContent}}", htmlHeade);
@@ -2380,14 +2378,14 @@ namespace HIMS.Services.Report
                         return html;
 
 
-                        }
+                    }
 
-                    
+
                     break;
 
                 case "IpFinalBill":
                     {
-                       // StringBuilder items = new StringBuilder("");
+                        // StringBuilder items = new StringBuilder("");
                         int i = 0, j = 0;
                         String[] GroupName;
                         object GroupName1 = "";
@@ -2428,7 +2426,7 @@ namespace HIMS.Services.Report
                             if (i == length + 1)
                             {
 
-                                T_TotalAmount = T_TotalAmount - Tot;
+                                T_TotalAmount -= Tot;
                                 items.Append("<tr style='font-size:20px;border:1px solid black;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #000;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Class Wise Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\"><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                                 .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
@@ -2536,7 +2534,7 @@ namespace HIMS.Services.Report
 
                     }
 
-            
+
                     break;
 
 
@@ -2570,13 +2568,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='13' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;font-weight:bold;vertical-align:middle\">").Append(dr["AdmittedDoctorName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["AdmittedDoctorName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -2590,7 +2588,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='13' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -2607,7 +2605,7 @@ namespace HIMS.Services.Report
                     {
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //html = html.Replace("{{NewHeader}}", htmlHeader);
-                      
+
                         int i = 0;
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -2754,7 +2752,7 @@ namespace HIMS.Services.Report
                         //string finalamt = conversion(Bills.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
                         //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-                      
+
 
                     }
 
@@ -2790,7 +2788,7 @@ namespace HIMS.Services.Report
                             {
                                 String Label;
                                 Label = dr["RoomName"].ConvertToString();
-                               // items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(j).Append("</td>");
+                                // items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(j).Append("</td>");
                                 items.Append("<tr style=\"font-size:20px;border: 1px;\"><td colspan=\"12\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
                             }
                             if (previousLabel != "" && previousLabel != dr["RoomName"].ConvertToString())
@@ -2814,20 +2812,20 @@ namespace HIMS.Services.Report
 
 
                             previousLabel = dr["RoomName"].ConvertToString();
-                          
+
                             items.Append("<tr style=\"font-size:15px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-bottom: 1px;\"><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(j).Append("</td>");
-                          
+
                             items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["RegID"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["IPDNo"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["RoomName"].ConvertToString()).Append("</td>");
-                            
+
                             items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: right;\">").Append(dr["PatientName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(dr["AdmissionTime"].ConvertToDateString("dd/MM/yy")).Append("</td>");
 
                             items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["DoctorName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["BedName"].ConvertToString()).Append("</td>");
-                            
+
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["ChargesAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["AdvanceAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BalPayAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
@@ -2857,7 +2855,7 @@ namespace HIMS.Services.Report
                     break;
                 case "IPDRefrancefDoctorwise":
                     {
-                      
+
                         HeaderItems.Append("<tr>");
                         foreach (var hr in headerList)
                         {
@@ -2886,13 +2884,13 @@ namespace HIMS.Services.Report
                                 j = 1;
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='6' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                                 .Append(D.ToString()).Append("</td></tr>");
+                                 .Append(D).Append("</td></tr>");
 
 
                                 D = 0;
                                 items.Append("<tr style=\"font-size:20px;border-bottom: 1px;border-right: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"7\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["RefDoctorName"].ConvertToString()).Append("</td></tr>");
                             }
-                            D = D + 1;
+                            D++;
                             previousLabel = dr["RefDoctorName"].ConvertToString();
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">").Append(j).Append("</td>");
@@ -2906,7 +2904,7 @@ namespace HIMS.Services.Report
 
                                 items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='6' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
 
-                                     .Append(D.ToString()).Append("</td></tr>");
+                                     .Append(D).Append("</td></tr>");
 
                             }
 
@@ -2917,7 +2915,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                  
+
                 case "IPDDischargewithmarkstatus":
 
                 case "DepartmentwiseCount":
@@ -2944,7 +2942,7 @@ namespace HIMS.Services.Report
                             {
                                 items.Append("<td style=\"text-align: left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
-                         }
+                        }
 
                     }
                     break;
@@ -3023,10 +3021,10 @@ namespace HIMS.Services.Report
 
 
             }
-             
+
             if (model.Mode == "DepartmentWisecountSummury" || model.Mode == "OPDoctorWiseVisitCountSummary" || model.Mode == "OPDoctorWiseNewOldPatientReport" || model.Mode == "IPDCurrentrefDoctorAdmissionList" || model.Mode == "IPDDoctorWiseCountSummaryList" || model.Mode == "Dischargetypewise" || model.Mode == "Dischargetypecompanywise" || model.Mode == "DepartmentwiseCount" || model.Mode == "IPDDischargewithmarkstatus")
                 html = html.Replace("{{T_Count}}", T_Count.ToString());
-             
+
             html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
             html = html.Replace("{{Items}}", items.ToString());
             html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
@@ -3036,7 +3034,7 @@ namespace HIMS.Services.Report
 
         }
 
-        public string conversion(string amount)
+        public static string conversion(string amount)
         {
             double m = Convert.ToInt64(Math.Floor(Convert.ToDouble(amount)));
             double l = Convert.ToDouble(amount);
@@ -3045,7 +3043,7 @@ namespace HIMS.Services.Report
             //string Word = " ";
 
             var beforefloating = ConvertNumbertoWords(Convert.ToInt64(m));
-            var afterfloating = ConvertNumbertoWords(Convert.ToInt64(j));
+            ConvertNumbertoWords(Convert.ToInt64(j));
 
             // Word = beforefloating + '.' + afterfloating;
 
@@ -3054,7 +3052,7 @@ namespace HIMS.Services.Report
             return Content;
         }
 
-        public string ConvertNumbertoWords(long number)
+        public static string ConvertNumbertoWords(long number)
         {
             if (number == 0) return "ZERO";
             if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));

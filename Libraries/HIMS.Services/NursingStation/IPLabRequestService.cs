@@ -1,16 +1,4 @@
-﻿using HIMS.Data.DataProviders;
-using HIMS.Data.Models;
-using HIMS.Data.DataProviders;
-using System.Data;
-using System.Transactions;
-using HIMS.Services.Utilities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aspose.Cells.Drawing;
+﻿using HIMS.Data.Models;
 
 namespace HIMS.Services.NursingStation
 {

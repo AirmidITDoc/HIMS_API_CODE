@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
-          
+
             var data = await _repository1.GetById(x => x.AdmissionId == id);
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("AdmissionInsertSP")]
         //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AdmissionInsertSP(NewAdmission obj)
+        public ApiResponse AdmissionInsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
             Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
@@ -104,14 +104,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.RegTime = Convert.ToDateTime(obj.AdmissionReg.RegTime);
                 model.AddedBy = CurrentUserId;
-
-                //if (obj.Visit.VisitId == 0)
-                //{
-                //    objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
-                //    objVisitDetail.AddedBy = CurrentUserId;
-                //    objVisitDetail.UpdatedBy = CurrentUserId;
-                //}
-                await _IAdmissionService.InsertAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -137,13 +130,13 @@ namespace HIMS.API.Controllers.IPPatient
         //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
         {
-           
+
             Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
             if (obj.ADMISSION.AdmissionId != 0)
             {
 
                 objAdmission.IsUpdatedBy = CurrentUserId;
-                              
+
                 await _IAdmissionService.UpdateAdmissionAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
             }
             else
@@ -155,7 +148,7 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission data",data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission data", data);
         }
 
 

@@ -1,38 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
-using System.Transactions;
 using LinqToDB;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
-using HIMS.Data.Extensions;
-using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using LinqToDB;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
-using HIMS.Data.Extensions;
-using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
-using System.Transactions;
-using System.Data.Common;
-using HIMS.Core.Domain.Grid;
-using static LinqToDB.Sql;
 
 namespace HIMS.Services.Masters
 {
