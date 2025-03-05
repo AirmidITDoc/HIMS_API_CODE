@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Bill added successfully.",model);
         }
 
 
@@ -196,7 +196,7 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Ip Bill Credited successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Ip Bill Credited successfully.",model);
         }
 
         [HttpPost("IPInterimInsert")]
@@ -212,7 +212,7 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Interim Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Interim Bill added successfully.",model);
         }
 
 
@@ -230,7 +230,7 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Draft Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP Draft Bill added successfully.",model);
         }
 
     }
