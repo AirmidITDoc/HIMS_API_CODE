@@ -1,19 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Nursing
@@ -35,7 +26,25 @@ namespace HIMS.Services.Nursing
         }
         public virtual async Task<IPagedList<PrescriptionReturnListDto>> GetListAsyncReturn(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnListDto>(model, "Rtrv_IPPrescriptionReturnListFromWard");
+            var qry = from t in _context.TIpprescriptionReturnHs
+                      join a in _context.Admissions on t.OpIpId equals a.AdmissionId
+                      join r in _context.Registrations on a.RegId equals r.RegId
+                      join p in _context.DbPrefixMasters on r.PrefixId equals p.PrefixId
+                      join s in _context.MStoreMasters on t.ToStoreId equals s.StoreId
+                      select new PrescriptionReturnListDto()
+                      {
+                          PatientName = p.PrefixName + " " + r.FirstName + " " + r.MiddleName + " " + r.LastName,
+                          RegNo = r.RegNo,
+                          PresReId = t.PresReId,
+                          Date = (t.PresDate.Value.ToString("dd/MM/yyyy") ?? ""),
+                          PresTime = t.PresTime,
+                          OP_IP_Id = t.OpIpId,
+                          Vst_Adm_Date = (a.AdmissionDate.Value.ToString("dd/MM/yyyy") ?? ""),
+                          StoreName = s.StoreName,
+                          OP_IP_Type = t.OpIpType
+                      };
+            return await qry.BuildPredicate(model);
+            //return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnListDto>(model, "Rtrv_IPPrescriptionReturnListFromWard");
         }
         public virtual async Task<IPagedList<PrescriptionDetailListDto>> GetListAsyncDetail(GridRequestModel model)
         {
@@ -51,7 +60,7 @@ namespace HIMS.Services.Nursing
 
                 scope.Complete();
             }
-       }
+        }
         public virtual async Task UpdateAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -67,5 +76,5 @@ namespace HIMS.Services.Nursing
 
     }
 }
-    
+
 

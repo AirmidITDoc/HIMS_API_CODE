@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.Models
+namespace HIMS.Data.DTO.OPPatient
 {
     //public partial class ServiceMasterList
     //{
@@ -13,7 +14,7 @@ namespace HIMS.Data.Models
     //    public long? ClassId { get; set; }
     //}
 
-    public class ServiceMasterDTO:ServiceMaster
+    public class ServiceMasterDTO : ServiceMaster
     {
         public long ServiceId { get; set; }
         public string ServiceName { get; set; }

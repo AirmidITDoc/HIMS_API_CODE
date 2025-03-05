@@ -440,7 +440,7 @@ namespace HIMS.Data.DataProviders
                 connection.Close();
             return retval;
         }
-        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, string v = null, SqlParameter[] commandParameters = null)
+        public async static Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType = CommandType.StoredProcedure, SqlParameter[] commandParameters = null)
         {
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
             using var connection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
@@ -860,7 +860,7 @@ namespace HIMS.Data.DataProviders
                 CommandTimeout = 180,
                 CommandText = procedureName,
                 CommandType = CommandType.StoredProcedure,
-                Connection=dataContext
+                Connection = dataContext
             };
             await dataContext.OpenAsync();
             cmd.Parameters.AddRange(parameters.ToArray());
@@ -902,8 +902,8 @@ namespace HIMS.Data.DataProviders
                 T obj = GetListItem<T>(dr);
                 list.Add(obj);
             }
-            
-           return list;
+
+            return list;
         }
         #endregion
 
@@ -968,31 +968,14 @@ namespace HIMS.Data.DataProviders
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             Command.Parameters.Clear();
             objConnection.Close();
             objConnection.Dispose();
             Command.Dispose();
+            
         }
 
-        public async Task BeginTransactionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task CommitTransactionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task ExecuteNonQueryAsync(string v, CommandType storedProcedure, string v1, Dictionary<string, object> paymentEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task RollbackTransactionAsync()
-        {
-            throw new NotImplementedException();
-        }
 
         public enum ParamType
         {
