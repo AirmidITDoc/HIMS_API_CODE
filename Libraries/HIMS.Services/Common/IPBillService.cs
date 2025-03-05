@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using Aspose.Cells.Drawing;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
@@ -313,10 +314,60 @@ namespace HIMS.Services.Common
             {
                 _context.AddCharges.Add(objAddCharge);
                 await _context.SaveChangesAsync();
+                if (objAddCharge.IsPathology == 1)
+                {
+                    TPathologyReportHeader objPatho = new TPathologyReportHeader();
+                    objPatho.PathDate = objAddCharge.ChargesDate;
+                    objPatho.PathTime = objAddCharge?.ChargesDate;
+                    objPatho.OpdIpdType = objAddCharge?.OpdIpdType;
+                    objPatho.OpdIpdId = objAddCharge?.OpdIpdId;
+                    objPatho.PathTestId = objAddCharge?.ServiceId;
+                    objPatho.AddedBy = objAddCharge?.AddedBy;
+                    objPatho.ChargeId = objAddCharge?.ChargesId;
+                    objPatho.IsCompleted = false;
+                    objPatho.IsPrinted = false;
+                    objPatho.IsSampleCollection = false;
+                    objPatho.TestType = false;
+
+                    _context.TPathologyReportHeaders.Add(objPatho);
+                    await _context.SaveChangesAsync();
+                }
+                // Radiology Code
+                if (objAddCharge?.IsRadiology == 1)
+                {
+                    TRadiologyReportHeader objRadio = new TRadiologyReportHeader();
+                    objRadio.RadDate = objAddCharge.ChargesDate;
+                    objRadio.RadTime = objAddCharge?.ChargesDate;
+                    objRadio.OpdIpdType = objAddCharge?.OpdIpdType;
+                    objRadio.OpdIpdId = objAddCharge?.OpdIpdId;
+                    objRadio.RadTestId = objAddCharge?.ServiceId;
+                    objRadio.AddedBy = objAddCharge?.AddedBy;
+                    objRadio.ChargeId = objAddCharge?.ChargesId;
+                    objRadio.IsCompleted = false;
+                    objRadio.IsCancelled = 0;
+                    objRadio.IsPrinted = false;
+                    objRadio.TestType = false;
+
+                    _context.TRadiologyReportHeaders.Add(objRadio);
+                    await _context.SaveChangesAsync();
+                }
 
                 scope.Complete();
             }
         }
+        //public virtual async Task DeleteAsync(AddCharge ObjAddCharge, int UserId, string Username)
+        //{
+        //    // throw new NotImplementedException();
+        //    var disc1 = ObjAddCharge.DeleteCharges.ToDictionary();
+
+        //    odal.ExecuteNonQuery("Delete_IPAddcharges", disc1);
+        //    _context.SaveChanges();
+
+        //    return true;
+        //}
+
+
+
         public virtual async Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int UserId, string UserName)
         {
 
@@ -371,8 +422,206 @@ namespace HIMS.Services.Common
 
             await _context.SaveChangesAsync(UserId, UserName);
         }
+        public virtual async Task IPbillAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills,  List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+            var entity = ObjBill.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+            ObjBill.BillNo = Convert.ToInt32(vBillNo);
+            ObjBillDetailsModel.BillNo = Convert.ToInt32(vBillNo);
+            ObjAddCharge.BillNo = Convert.ToInt32(vBillNo);
+            Objpayment.BillNo = Convert.ToInt32(vBillNo);
 
 
+            string[] BillEntity = { "BillDetailId", "BillNoNavigation" };
+            var Bentity = ObjBillDetailsModel.ToDictionary();
+            foreach (var rProperty in BillEntity)
+            {
+                Bentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+
+
+            string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
+                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", 
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation"};
+     
+            var AddEntity = ObjAddCharge.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                AddEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
+
+            string[] rEntity2 = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId",
+                             "TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur",
+                "IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt",
+                "PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate",
+                "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"};
+            var entity2 = ObjAddmission.ToDictionary();
+            foreach (var rProperty in rEntity2)
+            {
+                entity2.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
+
+            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            var entity1 = Objpayment.ToDictionary();
+            foreach (var rProperty in pEntity)
+            {
+                entity1.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+
+            string[] rDetailEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt","BillDate", "OpdIpdType", "IsCancelled",
+                                              "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled",
+                                             "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
+                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+
+            var BEntity = ObjBills.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                BEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
+
+
+            foreach (var item in ObjadvanceDetailList)
+            {
+
+                string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+                var AdvanceDetailEntity = item.ToDictionary();
+                foreach (var rProperty in ADetailEntity)
+                {
+                    AdvanceDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+
+            }
+
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
+            foreach (var rProperty in AHeaderEntity)
+            {
+                AdvanceHeaderEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+
+
+
+
+        }
+
+
+
+
+
+        public virtual async Task IPbillCreditAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+            var entity = ObjBill.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+            ObjBill.BillNo = Convert.ToInt32(vBillNo);
+            ObjBillDetailsModel.BillNo = Convert.ToInt32(vBillNo);
+            ObjAddCharge.BillNo = Convert.ToInt32(vBillNo);
+       //     Objpayment.BillNo = Convert.ToInt32(vBillNo);
+
+
+            string[] BillEntity = { "BillDetailId", "BillNoNavigation" };
+            var Bentity = ObjBillDetailsModel.ToDictionary();
+            foreach (var rProperty in BillEntity)
+            {
+                Bentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+
+
+            string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
+                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation"};
+
+            var AddEntity = ObjAddCharge.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                AddEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
+
+            string[] rEntity2 = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId",
+                             "TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur",
+                "IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt",
+                "PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate",
+                "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"};
+            var entity2 = ObjAddmission.ToDictionary();
+            foreach (var rProperty in rEntity2)
+            {
+                entity2.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
+
+            //string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            //var entity1 = Objpayment.ToDictionary();
+            //foreach (var rProperty in pEntity)
+            //{
+            //    entity1.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+
+            string[] rDetailEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt","BillDate", "OpdIpdType", "IsCancelled",
+                                              "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled",
+                                             "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
+                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+
+            var BEntity = ObjBills.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                BEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
+
+
+            foreach (var item in ObjadvanceDetailList)
+            {
+
+                string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+                var AdvanceDetailEntity = item.ToDictionary();
+                foreach (var rProperty in ADetailEntity)
+                {
+                    AdvanceDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+
+            }
+
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
+            foreach (var rProperty in AHeaderEntity)
+            {
+                AdvanceHeaderEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+
+
+
+
+        }
+
+      
+       
     }
-
+    
 }

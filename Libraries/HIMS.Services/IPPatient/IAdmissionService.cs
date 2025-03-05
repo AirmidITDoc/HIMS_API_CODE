@@ -18,7 +18,7 @@ namespace HIMS.Services.IPPatient
         //Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel objGrid);
         //Task<IPagedList<IPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel objGrid);
         //Task<IPagedList<IPRefundBillListDto>> GetIPRefundBillListListAsync(GridRequestModel objGrid);
-        Task InsertAsyncSP(Registration objRegistration, Admission objAdmission, int currentUserId, string currentUserName);
+        void InsertAsyncSP(Registration objRegistration, Admission objAdmission, int currentUserId, string currentUserName);
         Task InsertRegAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task UpdateAdmissionAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword);
