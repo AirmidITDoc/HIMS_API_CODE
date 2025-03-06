@@ -117,8 +117,55 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("sp_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
 
         }
+
+        public virtual async Task IPInsertAsyncSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, AdvRefundDetail ObjadvRefundDetail, AdvanceDetail ObjAdvanceDetail, Payment ObjPayment, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RefundNo", "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
+            var entity = Objrefund.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RefundId = odal.ExecuteNonQuery("insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
+            Objrefund.RefundId = Convert.ToInt32(RefundId);
+
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            var AdvanceHeaderEntity = ObjAdvanceHeader.ToDictionary();
+            foreach (var rProperty in AHeaderEntity)
+            {
+                AdvanceHeaderEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+
+
+            string[] ADetailEntity = { "AdvRefId" };
+            var AdvDetailEntity = ObjadvRefundDetail.ToDictionary();
+            foreach (var rProperty in ADetailEntity)
+            {
+                AdvDetailEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("insert_AdvRefundDetail_1", CommandType.StoredProcedure, AdvDetailEntity);
+
+            string[] AdvanceDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+            var AdDetailEntity = ObjAdvanceDetail.ToDictionary();
+            foreach (var rProperty in AdvanceDetailEntity)
+            {
+                AdDetailEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
+
+            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            var entity1 = ObjPayment.ToDictionary();
+            foreach (var rProperty in pEntity)
+            {
+                entity1.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+        }
+
     }
-       
 }
 
 

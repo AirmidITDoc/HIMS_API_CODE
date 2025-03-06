@@ -20,6 +20,7 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<PatientWiseAdvanceListDto>> PatientWiseAdvanceList(GridRequestModel objGrid);
 
         Task<IPagedList<RefundOfAdvancesListDto>> GetAdvancesListAsync(GridRequestModel objGrid);
+        Task IPInsertAsyncSP( Refund Objrefund, AdvanceHeader ObjAdvanceHeader, AdvRefundDetail ObjadvRefundDetail, AdvanceDetail ObjAdvanceDetail, Payment ObjPayment, int UserId, string UserName);
 
         // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
 
