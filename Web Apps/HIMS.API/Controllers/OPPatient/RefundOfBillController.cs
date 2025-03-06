@@ -61,7 +61,16 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(Servicelist.ToGridResponse(objGrid, "Refund Against Bill List "));
         }
 
-        [HttpPost("OPInsert")]//[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [HttpPost("IPBillListforRefundList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillGetListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListforRefundListDto> IPBillListforRefundList = await _IRefundOfBillService.IPBillGetListAsync(objGrid);
+            return Ok(IPBillListforRefundList.ToGridResponse(objGrid, "IPBillListforRefund List "));
+        }
+
+        [HttpPost("IPRefundofBILL")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();

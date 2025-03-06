@@ -17,6 +17,7 @@ namespace HIMS.Services.OPPatient
         Task<IPagedList<OpBilllistforRefundDto>> GeOpbilllistforrefundAsync(GridRequestModel objGrid);
         Task<IPagedList<OPBillservicedetailListDto>> GetBillservicedetailListAsync(GridRequestModel objGrid);
         Task<IPagedList<RefundAgainstBillListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPBillListforRefundListDto>> IPBillGetListAsync(GridRequestModel objGrid);
 
 
     }
