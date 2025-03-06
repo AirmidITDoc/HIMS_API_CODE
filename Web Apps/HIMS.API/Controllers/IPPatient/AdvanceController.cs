@@ -18,6 +18,7 @@ using static HIMS.API.Models.IPPatient.UpdateAdvanceModelValidator;
 using HIMS.Data.DTO.Administration;
 using HIMS.API.Models.Masters;
 using HIMS.Data;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -122,5 +123,34 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objAdvanceDetail);
         }
+
+        [HttpPost("IPRefundofAdvanceInsert")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> IPInsertAsyncSP(RefundsModel obj)
+        {
+            Refund model = obj.Refund.MapTo<Refund>();
+            AdvanceHeader AdvanceHeadermodel = obj.advanceHeaderupdate.MapTo<AdvanceHeader>();
+            AdvRefundDetail AdvDetailmodel = obj.AdvDetailRefund.MapTo<AdvRefundDetail>();
+            AdvanceDetail objAdvanceDetail = obj.AdveDetailupdate.MapTo<AdvanceDetail>();
+             Payment objpayment = obj.payment.MapTo<Payment>();
+            if (obj.Refund.RefundId == 0)
+            {
+                model.RefundDate = Convert.ToDateTime(obj.Refund.RefundDate);
+                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+                model.AddedBy = CurrentUserId;
+
+                //objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
+                //objAdvanceDetail.AddedBy = CurrentUserId;
+                //objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
+                //objpayment.AddBy = CurrentUserId;
+
+                await _IAdvanceService.IPInsertAsyncSP(model, AdvanceHeadermodel, AdvDetailmodel, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPRefundofAdvance added successfully.");
+        }
+
+
     }
 }
