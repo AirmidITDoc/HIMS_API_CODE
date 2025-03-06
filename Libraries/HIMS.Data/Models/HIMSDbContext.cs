@@ -76,6 +76,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<HmsLog> HmsLogs { get; set; } = null!;
         public virtual DbSet<HospitalMaster> HospitalMasters { get; set; } = null!;
         public virtual DbSet<IndentDetial> IndentDetials { get; set; } = null!;
+        public virtual DbSet<InitiateDischarge> InitiateDischarges { get; set; } = null!;
         public virtual DbSet<IpadmBedtransferSmsquery> IpadmBedtransferSmsqueries { get; set; } = null!;
         public virtual DbSet<IpadmRefDoctorSmsquery> IpadmRefDoctorSmsqueries { get; set; } = null!;
         public virtual DbSet<IpadmRefInfo> IpadmRefInfos { get; set; } = null!;
@@ -2688,6 +2689,27 @@ namespace HIMS.Data.Models
                 entity.ToView("IndentDetials");
 
                 entity.Property(e => e.ItemName).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<InitiateDischarge>(entity =>
+            {
+                entity.HasKey(e => e.InitateDiscId);
+
+                entity.ToTable("initiateDischarge");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.ApprovedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<IpadmBedtransferSmsquery>(entity =>

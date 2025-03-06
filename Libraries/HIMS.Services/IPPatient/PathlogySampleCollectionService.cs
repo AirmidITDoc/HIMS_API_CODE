@@ -21,14 +21,14 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<PathologySampleCollectionDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<SampleCollectionPatientListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PathologySampleCollectionDto>(model, "m_Rtrv_PathSamPatList");
+            return await DatabaseHelper.GetGridDataBySp<SampleCollectionPatientListDto>(model, "ps_Rtrv_PathSamPatList");
 
         }
-        public virtual async Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<SampleCollectionTestListDto>> GetListAsyn(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
+            return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamPatList");
 
         }
         public virtual async Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)

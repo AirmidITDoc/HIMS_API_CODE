@@ -130,7 +130,6 @@ namespace HIMS.Data.DataProviders
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, sql, parameters);
             int affectedRecords = await command.ExecuteAsync();
-            //UpdateOutputParameters(dataContext, parameters);
             return affectedRecords;
         }
 
@@ -149,7 +148,6 @@ namespace HIMS.Data.DataProviders
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, sql, parameters);
             T affectedRecords = await command.ExecuteAsync<T>();
-            //UpdateOutputParameters(dataContext, parameters);
             return affectedRecords;
         }
 
@@ -158,7 +156,6 @@ namespace HIMS.Data.DataProviders
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, sql, parameters);
             object affectedRecords = await command.ExecuteAsync<object>();
-            //UpdateOutputParameters(dataContext, parameters);
             return affectedRecords;
         }
 
@@ -193,7 +190,6 @@ namespace HIMS.Data.DataProviders
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, procedureName, parameters);
             int affectedRecords = await command.ExecuteProcAsync();
-            //UpdateOutputParameters(dataContext, parameters);
             return affectedRecords;
         }
 
@@ -213,7 +209,6 @@ namespace HIMS.Data.DataProviders
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, procedureName, parameters);
             T result = await command.ExecuteProcAsync<T>();
-            //UpdateOutputParameters(dataContext, parameters);
             return result;
         }
 
@@ -232,16 +227,13 @@ namespace HIMS.Data.DataProviders
         {
             using DataConnection dataContext = await CreateDataConnectionAsync();
             CommandInfo command = new(dataContext, procedureName, parameters);
-            List<T> rez = command.QueryProc<T>().ToList();
-            //UpdateOutputParameters(dataContext, parameters);
-            return rez;
+            return (await command.QueryProcAsync<T>()).ToList();
         }
         public virtual IList<T> QueryProc<T>(string procedureName, params DataParameter[] parameters)
         {
             using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, procedureName, parameters);
             List<T> rez = command.QueryProc<T>().ToList();
-            //UpdateOutputParameters(dataContext, parameters);
             return rez;
         }
         public virtual System.Data.DataSet ExecuteStoredProcedureForDataSetAsync(string procedureName, params DataParameter[] parameters)

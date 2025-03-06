@@ -13,8 +13,9 @@ namespace HIMS.Services.IPPatient
     public partial interface IPathlogySampleCollectionService
     {
         Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username);
-        Task<IPagedList<PathologySampleCollectionDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<SampleCollectionPatientListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<SampleCollectionTestListDto>> GetListAsyn(GridRequestModel objGrid);
+
 
     }
 }

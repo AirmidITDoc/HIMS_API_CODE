@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Pathology;
 using System;
 using System.Collections.Generic;
@@ -31,5 +32,15 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathologyTestListDto>(model, "m_Rtrv_PathologyTestList");
         }
+        public virtual async Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathResultEntryListDto>(model, "ps_Rtrv_PathResultEntryList_Test_Dtls");
+        }
+        public virtual async Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
+
+        }
     }
+
 }

@@ -4,6 +4,8 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,20 @@ namespace HIMS.API.Controllers.OPPatient
         public PathlogySampleCollectionController(IPathlogySampleCollectionService repository)
         {
             _IPathlogySampleCollectionService = repository;
+        }
+        [HttpPost("SampleCollectionPatientList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SampleCollectionList(GridRequestModel objGrid)
+        {
+            IPagedList<SampleCollectionPatientListDto> SampleCollectionList = await _IPathlogySampleCollectionService.GetListAsync(objGrid);
+            return Ok(SampleCollectionList.ToGridResponse(objGrid, "SampleCollectionList "));
+        }
+        [HttpPost("SampleCollectionTestList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SampleCollectionTestList(GridRequestModel objGrid)
+        {
+            IPagedList<SampleCollectionTestListDto> SampleCollectionTestList = await _IPathlogySampleCollectionService.GetListAsyn(objGrid);
+            return Ok(SampleCollectionTestList.ToGridResponse(objGrid, "SampleCollectionTestList "));
         }
         [HttpPut("PathlogySampleCollectionUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

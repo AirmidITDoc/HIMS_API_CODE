@@ -31,8 +31,8 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        
-        public virtual async Task InsertAsyncSP(Registration objRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
+
+        public virtual void InsertAsyncSP(Registration objRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
 
 
