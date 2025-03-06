@@ -16,6 +16,7 @@ using HIMS.Data.DTO.IPPatient;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using System.Data;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -45,6 +46,20 @@ namespace HIMS.API.Controllers.IPPatient
         {
             IPagedList<IPPrescriptiononDischargeListDto> IPPRDiscList = await _IDischargeSummaryService.IPPrescriptionDischargesummaryList(objGrid);
             return Ok(IPPRDiscList.ToGridResponse(objGrid, "IP Prescription On Dischareg  Data  "));
+        }
+        [HttpPost("PatientClearanceAprovViewList")]
+        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PatientClearanceAprovViewListDto> IPDiscList = await _IDischargeSummaryService.GetListAsync(objGrid);
+            return Ok(IPDiscList.ToGridResponse(objGrid, "PatientClearanceAprovViewList "));
+        }
+        [HttpPost("PatientClearanceApprovalList")]
+        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetListAsyncP(GridRequestModel objGrid)
+        {
+            IPagedList<PatientClearanceApprovalListDto> IPDiscList = await _IDischargeSummaryService.GetListAsyncP(objGrid);
+            return Ok(IPDiscList.ToGridResponse(objGrid, "PatientClearanceApprovalList"));
         }
 
         [HttpGet("{id?}")]

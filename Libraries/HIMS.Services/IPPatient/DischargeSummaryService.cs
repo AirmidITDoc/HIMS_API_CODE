@@ -22,6 +22,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using System.ComponentModel.Design;
 using System.Text.RegularExpressions;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.Services.IPPatient
 {
@@ -31,6 +33,14 @@ namespace HIMS.Services.IPPatient
         public DischargeSummaryService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<PatientClearanceAprovViewListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PatientClearanceAprovViewListDto>(model, "m_Rtrv_PatientClearanceAprovViewList");
+        }
+        public virtual async Task<IPagedList<PatientClearanceApprovalListDto>> GetListAsyncP(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PatientClearanceApprovalListDto>(model, "m_Rtrv_PatientClearanceApprovalList");
         }
         public virtual async Task<IPagedList<DischrageSummaryListDTo>> IPDischargesummaryList(GridRequestModel objGrid)
         {
@@ -211,12 +221,12 @@ namespace HIMS.Services.IPPatient
             "DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
             "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod",
             "IsPharClearance","Ipnumber","EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
-            "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"}; 
+            "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt"};
             var Aentity = ObjAdmission.ToDictionary();
             foreach (var rProperty in AEntity)
             {
                 Aentity.Remove(rProperty);
-               
+
             }
             odal.ExecuteNonQuery("update_Admission_3", CommandType.StoredProcedure, Aentity);
         }
@@ -234,7 +244,7 @@ namespace HIMS.Services.IPPatient
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                
+
                 // Update header & detail table records
                 _context.InitiateDischarges.Update(ObjInitiateDischarge);
                 _context.Entry(ObjInitiateDischarge).State = EntityState.Modified;
@@ -243,8 +253,21 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
+        {
+            // throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "InitateDiscId", "IsNoDues", "Comments", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var Ientity = ObjInitiateDischarge.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                Ientity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_initiateDischarge_1", CommandType.StoredProcedure, Ientity);
+        }
     }
 }
+
 
 
 

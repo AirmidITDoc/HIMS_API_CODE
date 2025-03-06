@@ -60,6 +60,29 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
+        //[HttpPost("InsertSP")]
+        ////[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(ModelTPrescription obj)
+        //{
+        //    List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();
+        //    List<TOprequestList> objTOPRequest = obj.TOPRequestList.MapTo<List<TOprequestList>>();
+        //    List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosis = obj.MOPCasepaperDignosisMaster.MapTo<List<MOpcasepaperDignosisMaster>>();
+
+        //    long i = (model[0].OpdIpdIp).ToInt();
+
+
+        //    if (model[0].OpdIpdIp != 0)
+        //    {
+
+        //        objTOPRequest.ForEach(x => { x.OpIpId = model[0].OpdIpdIp; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
+        //        objmOpcasepaperDignosis.ForEach(x => { x.VisitId = model[0].OpdIpdIp; });
+
+        //        await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
+        //}
 
         [HttpPost("GetVisitList")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]

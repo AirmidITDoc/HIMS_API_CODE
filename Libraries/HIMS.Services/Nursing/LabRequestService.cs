@@ -31,11 +31,7 @@ namespace HIMS.Services.Nursing
             return await DatabaseHelper.GetGridDataBySp<LabRequestDetailsListDto>(model, "m_Rtrv_NursingLabRequestDetails");
 
         }
-        public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestListDto>(model, "Rtrv_LabOrRadRequestList");
-
-        }
+       
 
 
         public virtual async Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username)

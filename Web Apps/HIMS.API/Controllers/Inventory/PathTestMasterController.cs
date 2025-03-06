@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest   updated successfully.");
         }
-        [HttpPost("PathTestDelete")]
+        [HttpDelete("PathTestDelete")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {       

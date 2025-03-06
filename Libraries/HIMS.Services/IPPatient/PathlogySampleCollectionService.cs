@@ -28,21 +28,19 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<SampleCollectionTestListDto>> GetListAsyn(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamPatList");
+            return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamColllist_Pat_Dtls");
 
         }
         public virtual async Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {"OpdIpdType", "SampleCollectionTime", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate",};
+            string[] rEntity = {"OpdIpdType", "SampleCollectionTime", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails","TPathologyReportTemplateDetails"};
             var entity = objTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-
             odal.ExecuteNonQuery("v_Update_PathologySampleCollection_1", CommandType.StoredProcedure , entity);
-            //objTPathologyReportHeader.PathReportId = Convert.ToInt32(PathReportId);
             await _context.SaveChangesAsync(UserId, Username);
         }
 

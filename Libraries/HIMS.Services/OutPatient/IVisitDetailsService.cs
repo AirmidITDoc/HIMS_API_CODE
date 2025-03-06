@@ -34,6 +34,7 @@ namespace HIMS.Services.OutPatient
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
         Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword);
 
+        Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
 
         Task UpdateVitalAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
     }

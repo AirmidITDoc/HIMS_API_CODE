@@ -118,7 +118,6 @@ namespace HIMS.API.Infrastructure
 
 
             services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
-            services.AddScoped<ICrossConsultationService, CrossConsultationService>();
             services.AddScoped<IIPBillService, IPBIllService>();
             services.AddScoped<IIPBILLCreditService,IPBILLCreditService>();
             services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();

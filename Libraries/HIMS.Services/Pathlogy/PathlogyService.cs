@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,11 @@ namespace HIMS.Services.Pathlogy
         public virtual async Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
+
+        }
+        public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestListDto>(model, "Rtrv_LabOrRadRequestList");
 
         }
     }
