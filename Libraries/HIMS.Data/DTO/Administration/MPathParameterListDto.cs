@@ -16,7 +16,7 @@ namespace HIMS.Data.DTO.Administration
         public string PrintParameterName { get; set; }
         public string Formula { get; set; }
         public long IsNumericParameter { get; set; }
-        public bool Isdeleted { get; set; }
+        public bool IsActive { get; set; }
         public long AddedBy { get; set; }
         public string IsBoldFlag { get; set; }
         public long UpdatedBy { get; set; }
