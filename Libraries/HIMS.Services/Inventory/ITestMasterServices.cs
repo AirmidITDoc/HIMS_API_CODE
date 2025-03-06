@@ -12,7 +12,7 @@ namespace HIMS.Services.Inventory
 {
     public partial interface ITestMasterServices
     {
-        Task<IPagedList<TestMasterDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PathTestMasterDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);

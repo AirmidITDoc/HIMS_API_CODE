@@ -25,9 +25,9 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<TestMasterDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PathTestMasterDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<TestMasterDto>(model, "Rtrv_PathTestForUpdate");
+            return await DatabaseHelper.GetGridDataBySp<PathTestMasterDto>(model, "Rtrv_PathTestForUpdate");
         }
         public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
         {
