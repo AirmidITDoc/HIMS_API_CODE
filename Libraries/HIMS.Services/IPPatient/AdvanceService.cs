@@ -44,7 +44,10 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "ps_Rtrv_BrowseIPRefundAdvanceReceipt");
         }
-
+        public virtual async Task<IPagedList<RefundOfAdvancesListDto>> GetAdvancesListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvancesListDto>(model, "m_Rtrv_RefundOfAdvance");
+        }
         //SHILPA CODE////
         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName)
         {

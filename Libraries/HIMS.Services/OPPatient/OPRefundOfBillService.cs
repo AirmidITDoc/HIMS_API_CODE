@@ -39,6 +39,11 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<RefundAgainstBillListDto>(model, "m_rtrv_OPDRefundAgainstBillList");
         }
 
+        public virtual async Task<IPagedList<IPBillListforRefundListDto>> IPBillGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillListforRefundListDto>(model, "m_IPBillListforRefund");
+        }
+
 
 
         public virtual async Task InsertAsyncOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username)
