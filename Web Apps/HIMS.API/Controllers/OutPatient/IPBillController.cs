@@ -126,7 +126,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPBilll with Cash Counter added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.");
         }
 
         [HttpPost("IPBilllCreditInsert")]
@@ -153,7 +153,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPBilll Credit added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.");
         }
 
 
@@ -181,7 +181,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPInterimBill CashCounter  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.");
         }
         [HttpPost("InsertIPDraftBill")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -201,7 +201,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPDraftBill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.");
         }
 
         //[HttpDelete("IPAddchargesdelete")]

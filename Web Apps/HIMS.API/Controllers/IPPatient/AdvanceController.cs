@@ -39,23 +39,23 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> PatientWiseAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
-            return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "PatientWiseAdvance List"));
+            return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "Patient Wise Advance List"));
         }
 
 
-        [HttpPost("AdvanceList")]
+        [HttpPost("BrowseAdvanceList")]
         [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
-        [HttpPost("RefundOfAdvancesList")]
+        [HttpPost("PatientRefundOfAdvancesList")]
      //   [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
-            return Ok(RefundOfAdvancesList.ToGridResponse(objGrid, "RefundOfAdvances List"));
+            return Ok(RefundOfAdvancesList.ToGridResponse(objGrid, "Patient Refund Of Advances List"));
         }
 
         //List API Get By Id
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.IPPatient
             return data1.ToSingleResponse<AdvanceHeader, AdvanceHeaderModel>("Advance Details ");
         }
 
-        [HttpPost("RefundOfAdvanceList")]
+        [HttpPost("BrowseRefundOfAdvanceList")]
         [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundAdvanceList(GridRequestModel objGrid)
         {
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.", objAdvanceDetail);
         }
         [HttpPut("Edit")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objAdvanceDetail);
         }
 
         [HttpPost("IPRefundofAdvanceInsert")]
