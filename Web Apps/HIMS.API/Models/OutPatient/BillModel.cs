@@ -59,16 +59,30 @@ namespace HIMS.API.Models.OutPatient
         }
     }
 
-
     public class AdddChargeModel
     {
         public long? BillNo { get; set; }
 
-       
+
     }
     public class AdddChargeModelValidator : AbstractValidator<AdddChargeModel>
     {
         public AdddChargeModelValidator()
+        {
+            //       RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+        }
+    }
+
+
+    public class AddChargessModel
+    {
+        public long? ChargesID { get; set; }
+
+       
+    }
+    public class AddChargessModelValidator : AbstractValidator<AddChargessModel>
+    {
+        public AddChargessModelValidator()
         {
      //       RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
@@ -177,16 +191,14 @@ namespace HIMS.API.Models.OutPatient
     public class BillingModel
     {
       
-        public BillsModel Bill { get; set; }
-        public BillingDetailModel BillDetail { get; set; }
+        public BillsModel? Bill { get; set; }
+        public BillingDetailModel? BillDetail { get; set; }
         public AdddChargeModel? AddCharge { get; set; }
-        public AddmissionModel Addmission { get; set; }
+        public AddmissionModel? Addmission { get; set; }
         public paymentModel? payment { get; set; }
-        public BillMModel Bills { get; set; }
+        public BillMModel? Bills { get; set; }
         public List<AdvancesDetailModel?> Advancesupdate { get; set; }
         public AdvancesHeaderModel? advancesHeaderupdate { get; set; }
-
-
-
+        public AddChargessModel? AddChargessupdate { get; set; }
     }
 }
