@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Inventory
             _repository = repository1;
         }
         [HttpPost("TestMasterList")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);

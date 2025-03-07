@@ -6,7 +6,7 @@ namespace HIMS.API.Models.OPPatient
     public class PathlogySampleCollectionModel
     {
         public long PathReportId { get; set; }
-        public string? PathDate { get; set; }
+        public DateTime? PathDate { get; set; }
         public string? PathTime { get; set; }
         public bool? IsSampleCollection { get; set; }
         public string? SampleNo { get; set; }

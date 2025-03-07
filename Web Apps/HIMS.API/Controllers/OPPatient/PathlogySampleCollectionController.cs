@@ -45,8 +45,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.PathDate = Convert.ToDateTime(obj.PathDate);
                 model.PathTime = Convert.ToDateTime(obj.PathTime);
-                //model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
-                //model.AddedBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
                 await _IPathlogySampleCollectionService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else

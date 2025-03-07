@@ -347,20 +347,37 @@ namespace HIMS.Services.OPPatient
                 //await _context.SaveChangesAsync();
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId"};
+                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId" };
                 var entity = objPara.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_update_vitalInformation", CommandType.StoredProcedure, entity);
-               
+
                 scope.Complete();
             }
         }
-    }
+             public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+            {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray" };
+            var entity = objCrossConsultation.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VisitID = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+            objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
 
+            await _context.SaveChangesAsync(UserId, Username);
+
+            return objCrossConsultation;
+        }
+    }  
 }
+
+
 
 
 

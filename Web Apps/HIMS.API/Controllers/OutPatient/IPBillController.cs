@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.",model);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -126,7 +126,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.", Model);
         }
 
         [HttpPost("IPBilllCreditInsert")]
@@ -153,7 +153,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.", Model);
         }
 
 
@@ -181,7 +181,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", Model);
         }
         [HttpPost("InsertIPDraftBill")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -201,7 +201,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.", Model);
         }
 
         //[HttpDelete("IPAddchargesdelete")]
