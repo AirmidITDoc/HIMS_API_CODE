@@ -23,7 +23,7 @@ namespace HIMS.Services.Common
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListAsync1(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
         }

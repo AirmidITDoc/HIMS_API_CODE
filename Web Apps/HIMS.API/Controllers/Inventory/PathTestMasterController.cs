@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Inventory
         [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TestMasterDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
+            IPagedList<TestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
             return Ok(TestMasterList.ToGridResponse(objGrid, "TestMasterList"));
         }
 
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest   updated successfully.");
         }
-        [HttpPost("PathTestDelete")]
+        [HttpDelete("PathTestDelete")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {       

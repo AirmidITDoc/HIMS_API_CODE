@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
         }
-        [HttpPost("ItemCanceled")]
+        [HttpDelete("ItemCanceled")]
         [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
         {
