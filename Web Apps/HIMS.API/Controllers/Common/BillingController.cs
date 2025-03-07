@@ -42,10 +42,16 @@ namespace HIMS.API.Controllers.Common
             _iPInterimBillSerive = iPInterimBill;
         }
 
+        //[HttpPost("BrowseIPBillList")]
+        //public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<BrowseIPDBillListDto> IPDBillList = await _IPBillService.GetIPBillListAsync(objGrid);
+        //    return Ok(IPDBillList.ToGridResponse(objGrid, "Browse IP Bill List "));
+        //}
         [HttpPost("BrowseIPBillList")]
-        public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
+        public async Task<IActionResult> GetIPBillListAsync1(GridRequestModel objGrid)
         {
-            IPagedList<BrowseIPDBillListDto> IPDBillList = await _IPBillService.GetIPBillListAsync(objGrid);
+            IPagedList<IPBillListDto> IPDBillList = await _IPBillService.GetIPBillListAsync1(objGrid);
             return Ok(IPDBillList.ToGridResponse(objGrid, "Browse IP Bill List "));
         }
         [HttpPost("BrowseIPPaymentList")]

@@ -16,7 +16,7 @@ namespace HIMS.API.Models.Inventory
         public string? FootNote { get; set; }
         public bool? IsDeleted { get; set; }
         public long? ServiceId { get; set; }
-        public bool? IsTemplateTest { get; set; }
+        public long? IsTemplateTest { get; set; }
         public string? TestTime { get; set; }
         public string? TestDate { get; set; }
 

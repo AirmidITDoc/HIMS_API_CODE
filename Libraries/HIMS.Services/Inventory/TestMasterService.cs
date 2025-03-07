@@ -25,9 +25,9 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<PathTestMasterDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<TestMasterListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PathTestMasterDto>(model, "Rtrv_PathTestForUpdate");
+            return await DatabaseHelper.GetGridDataBySp<TestMasterListDto>(model, "Rtrv_PathTestForUpdate");
         }
         public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
         {
@@ -110,6 +110,36 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+
+                if (objTest.IsTemplateTest == 1)
+                {
+                    // Delete record from MPathTestMaster  table IsTemplateTest : 0
+                    var lst1 = await _context.MPathTemplateDetails.Where(x => x.TestId == objTest.TestId).ToListAsync();
+                    if (lst1 != null && lst1.Count > 0)
+                    {
+                        _context.MPathTemplateDetails.RemoveRange(lst1);
+                    }
+                    await _context.SaveChangesAsync(); // Save deletions before proceeding
+                }
+                else
+                {
+                    //Delete details table realted records // Delete record from MPathTestDetailMasters table IsNumeric : 1
+                    var lst = await _context.MPathTestDetailMasters.Where(x => x.TestId == objTest.TestId).ToListAsync();
+                    if (lst != null && lst.Count > 0)
+                    {
+                        _context.MPathTestDetailMasters.RemoveRange(lst);
+                    }
+                    await _context.SaveChangesAsync(); // Save deletions before proceeding
+                }
+                if (objTest.IsTemplateTest == 1)
+                {
+                    objTest.MPathTestDetailMasters = null; // Prevent re-inserting deleted records
+                }
+                else
+                {
+                    objTest.MPathTemplateDetails = null;
+                }
+
                 // Update header & detail table records
                 _context.MPathTestMasters.Update(objTest);
                 _context.Entry(objTest).State = EntityState.Modified;
