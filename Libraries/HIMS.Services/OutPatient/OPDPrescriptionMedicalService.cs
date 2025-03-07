@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System;
@@ -20,6 +21,9 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
+
+      
+
         public virtual async Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<GetVisitInfoListDto>(model, "m_Rtrv_GetVisitInfo");
@@ -29,7 +33,12 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailsVisitWiseListDto>(model, "Get_PrescriptionDetailsVisitWise");
         }
 
-         //Ashu///
+        public virtual async Task<IPagedList<MOpcasepaperDignosisMaster>> GetDignosisListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MOpcasepaperDignosisMaster>(model, "m_Rtrv_OPCasepaperDignosisList");
+        }
+
+        //Ashu///
         public virtual async Task InsertPrescriptionAsyncSP(TPrescription objTPrescription, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
 
@@ -75,6 +84,12 @@ namespace HIMS.Services.OutPatient
 
 
             }
+        }
+
+       
+        public virtual async Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "m_Rtrv_OPRequestList");
         }
     }
 }
