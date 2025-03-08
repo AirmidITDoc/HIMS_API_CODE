@@ -2,6 +2,7 @@
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel objGrid);
         Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel objGrid);
+        Task InsertAsyncResultEntry(TPathologyReportDetail ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader,int  UserId, string Username);
 
 
 

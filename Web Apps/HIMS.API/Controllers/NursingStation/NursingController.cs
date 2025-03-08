@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
-            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
+            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList"));
         }
 
     
