@@ -22,7 +22,7 @@ namespace HIMS.Services.Common
         Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPDBillListDto>> GetIPBillListAsync(GridRequestModel objGrid);
         Task InsertAsync(AddCharge objAddCharge,  int UserId, string Username);
-    //    Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
+        Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
         Task IPbillAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
         Task IPbillCreditAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);

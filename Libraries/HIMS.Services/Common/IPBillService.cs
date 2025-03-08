@@ -356,23 +356,23 @@ namespace HIMS.Services.Common
             }
         }
 
-        //public virtual async Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
-        //{
+        public virtual async Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
+        {
 
-        //    DatabaseHelper odal = new();
-        //    string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
-        //        "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
-        //        "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-        //        "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation"};
-        //    var entity = ObjaddCharge.ToDictionary();
-        //    foreach (var rProperty in AEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
+                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation"};
+            var entity = ObjaddCharge.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
 
-        //    odal.ExecuteNonQuery("Delete_IPAddcharges", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("Delete_IPAddcharges", CommandType.StoredProcedure, entity);
 
-        //}
+        }
 
         public virtual async Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int UserId, string UserName)
         {

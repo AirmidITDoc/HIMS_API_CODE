@@ -204,24 +204,25 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.", Model);
         }
 
-        //[HttpDelete("IPAddchargesdelete")]
-        //public async Task<ApiResponse> IPAddchargesdelete(AddChargesDeleteModel obj)
-        //{
+        [HttpDelete("IPAddchargesdelete")]
+        public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
+        {
 
-        //    AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
-
-
-        //    if (obj.DeleteCharges.ChargesId == 0)
-        //    {
+            AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
 
 
-        //        Model.AddedBy = CurrentUserId;
-        //        await _IPBillService.IPAddchargesdelete(Model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
-        //}
+            if (obj.DeleteCharges.ChargesId != 0)
+            {
+               
+
+
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.IPAddchargesdelete(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
+        }
 
     }
 }

@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -201,7 +202,6 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> Post(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
-            //model.IsActive = true;
             if (obj.DocNoteId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -218,7 +218,6 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
-            //model.IsActive = true;
             if (obj.DocNoteId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -237,7 +236,6 @@ namespace HIMS.API.Controllers.NursingStation
             TNursingNote model = await _repository.GetById(x => x.DocNoteId == Id);
             if ((model?.DocNoteId ?? 0) > 0)
             {
-                //model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.CreatedDatetime = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
@@ -246,6 +244,39 @@ namespace HIMS.API.Controllers.NursingStation
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
+        [HttpPost("DoctorNoteInsert")]
+        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(DoctorNoteModel obj)
+        {
+            TDoctorsNote model = obj.MapTo<TDoctorsNote>();
+            if (obj.DoctNoteId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNote  added successfully.");
+        }
+
+
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Edit(DoctorNoteModel obj)
+        {
+            TDoctorsNote model = obj.MapTo<TDoctorsNote>();
+            if (obj.DoctNoteId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.Ttime = Convert.ToDateTime(obj.Ttime);
+                await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNote updated successfully.");
+        }
+
 
 
         //[HttpPost("TDoctorPatientHandoverList")]

@@ -3,6 +3,8 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
+using LinqToDB;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,34 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<NursingNoteListDto>(model, "m_Rtrv_NursingNotesList");
         }
+
+        //Ashu//
+        public virtual async Task InsertAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TDoctorsNotes.Add(ObjTDoctorsNote);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.TDoctorsNotes.Update(ObjTDoctorsNote);
+                _context.Entry(ObjTDoctorsNote).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+      
+
 
         public virtual async Task InsertAsyncSP(TNursingNote objTNursingNote, int currentUserId, string currentUserName)
         {
