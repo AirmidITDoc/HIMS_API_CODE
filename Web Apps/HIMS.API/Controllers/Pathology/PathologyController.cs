@@ -7,6 +7,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
@@ -14,6 +15,7 @@ using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
 using HIMS.Services.OPPatient;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,14 +66,16 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
             return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
         }
-        [HttpPost("PathologyTestList")]
+
+
+        [HttpPost("Path_TestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathologyTestList(GridRequestModel objGrid)
+        public async Task<IActionResult> PathTestList(GridRequestModel objGrid)
         {
-            IPagedList<PathologyTestListDto> PathologyTestList = await _IPathlogyService.PathologyTestList(objGrid);
-            return Ok(PathologyTestList.ToGridResponse(objGrid, "PathologyTest App List"));
+            IPagedList<TestListDTo> TestList = await _IPathlogyService.GetPathTestListAsync(objGrid);
+            return Ok(TestList.ToGridResponse(objGrid, "Path Test List "));
         }
-      
+
         [HttpPost("LabOrRadRequestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)

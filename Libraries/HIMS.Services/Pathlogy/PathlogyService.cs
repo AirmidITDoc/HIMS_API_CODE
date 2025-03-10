@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -32,10 +33,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathSubtestFillListDto>(model, "rtrv_PathSubtestFill");
         }
-        public virtual async Task<IPagedList<PathologyTestListDto>> PathologyTestList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PathologyTestListDto>(model, "m_Rtrv_PathologyTestList");
-        }
+        //public virtual async Task<IPagedList<PathologyTestListDto>> PathologyTestList(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<PathologyTestListDto>(model, "m_Rtrv_PathologyTestList");
+        //}
         public virtual async Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathResultEntryListDto>(model, "ps_Rtrv_PathResultEntryList_Test_Dtls");
@@ -49,6 +50,11 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestListDto>(model, "Rtrv_LabOrRadRequestList");
 
+        }
+
+        public virtual async Task<IPagedList<TestListDTo>> GetPathTestListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TestListDTo>(model, "m_Rtrv_PathologyTestList");
         }
         public virtual async Task InsertAsyncResultEntry(TPathologyReportDetail ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {

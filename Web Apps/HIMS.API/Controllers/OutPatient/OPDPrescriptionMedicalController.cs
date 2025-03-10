@@ -10,8 +10,10 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
+using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.OutPatient.TPrescriptionModel;
@@ -119,6 +121,14 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Dignosis dropdown", MDignosMasterList.Select(x => new { x.DescriptionName, x.VisitId, x.DescriptionType }));
         }
 
+        [HttpPost("GetDignosisList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DignsisList(GridRequestModel objGrid)
+        {
+            IPagedList<MOpcasepaperDignosisMaster> GetVisitList = await _OPDPrescriptionService.GetDignosisListAsync(objGrid);
+            return Ok(GetVisitList.ToGridResponse(objGrid, "Get DignosisList "));
+        }
+
         //List API
         [HttpGet]
         [Route("get-Examination")]
@@ -136,6 +146,14 @@ namespace HIMS.API.Controllers.OutPatient
         {
             var MChiefComplaintMasterList = await _MComplaintMaster.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ChiefComplaint dropdown", MChiefComplaintMasterList.Select(x => new { x.ComplaintId, x.ComplaintDescr }));
+        }
+
+        [HttpPost("OPRequestList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<IActionResult> OPRequestList(GridRequestModel objGrid)
+        {
+            IPagedList<OPRequestListDto> List = await _OPDPrescriptionService.TOprequestList(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "OP Request List"));
         }
 
     }

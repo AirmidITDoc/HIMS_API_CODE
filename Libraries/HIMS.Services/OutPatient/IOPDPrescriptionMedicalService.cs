@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionDetailsVisitWiseListDto>> GetListAsyncL(GridRequestModel objGrid);
 
-
+        Task<IPagedList<MOpcasepaperDignosisMaster>> GetDignosisListAsync(GridRequestModel objGrid);
+        Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel objGrid);
     }
 }
