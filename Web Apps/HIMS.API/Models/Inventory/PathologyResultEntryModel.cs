@@ -23,48 +23,32 @@ namespace HIMS.API.Models.Inventory
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
         public string? SampleId { get; set; }
-        public List<TPathologyReportHeaderModel> TPathologyReportHeaders { get; set; }
+        public string? ParaBoldFlag { get; set; }
+        public float? MinValue { get; set; }
+        public float? MaxValue { get; set; }
     }
     public class PathologyResultEntryModelValidator : AbstractValidator<PathologyResultEntryModel>
     {
         public PathologyResultEntryModelValidator()
         {
-            RuleFor(x => x.CategoryId).NotNull().NotEmpty().WithMessage("CategoryId is required");
-            RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage("TestId  is required");
+            RuleFor(x => x.PathReportId).NotNull().NotEmpty().WithMessage("PathReportId is required");
+            RuleFor(x => x.CategoryId).NotNull().NotEmpty().WithMessage("CategoryId  is required");
             RuleFor(x => x.SubTestId).NotNull().NotEmpty().WithMessage(" SubTestId required");
-            RuleFor(x => x.ParameterId).NotNull().NotEmpty().WithMessage("ParameterId is required");
-            RuleFor(x => x.ResultValue).NotNull().NotEmpty().WithMessage("ResultValue is required");
-            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId  is required");
+            RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage("TestId is required");
           
         }
     }
-
     public class TPathologyReportHeaderModel
     {
         public long PathReportId { get; set; }
-        //public DateTime? PathDate { get; set; }
-        //public DateTime? PathTime { get; set; }
-        //public long? OpdIpdType { get; set; }
-        //public long? OpdIpdId { get; set; }
-        //public long? PathTestId { get; set; }
+        public DateTime? ReportDate { get; set; }
+        public string? ReportTime { get; set; }
+        public bool? IsCompleted { get; set; }
+        public bool? IsPrinted { get; set; }
         public long? PathResultDr1 { get; set; }
         public long? PathResultDr2 { get; set; }
         public long? PathResultDr3 { get; set; }
-        //public long? IsCancelled { get; set; }
-        //public long? IsCancelledBy { get; set; }
-        //public DateTime? IsCancelledDate { get; set; }
-        //public long? AddedBy { get; set; }
-        //public long? UpdatedBy { get; set; }
-        //public long? ChargeId { get; set; }
-        public bool? IsCompleted { get; set; }
-        public bool? IsPrinted { get; set; }
-        public DateTime? ReportDate { get; set; }
-        public DateTime? ReportTime { get; set; }
-        //public string? SampleNo { get; set; }
-        //public DateTime? SampleCollectionTime { get; set; }
-        //public bool? IsSampleCollection { get; set; }
         public long? IsTemplateTest { get; set; }
-        //public bool? TestType { get; set; }
         public string? SuggestionNotes { get; set; }
         public long? AdmVisitDoctorId { get; set; }
         public long? RefDoctorId { get; set; }
@@ -78,4 +62,12 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
+    public class PathologyResultModel
+    {
+        public PathologyResultEntryModel PathologyResult {  get; set; }
+        public TPathologyReportHeaderModel PathologyReport { get; set; }
+
+
+    }
+
 }

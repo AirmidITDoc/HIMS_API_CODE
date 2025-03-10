@@ -12367,6 +12367,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
 
+                entity.Property(e => e.ParaBoldFlag).HasMaxLength(1);
+
                 entity.Property(e => e.ParameterName).HasMaxLength(150);
 
                 entity.Property(e => e.PatientName).HasMaxLength(150);

@@ -50,13 +50,13 @@ namespace HIMS.API.Controllers.NursingStation
         //    return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn  List "));
         //}
 
-        //[HttpPost("LabRequestList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> LabRequestList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<LabRequestListDto> LabRequestList = await _ILabRequestService.GetListAsync(objGrid);
-        //    return Ok(LabRequestList.ToGridResponse(objGrid, "LabRequestList "));
-        //}
+        [HttpPost("LabRequestDetailsList")] 
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
+            return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList"));
+        }
 
         //[HttpPost("LabRequestDetailsList")] 
         ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]

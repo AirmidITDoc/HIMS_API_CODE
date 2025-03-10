@@ -154,15 +154,17 @@ namespace HIMS.API.Controllers.Report
                 case "DoctorNotesReceipt":
                 case "NursingNotesReceipt":
                 case "DoctorPatientHandoverReceipt":
+                case "NurMaterialConsumption":
+                case "NurLabRequest":
 
 
 
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 
@@ -199,6 +201,10 @@ namespace HIMS.API.Controllers.Report
                 case "IptemplateCasepaperReport":
                 case "AdmissionList":
                 case "IpFinalBill":
+                case "IpFinalBillClassservicewise":
+                case "IpFinalClasswiseBill":
+                case "IpFinalGroupwiseBill":
+                case "IpInterimBill":
                 case "IpPaymentReceipt":
                 case "IpAdvanceRefundReceipt":
                 case "IpBillRefundReceipt":
@@ -213,14 +219,18 @@ namespace HIMS.API.Controllers.Report
                 case "DepartmentwiseCount":
                 case "IPDDischargewithmarkstatus":
                 case "IpMLCCasePaperPrint":
-                    
-                //case "IpBillRefundReceipt":
+                case "PathresultEntry":
+                case "PathTemplateReport":
 
-                //{
-                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
+                    
+
+                //case "PathresultEntry":
+
+                //    {
+                //        if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                //            return Unauthorized("You don't have permission to access this report.");
+                //        break;
+                //    }
                 #endregion
 
 
