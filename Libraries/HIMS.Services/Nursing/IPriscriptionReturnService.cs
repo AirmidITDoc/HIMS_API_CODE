@@ -13,6 +13,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<PrescriptionListDto>> GetPrescriptionListAsync(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionReturnListDto>> GetListAsyncReturn(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionDetailListDto>> GetListAsyncDetail(GridRequestModel objGrid);
+       Task InsertAsync(TIpPrescription ObjTIpPrescription, int UserId, string Username);
+
 
     }
 }

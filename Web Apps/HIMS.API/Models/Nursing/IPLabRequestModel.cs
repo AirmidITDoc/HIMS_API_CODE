@@ -17,21 +17,20 @@ namespace HIMS.API.Models.Nursing
         public DateTime? IsCancelledTime { get; set; }
         public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
+        public List<TDLabRequestModel> TDlabRequests { get; set; }
     }
 
     public class IPLabRequestModelValidator : AbstractValidator<IPLabRequestModel>
     {
         public IPLabRequestModelValidator()
         {
-            //    RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
-            //    RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
-            //    RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            //    RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            //    RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
+                RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");
+                RuleFor(x => x.OpIpType).NotNull().NotEmpty().WithMessage("OpIpType is required");
+           
         }
     }
 
-    public class TDLabRequest
+    public class TDLabRequestModel
     {
         public long ReqDetId { get; set; }
         public long? RequestId { get; set; }
@@ -46,12 +45,12 @@ namespace HIMS.API.Models.Nursing
         public bool? IsOnFileTest { get; set; }
     }
 
-    public class TDLabRequestModelValidator : AbstractValidator<TDLabRequest>
+    public class TDLabRequestModelValidator : AbstractValidator<TDLabRequestModel>
     {
         public TDLabRequestModelValidator()
         {
-            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            //RuleFor(x => x.ChargesId).NotNull().NotEmpty().WithMessage("ChargesId is required");
+            RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
+  
         }
     }
 }

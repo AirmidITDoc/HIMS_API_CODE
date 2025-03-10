@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Nursing
         public long? OpIpId { get; set; }
         public byte? OpIpType { get; set; }
         public long? Addedby { get; set; }
-        public long? Isdeleted { get; set; }
+        public long? IsActive { get; set; }
         public bool? Isclosed { get; set; }
         public List<IpprescriptionReturnDModel> TIpprescriptionReturnDs { get; set; }
 

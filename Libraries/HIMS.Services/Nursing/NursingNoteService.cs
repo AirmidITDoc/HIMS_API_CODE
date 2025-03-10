@@ -52,7 +52,20 @@ namespace HIMS.Services.Nursing
             }
         }
 
-      
+
+        public virtual async Task InsertAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TDoctorPatientHandovers.Add(ObjTDoctorPatientHandover);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+       
+
 
 
         public virtual async Task InsertAsyncSP(TNursingNote objTNursingNote, int currentUserId, string currentUserName)
