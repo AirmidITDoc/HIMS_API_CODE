@@ -11,6 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
@@ -21,9 +22,10 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-
-      
-
+        public virtual async Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "m_Rtrv_OPRequestList");
+        }
         public virtual async Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<GetVisitInfoListDto>(model, "m_Rtrv_GetVisitInfo");
@@ -85,11 +87,6 @@ namespace HIMS.Services.OutPatient
 
             }
         }
-
        
-        public virtual async Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "m_Rtrv_OPRequestList");
-        }
     }
 }

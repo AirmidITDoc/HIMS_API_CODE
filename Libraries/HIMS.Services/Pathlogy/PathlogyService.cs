@@ -56,7 +56,7 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<TestListDTo>(model, "m_Rtrv_PathologyTestList");
         }
-        public virtual async Task InsertAsyncResultEntry(TPathologyReportDetail ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
+        public virtual async Task InsertAsyncResultEntry(TPathologyReportDetail ObjPathologyReportDetail, List<TPathologyReportHeader> ObjTPathologyReportHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -65,6 +65,7 @@ namespace HIMS.Services.Pathlogy
                 PathReportID = Convert.ToInt32(ObjPathologyReportDetail.PathReportId)
             };
             odal.ExecuteNonQuery("m_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+
             string[] rEntity = { "PathReportDetId", "PathReport" };
             var entity = ObjPathologyReportDetail.ToDictionary();
             foreach (var rProperty in rEntity)
@@ -72,15 +73,17 @@ namespace HIMS.Services.Pathlogy
                 entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_insert_PathRrptDet_1", CommandType.StoredProcedure, entity);
-
-            string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
-            "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime"};
-            var Hentity = ObjTPathologyReportHeader.ToDictionary();
-            foreach (var rProperty in Entity)
+            foreach (var item in ObjTPathologyReportHeader)
             {
-                Hentity.Remove(rProperty);
+            string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
+                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime"};
+                var Hentity = item.ToDictionary();
+                foreach (var rProperty in Entity)
+                {
+                    Hentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
             }
-            odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
         }
     }
 }

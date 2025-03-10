@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-        [HttpPost("PathResultEntryList")]
+        [HttpPost("PathologyTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
@@ -106,11 +106,13 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             TPathologyReportDetail model = obj.PathologyResult.MapTo<TPathologyReportDetail>();
-            TPathologyReportHeader objTPathology = obj.PathologyReport.MapTo<TPathologyReportHeader>();
+            List<TPathologyReportHeader> objTPathology = obj.PathologyReport.MapTo<List<TPathologyReportHeader>>();
             if (model.PathReportDetId == 0)
             {
-                objTPathology.ReportDate = Convert.ToDateTime(objTPathology.ReportDate);
-                objTPathology.ReportTime = Convert.ToDateTime(objTPathology.ReportTime);
+                //objTPathology.ReportDate = Convert.ToDateTime(objTPathology.ReportDate);
+                //objTPathology.ReportTime = Convert.ToDateTime(objTPathology.ReportTime);
+                objTPathology.ForEach(x => { x.PathReportId = model.PathReportDetId; });
+
 
                 await _IPathlogyService.InsertAsyncResultEntry(model, objTPathology, CurrentUserId, CurrentUserName);
             }
