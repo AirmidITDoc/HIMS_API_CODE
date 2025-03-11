@@ -253,18 +253,26 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        public virtual async Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
-        {
-            // throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] rEntity = { "InitateDiscId", "IsNoDues", "Comments", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            var Ientity = ObjInitiateDischarge.ToDictionary();
-            foreach (var rProperty in rEntity)
-            {
-                Ientity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("m_insert_initiateDischarge_1", CommandType.StoredProcedure, Ientity);
-        }
+        //public virtual async Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
+        //{
+        //    // throw new NotImplementedException();
+        //    DatabaseHelper odal = new();
+        //    string[] rEntity = { "InitateDiscId", "IsNoDues", "Comments", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+        //    var Ientity = ObjInitiateDischarge.ToDictionary();
+        //    foreach (var rProperty in rEntity)
+        //    {
+        //        Ientity.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("m_insert_initiateDischarge_1", CommandType.StoredProcedure, Ientity);
+
+        //    string[] Entity = { "InitateDiscId",  };
+        //    var Dentity = ObjInitiateDischarge.ToDictionary();
+        //    foreach (var rProperty in Entity)
+        //    {
+        //        Dentity.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("m_Update_initiateDisc_1", CommandType.StoredProcedure, Dentity);
+        //}
     }
 }
 

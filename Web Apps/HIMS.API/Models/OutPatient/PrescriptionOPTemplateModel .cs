@@ -11,6 +11,8 @@ namespace HIMS.API.Models.OutPatient
         public byte? OpIpType { get; set; }
         public long? IsAddBy { get; set; }
         public long? IsUpdatedBy { get; set; }
+        //public List<PresTemplateDModel> MPresTemplateDs { get; set; }
+
 
     }
     public class PrescriptionOPTemplateModelValidator : AbstractValidator<PrescriptionOPTemplateModel>
@@ -24,7 +26,7 @@ namespace HIMS.API.Models.OutPatient
     public class PresTemplateDModel
     {
         public long? PresId { get; set; }
-        public DateTime? Date { get; set; }
+        public string? Date { get; set; }
         public long? ClassId { get; set; }
         public long? GenericId { get; set; }
         public long? DrugId { get; set; }
@@ -42,6 +44,7 @@ namespace HIMS.API.Models.OutPatient
         public PresTemplateDModelValidator()
         {
             RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
+
 
         }
     }

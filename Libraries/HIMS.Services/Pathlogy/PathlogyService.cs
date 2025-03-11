@@ -21,10 +21,7 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
         }
-        public virtual async Task<IPagedList<PathTestForUpdateListdto>> PathTestForUpdateList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PathTestForUpdateListdto>(model, "Rtrv_PathTestForUpdate");
-        }
+      
         public virtual async Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathParaFillListDto>(model, "rtrv_PathParaFill");
@@ -33,10 +30,7 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathSubtestFillListDto>(model, "rtrv_PathSubtestFill");
         }
-        //public virtual async Task<IPagedList<PathologyTestListDto>> PathologyTestList(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<PathologyTestListDto>(model, "m_Rtrv_PathologyTestList");
-        //}
+       
         public virtual async Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathResultEntryListDto>(model, "ps_Rtrv_PathResultEntryList_Test_Dtls");

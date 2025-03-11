@@ -31,6 +31,14 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(PhoneAppList.ToGridResponse(objGrid, "PhoneApp List"));
         }
 
+        [HttpPost("GetPhoneList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DignsisList(GridRequestModel objGrid)
+        {
+            IPagedList<TPhoneAppointment> GetPhoneList = await _IPhoneAppointment2Service.GetPhoneListAsync(objGrid);
+            return Ok(GetPhoneList.ToGridResponse(objGrid, " GetPhoneList "));
+        }
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
