@@ -76,6 +76,16 @@ namespace HIMS.API.Models.OPPatient
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
 
+
+        public string? Height { get; set; }
+        public string? Pweight { get; set; }
+        public string? Bmi { get; set; }
+        public string? Bsl { get; set; }
+        public string? SpO2 { get; set; }
+        public string? Temp { get; set; }
+        public string? Pulse { get; set; }
+        public string? Bp { get; set; }
+
     }
     public class VisitDetailModelValidator : AbstractValidator<VisitDetailModel>
     {

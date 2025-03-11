@@ -118,7 +118,7 @@ namespace HIMS.Services.IPPatient
 
         }
 
-        public virtual async Task IPInsertAsyncSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, AdvRefundDetail ObjadvRefundDetail, AdvanceDetail ObjAdvanceDetail, Payment ObjPayment, int UserId, string UserName)
+        public virtual async Task IPInsertAsyncSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -139,23 +139,28 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
 
-
-            string[] ADetailEntity = { "AdvRefId" };
-            var AdvDetailEntity = ObjadvRefundDetail.ToDictionary();
-            foreach (var rProperty in ADetailEntity)
+            foreach (var item in ObjadvRefundDetailList)
             {
-                AdvDetailEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("insert_AdvRefundDetail_1", CommandType.StoredProcedure, AdvDetailEntity);
 
-            string[] AdvanceDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
-            var AdDetailEntity = ObjAdvanceDetail.ToDictionary();
-            foreach (var rProperty in AdvanceDetailEntity)
+                string[] ADetailEntity = { "AdvRefId" };
+                var AdvDetailEntity = item.ToDictionary();
+                foreach (var rProperty in ADetailEntity)
+                {
+                    AdvDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("insert_AdvRefundDetail_1", CommandType.StoredProcedure, AdvDetailEntity);
+            }
+
+            foreach (var item in ObjAdvanceDetailList)
             {
-                AdDetailEntity.Remove(rProperty);
+                string[] AdvanceDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+                var AdDetailEntity = item.ToDictionary();
+                foreach (var rProperty in AdvanceDetailEntity)
+                {
+                    AdDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
             }
-            odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
-
             string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
             var entity1 = ObjPayment.ToDictionary();
             foreach (var rProperty in pEntity)
