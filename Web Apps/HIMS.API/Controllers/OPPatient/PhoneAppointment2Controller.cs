@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("Cancel")]
+        [HttpDelete("Cancel")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
         {
