@@ -59,6 +59,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<IIssueToDepService, IssueToDepService>();
+            services.AddScoped<IPrescriptionOPTemplateService, PrescriptionOPTemplateService>();
+
 
 
             services.AddScoped<ITestMasterServices, TestMasterService>();
@@ -78,6 +80,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IMenuMasterService, MenuMasterService>();
             services.AddScoped<IPaymentpharmacyService, paymentpharmacyService>();
             services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            services.AddScoped<INursingNoteService, NursingNoteService>();
 
 
             services.AddScoped<IPaymentService, PaymentService>();

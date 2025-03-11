@@ -6820,9 +6820,12 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Instruction).HasMaxLength(200);
 
-                entity.Property(e => e.PresId).HasMaxLength(200);
-
                 entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.HasOne(d => d.Pres)
+                    .WithMany(p => p.MPresTemplateDs)
+                    .HasForeignKey(d => d.PresId)
+                    .HasConstraintName("FK_M_PresTemplateD_M_PresTemplateH");
             });
 
             modelBuilder.Entity<MPresTemplateH>(entity =>
@@ -6830,6 +6833,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.PresId);
 
                 entity.ToTable("M_PresTemplateH");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
@@ -12366,6 +12373,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CategoryName).HasMaxLength(150);
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
+
+                entity.Property(e => e.ParaBoldFlag).HasMaxLength(1);
 
                 entity.Property(e => e.ParameterName).HasMaxLength(150);
 

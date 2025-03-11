@@ -21,7 +21,11 @@ namespace HIMS.Services.Nursing
         Task InsertAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
         Task UpdateAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
 
-     
+        Task InsertAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
+       
+
+
+
 
 
         Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);

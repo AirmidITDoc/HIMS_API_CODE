@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class MPresTemplateD
     {
         public long PresDetId { get; set; }
-        public string? PresId { get; set; }
+        public long? PresId { get; set; }
         public DateTime? Date { get; set; }
         public long? ClassId { get; set; }
         public long? GenericId { get; set; }
@@ -19,5 +19,7 @@ namespace HIMS.Data.Models
         public string? Instruction { get; set; }
         public string? Remark { get; set; }
         public bool? IsEnglishOrIsMarathi { get; set; }
+
+        public virtual MPresTemplateH? Pres { get; set; }
     }
 }

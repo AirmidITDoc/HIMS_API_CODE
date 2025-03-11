@@ -51,6 +51,18 @@ namespace HIMS.Services.Nursing
             return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailListDto>(model, "m_Rtrv_IP_Prescriptio_Det");
         }
 
+
+
+        public virtual async Task InsertAsync(TIpPrescription ObjTIpPrescription, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TIpPrescriptions.Add(ObjTIpPrescription);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

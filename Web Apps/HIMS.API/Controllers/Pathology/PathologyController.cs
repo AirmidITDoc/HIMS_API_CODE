@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
@@ -28,13 +29,11 @@ namespace HIMS.API.Controllers.Pathology
         private readonly IPathlogySampleCollectionService _IPathlogySampleCollectionService;
         private readonly ILabRequestService _ILabRequestService;
         private readonly IPathlogyService _IPathlogyService;
-        private readonly IPathologyResultEntryService _IPathologyResultEntryService;
-        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2, IPathologyResultEntryService repository3)
+        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2)
         {
             _IPathlogySampleCollectionService = repository;
             _ILabRequestService = repository1;
             _IPathlogyService = repository2;
-            _IPathologyResultEntryService = repository3;
         }
         [HttpPost("PathTemplateForUpdateList")]
         //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
@@ -94,64 +93,33 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-        [HttpPost("PathResultEntryList")]
+        [HttpPost("PathologyTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
             return Ok(PathResultEntryList.ToGridResponse(objGrid, "PathResultEntryList"));
         }
+        
         [HttpPost("InsertResultEntry")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(PathologyResultEntryModel obj)
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
-            TPathologyReportDetail model = obj.MapTo<TPathologyReportDetail>();
-            if (obj.PathReportDetId == 0)
+            TPathologyReportDetail model = obj.PathologyResult.MapTo<TPathologyReportDetail>();
+            List<TPathologyReportHeader> objTPathology = obj.PathologyReport.MapTo<List<TPathologyReportHeader>>();
+            if (model.PathReportDetId == 0)
             {
-                //model.PathDate = Convert.ToDateTime(obj.PathDate);
-                //model.AddedBy = CurrentUserId;
+                //objTPathology.ReportDate = Convert.ToDateTime(objTPathology.ReportDate);
+                //objTPathology.ReportTime = Convert.ToDateTime(objTPathology.ReportTime);
+                objTPathology.ForEach(x => { x.PathReportId = model.PathReportDetId; });
 
-                await _IPathologyResultEntryService.InsertAsyncResultEntry(model, CurrentUserId, CurrentUserName);
+
+                await _IPathlogyService.InsertAsyncResultEntry(model, objTPathology, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Result Entry added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyResult Entry  added successfully.");
         }
-
-        [HttpPost("InsertTemplateResult")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PathTemplateResultModel obj)
-        {
-            TPathologyReportTemplateDetail model = obj.MapTo<TPathologyReportTemplateDetail>();
-            if (obj.PathReportTemplateDetId == 0)
-            {
-                //model.PathDate = Convert.ToDateTime(obj.PathDate);
-                //model.AddedBy = CurrentUserId;
-
-                await _IPathologyResultEntryService.InsertAsyncTemplateResult(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Template Result  added successfully.");
-        }
-
-
-        [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(PathologyResultEntryModel obj)
-        {
-            TPathologyReportDetail model = new();
-            if (obj.PathReportDetId != 0)
-            {
-                //model.IndentId = obj.IndentId;
-                //model.Isclosed = true;
-                //model.IsCancelledDate = DateTime.Now;
-                await _IPathologyResultEntryService.CancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Result Entry Canceled successfully.");
-        }
-
+       
     }
 }
