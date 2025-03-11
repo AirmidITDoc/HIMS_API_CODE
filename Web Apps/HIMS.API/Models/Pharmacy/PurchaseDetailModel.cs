@@ -8,21 +8,21 @@ namespace HIMS.API.Models.Pharmacy
         public long PurchaseId { get; set; }
         public long? ItemId { get; set; }
         public long? Uomid { get; set; }
-        public float? Qty { get; set; }
+        public double? Qty { get; set; }
         public decimal? Rate { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? DiscAmount { get; set; }
-        public float? DiscPer { get; set; }
+        public double? DiscPer { get; set; }
         public decimal? VatAmount { get; set; }
-        public float? VatPer { get; set; }
+        public double? VatPer { get; set; }
         public decimal? GrandTotalAmount { get; set; }
         public decimal? Mrp { get; set; }
         public string? Specification { get; set; }
-        public float? Cgstper { get; set; }
-        public float? Cgstamt { get; set; }
-        public float? Sgstper { get; set; }
-        public float? Sgstamt { get; set; }
-        public float? Igstper { get; set; }
+        public double? Cgstper { get; set; }
+        public double? Cgstamt { get; set; }
+        public double? Sgstper { get; set; }
+        public decimal? Sgstamt { get; set; }
+        public double? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
         public decimal? DefRate { get; set; }
         public float? VendDiscPer { get; set; }

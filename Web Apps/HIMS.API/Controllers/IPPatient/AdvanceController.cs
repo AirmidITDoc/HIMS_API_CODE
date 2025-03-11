@@ -130,8 +130,8 @@ namespace HIMS.API.Controllers.IPPatient
         {
             Refund model = obj.Refund.MapTo<Refund>();
             AdvanceHeader AdvanceHeadermodel = obj.advanceHeaderupdate.MapTo<AdvanceHeader>();
-            AdvRefundDetail AdvDetailmodel = obj.AdvDetailRefund.MapTo<AdvRefundDetail>();
-            AdvanceDetail objAdvanceDetail = obj.AdveDetailupdate.MapTo<AdvanceDetail>();
+          List<AdvRefundDetail> AdvDetailmodel = obj.AdvDetailRefund.MapTo<List<AdvRefundDetail>>();
+           List<AdvanceDetail> objAdvanceDetail = obj.AdveDetailupdate.MapTo<List<AdvanceDetail>>();
              Payment objpayment = obj.payment.MapTo<Payment>();
             if (obj.Refund.RefundId == 0)
             {

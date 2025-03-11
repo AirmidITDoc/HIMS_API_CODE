@@ -68,41 +68,104 @@ namespace HIMS.Services.Pharmacy
             await _context.SaveChangesAsync(UserId, Username);
         }
 
+
         public virtual async Task InsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled);
+            { 
+            // Fetch Store Info
+            MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
+
+            if (StoreInfo == null)
             {
-                // Update store table records
-                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
-                StoreInfo.PurchaseNo = Convert.ToString(Convert.ToInt32(StoreInfo.PurchaseNo) + 1);
-                _context.MStoreMasters.Update(StoreInfo);
-                await _context.SaveChangesAsync();
-
-                // Add header & detail table records
-                objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
-                _context.TPurchaseHeaders.Add(objPurchase);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                throw new Exception($"StoreInfo is null. No store found with StoreId: {objPurchase.StoreId}");
             }
+
+            // Ensure PurchaseNo is valid
+            int purchaseNo = 0;
+            if (!string.IsNullOrEmpty(StoreInfo.PurchaseNo))
+            {
+                purchaseNo = Convert.ToInt32(StoreInfo.PurchaseNo);
+            }
+            StoreInfo.PurchaseNo = (purchaseNo + 1).ToString();
+
+            // Update Store Record
+            _context.MStoreMasters.Update(StoreInfo);
+            await _context.SaveChangesAsync();
+
+            // Add Purchase Header
+            objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
+            _context.TPurchaseHeaders.Add(objPurchase);
+            await _context.SaveChangesAsync();
+
+            // Complete Transaction
+            scope.Complete();
+     
+         }
         }
+
+        //public virtual async Task InsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update store table records
+        //        MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
+        //        StoreInfo.PurchaseNo = Convert.ToString(Convert.ToInt32(StoreInfo.PurchaseNo) + 1);
+        //        _context.MStoreMasters.Update(StoreInfo);
+        //        await _context.SaveChangesAsync();
+
+        //        // Add header & detail table records
+        //        objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
+        //        _context.TPurchaseHeaders.Add(objPurchase);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+
+
+
 
         public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                // Delete details table realted records
                 var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
                 _context.TPurchaseDetails.RemoveRange(lst);
+                await _context.SaveChangesAsync();
 
-                // Update header & detail table records
                 _context.TPurchaseHeaders.Update(objPurchase);
                 _context.Entry(objPurchase).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
-                scope.Complete();
+                await transaction.CommitAsync();
             }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+
         }
+
+
+        //public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Delete details table realted records
+        //        var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
+        //        _context.TPurchaseDetails.RemoveRange(lst);
+
+        //        // Update header & detail table records
+        //        _context.TPurchaseHeaders.Update(objPurchase);
+        //        _context.Entry(objPurchase).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
 
         public virtual async Task VerifyAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         {
