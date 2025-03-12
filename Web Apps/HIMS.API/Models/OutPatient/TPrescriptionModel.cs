@@ -103,6 +103,12 @@ namespace HIMS.API.Models.OutPatient
             public long DoseId { get; set; }
 
         }
+        public class UpdatePrescription
+        {
+            public long PrecriptionId { get; set; }
+            public long GenericId { get; set; }
+
+        }
 
     }
 }

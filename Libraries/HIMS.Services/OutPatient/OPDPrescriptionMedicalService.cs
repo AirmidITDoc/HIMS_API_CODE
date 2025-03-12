@@ -101,15 +101,29 @@ namespace HIMS.Services.OutPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
                 TransactionScopeAsyncFlowOption.Enabled);
+                var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
 
-            var existingPrescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
-
-            if (existingPrescription != null)  
+            if (Prescription != null)  
             {
-                existingPrescription.DoseId = OBJTPrescription.DoseId;
+                Prescription.DoseId = OBJTPrescription.DoseId;
                 await _context.SaveChangesAsync();  
 
                 scope.Complete(); 
+            }
+        }
+        public virtual async Task UpdateAsyncGeneric(TPrescription OBJTPrescription, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
+                var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
+
+            if (Prescription != null)
+            {
+                Prescription.GenericId = OBJTPrescription.GenericId;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
             }
         }
     }

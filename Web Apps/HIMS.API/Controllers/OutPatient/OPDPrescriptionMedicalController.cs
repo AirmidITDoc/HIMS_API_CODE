@@ -187,6 +187,22 @@ namespace HIMS.API.Controllers.OutPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription  update successfully.");
         }
+        [HttpPut("GenericEdit/{id:int}")]
+        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(UpdatePrescription obj)
+        {
+            TPrescription model = obj.MapTo<TPrescription>();
+            if (obj.PrecriptionId != 0)
+            {
+                model.PrecriptionId = obj.PrecriptionId;
+                model.ModifiedBy = CurrentUserId;
+                model.Date = DateTime.Now;
+                await _OPDPrescriptionService.UpdateAsyncGeneric(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionGeneric  update successfully.");
+        }
 
 
 

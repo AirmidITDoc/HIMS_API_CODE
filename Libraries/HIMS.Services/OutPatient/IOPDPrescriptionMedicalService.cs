@@ -21,6 +21,8 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel objGrid);
         Task<IPagedList<OPrtrvDignosisListDto>> TDignosisrRtrvList(GridRequestModel objGrid);
         Task UpdateAsync(TPrescription ObjTPrescription, int UserId, string Username);
+        Task UpdateAsyncGeneric(TPrescription ObjTPrescription, int UserId, string Username);
+
 
 
 
