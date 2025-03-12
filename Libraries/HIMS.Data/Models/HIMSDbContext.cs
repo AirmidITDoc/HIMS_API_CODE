@@ -6821,11 +6821,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Instruction).HasMaxLength(200);
 
                 entity.Property(e => e.Remark).HasMaxLength(200);
-
-                entity.HasOne(d => d.Pres)
-                    .WithMany(p => p.MPresTemplateDs)
-                    .HasForeignKey(d => d.PresId)
-                    .HasConstraintName("FK_M_PresTemplateD_M_PresTemplateH");
             });
 
             modelBuilder.Entity<MPresTemplateH>(entity =>

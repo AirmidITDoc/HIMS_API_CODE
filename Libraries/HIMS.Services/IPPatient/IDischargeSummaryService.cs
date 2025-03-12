@@ -20,7 +20,7 @@ namespace HIMS.Services.IPPatient
         Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission ,int currentUserId, string currentUserName);
         Task InsertAsync(InitiateDischarge ObjInitiateDischarge, int UserId, string Username);
         Task UpdateAsync(InitiateDischarge ObjInitiateDischarge, int UserId, string Username);
-        Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int UserId, string Username);
+        Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, Admission ObjAdmission, int UserId, string Username);
         Task<IPagedList<PatientClearanceAprovViewListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PatientClearanceApprovalListDto>> GetListAsyncP(GridRequestModel objGrid);
         Task<IPagedList<DischrageSummaryListDTo>> IPDischargesummaryList(GridRequestModel objGrid);

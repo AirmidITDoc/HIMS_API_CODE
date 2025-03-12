@@ -131,8 +131,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
            CreateMap<Discharge, DischargeUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Admission, InitiateDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Admission, AdmisionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<InitiateDischarge, InitiateDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<InitiateDischarge, InitiateDisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
@@ -226,8 +228,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPrescription, TPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOprequestList, TOPRequestListModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<MOpcasepaperososisMaster, MOPCasepaperDignosisMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOpcasepaperDignosisMaster, MOPCasepaperDignosisMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<MPresTemplateD, PresTemplateDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<MPresTemplateD, PrescriptionOPTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<MPresTemplateH, PrescriptionOPTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 

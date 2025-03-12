@@ -21,7 +21,7 @@ namespace HIMS.API.Models.Pharmacy
         public long? PaymentTermId { get; set; }
         public long? ModeofPayment { get; set; }
         public string? Worrenty { get; set; }
-        public decimal? RoundVal { get; set; }
+        public double? RoundVal { get; set; }
         public decimal? TotCgstamt { get; set; }
         public decimal? TotSgstamt { get; set; }
         public decimal? TotIgstamt { get; set; }

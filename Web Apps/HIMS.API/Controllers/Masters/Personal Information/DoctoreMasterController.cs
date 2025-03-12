@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return data.ToSingleResponse<DoctorMaster, DoctoreMasterModel>("DoctorMaster");
         }
 
-      
+
 
         //Add API
         [HttpPost]
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("get-Doctor")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var List = await _repository1.GetAll();
@@ -114,3 +114,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
     }
 }
+        //[HttpGet]
+        //[Route("get-Doctor")]
+        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetDropdown()
+        //{
+        //    var List = await _repository1.GetAll(x);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { x.DoctorId, x.DepartmentId, x.FirstName }));
+        //}
+    
+

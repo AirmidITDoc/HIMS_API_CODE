@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MPresTemplateH
     {
-        public MPresTemplateH()
-        {
-            MPresTemplateDs = new HashSet<MPresTemplateD>();
-        }
-
         public long PresId { get; set; }
         public string? PresTemplateName { get; set; }
         public bool? IsActive { get; set; }
@@ -20,7 +15,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public virtual ICollection<MPresTemplateD> MPresTemplateDs { get; set; }
     }
 }

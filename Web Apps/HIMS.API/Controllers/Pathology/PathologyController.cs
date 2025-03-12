@@ -42,16 +42,6 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<PathTemplateForUpdateListDto> PathTestForUpdateList = await _IPathlogyService.PathTemplateForUpdateList(objGrid);
             return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdate List"));
         }
-
-
-        [HttpPost("PathTestForUpdateList")]
-        //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathTestForUpdateList(GridRequestModel objGrid)
-        {
-            IPagedList<PathTestForUpdateListdto> PathTestForUpdateList= await _IPathlogyService.PathTestForUpdateList(objGrid);
-            return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTestForUpdate List"));
-        }
-
         [HttpPost("PathParaFillList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)
@@ -65,15 +55,6 @@ namespace HIMS.API.Controllers.Pathology
         {
             IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
             return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
-        }
-
-
-        [HttpPost("Path_TestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathTestList(GridRequestModel objGrid)
-        {
-            IPagedList<TestListDTo> TestList = await _IPathlogyService.GetPathTestListAsync(objGrid);
-            return Ok(TestList.ToGridResponse(objGrid, "Path Test List "));
         }
 
         [HttpPost("LabOrRadRequestList")]

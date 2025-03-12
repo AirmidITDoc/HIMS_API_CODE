@@ -57,6 +57,13 @@ namespace HIMS.Services.Common
             SqlParameter[] para = new SqlParameter[fields.Count];
             switch (model.Mode)
             {
+                //Ashu//
+                case "OpeningItemDet": sp_Name = "m_Rtrv_OpeningItemDet"; break;
+                case "OpeningItemList": sp_Name = "m_Rtrv_OpeningItemList"; break;
+                case "GrnItemList": sp_Name = "Retrieve_GrnItemList"; break;
+                case "GRNList": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
+                case "PurchaseItem": sp_Name = "m_Rtrv_PurchaseItemList"; break;
+                case "PurchasesOrder": sp_Name = "Rtrv_LastThreeItemInfo"; break;
                 case "PurchaseOrder": sp_Name = "m_Rtrv_PurchaseOrderList_by_Name_Pagn"; break;
                 case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
                 case "OPVisit": sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi"; break;
