@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> GetDignosDropdown()
         {
             var MDignosMasterList = await _Dignos.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Dignosis dropdown", MDignosMasterList.Select(x => new { x.DescriptionName, x.VisitId, x.DescriptionType }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Dignosis dropdown", MDignosMasterList.Select(x => new {x.Id, x.DescriptionName, x.VisitId, x.DescriptionType }));
         }
 
         [HttpPost("GetDignosisList")]
@@ -87,6 +87,15 @@ namespace HIMS.API.Controllers.OutPatient
             IPagedList<MOpcasepaperDignosisMaster> GetVisitList = await _OPDPrescriptionService.GetDignosisListAsync(objGrid);
             return Ok(GetVisitList.ToGridResponse(objGrid, "Get DignosisList "));
         }
+
+        [HttpPost("OPRtrvDignosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<IActionResult> OPDignosisList(GridRequestModel objGrid)
+        {
+            IPagedList<OPrtrvDignosisListDto> List = await _OPDPrescriptionService.TDignosisrRtrvList(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "OP Rtrv Dignosis  List"));
+        }
+
 
         //List API
         [HttpGet]
@@ -114,6 +123,10 @@ namespace HIMS.API.Controllers.OutPatient
             IPagedList<OPRequestListDto> List = await _OPDPrescriptionService.TOprequestList(objGrid);
             return Ok(List.ToGridResponse(objGrid, "OP Request List"));
         }
+
+       
+
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)

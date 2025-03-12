@@ -226,7 +226,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionforBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPrescription, TPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOprequestList, TOPRequestListModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MOpcasepaperDignosisMaster, MOPCasepaperDignosisMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<MOpcasepaperososisMaster, MOPCasepaperDignosisMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPresTemplateD, PresTemplateDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPresTemplateH, PrescriptionOPTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

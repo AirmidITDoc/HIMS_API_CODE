@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation added successfully.",model);
         }
         //Edit API
         [HttpPut("{id:int}")]
