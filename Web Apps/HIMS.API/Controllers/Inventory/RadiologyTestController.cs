@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest Name added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest  added successfully.");
         }
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
@@ -90,7 +90,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
         }
-        [HttpPost("RadilogyCancel")]
+        [HttpDelete("RadilogyCancel")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
         {
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest deleted successfully.");
         }
     }
 }

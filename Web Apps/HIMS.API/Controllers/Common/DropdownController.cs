@@ -75,6 +75,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPresTemplateH> _IMPresTemplateH;
         private readonly IGenericService<MOpcasepaperDignosisMaster> _IMOPCasepaperDignosisMaster;
         private readonly IGenericService<MReportTemplateConfig> _IMReportConfTemplate;
+        private readonly IGenericService<MTalukaMaster> _IMTalukaMaster;
 
 
 
@@ -97,7 +98,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MenuMaster> iMDmenuMaster,
               IGenericService<MDoseMaster> IMDdoseMaster,
               IGenericService<MPresTemplateH> IMDPresTemplateH,
-              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig
+              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
+              IGenericService<MTalukaMaster> IMTalukaMaster
 
               )
         {
@@ -157,6 +159,7 @@ namespace HIMS.API.Controllers.Common
             _IMPresTemplateH = IMDPresTemplateH;
             _IMOPCasepaperDignosisMaster = _IMOPCasepaperDignosisMaster;
             _IMReportConfTemplate = IMReportTemplateConfig;
+            _IMTalukaMaster = IMTalukaMaster;
         }
 
         [HttpGet]
@@ -175,6 +178,7 @@ namespace HIMS.API.Controllers.Common
                 "Gender" => (await _IGenderService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DbGenderMaster.GenderId), nameof(DbGenderMaster.GenderName)),
                 "Relationship" => (await _IRelationshipMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
                 "MaritalStatus" => (await _IMaritalStatusMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MMaritalStatusMaster.MaritalStatusId), nameof(MMaritalStatusMaster.MaritalStatusName)),
+                "Taluka" => (await _IMTalukaMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTalukaMaster.TalukaId), nameof(MTalukaMaster.TalukaName)),
                 "City" => (await _IMCityService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCityMaster.CityId), nameof(MCityMaster.CityName)),
                 "State" => (await _IMStateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStateMaster.StateId), nameof(MStateMaster.StateName)),
                 "Country" => (await _IMCountryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCountryMaster.CountryId), nameof(MCountryMaster.CountryName)),

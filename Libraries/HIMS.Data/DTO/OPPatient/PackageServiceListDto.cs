@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HIMS.Data.DTO.OPPatient
+{
+    public class PackageServiceListDto
+    {
+        public string? ServiceName { get; set; }
+        public long ServiceId {  get; set; }
+        public string? PackageServiceName { get; set; }
+        public long? PackageServiceId { get; set; }
+        public double? Price { get; set; }
+        public long? PackageId { get; set; }
+      
+   }
+}

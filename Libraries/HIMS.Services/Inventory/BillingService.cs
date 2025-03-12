@@ -30,7 +30,13 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<BillingServiceDto>(model, "m_Rtrv_ServiceList_Pagn");
         }
-        
+
+        public virtual async Task<IPagedList<PackageServiceListDto>> GetListAsync1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PackageServiceListDto>(model, "m_Rtrv_PackageServiceInfo");
+        }
+
+
 
         //public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
         //{

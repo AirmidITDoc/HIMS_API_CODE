@@ -35,7 +35,13 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
-
+        [HttpPost("PackageServiceList")]
+      //  [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<PackageServiceListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
+            return Ok(ServiceList.ToGridResponse(objGrid, "PackageService List"));
+        }
 
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]

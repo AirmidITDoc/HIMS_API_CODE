@@ -15,6 +15,7 @@ namespace HIMS.API.Models.Inventory
         public string? ConversionFactor { get; set; }
         public long? CurrencyId { get; set; }
         public double? TaxPer { get; set; }
+        public bool? IsActive { get; set; }
         public bool? IsBatchRequired { get; set; }
         public float? MinQty { get; set; }
         public float? MaxQty { get; set; }
