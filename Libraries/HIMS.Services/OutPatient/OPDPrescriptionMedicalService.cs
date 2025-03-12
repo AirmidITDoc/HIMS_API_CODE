@@ -40,6 +40,12 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<MOpcasepaperDignosisMaster>(model, "m_Rtrv_OPCasepaperDignosisList");
         }
 
+        public virtual async Task<IPagedList<OPrtrvDignosisListDto>> TDignosisrRtrvList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPrtrvDignosisListDto>(model, "m_Rtrv_OPCasepaperDignosisMaster");
+        }
+
+
         //Ashu///
         public virtual async Task InsertPrescriptionAsyncSP(TPrescription objTPrescription, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
@@ -87,6 +93,7 @@ namespace HIMS.Services.OutPatient
 
             }
         }
-       
+
+      
     }
 }

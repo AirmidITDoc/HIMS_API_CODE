@@ -19,6 +19,8 @@ namespace HIMS.Services.OutPatient
 
         Task<IPagedList<MOpcasepaperDignosisMaster>> GetDignosisListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel objGrid);
+        Task<IPagedList<OPrtrvDignosisListDto>> TDignosisrRtrvList(GridRequestModel objGrid);
+
 
     }
 }
