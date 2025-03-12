@@ -12,8 +12,6 @@ namespace HIMS.API.Models.OutPatient
         public long? IsAddBy { get; set; }
         public long? IsUpdatedBy { get; set; }
         //public List<PresTemplateDModel> MPresTemplateDs { get; set; }
-
-
     }
     public class PrescriptionOPTemplateModelValidator : AbstractValidator<PrescriptionOPTemplateModel>
     {
