@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(PrescriptiontDetailList.ToGridResponse(objGrid, "PrescriptionDetail  List "));
         }
 
-        [HttpPost("PrescriptionReturnList")]
+        [HttpPost("InsertIPPrescriptionReturnList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
         {
@@ -69,14 +69,6 @@ namespace HIMS.API.Controllers.OPPatient
         {
             IPagedList<PrescriptionReturnDto> PrescriptionReturnList = await _IPriscriptionReturnService.GetListAsync(objGrid);
             return Ok(PrescriptionReturnList.ToGridResponse(objGrid, "PrescriptionReturnList "));
-        }
-
-        [HttpPost("PatietWiseMatetialList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<PatietWiseMatetialListDto> PatietWiseMatetialList = await _IPPrescriptionService.PatietWiseMatetialList(objGrid);
-            return Ok(PatietWiseMatetialList.ToGridResponse(objGrid, "PatietWiseMatetial App List"));
         }
 
         [HttpPost("LabRadRequestList")]
@@ -110,22 +102,6 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
-
-        [HttpPost("TIpPrescriptionInsertEDMX")]
-   //     [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(IpPrescriptionModel obj)
-        {
-            TIpPrescription model = obj.MapTo<TIpPrescription>();
-            if (obj.IppreId == 0)
-            {
-                model.Ptime = Convert.ToDateTime(obj.Ptime);
-                model.IsAddBy = CurrentUserId;
-                await _IPriscriptionReturnService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TIpPrescription   added successfully.");
-        }
         [HttpPost("PrescriptionReturnInsert")]
       //  [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
@@ -142,60 +118,22 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.");
         }
 
-        [HttpPut("PrescriptionReturnUpdate")]
-     //   [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PriscriptionReturnModel obj)
-        {
+     //   [HttpPut("PrescriptionReturnUpdate")]
+     ////   [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Edit)]
+     //   public async Task<ApiResponse> Edit(PriscriptionReturnModel obj)
+     //   {
 
-            TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
-            if (obj.PresReId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.PresTime = Convert.ToDateTime(obj.PresTime);
-                model.PresDate = Convert.ToDateTime(obj.PresDate);
-                await _IPriscriptionReturnService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn updated successfully.");
-        }
-
-
-
-        [HttpPost("PrescriptionInsertEDMX")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(IPPrescriptionModel obj)
-        {
-            TPrescription model = obj.MapTo<TPrescription>();
-            if (obj.PrecriptionId == 0)
-            {
-                model.Date = Convert.ToDateTime(obj.Date);
-                model.Ptime = Convert.ToDateTime(obj.Ptime);
-
-                model.CreatedBy = CurrentUserId;
-                await _IPPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
-        }
-
-        //[HttpPost("PrescriptionInsert")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertSP(IPPrescriptionModel obj)
-        //{
-        //    TPrescription model = obj.MapTo<TPrescription>();
-        //    if (obj.PrecriptionId == 0)
-        //    {
-        //        model.Date = Convert.ToDateTime(obj.Date);
-        //        model.Ptime = Convert.ToDateTime(obj.Ptime);
-
-        //        model.CreatedBy = CurrentUserId;
-        //        await _IPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
-        //}
+     //       TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
+     //       if (obj.PresReId == 0)
+     //           return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+     //       else
+     //       {
+     //           model.PresTime = Convert.ToDateTime(obj.PresTime);
+     //           model.PresDate = Convert.ToDateTime(obj.PresDate);
+     //           await _IPriscriptionReturnService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+     //       }
+     //       return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn updated successfully.");
+     //   }
 
         [HttpPost("LabRequestInsert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -217,38 +155,5 @@ namespace HIMS.API.Controllers.OPPatient
        
 
 
-        [HttpPost("PrescriptionInsertMultiRecord")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(IPPrescriptionModel obj)
-        {
-            TPrescription model = obj.MapTo<TPrescription>();
-            if (obj.PrecriptionId == 0)
-            {
-                model.Date = Convert.ToDateTime(obj.Date);
-                model.Ptime = Convert.ToDateTime(obj.Ptime);
-
-                model.CreatedBy = CurrentUserId;
-                await _IPPrescriptionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
-        }
-        [HttpPost("PrescriptionUpdate")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(IPPrescriptionModel obj)
-        {
-            TPrescription model = obj.MapTo<TPrescription>();
-            if (obj.PrecriptionId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.Date = Convert.ToDateTime(obj.Date);
-                model.Ptime = Convert.ToDateTime(obj.Ptime);
-                model.CreatedBy = CurrentUserId;
-                await _IPPrescriptionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription updated successfully.");
-        }
     }
 }

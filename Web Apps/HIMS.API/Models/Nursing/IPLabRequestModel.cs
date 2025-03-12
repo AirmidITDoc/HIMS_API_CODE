@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Nursing
 {
     public class IPLabRequestModel
     {
-        public long RequestId { get; set; }
+        public int RequestId { get; set; }
         public DateTime? ReqDate { get; set; }
         public string? ReqTime { get; set; }
         public long? OpIpId { get; set; }
@@ -32,8 +32,8 @@ namespace HIMS.API.Models.Nursing
 
     public class TDLabRequestModel
     {
-        public long ReqDetId { get; set; }
-        public long? RequestId { get; set; }
+        public int ReqDetId { get; set; }
+        public int? RequestId { get; set; }
         public long? ServiceId { get; set; }
         public decimal? Price { get; set; }
         public bool? IsStatus { get; set; }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data.DTO.Administration;
+using HIMS.Services.Pathlogy;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -22,11 +23,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         private readonly IGenericService<MPathParameterMaster> _repository;
         private readonly IParameterMasterService _IParameterMasterService;
         private readonly IMParameterDescriptiveMasterService _IMParameterDescriptiveMasterService;
-        public ParameterMasterController(IParameterMasterService repository, IMParameterDescriptiveMasterService repository1, IGenericService<MPathParameterMaster> repository2)
+        private readonly IMPathParaRangeWithAgeMasterService _IMPathParaRangeWithAgeMasterService;
+        public ParameterMasterController(IParameterMasterService repository, IMParameterDescriptiveMasterService repository1, IGenericService<MPathParameterMaster> repository2, IMPathParaRangeWithAgeMasterService repository3)
         {
             _IParameterMasterService = repository;
             _IMParameterDescriptiveMasterService = repository1;
             _repository = repository2;
+            _IMPathParaRangeWithAgeMasterService = repository3;
         }
         [HttpPost("MPathParameterList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
@@ -36,6 +39,20 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return Ok(MPathParameterList.ToGridResponse(objGrid, "Pathology Parameter List"));
         }
 
+        [HttpPost("MPathParaRangeWithAgeMasterList")]
+        //[Permission(PageCode = "MPathParaRangeWithAgeMasterList", Permission = PagePermission.View)]
+        public async Task<IActionResult> MPathParaRangeWithAgeMasterList(GridRequestModel objGrid)
+        {
+            IPagedList<MPathParaRangeWithAgeMasterListDto> MPathParaRangeWithAgeMasterList = await _IMPathParaRangeWithAgeMasterService.MPathParaRangeWithAgeMasterList(objGrid);
+            return Ok(MPathParaRangeWithAgeMasterList.ToGridResponse(objGrid, "MPathParaRangeWithAgeMaster List"));
+        }
+        [HttpPost("MParameterDescriptiveMasterList")]
+        //[Permission(PageCode = "MParameterDescriptiveMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> MParameterDescriptiveMasterList(GridRequestModel objGrid)
+        {
+            IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _IMParameterDescriptiveMasterService.GetListAsync1(objGrid);
+            return Ok(MParameterDescriptiveMasterList.ToGridResponse(objGrid, "MParameterDescriptiveMaster  List"));
+        }
         //Add API
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
