@@ -49,7 +49,7 @@ namespace HIMS.API.Models.OutPatient
     public class PreTemplateModel
     {
         public PrescriptionOPTemplateModel PrescriptionOPTemplate {  get; set; }
-        public PresTemplateDModel PresTemplate { get; set; }
+        public List<PresTemplateDModel> PresTemplate { get; set; }
 
     }
 

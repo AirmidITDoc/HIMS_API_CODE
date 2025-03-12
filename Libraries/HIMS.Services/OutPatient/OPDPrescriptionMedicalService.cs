@@ -5,6 +5,8 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using LinqToDB;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -93,7 +95,22 @@ namespace HIMS.Services.OutPatient
 
             }
         }
-
       
+        public virtual async Task UpdateAsync(TPrescription OBJTPrescription, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
+
+            var existingPrescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
+
+            if (existingPrescription != null)  
+            {
+                existingPrescription.DoseId = OBJTPrescription.DoseId;
+                await _context.SaveChangesAsync();  
+
+                scope.Complete(); 
+            }
+        }
     }
 }

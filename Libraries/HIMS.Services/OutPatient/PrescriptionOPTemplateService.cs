@@ -19,15 +19,16 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, MPresTemplateD ObjMPresTemplateD, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, List<MPresTemplateD> ObjMPresTemplateD, int UserId, string Username)
         {
             //Add header table records
             DatabaseHelper odal = new();
             var tokensObj = new
             {
-                PresId = Convert.ToInt32(ObjMPresTemplateD.PresId)
+                PresId = Convert.ToInt32(ObjMPresTemplateH.PresId)
             };
             odal.ExecuteNonQuery("Delete_M_PresTempl_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+
             string[] rEntity = { "IsUpdatedBy", "CreatedBy", "ModifiedBy", "ModifiedDate", "CreatedDate", };
             var entity = ObjMPresTemplateH.ToDictionary();
             foreach (var rProperty in rEntity)
@@ -36,16 +37,22 @@ namespace HIMS.Services.OutPatient
             }
             string VPresId = odal.ExecuteNonQuery("insert_M_PresTemplateH_1", CommandType.StoredProcedure, "PresId", entity);
             ObjMPresTemplateH.PresId = Convert.ToInt32(VPresId);
-            ObjMPresTemplateD .PresId = Convert.ToInt32(VPresId);
+            //ObjMPresTemplateD.PresId = Convert.ToInt32(VPresId);
 
-            string[] Entity = { "PresDetId" };
-            var Dentity = ObjMPresTemplateD.ToDictionary();
-            foreach (var rProperty in Entity)
+            foreach (var item in ObjMPresTemplateD)
             {
-            Dentity.Remove(rProperty);
+                item.PresId = Convert.ToInt32(VPresId);
+
+
+                string[] Entity = { "PresDetId" };
+                var Dentity = item.ToDictionary();
+                foreach (var rProperty in Entity)
+                {
+                    Dentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
+
             }
-            odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
-            
         }
 
     }

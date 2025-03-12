@@ -26,4 +26,12 @@ namespace HIMS.Data.DTO.OPPatient
         public bool? IsCancelled { get; set; }
         public string? AddedByName { get; set; }
     }
+    public class PhoneAutoCompleteDto
+    {
+        public long Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string RegNo { get; set; }
+        public string Mobile { get; set; }
+    }
 }

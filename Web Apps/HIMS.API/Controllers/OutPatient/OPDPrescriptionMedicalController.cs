@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -124,7 +125,7 @@ namespace HIMS.API.Controllers.OutPatient
             return Ok(List.ToGridResponse(objGrid, "OP Request List"));
         }
 
-       [HttpPost("InsertSP")]
+       [HttpPost("PrescriptionInsertSP")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
@@ -169,19 +170,37 @@ namespace HIMS.API.Controllers.OutPatient
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         //}
 
+        //Edit API
+        [HttpPut("PrescriptionEdit/{id:int}")]
+        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(UpdatePrescriptionModel obj)
+        {
+            TPrescription model = obj.MapTo<TPrescription>();
+            if (obj.PrecriptionId != 0)
+            {
+                model.PrecriptionId = obj.PrecriptionId;
+                model.ModifiedBy = CurrentUserId;
+                model.Date = DateTime.Now;
+                await _OPDPrescriptionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription  update successfully.");
+        }
 
-        
+
+
         [HttpPost("OPTemplateInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
-            MPresTemplateD objTemplate = obj.PresTemplate.MapTo<MPresTemplateD>();
+            List<MPresTemplateD> objTemplate = obj.PresTemplate.MapTo <List<MPresTemplateD>>();
             if (obj.PrescriptionOPTemplate.PresId == 0)
             {
                 model.CreatedDate = Convert.ToDateTime(model.CreatedDate);
                 model.CreatedBy = CurrentUserId;
-                //objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId;});
+                objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId;});
 
                 await _PrescriptionOPTemplateService.InsertAsyncSP(model, objTemplate, CurrentUserId, CurrentUserName);
             }

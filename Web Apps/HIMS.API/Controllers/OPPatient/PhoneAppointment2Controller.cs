@@ -6,6 +6,7 @@ using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
@@ -19,28 +20,32 @@ namespace HIMS.API.Controllers.OPPatient
     public class PhoneAppointment2Controller : BaseController
     {
         private readonly IPhoneAppointment2Service _IPhoneAppointment2Service;
-        public PhoneAppointment2Controller(IPhoneAppointment2Service repository)
+        private readonly IGenericService<TPhoneAppointment> _repository;
+
+        public PhoneAppointment2Controller(IPhoneAppointment2Service repository, IGenericService<TPhoneAppointment> repository1)
         {
             _IPhoneAppointment2Service = repository;
+            _repository = repository1;
+
         }
         [HttpPost("PhoneAppList")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PhoneAppointment2ListDto> PhoneAppList = await _IPhoneAppointment2Service.GetListAsync(objGrid);
             return Ok(PhoneAppList.ToGridResponse(objGrid, "PhoneApp List"));
         }
-
-        [HttpPost("GetPhoneList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> DignsisList(GridRequestModel objGrid)
+        [HttpGet("{id?}")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
         {
-            IPagedList<TPhoneAppointment> GetPhoneList = await _IPhoneAppointment2Service.GetPhoneListAsync(objGrid);
-            return Ok(GetPhoneList.ToGridResponse(objGrid, " GetPhoneList "));
+            var data = await _repository.GetById(x => x.PhoneAppId == id);
+            return data.ToSingleResponse<TPhoneAppointment, PhoneAppointment2Model>("Registration");
         }
 
+
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
@@ -75,7 +80,14 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
         }
-
+        [HttpGet("auto-complete")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        {
+            var data = await _IPhoneAppointment2Service.SearchPhoneApp(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id }));
+        }
+        
     }
 }
 

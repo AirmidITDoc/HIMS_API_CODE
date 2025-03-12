@@ -64,7 +64,7 @@ namespace HIMS.API.Models.Inventory
     }
     public class PathologyResultModel
     {
-        public List<PathologyResultEntryModel> PathologyResult {  get; set; }
+        public PathologyResultEntryModel PathologyResult {  get; set; }
         public List<TPathologyReportHeaderModel> PathologyReport { get; set; }
 
     }

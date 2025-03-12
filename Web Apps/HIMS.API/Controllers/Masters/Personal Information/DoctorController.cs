@@ -19,19 +19,23 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     public class DoctorController : BaseController
     {
         private readonly IDoctorMasterService _IDoctorMasterService;
-        public DoctorController(IDoctorMasterService repository)
+        private readonly IGenericService<LvwDoctorMasterList> _repository1;
+
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1)
         {
             _IDoctorMasterService = repository;
+            _repository1 = repository1;
+
         }
         [HttpPost("DoctorList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMaster> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Bed", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -42,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return data.ToSingleResponse<DoctorMaster, DoctorModel>("Doctor Master");
         }
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -60,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -81,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -99,7 +103,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name updated successfully.");
         }
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             DoctorMaster model = await _IDoctorMasterService.GetById(Id);
@@ -117,11 +121,20 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost("DocList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<LvwDoctorMasterList> List = await _IDoctorMasterService.GetListAsync1(objGrid);
             return Ok(List.ToGridResponse(objGrid, "Doctor List"));
+        }
+
+        [HttpGet]
+        [Route("get-Doctor")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var List = await _repository1.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { x.DoctorId, x.FirstName, x.MiddleName, x.LastName }));
         }
     }
 }

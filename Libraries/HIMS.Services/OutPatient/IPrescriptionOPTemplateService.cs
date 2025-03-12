@@ -9,7 +9,7 @@ namespace HIMS.Services.OutPatient
 {
     public partial  interface IPrescriptionOPTemplateService
     {
-        Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, MPresTemplateD ObjMPresTemplateD, int UserId, string UserName);
+        Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, List<MPresTemplateD> ObjMPresTemplateD, int UserId, string UserName);
 
 
 
