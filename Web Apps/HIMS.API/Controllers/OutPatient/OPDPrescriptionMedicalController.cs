@@ -124,10 +124,7 @@ namespace HIMS.API.Controllers.OutPatient
             return Ok(List.ToGridResponse(objGrid, "OP Request List"));
         }
 
-       
-
-
-        [HttpPost("InsertSP")]
+       [HttpPost("InsertSP")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
@@ -184,7 +181,8 @@ namespace HIMS.API.Controllers.OutPatient
             {
                 model.CreatedDate = Convert.ToDateTime(model.CreatedDate);
                 model.CreatedBy = CurrentUserId;
-                objTemplate.Date = Convert.ToDateTime(objTemplate.Date);
+                //objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId;});
+
                 await _PrescriptionOPTemplateService.InsertAsyncSP(model, objTemplate, CurrentUserId, CurrentUserName);
             }
             else
@@ -192,24 +190,5 @@ namespace HIMS.API.Controllers.OutPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPTemplate added successfully.");
         }
 
-        [HttpPost("OPTemplateEDMX")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PrescriptionOPTemplateModel obj)
-        {
-            MPresTemplateH model = obj.MapTo<MPresTemplateH>();
-            MPresTemplateD model1 = obj.MapTo<MPresTemplateD>();
-
-
-            if (model.PresId == 0)
-            {
-                model.CreatedDate = Convert.ToDateTime(model.CreatedDate);
-                model.CreatedBy = CurrentUserId;
-                model1.Date = Convert.ToDateTime(model1.Date);
-                await _PrescriptionOPTemplateService.InsertAsync(model, model1 , CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPTemplate added successfully.");
-        }
     }
 }

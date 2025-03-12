@@ -21,37 +21,31 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, MPresTemplateD ObjMPresTemplateD, int UserId, string Username)
         {
-               //Add header table records
-                DatabaseHelper odal = new();
-                string[] rEntity = {"IsUpdatedBy", "CreatedBy", "ModifiedBy", "ModifiedDate", "CreatedDate",};
-                var entity = ObjMPresTemplateH.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string VPresId = odal.ExecuteNonQuery("insert_M_PresTemplateH_1", CommandType.StoredProcedure, "PresId", entity);
-                ObjMPresTemplateH.PresId = Convert.ToInt32(VPresId);
-                ObjMPresTemplateD.PresId = Convert.ToInt32(VPresId);
-
-
-                string[] Entity = { "PresDetId"};
-                var Dentity = ObjMPresTemplateD.ToDictionary();
-                foreach (var rProperty in Entity)
-                {
-                Dentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
-
-        }
-
-        public virtual async Task InsertAsync(MPresTemplateH ObjMPresTemplateH, MPresTemplateD ObjMPresTemplateD, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            //Add header table records
+            DatabaseHelper odal = new();
+            var tokensObj = new
             {
-                _context.MPresTemplateHs.Add(ObjMPresTemplateH);
-                await _context.SaveChangesAsync();
-                scope.Complete();
+                PresId = Convert.ToInt32(ObjMPresTemplateD.PresId)
+            };
+            odal.ExecuteNonQuery("Delete_M_PresTempl_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            string[] rEntity = { "IsUpdatedBy", "CreatedBy", "ModifiedBy", "ModifiedDate", "CreatedDate", };
+            var entity = ObjMPresTemplateH.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
             }
+            string VPresId = odal.ExecuteNonQuery("insert_M_PresTemplateH_1", CommandType.StoredProcedure, "PresId", entity);
+            ObjMPresTemplateH.PresId = Convert.ToInt32(VPresId);
+            ObjMPresTemplateD .PresId = Convert.ToInt32(VPresId);
+
+            string[] Entity = { "PresDetId" };
+            var Dentity = ObjMPresTemplateD.ToDictionary();
+            foreach (var rProperty in Entity)
+            {
+            Dentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
+            
         }
 
     }
