@@ -10,7 +10,7 @@ using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OPPatient
+namespace HIMS.API.Controllers.Pathology
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
