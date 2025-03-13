@@ -28,10 +28,10 @@ namespace HIMS.Services.OPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "Retrieve_PhoneAppList");
         }
-        public virtual async Task<IPagedList<TPhoneAppointment>> GetPhoneListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<TPhoneAppointment>(model, "m_Rtrv_PhoneAppointmentListSearch");
-        }
+        //public virtual async Task<IPagedList<TPhoneAppointment>> GetPhoneListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<TPhoneAppointment>(model, "m_Rtrv_PhoneAppointmentListSearch");
+        //}
         public virtual async Task<List<PhoneAutoCompleteDto>> SearchPhoneApp(string str)
         {
             return await this._context.TPhoneAppointments.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str) || x.RegNo.ToLower().Contains(str) || x.MobileNo.ToLower().Contains(str)).Take(25).Select(x => new PhoneAutoCompleteDto() { FirstName = x.FirstName, Id = x.PhoneAppId, LastName = x.LastName, Mobile = x.MobileNo, RegNo = x.RegNo }).OrderBy(x => x.FirstName).ToListAsync();

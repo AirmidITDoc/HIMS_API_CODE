@@ -70,6 +70,11 @@ namespace HIMS.Services.Common
                 // Check for Dashboard API
                 case "DailyDashboardSummary": sp_Name = "rptOP_DepartmentChart_Range"; break;
                 case "MISDashboards": sp_Name = "sp_MIS_Dashboards"; break;
+
+                // Pathology Result Entry
+                case "PathologyResultEntryOP": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge"; break;
+                case "PathologyResultEntryIP": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge"; break;
+
                 default: break;
             }
             foreach (var property in fields)
