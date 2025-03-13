@@ -101,22 +101,23 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
         }
-        [HttpDelete("RadilogyCancel")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
-        {
-            MRadiologyTestMaster? model = await _repository.GetById(x => x.TestId == Id);
-            if ((model?.TestId ?? 0) > 0)
-            {
-                model.IsActive = false;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyTest deleted successfully.");
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        }
+        //[HttpDelete("RadilogyCancel")]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
+        //public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
+        //{
+        //    MRadiologyTestMaster? model = await _repository.GetById(x => x.TestId == Id);
+        //    if ((model?.TestId ?? 0) > 0)
+        //    {
+        //        model.IsActive = false;
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = DateTime.Now;
+        //        await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyTest deleted successfully.");
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //}
+       
 
         [HttpPut("RadiologyUpdate/{id:int}")]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
@@ -131,6 +132,23 @@ namespace HIMS.API.Controllers.Inventory
                 await _RadiologyTestService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyReport updated successfully.");
+        }
+        //Delete API
+        [HttpDelete]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            MRadiologyTestMaster? model = await _repository.GetById(x => x.TestId == Id);
+            if ((model?.TestId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyTest deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
 }
