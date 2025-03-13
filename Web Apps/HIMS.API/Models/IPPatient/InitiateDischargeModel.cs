@@ -56,7 +56,7 @@ namespace HIMS.API.Models.IPPatient
     public class InitiateDModel
     {
         public InitiateDischargeModel InitiateDischarge { get; set; }
-        public AdmisionModel Admision { get; set; }
+        //public AdmisionModel Admision { get; set; }
 
 
     }

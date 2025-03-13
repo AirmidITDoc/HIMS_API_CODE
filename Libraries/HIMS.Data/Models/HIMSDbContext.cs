@@ -823,6 +823,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RelativeAddress).HasMaxLength(200);
 
                 entity.Property(e => e.RelativeName).HasMaxLength(100);
+
+                entity.Property(e => e.SubTpacomp).HasColumnName("SubTPAComp");
             });
 
             modelBuilder.Entity<AdmittedPatientBalanceAmount>(entity =>
@@ -6272,7 +6274,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_ItemDrugTypeMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DrugTypeName).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MItemGenericNameMaster>(entity =>
