@@ -16,7 +16,7 @@ using System.Transactions;
 
 namespace HIMS.Services.Inventory
 {
-    public  class RadiologyTestService : IRadiologyTestService
+    public class RadiologyTestService : IRadiologyTestService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public RadiologyTestService(HIMSDbContext HIMSDbContext)
@@ -31,6 +31,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyTestListDto>(model, "m_Rtrv_RadiologyTestList");
         }
+        //public virtual async Task<IPagedList<RadiologyTestListDto>> GetListAsyn(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<RadiologyTestListDto>(model, "m_Rtrv_RadiologyTestList");
+        //}
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
@@ -112,7 +116,7 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-       
+
         public virtual async Task<List<MRadiologyTestMaster>> GetAllRadiologyTest()
         {
             var query = from M in _context.MRadiologyTestMasters
@@ -131,8 +135,20 @@ namespace HIMS.Services.Inventory
 
         //    return await query;
         //}
+
+        public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType"};
+            var Dentity = ObjTRadiologyReportHeader.ToDictionary();
+            foreach (var rProperty in REntity)
+            {
+                Dentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_T_RadiologyReportHeader_1", CommandType.StoredProcedure, Dentity);
+        }
     }
 }
 
-    
 

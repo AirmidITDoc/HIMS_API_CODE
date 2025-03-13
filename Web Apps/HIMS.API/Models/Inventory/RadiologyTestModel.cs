@@ -40,4 +40,28 @@ namespace HIMS.API.Models.Inventory
     {
         public long TestId { get; set; }
     }
+    public class TRadiologyReportModel
+    {
+        public long RadReportId { get; set; }
+        public DateTime? ReportDate { get; set; }
+        public string? ReportTime { get; set; }
+        public bool? IsCompleted { get; set; }
+        public bool? IsPrinted { get; set; }
+        public long? RadResultDr1 { get; set; }
+        public long? RadResultDr2 { get; set; }
+        public long? RadResultDr3 { get; set; }
+        public string? SuggestionNotes { get; set; }
+        public long? AdmVisitDoctorId { get; set; }
+        public long? RefDoctorId { get; set; }
+        public string? ResultEntry { get; set; }
+
+    }
+    public class TRadiologyReportModelValidator : AbstractValidator<TRadiologyReportModel>
+    {
+        public TRadiologyReportModelValidator()
+        {
+            RuleFor(x => x.ReportDate).NotNull().NotEmpty().WithMessage("ReportDate is required");
+            RuleFor(x => x.ReportTime).NotNull().NotEmpty().WithMessage("ReportTime is required");
+        }
+    }
 }

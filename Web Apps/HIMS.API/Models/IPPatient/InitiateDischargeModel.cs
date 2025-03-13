@@ -35,24 +35,7 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.IsInitinatedDischarge).NotNull().NotEmpty().WithMessage("IsInitinatedDischarge is required");
         }
     }
-    public class InitiateDisModel 
-    {
-        public long? AdmId { get; set; }
-        public string? DepartmentName { get; set; }
-        public long? DepartmentId { get; set; }
-        public bool? IsApproved { get; set; }
-        public long? ApprovedBy { get; set; }
-        public DateTime? ApprovedDatetime { get; set; }
-        
-    }
-    public class InitiateModelValidator : AbstractValidator<InitiateDisModel>
-    {
-        public InitiateModelValidator()
-        {
-            RuleFor(x => x.ApprovedDatetime).NotNull().NotEmpty().WithMessage("ApprovedDatetime is required");
-            RuleFor(x => x.DepartmentName).NotNull().NotEmpty().WithMessage("DepartmentName is required");
-        }
-    }
+    
     public class InitiateDModel
     {
         public InitiateDischargeModel InitiateDischarge { get; set; }
