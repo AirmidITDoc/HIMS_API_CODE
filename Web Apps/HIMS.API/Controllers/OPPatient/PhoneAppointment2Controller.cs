@@ -43,7 +43,6 @@ namespace HIMS.API.Controllers.OPPatient
             return data.ToSingleResponse<TPhoneAppointment, PhoneAppointment2Model>("Registration");
         }
 
-
         [HttpPost("InsertSP")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
@@ -62,7 +61,6 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment added successfully.", model);
         }
 
-
         [HttpDelete("Cancel")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
@@ -80,6 +78,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
         }
+
         [HttpGet("auto-complete")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
