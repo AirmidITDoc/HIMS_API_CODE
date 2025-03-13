@@ -21,9 +21,11 @@ namespace HIMS.API.Controllers.Inventory
     public class ItemMasterController : BaseController
     {
         private readonly IItemMasterService _ItemMasterServices;
-        public ItemMasterController(IItemMasterService repository)
+        private readonly IGenericService<MItemMaster> _repository;
+        public ItemMasterController(IItemMasterService repository, IGenericService<MItemMaster> repository1)
         {
             _ItemMasterServices = repository;
+            _repository = repository1;
         }
         [HttpPost("ItemMasterList")]
         //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
@@ -97,21 +99,39 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
         }
-        [HttpDelete("ItemCanceled")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
+    //    [HttpDelete("ItemCanceled")]
+    ////    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
+    //    public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
+    //    {
+    //        MItemMaster model = new();
+    //        if (obj.ItemId != 0)
+    //        {
+    //            model.ItemId = obj.ItemId;
+    //            model.CreatedBy = CurrentUserId;
+    //            model.CreatedDate = DateTime.Now;
+    //            await _ItemMasterServices.CancelAsync(model, CurrentUserId, CurrentUserName);
+    //        }
+    //        else
+    //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+    //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name Canceled successfully.");
+    //    }
+
+        //Delete API
+        [HttpDelete]
+    //    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
         {
-            MItemMaster model = new();
-            if (obj.ItemId != 0)
+            MItemMaster model = await _repository.GetById(x => x.ItemId == Id);
+            if ((model?.ItemId ?? 0) > 0)
             {
-                model.ItemId = obj.ItemId;
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _ItemMasterServices.CancelAsync(model, CurrentUserId, CurrentUserName);
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bank deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name Canceled successfully.");
         }
     }
 }

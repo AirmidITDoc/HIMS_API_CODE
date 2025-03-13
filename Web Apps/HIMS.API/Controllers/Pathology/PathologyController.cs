@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.Pathology;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
@@ -57,13 +58,6 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
         }
 
-        [HttpPost("LabOrRadRequestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
-        {
-            IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogyService.LGetListAsync(objGrid);
-            return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
-        }
 
         [HttpPost("PathologyPatientTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -101,6 +95,28 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyResult Entry  added successfully.");
         }
-       
+
+
+
+        [HttpPost("Pathology")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
+        {
+            TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
+            TPathologyReportHeader objPathologyReportHeader = obj.PathologyReportHeader.MapTo<TPathologyReportHeader>();
+            if (model.PathReportId == 0)
+            {
+                objPathologyReportHeader.ReportDate = Convert.ToDateTime(objPathologyReportHeader.ReportDate);
+                objPathologyReportHeader.ReportTime = Convert.ToDateTime(objPathologyReportHeader.ReportTime);
+                //   objTPathology.ForEach(x => { x.PathReportId = model.PathReportDetId; });
+
+
+                await _IPathlogyService.InsertAsyncResultEntry1(model, objPathologyReportHeader, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyTemplate   added successfully.");
+        }
+
     }
 }

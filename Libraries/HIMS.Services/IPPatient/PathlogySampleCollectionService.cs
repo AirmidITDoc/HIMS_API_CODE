@@ -31,6 +31,17 @@ namespace HIMS.Services.IPPatient
             return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamColllist_Pat_Dtls");
 
         }
+
+        public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestListDto>(model, "Rtrv_LabOrRadRequestList");
+
+        }
+        public virtual async Task<IPagedList<LabOrRadRequestDetailListDto>> LGetListAsync1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabOrRadRequestDetailListDto>(model, "ps_Rtrv_NursingPathRadReqDet");
+
+        }
         public virtual async Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)
         {
             DatabaseHelper odal = new();

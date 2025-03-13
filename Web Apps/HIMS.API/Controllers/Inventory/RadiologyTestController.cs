@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -22,9 +23,11 @@ namespace HIMS.API.Controllers.Inventory
     public class RadiologyTestController : BaseController
     {
         private readonly IRadiologyTestService _RadiologyTestService;
-        public RadiologyTestController(IRadiologyTestService repository)
+        private readonly IGenericService<MRadiologyTestMaster> _repository;
+        public RadiologyTestController(IRadiologyTestService repository, IGenericService<MRadiologyTestMaster> repository1)
         {
             _RadiologyTestService = repository;
+            _repository = repository1;
         }
         [HttpPost("RadiologyList")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
@@ -90,21 +93,37 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
         }
-        [HttpDelete("RadilogyCancel")]
+        //[HttpDelete("RadilogyCancel")]
+        ////[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
+        //public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
+        //{
+        //    MRadiologyTestMaster model = new();
+        //    if (obj.TestId != 0)
+        //    {
+        //        model.TestId = obj.TestId;
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = DateTime.Now;
+        //        await _RadiologyTestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest deleted successfully.");
+        //}
+        [HttpDelete]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
+        public async Task<ApiResponse> Delete(int Id)
         {
-            MRadiologyTestMaster model = new();
-            if (obj.TestId != 0)
+            MRadiologyTestMaster? model = await _repository.GetById(x => x.TestId == Id);
+            if ((model?.TestId ?? 0) > 0)
             {
-                model.TestId = obj.TestId;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _RadiologyTestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyTest deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest deleted successfully.");
         }
     }
 }

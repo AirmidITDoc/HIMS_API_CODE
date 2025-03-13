@@ -159,25 +159,24 @@ namespace HIMS.API.Controllers.OutPatient
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(BillingModel obj)
+        public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
-
-            Bill Model = obj.Bill.MapTo<Bill>();
-            BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
-            AddCharge AddChargeModel = obj.AddChargessupdate.MapTo<AddCharge>();
+            AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
+            Bill Model = obj.IPBillling.MapTo<Bill>();
+            BillDetail BillDetailModel = obj.BillingDetails.MapTo<BillDetail>();
           //  Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
-               Payment paymentModel = obj.payment.MapTo<Payment>();
+               Payment paymentModel = obj.payments.MapTo<Payment>();
           //  Bill BillModel = obj.Bills.MapTo<Bill>();
            // List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
           //  AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
-            if (obj.Bill.BillNo == 0)
+            if (obj.IPBillling.BillNo == 0)
             {
-                Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
-                Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
-                 paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
-                   paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
+                Model.BillDate = Convert.ToDateTime(obj.IPBillling.BillDate);
+                Model.BillTime = Convert.ToDateTime(obj.IPBillling.BillTime);
+                 paymentModel.PaymentDate = Convert.ToDateTime(obj.payments.PaymentDate);
+                   paymentModel.PaymentTime = Convert.ToDateTime(obj.payments.PaymentTime);
                 Model.AddedBy = CurrentUserId;
-                await _IPBillService.IPInterimBillCashCounterAsyncSp(Model, BillDetailModel, AddChargeModel, paymentModel, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPInterimBillCashCounterAsyncSp(AddChargeModel,Model, BillDetailModel,  paymentModel, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
