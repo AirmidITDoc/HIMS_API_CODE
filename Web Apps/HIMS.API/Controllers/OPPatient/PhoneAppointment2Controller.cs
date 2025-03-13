@@ -78,7 +78,6 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
         }
-
         [HttpGet("auto-complete")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
