@@ -230,13 +230,21 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("update_Admission_3", CommandType.StoredProcedure, Aentity);
         }
-        public virtual async Task InsertAsync(InitiateDischarge ObjInitiateDischarge, int UserId, string Username)
+       
+        public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.InitiateDischarges.Add(ObjInitiateDischarge);
                 await _context.SaveChangesAsync();
 
+                Admission objAdmission = await _context.Admissions.FirstOrDefaultAsync(x => x.AdmissionId == ObjInitiateDischarge.AdmId);
+                if (objAdmission != null)
+                {
+                    objAdmission.IsInitinatedDischarge = 1;
+                    _context.Entry(objAdmission).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
                 scope.Complete();
             }
         }
@@ -245,7 +253,7 @@ namespace HIMS.Services.IPPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
 
-                // Update header & detail table records
+                //Update header &detail table records
                 _context.InitiateDischarges.Update(ObjInitiateDischarge);
                 _context.Entry(ObjInitiateDischarge).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -253,26 +261,6 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        //public virtual async Task InsertAsyncSP(InitiateDischarge ObjInitiateDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
-        //{
-        //    // throw new NotImplementedException();
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "InitateDiscId", "IsNoDues", "Comments", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-        //    var Ientity = ObjInitiateDischarge.ToDictionary();
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        Ientity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_insert_initiateDischarge_1", CommandType.StoredProcedure, Ientity);
-
-        //    string[] Entity = { "InitateDiscId",  };
-        //    var Dentity = ObjInitiateDischarge.ToDictionary();
-        //    foreach (var rProperty in Entity)
-        //    {
-        //        Dentity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_Update_initiateDisc_1", CommandType.StoredProcedure, Dentity);
-        //}
     }
 }
 

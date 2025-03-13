@@ -176,6 +176,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.", ObjAdmission);
         }
+
         [HttpPut("DischargeUpdate")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
@@ -201,24 +202,23 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Updated successfully.", ObjAdmission);
         }
 
-        //Add API
-        [HttpPost("InitiateDischargeInsert")]
-        //[Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(InitiateDischargeModel obj)
+       
+        [HttpPost("InitiateDischargeInsertsync")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(InitiateDModel obj)
         {
-            InitiateDischarge model = obj.MapTo<InitiateDischarge>();
-            if (obj.InitateDiscId == 0)
+            InitiateDischarge model = obj.InitiateDischarge.MapTo<InitiateDischarge>();
+            if (obj.InitiateDischarge.InitateDiscId == 0)
             {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                //model.IsActive = true;
-                await _IDischargeSummaryService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                model.ApprovedDatetime = Convert.ToDateTime(obj.InitiateDischarge.ApprovedDatetime);
+                model.ApprovedBy = CurrentUserId;
+                await _IDischargeSummaryService.DischargeInsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "InitiateDischarge added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.");
         }
-        [HttpPut("InitiateDischargeUpdate")]
+        [HttpPut("DischargeInitiateApprovalUpdate")]
         //[Permission(PageCode = "DischargeSummary", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(InitiateDischargeModel obj)
         {
@@ -233,30 +233,6 @@ namespace HIMS.API.Controllers.IPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "InitiateDischarge  updated successfully.");
         }
-
-        //[HttpPost("InitiateDischargeInsert")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertSP(InitiateDModel obj)
-        //{
-        //    InitiateDischarge model = obj.InitiateDischarge.MapTo<InitiateDischarge>();
-        //    Admission ObjAdmission = obj.Admision.MapTo<Admission>();
-
-        //    if (obj.InitiateDischarge.InitateDiscId == 0)
-        //    {
-        //        model.ApprovedDatetime = Convert.ToDateTime(obj.InitiateDischarge.ApprovedDatetime);
-        //        model.ApprovedBy = CurrentUserId;
-
-        //        if (obj.InitiateDischarge.InitateDiscId == 0)
-        //        {
-        //            ObjAdmission.AddedBy = CurrentUserId;
-        //        }
-        //        await _IDischargeSummaryService.InsertAsyncSP(model, ObjAdmission, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.", ObjAdmission);
-        //}
-
     }
 }
 

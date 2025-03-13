@@ -84,5 +84,10 @@ namespace HIMS.Data.Models
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
         public decimal? MedicalApreAmt { get; set; }
+        public double? AdminPer { get; set; }
+        public double? AdminAmt { get; set; }
+        public long? SubTpacomp { get; set; }
+        public int? IsCtoH { get; set; }
+        public int? IsInitinatedDischarge { get; set; }
     }
 }

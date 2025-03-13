@@ -36,28 +36,35 @@ namespace HIMS.API.Controllers.Pathology
             _ILabRequestService = repository1;
             _IPathlogyService = repository2;
         }
-        [HttpPost("PathTemplateForUpdateList")]
-        //[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathTemplateForUpdateList(GridRequestModel objGrid)
-        {
-            IPagedList<PathTemplateForUpdateListDto> PathTestForUpdateList = await _IPathlogyService.PathTemplateForUpdateList(objGrid);
-            return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdate List"));
-        }
-        [HttpPost("PathParaFillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)
-        {
-            IPagedList<PathParaFillListDto> PathParaFillList = await _IPathlogyService.PathParaFillList(objGrid);
-            return Ok(PathParaFillList.ToGridResponse(objGrid, "PathParaFillList App List"));
-        }
-        [HttpPost("PathSubtestFillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathSubtestFillList(GridRequestModel objGrid)
-        {
-            IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
-            return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
-        }
+        //[HttpPost("PathTemplateForUpdateList")]
+        ////[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
+        //public async Task<IActionResult> PathTemplateForUpdateList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<PathTemplateForUpdateListDto> PathTestForUpdateList = await _IPathlogyService.PathTemplateForUpdateList(objGrid);
+        //    return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdate List"));
+        //}
+        //[HttpPost("PathParaFillList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<PathParaFillListDto> PathParaFillList = await _IPathlogyService.PathParaFillList(objGrid);
+        //    return Ok(PathParaFillList.ToGridResponse(objGrid, "PathParaFillList App List"));
+        //}
+        //[HttpPost("PathSubtestFillList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> PathSubtestFillList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
+        //    return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
+        //}
 
+        //[HttpPost("LabOrRadRequestList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogyService.LGetListAsync(objGrid);
+        //    return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
+        //}
 
         [HttpPost("PathologyPatientTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
