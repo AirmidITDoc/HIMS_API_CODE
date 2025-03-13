@@ -853,6 +853,8 @@ namespace HIMS.Data.DataProviders
                     Value = filter.FieldValue
                 });
             }
+            parameters.Add(new SqlParameter() { ParameterName = "@Start", Value = objGrid.First });
+            parameters.Add(new SqlParameter() { ParameterName = "@Length", Value = objGrid.Rows });
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
             using var dataContext = new SqlConnection(ConnectionStrings.MainDbConnectionString);
             var cmd = new SqlCommand
@@ -973,7 +975,7 @@ namespace HIMS.Data.DataProviders
             objConnection.Close();
             objConnection.Dispose();
             Command.Dispose();
-            
+
         }
 
 
