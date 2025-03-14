@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,8 +53,28 @@ namespace HIMS.Data.DTO.Inventory
         public string DrugTypeName { get; set; }
         public long ItemCompnayId { get; set; }
 
+    }
 
 
-
+    public class ItemListForSearchDTO
+    {
+        public long ItemId { get; set; }
+        public string ItemName { get; set; }
+        public float? BalanceQty { get; set; }
+        public long? LandedRate { get; set; }
+        public long? UnitMRP { get; set; }
+        public long? PurchaseRate { get;set; }
+        public string? DoseName { get;set; }
+        public long? DoseDay { get; set; }
+        public string? Instruction { get; set; }
+        public string? HSNcode { get; set; }
+        public double? CGSTPer {  get; set; }
+        public double? SGSTPer { get; set; }
+        public double? IGSTPer { get;set; }
+        public string? ConverFactor{ get; set; }
+        public long? StoreId { get; set; }
+        public long? UMOId { get; set; }
+        public string? ItemCompanyName {  get; set; }
+        //public string FormattedText { get { return this.ServiceName + " | " + this.ClassRate; } }
     }
 }

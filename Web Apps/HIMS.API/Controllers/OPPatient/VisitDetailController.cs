@@ -185,6 +185,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", resultList.Select(x => new
             {
+                x.FormattedText,
                 x.ServiceId,
                 x.GroupId,
                 x.ServiceShortDesc,
