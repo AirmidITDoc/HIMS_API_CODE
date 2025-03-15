@@ -11,7 +11,7 @@ using HIMS.Core;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.Services.Masters;
 
-namespace HIMS.API.Controllers.Masters.DoctorMaster
+namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

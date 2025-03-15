@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
 using Asp.Versioning;
 
-namespace HIMS.API.Controllers.Masters.DoctorMaster
+namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

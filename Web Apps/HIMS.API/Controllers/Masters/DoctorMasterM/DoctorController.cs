@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
 using HIMS.Data.DTO.OPPatient;
-namespace HIMS.API.Controllers.Masters.DoctorMaster
+
+namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
