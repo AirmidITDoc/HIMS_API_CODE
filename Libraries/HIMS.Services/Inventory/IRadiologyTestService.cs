@@ -15,7 +15,7 @@ namespace HIMS.Services.Inventory
     public partial interface IRadiologyTestService
     {
         Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
-        //Task<IPagedList<RadiologyListDto>> GetListAsyn(GridRequestModel objGrid);
+        Task<IPagedList<RadiologyPatientListDto>> GetListAsyn(GridRequestModel objGrid);
 
         Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task InsertAsync(MRadiologyTestMaster objRadio, int UserId, string Username);

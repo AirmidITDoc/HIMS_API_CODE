@@ -31,10 +31,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyTestListDto>(model, "m_Rtrv_RadiologyTestList");
         }
-        //public virtual async Task<IPagedList<RadiologyTestListDto>> GetListAsyn(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<RadiologyTestListDto>(model, "m_Rtrv_RadiologyTestList");
-        //}
+        public virtual async Task<IPagedList<RadiologyPatientListDto>> GetListAsyn(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadiologyPatientListDto>(model, "ps_Rtrv_RadiologyPatient_ResultEntry_List");
+        }
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
