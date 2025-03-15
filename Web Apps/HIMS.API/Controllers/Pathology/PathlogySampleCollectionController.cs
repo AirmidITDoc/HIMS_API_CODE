@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
@@ -35,6 +36,20 @@ namespace HIMS.API.Controllers.Pathology
         {
             IPagedList<SampleCollectionTestListDto> SampleCollectionTestList = await _IPathlogySampleCollectionService.GetListAsyn(objGrid);
             return Ok(SampleCollectionTestList.ToGridResponse(objGrid, "SampleCollectionTestList "));
+        }
+        [HttpPost("LabOrRadRequestPatientList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
+        {
+            IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync(objGrid);
+            return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
+        }
+        [HttpPost("LabOrRadRequestDetailList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabOrRadRequestDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabOrRadRequestDetailListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync1(objGrid);
+            return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestDetail List "));
         }
         [HttpPut("PathlogySampleCollectionUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -112,5 +113,134 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+        public virtual async Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName)
+        {
+            var qry = (from itemMaster in _context.MItemMasters
+                         join uomMaster in _context.MUnitofMeasurementMasters
+                         on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
+                         join genericNameMaster in _context.MItemGenericNameMasters
+                         on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
+                         join assignItemToStore in _context.MAssignItemToStores
+                         on itemMaster.ItemId equals assignItemToStore.ItemId into storeGroup
+                         from assignItem in storeGroup.DefaultIfEmpty()
+                         where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
+                            && (assignItem == null || assignItem.StoreId == StoreId)
+                         orderby itemMaster.ItemId
+
+                         select new ItemListForSearchDTO
+                         {
+                             //StoreId = assignItem != null ? assignItem.StoreId : 0,
+                             ItemId = itemMaster.ItemId,
+                             ItemName = itemMaster.ItemName,
+                             BalanceQty = 0,
+                             LandedRate = 0,
+                             UnitMRP = 0,
+                             PurchaseRate = 0,
+                             //VatPercentage = 0,
+                             //itemMaster.IsBatchRequired,
+                             //ReOrder = itemMaster.ReOrder,
+                             //IsNarcotic = itemMaster.IsNarcotic ?? 0,
+                             //CGSTPer = itemMaster.CGST,
+                             //SGSTPer = itemMaster.SGST,
+                             //IGSTPer = itemMaster.IGST,
+                             //UOM = uomMaster.UnitofMeasurementName,
+                             //itemMaster.ItemGenericNameId,
+                             //itemGenericNameMaster.ItemGenericName,
+                             DoseName = itemMaster.DoseName ?? string.Empty,
+                             DoseDay = itemMaster.DoseDay ?? 0,
+                             Instruction = itemMaster.Instruction ?? string.Empty
+                         });
+            return await qry.Take(50).ToListAsync();
+        }
+        public virtual async Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName)
+        {
+            var qry = (from itemMaster in _context.MItemMasters
+                         join uomMaster in _context.MUnitofMeasurementMasters
+                         on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
+                         join assignItemToStore in _context.MAssignItemToStores
+                         on itemMaster.ItemId equals assignItemToStore.ItemId
+                         join itemCompanyMaster in _context.MItemCompanyMasters
+                         on itemMaster.ItemCompnayId equals itemCompanyMaster.CompanyId into companyGroup
+                         from company in companyGroup.DefaultIfEmpty()
+                         join currentStock in _context.TCurrentStocks
+                         on itemMaster.ItemId equals currentStock.ItemId into stockGroup
+                         from stock in stockGroup.DefaultIfEmpty()
+                         where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
+                            && assignItemToStore.StoreId == StoreId
+                       group new { itemMaster, uomMaster, assignItemToStore, stock, company } by new 
+                         {
+                             itemMaster.ItemId,
+                             itemMaster.ItemName,
+                             uomMaster.UnitofMeasurementName,
+                             uomMaster.UnitofMeasurementId,
+                             itemMaster.ConversionFactor,
+                             itemMaster.TaxPer,
+                             itemMaster.IsBatchRequired,
+                             assignItemToStore.StoreId,
+                             itemMaster.ItemCategaryId,
+                             itemMaster.Cgst,
+                             itemMaster.Sgst,
+                             itemMaster.Igst,
+                             itemMaster.Hsncode,
+                             company.CompanyName
+                         } into grouped
+                         select new ItemListForSearchDTO
+                         { 
+                            ItemId = grouped.Key.ItemId,
+                            ItemName = grouped.Key.ItemName,
+                             //grouped.Key.UnitofMeasurementName,
+                             UMOId = grouped.Key.UnitofMeasurementId,
+                             ConverFactor = grouped.Key.ConversionFactor,
+                             //grouped.Key.TaxPer,
+                             //grouped.Key.IsBatchRequired,
+                             StoreId =  grouped.Key.StoreId,
+                             //grouped.Key.ItemCategaryId,
+                             BalanceQty = grouped.Sum(x => x.stock != null ? x.stock.BalanceQty : 0),
+                             CGSTPer = grouped.Key.Cgst ?? 0,
+                             SGSTPer = grouped.Key.Sgst ?? 0,
+                             IGSTPer = grouped.Key.Igst ?? 0,
+                             HSNcode = grouped.Key.Hsncode,
+                             ItemCompanyName = grouped.Key.CompanyName ?? string.Empty
+                         });
+            return await qry.Take(50).ToListAsync();
+        }
+        public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId)
+        {
+
+            var qry = (from currentStock in _context.TCurrentStocks
+                         join itemMaster in _context.MItemMasters
+                         on currentStock.ItemId equals itemMaster.ItemId
+                         join itemManufactureMaster in _context.MItemManufactureMasters
+                         on itemMaster.ManufId equals itemManufactureMaster.ItemManufactureId into manufactureGroup
+                         from manufacture in manufactureGroup.DefaultIfEmpty()
+                         where currentStock.ItemId == ItemId
+                            && currentStock.StoreId == StoreId
+                            && (currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0)) > 0
+                         orderby currentStock.BalanceQty descending
+                         select new ItemListForBatchPopDTO
+                         {
+                             StockId=currentStock.StockId,
+                             StoreId= currentStock.StoreId,
+                             ItemId = currentStock.ItemId,
+                             ItemName = itemMaster.ItemName,
+                             BalanceQty = currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0),
+                             LandedRate = currentStock.LandedRate,
+                             UnitMRP = currentStock.UnitMrp,
+                             PurchaseRate = currentStock.PurUnitRateWf,
+                             //currentStock.VatPercentage,
+                             //itemMaster.IsBatchRequired,
+                             BatchNo = currentStock.BatchNo,
+                             BatchExpDate = currentStock.BatchExpDate,
+                             ConverFactor = itemMaster.ConversionFactor,
+                             CGSTPer = currentStock.Cgstper,
+                             SGSTPer = currentStock.Sgstper,
+                             IGSTPer = currentStock.Igstper,
+                             ManufactureName = manufacture != null ? manufacture.ManufactureName : string.Empty,
+                             GrnRetQty = currentStock.GrnRetQty,
+                             DrugTypeName = itemMaster.DrugTypeName
+                         });
+            return await qry.Take(50).ToListAsync();
+        }
+
     }
 }

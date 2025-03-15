@@ -127,7 +127,6 @@ namespace HIMS.API.Controllers.OPPatient
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
         //}
-       
 
         //[HttpPost("InsertEDMX")]
         ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
@@ -148,6 +147,7 @@ namespace HIMS.API.Controllers.OPPatient
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.", returnId);
         //}
+
         //[HttpPut("Edit/{id:int}")]
         ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         //public async Task<ApiResponse> Edit(OPRefundOfBillModel obj)

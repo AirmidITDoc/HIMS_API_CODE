@@ -148,7 +148,7 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission data", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Admission data", data);
         }
 
 

@@ -21,5 +21,6 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal? ClassRate { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
+        public string FormattedText { get { return this.ServiceName + " | " + this.ClassRate; } }
     }
 }
