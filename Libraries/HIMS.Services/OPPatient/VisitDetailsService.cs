@@ -266,37 +266,50 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword)
         {
-            var qry = from r in _context.Registrations
-                      join a in _context.VisitDetails on r.RegId equals a.RegId
-                     
-                      //where a.VisitDate ==  + "'"+ 2025-02-10 00:00:00.000 &&
-                      where ((r.FirstName + " " + r.LastName).Contains(Keyword) || (r.RegNo ?? "").Contains(Keyword))
+            var qry = from registration in _context.Registrations
+                       join visitDetails in _context.VisitDetails on registration.RegId equals visitDetails.RegId
+                       join tariffMaster in _context.TariffMasters on visitDetails.TariffId equals tariffMaster.TariffId
+                       join departmentMaster in _context.MDepartmentMasters on visitDetails.DepartmentId equals departmentMaster.DepartmentId
+                       join doctorMaster in _context.DoctorMasters on visitDetails.ConsultantDocId equals doctorMaster.DoctorId
+                       join refDoctorMaster in _context.DoctorMasters on visitDetails.RefDocId equals refDoctorMaster.DoctorId into refDoctorGroup
+                       from refDoctor in refDoctorGroup.DefaultIfEmpty()
+                       join companyMaster in _context.CompanyMasters on visitDetails.CompanyId equals companyMaster.CompanyId into companyGroup
+                       from company in companyGroup.DefaultIfEmpty()
+                       where visitDetails.VisitDate == DateTime.Today
+                          && (registration.FirstName + " " + registration.LastName).Contains(Keyword)
+                          || registration.RegNo.Contains(Keyword)
+                          || registration.MobileNo.Contains(Keyword)
+                       orderby registration.FirstName
 
-                      orderby r.FirstName
-                      select new VisitDetailsListSearchDto()
-                      {
-                          FirstName = r.FirstName,
-                          MiddleName = r.MiddleName,
-                          LastName = r.LastName,
-                          RegNo = r.RegNo,
-                          RegId = r.RegId,
-                          MobileNo = r.MobileNo,
-                          PatientTypeId = a.PatientTypeId,
-                          ConsultantDocId = a.ConsultantDocId,
-                          RefDocId = a.RefDocId,
-                          TariffId = a.TariffId,
-                          ClassId = a.ClassId,
-                          VisitId = a.VisitId
-
-                          //CompanyId = a.CompanyId,
-                          //CompanyName = a.CompanyName,
-                          //RefDoctorName = a.RefDoctorName,
-                          //DoctorName = a.DoctorName,
-                          //DepartmentName = a.DepartmentName,
-
-
-                      };
+                       select new VisitDetailsListSearchDto
+                       {
+                           FirstName = registration.FirstName,
+                           MiddleName = registration.MiddleName,
+                           LastName = registration.LastName,
+                           RegNo = registration.RegNo,
+                           MobileNo = registration.MobileNo,
+                           VisitId = visitDetails.VisitId,
+                           // RegId = visitDetails.RegId,
+                           // VisitDate = visitDetails.VisitDate,
+                           UnitId = visitDetails.UnitId,
+                           PatientTypeId = visitDetails.PatientTypeId,
+                           ConsultantDocId = visitDetails.ConsultantDocId,
+                           RefDocId = visitDetails.RefDocId,
+                           OPDNo = visitDetails.Opdno,
+                           TariffId = visitDetails.TariffId,
+                           ClassId = visitDetails.ClassId,
+                           TariffName = tariffMaster.TariffName,
+                           CompanyId = visitDetails.CompanyId,
+                           CompanyName = company != null ? company.CompanyName : string.Empty,
+                           AgeYear = registration.AgeYear,
+                           AgeMonth = registration.AgeMonth,
+                           AgeDay = registration.AgeDay,
+                           DepartmentName = departmentMaster.DepartmentName,
+                           RefDoctorName = refDoctor != null ? refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
+                           DoctorName = doctorMaster.FirstName + " " + doctorMaster.LastName
+                       };
             return await qry.Take(25).ToListAsync();
+
         }
 
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)

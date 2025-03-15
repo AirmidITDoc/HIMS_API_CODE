@@ -51,11 +51,11 @@ namespace HIMS.API.Controllers.OPPatient
             return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
         }
         [HttpGet("search-patient")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _visitDetailsService.VisitDetailsListSearchDto(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Visit data", data.Select(x => new { x.FormattedText, x.RegId, x.VisitId }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
         }
 
         [HttpPost("OPRegistrationList")]
@@ -185,6 +185,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", resultList.Select(x => new
             {
+                x.FormattedText,
                 x.ServiceId,
                 x.GroupId,
                 x.ServiceShortDesc,

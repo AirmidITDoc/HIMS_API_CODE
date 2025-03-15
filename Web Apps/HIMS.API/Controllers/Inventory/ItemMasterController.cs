@@ -12,6 +12,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Core;
+using HIMS.Services.OPPatient;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -132,6 +133,21 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+
+        [HttpGet("GetItemListForPrescription")]
+        public async Task<ApiResponse> GetItemListForPrescription(int StoreId, string ItemName)
+        {
+            var resultList = await _ItemMasterServices.GetItemListForPrescription(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription List.", resultList);
+        }
+
+        [HttpGet("GetItemListForGRNOrPO")]
+        public async Task<ApiResponse> GetItemListForGRNOrPO(int StoreId, string ItemName)
+        {
+            var resultList = await _ItemMasterServices.GetItemListForGRNOrPO(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For GRN or PO List.", resultList);
         }
     }
 }
