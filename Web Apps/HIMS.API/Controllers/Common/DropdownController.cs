@@ -236,7 +236,7 @@ namespace HIMS.API.Controllers.Common
                 //"PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
                 "CasepaperDignosis" => (await _IMOPCasepaperDignosisMaster.GetAll()).ToList().ToDropDown(nameof(MOpcasepaperDignosisMaster.DescriptionType), nameof(MOpcasepaperDignosisMaster.DescriptionName)),
                 "DischargeTemplate" => (await _IMReportConfTemplate.GetAll()).ToList().ToDropDown(nameof(MReportTemplateConfig.TemplateId), nameof(MReportTemplateConfig.TemplateName)),
-                "ModeOfDischarge" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfDischarge.ModeOfDischargeId), nameof(MModeOfDischarge.ModeOfDischargeName)),
+                "ModeOfDischarge" => (await _IMModeofdischarge.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfDischarge.ModeOfDischargeId), nameof(MModeOfDischarge.ModeOfDischargeName)),
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
