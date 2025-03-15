@@ -178,6 +178,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MAssignSupplierToStore> MAssignSupplierToStores { get; set; } = null!;
         public virtual DbSet<MBankMaster> MBankMasters { get; set; } = null!;
         public virtual DbSet<MCanItemMaster> MCanItemMasters { get; set; } = null!;
+        public virtual DbSet<MCertificateMaster> MCertificateMasters { get; set; } = null!;
         public virtual DbSet<MCertificateTemplateMaster> MCertificateTemplateMasters { get; set; } = null!;
         public virtual DbSet<MCityMaster> MCityMasters { get; set; } = null!;
         public virtual DbSet<MClassMaster> MClassMasters { get; set; } = null!;
@@ -215,6 +216,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MMemberCategoryMaster> MMemberCategoryMasters { get; set; } = null!;
         public virtual DbSet<MMessageTemplate> MMessageTemplates { get; set; } = null!;
         public virtual DbSet<MModeOfDeliveryMaster> MModeOfDeliveryMasters { get; set; } = null!;
+        public virtual DbSet<MModeOfDischarge> MModeOfDischarges { get; set; } = null!;
         public virtual DbSet<MModeOfPayment> MModeOfPayments { get; set; } = null!;
         public virtual DbSet<MNursingTemplateMaster> MNursingTemplateMasters { get; set; } = null!;
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
@@ -5903,6 +5905,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Sgst).HasColumnName("SGST");
             });
 
+            modelBuilder.Entity<MCertificateMaster>(entity =>
+            {
+                entity.HasKey(e => e.CertificateId);
+
+                entity.ToTable("M_CertificateMaster");
+
+                entity.Property(e => e.CertificateDesc).HasColumnType("text");
+
+                entity.Property(e => e.CertificateName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MCertificateTemplateMaster>(entity =>
             {
                 entity.HasKey(e => e.TemplateId);
@@ -6447,6 +6464,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.ModeOfDelivery).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<MModeOfDischarge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("m_modeOfDischarge");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModeOfDischargeId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModeOfDischargeName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MModeOfPayment>(entity =>
