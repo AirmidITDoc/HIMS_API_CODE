@@ -34,7 +34,19 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<List<PhoneAutoCompleteDto>> SearchPhoneApp(string str)
         {
-            return await this._context.TPhoneAppointments.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str) || x.RegNo.ToLower().Contains(str) || x.MobileNo.ToLower().Contains(str)).Take(25).Select(x => new PhoneAutoCompleteDto() { FirstName = x.FirstName, Id = x.PhoneAppId, LastName = x.LastName, Mobile = x.MobileNo, RegNo = x.RegNo }).OrderBy(x => x.FirstName).ToListAsync();
+            return await this._context.TPhoneAppointments
+                .Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str) 
+                || x.RegNo.ToLower().Contains(str) 
+                || x.MobileNo.ToLower().Contains(str))
+                .Where(x => x.PhAppDate == DateTime.Today) // Filter by today's date
+                .Take(25)
+                .Select(x => new PhoneAutoCompleteDto() { 
+                    FirstName = x.FirstName, 
+                    Id = x.PhoneAppId, 
+                    LastName = x.LastName, 
+                    Mobile = x.MobileNo, 
+                    RegNo = x.RegNo 
+                }).OrderBy(x => x.FirstName).ToListAsync();
         }
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {

@@ -75,6 +75,27 @@ namespace HIMS.Data.DTO.Inventory
         public long? StoreId { get; set; }
         public long? UMOId { get; set; }
         public string? ItemCompanyName {  get; set; }
-        //public string FormattedText { get { return this.ServiceName + " | " + this.ClassRate; } }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+    }
+    public class ItemListForBatchPopDTO
+    {
+        public long StockId { get; set; }
+        public long? StoreId { get; set; }
+        public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public float? BalanceQty { get; set; }
+        public decimal? LandedRate { get; set; }
+        public decimal? UnitMRP { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public double? CGSTPer { get; set; }
+        public double? SGSTPer { get; set; }
+        public double? IGSTPer { get; set; }
+        public string? ConverFactor { get; set; }
+        public string? BatchNo { get; set; }
+        public DateTime? BatchExpDate { get; set; }
+        public float? GrnRetQty { get; set; }
+        public string DrugTypeName { get; set; }
+        public string ManufactureName { get; set; }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
     }
 }

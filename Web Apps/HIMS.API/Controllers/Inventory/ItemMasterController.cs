@@ -149,6 +149,13 @@ namespace HIMS.API.Controllers.Inventory
             var resultList = await _ItemMasterServices.GetItemListForGRNOrPO(StoreId, ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For GRN or PO List.", resultList);
         }
+
+        [HttpGet("GetItemListForSalesBatchPop")]
+        public async Task<ApiResponse> GetItemListForSalesBatchPop(int StoreId, int ItemId)
+        {
+            var resultList = await _ItemMasterServices.GetItemListForSalesBatchPop(StoreId, ItemId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page Batch Pop.", resultList);
+        }
     }
 }
 
