@@ -123,7 +123,7 @@ namespace HIMS.Services.IPPatient
                 Tentity.Remove(rProperty);
             }
             // Add the new parameter
-            Tentity["TemplateDescriptionHtml"] = 0; // Ensure objpayment 
+            Tentity["TemplateDescriptionHtml"] = "0"; // Ensure objpayment 
 
             string TDischargeSummaryId = odal.ExecuteNonQuery("ps_insert_DischargeSummaryTemplate", CommandType.StoredProcedure, "DischargeSummaryId", Tentity);
             ObjDischargeTemplate.DischargeSummaryId = Convert.ToInt32(TDischargeSummaryId);
@@ -149,7 +149,7 @@ namespace HIMS.Services.IPPatient
             {
                 Sentity.Remove(rProperty);
                 // Add the new parameter
-                Sentity["TemplateDescriptionHtml"] = 0; // Ensure objpayment 
+                Sentity["TemplateDescriptionHtml"] = "0"; // Ensure objpayment 
             }
             odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
             var tokensObj = new
