@@ -154,6 +154,7 @@ namespace HIMS.Services.IPPatient
                           BedName = b.BedName,
                           Age = r.Age,
                           GenderName = g.GenderName
+
                       };
             return await qry.Take(25).ToListAsync();
         }

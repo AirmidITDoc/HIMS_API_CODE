@@ -106,5 +106,6 @@ namespace HIMS.Data.DTO.IPPatient
         public string? BedName { get; set; }
         public string? Age { get; set; }
         public string? GenderName { get; set; }
+        public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
     }
 }

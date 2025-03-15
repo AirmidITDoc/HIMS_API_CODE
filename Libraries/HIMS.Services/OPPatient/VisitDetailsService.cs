@@ -289,7 +289,7 @@ namespace HIMS.Services.OPPatient
                            RegNo = registration.RegNo,
                            MobileNo = registration.MobileNo,
                            VisitId = visitDetails.VisitId,
-                           // RegId = visitDetails.RegId,
+                           RegId = visitDetails.RegId,
                            // VisitDate = visitDetails.VisitDate,
                            UnitId = visitDetails.UnitId,
                            PatientTypeId = visitDetails.PatientTypeId,

@@ -70,7 +70,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public long VisitId { get; set; }
-        public long RegId { get; set; }
+        public long? RegId { get; set; }
         public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.MobileNo + " | " + this.RegNo; } }
         public string? MobileNo { get; set; }
         public long? PatientTypeId { get; set; }
