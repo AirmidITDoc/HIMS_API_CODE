@@ -36,51 +36,6 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<PackageServiceListDto>(model, "m_Rtrv_PackageServiceInfo");
         }
 
-
-
-        //public virtual async Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username)
-        //{
-        //    try
-        //    {
-        //        //Add header table records
-        //        DatabaseHelper odal = new();
-        //        string[] rEntity = { " SubGroupId  ", "DoctorId", "IsEmergency ", "EmgAmt", " EmgPer", " IsDocEditable", "  CreatedBy ", " CreatedDate", "AddedBy ", "ServiceDetail" };
-        //        var entity = objService.ToDictionary();
-        //        foreach (var rProperty in rEntity)
-        //        {
-        //            entity.Remove(rProperty);
-        //        }
-        //        string VServiceId = odal.ExecuteNonQuery("m_insert_ServiceMaster_1", CommandType.StoredProcedure, "ServiceId", entity);
-        //        objService.ServiceId = Convert.ToInt32(VServiceId);
-
-
-
-        //        // Add details table records
-        //        foreach (var objTemplate in objService.ServiceDetails)
-        //        {
-        //            objTemplate.ServiceId = objService.ServiceId;
-        //        }
-        //        _context.ServiceDetails.AddRange(objService.ServiceDetails);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Delete header table realted records
-        //        ServiceMaster? objBill = await _context.ServiceMasters.FindAsync(objService.ServiceId);
-        //        if (objBill != null)
-        //        {
-        //            _context.ServiceMasters.Remove(objBill);
-        //        }
-
-        //        // Delete details table realted records
-        //        var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync(); 
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.ServiceDetails.RemoveRange(lst);
-        //        }
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
         public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
             {
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -134,6 +89,89 @@ namespace HIMS.Services.Inventory
 
             return await query.ToListAsync();
         }
+
+        //public virtual async Task<List<BillingServiceDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, int IsPathRad, string ServiceName)
+        //{
+        //    // Begin constructing the query
+        //    var query = _context.ServiceMasters
+        //        .Join(_context.GroupMasters, service => service.GroupId, group => group.GroupId, (service, group) => new { service, group })
+        //        .Join(_context.ServiceDetails, sg => sg.service.ServiceId, detail => detail.ServiceId, (sg, detail) => new { sg.service, sg.group, detail })
+        //        .Where(x => (string.IsNullOrEmpty(ServiceName) || x.service.ServiceName.Contains(ServiceName)) // Handle ServiceName condition
+        //                    && x.detail.TariffId == TariffId
+        //                    && x.detail.ClassId == ClassId
+        //                    && x.service.IsActive == true) // Only active services
+        //        .Select(x => new BillingServiceDto
+        //        {
+        //            ServiceId = x.service.ServiceId,
+        //            ServiceName = x.service.ServiceName,
+        //            Price = x.detail.ClassRate,
+        //            IsPathology = x.service.IsPathology,
+        //            IsRadiology = x.service.IsRadiology,
+        //            TariffId = x.detail.TariffId
+        //        });
+
+        //    // Handle IsPathRad filtering
+        //    if (IsPathRad == 1) // Pathology
+        //    {
+        //        query = query.Where(x => x.service.IsPathology == true);
+        //    }
+        //    else if (IsPathRad == 2) // Radiology
+        //    {
+        //        query = query.Where(x => x.service.IsRadiology == true);
+        //    }
+        //    else // Neither pathology nor radiology
+        //    {
+        //        query = query.Where(x => x.service.IsPathology == false && x.service.IsRadiology == false);
+        //    }
+
+        //    // Limit the result to 50
+        //    return await query.Take(50).ToListAsync();
+        //}
+
+        public virtual async Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string isPathRad, string ServiceName)
+        {
+            // If serviceName is '%' (wildcard), set it to null for filtering
+            if (ServiceName == "%")
+            {
+                ServiceName = null;
+            }
+
+            // Start constructing the query
+            var query = _context.ServiceMasters
+                .Join(_context.GroupMasters, service => service.GroupId, group => group.GroupId, (service, group) => new { service, group })
+                .Join(_context.ServiceDetails, sg => sg.service.ServiceId, detail => detail.ServiceId, (sg, detail) => new { sg.service, sg.group, detail })
+                .Where(x => (string.IsNullOrEmpty(ServiceName) || x.service.ServiceName.Contains(ServiceName)) // Handle ServiceName condition
+                            && x.detail.TariffId == TariffId
+                            && x.detail.ClassId == ClassId
+                            && x.service.IsActive == true) // Only active services
+                .Select(x => new BillingServiceListDto
+                {
+                    ServiceId = x.service.ServiceId,
+                    ServiceName = x.service.ServiceName,
+                    Price = x.detail.ClassRate,
+                    IsPathology = x.service.IsPathology,
+                    IsRadiology = x.service.IsRadiology,
+                    TariffId = x.detail.TariffId
+                });
+
+            // Filter based on IsPathRad value
+            if (isPathRad == "1") // Pathology
+            {
+                query = query.Where(x => x.IsPathology == 1);
+            }
+            else if (isPathRad == "2") // Radiology
+            {
+                query = query.Where(x => x.IsRadiology == 1);
+            }
+            else // Neither pathology nor radiology
+            {
+                query = query.Where(x => x.IsPathology == 0 && x.IsRadiology == 0);
+            }
+
+            // Return the results
+            return await query.ToListAsync();
+        }
+
     }
- }
+}
 

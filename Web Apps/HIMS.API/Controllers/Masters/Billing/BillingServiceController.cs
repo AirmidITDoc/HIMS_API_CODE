@@ -109,7 +109,12 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
         }
-
+        [HttpGet("GetServiceListwithGroupWise")]
+        public async Task<ApiResponse> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName)
+        {
+            var resultList = await _BillingService.GetServiceListwithGroupWise(TariffId, ClassId, IsPathRad, ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
+        }
     }
 }
 

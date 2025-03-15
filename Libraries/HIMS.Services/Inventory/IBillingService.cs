@@ -20,11 +20,7 @@ namespace HIMS.Services.Inventory
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageServiceListDto>> GetListAsync1(GridRequestModel objGrid);
-        //Task<IPagedList<IPPaymentListDto>> GetListAsyncc(GridRequestModel objGrid);
-        //Task<IPagedList<IPBillListDto>> GetListAsyn(GridRequestModel objGrid);
-        //Task<IPagedList<IPRefundBillListDto>> GetListAsy(GridRequestModel objGrid);
-        //Task<IPagedList<DoctorShareListDto>> GetListAs(GridRequestModel objGrid);
-
+        Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
 
     }
