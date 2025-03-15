@@ -133,7 +133,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.", objVisitDetail);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully." + objVisitDetail.VisitId);
         }
 
 
@@ -158,7 +158,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully."+objVisitDetail.VisitId);
         }
 
         [HttpPost("Cancel")]
