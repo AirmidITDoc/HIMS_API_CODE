@@ -41,13 +41,13 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(RadiologyTestList.ToGridResponse(objGrid, "RadiologyTest List "));
         }
 
-        //[HttpPost("RadiologyTestList")]
-        ////[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> RadiologyTestList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<RadiologyTestListDto> RadiologyTestList = await _RadiologyTestService.RadiologyTestList(objGrid);
-        //    return Ok(RadiologyTestList.ToGridResponse(objGrid, "RadiologyTest List "));
-        //}
+        [HttpPost("RadiologyPatientList")]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> RadiologyPatientList(GridRequestModel objGrid)
+        {
+            IPagedList<RadiologyPatientListDto> RadiologyPatientList = await _RadiologyTestService.GetListAsyn(objGrid);
+            return Ok(RadiologyPatientList.ToGridResponse(objGrid, "RadiologyPatient List "));
+        }
 
         [HttpPost("Insert")]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
