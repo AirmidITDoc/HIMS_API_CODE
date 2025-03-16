@@ -136,13 +136,13 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> DischargeTemplateUpdate(DischargeTemUpdate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
-            TIpPrescriptionDischarge Prescription = obj.PrescriptionTemplate.MapTo<TIpPrescriptionDischarge>();
+            List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
             if (obj.Discharge.DischargeSummaryId != 0)
             {
                 model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
                 model.AddedBy = CurrentUserId;
-                
-                Prescription.CreatedBy = CurrentUserId;
+
+                Prescription.ForEach(x => { x.OpdIpdId = model.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
                 await _IDischargeSummaryService.UpdateAsyncTemplate(model, Prescription, CurrentUserId, CurrentUserName);
             }
@@ -150,6 +150,8 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate Update successfully.", model);
         }
+
+
         [HttpPost("DischargeInsert")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPDischargeInsert(DischargeModels obj)
