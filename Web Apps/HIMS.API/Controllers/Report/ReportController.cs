@@ -155,7 +155,7 @@ namespace HIMS.API.Controllers.Report
                 case "NursingNotesReceipt":
                 case "DoctorPatientHandoverReceipt":
                 case "NurMaterialConsumption":
-                case "NurLabRequest":
+                case "NurLabRequestTest":
 
 
 

@@ -876,10 +876,12 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathtemplateReport", "PathtemplateReport", Orientation.Landscape);
                         break;
                     }
-                    #endregion
-                    
+                #endregion
 
-                    //Radiology
+
+
+
+                //Radiology
                 #region :: RadiologyTemplateReport ::
                 case "RadiologyTemplateReport":
                     {
@@ -913,11 +915,11 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                #region :: NurLabRequest ::
-                case "NurLabRequest":
+                #region :: NurLabRequestTest ::
+                case "NurLabRequestTest":
                     {
 
-                        model.RepoertName = "Nursing Material Consumption Report ";
+                        model.RepoertName = "Nursing Lab Request Report ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
@@ -4537,7 +4539,7 @@ namespace HIMS.Services.Report
 
                     break;
 
-                case "NurLabRequest":
+                case "NurLabRequestTest":
                     {
 
                         int i = 0;

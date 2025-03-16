@@ -36,6 +36,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? OtherConDrOpinions { get; set; }
         public string? ConditionAtTheTimeOfDischarge { get; set; }
         public string? PainManagementTechnique { get; set; }
+
+        public string? TemplateDescriptionHtml { get; set; }
         public string? LifeStyle { get; set; }
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
