@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             MTaxNatureMaster model = await _repository.GetById(x => x.Id == Id);
             if ((model?.Id ?? 0) > 0)
             {
-                model.IsActive = true;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
