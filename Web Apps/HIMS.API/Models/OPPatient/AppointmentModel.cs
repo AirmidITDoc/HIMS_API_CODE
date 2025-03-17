@@ -27,7 +27,6 @@ namespace HIMS.API.Models.OPPatient
         public long? StateId { get; set; }
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
-
         public int? ReligionId { get; set; }
         public bool? IsCharity { get; set; }
         public long? AreaId { get; set; }
@@ -46,7 +45,6 @@ namespace HIMS.API.Models.OPPatient
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
             RuleFor(x => x.GenderId).NotNull().NotEmpty().WithMessage("Gender is required");
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
-
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
             RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
         }
@@ -62,6 +60,7 @@ namespace HIMS.API.Models.OPPatient
         public long? PatientTypeId { get; set; }
         public long? ConsultantDocId { get; set; }
         public long? RefDocId { get; set; }
+        public string? Opdno { get; set; }
         public long? TariffId { get; set; }
         public long? CompanyId { get; set; }
         public bool? IsCancelled { get; set; }
@@ -75,8 +74,6 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? FollowupDate { get; set; }
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
-
-
         public string? Height { get; set; }
         public string? Pweight { get; set; }
         public string? Bmi { get; set; }
