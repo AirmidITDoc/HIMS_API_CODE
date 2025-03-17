@@ -41,8 +41,8 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.AdmissionId == id);
-            return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("MlcinformationList");
+            var data = await _repository.GetById(x => x.Mlcid == id);
+            return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("TMlcinformation");
         }
         //Add API
         [HttpPost]

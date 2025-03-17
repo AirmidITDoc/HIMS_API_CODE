@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<ACustomerInformation> ACustomerInformations { get; set; } = null!;
         public virtual DbSet<ACustomerPaymentSummary> ACustomerPaymentSummaries { get; set; } = null!;
@@ -11766,6 +11766,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DetailGiven).HasMaxLength(2000);
+
                 entity.Property(e => e.Mlcno)
                     .HasMaxLength(50)
                     .HasColumnName("MLCNo");
@@ -11773,6 +11775,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PoliceStation).HasMaxLength(100);
+
+                entity.Property(e => e.Remark).HasMaxLength(2000);
 
                 entity.Property(e => e.ReportingDate).HasColumnType("datetime");
 
