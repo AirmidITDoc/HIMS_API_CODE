@@ -29,14 +29,14 @@ namespace HIMS.API.Controllers.Inventory
             _repository = repository1;
         }
         [HttpPost("SupplierList")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+      //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);
             return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+      //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Inventory
             return data.ToSingleResponse<MSupplierMaster, SupplierModel>("Supplier Master");
         }
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Inventory
 
        
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
@@ -98,22 +98,22 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name updated successfully.");
         }
 
-        [HttpPost("Cancel")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(SupplierCancel obj)
-        {
-            MSupplierMaster model = new();
-            if (obj.SupplierId != 0)
-            {
-                model.SupplierId = obj.SupplierId;
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _SupplierService.CancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Canceled successfully.");
-        }
+    //    [HttpPost("Cancel")]
+    ////    [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Delete)]
+    //    public async Task<ApiResponse> Cancel(SupplierCancel obj)
+    //    {
+    //        MSupplierMaster model = new();
+    //        if (obj.SupplierId != 0)
+    //        {
+    //            model.SupplierId = obj.SupplierId;
+    //            model.CreatedBy = CurrentUserId;
+    //            model.CreatedDate = DateTime.Now;
+    //            await _SupplierService.CancelAsync(model, CurrentUserId, CurrentUserName);
+    //        }
+    //        else
+    //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+    //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Canceled successfully.");
+    //    }
         [HttpDelete("SupplierDelete")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)

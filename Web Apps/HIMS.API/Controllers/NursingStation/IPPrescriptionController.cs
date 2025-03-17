@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(PrescriptiontDetailList.ToGridResponse(objGrid, "PrescriptionDetail  List "));
         }
 
-        [HttpPost("InsertIPPrescriptionReturnList")]
+        [HttpPost("IPPrescriptionReturnList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
         {

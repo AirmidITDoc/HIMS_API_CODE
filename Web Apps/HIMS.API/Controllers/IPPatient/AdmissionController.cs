@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission added successfully.", objAdmission);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission added successfully." + objAdmission.AdmissionId);
         }
 
 
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.IPPatient
 
             await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully.", objAdmission);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully." + objAdmission.AdmissionId);
         }
 
 
@@ -141,7 +141,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission  Updated successfully.", objAdmission);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission  Updated successfully." + objAdmission.AdmissionId);
         }
         [HttpGet("search-patient")]
         //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
