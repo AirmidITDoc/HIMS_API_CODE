@@ -13,9 +13,11 @@ namespace HIMS.Data.Models
         public string? AuthorityName { get; set; }
         public string? BuckleNo { get; set; }
         public string? PoliceStation { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public string? DetailGiven { get; set; }
+        public string? Remark { get; set; }
+        public long? CreatedBy { get; set; }
+        public long? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public int? CreatedBy { get; set; }
-        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
