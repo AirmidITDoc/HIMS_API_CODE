@@ -51,6 +51,13 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<LabOrRadRequestDetailListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync1(objGrid);
             return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestDetail List "));
         }
+        [HttpPost("PathRadServiceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathRadServiceList(GridRequestModel objGrid)
+        {
+            IPagedList<PathRadServiceListDto> PathRadServiceList = await _IPathlogySampleCollectionService.GetListAsync1(objGrid);
+            return Ok(PathRadServiceList.ToGridResponse(objGrid, "PathRadService List "));
+        }
         [HttpPut("PathlogySampleCollectionUpdate")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(PathlogySampleCollectionModel obj)

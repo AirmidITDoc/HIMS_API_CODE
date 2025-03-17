@@ -26,7 +26,7 @@ namespace HIMS.Services.Common
         Task IPbillAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
         Task IPbillCreditAsyncSp(Bill ObjBill, BillDetail ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
-        Task IPInterimBillCashCounterAsyncSp(AddCharge ObjAddCharge, Bill ObjBill, BillDetail ObjBillDetails,  Payment Objpayment, int UserId, string Username);
+        Task IPInterimBillCashCounterAsyncSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails,  Payment Objpayment, int UserId, string Username);
         Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
     }
 }
