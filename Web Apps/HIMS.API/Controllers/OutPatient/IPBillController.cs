@@ -163,7 +163,7 @@ namespace HIMS.API.Controllers.OutPatient
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
             Bill Model = obj.IPBillling.MapTo<Bill>();
-            BillDetail BillDetailModel = obj.BillingDetails.MapTo<BillDetail>();
+          List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
           //  Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
                Payment paymentModel = obj.payments.MapTo<Payment>();
           //  Bill BillModel = obj.Bills.MapTo<Bill>();

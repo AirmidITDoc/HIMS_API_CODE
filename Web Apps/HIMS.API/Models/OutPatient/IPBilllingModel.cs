@@ -124,7 +124,7 @@ namespace HIMS.API.Models.OutPatient
       
         public AddChargeuModel? AddChargeM { get; set; }
         public IPBilllingModel? IPBillling { get; set; }
-        public BillingDetailsModel? BillingDetails { get; set; }
+        public List<BillingDetailsModel>? BillingDetails { get; set; }
         public paymentsModel? payments { get; set; }
         //public paymentModel? payment { get; set; }
         //public BillMModel? Bills { get; set; }
