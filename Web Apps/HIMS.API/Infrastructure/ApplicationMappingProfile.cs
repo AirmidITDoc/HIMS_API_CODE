@@ -27,6 +27,8 @@ namespace HIMS.API.Infrastructure
 
             // Master
 
+            CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<MPathParameterMaster, ParameterMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MParameterDescriptiveMaster, MParameterDescriptiveMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathParaRangeWithAgeMaster, MPathParaRangeWithAgeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
