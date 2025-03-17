@@ -7,6 +7,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
@@ -27,7 +28,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BTransferModel obj)
         {
             TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
@@ -42,17 +43,12 @@ namespace HIMS.API.Controllers.IPPatient
                 //objbed.AddedBy = CurrentUserId;
 
                 obj.Admssion.AdmissionId = obj.Admssion.AdmissionId;
-
-
-
                 await _IBedTransferService.InsertAsyncSP(model, objbed, objAdd ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer Updated successfully.");
         }
-
-        
 
     }
 }

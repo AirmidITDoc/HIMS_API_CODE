@@ -9,10 +9,7 @@ namespace HIMS.Services.IPPatient
 {
     public partial  interface IBedTransferService
     {
-        Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster objBedMaster, Admission objAdmission, int CurrentUserId, string CurrentUserName);
-
-        //Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster objBedMaster,   int CurrentUserId, string CurrentUserName);
-
+        Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster ,Admission ObjAdmission, int CurrentUserId, string CurrentUserName);
 
     }
 }
