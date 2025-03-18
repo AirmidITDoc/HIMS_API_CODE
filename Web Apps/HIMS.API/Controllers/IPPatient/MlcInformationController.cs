@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.Mlcid == id);
+            var data = await _repository.GetById(x => x.AdmissionId == id);
             return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("TMlcinformation");
         }
         //Add API
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation added successfully."+model.AdmissionId);
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mlcinformation  updated successfully."+ model.AdmissionId);
         }
         //Delete API
         [HttpDelete]

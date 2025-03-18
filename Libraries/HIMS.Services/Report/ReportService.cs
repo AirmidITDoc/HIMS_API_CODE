@@ -4200,13 +4200,13 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                             html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                             html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                            //html = html.Replace("{{Remark}}", Bills.GetColValue("Remark"));
-                            //html = html.Replace("{{DetailGiven}}", Bills.GetColValue("DetailGiven"));
+                            html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
+                            html = html.Replace("{{DetailGiven}}", dt.GetColValue("DetailGiven"));
 
 
-                            //html = html.Replace("{{chkRemarkflag}}", Bills.GetColValue("Remark") != null ? "table-row " : "none");
+                            //html = html.Replace("{{chkRemarkflag}}", dt.GetColValue("Remark") != null ? "table-row " : "none");
 
-                            //html = html.Replace("{{chkgivenflag}}", Bills.GetColValue("DetailGiven").ConvertToString() != "" ? "table -row " : "none");
+                            //html = html.Replace("{{chkgivenflag}}", dt.GetColValue("DetailGiven").ConvertToString() != "" ? "table -row " : "none");
 
                             html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
