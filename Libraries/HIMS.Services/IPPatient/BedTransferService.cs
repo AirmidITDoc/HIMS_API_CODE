@@ -43,13 +43,13 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("v_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
 
-            //string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            //var bedentity = ObjBedMaster.ToDictionary();
-            //foreach (var rProperty in BedEntity)
-            //{
-            //    bedentity.Remove(rProperty);
-            //}
-            //odal.ExecuteNonQuery("v_update_BedMaster", CommandType.StoredProcedure, bedentity);
+            string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var bedentity = ObjBedMaster.ToDictionary();
+            foreach (var rProperty in BedEntity)
+            {
+                bedentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("v_update_BedMaster", CommandType.StoredProcedure, bedentity);
 
             string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId", "DepartmentId",
                 "RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime",
