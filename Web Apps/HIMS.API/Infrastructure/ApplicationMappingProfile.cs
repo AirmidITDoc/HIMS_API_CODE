@@ -34,7 +34,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathParaRangeWithAgeMaster, MPathParaRangeWithAgeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathParameterMaster, UpdateParameterFormulaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            CreateMap<MModeOfPayment, MModeOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathTestFormula, MPathTestFormulaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfiguration, MReportConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OTBookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

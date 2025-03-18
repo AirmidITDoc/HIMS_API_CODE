@@ -6,6 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long Id { get; set; }
         public string? ModeOfPayment { get; set; }
+        public bool IsActive { get; set; }
     }
     public class ModeOfPaymentModelValidator : AbstractValidator<ModeOfPaymentModel>
     {

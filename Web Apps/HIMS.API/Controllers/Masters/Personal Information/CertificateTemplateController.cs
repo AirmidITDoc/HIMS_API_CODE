@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Post(CertificateTemplateModel obj)
         {
             MCertificateTemplateMaster model = obj.MapTo<MCertificateTemplateMaster>();
-            model.IsActive = true;
+            model.Isdeleted = false;
             if (obj.TemplateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(CertificateTemplateModel obj)
         {
             MCertificateTemplateMaster model = obj.MapTo<MCertificateTemplateMaster>();
-            model.IsActive = true;
+            model.Isdeleted = false;
             if (obj.TemplateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             MCertificateTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);
             if ((model?.TemplateId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.Isdeleted = true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

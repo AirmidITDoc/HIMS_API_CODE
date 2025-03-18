@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TSalesHeader
     {
-        public TSalesHeader()
-        {
-            TSalesDetails = new HashSet<TSalesDetail>();
-        }
-
         public long SalesId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }

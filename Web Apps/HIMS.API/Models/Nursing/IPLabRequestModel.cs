@@ -14,7 +14,7 @@ namespace HIMS.API.Models.Nursing
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public DateTime? IsCancelledTime { get; set; }
+        public string? IsCancelledTime { get; set; }
         public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
         public List<TDLabRequestModel> TDlabRequests { get; set; }
@@ -34,7 +34,7 @@ namespace HIMS.API.Models.Nursing
     {
         public int ReqDetId { get; set; }
         public int? RequestId { get; set; }
-        public long? ServiceId { get; set; }
+        public int? ServiceId { get; set; }
         public decimal? Price { get; set; }
         public bool? IsStatus { get; set; }
         public long? AddedBillingId { get; set; }

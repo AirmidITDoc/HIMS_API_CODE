@@ -13,6 +13,7 @@ namespace HIMS.Data.Models
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
+        public long? ModeOfDischargeId { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? IsCancelledby { get; set; }
@@ -22,5 +23,9 @@ namespace HIMS.Data.Models
         public DateTime? MrdreceivedTime { get; set; }
         public long? MrdreceivedUserId { get; set; }
         public string? MrdreceivedName { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

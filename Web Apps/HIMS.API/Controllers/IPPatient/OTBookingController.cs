@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.IPPatient
             if (obj.OtbookingId == 0)
             {
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
-                model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 //model.IsActive = true;
                 await _OTBookingRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
