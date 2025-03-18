@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MSupplierMaster
     {
-        public MSupplierMaster()
-        {
-            MAssignSupplierToStores = new HashSet<MAssignSupplierToStore>();
-        }
-
         public long SupplierId { get; set; }
         public string? SupplierName { get; set; }
         public string? ContactPerson { get; set; }
@@ -28,7 +23,6 @@ namespace HIMS.Data.Models
         public long? CurrencyId { get; set; }
         public long? Octroi { get; set; }
         public long? Freight { get; set; }
-        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? Gstno { get; set; }
@@ -45,12 +39,12 @@ namespace HIMS.Data.Models
         public string? Ifsccode { get; set; }
         public long? VenderTypeId { get; set; }
         public decimal? OpeningBalance { get; set; }
+        public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? SupplierTime { get; set; }
-
         public virtual ICollection<MAssignSupplierToStore> MAssignSupplierToStores { get; set; }
     }
 }

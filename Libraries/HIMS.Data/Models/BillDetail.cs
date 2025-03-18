@@ -6,9 +6,9 @@ namespace HIMS.Data.Models
     public partial class BillDetail
     {
         public long BillDetailId { get; set; }
-        public long BillNo { get; set; }
+        public long? BillNo { get; set; }
         public long? ChargesId { get; set; }
 
-        public virtual Bill BillNoNavigation { get; set; } = null!;
+        public virtual Bill? BillNoNavigation { get; set; }
     }
 }

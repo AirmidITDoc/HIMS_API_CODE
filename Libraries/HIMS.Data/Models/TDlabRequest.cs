@@ -16,7 +16,5 @@ namespace HIMS.Data.Models
         public long? CharId { get; set; }
         public bool? IsTestCompted { get; set; }
         public bool? IsOnFileTest { get; set; }
-
-        public virtual THlabRequest? Request { get; set; }
     }
 }

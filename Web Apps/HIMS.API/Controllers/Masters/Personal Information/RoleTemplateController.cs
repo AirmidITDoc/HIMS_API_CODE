@@ -52,8 +52,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             model.IsActive = true;
             if (obj.RoleId == 0)
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -71,8 +69,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleTemplate  updated successfully.");
@@ -86,8 +82,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             if ((model?.RoleId ?? 0) > 0)
             {
                 model.IsActive = false;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleTemplate  deleted successfully.");
             }

@@ -3,7 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
+using HIMS.API.Utility;
 using HIMS.Core.Infrastructure;
+using HIMS.Core.Utilities;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
@@ -39,19 +41,26 @@ namespace HIMS.API.Controllers.Login
         [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
         public async Task<ApiResponse> Authenticate([FromBody] AuthenticateModel model)
         {
-            //if (string.IsNullOrWhiteSpace(model.CaptchaCode))
-            //{
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
-            //}
-            //else 
-            if (string.IsNullOrWhiteSpace(model.Username))
+            //string id = Guid.NewGuid().ToString();
+            //string secret = ApiKeyUtility.EncryptString(id + "|" + DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
+            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value;
+            string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value;
+            string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
+            if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= DateTime.Now)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
-            }
-            else
-            {
-                //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                //if (string.IsNullOrWhiteSpace(model.CaptchaCode))
                 //{
+                //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
+                //}
+                //else 
+                if (string.IsNullOrWhiteSpace(model.Username))
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
+                }
+                else
+                {
+                    //if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                    //{
                     LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
                     if (user == null)
                     {
@@ -72,11 +81,15 @@ namespace HIMS.API.Controllers.Login
                             user.UserId
                         });
                     }
-                //}
-                //else
-                //{
-                //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
-                //}
+                    //}
+                    //else
+                    //{
+                    //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                    //}
+                }
+            }
+            else {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "API product key expired.");
             }
         }
         [NonAction]

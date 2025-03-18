@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MItemMaster
     {
-        public MItemMaster()
-        {
-            MAssignItemToStores = new HashSet<MAssignItemToStore>();
-        }
-
         public long ItemId { get; set; }
         public string? ItemShortName { get; set; }
         public string? ItemName { get; set; }
@@ -47,15 +42,15 @@ namespace HIMS.Data.Models
         public long? ItemCompnayId { get; set; }
         public DateTime? IsCreatedBy { get; set; }
         public DateTime? IsUpdatedBy { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ItemTime { get; set; }
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
         public string? Instruction { get; set; }
+        public DateTime? ItemTime { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
         public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }
+
     }
 }

@@ -24,7 +24,7 @@ namespace HIMS.Data.Models
         public bool? IsPatientInfo { get; set; }
         public bool? IsDateInterval { get; set; }
         public int? IsDateIntervalDays { get; set; }
-        public string MailId { get; set; } = null!;
+        public string? MailId { get; set; }
         public string? MailDomain { get; set; }
         public bool? LoginStatus { get; set; }
         public bool? AddChargeIsDelete { get; set; }
@@ -33,17 +33,17 @@ namespace HIMS.Data.Models
         public bool? IsRefDocEditOpt { get; set; }
         public bool? IsInchIndVfy { get; set; }
         public long? WebRoleId { get; set; }
-        public string? UserToken { get; set; }
         public int? PharExtOpt { get; set; }
         public int? PharOpopt { get; set; }
         public int? PharIpopt { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public string? UserToken { get; set; }
         public long? UnitId { get; set; }
         public long? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
