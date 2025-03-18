@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TIndentHeader
     {
-        public TIndentHeader()
-        {
-            TIndentDetails = new HashSet<TIndentDetail>();
-        }
-
         public long IndentId { get; set; }
         public string? IndentNo { get; set; }
         public DateTime? IndentDate { get; set; }
@@ -24,7 +19,6 @@ namespace HIMS.Data.Models
         public long? IsInchargeVerifyId { get; set; }
         public DateTime? IsInchargeVerifyDate { get; set; }
         public string? Comments { get; set; }
-
         public virtual ICollection<TIndentDetail> TIndentDetails { get; set; }
     }
 }

@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class MenuMaster
     {
+        public MenuMaster()
+        {
+            PermissionMasters = new HashSet<PermissionMaster>();
+        }
+
         public int Id { get; set; }
         public int? UpId { get; set; }
         public string LinkName { get; set; } = null!;
@@ -15,5 +20,7 @@ namespace HIMS.Data.Models
         public bool IsDisplay { get; set; }
         public string? PermissionCode { get; set; }
         public string? TableNames { get; set; }
+
+        public virtual ICollection<PermissionMaster> PermissionMasters { get; set; }
     }
 }

@@ -23,8 +23,13 @@ namespace HIMS.Data.Models
         public string? AnesthType { get; set; }
         public bool? UnBooking { get; set; }
         public string? Instruction { get; set; }
-        public long? IsAddedBy { get; set; }
-        public long? IsUpdatedBy { get; set; }
         public long? OttypeId { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
     }
 }
