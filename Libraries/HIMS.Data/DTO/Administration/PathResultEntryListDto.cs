@@ -27,11 +27,11 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsPrinted { get; set; }
         public long? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
-        public bool? PatientType { get; set; }
+        public string? PatientType { get; set; }
         public string? PBillNo { get; set; }
-        public long AgeYear { get; set; }
+        public string AgeYear { get; set; }
         public string? GenderName { get; set; }
-        public string? IsTemplateTest { get; set; }
+        public long? IsTemplateTest { get; set; }
         public string? CategoryName { get; set; }
         public long ChargeId { get; set; }
         public long? Adm_Visit_docId { get; set; }

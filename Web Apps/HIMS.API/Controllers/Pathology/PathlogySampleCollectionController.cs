@@ -59,19 +59,17 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(PathRadServiceList.ToGridResponse(objGrid, "PathRadService List "));
         }
         [HttpPut("PathlogySampleCollectionUpdate")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(PathlogySampleCollectionModel obj)
+        //  [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
-            TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
-            if (obj.PathReportId != 0)
-            {
-                model.PathDate = Convert.ToDateTime(obj.PathDate);
-                model.PathTime = Convert.ToDateTime(obj.PathTime);
-                model.AddedBy = CurrentUserId;
+            List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
+         
+                //   model.PathDate = Convert.ToDateTime(obj.PathDate);
+                // model.PathTime = Convert.ToDateTime(obj.PathTime);
+                //  model.AddedBy = CurrentUserId;
                 await _IPathlogySampleCollectionService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+          
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathlogySampleCollection Update successfully.");
         }
 
