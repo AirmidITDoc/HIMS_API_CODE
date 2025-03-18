@@ -40,6 +40,11 @@ namespace HIMS.API.Models.IPPatient
     {
         public long BedId { get; set; }
     }
+    public class BedMasterUpdate
+    {
+        public long BedId { get; set; }
+    }
+
     public class BedMasterTofreebedModelValidator : AbstractValidator<BedMasterTofreebedModel>
     {
         public BedMasterTofreebedModelValidator()
@@ -65,6 +70,7 @@ namespace HIMS.API.Models.IPPatient
     {
         public BedTransferModel BedTransfer { get; set; }
         public BedMasterTofreebedModel BedTofreed { get; set; }
+        public BedMasterUpdate BedUpdate { get; set; }
         public AdmissionforBedModel Admssion { get; set; }
     }
 }
