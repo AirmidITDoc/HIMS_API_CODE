@@ -47,17 +47,23 @@ namespace HIMS.Services.IPPatient
             return await DatabaseHelper.GetGridDataBySp<PathRadServiceListDto>(model, "Rtrv_PathRadServiceList");
 
         }
-        public virtual async Task UpdateAsyncSP(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)
+        public virtual async Task UpdateAsyncSP(List<TPathologyReportHeader> objTPathologyReportHeader, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {"OpdIpdType", "SampleCollectionTime", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails","TPathologyReportTemplateDetails"};
-            var entity = objTPathologyReportHeader.ToDictionary();
-            foreach (var rProperty in rEntity)
+
+            foreach (var item in objTPathologyReportHeader)
             {
-                entity.Remove(rProperty);
+                string[] rEntity = { "OpdIpdType", "SampleCollectionTime", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",
+                                    "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",
+                                        "TPathologyReportTemplateDetails" };
+                var entity = item.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("v_Update_PathologySampleCollection_1", CommandType.StoredProcedure, entity);
+                await _context.SaveChangesAsync(UserId, Username);
             }
-            odal.ExecuteNonQuery("v_Update_PathologySampleCollection_1", CommandType.StoredProcedure , entity);
-            await _context.SaveChangesAsync(UserId, Username);
         }
 
     }

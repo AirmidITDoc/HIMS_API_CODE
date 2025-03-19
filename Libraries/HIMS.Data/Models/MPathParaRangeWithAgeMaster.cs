@@ -16,7 +16,5 @@ namespace HIMS.Data.Models
         public bool? IsDeleted { get; set; }
         public long? Addedby { get; set; }
         public long? Updatedby { get; set; }
-
-        public virtual MPathParameterMaster? Para { get; set; }
     }
 }

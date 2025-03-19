@@ -22,7 +22,7 @@ namespace HIMS.Services.IPPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster,Admission ObjAdmission, int  CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Admission ObjAdmission, int  CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();

@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class DoctorMaster
     {
-        public DoctorMaster()
-        {
-            MDoctorDepartmentDets = new HashSet<MDoctorDepartmentDet>();
-        }
-
         public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
@@ -43,12 +38,11 @@ namespace HIMS.Data.Models
         public bool? IsOnCallDoctor { get; set; }
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
+        public string? Signature { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string? Signature { get; set; }
-
         public virtual ICollection<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; }
     }
 }

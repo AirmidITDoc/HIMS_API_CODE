@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BTransferModel obj)
         {
             TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
@@ -40,6 +40,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.AddedBy = CurrentUserId;
 
                 obj.BedTofreed.BedId = obj.BedTofreed.BedId;
+
                 //objbed.AddedBy = CurrentUserId;
 
                 obj.Admssion.AdmissionId = obj.Admssion.AdmissionId;

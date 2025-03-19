@@ -47,53 +47,6 @@ namespace HIMS.API.Controllers.IPPatient
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
 
-
-        //[HttpPost("AdvanceList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<AdvanceListDto> AdvanceList = await _IAdmissionService.GetAdvanceListAsync(objGrid);
-        //    return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
-        //}
-
-
-        //[HttpPost("RefundOfAdvanceList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> RefundAdvanceList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<RefundOfAdvanceListDto> RefundAdvanceList = await _IAdmissionService.GetRefundOfAdvanceListAsync(objGrid);
-        //    return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
-        //}
-
-
-        //[HttpPost("IPBillList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> BillList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<IPBillListDto> IPBillList = await _IAdmissionService.GetIPBillListListAsync(objGrid);
-        //    return Ok(IPBillList.ToGridResponse(objGrid, "IP Bill List"));
-        //}
-
-
-        //[HttpPost("IPPaymentList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<IPPaymentListDto> IPPaymentList = await _IAdmissionService.GetIPPaymentListAsync(objGrid);
-        //    return Ok(IPPaymentList.ToGridResponse(objGrid, "IP Payment List List"));
-        //}
-
-
-        //[HttpPost("IPRefundBillList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<IPRefundBillListDto> IPRefundBillList = await _IAdmissionService.GetIPRefundBillListListAsync(objGrid);
-        //    return Ok(IPRefundBillList.ToGridResponse(objGrid, "IP Refund Bill List"));
-        //}
-
-
-
         [HttpPost("AdmissionInsertSP")]
         //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse AdmissionInsertSP(NewAdmission obj)
@@ -108,7 +61,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission added successfully." + objAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission added successfully." /*+ objAdmission.AdmissionId*/);
         }
 
 

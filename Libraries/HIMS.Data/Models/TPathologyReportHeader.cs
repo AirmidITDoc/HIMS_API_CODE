@@ -5,12 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TPathologyReportHeader
     {
-        public TPathologyReportHeader()
-        {
-            TPathologyReportDetails = new HashSet<TPathologyReportDetail>();
-            TPathologyReportTemplateDetails = new HashSet<TPathologyReportTemplateDetail>();
-        }
-
         public long PathReportId { get; set; }
         public DateTime? PathDate { get; set; }
         public DateTime? PathTime { get; set; }
@@ -41,8 +35,5 @@ namespace HIMS.Data.Models
         public bool? IsVerifySign { get; set; }
         public long? IsVerifyid { get; set; }
         public DateTime? IsVerifyedDate { get; set; }
-
-        public virtual ICollection<TPathologyReportDetail> TPathologyReportDetails { get; set; }
-        public virtual ICollection<TPathologyReportTemplateDetail> TPathologyReportTemplateDetails { get; set; }
     }
 }

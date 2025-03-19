@@ -5,12 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MPathTestMaster
     {
-        public MPathTestMaster()
-        {
-            MPathTemplateDetails = new HashSet<MPathTemplateDetail>();
-            MPathTestDetailMasters = new HashSet<MPathTestDetailMaster>();
-        }
-
         public long TestId { get; set; }
         public string? TestName { get; set; }
         public string? PrintTestName { get; set; }
@@ -20,19 +14,20 @@ namespace HIMS.Data.Models
         public string? MachineName { get; set; }
         public string? SuggestionNote { get; set; }
         public string? FootNote { get; set; }
-        public bool? IsActive { get; set; }
+        public bool? Isdeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? CreatedBy { get; set; }
+        public bool? IsCategoryPrint { get; set; }
+        public bool? IsPrintTestName { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime? TestTime { get; set; }
         public DateTime? TestDate { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public bool? Isdeleted { get; set; }
-
         public virtual ICollection<MPathTemplateDetail> MPathTemplateDetails { get; set; }
         public virtual ICollection<MPathTestDetailMaster> MPathTestDetailMasters { get; set; }
     }
