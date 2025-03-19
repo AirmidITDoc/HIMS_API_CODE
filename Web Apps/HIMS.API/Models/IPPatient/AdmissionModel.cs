@@ -105,7 +105,7 @@ namespace HIMS.API.Models.IPPatient
     public class NewAdmission
     {
         public AdmissionRegModel AdmissionReg { get; set; }
-        public ADMISSIONModel ADMISSION { get; set; }
+        public ADMISSIONModel Admission { get; set; }
     }
     public class BedMaster
     {
