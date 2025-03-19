@@ -71,6 +71,7 @@ namespace HIMS.API.Models.IPPatient
         public long? ClassId { get; set; }
         public long? DepartmentId { get; set; }
         public string? RelativeName { get; set; }
+        public string? RelativeAddress { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
         public long? RelationshipId { get; set; }
@@ -84,7 +85,7 @@ namespace HIMS.API.Models.IPPatient
         public long? SubTpaComId { get; set; }
         public string? PolicyNo { get; set; }
         public bool? IsOpToIpconv { get; set; }
-        public decimal? ApprovedAmount { get; set; }
+        public decimal? AprovAmount { get; set; }
         public DateTime? CompDod { get; set; }
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }

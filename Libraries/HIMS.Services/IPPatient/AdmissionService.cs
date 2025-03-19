@@ -35,8 +35,6 @@ namespace HIMS.Services.IPPatient
         public virtual void InsertAsyncSP(Registration objRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
 
-
-
             // OLD CODE With SP
             DatabaseHelper odal = new();
             string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
@@ -45,19 +43,20 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            string RegId = odal.ExecuteNonQuery("v_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
             objAdmission.RegId = Convert.ToInt32(RegId);
             
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
-            "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
-            "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
+            "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
+            "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
+            "HBalAmt","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
             var admientity = objAdmission.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
                 admientity.Remove(rProperty);
             }
-            string VAdmissionId = odal.ExecuteNonQuery("v_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
+            string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
 
             var tokenObj = new
