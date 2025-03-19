@@ -37,6 +37,7 @@ namespace HIMS.API.Models.IPPatient
         public byte? IsNormalOrDeath { get; set; }
         public long DischargeSummaryId { get; set; }
 
+
     }
     public class DischargeSummaryModelValidator : AbstractValidator<DischargeSummaryModel>
     {
