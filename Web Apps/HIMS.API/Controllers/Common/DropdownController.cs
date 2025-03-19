@@ -77,6 +77,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MReportTemplateConfig> _IMReportConfTemplate;
         private readonly IGenericService<MTalukaMaster> _IMTalukaMaster;
         private readonly IGenericService<MModeOfDischarge> _IMModeofdischarge;
+        private readonly IGenericService<MSupplierMaster> _IMSupplierMaster; 
 
 
 
@@ -101,7 +102,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MPresTemplateH> IMDPresTemplateH,
               IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
               IGenericService<MTalukaMaster> IMTalukaMaster,
-              IGenericService<MModeOfDischarge> iMModeofdischarge
+              IGenericService<MModeOfDischarge> iMModeofdischarge,
+              IGenericService<MSupplierMaster> iMSupplierMaster
               )
         {
             _IAreaService = areaservice;
@@ -162,6 +164,7 @@ namespace HIMS.API.Controllers.Common
             _IMReportConfTemplate = IMReportTemplateConfig;
             _IMTalukaMaster = IMTalukaMaster;
             _IMModeofdischarge = iMModeofdischarge;
+            _IMSupplierMaster = iMSupplierMaster
         }
 
         [HttpGet]
@@ -223,6 +226,8 @@ namespace HIMS.API.Controllers.Common
                 "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
+                "SupplierMaster" => (await _IMSupplierMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSupplierMaster.SupplierId), nameof(MSupplierMaster.SupplierName), nameof(MSupplierMaster.Gstno)),
+
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
                 "NurNote" => (await _IMNurNoteervice.GetAll()).ToList().ToDropDown(nameof(TNursingNote.DocNoteId), nameof(TNursingNote.NursingNotes)),
@@ -233,7 +238,7 @@ namespace HIMS.API.Controllers.Common
                 "WebRole" => (await _IMRoleMasterservice.GetAll()).ToList().ToDropDown(nameof(RoleMaster.RoleId), nameof(RoleMaster.RoleName)),
 
                 "DoseMaster" => (await _IMDoseMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDoseMaster.DoseId), nameof(MDoseMaster.DoseName)),
-                //"PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
+                "PrescriptionTemplateMaster" => (await _IMPresTemplateH.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPresTemplateH.PresId), nameof(MPresTemplateH.PresTemplateName)),
                 "CasepaperDignosis" => (await _IMOPCasepaperDignosisMaster.GetAll()).ToList().ToDropDown(nameof(MOpcasepaperDignosisMaster.DescriptionType), nameof(MOpcasepaperDignosisMaster.DescriptionName)),
                 "DischargeTemplate" => (await _IMReportConfTemplate.GetAll()).ToList().ToDropDown(nameof(MReportTemplateConfig.TemplateId), nameof(MReportTemplateConfig.TemplateName)),
                 "ModeOfDischarge" => (await _IMModeofdischarge.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfDischarge.ModeOfDischargeId), nameof(MModeOfDischarge.ModeOfDischargeName)),
