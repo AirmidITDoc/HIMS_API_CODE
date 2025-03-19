@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse AdmissionInsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
@@ -66,21 +66,17 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionRegisteredInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AdmissionRegisteredInsertSP(NewAdmission obj)
         {
 
             Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
-
             await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
-
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully." + objAdmission.AdmissionId);
         }
-
-
-        //[HttpPost("AdmissionUpdateSP")]
+        
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
         {
 
@@ -97,7 +93,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Admission  Updated successfully." + objAdmission.AdmissionId);
         }
         [HttpGet("search-patient")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
