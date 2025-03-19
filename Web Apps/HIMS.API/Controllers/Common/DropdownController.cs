@@ -162,12 +162,11 @@ namespace HIMS.API.Controllers.Common
             _IMmenuMasterService = iMDmenuMaster;
             _IMDoseMaster = IMDdoseMaster;
             _IMPresTemplateH = IMDPresTemplateH;
-            _IMOPCasepaperDignosisMaster = _IMOPCasepaperDignosisMaster;
+            _IMOPCasepaperDignosisMaster = IMDOPCasepaperDignosisMaster;
             _IMReportConfTemplate = IMReportTemplateConfig;
             _IMTalukaMaster = IMTalukaMaster;
             _IMModeofdischarge = iMModeofdischarge;
             _IMSupplierMaster = iMSupplierMaster;
-            _IMRadioMaster = iMRadiomaster;
         }
 
         [HttpGet]
@@ -220,7 +219,7 @@ namespace HIMS.API.Controllers.Common
                 "GroupName" => (await _IMgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(GroupMaster.GroupId), nameof(GroupMaster.GroupName)),
                 "SubGroupName" => (await _IMsubgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubGroupMaster.SubGroupId), nameof(MSubGroupMaster.SubGroupName)),
                 "Template" => (await _IMtemplateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTemplateMaster.TemplateId), nameof(MTemplateMaster.TemplateName)),
-                "RadioTemplate" => (await _IMRadioMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
+                //"RadioTemplate" => (await _IMRadioTemplate.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
 
                 "ItemClass" => (await _IMItemclassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemClassMaster.ItemClassId), nameof(MItemClassMaster.ItemClassName)),
                 "ItemCategory" => (await _IMItemcategoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemCategoryMaster.ItemCategoryId), nameof(MItemCategoryMaster.ItemCategoryName)),

@@ -21,7 +21,7 @@ using System.Security;
 
 
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.IPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.OutPatient
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.ChargesId == 0)
             {
-                
+
                 model.AddedBy = CurrentUserId;
                 await _IPBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.", model);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -122,7 +122,7 @@ namespace HIMS.API.Controllers.OutPatient
                 paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
                 paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
                 Model.AddedBy = CurrentUserId;
-                await _IPBillService.IPbillAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader,CurrentUserId, CurrentUserName);
+                await _IPBillService.IPbillAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -138,7 +138,7 @@ namespace HIMS.API.Controllers.OutPatient
             BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
             AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
             Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
-         //   Payment paymentModel = obj.payment.MapTo<Payment>();
+            //   Payment paymentModel = obj.payment.MapTo<Payment>();
             Bill BillModel = obj.Bills.MapTo<Bill>();
             List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
             AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
@@ -146,10 +146,10 @@ namespace HIMS.API.Controllers.OutPatient
             {
                 Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
                 Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
-              //  paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
-             //   paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
+                //  paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
+                //   paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
                 Model.AddedBy = CurrentUserId;
-                await _IPBillService.IPbillCreditAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel,  BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPbillCreditAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -163,20 +163,20 @@ namespace HIMS.API.Controllers.OutPatient
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
             Bill Model = obj.IPBillling.MapTo<Bill>();
-          List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
-          //  Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
-               Payment paymentModel = obj.payments.MapTo<Payment>();
-          //  Bill BillModel = obj.Bills.MapTo<Bill>();
-           // List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
-          //  AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+            List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
+            //  Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
+            Payment paymentModel = obj.payments.MapTo<Payment>();
+            //  Bill BillModel = obj.Bills.MapTo<Bill>();
+            // List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
+            //  AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
             if (obj.IPBillling.BillNo == 0)
             {
                 Model.BillDate = Convert.ToDateTime(obj.IPBillling.BillDate);
                 Model.BillTime = Convert.ToDateTime(obj.IPBillling.BillTime);
-                 paymentModel.PaymentDate = Convert.ToDateTime(obj.payments.PaymentDate);
-                   paymentModel.PaymentTime = Convert.ToDateTime(obj.payments.PaymentTime);
+                paymentModel.PaymentDate = Convert.ToDateTime(obj.payments.PaymentDate);
+                paymentModel.PaymentTime = Convert.ToDateTime(obj.payments.PaymentTime);
                 Model.AddedBy = CurrentUserId;
-                await _IPBillService.IPInterimBillCashCounterAsyncSp(AddChargeModel,Model, BillDetailModel,  paymentModel, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPInterimBillCashCounterAsyncSp(AddChargeModel, Model, BillDetailModel, paymentModel, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -188,7 +188,7 @@ namespace HIMS.API.Controllers.OutPatient
         {
 
             TDrbill Model = obj.TDrbill.MapTo<TDrbill>();
-          List<TDrbillDet> DetModel = obj.TDRBillDet.MapTo<List<TDrbillDet>>();
+            List<TDrbillDet> DetModel = obj.TDRBillDet.MapTo<List<TDrbillDet>>();
 
             if (obj.TDrbill.Drbno == 0)
             {
@@ -212,7 +212,7 @@ namespace HIMS.API.Controllers.OutPatient
 
             if (obj.DeleteCharges.ChargesId != 0)
             {
-               
+
 
 
                 Model.AddedBy = CurrentUserId;
