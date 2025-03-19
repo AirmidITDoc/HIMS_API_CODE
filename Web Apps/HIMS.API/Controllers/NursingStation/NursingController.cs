@@ -11,7 +11,7 @@ using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
-using HIMS.Services.NursingStation;
+//using HIMS.Services.NursingStation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.NursingStation

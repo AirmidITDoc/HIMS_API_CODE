@@ -25,4 +25,8 @@
     <None Include="D:\AIRID\Libraries\HIMS.Services\Inventory\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NursingStation\" />
+  </ItemGroup>
+
 </Project>

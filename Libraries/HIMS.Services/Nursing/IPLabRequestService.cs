@@ -1,6 +1,6 @@
 ﻿using HIMS.Data.Models;
 
-namespace HIMS.Services.NursingStation
+namespace HIMS.Services.Nursing
 {
     public class IPLabRequestService : IIPLabRequestService
     {
@@ -10,7 +10,7 @@ namespace HIMS.Services.NursingStation
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(THlabRequest objTHlabRequest,int currentUserId, string currentUserName)
+        public virtual async Task InsertAsyncSP(THlabRequest objTHlabRequest, int currentUserId, string currentUserName)
         {
 
             // OLD CODE With SP

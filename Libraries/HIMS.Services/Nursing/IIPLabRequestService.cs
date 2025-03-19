@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services.NursingStation
+namespace HIMS.Services.Nursing
 {
     public partial interface IIPLabRequestService
     {
