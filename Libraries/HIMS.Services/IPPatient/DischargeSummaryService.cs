@@ -148,13 +148,12 @@ namespace HIMS.Services.IPPatient
                 Sentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
-
+          
             var tokensObj = new
             {
                 OPDIPDID = Convert.ToInt32(ObjDischargeTemplate.AdmissionId)
             };
             odal.ExecuteNonQuery("PS_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
-
             foreach (var item in ObjTIpPrescriptionTemplate)
             {
                 string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
@@ -164,8 +163,9 @@ namespace HIMS.Services.IPPatient
                     pentity.Remove(Property);
                 }
                 odal.ExecuteNonQuery("v_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
-            }
 
+
+            }
         }
         public virtual async Task InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName)
         {

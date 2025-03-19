@@ -184,6 +184,7 @@ namespace HIMS.API.Models.IPPatient
     public class DischargeTemplateUpdate
     {
         public long DischargeSummaryId { get; set; }
+        public long AdmissionId { get; set; }
         public long? DischargeId { get; set; }
         public DateTime? Followupdate { get; set; }
         public long? DischargeDoctor1 { get; set; }
@@ -203,7 +204,7 @@ namespace HIMS.API.Models.IPPatient
     }
     public class PrescriptionTemplatUpdate
     {
-        public long? OPDIPDID { get; set; }
+        public long? OpdIpdId { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Date { get; set; }
         public string? Ptime { get; set; }
