@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.IPPatient
             _repository1 = AdvanceHeaderrepository;
         }
         [HttpPost("PatientWiseAdvanceList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientWiseAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
         [HttpPost("PatientRefundOfAdvancesList")]
-     //   [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
@@ -130,9 +130,10 @@ namespace HIMS.API.Controllers.IPPatient
         {
             Refund model = obj.Refund.MapTo<Refund>();
             AdvanceHeader AdvanceHeadermodel = obj.advanceHeaderupdate.MapTo<AdvanceHeader>();
-          List<AdvRefundDetail> AdvDetailmodel = obj.AdvDetailRefund.MapTo<List<AdvRefundDetail>>();
-           List<AdvanceDetail> objAdvanceDetail = obj.AdveDetailupdate.MapTo<List<AdvanceDetail>>();
-             Payment objpayment = obj.payment.MapTo<Payment>();
+            List<AdvRefundDetail> AdvDetailmodel = obj.AdvDetailRefund.MapTo<List<AdvRefundDetail>>();
+            List<AdvanceDetail> objAdvanceDetail = obj.AdveDetailupdate.MapTo<List<AdvanceDetail>>();
+            Payment objpayment = obj.payment.MapTo<Payment>();
+            
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundDate = Convert.ToDateTime(obj.Refund.RefundDate);

@@ -77,8 +77,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MReportTemplateConfig> _IMReportConfTemplate;
         private readonly IGenericService<MTalukaMaster> _IMTalukaMaster;
         private readonly IGenericService<MModeOfDischarge> _IMModeofdischarge;
-        private readonly IGenericService<MSupplierMaster> _IMSupplierMaster; 
-
+        private readonly IGenericService<MSupplierMaster> _IMSupplierMaster;
+        private readonly IGenericService<MConstant> _IMConstant;
 
 
 
@@ -104,7 +104,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
-              IGenericService<MSupplierMaster> iMSupplierMaster
+              IGenericService<MSupplierMaster> iMSupplierMaster,
+              IGenericService<MConstant> iMConstant
               )
         {
             _IAreaService = areaservice;
@@ -166,6 +167,7 @@ namespace HIMS.API.Controllers.Common
             _IMTalukaMaster = IMTalukaMaster;
             _IMModeofdischarge = iMModeofdischarge;
             _IMSupplierMaster = iMSupplierMaster;
+            _IMConstant = iMConstant;
         }
 
         [HttpGet]
@@ -229,6 +231,7 @@ namespace HIMS.API.Controllers.Common
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
                 "SupplierMaster" => (await _IMSupplierMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSupplierMaster.SupplierId), nameof(MSupplierMaster.SupplierName), nameof(MSupplierMaster.Gstno)),
+                "GstCalcType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_CALC_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
