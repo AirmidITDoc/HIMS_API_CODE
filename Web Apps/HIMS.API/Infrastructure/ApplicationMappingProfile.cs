@@ -137,6 +137,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<InitiateDischarge, InitiateDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TIpPrescriptionDischarge, PrescriptionTemplatUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TIpPrescriptionDischarge, PrescriptionTemplatUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

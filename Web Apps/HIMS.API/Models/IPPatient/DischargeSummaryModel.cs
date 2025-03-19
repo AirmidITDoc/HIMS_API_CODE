@@ -83,6 +83,7 @@ namespace HIMS.API.Models.IPPatient
         public List<PrescriptionDischargeModel> PrescriptionDischarge { get; set; }
 
     }
+    
     public class DischargeSummaryUpdate
     {
         public long DischargeSummaryId { get; set; }
@@ -202,7 +203,7 @@ namespace HIMS.API.Models.IPPatient
     }
     public class PrescriptionTemplatUpdate
     {
-        public long? OpdIpdId { get; set; }
+        public long? OPDIPDID { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Date { get; set; }
         public string? Ptime { get; set; }
@@ -232,7 +233,7 @@ namespace HIMS.API.Models.IPPatient
     public class DischargeTemUpdate
     {
         public DischargeTemplateUpdate Discharge { get; set; }
-        public List<PrescriptionTemplateModel> PrescriptionTemplate { get; set; }
+        public List<PrescriptionTemplatUpdate> PrescriptionTemplate { get; set; }
 
     }
 }
