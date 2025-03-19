@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.OutPatient
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
-            _IOPSettlementService= repository2;
+            _IOPSettlementService = repository2;
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
         }
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.OutPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully."+model.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully." + model.BillNo);
         }
 
         [HttpPost("OPCreditBillingInsert")]

@@ -17,10 +17,10 @@ namespace HIMS.Data.DTO.OPPatient
     public class ServiceMasterDTO : ServiceMaster
     {
         public long ServiceId { get; set; }
-        public string ServiceName { get; set; }
+        public string? ServiceName { get; set; }
         public decimal? ClassRate { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
-        public string FormattedText { get { return this.ServiceName + " | " + this.ClassRate; } }
+        //public string FormattedText { get { return this.ServiceName + " | " + this.ClassRate; } }
     }
 }

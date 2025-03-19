@@ -20,7 +20,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.OutPatient.TPrescriptionModel;
 
-namespace HIMS.API.Controllers.OutPatient
+namespace HIMS.API.Controllers.OPPatient
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> GetDignosDropdown()
         {
             var MDignosMasterList = await _Dignos.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Dignosis dropdown", MDignosMasterList.Select(x => new {x.Id, x.DescriptionName, x.VisitId, x.DescriptionType }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Dignosis dropdown", MDignosMasterList.Select(x => new { x.Id, x.DescriptionName, x.VisitId, x.DescriptionType }));
         }
 
         [HttpPost("GetDignosisList")]
@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.OutPatient
             return Ok(List.ToGridResponse(objGrid, "OP Request List"));
         }
 
-       [HttpPost("PrescriptionInsertSP")]
+        [HttpPost("PrescriptionInsertSP")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
@@ -211,12 +211,12 @@ namespace HIMS.API.Controllers.OutPatient
         public async Task<ApiResponse> InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
-            List<MPresTemplateD> objTemplate = obj.PresTemplate.MapTo <List<MPresTemplateD>>();
+            List<MPresTemplateD> objTemplate = obj.PresTemplate.MapTo<List<MPresTemplateD>>();
             if (obj.PrescriptionOPTemplate.PresId == 0)
             {
                 model.CreatedDate = Convert.ToDateTime(model.CreatedDate);
                 model.CreatedBy = CurrentUserId;
-                objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId;});
+                objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId; });
 
                 await _PrescriptionOPTemplateService.InsertAsyncSP(model, objTemplate, CurrentUserId, CurrentUserName);
             }
