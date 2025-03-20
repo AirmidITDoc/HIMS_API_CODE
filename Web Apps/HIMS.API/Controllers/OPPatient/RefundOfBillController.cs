@@ -22,6 +22,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Core;
 
 
 namespace HIMS.API.Controllers.OPPatient
@@ -39,14 +40,14 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPBilllistforrefundList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OpBilllistforRefundDto> BillList = await _IRefundOfBillService.GeOpbilllistforrefundAsync(objGrid);
             return Ok(BillList.ToGridResponse(objGrid, "OP Bill list for refund List"));
         }
         [HttpPost("OPBillservicedetailList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
         public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
@@ -54,7 +55,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RefundAgainstBillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
         public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
@@ -62,7 +63,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("IPBillListforRefundList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillGetListAsync(GridRequestModel objGrid)
         {
             IPagedList<IPBillListforRefundListDto> IPBillListforRefundList = await _IRefundOfBillService.IPBillGetListAsync(objGrid);
@@ -70,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRefundOfBILLInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OPRefund", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();

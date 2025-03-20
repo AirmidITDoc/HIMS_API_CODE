@@ -50,7 +50,7 @@ namespace HIMS.Services.OPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails" };
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails", "AddBy" };
 
             var entity = objRefund.ToDictionary();
             foreach (var rProperty in rEntity)
