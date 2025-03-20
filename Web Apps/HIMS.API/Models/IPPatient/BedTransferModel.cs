@@ -23,8 +23,8 @@ namespace HIMS.API.Models.IPPatient
         public long? AddedBy { get; set; }
         public long? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
-}
- public class BedTransferModelValidator : AbstractValidator<BedTransferModel>
+    }
+    public class BedTransferModelValidator : AbstractValidator<BedTransferModel>
     {
         public BedTransferModelValidator()
         {
@@ -36,7 +36,7 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.ToTime).NotNull().NotEmpty().WithMessage("ToTime is required");
         }
     }
-    public  class BedMasterTofreebedModel
+    public class BedMasterTofreebedModel
     {
         public long BedId { get; set; }
     }

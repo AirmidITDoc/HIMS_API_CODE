@@ -22,11 +22,11 @@ namespace HIMS.Services.IPPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Admission ObjAdmission, int  CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-              string[] rEntity = { "TransferId" };
+            string[] rEntity = { "TransferId" };
             var Entity = objBedTransferDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -44,7 +44,7 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("v_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
 
             string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            var bedentity = ObjBedMaster.ToDictionary();
+            var bedentity = ObjBedMasterUpdate.ToDictionary();
             foreach (var rProperty in BedEntity)
             {
                 bedentity.Remove(rProperty);
