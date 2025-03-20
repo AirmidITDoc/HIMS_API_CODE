@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class DoctorMaster
     {
+        public DoctorMaster()
+        {
+            MDoctorDepartmentDets = new HashSet<MDoctorDepartmentDet>();
+        }
+
         public long DoctorId { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }
@@ -43,6 +48,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
         public virtual ICollection<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; }
     }
 }

@@ -6361,6 +6361,18 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.DocDeptId);
 
                 entity.ToTable("M_DoctorDepartmentDet");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.MDoctorDepartmentDets)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_DoctorDepartmentDet_M_DepartmentMaster");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorDepartmentDets)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_DoctorDepartmentDet_DoctorMaster");
             });
 
             modelBuilder.Entity<MDoctorHouseManMaster>(entity =>
