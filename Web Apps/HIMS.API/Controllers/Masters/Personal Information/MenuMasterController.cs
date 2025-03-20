@@ -33,8 +33,6 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return Ok(MenuMasterList.ToGridResponse(objGrid, "Menu Master List"));
         }
 
-        
-
         [HttpPost("Insertsp")]
         [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(MenuMasterModel obj)
