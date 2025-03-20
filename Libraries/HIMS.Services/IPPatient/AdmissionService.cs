@@ -44,9 +44,14 @@ namespace HIMS.Services.IPPatient
                 entity.Remove(rProperty);
             }
             string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt32(RegId);
-            objAdmission.RegId = Convert.ToInt32(RegId);
-            
+            //objRegistration.RegId = Convert.ToInt32(RegId);
+            //objAdmission.RegId = Convert.ToInt32(RegId);
+
+            objRegistration.RegId = Convert.ToInt64(RegId);
+            objAdmission.RegId = Convert.ToInt64(RegId);
+
+
+
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
             "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
             "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
