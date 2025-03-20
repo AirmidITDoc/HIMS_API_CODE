@@ -5,6 +5,12 @@ namespace HIMS.Data.Models
 {
     public partial class TGrnheader
     {
+        public TGrnheader()
+        {
+            TGrndetails = new HashSet<TGrndetail>();
+            TSupPayDets = new HashSet<TSupPayDet>();
+        }
+
         public long Grnid { get; set; }
         public string? GrnNumber { get; set; }
         public DateTime? Grndate { get; set; }
@@ -47,6 +53,7 @@ namespace HIMS.Data.Models
         public DateTime? PaymentDate { get; set; }
         public string? EwayBillNo { get; set; }
         public DateTime? EwayBillDate { get; set; }
+
         public virtual ICollection<TGrndetail> TGrndetails { get; set; }
         public virtual ICollection<TSupPayDet> TSupPayDets { get; set; }
     }

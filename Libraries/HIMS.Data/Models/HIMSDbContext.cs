@@ -6087,6 +6087,18 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.AssignId);
 
                 entity.ToTable("M_AssignItemToStore");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.MAssignItemToStores)
+                    .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_AssignItemToStore_M_ItemMaster");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.MAssignItemToStores)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_AssignItemToStore_M_StoreMaster");
             });
 
             modelBuilder.Entity<MAssignSupplierToStore>(entity =>
@@ -6095,7 +6107,17 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_AssignSupplierToStore");
 
-                entity.Property(e => e.SupplierId).HasColumnName("SupplierId ");
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.MAssignSupplierToStores)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_AssignSupplierToStore_M_StoreMaster");
+
+                entity.HasOne(d => d.Supplier)
+                    .WithMany(p => p.MAssignSupplierToStores)
+                    .HasForeignKey(d => d.SupplierId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_AssignSupplierToStore_M_SupplierMaster");
             });
 
             modelBuilder.Entity<MBankMaster>(entity =>
@@ -7303,6 +7325,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DefaultValue).HasMaxLength(500);
 
                 entity.Property(e => e.ParameterValues).HasMaxLength(500);
+
+                entity.HasOne(d => d.Parameter)
+                    .WithMany(p => p.MParameterDescriptiveMasters)
+                    .HasForeignKey(d => d.ParameterId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_ParameterDescriptiveMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPastHistoryMaster>(entity =>
@@ -7351,6 +7379,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MaxValue).HasMaxLength(50);
 
                 entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.HasOne(d => d.Para)
+                    .WithMany(p => p.MPathParaRangeWithAgeMasters)
+                    .HasForeignKey(d => d.ParaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_PathParaRangeWithAgeMaster_M_PathParameterMaster");
             });
 
             modelBuilder.Entity<MPathParameterMaster>(entity =>
@@ -7391,6 +7425,12 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_Path_TemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTemplateDetails)
+                    .HasForeignKey(d => d.TestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_Path_TemplateDetails_M_PathTestMaster");
             });
 
             modelBuilder.Entity<MPathTemplateDetail1>(entity =>
@@ -7410,6 +7450,17 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_PathTestDetailMaster");
 
                 entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.HasOne(d => d.Parameter)
+                    .WithMany(p => p.MPathTestDetailMasters)
+                    .HasForeignKey(d => d.ParameterId)
+                    .HasConstraintName("FK_M_PathTestDetailMaster_M_PathParameterMaster");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTestDetailMasters)
+                    .HasForeignKey(d => d.TestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_PathTestDetailMaster_M_PathTestMaster");
             });
 
             modelBuilder.Entity<MPathTestFormula>(entity =>
@@ -7544,6 +7595,18 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_RadiologyTemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Template)
+                    .WithMany(p => p.MRadiologyTemplateDetails)
+                    .HasForeignKey(d => d.TemplateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_RadiologyTemplateDetails_M_Radiology_TemplateMaster");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MRadiologyTemplateDetails)
+                    .HasForeignKey(d => d.TestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_M_RadiologyTemplateDetails_M_RadiologyTestMaster");
             });
 
             modelBuilder.Entity<MRadiologyTemplateMaster>(entity =>
@@ -11020,6 +11083,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Uomid).HasColumnName("UOMId");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Grn)
+                    .WithMany(p => p.TGrndetails)
+                    .HasForeignKey(d => d.Grnid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_GRNDetails_T_GRNHeader");
             });
 
             modelBuilder.Entity<TGrnheader>(entity =>
@@ -11354,7 +11423,15 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_IndentDetails");
 
-                entity.Property(e => e.IsClosed).HasDefaultValueSql("((1))");
+                entity.Property(e => e.IsClosed)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Indent)
+                    .WithMany(p => p.TIndentDetails)
+                    .HasForeignKey(d => d.IndentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IndentDetails_T_IndentHeader");
             });
 
             modelBuilder.Entity<TIndentHeader>(entity =>
@@ -11507,6 +11584,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitPurRate).HasColumnType("money");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Issue)
+                    .WithMany(p => p.TIssueToDepartmentDetails)
+                    .HasForeignKey(d => d.IssueId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IssueToDepartmentDetails_T_IssueToDepartmentHeader");
             });
 
             modelBuilder.Entity<TIssueToDepartmentHeader>(entity =>
@@ -13160,6 +13243,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Uomid).HasColumnName("UOMID");
 
                 entity.Property(e => e.VendDiscAmt).HasColumnType("money");
+
+                entity.HasOne(d => d.Purchase)
+                    .WithMany(p => p.TPurchaseDetails)
+                    .HasForeignKey(d => d.PurchaseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_PurchaseDetail_T_PurchaseHeader");
             });
 
             modelBuilder.Entity<TPurchaseHeader>(entity =>
@@ -13353,8 +13442,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
 
-                entity.Property(e => e.IsPurRate).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.LandedPrice).HasColumnType("money");
 
                 entity.Property(e => e.Mrp).HasColumnType("money");
@@ -13384,6 +13471,12 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.TSalesDetails)
+                    .HasForeignKey(d => d.SalesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_SalesDetails_T_SalesHeader");
             });
 
             modelBuilder.Entity<TSalesDraftDet>(entity =>
@@ -13771,6 +13864,12 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.SupTranId);
 
                 entity.ToTable("T_SupPayDet");
+
+                entity.HasOne(d => d.SupGrn)
+                    .WithMany(p => p.TSupPayDets)
+                    .HasForeignKey(d => d.SupGrnId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_SupPayDet_T_GRNHeader");
             });
 
             modelBuilder.Entity<TTokenNoDoctorWiseMannual>(entity =>

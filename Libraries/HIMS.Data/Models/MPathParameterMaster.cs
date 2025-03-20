@@ -5,6 +5,13 @@ namespace HIMS.Data.Models
 {
     public partial class MPathParameterMaster
     {
+        public MPathParameterMaster()
+        {
+            MParameterDescriptiveMasters = new HashSet<MParameterDescriptiveMaster>();
+            MPathParaRangeWithAgeMasters = new HashSet<MPathParaRangeWithAgeMaster>();
+            MPathTestDetailMasters = new HashSet<MPathTestDetailMaster>();
+        }
+
         public long ParameterId { get; set; }
         public string? ParameterShortName { get; set; }
         public string? ParameterName { get; set; }
@@ -26,8 +33,9 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public virtual ICollection<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasters { get; set; }
-        public virtual ICollection<MParameterDescriptiveMaster> MParameterDescriptiveMasters { get; set; }
 
+        public virtual ICollection<MParameterDescriptiveMaster> MParameterDescriptiveMasters { get; set; }
+        public virtual ICollection<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasters { get; set; }
+        public virtual ICollection<MPathTestDetailMaster> MPathTestDetailMasters { get; set; }
     }
 }

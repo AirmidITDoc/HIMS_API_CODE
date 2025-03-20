@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TPurchaseHeader
     {
+        public TPurchaseHeader()
+        {
+            TPurchaseDetails = new HashSet<TPurchaseDetail>();
+        }
+
         public long PurchaseId { get; set; }
         public string? PurchaseNo { get; set; }
         public DateTime? PurchaseDate { get; set; }

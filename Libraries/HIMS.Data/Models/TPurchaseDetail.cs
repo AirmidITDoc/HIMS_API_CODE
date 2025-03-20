@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class TPurchaseDetail
     {
         public long PurDetId { get; set; }
-        public long? PurchaseId { get; set; }
+        public long PurchaseId { get; set; }
         public long? ItemId { get; set; }
         public long? Uomid { get; set; }
         public double? Qty { get; set; }
@@ -31,5 +31,7 @@ namespace HIMS.Data.Models
         public decimal? DefRate { get; set; }
         public float? VendDiscPer { get; set; }
         public decimal? VendDiscAmt { get; set; }
+
+        public virtual TPurchaseHeader Purchase { get; set; } = null!;
     }
 }

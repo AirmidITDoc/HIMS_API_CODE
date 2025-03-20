@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class TIssueToDepartmentDetail
     {
         public long IssueDepId { get; set; }
-        public long? IssueId { get; set; }
+        public long IssueId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -22,5 +22,7 @@ namespace HIMS.Data.Models
         public float? ReturnQty { get; set; }
         public long? StkId { get; set; }
         public string? Status { get; set; }
+
+        public virtual TIssueToDepartmentHeader Issue { get; set; } = null!;
     }
 }

@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class TGrndetail
     {
         public long GrndetId { get; set; }
-        public long? Grnid { get; set; }
+        public long Grnid { get; set; }
         public long? ItemId { get; set; }
         public long? Uomid { get; set; }
         public float? ReceiveQty { get; set; }
@@ -43,5 +43,7 @@ namespace HIMS.Data.Models
         public long? IsVerifiedUserId { get; set; }
         public double? DiscPerc2 { get; set; }
         public decimal? DiscAmt2 { get; set; }
+
+        public virtual TGrnheader Grn { get; set; } = null!;
     }
 }
