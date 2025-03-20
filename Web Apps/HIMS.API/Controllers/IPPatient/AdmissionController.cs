@@ -48,11 +48,11 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public ApiResponse AdmissionInsertSP(NewAdmission obj)
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        public ApiResponse InsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
-            Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
+            Admission objAdmission = obj.Admission.MapTo<Admission>();
             if (obj.AdmissionReg.RegId == 0)
             {
                 model.RegTime = Convert.ToDateTime(obj.AdmissionReg.RegTime);
@@ -65,23 +65,23 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        [HttpPost("AdmissionRegisteredInsertSP")]
+        [HttpPost("AdmissionRegInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> AdmissionRegisteredInsertSP(NewAdmission obj)
+        public async Task<ApiResponse> Insert(NewAdmission obj)
         {
 
-            Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
+            Admission objAdmission = obj.Admission.MapTo<Admission>();
             await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registered Admission added successfully." + objAdmission.AdmissionId);
         }
         
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> AdmissionUpdateSP(NewAdmission obj)
+        public async Task<ApiResponse> UpdateSP(NewAdmission obj)
         {
 
-            Admission objAdmission = obj.ADMISSION.MapTo<Admission>();
-            if (obj.ADMISSION.AdmissionId != 0)
+            Admission objAdmission = obj.Admission.MapTo<Admission>();
+            if (obj.Admission.AdmissionId != 0)
             {
 
                 objAdmission.IsUpdatedBy = CurrentUserId;
