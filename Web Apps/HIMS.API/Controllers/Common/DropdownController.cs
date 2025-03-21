@@ -79,6 +79,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MModeOfDischarge> _IMModeofdischarge;
         private readonly IGenericService<MSupplierMaster> _IMSupplierMaster;
         private readonly IGenericService<MConstant> _IMConstant;
+        private readonly IGenericService<MRadiologyTemplateMaster> _IMradiotemp;
 
 
 
@@ -105,7 +106,7 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
               IGenericService<MSupplierMaster> iMSupplierMaster,
-              IGenericService<MConstant> iMConstant
+              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp
               )
         {
             _IAreaService = areaservice;
@@ -168,6 +169,7 @@ namespace HIMS.API.Controllers.Common
             _IMModeofdischarge = iMModeofdischarge;
             _IMSupplierMaster = iMSupplierMaster;
             _IMConstant = iMConstant;
+            _IMradiotemp = iMRadioTemp;
         }
 
         [HttpGet]
@@ -213,14 +215,14 @@ namespace HIMS.API.Controllers.Common
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
                 "TermofPayment" => (await _IMTermofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTermsOfPaymentMaster.Id), nameof(MTermsOfPaymentMaster.TermsOfPayment)),
                 "Store" => (await _IMStoreService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),
-                //"PaymentMode" => (await _IMModeofpaymentService.GetAll(x => x.IsActive)).ToList().ToDropDown(nameof(MModeOfPayment.Id), nameof(MModeOfPayment.ModeOfPayment)),
+                "PaymentMode" => (await _IMModeofpaymentService.GetAll(x => x.IsActive)).ToList().ToDropDown(nameof(MModeOfPayment.Id), nameof(MModeOfPayment.ModeOfPayment)),
                 "PathCategory" => (await _IMpathCateggoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathCategoryMaster.CategoryId), nameof(MPathCategoryMaster.CategoryName)),
                 "RadioCategory" => (await _IMradioCateggoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyCategoryMaster.CategoryId), nameof(MPathCategoryMaster.CategoryName)),
                 "Unit" => (await _IMpathunitService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathUnitMaster.UnitId), nameof(MPathUnitMaster.UnitName)),
                 "GroupName" => (await _IMgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(GroupMaster.GroupId), nameof(GroupMaster.GroupName)),
                 "SubGroupName" => (await _IMsubgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubGroupMaster.SubGroupId), nameof(MSubGroupMaster.SubGroupName)),
                 "Template" => (await _IMtemplateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTemplateMaster.TemplateId), nameof(MTemplateMaster.TemplateName)),
-                //"RadioTemplate" => (await _IMRadioTemplate.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
+                "RadioTemplate" => (await _IMradiotemp.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
 
                 "ItemClass" => (await _IMItemclassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemClassMaster.ItemClassId), nameof(MItemClassMaster.ItemClassName)),
                 "ItemCategory" => (await _IMItemcategoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemCategoryMaster.ItemCategoryId), nameof(MItemCategoryMaster.ItemCategoryName)),
