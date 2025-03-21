@@ -23,5 +23,6 @@ namespace HIMS.Data.Models
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
         public long? SiteDescId { get; set; }
+        public int? CreatedBy { get; set; }
     }
 }
