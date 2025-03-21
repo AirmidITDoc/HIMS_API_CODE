@@ -76,15 +76,15 @@ namespace HIMS.API.Controllers.Pathology
 
 
      
-           [HttpPost("PathologyTestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [HttpPost("PathologyTestList")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
             return Ok(PathResultEntryList.ToGridResponse(objGrid, "PathResultEntryList"));
         }
         [HttpPost("InsertResultEntry")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             TPathologyReportDetail model = obj.PathologyResult.MapTo<TPathologyReportDetail>();
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("Pathology")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
