@@ -12,7 +12,6 @@ namespace HIMS.Data.Models
 
         public long DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
-        public bool? IsDeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public bool? IsActive { get; set; }

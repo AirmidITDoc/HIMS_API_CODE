@@ -7,7 +7,6 @@ namespace HIMS.Data.Models
     {
         public long CategoryId { get; set; }
         public string? CategoryName { get; set; }
-        public bool? Isdeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public bool? IsActive { get; set; }
