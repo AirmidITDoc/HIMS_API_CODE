@@ -177,7 +177,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully."+ObjAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully."/*+ObjAdmission.AdmissionId*/);
         }
 
         [HttpPut("DischargeUpdate")]
