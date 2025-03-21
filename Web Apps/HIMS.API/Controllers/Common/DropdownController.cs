@@ -79,6 +79,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MModeOfDischarge> _IMModeofdischarge;
         private readonly IGenericService<MSupplierMaster> _IMSupplierMaster;
         private readonly IGenericService<MConstant> _IMConstant;
+        private readonly IGenericService<MRadiologyTemplateMaster> _IMradiotemp;
 
 
 
@@ -105,7 +106,7 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
               IGenericService<MSupplierMaster> iMSupplierMaster,
-              IGenericService<MConstant> iMConstant
+              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp
               )
         {
             _IAreaService = areaservice;
@@ -168,6 +169,7 @@ namespace HIMS.API.Controllers.Common
             _IMModeofdischarge = iMModeofdischarge;
             _IMSupplierMaster = iMSupplierMaster;
             _IMConstant = iMConstant;
+            _IMradiotemp = iMRadioTemp;
         }
 
         [HttpGet]
@@ -220,7 +222,7 @@ namespace HIMS.API.Controllers.Common
                 "GroupName" => (await _IMgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(GroupMaster.GroupId), nameof(GroupMaster.GroupName)),
                 "SubGroupName" => (await _IMsubgroupService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubGroupMaster.SubGroupId), nameof(MSubGroupMaster.SubGroupName)),
                 "Template" => (await _IMtemplateService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTemplateMaster.TemplateId), nameof(MTemplateMaster.TemplateName)),
-                //"RadioTemplate" => (await _IMRadioTemplate.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
+                "RadioTemplate" => (await _IMradiotemp.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRadiologyTemplateMaster.TemplateId), nameof(MRadiologyTemplateMaster.TemplateName)),
 
                 "ItemClass" => (await _IMItemclassService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemClassMaster.ItemClassId), nameof(MItemClassMaster.ItemClassName)),
                 "ItemCategory" => (await _IMItemcategoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemCategoryMaster.ItemCategoryId), nameof(MItemCategoryMaster.ItemCategoryName)),
