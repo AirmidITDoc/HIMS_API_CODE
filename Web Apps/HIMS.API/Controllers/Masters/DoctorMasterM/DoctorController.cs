@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return data.ToSingleResponse<DoctorMaster, DoctorModel>("Doctor Master");
         }
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();

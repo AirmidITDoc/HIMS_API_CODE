@@ -5,6 +5,12 @@ namespace HIMS.Data.Models
 {
     public partial class TCurrentStock
     {
+        public TCurrentStock()
+        {
+            TBatchAdjustments = new HashSet<TBatchAdjustment>();
+            TStockAdjustments = new HashSet<TStockAdjustment>();
+        }
+
         public long StockId { get; set; }
         public long? StoreId { get; set; }
         public long? ItemId { get; set; }
@@ -27,5 +33,8 @@ namespace HIMS.Data.Models
         public long? IstkId { get; set; }
         public float? GrnRetQty { get; set; }
         public float? IssDeptQty { get; set; }
+
+        public virtual ICollection<TBatchAdjustment> TBatchAdjustments { get; set; }
+        public virtual ICollection<TStockAdjustment> TStockAdjustments { get; set; }
     }
 }

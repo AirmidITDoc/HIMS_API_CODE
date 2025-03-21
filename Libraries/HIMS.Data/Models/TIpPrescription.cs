@@ -23,5 +23,7 @@ namespace HIMS.Data.Models
         public long? IsAddBy { get; set; }
         public long? StoreId { get; set; }
         public long? WardId { get; set; }
+
+        public virtual TIpmedicalRecord? Ipmed { get; set; }
     }
 }

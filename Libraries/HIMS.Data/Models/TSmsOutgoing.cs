@@ -15,9 +15,5 @@ namespace HIMS.Data.Models
         public long? TranNo { get; set; }
         public long? TemplateId { get; set; }
         public string? Smsurl { get; set; }
-        public int? Status { get; set; }
-        public DateTime? LastTry { get; set; }
-        public string? LastResponse { get; set; }
-        public int? Retry { get; set; }
     }
 }

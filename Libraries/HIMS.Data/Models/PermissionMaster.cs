@@ -12,7 +12,5 @@ namespace HIMS.Data.Models
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
-
-        public virtual MenuMaster Menu { get; set; } = null!;
     }
 }
