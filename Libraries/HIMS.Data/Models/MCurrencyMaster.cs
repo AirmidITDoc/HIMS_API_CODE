@@ -7,7 +7,6 @@ namespace HIMS.Data.Models
     {
         public long CurrencyId { get; set; }
         public string? CurrencyName { get; set; }
-        public bool? IsDeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public bool? IsActive { get; set; }
