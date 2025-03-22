@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("get-cities")]
-        [Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var McityMasterList = await _repository.GetAll(x => x.IsActive.Value);
