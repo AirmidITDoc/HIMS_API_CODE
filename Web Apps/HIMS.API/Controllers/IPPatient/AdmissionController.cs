@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionRegInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewAdmission obj)
         {
 
