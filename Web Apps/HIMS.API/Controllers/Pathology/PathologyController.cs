@@ -111,7 +111,7 @@ namespace HIMS.API.Controllers.Pathology
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
             TPathologyReportHeader objPathologyReportHeader = obj.PathologyReportHeader.MapTo<TPathologyReportHeader>();
-            if (model.PathReportId == 0)
+            if (model.PathReportTemplateDetId == 0)
             {
                 objPathologyReportHeader.ReportDate = Convert.ToDateTime(objPathologyReportHeader.ReportDate);
                 objPathologyReportHeader.ReportTime = Convert.ToDateTime(objPathologyReportHeader.ReportTime);

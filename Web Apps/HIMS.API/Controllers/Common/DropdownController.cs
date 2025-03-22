@@ -231,7 +231,7 @@ namespace HIMS.API.Controllers.Common
                 "ItemCategory" => (await _IMItemcategoryService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemCategoryMaster.ItemCategoryId), nameof(MItemCategoryMaster.ItemCategoryName)),
                 "ItemGeneric" => (await _IMItemgenericService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemGenericNameMaster.ItemGenericNameId), nameof(MItemGenericNameMaster.ItemGenericName)),
                 "ItemType" => (await _IMItemtypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemTypeMaster.ItemTypeId), nameof(MItemTypeMaster.ItemTypeName)),
-                "Currency" => (await _IMCurrencyeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCurrencyMaster.CurrencyId), nameof(MCurrencyMaster.CurrencyName)),
+                "Currency" => (await _IMCurrencyeService.GetAll()).ToList().ToDropDown(nameof(MCurrencyMaster.CurrencyId), nameof(MCurrencyMaster.CurrencyName)),
                 "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
