@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MTemplateMaster> TemplateMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Add API
         [HttpPost]
-        // [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathologyTemplateModel obj)
         {
             MTemplateMaster model = obj.MapTo<MTemplateMaster>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathologyTemplateModel obj)
         {
             MTemplateMaster model = obj.MapTo<MTemplateMaster>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "RelationshipMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);
