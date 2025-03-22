@@ -6,8 +6,8 @@ namespace HIMS.API.Models.OPPatient
     public class PathlogySampleCollectionModel
     {
         public long PathReportId { get; set; }
-        public DateTime? PathDate { get; set; }
-        public string? PathTime { get; set; }
+        //public DateTime? PathDate { get; set; }
+        public string? SampleCollectionTime { get; set; }
         public bool? IsSampleCollection { get; set; }
         public long? SampleNo { get; set; }
 
@@ -16,8 +16,8 @@ namespace HIMS.API.Models.OPPatient
     {
         public PathlogySampleCollectionModelValidator()
         {
-            RuleFor(x => x.PathDate).NotNull().NotEmpty().WithMessage("PathDate is required");
-            RuleFor(x => x.PathTime).NotNull().NotEmpty().WithMessage("PathTime is required");
+            RuleFor(x => x.PathReportId).NotNull().NotEmpty().WithMessage("PathReportId is required");
+            RuleFor(x => x.SampleCollectionTime).NotNull().NotEmpty().WithMessage("PathTime is required");
 
         }
     }
