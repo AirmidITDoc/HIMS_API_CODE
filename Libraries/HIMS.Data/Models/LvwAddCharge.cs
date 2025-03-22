@@ -43,7 +43,5 @@ namespace HIMS.Data.Models
         public bool? IsPrintCompSer { get; set; }
         public string? CompanyServiceName { get; set; }
         public long? ClassId { get; set; }
-        public bool IsPathTestCompleted { get; set; }
-        public bool IsRadTestCompleted { get; set; }
     }
 }

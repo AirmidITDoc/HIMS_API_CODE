@@ -13,5 +13,7 @@ namespace HIMS.Data.Models
         public decimal? TotalAmount { get; set; }
         public bool? IsBillGenerated { get; set; }
         public bool? IsCancelled { get; set; }
+
+        public virtual TCanteenRequestHeader? Req { get; set; }
     }
 }

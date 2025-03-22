@@ -13,7 +13,6 @@ namespace HIMS.Data.Models
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
-        public long? ModeOfDischargeId { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? IsCancelledby { get; set; }

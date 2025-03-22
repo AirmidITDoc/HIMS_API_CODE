@@ -17,10 +17,10 @@ namespace HIMS.Data.Models
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public decimal? TotalAmount { get; set; }
-        public double? DiscAmount { get; set; }
-        public double? TaxAmount { get; set; }
-        public double? FreightAmount { get; set; }
-        public double? OctriAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
+        public decimal? FreightAmount { get; set; }
+        public decimal? OctriAmount { get; set; }
         public decimal? GrandTotal { get; set; }
         public bool? Isclosed { get; set; }
         public bool? IsVerified { get; set; }

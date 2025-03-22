@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         public async Task<ApiResponse> Post(ModeOfPaymentModel obj)
         {
             MModeOfPayment model = obj.MapTo<MModeOfPayment>();
-            model.IsDeleted = false;
+            model.IsActive = false;
             if (obj.Id == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         public async Task<ApiResponse> Edit(ModeOfPaymentModel obj)
         {
             MModeOfPayment model = obj.MapTo<MModeOfPayment>();
-            model.IsDeleted=false;
+            model.IsActive = false;
             if (obj.Id == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             if ((model?.Id ?? 0) > 0)
             {
                 model.IsActive = false;
-                model.IsDeleted = true;
+                model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
