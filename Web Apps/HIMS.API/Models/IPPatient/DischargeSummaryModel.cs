@@ -194,6 +194,7 @@ namespace HIMS.API.Models.IPPatient
         public byte? IsNormalOrDeath { get; set; }
         public string? TemplateDescriptionHtml { get; set; }
 
+
     }
     public class DischargeTemplateUpdateValidator : AbstractValidator<DischargeTemplateUpdate>
     {
