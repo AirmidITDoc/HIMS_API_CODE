@@ -53,7 +53,7 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in objTPathologyReportHeader)
             {
-                string[] rEntity = { "OpdIpdType", "SampleCollectionTime", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",
+                string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",
                                     "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",
                                         "TPathologyReportTemplateDetails" };
                 var entity = item.ToDictionary();
@@ -61,8 +61,7 @@ namespace HIMS.Services.IPPatient
                 {
                     entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("v_Update_PathologySampleCollection_1", CommandType.StoredProcedure, entity);
-                await _context.SaveChangesAsync(UserId, Username);
+                odal.ExecuteNonQuery("ps_Update_PathologySampleCollection_1", CommandType.StoredProcedure, entity);
             }
         }
 
