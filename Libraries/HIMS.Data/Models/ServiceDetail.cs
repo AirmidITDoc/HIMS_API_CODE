@@ -10,5 +10,7 @@ namespace HIMS.Data.Models
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
         public decimal? ClassRate { get; set; }
+
+        public virtual ServiceMaster? Service { get; set; }
     }
 }

@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HIMS.Data.DTO.OPPatient
+{
+    public class getPrescriptionTemplateDetailsListDto
+    {
+        public long PresId { get; set; }
+        public long PresDetId { get; set; }
+        public DateTime Date { get; set; }
+        public long ClassID { get; set; }
+        public long Genericid { get; set; }
+        public string DrugName { get; set; }
+        public long DrugId { get; set; }
+        public long DoseId { get; set; }
+        public string DoseName { get; set; }
+        public long Days { get; set; }
+        public long InstructionId { get; set; }
+        public long QtyPerDay { get; set; }
+        public long TotalQty { get; set; }
+        public string Instruction { get; set; }
+        public string Remark { get; set; }
+        public long IsEnglishOrIsMarathi { get; set; }
+
+
+    }
+}

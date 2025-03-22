@@ -35,8 +35,5 @@ namespace HIMS.Data.Models
         public string? MachineName { get; set; }
         public string? TechniqueName { get; set; }
         public long? UnitId { get; set; }
-        public float? MinValue { get; set; }
-        public float? MaxValue { get; set; }
-        public long PathReportdetid { get; set; }
     }
 }

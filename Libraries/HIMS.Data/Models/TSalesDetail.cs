@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class TSalesDetail
     {
         public long SalesDetId { get; set; }
-        public long SalesId { get; set; }
+        public long? SalesId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -29,11 +29,11 @@ namespace HIMS.Data.Models
         public decimal? Sgstamt { get; set; }
         public float? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
-        public bool IsPurRate { get; set; }
+        public bool? IsPurRate { get; set; }
         public long? StkId { get; set; }
         public decimal? Mrp { get; set; }
         public decimal? MrpTotal { get; set; }
 
-        public virtual TSalesHeader Sales { get; set; } = null!;
+        public virtual TSalesHeader? Sales { get; set; }
     }
 }
