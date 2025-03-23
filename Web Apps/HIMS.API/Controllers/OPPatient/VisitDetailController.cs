@@ -79,6 +79,7 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<PrevDrVisistListDto> Oplist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
             return Ok(Oplist.ToGridResponse(objGrid, "OP Previoud Dr Visit List"));
         }
+
         [HttpGet("DeptDoctorList")]
         public async Task<ApiResponse> DeptDoctorList(int DeptId)
         {
@@ -185,7 +186,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", resultList.Select(x => new
             {
-                //x.FormattedText,
+                x.FormattedText,
                 x.ServiceId,
                 x.GroupId,
                 x.ServiceShortDesc,
