@@ -46,11 +46,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Add)]
+       [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CertificateTemplateModel obj)
         {
             MCertificateTemplateMaster model = obj.MapTo<MCertificateTemplateMaster>();
-            model.IsActive = false;
+            model.IsActive = true;
             if (obj.TemplateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<ApiResponse> Edit(CertificateTemplateModel obj)
         {
             MCertificateTemplateMaster model = obj.MapTo<MCertificateTemplateMaster>();
-            model.IsActive = false;
+            model.IsActive = true;
             if (obj.TemplateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -80,13 +80,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Delete)]
+     //   [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCertificateTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);
             if ((model?.TemplateId ?? 0) > 0)
             {
-                model.IsActive = true;
+                model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

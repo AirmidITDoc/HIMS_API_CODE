@@ -63,13 +63,12 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
             List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
-         
-                //   model.PathDate = Convert.ToDateTime(obj.PathDate);
-                // model.PathTime = Convert.ToDateTime(obj.PathTime);
-                //  model.AddedBy = CurrentUserId;
+
+            //if (obj == null)
+            //{
                 await _IPathlogySampleCollectionService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
-          
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            //}
+               //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathlogySampleCollection Update successfully.");
         }
 

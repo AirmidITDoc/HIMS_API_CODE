@@ -19,9 +19,12 @@ namespace HIMS.API.Controllers.Masters.Radiology
     {
 
         private readonly IGenericService<MRadiologyTemplateMaster> _repository;
-        public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository)
+        private readonly IGenericService<MRadiologyTemplateMaster> _radiorepository;
+
+        public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository, IGenericService<MRadiologyTemplateMaster> repository1)
         {
             _repository = repository;
+            _radiorepository = repository1;
         }
         //List API
         [HttpPost]
@@ -95,5 +98,16 @@ namespace HIMS.API.Controllers.Masters.Radiology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
+
+        [HttpGet]
+        [Route("get-RdioTemplates")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MMasterList = await _radiorepository.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc}));
+        }
+
     }
 }

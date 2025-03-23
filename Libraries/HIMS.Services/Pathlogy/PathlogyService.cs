@@ -86,12 +86,12 @@ namespace HIMS.Services.Pathlogy
             };
             odal.ExecuteNonQuery("m_Delete_T_PathologyReportTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
 
-            string[] rEntity = { "PathReportTemplateDetId" };
+            string[] rEntity = { "PathReportTemplateDetId", "PathReport" };
             var entity = ObjTPathologyReportTemplateDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
-            };
+            }
             odal.ExecuteNonQuery("m_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
 
             string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
