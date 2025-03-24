@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpGet]
         [Route("get-prefixs")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);
