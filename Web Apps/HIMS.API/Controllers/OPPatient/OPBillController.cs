@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
         }
-        [HttpPost("OPRefundList")]
+        [HttpPost("BrowseOPRefundList")]
         public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
         {
             IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid);
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "BrowseOPDBillPagi App List"));
         }
-        [HttpPost("OPPaymentList")]
+        [HttpPost("BrowseOPPaymentList")]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);

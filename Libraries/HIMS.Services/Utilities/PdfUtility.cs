@@ -1,4 +1,5 @@
 ﻿using HIMS.Data.Models;
+using Microsoft.Extensions.Configuration;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
@@ -8,24 +9,44 @@ namespace HIMS.Services.Utilities
     {
         private readonly Data.Models.HIMSDbContext _context;
         private static IConverter converter = new SynchronizedConverter(new PdfTools());
-        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter)
+        public readonly IConfiguration _configuration;
+
+        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration)
         {
             _context = HIMSDbContext;
             converter = _converter;
+            _configuration = configuration;
         }
 
+        //public string GetHeader(string filePath, string basePath, long HospitalId = 0)
+        //{
+        //    string htmlHeader = System.IO.File.ReadAllText(filePath);
+        //    HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+        //    //HospitalMaster objHospital = _context.HospitalMasters.Where(x => x.HospitalId == 1).FirstOrDefault();
+        //    htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
+        //    return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
+        //}
         public string GetHeader(string filePath, string basePath, long HospitalId = 0)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
             HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
-            //HospitalMaster objHospital = _context.HospitalMasters.Where(x => x.HospitalId == 1).FirstOrDefault();
             htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
             htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
             htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
             htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
             htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+            //htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+           // htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailID ?? "");
+            //htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
             htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
             return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
+            //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
+
         }
 
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath , string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)

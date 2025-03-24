@@ -137,21 +137,27 @@ namespace HIMS.API.Controllers.OPPatient
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
-            TPrescription model = obj.TPrescription.MapTo<TPrescription>();
+            List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();
             List<TOprequestList> objTOPRequest = obj.TOPRequestList.MapTo<List<TOprequestList>>();
             List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosis = obj.MOPCasepaperDignosisMaster.MapTo<List<MOpcasepaperDignosisMaster>>();
 
-            if (model.OpdIpdIp != 0)
+            if (model.Count > 0)
             {
-                model.Date = Convert.ToDateTime(obj.TPrescription.Date);
-                model.CreatedBy = CurrentUserId;
-                objTOPRequest.ForEach(x => { x.OpIpId = obj.TPrescription.OpdIpdIp; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
-                objmOpcasepaperDignosis.ForEach(x => { x.VisitId = obj.TPrescription.OpdIpdIp; });
-
                 await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            //if (model.OpdIpdIp != 0)
+            //{
+            //    model.Date = Convert.ToDateTime(obj.TPrescription.Date);
+            //    model.CreatedBy = CurrentUserId;
+            //    objTOPRequest.ForEach(x => { x.OpIpId = obj.TPrescription.OpdIpdIp; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
+            //    objmOpcasepaperDignosis.ForEach(x => { x.VisitId = obj.TPrescription.OpdIpdIp; });
+
+            //    await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+            //}
+            //else
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
         }
         //[HttpPost("InsertSP")]

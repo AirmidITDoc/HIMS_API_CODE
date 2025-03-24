@@ -78,7 +78,8 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryOPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge_Test"; break;
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;
 
-
+                //System Configuration
+                case "SysConfig": sp_Name = "SS_ConfigSettingParam"; break;
 
                 default: break;
             }
