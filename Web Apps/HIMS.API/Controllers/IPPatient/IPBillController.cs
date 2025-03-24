@@ -164,11 +164,8 @@ namespace HIMS.API.Controllers.IPPatient
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
             Bill Model = obj.IPBillling.MapTo<Bill>();
             List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
-            //  Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
             Payment paymentModel = obj.payments.MapTo<Payment>();
-            //  Bill BillModel = obj.Bills.MapTo<Bill>();
-            // List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
-            //  AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+          
             if (obj.IPBillling.BillNo == 0)
             {
                 Model.BillDate = Convert.ToDateTime(obj.IPBillling.BillDate);
