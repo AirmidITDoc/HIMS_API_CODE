@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.IPPatient
 
             var data1 = await _repository.GetById(x => x.AdmissionId == id);
             return data1.ToSingleResponse<Discharge, DischargeModel>("Discharge");
-        }
+        } 
 
         [HttpPost("DischargeSummaryInsert")]
         [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]

@@ -460,38 +460,7 @@ namespace HIMS.Data.DataProviders
 
         #endregion ExecuteScalarAsync        
 
-        public SqlDataReader ExecuteReader(string query)
-        {
-            return ExecuteReader(query, CommandType.Text);
-        }
-
-        public SqlDataReader ExecuteReader(string query, CommandType commandtype)
-        {
-            Command.CommandText = query;
-            Command.CommandType = commandtype;
-            SqlDataReader reader = null;
-            try
-            {
-                if (objConnection.State == System.Data.ConnectionState.Closed)
-                {
-                    objConnection.Open();
-                }
-                reader = Command.ExecuteReader(CommandBehavior.CloseConnection);
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, query);
-            }
-            finally
-            {
-                //objCommand.Parameters.Clear();
-                if (Command.Transaction == null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return reader;
-        }
+       
 
         public DataSet ExecuteDataSet(string query)
         {
@@ -682,7 +651,7 @@ namespace HIMS.Data.DataProviders
                 CommandTimeout = 180
             };
             await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
-            var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
             dt.Load(reader);
             return dt;
         }
@@ -697,7 +666,7 @@ namespace HIMS.Data.DataProviders
                 CommandTimeout = 180
             };
             await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
-            var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
             dt.Load(reader);
             return dt;
         }
@@ -744,7 +713,7 @@ namespace HIMS.Data.DataProviders
             try
             {
                 objConnection.Open();
-                var dr = Command.ExecuteReader();
+                using var dr = Command.ExecuteReader();
                 while (dr.Read())
                 {
                     T item = GetListItem<T>(dr);
@@ -776,7 +745,7 @@ namespace HIMS.Data.DataProviders
             try
             {
                 objConnection.Open();
-                var dr = Command.ExecuteReader();
+                using var dr = Command.ExecuteReader();
                 while (dr.Read())
                 {
                     T item = GetListItem<T>(dr);
@@ -810,7 +779,7 @@ namespace HIMS.Data.DataProviders
                 CommandTimeout = 180
             };
             await PrepareCommandAsync(cmd, connection, null, CommandType.StoredProcedure, commandText, commandParameters).ConfigureAwait(false);
-            var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
             List<T> lst = new();
             while (await dr.ReadAsync().ConfigureAwait(false))
             {
@@ -829,7 +798,7 @@ namespace HIMS.Data.DataProviders
                 CommandTimeout = 180
             };
             await PrepareCommandAsync(cmd, connection, null, CommandType.Text, commandText, commandParameters).ConfigureAwait(false);
-            var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using var dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
             List<T> lst = new();
             while (await dr.ReadAsync().ConfigureAwait(false))
             {
