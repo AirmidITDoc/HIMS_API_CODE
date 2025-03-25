@@ -386,6 +386,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TGrnreturnDetail> TGrnreturnDetails { get; set; } = null!;
         public virtual DbSet<TGrnreturnHeader> TGrnreturnHeaders { get; set; } = null!;
         public virtual DbSet<TGrnsupPayment> TGrnsupPayments { get; set; } = null!;
+        public virtual DbSet<TGstadjustment> TGstadjustments { get; set; } = null!;
         public virtual DbSet<THlabRequest> THlabRequests { get; set; } = null!;
         public virtual DbSet<THomeDeliveryOrder> THomeDeliveryOrders { get; set; } = null!;
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
@@ -11344,6 +11345,35 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SupPayNo).HasMaxLength(50);
 
                 entity.Property(e => e.SupPayTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TGstadjustment>(entity =>
+            {
+                entity.HasKey(e => e.GstadgId);
+
+                entity.ToTable("T_GSTAdjustment");
+
+                entity.Property(e => e.GstadgId).HasColumnName("GSTAdgId");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.OldCgstper).HasColumnName("OldCGSTPer");
+
+                entity.Property(e => e.OldIgstper).HasColumnName("OldIGSTPer");
+
+                entity.Property(e => e.OldSgstper).HasColumnName("OldSGSTPer");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
             });
 
             modelBuilder.Entity<THlabRequest>(entity =>

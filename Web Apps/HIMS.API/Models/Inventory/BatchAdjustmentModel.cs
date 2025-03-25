@@ -12,15 +12,14 @@ namespace HIMS.API.Models.Inventory
         public string? NewBatchNo { get; set; }
         public DateTime? NewExpDate { get; set; }
         public long? AddedBy { get; set; }
-
         public long? StkId { get; set; }
-        public List<TCurrentStockModelll> TCurrentStock { get; set; }
+
+        //public List<TCurrentStockModelll> TCurrentStock { get; set; }
     }
     public class BatchAdjustmentModelValidator : AbstractValidator<BatchAdjustmentModel>
     {
         public BatchAdjustmentModelValidator()
         {
-            RuleFor(x => x.StkId).NotNull().NotEmpty().WithMessage("StkId is required");
             RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
 
         }
