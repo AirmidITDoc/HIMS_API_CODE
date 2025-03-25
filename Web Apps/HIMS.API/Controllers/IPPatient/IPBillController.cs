@@ -46,6 +46,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
         }
         [HttpPost("IPAddchargesList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
         {
             IPagedList<IPAddchargesListDto> IPAddchargesList = await _IPBillService.GetIPAddchargesAsync(objGrid);
@@ -53,13 +54,21 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBillList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPDBillListDto> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
+        [HttpPost("PreviousBillList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetPreviousBillListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PreviousBillListDto> IPBill = await _IPBillService.GetPreviousBillListAsync(objGrid);
+            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
+        }
         [HttpPost("AddChargeInsert")]
-        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -74,17 +83,8 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharge  added successfully.");
         }
 
-        //[HttpDelete("IPAddchargesdelete")]
-        //public async Task<ApiResponse> IPAddchargesdelete(AddChargesDeleteModel obj)
-        //{
-        //    var RPAP = _IPBillService.DeleteAsync(obj);
-        //    return Ok(RPAP);
-        //}
-
-
-
         [HttpPost("PaymentSettelment")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
             Payment model = obj.Payment.MapTo<Payment>();
@@ -103,12 +103,12 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.", model);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insertsp(BillingModel obj)
         {
 
             Bill Model = obj.Bill.MapTo<Bill>();
-            BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
+          List<BillDetail> BillDetailModel = obj.BillDetail.MapTo<List<BillDetail>>();
             AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
             Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
             Payment paymentModel = obj.payment.MapTo<Payment>();
@@ -130,12 +130,12 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertCreditSP(BillingModel obj)
         {
 
             Bill Model = obj.Bill.MapTo<Bill>();
-            BillDetail BillDetailModel = obj.BillDetail.MapTo<BillDetail>();
+          List<BillDetail> BillDetailModel = obj.BillDetail.MapTo<List<BillDetail>>();
             AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
             Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
             //   Payment paymentModel = obj.payment.MapTo<Payment>();
@@ -158,7 +158,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -180,7 +180,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", Model);
         }
         [HttpPost("InsertIPDraftBill")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertIP(TDrbillingModel obj)
         {
 
@@ -201,6 +201,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpDelete("IPAddchargesdelete")]
+        [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
         {
 

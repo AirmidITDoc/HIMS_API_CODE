@@ -192,7 +192,7 @@ namespace HIMS.API.Models.OutPatient
     {
       
         public BillsModel? Bill { get; set; }
-        public BillingDetailModel? BillDetail { get; set; }
+        public List<BillingDetailModel?> BillDetail { get; set; }
         public AdddChargeModel? AddCharge { get; set; }
         public AddmissionModel? Addmission { get; set; }
         public paymentModel? payment { get; set; }
