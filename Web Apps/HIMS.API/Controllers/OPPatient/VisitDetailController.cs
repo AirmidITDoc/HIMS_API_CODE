@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppVisitInsert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -114,7 +114,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
