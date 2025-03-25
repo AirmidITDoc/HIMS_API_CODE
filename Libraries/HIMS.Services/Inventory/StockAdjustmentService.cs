@@ -31,70 +31,49 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<StockAdjustmentListDto>> StockAdjustmentList(GridRequestModel model)
+        //SHILPA//
+        public virtual async Task<IPagedList<ItemWiseStockListDto>> StockAdjustmentList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<StockAdjustmentListDto>(model, "m_Rtrv_BatchNoForMrpAdj");
+            return await DatabaseHelper.GetGridDataBySp<ItemWiseStockListDto>(model, "ps_Rtrv_BatchNoForMrpAdj");
         }
-        public virtual async Task InsertAsync(TIssueToDepartmentDetail objStock, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TIssueToDepartmentDetails.Add(objStock);
-                await _context.SaveChangesAsync();
+            
+            DatabaseHelper odal = new();
+            string[] rEntity = { "CreatedOn","UpdatedBy","ModifiedOn", "Stk" };
 
-                scope.Complete();
+            var entity = ObjTStockAdjustment.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
             }
+            string VStockAdgId = odal.ExecuteNonQuery("ps_Update_Phar_StockAjustment_1", CommandType.StoredProcedure, "StockAdgId", entity);
+            ObjTStockAdjustment.StockAdgId = Convert.ToInt32(VStockAdgId);
         }
-
-
-        public virtual async Task InsertAsync(TStockAdjustment objStock, int UserId, string Username)
+        public virtual async Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TStockAdjustments.Add(objStock);
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "BatchAdjId", "AddedDateTime","Stk" };
+
+            var Bentity = ObjTBatchAdjustment.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                Bentity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("ps_Phar_BatchExpDate_StockAjustment_1", CommandType.StoredProcedure, Bentity);
         }
-
-
-        public virtual async Task InsertAsync(TBatchAdjustment objStock, int UserId, string Username)
+        public virtual async Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "GstadgId", "CreatedOn", "UpdatedBy", "ModifiedOn" };
+            var Bentity = ObjTGstadjustment.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                _context.TBatchAdjustments.Add(objStock);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                Bentity.Remove(rProperty);
             }
-        }
-
-
-
-
-        public virtual async Task InsertAsync(TMrpAdjustment objStock, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TMrpAdjustments.Add(objStock);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-
-        public virtual async Task UpdateAsync(TIssueToDepartmentDetail objStock, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.TIssueToDepartmentDetails.Update(objStock);
-                _context.Entry(objStock).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
+            odal.ExecuteNonQuery("ps_Update_CurrentStock_GSTAdjustment", CommandType.StoredProcedure, Bentity);
         }
     }
 }

@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pathology;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
@@ -30,41 +31,16 @@ namespace HIMS.API.Controllers.Pathology
         private readonly IPathlogySampleCollectionService _IPathlogySampleCollectionService;
         private readonly ILabRequestService _ILabRequestService;
         private readonly IPathlogyService _IPathlogyService;
-        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2)
+        private readonly IGenericService<MTemplateMaster> _radiorepository;
+
+        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2, IGenericService<MTemplateMaster> pathrepository)
         {
             _IPathlogySampleCollectionService = repository;
             _ILabRequestService = repository1;
             _IPathlogyService = repository2;
+            _radiorepository = pathrepository;
         }
-        //[HttpPost("PathTemplateForUpdateList")]
-        ////[Permission(PageCode = "PathTemplateForUpdateList", Permission = PagePermission.View)]
-        //public async Task<IActionResult> PathTemplateForUpdateList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<PathTemplateForUpdateListDto> PathTestForUpdateList = await _IPathlogyService.PathTemplateForUpdateList(objGrid);
-        //    return Ok(PathTestForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdate List"));
-        //}
-        //[HttpPost("PathParaFillList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> PathParaFillListList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<PathParaFillListDto> PathParaFillList = await _IPathlogyService.PathParaFillList(objGrid);
-        //    return Ok(PathParaFillList.ToGridResponse(objGrid, "PathParaFillList App List"));
-        //}
-        //[HttpPost("PathSubtestFillList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> PathSubtestFillList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<PathSubtestFillListDto> PathSubtestFillList = await _IPathlogyService.PathSubtestFillList(objGrid);
-        //    return Ok(PathSubtestFillList.ToGridResponse(objGrid, "PathSubtestFill App List"));
-        //}
-
-        //[HttpPost("LabOrRadRequestList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogyService.LGetListAsync(objGrid);
-        //    return Ok(LabOrRadRequestList.ToGridResponse(objGrid, "LabOrRadRequestList "));
-        //}
+       
 
         [HttpPost("PathologyPatientTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -125,5 +101,13 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyTemplate   added successfully.");
         }
 
+        [HttpGet]
+        [Route("get-PathologyTemplates")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MMasterList = await _radiorepository.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
+        }
     }
 }
