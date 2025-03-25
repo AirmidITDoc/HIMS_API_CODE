@@ -41,18 +41,16 @@ namespace HIMS.API.Controllers.Inventory
             TStockAdjustment model = obj.MapTo<TStockAdjustment>();
             if (obj.StockAdgId == 0)
             {
-
                 model.AddedBy = CurrentUserId;
-
                 await _IStockAdjustmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock Update  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock Update successfully.");
         }
 
         [HttpPost("BatchUpdate")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> BatchUpdate(BatchAdjustmentModel obj)
         {
             TBatchAdjustment model = obj.MapTo<TBatchAdjustment>();
@@ -60,86 +58,25 @@ namespace HIMS.API.Controllers.Inventory
             {
 
                 model.AddedBy = CurrentUserId;
-
                 await _IStockAdjustmentService.BatchUpdateSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Batch Update  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Batch Update successfully.");
         }
         [HttpPost("GSTUpdate")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(GSTUpdateModel obj)
         {
             TGstadjustment model = obj.MapTo<TGstadjustment>();
             if (obj.StoreId == 0)
             {
-
                 model.AddedBy = CurrentUserId;
-
                 await _IStockAdjustmentService.GSTUpdateSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " GSTUpdate  successfully.");
-        }
-
-
-
-
-
-        [HttpPost("InsertStockAdjustmentEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertAsync(PharStockAdjustmentModel obj)
-        {
-            TStockAdjustment model = obj.MapTo<TStockAdjustment>();
-            if (obj.StockAdgId == 0)
-            {
-
-                model.StoreId = CurrentUserId;
-
-                await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock added successfully.");
-        }
-
-
-        [HttpPost("InsertBatchAdjustmentEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertAsync(BatchAdjustmentModel obj)
-        {
-            TBatchAdjustment model = obj.MapTo<TBatchAdjustment>();
-            if (obj.BatchAdjId == 0)
-            {
-
-                model.StoreId = CurrentUserId;
-
-                await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Batch Adjustment Stock added successfully.");
-        }
-
-
-
-        [HttpPost("InsertMRPAdjustmentEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertAsync(MRPAdjustmentModel obj)
-        {
-            TMrpAdjustment model = obj.MapTo<TMrpAdjustment>();
-            if (obj.MrpAdjId == 0)
-            {
-
-                model.StoreId = CurrentUserId;
-
-                await _IStockAdjustmentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRP Adjustment Stock added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " GST Update successfully.");
         }
 
     }
