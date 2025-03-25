@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.",model);
         }
         [HttpPut("DischargeSummaryUpdate")]
-        [Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();

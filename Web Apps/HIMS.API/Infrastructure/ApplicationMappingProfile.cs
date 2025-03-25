@@ -235,6 +235,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPrescription, UpdatePrescription>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TRadiologyReportHeader, TRadiologyReportModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPathologyReportHeader, PathlogySampleCollectionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
