@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PrescriptionInsertSP")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
             List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();
@@ -186,7 +186,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         //Edit API
         [HttpPut("PrescriptionEdit/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdatePrescriptionModel obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
@@ -202,7 +202,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription  update successfully.");
         }
         [HttpPut("GenericEdit/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(UpdatePrescription obj)
         {
             TPrescription model = obj.MapTo<TPrescription>();
