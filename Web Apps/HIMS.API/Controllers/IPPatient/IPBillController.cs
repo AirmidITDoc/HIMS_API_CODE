@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<BrowseIPDBillListDto> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
-        [HttpPost("PreviousBillList")]
+        [HttpPost("PreviousBillDetailList")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPreviousBillListAsync(GridRequestModel objGrid)
         {

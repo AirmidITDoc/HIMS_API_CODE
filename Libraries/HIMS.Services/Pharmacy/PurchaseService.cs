@@ -126,46 +126,46 @@ namespace HIMS.Services.Pharmacy
 
 
 
-        public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
-        {
-            using var transaction = await _context.Database.BeginTransactionAsync();
-            try
-            {
-                var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
-                _context.TPurchaseDetails.RemoveRange(lst);
-                await _context.SaveChangesAsync();
-
-                _context.TPurchaseHeaders.Update(objPurchase);
-                _context.Entry(objPurchase).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                await transaction.CommitAsync();
-            }
-            catch (Exception)
-            {
-                await transaction.RollbackAsync();
-                throw;
-            }
-
-        }
-
-
         //public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+        //    try
         //    {
-        //        // Delete details table realted records
         //        var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
         //        _context.TPurchaseDetails.RemoveRange(lst);
+        //        await _context.SaveChangesAsync();
 
-        //        // Update header & detail table records
         //        _context.TPurchaseHeaders.Update(objPurchase);
         //        _context.Entry(objPurchase).State = EntityState.Modified;
         //        await _context.SaveChangesAsync();
 
-        //        scope.Complete();
+        //        await transaction.CommitAsync();
         //    }
+        //    catch (Exception)
+        //    {
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+
         //}
+
+
+        public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Delete details table realted records
+                var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
+                _context.TPurchaseDetails.RemoveRange(lst);
+
+                // Update header & detail table records
+                _context.TPurchaseHeaders.Update(objPurchase);
+                _context.Entry(objPurchase).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
 
         public virtual async Task VerifyAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         {

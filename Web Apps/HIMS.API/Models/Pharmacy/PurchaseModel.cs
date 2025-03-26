@@ -7,13 +7,13 @@ namespace HIMS.API.Models.Pharmacy
         public long PurchaseId { get; set; }
         public string? PurchaseNo { get; set; }
         public long? StoreId { get; set; }
-        public long? SupplierId { get; set; }     
-        public decimal? TotalAmount { get; set; }
-        public decimal? DiscAmount { get; set; }
-        public decimal? TaxAmount { get; set; }
-        public decimal? FreightAmount { get; set; }
-        public decimal? OctriAmount { get; set; }
-        public decimal? GrandTotal { get; set; }
+        public long? SupplierId { get; set; }
+        public double? TotalAmount { get; set; }
+        public float? DiscAmount { get; set; }
+        public float? TaxAmount { get; set; }
+        public double? FreightAmount { get; set; }
+        public float? OctriAmount { get; set; }
+        public double? GrandTotal { get; set; }
         public bool Isclosed { get; set; }
         public bool IsVerified { get; set; }
         public string? Remarks { get; set; }
@@ -21,7 +21,10 @@ namespace HIMS.API.Models.Pharmacy
         public long? PaymentTermId { get; set; }
         public long? ModeofPayment { get; set; }
         public string? Worrenty { get; set; }
-        public double? RoundVal { get; set; }
+        public float? RoundVal { get; set; }
+        public string? Prefix { get; set; }
+        public long? IsVerifiedId { get; set; }
+        public DateTime? VerifiedDateTime { get; set; }
         public decimal? TotCgstamt { get; set; }
         public decimal? TotSgstamt { get; set; }
         public decimal? TotIgstamt { get; set; }

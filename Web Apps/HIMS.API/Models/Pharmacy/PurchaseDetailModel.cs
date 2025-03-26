@@ -12,17 +12,17 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? Rate { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? DiscAmount { get; set; }
-        public double? DiscPer { get; set; }
+        public decimal? DiscPer { get; set; }
         public decimal? VatAmount { get; set; }
-        public double? VatPer { get; set; }
+        public decimal? VatPer { get; set; }
         public decimal? GrandTotalAmount { get; set; }
         public decimal? Mrp { get; set; }
         public string? Specification { get; set; }
-        public double? Cgstper { get; set; }
-        public double? Cgstamt { get; set; }
-        public double? Sgstper { get; set; }
+        public decimal? Cgstper { get; set; }
+        public decimal? Cgstamt { get; set; }
+        public decimal? Sgstper { get; set; }
         public decimal? Sgstamt { get; set; }
-        public double? Igstper { get; set; }
+        public decimal? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
         public decimal? DefRate { get; set; }
         public float? VendDiscPer { get; set; }

@@ -13,6 +13,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long MedicalRecoredId { get; set; }
         public long IPMedID { get; set; }
         public long OP_IP_ID { get; set; }
+        public bool IsClosed { get; set; }
 
     }
 }
