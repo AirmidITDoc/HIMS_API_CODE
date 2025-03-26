@@ -12,6 +12,7 @@ namespace HIMS.API.Models.IPPatient
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
+        public long ModeOfDischargeId {  get; set; }
         public long? AddedBy { get; set; }
         public long DischargeId { get; set; }
 
