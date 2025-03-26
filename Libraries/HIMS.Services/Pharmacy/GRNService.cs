@@ -69,6 +69,12 @@ namespace HIMS.Services.Pharmacy
                 objItem.Grnid = objGRN.Grnid;
             }
             _context.TGrndetails.AddRange(objGRN.TGrndetails);
+
+            //// Update item master table records
+            //_context.MItemMasters.UpdateRange(objItems);
+
+
+          
             await _context.SaveChangesAsync();
         }
 

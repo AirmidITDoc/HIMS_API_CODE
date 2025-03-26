@@ -21,7 +21,13 @@ namespace HIMS.API.Models.Inventory
     {
         public PharStockAdjustmentModelValidator()
         {
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId  is required");
+            RuleFor(x => x.StkId).NotNull().NotEmpty().WithMessage("StkId  is required");
             RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+            RuleFor(x => x.BatchNo).NotNull().NotEmpty().WithMessage("BatchNo  is required");
+            RuleFor(x => x.AdDdType).NotNull().NotEmpty().WithMessage("AdDdType  is required");
+
+
 
         }
     }

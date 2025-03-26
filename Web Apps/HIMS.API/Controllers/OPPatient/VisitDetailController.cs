@@ -163,7 +163,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(CancelAppointment obj)
         {
             VisitDetail model = new();
@@ -223,7 +223,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Vital  Information update successfully.");
         }
         [HttpPost("CrossConsultationInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -240,7 +240,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CrossConsultation added successfully.", model);
         }
         [HttpPut("ConsultantDoctorUpdate/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdateAsync(ConsRefDoctorModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -255,7 +255,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPut("RefDoctorUpdate")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RefDoctorModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();

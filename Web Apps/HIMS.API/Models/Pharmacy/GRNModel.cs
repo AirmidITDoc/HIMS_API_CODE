@@ -7,7 +7,7 @@ namespace HIMS.API.Models.Pharmacy
         public long Grnid { get; set; }
         public string? GrnNumber { get; set; }
         public DateTime? Grndate { get; set; }
-        public DateTime? Grntime { get; set; }
+        public string? Grntime { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public string? InvoiceNo { get; set; }

@@ -33,7 +33,6 @@ namespace HIMS.API.Controllers.Inventory
 
         }
 
-
         [HttpPost("StockUpdate")]
         [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PharStockAdjustmentModel obj)
