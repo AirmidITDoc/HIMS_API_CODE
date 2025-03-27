@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Common
         public ApiResponse GetByProc(ListRequestModel model)
         {
             dynamic resultList = _ICommonService.GetDataSetByProc(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, model.Mode + " List.", (dynamic)resultList);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", (dynamic)resultList);
         }
         [Route("get-daily-dashboard-data")]
         [HttpPost]
