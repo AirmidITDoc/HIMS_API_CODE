@@ -137,7 +137,7 @@ namespace HIMS.API.Controllers.Login
 
         [HttpGet]
         [Route("get-menus")]
-        [Permission]
+        //[Permission]
         public ApiResponse GetMenus()
         {
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", _IMenuService.GetMenus(CurrentRoleId, true));
