@@ -2196,10 +2196,10 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                             //html = html.Replace("{{NewHeader}}", htmlHeader);
                             html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                            html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                            html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
                             html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                             html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                             html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));

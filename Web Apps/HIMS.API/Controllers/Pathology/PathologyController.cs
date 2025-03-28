@@ -40,18 +40,18 @@ namespace HIMS.API.Controllers.Pathology
             _IPathlogyService = repository2;
             _radiorepository = pathrepository;
         }
-       
+
 
         [HttpPost("PathologyPatientTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
         {
-            IPagedList<PatientTestListDto> PatientList = await _IPathlogyService.PGetListAsync(objGrid);
+            IPagedList<PathPatientTestListDto> PatientList = await _IPathlogyService.GetListAsync(objGrid);
             return Ok(PatientList.ToGridResponse(objGrid, "PathologyPatientTestList "));
         }
 
 
-     
+
         [HttpPost("PathologyTestList")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)

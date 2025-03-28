@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.", objAdvanceDetail.AdvanceId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.", objAdvanceDetail.AdvanceDetailId);
         }
         [HttpPut("Edit")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objAdvanceDetail.AdvanceId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objAdvanceDetail.AdvanceDetailId);
         }
 
         [HttpPost("IPRefundofAdvanceInsert")]
