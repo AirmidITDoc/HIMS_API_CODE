@@ -17,6 +17,5 @@ namespace HIMS.Data.Models
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? AdmId { get; set; }
-        public int? CreatedBy { get; set; }
     }
 }

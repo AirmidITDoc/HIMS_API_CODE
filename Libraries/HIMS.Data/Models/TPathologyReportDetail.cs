@@ -27,7 +27,5 @@ namespace HIMS.Data.Models
         public float? MinValue { get; set; }
         public float? MaxValue { get; set; }
         public string? ParaBoldFlag { get; set; }
-
-        public virtual TPathologyReportHeader? PathReport { get; set; }
     }
 }

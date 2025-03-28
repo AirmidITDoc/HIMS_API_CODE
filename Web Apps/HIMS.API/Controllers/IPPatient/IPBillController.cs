@@ -65,10 +65,25 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> GetPreviousBillListAsync(GridRequestModel objGrid)
         {
             IPagedList<PreviousBillListDto> IPBill = await _IPBillService.GetPreviousBillListAsync(objGrid);
-            return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
+            return Ok(IPBill.ToGridResponse(objGrid, "PreviousBill List"));
         }
+        [HttpPost("PathRadRequestList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathRadRequestListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PathRadRequestListDto> RequestList = await _IPBillService.PathRadRequestListAsync(objGrid);
+            return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
+        }
+        [HttpPost("IPBillForRefundList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillForRefundListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillForRefundListDto> RequestList = await _IPBillService.IPBillForRefundListAsync(objGrid);
+            return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
+        }
+
         [HttpPost("AddChargeInsert")]
-        [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();

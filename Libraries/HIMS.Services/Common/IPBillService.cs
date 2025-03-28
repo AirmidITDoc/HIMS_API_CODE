@@ -312,6 +312,14 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<PreviousBillListDto>(model, "m_Rtrv_IPBillInfo");
         }
+        public virtual async Task<IPagedList<PathRadRequestListDto>> PathRadRequestListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathRadRequestListDto>(model, "Rtrv_PathRadRequestList");
+        }
+        public virtual async Task<IPagedList<IPBillForRefundListDto>> IPBillForRefundListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillForRefundListDto>(model, "Retrieve_IPBill_For_Refund");
+        }
         public virtual async Task InsertAsync(AddCharge objAddCharge, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
