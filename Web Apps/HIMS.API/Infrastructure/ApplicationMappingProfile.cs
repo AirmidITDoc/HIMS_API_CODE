@@ -17,7 +17,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
-using static HIMS.API.Models.OutPatient.TPrescriptionModel;
+//using static HIMS.API.Models.OutPatient.TPrescriptionModel;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile

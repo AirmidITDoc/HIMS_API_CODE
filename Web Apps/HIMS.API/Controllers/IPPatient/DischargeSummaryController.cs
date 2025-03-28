@@ -17,7 +17,6 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using System.Data;
 using HIMS.Data.DTO.Pathology;
-using static HIMS.API.Models.OutPatient.TPrescriptionModel;
 
 namespace HIMS.API.Controllers.IPPatient
 {

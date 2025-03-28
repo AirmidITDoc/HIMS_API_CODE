@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PrescriptionInsertSP")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
             List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();

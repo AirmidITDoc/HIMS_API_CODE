@@ -7,7 +7,7 @@ namespace HIMS.API.Models.OutPatient
     public class TPrescriptionModel
     {
 
-      
+
         public long? OpdIpdIp { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Date { get; set; }
@@ -43,9 +43,9 @@ namespace HIMS.API.Models.OutPatient
         public long? PatientReferDocId { get; set; }
         public string? Advice { get; set; }
         public long? IsAddBy { get; set; }
-   
 
 
+    }
         public class RTPrescriptionModelValidator : AbstractValidator<TPrescriptionModel>
         {
             public RTPrescriptionModelValidator()
@@ -91,7 +91,7 @@ namespace HIMS.API.Models.OutPatient
 
         public class ModelTPrescription
         {
-            public TPrescriptionModel TPrescription { get; set; }
+            public List<TPrescriptionModel> TPrescription { get; set; }
             public List<TOPRequestListModel> TOPRequestList { get; set; }
             public List<MOPCasepaperDignosisMasterModel> MOPCasepaperDignosisMaster { get; set; }
 
@@ -111,4 +111,3 @@ namespace HIMS.API.Models.OutPatient
         }
 
     }
-}
