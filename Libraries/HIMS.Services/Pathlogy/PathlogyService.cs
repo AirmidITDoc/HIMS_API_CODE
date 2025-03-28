@@ -36,9 +36,9 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathResultEntryListDto>(model, "ps_Rtrv_PathResultEntryList_Test_Dtls");
         }
-        public virtual async Task<IPagedList<PatientTestListDto>> PGetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PathPatientTestListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
+            return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
         }
 

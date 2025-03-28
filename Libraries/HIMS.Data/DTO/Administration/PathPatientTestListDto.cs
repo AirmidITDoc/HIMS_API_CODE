@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.Pathology
+namespace HIMS.Data.DTO.Administration
 {
-    public class PatientTestListDto
+    public  class PathPatientTestListDto
     {
-        public string  RegNo { get; set; }
+        public string RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? OP_IP_No { get; set; }
         public string? VADate { get; set; }
@@ -19,9 +19,9 @@ namespace HIMS.Data.DTO.Pathology
         public string DOT { get; set; }
         public bool? IsCompleted { get; set; }
         public bool? IsPrinted { get; set; }
-        public long OPD_IPD_ID { get; set; }
         public long OPD_IPD_Type { get; set; }
-        public string PatientType { get; set; }
+        public string OPD_IPD_ID { get; set; }
+        public string? PatientType { get; set; }
         public string? BillNo { get; set; }
         public string? PBillNo { get; set; }
         public string? AgeYear { get; set; }
@@ -35,8 +35,5 @@ namespace HIMS.Data.DTO.Pathology
 
 
 
-
-
     }
 }
-
