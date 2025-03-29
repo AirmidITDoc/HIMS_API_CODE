@@ -15,7 +15,7 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data;
 
-namespace HIMS.API.Controllers.Inventory
+namespace HIMS.API.Controllers.Masters.Radiology
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -30,14 +30,14 @@ namespace HIMS.API.Controllers.Inventory
             _repository = repository1;
         }
         [HttpPost("RadiologyList")]
-     //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
             return Ok(RadiologyList.ToGridResponse(objGrid, "RadiologyList "));
         }
         [HttpPost("RadiologyTestList")]
-     //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RadiologyTestList(GridRequestModel objGrid)
         {
             IPagedList<RadiologyTestListDto> RadiologyTestList = await _RadiologyTestService.RadiologyTestList(objGrid);
@@ -117,7 +117,7 @@ namespace HIMS.API.Controllers.Inventory
         //    else
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         //}
-       
+
 
         [HttpPut("RadiologyUpdate/{id:int}")]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
