@@ -28,6 +28,7 @@ namespace HIMS.Data.Models
         public long? CurrencyId { get; set; }
         public long? Octroi { get; set; }
         public long? Freight { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? Gstno { get; set; }
@@ -44,7 +45,6 @@ namespace HIMS.Data.Models
         public string? Ifsccode { get; set; }
         public long? VenderTypeId { get; set; }
         public decimal? OpeningBalance { get; set; }
-        public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class ScheduleMaster
     {
-        public ScheduleMaster()
-        {
-            ScheduleLogs = new HashSet<ScheduleLog>();
-        }
-
         public int Id { get; set; }
         public string ScheduleName { get; set; } = null!;
         public int ScheduleType { get; set; }
@@ -21,7 +16,5 @@ namespace HIMS.Data.Models
         public DateTime EndDate { get; set; }
         public string Query { get; set; } = null!;
         public bool IsActive { get; set; }
-
-        public virtual ICollection<ScheduleLog> ScheduleLogs { get; set; }
     }
 }

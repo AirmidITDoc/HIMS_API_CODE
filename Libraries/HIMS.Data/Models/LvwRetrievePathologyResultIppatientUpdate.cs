@@ -35,8 +35,5 @@ namespace HIMS.Data.Models
         public DateTime? AdmissionDate { get; set; }
         public DateTime? AdmissionTime { get; set; }
         public string? Ipdno { get; set; }
-        public long PathReportdetid { get; set; }
-        public float? MinValue { get; set; }
-        public float? MaxValue { get; set; }
     }
 }
