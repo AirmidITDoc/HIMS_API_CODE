@@ -1121,9 +1121,10 @@ namespace HIMS.Services.Report
         {
             string[] headerList = model.headerList;
             string[] colList = model.colList;
+            string[] totalList = model.totalFieldList;
             string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
-            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
             var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
@@ -1234,11 +1235,11 @@ namespace HIMS.Services.Report
                         string previousLabel = "";
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
-                        if (totalColList != null)
+                        if (totalColList.Count() > 0 && totalColList != null)
                         {
                             foreach (var colName in totalColList)
                             {
-                                if (!string.IsNullOrEmpty(colName))
+                                if (!string.IsNullOrEmpty(colName) && colName != "space")
                                 {
                                     dynamicVariable.Add(colName, 0);
                                 }
@@ -1273,16 +1274,16 @@ namespace HIMS.Services.Report
                                 items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
                             items.Append("</tr>");
-                            if (totalColList != null)
+                            if (totalColList.Count() > 0 && totalColList != null)
                             {
                                 foreach (var colName in totalColList)
                                 {
-                                    if (!string.IsNullOrEmpty(colName) && colName != "lableTotal")
+                                    if (!string.IsNullOrEmpty(colName) && colName != "lableTotal" && colName != "space")
                                         dynamicVariable[colName] += dr[colName].ConvertToDouble();
                                 }
                             }
                             //T_Count += dr["PatientName"].ConvertToDouble();
-                            if (totalColList == null)
+                            if (totalColList.Count() > 0 && totalColList == null)
                             {
                                 if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                                 {
@@ -1290,12 +1291,14 @@ namespace HIMS.Services.Report
                                 }
                             }
                         }
-                        if (totalColList != null)
+                        if (totalColList.Count() > 0 && totalColList != null)
                         {
                             ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
                             foreach (var colName in totalColList)
                             {
-                                if (colName == "lableTotal")
+                                if (colName == "space")
+                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
+                                else if (colName == "lableTotal")
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
                                 else if (!string.IsNullOrEmpty(colName))
                                     ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
