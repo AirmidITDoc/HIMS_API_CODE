@@ -50,7 +50,6 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(PatientList.ToGridResponse(objGrid, "PathologyPatientTestList "));
         }
 
-
         [HttpPost("PathologyTestList")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
@@ -73,30 +72,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyResult Entry  added successfully.");
         }
 
-        //[HttpPost("InsertResultEntry")]
-        ////[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(PathologyResultModel obj)
-        //{
-        //    List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
-        //    TPathologyReportHeader objTPathology = obj.PathologyReport.MapTo<TPathologyReportHeader>();
-        //    if (model.PathReportDetId == 0)
-        //    {
-        //        //objTPathology.ReportDate = Convert.ToDateTime(objTPathology.ReportDate);
-        //        //objTPathology.ReportTime = Convert.ToDateTime(objTPathology.ReportTime);
-        //        model.ForEach(x => { x.PathReportId = model.PathReportDetId; });
-
-
-        //        await _IPathlogyService.InsertAsyncResultEntry(model, objTPathology, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyResult Entry  added successfully.");
-        //}
-
-
-
-
-        [HttpPost("Pathology")]
+        [HttpPost("PathologyTemplateSave")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {

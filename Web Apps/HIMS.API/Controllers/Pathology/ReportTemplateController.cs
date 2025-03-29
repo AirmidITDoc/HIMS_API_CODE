@@ -46,10 +46,6 @@ namespace HIMS.API.Controllers.Pathology
             return data1.ToSingleResponse<MReportTemplateConfig, MReportTemplateConfig>("Template Details");
         }
 
-
-      
-
-
         [HttpGet]
         [Route("get-Templates")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
