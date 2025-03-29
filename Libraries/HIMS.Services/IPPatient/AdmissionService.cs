@@ -27,9 +27,12 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<AdmissionListDto>> GetAdmissionListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "m_rtrv_Admtd_Ptnt_Dtls");
+            return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_Admtd_Ptnt_Dtls");
         }
-
+        public virtual async Task<IPagedList<AdmissionListDto>> GetAdmissionDischargeListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_AdmtdWithDischargeDate_Ptnt_Dtls");
+        }
 
 
         public virtual void InsertAsyncSP(Registration objRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
