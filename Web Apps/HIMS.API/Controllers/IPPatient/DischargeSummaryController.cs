@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.IPPatient
         } 
 
         [HttpPost("DischargeSummaryInsert")]
-        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.",model);
         }
         [HttpPut("DischargeSummaryUpdate")]
-        //[Permission(PageCode = "DischargeSummay", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
@@ -113,7 +113,7 @@ namespace HIMS.API.Controllers.IPPatient
 
        
         [HttpPost("DischargeTemplateInsert")]
-        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeTemplateInsert(DischargeTemplate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
@@ -132,7 +132,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("DischargeTemplateUpdate")]
-        [Permission(PageCode = "DischargeSummary", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeTemplateUpdate(DischargeTemUpdate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
@@ -153,7 +153,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("DischargeInsert")]
-        //[Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPDischargeInsert(DischargeModels obj)
         {
             Discharge model = obj.Discharge.MapTo<Discharge>();
@@ -180,7 +180,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("DischargeUpdate")]
-        //[Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
         {
             Discharge model = obj.Discharge.MapTo<Discharge>();
