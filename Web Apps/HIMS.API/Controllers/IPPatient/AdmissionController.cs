@@ -38,6 +38,14 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
 
+        [HttpPost("AdmissionDischargeList")]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<IActionResult> AdmDiscList(GridRequestModel objGrid)
+        {
+            IPagedList<AdmissionListDto> AdmissionDischargeList = await _IAdmissionService.GetAdmissionDischargeListAsync(objGrid);
+            return Ok(AdmissionDischargeList.ToGridResponse(objGrid, "Admission Discharge List"));
+        }
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
