@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Core;
+using HIMS.Data.DTO.IPPatient;
 
 
 namespace HIMS.API.Controllers.OPPatient
@@ -68,6 +69,14 @@ namespace HIMS.API.Controllers.OPPatient
         {
             IPagedList<IPBillListforRefundListDto> IPBillListforRefundList = await _IRefundOfBillService.IPBillGetListAsync(objGrid);
             return Ok(IPBillListforRefundList.ToGridResponse(objGrid, "IPBillListforRefund List "));
+        }
+
+        [HttpPost("IPBillForRefundList")]
+        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillForRefundListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillForRefundListDto> RequestList = await _IRefundOfBillService.IPBillForRefundListAsync(objGrid);
+            return Ok(RequestList.ToGridResponse(objGrid, "IP Bill For Refund List"));
         }
 
         [HttpPost("OPRefundOfBILLInsert")]

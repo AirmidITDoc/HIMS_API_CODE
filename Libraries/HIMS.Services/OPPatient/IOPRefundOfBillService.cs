@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
@@ -18,6 +19,7 @@ namespace HIMS.Services.OPPatient
         Task<IPagedList<OPBillservicedetailListDto>> GetBillservicedetailListAsync(GridRequestModel objGrid);
         Task<IPagedList<RefundAgainstBillListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IPBillListforRefundListDto>> IPBillGetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPBillForRefundListDto>> IPBillForRefundListAsync(GridRequestModel objGrid);
 
 
     }

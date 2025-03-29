@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -42,6 +43,11 @@ namespace HIMS.Services.OPPatient
         public virtual async Task<IPagedList<IPBillListforRefundListDto>> IPBillGetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillListforRefundListDto>(model, "m_IPBillListforRefund");
+        }
+
+        public virtual async Task<IPagedList<IPBillForRefundListDto>> IPBillForRefundListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillForRefundListDto>(model, "Retrieve_IPBill_For_Refund");
         }
 
 

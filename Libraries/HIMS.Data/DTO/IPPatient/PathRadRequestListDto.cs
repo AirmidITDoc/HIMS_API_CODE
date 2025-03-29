@@ -11,8 +11,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long? ReqDetId { get; set; }
         public string? ServiceName { get; set; }
         public long? ServiceId { get; set; }
-        public string? OP_IP_ID { get; set; }
-        public string? OP_IP_Type { get; set; }
+        public string? opipid { get; set; }
+        public string? opiptype { get; set; }
         public bool? IsStatus { get; set; }
         public long? IsPathology { get; set; }
         public long IsRadiology { get; set; }
