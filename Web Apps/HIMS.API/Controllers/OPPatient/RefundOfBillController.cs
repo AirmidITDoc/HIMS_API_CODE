@@ -40,14 +40,14 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPBilllistforrefundList")]
-        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OpBilllistforRefundDto> BillList = await _IRefundOfBillService.GeOpbilllistforrefundAsync(objGrid);
             return Ok(BillList.ToGridResponse(objGrid, "OP Bill list for refund List"));
         }
         [HttpPost("OPBillservicedetailList")]
-        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
         public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RefundAgainstBillList")]
-        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
         public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("IPBillListforRefundList")]
-        [Permission(PageCode = "OPRefund", Permission = PagePermission.View)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillGetListAsync(GridRequestModel objGrid)
         {
             IPagedList<IPBillListforRefundListDto> IPBillListforRefundList = await _IRefundOfBillService.IPBillGetListAsync(objGrid);
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRefundOfBILLInsert")]
-        //[Permission(PageCode = "OPRefund", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
