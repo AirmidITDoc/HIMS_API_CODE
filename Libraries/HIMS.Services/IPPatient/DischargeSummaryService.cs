@@ -60,7 +60,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            string VDischargeSummaryId = odal.ExecuteNonQuery("sp_insert_DischargeSummary_1", CommandType.StoredProcedure, "DischargeSummaryId", entity);
+            string VDischargeSummaryId = odal.ExecuteNonQuery("ps_insert_DischargeSummary_1", CommandType.StoredProcedure, "DischargeSummaryId", entity);
             ObjDischargeSummary.DischargeSummaryId = Convert.ToInt32(VDischargeSummaryId);
 
             foreach (var item in ObjTIpPrescriptionDischarge)
@@ -85,7 +85,7 @@ namespace HIMS.Services.IPPatient
             {
                 Uentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("sp_update_DischargeSummary_1", CommandType.StoredProcedure, Uentity);
+            odal.ExecuteNonQuery("ps_update_DischargeSummary_1", CommandType.StoredProcedure, Uentity);
 
 
             foreach (var item in ObjTIpPrescriptionDischarge)
@@ -94,7 +94,7 @@ namespace HIMS.Services.IPPatient
                 {
                     OPDIPDID = Convert.ToInt32(item.OpdIpdId)
                 };
-                odal.ExecuteNonQuery("sp_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                odal.ExecuteNonQuery("ps_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
             }
 
 
@@ -134,7 +134,7 @@ namespace HIMS.Services.IPPatient
                 {
                     pentity.Remove(Property);
                 }
-                odal.ExecuteNonQuery("v_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
             }
         }
         public virtual async Task UpdateAsyncTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
@@ -153,7 +153,7 @@ namespace HIMS.Services.IPPatient
             {
                 OPDIPDID = Convert.ToInt32(ObjDischargeTemplate.AdmissionId)
             };
-            odal.ExecuteNonQuery("PS_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
             foreach (var item in ObjTIpPrescriptionTemplate)
             {
                 string[] DEntity = { "PrecriptionId", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsClosed" };
@@ -162,7 +162,7 @@ namespace HIMS.Services.IPPatient
                 {
                     pentity.Remove(Property);
                 }
-                odal.ExecuteNonQuery("v_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
 
 
             }
@@ -177,7 +177,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            string DischargeId = odal.ExecuteNonQuery("v_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
+            string DischargeId = odal.ExecuteNonQuery("ps_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
             ObjDischarge.DischargeId = Convert.ToInt32(DischargeId);
 
             string[] AEntity = { "RegId","AdmissionDate","AdmissionTime","PatientTypeId","HospitalId","DocNameId","RefDocNameId","WardId","BedId","IsBillGenerated","Ipdno","IsCancelled","CompanyId","TariffId","ClassId",
@@ -190,7 +190,7 @@ namespace HIMS.Services.IPPatient
             {
                 Admientity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_Admission_3", CommandType.StoredProcedure, Admientity);
+            odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Admientity);
 
             string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Bentity = ObjBedmaster.ToDictionary();
@@ -198,7 +198,7 @@ namespace HIMS.Services.IPPatient
             {
                 Bentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
+            odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
 
         }
         public virtual async Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
@@ -214,7 +214,7 @@ namespace HIMS.Services.IPPatient
                 Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
                 Dentity["ModifiedBy"] = 0; // Ensure objpayment 
             }
-            odal.ExecuteNonQuery("m_update_Discharge_1", CommandType.StoredProcedure, Dentity);
+            odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
 
             string[] AEntity = { "RegId","AdmissionDate","AdmissionTime","PatientTypeId","HospitalId","DocNameId","RefDocNameId","WardId","BedId","IsBillGenerated","Ipdno","IsCancelled","CompanyId","TariffId","ClassId",
             "DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
@@ -227,7 +227,7 @@ namespace HIMS.Services.IPPatient
                 Aentity.Remove(rProperty);
 
             }
-            odal.ExecuteNonQuery("update_Admission_3", CommandType.StoredProcedure, Aentity);
+            odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
         }
        
         public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
