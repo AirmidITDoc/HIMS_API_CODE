@@ -39,6 +39,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IRefundOfBillService = repository;
         }
 
+        //OP//
 
         [HttpPost("OPBilllistforrefundList")]
         [Permission(PageCode = "Refund", Permission = PagePermission.View)]
@@ -62,6 +63,10 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
             return Ok(Servicelist.ToGridResponse(objGrid, "Refund Against Bill List "));
         }
+
+
+       //IP// 
+
 
         [HttpPost("IPBillListforRefundList")]
         [Permission(PageCode = "Refund", Permission = PagePermission.View)]

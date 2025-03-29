@@ -17,12 +17,11 @@ namespace HIMS.Data.DTO.Pathology
         public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
-        public string? FirstName { get; set; }
-        public long? LastName { get; set; }
+        public string? ConsultantDoctor { get; set; }
         public string? VisitDate { get; set; }
         public string? VisitTime { get; set; }
         public string? TestName { get; set; }
-        public long OPD_IPD_Type { get; set; } 
+        public long opdipdtype { get; set; } 
         public string? PBillNo { get; set; }
         public string? ServiceName { get; set; }
         public bool? IsCompleted { get; set; }
@@ -35,7 +34,7 @@ namespace HIMS.Data.DTO.Pathology
         public long IsCancelled { get; set; }
         public string? AdmissionDate { get; set; }
         public string? OP_IP_Number { get; set; }
-        public long OPD_IPD_ID { get; set; }
+        public long opdipdid { get; set; }
         public string PatientType { get; set; }
         public string AgeYear { get; set; }
 
