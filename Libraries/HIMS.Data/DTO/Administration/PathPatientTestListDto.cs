@@ -19,8 +19,8 @@ namespace HIMS.Data.DTO.Administration
         public string DOT { get; set; }
         public bool? IsCompleted { get; set; }
         public bool? IsPrinted { get; set; }
-        public long OPD_IPD_Type { get; set; }
-        public string OPD_IPD_ID { get; set; }
+        public long opdipdtype { get; set; }
+        public string opdipdid { get; set; }
         public string? PatientType { get; set; }
         public string? BillNo { get; set; }
         public string? PBillNo { get; set; }
