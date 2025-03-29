@@ -13,7 +13,7 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data;
 
-namespace HIMS.API.Controllers.Inventory
+namespace HIMS.API.Controllers.Masters.PathologyMaster
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Inventory
         [HttpDelete("PathTestDelete")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
-        {       
+        {
 
             MPathTestMaster model = await _repository.GetById(x => x.TestId == Id);
             if ((model?.TestId ?? 0) > 0)
