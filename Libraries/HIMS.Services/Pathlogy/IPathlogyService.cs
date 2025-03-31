@@ -24,9 +24,5 @@ namespace HIMS.Services.Pathlogy
 
         Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
 
-        Task<IPagedList<TestListDTo>> GetPathTestListAsync(GridRequestModel objGrid);
-
-
-
     }
 }
