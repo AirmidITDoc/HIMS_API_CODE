@@ -43,7 +43,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
             htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
             htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
-            //htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailID ?? "");
+            htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
             htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
             return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
