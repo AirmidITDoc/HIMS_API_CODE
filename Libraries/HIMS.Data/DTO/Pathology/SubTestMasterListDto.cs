@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.Pathology
 {
-    public class TestMasterListDto
+    public class SubTestMasterListDto
     {
 
         public long? SubTestID { get; set; }

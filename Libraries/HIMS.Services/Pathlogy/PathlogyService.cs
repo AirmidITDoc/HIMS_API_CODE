@@ -41,11 +41,7 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
         }
-
-        public virtual async Task<IPagedList<TestListDTo>> GetPathTestListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<TestListDTo>(model, "m_Rtrv_PathologyTestList");
-        }
+       
         public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {
 

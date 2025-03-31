@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.Masters.PathologyMaster
 {
@@ -27,13 +28,22 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             _ITestmasterService = repository;
             _repository = repository1;
         }
-        [HttpPost("TestMasterList")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        [HttpPost("PathTestList")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathList(GridRequestModel objGrid)
+        {
+            IPagedList<PathTestListDto> PathTestList = await _ITestmasterService.PetListAsync(objGrid);
+            return Ok(PathTestList.ToGridResponse(objGrid, "PathTestList"));
+        }
+
+        [HttpPost("SubTestList")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
-            return Ok(TestMasterList.ToGridResponse(objGrid, "TestMasterList"));
+            IPagedList<SubTestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
+            return Ok(TestMasterList.ToGridResponse(objGrid, "SubTestList"));
         }
+       
 
         [HttpPost("Insert")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
