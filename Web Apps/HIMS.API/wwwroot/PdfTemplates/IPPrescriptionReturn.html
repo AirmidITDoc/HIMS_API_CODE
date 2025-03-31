@@ -27,55 +27,75 @@
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Reg No. : </span>
+                                    <span>Return No.:</span>
+                                    <span>{{PresReId}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Prescription Date /Time:</span>
+                                    <span>{{Date}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>UHID No:</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>PDate : </span>
-                                    <span>{{PresTime}} </span>
+                                    <span>DOA /Time:</span>
+                                    <span>{{AdmissionTime}}</span>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Patient Name : </span>
+                                    <span>IPD No.:</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>DOD /Time:</span>
+                                    <!--<span>{{DischargeDate}}</span>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name:</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Age / Gender : </span>
-                                    <span> {{AgeYear}} / {{GenderName}}</span>
+                                    <span>Age/Gender:</span>
+                                    <span> {{Age}}Y | {{AgeMonth}} M|{{AgeDay}}D / {{GenderName}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 2px;">
-                                    <span>OPD No : </span>
-                                    <span>{{OPDNo}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span>Address : </span>
-                                    <span>{{Expr1}}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span>DepartmentName  : </span>
-                                    <span>{{DepartmentName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span>WardName  : </span>
-                                    <span>{{WardName}}</span>
-                                </td>
-                            </tr>
 
+                                <td style="padding: 2px;">
+                                    <span>Doctor Name:</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Ward/Bed Name: </span>
+                                    <span>{{RoomName}} | {{BedName}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span>Dr.Department Name.:</span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Patient Type:</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>DoctorName  : </span>
-                                    <span> {{ConsultantDocName}}</span>
+                                    <span>Ref.Doctor Name.:</span>
+                                    <span>{{RefDocName}}</span>
                                 </td>
-                                <!--<td style="padding: 2px;">
-                                    <span>Mobile No  : </span>
-                                    <span>{{MobileNo}}</span>
-                                </td>-->
+                                <td style="padding: 2px;">
+                                    <span>Company Name :</span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
                             </tr>
 
                         </table>
@@ -103,13 +123,27 @@
                 </tr>
 
 
+
                 <tr>
-                    <td style="padding: 6px; text-align: right;">
-                        <span>
-                            {{PreparedBy}}
-                        </span><br>
-                        <span>PreparedBy</span>
-                    </td>
+                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+                        <tr style="margin-top: 12px;">
+                        <tr>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                        </tr>
+                        <tr></tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+
+                                <span>{{PreparedBy}}</span>
+                            </td>
+                        </tr>
+                        <tr style="padding: 6px; text-align: right;">
+                            <td>
+                                <span>Prepared By</span>
+                            </td>
+                        </tr>
+                    </table>
                 </tr>
             </table>
         </div>
