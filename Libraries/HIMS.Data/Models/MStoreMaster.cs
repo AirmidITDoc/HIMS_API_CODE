@@ -5,6 +5,12 @@ namespace HIMS.Data.Models
 {
     public partial class MStoreMaster
     {
+        public MStoreMaster()
+        {
+            MAssignItemToStores = new HashSet<MAssignItemToStore>();
+            MAssignSupplierToStores = new HashSet<MAssignSupplierToStore>();
+        }
+
         public long StoreId { get; set; }
         public string? StoreShortName { get; set; }
         public string? StoreName { get; set; }
@@ -44,9 +50,13 @@ namespace HIMS.Data.Models
         public string? WhatsAppTemplateId { get; set; }
         public bool? IsSmsmsg { get; set; }
         public string? SmstemplateId { get; set; }
+        public string? Header { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }
+        public virtual ICollection<MAssignSupplierToStore> MAssignSupplierToStores { get; set; }
     }
 }

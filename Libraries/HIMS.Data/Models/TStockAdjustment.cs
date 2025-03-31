@@ -18,7 +18,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedOn { get; set; }
         public long? UpdatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
-
-        public virtual TCurrentStock? Stk { get; set; }
     }
 }

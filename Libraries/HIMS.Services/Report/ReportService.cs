@@ -1119,13 +1119,31 @@ namespace HIMS.Services.Report
 
         public string GetNewReportSetByProc(ReportNewRequestModel model)
         {
+
+            string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
+            
+            //Convert vPageOrientation from string to the appropriate Orientation enum
+            Orientation vPageOrg;
+            if (!Enum.TryParse(model.vPageOrientation, true, out vPageOrg))
+            {
+            // If conversion fails, set default value (for example, Portrait)
+            vPageOrg = Orientation.Portrait;
+            }
+
             string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
+            
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
+            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+
             var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
-            var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
+
+            html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 

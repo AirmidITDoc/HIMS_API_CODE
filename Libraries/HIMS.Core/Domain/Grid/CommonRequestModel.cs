@@ -41,6 +41,7 @@ namespace HIMS.Core.Domain.Grid
         public string SPName { get; set; } = string.Empty;
         public string FolderName { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
+        public string vPageOrientation { get; set; }
 
     }
 

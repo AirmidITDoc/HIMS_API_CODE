@@ -15,7 +15,5 @@ namespace HIMS.Data.Models
         public long? AddedBy { get; set; }
         public DateTime? AddedDateTime { get; set; }
         public long? StkId { get; set; }
-
-        public virtual TCurrentStock? Stk { get; set; }
     }
 }
