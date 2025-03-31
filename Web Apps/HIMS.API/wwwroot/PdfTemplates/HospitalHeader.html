@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <table style="display:{{Display}}">
+        <tr class="top-header-row">
+            <td style="padding: 6px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+                <table style="width: 1000px; border-collapse: collapse; border-bottom: 1px solid #d4c3c3;">
+                    <tr style="font-size: 16px">
+                        <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                            <span>
+                                <img src="{{BaseUrl}}/PdfTemplates/Hospital_logo.png" alt="logo" width="180">
+                            </span>
+                        </td>
+                        <div>
+                        <td style=" padding: 0px; text-align: left;">
+                            <table style="width: 80%; border-collapse: collapse;">
+                                <tbody style="text-align: center;">
+                                    <tr>
+                                        <td style="font-size: 15px; padding: 0px;">
+                                            {{HospitalHeaderLine}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 20px; padding: 0px; font-weight: 600; padding: 0px;">
+                                            {{HospitalName}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="font-size: 13px; padding: 0px; ">
+                                            <span>
+                                                {{Address}} {{City}} - {{Pin}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 13px; padding: 0px;">
+                                            <span>
+                                                {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td></div>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

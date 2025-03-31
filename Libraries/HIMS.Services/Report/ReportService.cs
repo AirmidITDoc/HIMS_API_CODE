@@ -1141,7 +1141,7 @@ namespace HIMS.Services.Report
 
             var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
 
-            html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+            html = html.Replace("{{Header}}", htmlHeaderFilePath);
 
             var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
             string byteFile = Convert.ToBase64String(tuple.Item1);
@@ -1168,11 +1168,8 @@ namespace HIMS.Services.Report
             }
             var dt = odal.FetchDataTableBySP(sp_Name, para);
 
-
-            //string htmlHeader = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-
             string html = File.ReadAllText(htmlFilePath);
-            //html = html.Replace("{{HospitalHeader}}", htmlHeader);
+            //html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
             html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
