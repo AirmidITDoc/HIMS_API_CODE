@@ -7,17 +7,11 @@
     /// </summary>
     /// <typeparam name="T">The type of object to store.</typeparam>
     /// <remarks>Access to the instance is not synchronized.</remarks>
-    public class Singleton<T>
+    public static class Singleton<T>
     {
-        private static T instance;
-
         /// <summary>
         /// The singleton instance for the specified type T. Only one instance (at the time) of this object for each type of T.
         /// </summary>
-        public static T Instance
-        {
-            get => instance;
-            set => instance = value;
-        }
+        public static T? Instance { get; set; }
     }
 }
