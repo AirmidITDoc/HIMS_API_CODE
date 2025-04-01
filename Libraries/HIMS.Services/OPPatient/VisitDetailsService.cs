@@ -27,7 +27,7 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "m_Rtrv_VisitDetailsList_1_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi");
         }
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -117,7 +117,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            string RegId = odal.ExecuteNonQuery("v_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
@@ -127,14 +127,14 @@ namespace HIMS.Services.OPPatient
             {
                 visitentity.Remove(rProperty);
             }
-            string VisitId = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
             var tokenObj = new
             {
                 VisitId = Convert.ToInt32(VisitId)
             };
-            odal.ExecuteNonQuery("v_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
 
             // Add TokenNumber table records
             //List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
@@ -172,7 +172,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_RegistrationForAppointment_1", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_update_RegistrationForAppointment_1", CommandType.StoredProcedure, entity);
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
@@ -182,7 +182,7 @@ namespace HIMS.Services.OPPatient
             {
                 visitentity.Remove(rProperty);
             }
-            string VisitId = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
             //var tokenObj = new
@@ -217,7 +217,7 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "m_Rtrv_BrowseOPDBill_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
         }
 
         public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
@@ -233,13 +233,13 @@ namespace HIMS.Services.OPPatient
         public virtual async Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel model)
         {
 
-            return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "Retrieve_RegistrationList");
+            return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "ps_Retrieve_RegistrationList");
         }
 
         public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
         {
 
-            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "v_Rtrv_PreviousDoctorVisitList");
+            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousDoctorVisitList");
         }
 
 
@@ -366,7 +366,7 @@ namespace HIMS.Services.OPPatient
                 {
                     entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_update_vitalInformation", CommandType.StoredProcedure, entity);
+                odal.ExecuteNonQuery("ps_update_vitalInformation", CommandType.StoredProcedure, entity);
 
                 scope.Complete();
             }
@@ -380,7 +380,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            string VisitID = odal.ExecuteNonQuery("v_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+            string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
 
             await _context.SaveChangesAsync(UserId, Username);
