@@ -36,14 +36,23 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return Ok(PathTestList.ToGridResponse(objGrid, "PathTestList"));
         }
 
-        [HttpPost("SubTestList")]
+        [HttpPost("PathTestForUpdateList")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SubTestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
             return Ok(TestMasterList.ToGridResponse(objGrid, "SubTestList"));
         }
-       
+
+        [HttpPost("PathTemplateForUpdateList")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> TList(GridRequestModel objGrid)
+        {
+            IPagedList<PathTemplateForUpdateListDto> PathTemplateForUpdateList = await _ITestmasterService.PathTemplateList(objGrid);
+            return Ok(PathTemplateForUpdateList.ToGridResponse(objGrid, "PathTemplateForUpdateList"));
+        }
+
+
 
         [HttpPost("Insert")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]

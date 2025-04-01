@@ -18,11 +18,7 @@ namespace HIMS.Services.Pathlogy
 {
     public class PathlogyService : IPathlogyService
     {
-        public virtual async Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateForUpdateList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
-        }
-      
+       
         public virtual async Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathParaFillListDto>(model, "rtrv_PathParaFill");

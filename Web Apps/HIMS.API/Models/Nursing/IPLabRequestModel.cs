@@ -24,8 +24,8 @@ namespace HIMS.API.Models.Nursing
     {
         public IPLabRequestModelValidator()
         {
-                RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");
-                RuleFor(x => x.OpIpType).NotNull().NotEmpty().WithMessage("OpIpType is required");
+                RuleFor(x => x.ReqDate).NotNull().NotEmpty().WithMessage("ReqDate is required");
+                RuleFor(x => x.ReqTime).NotNull().NotEmpty().WithMessage("ReqTime is required");
            
         }
     }
@@ -49,8 +49,10 @@ namespace HIMS.API.Models.Nursing
     {
         public TDLabRequestModelValidator()
         {
-            RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
-  
+            RuleFor(x => x.AddedByDate).NotNull().NotEmpty().WithMessage("AddedByDate is required");
+            RuleFor(x => x.AddedByTime).NotNull().NotEmpty().WithMessage("AddedByTime is required");
+
+
         }
     }
 }

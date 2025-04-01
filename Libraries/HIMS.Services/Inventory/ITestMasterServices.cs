@@ -15,6 +15,8 @@ namespace HIMS.Services.Inventory
     {
         Task<IPagedList<PathTestListDto>> PetListAsync(GridRequestModel objGrid);
         Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel objGrid);
+
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
