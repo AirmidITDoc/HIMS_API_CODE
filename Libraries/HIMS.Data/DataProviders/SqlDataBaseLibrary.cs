@@ -14,8 +14,8 @@ namespace HIMS.Data.DataProviders
     {
         private readonly SqlConnection objConnection;
 
-        public static string ConnectionString { get; set; }
-        public SqlBulkCopy bulkCopy;
+        public static string? ConnectionString { get; set; }
+        public SqlBulkCopy? bulkCopy;
         public bool HasError { get; set; } = false;
 
         public DatabaseHelper()
@@ -53,12 +53,12 @@ namespace HIMS.Data.DataProviders
         {
             SqlParameter p = Command.CreateParameter();
             p.ParameterName = name;
-            p.Value = value;
+            p.Value = value ?? DBNull.Value;
             if ((p.SqlDbType == SqlDbType.VarChar) || (p.SqlDbType == SqlDbType.NVarChar))
             {
                 p.Size = (p.SqlDbType == SqlDbType.VarChar) ? 8000 : 4000;
 
-                if ((value != null) && value is not DBNull && (value.ToString().Length > p.Size))
+                if (value != null && value is not DBNull && value.ToString()!.Length > p.Size)
                     p.Size = -1;
             }
             return Command.Parameters.Add(p);
@@ -70,12 +70,12 @@ namespace HIMS.Data.DataProviders
             if (type == ParamType.Output)
                 p.Direction = ParameterDirection.Output;
             p.ParameterName = name;
-            p.Value = value;
+            p.Value = value ?? DBNull.Value;
             if ((p.SqlDbType == SqlDbType.VarChar) || (p.SqlDbType == SqlDbType.NVarChar))
             {
                 p.Size = (p.SqlDbType == SqlDbType.VarChar) ? 8000 : 4000;
 
-                if ((value != null) && value is not DBNull && (value.ToString().Length > p.Size))
+                if (value != null && value is not DBNull && value.ToString()!.Length > p.Size)
                     p.Size = -1;
             }
             return Command.Parameters.Add(p);
@@ -899,7 +899,6 @@ namespace HIMS.Data.DataProviders
             }
             finally
             {
-                //objCommand.Parameters.Clear();
                 if (Command.Transaction == null)
                 {
                     objConnection.Close();
@@ -922,19 +921,6 @@ namespace HIMS.Data.DataProviders
             if (msg == null)
                 throw new ArgumentNullException(nameof(msg));
 
-            try
-            {
-                /*string strLogFile = CurrentContext.Config.UploadPath + "Logfile.txt";
-                if (strLogFile != "")
-                {
-                    System.IO.StreamWriter writer = System.IO.File.AppendText(strLogFile);
-                    writer.WriteLine("Date and Time : " + DateTime.Now.ToString() + " - " + msg);
-                    writer.WriteLine("Error in Query : " + query);
-                    writer.WriteLine("");
-                    writer.Close();
-                }*/
-            }
-            catch { }
         }
 
         public void Dispose()

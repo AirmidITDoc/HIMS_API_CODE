@@ -10,6 +10,7 @@ namespace HIMS.Core.Domain.Grid
         public SearchRequestModel()
         {
             Filters = new List<SearchGridValue>();
+            Timezone = string.Empty; // Initialize Timezone to avoid CS8618
         }
     }
    
