@@ -31,6 +31,8 @@ namespace HIMS.Services.Utilities
         //    htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
         //    return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
         //}
+
+
         public string GetHeader(string filePath, string basePath, long HospitalId = 0)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
@@ -40,14 +42,48 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
             htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
             htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
-            //htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
-           // htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailID ?? "");
-            //htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+            htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+            htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
             htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
             return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
             //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
 
         }
+        //public string GetHeader(int Id, int Type = 1)
+        //{
+        //    if (Type == 1)
+        //    {
+        //        HospitalMaster objHospital = _Hospital.GetHospitalById(Id);
+        //        return objHospital.Header;
+        //    }
+        //    else
+        //    {
+        //        HospitalStoreMaster objHospital = _Hospital.GetHospitalStoreById(Id);
+        //        return objHospital.Header;
+        //    }
+        //}
+
+        //public string GetTemplateHeader(int Id)
+        //{
+        //    M_ReportTemplateConfig objTemplate = _Hospital.GetTemplateById(Id);
+        //    return objTemplate.TemplateDescription;
+        //}
+
+        //public string GetStoreHeader(string filePath, string basePath, long StoreId = 0)
+        //{
+        //    string htmlHeader = System.IO.File.ReadAllText(filePath);
+        //    HospitalStoreMaster objStoreHospital = _context.MStoreMasters.Find(Convert.ToInt64(2));
+        //    htmlHeader = htmlHeader.Replace("{{PrintStoreName}}", objStoreHospital?.PrintStoreName ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{StoreAddress}}", objStoreHospital?.StoreAddress ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{HospitalMobileNo}}", objStoreHospital?.HospitalMobileNo ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{HospitalEmailId}}", objStoreHospital?.HospitalEmailId ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{PrintStoreUnitName}}", objStoreHospital?.PrintStoreUnitName ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{DL_NO}}", objStoreHospital?.DL_NO ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{GSTIN}}", objStoreHospital?.GSTIN ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
+        //    return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
+        //}
 
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath , string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
@@ -90,13 +126,15 @@ namespace HIMS.Services.Utilities
                     ColorMode = ColorMode.Color,
                     Orientation = PageOrientation,//Orientation.Portrait,
                     PaperSize = PaperSize,//PaperKind.A4,
+                    Margins = new MarginSettings() { Top = 10, Bottom=10, Left=10, Right=10 },
+                    //Scale = 0.9f,  // Reduce size to 90% of the original content size
                 },
                 Objects = {
                     new ObjectSettings() {
                         PagesCount = true,
                         HtmlContent = html,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                        FooterSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                     }
                 }
             };

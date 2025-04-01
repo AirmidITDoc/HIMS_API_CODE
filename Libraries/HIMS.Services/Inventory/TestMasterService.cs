@@ -2,6 +2,7 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -25,10 +26,17 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<TestMasterListDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PathTestListDto>> PetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<TestMasterListDto>(model, "Rtrv_PathTestForUpdate");
+            return await DatabaseHelper.GetGridDataBySp<PathTestListDto>(model, "Ps_Rtrv_PathologyTestList");
+
         }
+        public virtual async Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SubTestMasterListDto>(model, "Rtrv_PathTestForUpdate");
+
+        }
+        
         public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
         {
             try

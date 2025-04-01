@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TGrnsupPayment
     {
-        public TGrnsupPayment()
-        {
-            TSupPayDets = new HashSet<TSupPayDet>();
-        }
-
         public long SupPayId { get; set; }
         public DateTime? SupPayDate { get; set; }
         public DateTime? SupPayTime { get; set; }
@@ -34,7 +29,9 @@ namespace HIMS.Data.Models
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-
-        public virtual ICollection<TSupPayDet> TSupPayDets { get; set; }
+        public decimal? CardPayAmt { get; set; }
+        public DateTime? CardPayDate { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
     }
 }

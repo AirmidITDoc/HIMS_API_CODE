@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using System;
@@ -12,11 +13,11 @@ namespace HIMS.Services.Inventory
 {
     public partial interface ITestMasterServices
     {
-        Task<IPagedList<TestMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PathTestListDto>> PetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
-        //Task CancelAsync(MPathTestMaster objTest, int CurrentUserId, string CurrentUserName);
 
 
     }

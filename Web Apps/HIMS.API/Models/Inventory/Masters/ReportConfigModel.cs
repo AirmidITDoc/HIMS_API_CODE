@@ -12,6 +12,8 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportTitle { get; set; }
         public string? ReportHeader { get; set; }
         public string? ReportColumn { get; set; }
+        public string? ReportTotalField { get; set; }
+        public string? ReportGroupByLabel { get; set; }
         public string? ReportHeaderFile { get; set; }
         public string? ReportBodyFile { get; set; }
         public string? ReportFolderName { get; set; }

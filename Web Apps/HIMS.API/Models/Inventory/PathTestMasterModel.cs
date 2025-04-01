@@ -30,9 +30,6 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.TestName).NotNull().NotEmpty().WithMessage("TestName is required");
             RuleFor(x => x.PrintTestName).NotNull().NotEmpty().WithMessage("PrintTestName  is required");
             RuleFor(x => x.CategoryId).NotNull().NotEmpty().WithMessage(" CategoryId required");
-            RuleFor(x => x.TechniqueName).NotNull().NotEmpty().WithMessage("TechniqueName is required");
-            RuleFor(x => x.SuggestionNote).NotNull().NotEmpty().WithMessage("SuggestionNote is required");
-            RuleFor(x => x.FootNote).NotNull().NotEmpty().WithMessage("FootNote  is required");
             RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage(" ServiceId required");
         }
     }

@@ -56,7 +56,10 @@ namespace HIMS.API.Controllers.Pathology
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
             return Ok(PathResultEntryList.ToGridResponse(objGrid, "PathResultEntryList"));
+
         }
+
+      
         [HttpPost("InsertResultEntry")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
