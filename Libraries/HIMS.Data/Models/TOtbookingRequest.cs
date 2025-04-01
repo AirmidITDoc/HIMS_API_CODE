@@ -10,19 +10,18 @@ namespace HIMS.Data.Models
         public DateTime? OtbookingTime { get; set; }
         public long? OpIpId { get; set; }
         public byte? OpIpType { get; set; }
-        public long? SurgeonId { get; set; }
-        public long? SurgeryId { get; set; }
         public string? SurgeryType { get; set; }
         public long? DepartmentId { get; set; }
         public long? CategoryId { get; set; }
-        public long? AddedBy { get; set; }
-        public DateTime? AddedDateTime { get; set; }
-        public long? UpdateBy { get; set; }
-        public DateTime? UpdateDateTime { get; set; }
+        public long? SiteDescId { get; set; }
+        public long? SurgeonId { get; set; }
+        public long? SurgeryId { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
-        public long? SiteDescId { get; set; }
-        public int? CreatedBy { get; set; }
     }
 }

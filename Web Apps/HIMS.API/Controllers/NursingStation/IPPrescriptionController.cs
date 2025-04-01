@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
         [HttpPost("InsertPrescription")]
-        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
@@ -100,10 +100,10 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.", model);
         }
         [HttpPost("PrescriptionReturnInsert")]
-        [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
@@ -115,7 +115,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.", model);
         }
 
         [HttpPost("LabRequestInsert")]
@@ -132,7 +132,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.", model.RequestId);
         }
 
     }

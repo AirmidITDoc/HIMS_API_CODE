@@ -106,7 +106,7 @@ namespace HIMS.Services.Common
                     {
                         entity2.Remove(rProperty);
                     }
-                    string PaymentId = odal.ExecuteNonQuery("v_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
                 
                     scope.Complete();
@@ -135,7 +135,7 @@ namespace HIMS.Services.Common
                 {
                     entity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("v_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -220,7 +220,7 @@ namespace HIMS.Services.Common
                 {
                     entity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("v_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
 
