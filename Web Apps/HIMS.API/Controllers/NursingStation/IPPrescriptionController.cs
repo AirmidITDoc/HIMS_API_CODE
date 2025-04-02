@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
         [HttpPost("InsertPrescription")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();

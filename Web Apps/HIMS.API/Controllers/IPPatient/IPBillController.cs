@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.IPPatient
         {
 
             Bill Model = obj.Bill.MapTo<Bill>();
-          List<BillDetail> BillDetailModel = obj.BillDetail.MapTo<List<BillDetail>>();
+            List<BillDetail> BillDetailModel = obj.BillDetail.MapTo<List<BillDetail>>();
             AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
             Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
             Payment paymentModel = obj.payment.MapTo<Payment>();
@@ -221,46 +221,44 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.", Model);
         }
 
-        //[HttpDelete("IPAddchargesdelete")]
-        ////[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
-        //{
-
-        //    AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
-
-
-        //    if (obj.DeleteCharges.ChargesId != 0)
-        //    {
-
-        //        Model.AddedBy = CurrentUserId;
-        //        await _IPBillService.IPAddchargesdelete(Model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
-        //}
-
-        
-
-        [HttpDelete("IPAddchargesdelete")]
-        public async Task<ApiResponse> Delete(int Id)
+        [HttpPost("IPAddchargesdelete")]
+        //[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
         {
-            AddCharge model = await _repository.GetById(x => x.ChargesId == Id);
+            AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
 
-            if ((model?.ChargesId ?? 0) > 0)
+            if (obj.DeleteCharges.ChargesId != 0)
             {
-                model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = DateTime.Now; 
 
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges deleted  successfully.");
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.IPAddchargesdelete(Model, CurrentUserId, CurrentUserName);
             }
             else
-            {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            }
-
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
         }
+
+
+
+        //[HttpDelete("Addchargesdelete")]
+        //public async Task<ApiResponse> Delete(int Id)
+        //{
+        //    AddCharge model = await _repository.GetById(x => x.ChargesId == Id);
+
+        //    if ((model?.ChargesId ?? 0) > 0)
+        //    {
+        //        model.IsCancelledBy = CurrentUserId;
+        //        model.IsCancelledDate = DateTime.Now; 
+
+        //        await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges deleted  successfully.");
+        //    }
+        //    else
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    }
+
+        //}
 
     }
 }
