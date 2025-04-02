@@ -124,7 +124,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.", model.PaymentId);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insertsp(BillingModel obj)
         {
 
@@ -147,11 +147,11 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.", Model.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.", paymentModel.BillNo);
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertCreditSP(BillingModel obj)
         {
 
@@ -179,7 +179,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -198,7 +198,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", Model.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", paymentModel.BillNo);
         }
         [HttpPost("InsertIPDraftBill")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
