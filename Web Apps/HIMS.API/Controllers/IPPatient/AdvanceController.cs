@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPRefundofAdvanceInsert")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInsertAsyncSP(RefundsModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
