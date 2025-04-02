@@ -112,6 +112,32 @@ namespace HIMS.Core.Infrastructure
             return decryptedText;
         }
 
+        public static string DecryptFromAngular(string cipherText)
+        {
+            var encryptionKey = "airmidsoftwaredevelopmentat12345"; // Must match Angular key
+            var ivString = "airmidsoftware12"; // Must match Angular IV
+
+            var fullCipher = Convert.FromBase64String(cipherText);
+            var iv = Encoding.UTF8.GetBytes(ivString);
+            var cipherBytes = fullCipher;
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(encryptionKey);
+                aes.IV = iv;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(cipherBytes))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+
         /// <summary>
         /// Encrypt and URL encoded text
         /// </summary>
