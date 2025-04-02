@@ -179,7 +179,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
