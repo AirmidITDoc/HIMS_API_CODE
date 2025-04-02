@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(List.ToGridResponse(objGrid, "OP Rtrv Dignosis  List"));
         }
 
-        [HttpPost("getPrescriptionTemplateDetailsList")]
+        [HttpPost("OPPrescriptionTemplateList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionTemplateDetailsList(GridRequestModel objGrid)
         {

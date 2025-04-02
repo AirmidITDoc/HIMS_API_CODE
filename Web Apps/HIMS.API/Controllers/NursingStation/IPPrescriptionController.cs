@@ -119,7 +119,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPLabRequestModel obj)
         {
             THlabRequest model = obj.MapTo<THlabRequest>();
@@ -134,9 +134,6 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.", model.RequestId);
         }
-
-
-
 
     }
 }

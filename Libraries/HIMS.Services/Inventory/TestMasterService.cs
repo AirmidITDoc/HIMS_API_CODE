@@ -33,10 +33,15 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SubTestMasterListDto>(model, "Rtrv_PathTestForUpdate");
+            return await DatabaseHelper.GetGridDataBySp<SubTestMasterListDto>(model, "m_Retrieve_PathSubTestListForCombo");
 
         }
-        
+        public virtual async Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
+        }
+
+
         public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
         {
             try

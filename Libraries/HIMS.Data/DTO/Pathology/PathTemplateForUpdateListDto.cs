@@ -11,7 +11,7 @@ namespace HIMS.Data.DTO.Pathology
         public long TestId { get; set; }
         public long IsTemplateTest { get; set; }
         public long TemplateId { get; set; }
-        public string TemplateName { get; set; }
+        public string? TemplateName { get; set; }
        
 
     }
