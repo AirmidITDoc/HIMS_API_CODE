@@ -105,11 +105,40 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
+                await _IRefundOfBillService.InsertAsyncIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPRefund added successfully.", model.RefundId);
+        }
+
+
+        [HttpPost("OPRefundOfBILLInsert")]
+        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(RefundBillModel obj)
+        {
+            Refund model = obj.Refund.MapTo<Refund>();
+            List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
+            List<AddCharge> objAddCharge = obj.AddCharges.MapTo<List<AddCharge>>();
+            Payment objPayment = obj.Payment.MapTo<Payment>();
+            if (obj.Refund.RefundId == 0)
+            {
+                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+                model.AddedBy = CurrentUserId;
+
+                objTRefundDetail.ForEach(x => { x.RefundId = obj.Refund.RefundId; x.AddBy = CurrentUserId; x.UpdatedBy = CurrentUserId; });
+                obj.AddCharges.ForEach(x => { x.ChargesId = obj.Refund.RefundId; });
+
+                obj.Payment.RefundId = obj.Refund.RefundId;
+                objPayment.PaymentTime = Convert.ToDateTime(objPayment.PaymentTime);
+                objPayment.AddBy = CurrentUserId;
+                objPayment.IsCancelledBy = CurrentUserId;
+
                 await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.", model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPRefund added successfully.", model.RefundId);
         }
 
         //[HttpPost("IPInsert")]

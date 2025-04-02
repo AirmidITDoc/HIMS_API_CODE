@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
@@ -36,6 +37,8 @@ namespace HIMS.API.Controllers.Login
             _IPermissionService = permission;
             _IMenuService = iMenuService;
         }
+        
+
         [HttpPost]
         [Route("[action]")]
         [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
@@ -54,6 +57,8 @@ namespace HIMS.API.Controllers.Login
             }
             else
             {
+                model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
+                model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
                 if (string.IsNullOrWhiteSpace(model.Username))
                 {
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
