@@ -14,6 +14,8 @@ namespace HIMS.Services.Inventory
     public partial interface ITestMasterServices
     {
         Task<IPagedList<PathTestListDto>> PetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PathTestForUpdateListdto>> ListAsync(GridRequestModel objGrid);
+
         Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel objGrid);
 

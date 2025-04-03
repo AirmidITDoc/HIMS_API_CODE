@@ -511,7 +511,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -11548,6 +11548,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.BatchNo).HasMaxLength(20);
 
                 entity.Property(e => e.IsClosed).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.PresRe)
+                    .WithMany(p => p.TIpprescriptionReturnDs)
+                    .HasForeignKey(d => d.PresReId)
+                    .HasConstraintName("FK_T_IPPrescriptionReturnD_T_IPPrescriptionReturnH");
             });
 
             modelBuilder.Entity<TIpprescriptionReturnH>(entity =>
