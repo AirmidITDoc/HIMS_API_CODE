@@ -57,6 +57,16 @@ namespace HIMS.Services.OutPatient
         public virtual async Task InsertPrescriptionAsyncSP(List<TPrescription> objTPrescription, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
+            foreach (var modelItem in objTPrescription)
+            {
+
+                var tokensObj = new
+                {
+                    OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
+
+                };
+                odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
 
             foreach (var modelItem in objTPrescription)
             {
@@ -65,12 +75,6 @@ namespace HIMS.Services.OutPatient
                 modelItem.CreatedBy = UserId;
                 objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = UserId; x.ModifiedBy = UserId; });
                 objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
-
-                var tokensObj = new
-                {
-                    OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
-                };
-                odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
 
                 string[] rEntity = { "PrecriptionId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
                 var entity = modelItem.ToDictionary();
@@ -104,7 +108,7 @@ namespace HIMS.Services.OutPatient
                     CasepaperEntity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
-            }            
+            }
         }
       
         public virtual async Task UpdateAsync(TPrescription OBJTPrescription, int UserId, string Username)
