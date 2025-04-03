@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
