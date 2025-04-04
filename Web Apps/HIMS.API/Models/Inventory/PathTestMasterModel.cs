@@ -5,7 +5,6 @@ namespace HIMS.API.Models.Inventory
 {
     public class PathTestMasterModel
     {
-        public int TestId { get; set; }
         public string? TestName { get; set; }
         public string? PrintTestName { get; set; }
         public long? CategoryId { get; set; }
@@ -15,13 +14,19 @@ namespace HIMS.API.Models.Inventory
         public string? SuggestionNote { get; set; }
         public string? FootNote { get; set; }
         public bool? IsActive { get; set; }
+        public long? AddedBy { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
-        public string? TestTime { get; set; }
-        public string? TestDate { get; set; }
+        public int TestId { get; set; }
 
-        public List<PathTemplateDetailModel>? MPathTemplateDetails { get; set; }
-        public List<PathTestDetailModel>? MPathTestDetailMasters { get; set; }
+        //public string? TestTime { get; set; }
+        //public string? TestDate { get; set; }
+        //public List<PathTemplateDetailModel> MPathTemplateDetails { get; set; }
+        //public List<PathTestDetailModel> MPathTestDetailMasters { get; set; }
+
+
+        //public List<PathTemplateDetailModel>? MPathTemplateDetails { get; set; }
+        //public List<PathTestDetailModel>? MPathTestDetailMasters { get; set; }
     }
     public class PathTestMasterModelValidator : AbstractValidator<PathTestMasterModel>
     {
@@ -36,7 +41,7 @@ namespace HIMS.API.Models.Inventory
 
     public class PathTemplateDetailModel
     {
-        public long PtemplateId { get; set; }
+        
         public long TestId { get; set; }
         public long  TemplateId { get; set; }
     }
@@ -51,7 +56,6 @@ namespace HIMS.API.Models.Inventory
     }
     public class PathTestDetailModel
     {
-        public long TestDetId { get; set; }
         public long? TestId { get; set; }
         public long? SubTestId { get; set; }
         public long? ParameterId { get; set; }
@@ -60,7 +64,6 @@ namespace HIMS.API.Models.Inventory
     {
         public PathTestDetailModelModelValidator()
         {
-            RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage("TestId  is required");
             RuleFor(x => x.SubTestId).NotNull().NotEmpty().WithMessage("SubTestId required");
             RuleFor(x => x.ParameterId).NotNull().NotEmpty().WithMessage("ParameterId is required");
         }
@@ -69,5 +72,12 @@ namespace HIMS.API.Models.Inventory
         {
             public long TestId { get; set; }
         }
+    public class TestMasterModel
+    {
+        public  PathTestMasterModel PathTest {  get; set; }
+        public List<PathTemplateDetailModel> PathTemplateDetail { get; set; }
+        public List<PathTestDetailModel> PathTestDetail{ get; set; }
+
+    }
 }
 
