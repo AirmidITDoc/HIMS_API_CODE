@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -42,14 +43,6 @@ namespace HIMS.API.Controllers.NursingStation
 
         }
      
-        //[HttpPost("PrescriptionReturn List")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
-        //{
-        //    IPagedList<PrescriptionReturnListDto> PrescriptiontReturnList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
-        //    return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn  List "));
-        //}
-
         [HttpPost("LabRequestDetailsList")] 
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
@@ -58,36 +51,25 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList"));
         }
 
-        //[HttpPost("LabRequestDetailsList")] 
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
-        //    return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
-        //}
+        [HttpPost("NursingNoteList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> NursingNoteList(GridRequestModel objGrid)
+        {
+            IPagedList<NursingNoteListDto> List = await _INursingNoteService.GetListAsync(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "NursingNote List "));
+        }
 
-    
-        // [HttpPost("NursingInsertLabRequest")]
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(IPLabRequestModel obj)
-        //{
-        //THlabRequest model = obj.MapTo<THlabRequest>();
-        //if (obj.RequestId == 0)
-        //{
-        //    model.ReqDate = Convert.ToDateTime(obj.ReqDate);
-        //    model.ReqTime = Convert.ToDateTime(obj.ReqTime);
-        //    model.IsAddedBy = CurrentUserId;
-        //    await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //}
-        //else
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "labRequest added successfully.", model);
-        //}
+        [HttpPost("DoctorPatientHandoverList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DoctorPatientHandoverList(GridRequestModel objGrid)
+        {
+            IPagedList<TDoctorPatientHandoverListDto> DoctorPatientHandoverList = await _INursingNoteService.SGetListAsync(objGrid);
+            return Ok(DoctorPatientHandoverList.ToGridResponse(objGrid, "DoctorPatientHandoverList"));
+        }
 
-        
 
-      
-        [HttpPost("CanteenInsert")]
+
+       [HttpPost("CanteenInsert")]
 
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
@@ -103,18 +85,6 @@ namespace HIMS.API.Controllers.NursingStation
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CanteenRequest added successfully.", model);
-        }
-
-
-        //Nursing Note 
-       
-
-        [HttpPost("NursingNoteList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> NursingNote_List(GridRequestModel objGrid)
-        {
-            IPagedList<NursingNoteListDto> List = await _INursingNoteService.GetListAsync(objGrid);
-            return Ok(List.ToGridResponse(objGrid, "Nursing Note List "));
         }
 
 
@@ -196,7 +166,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
 
-        [HttpPut("Edit/{id:int}")]
+        [HttpPut("DoctorNoteUpdate/{id:int}")]
         //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
@@ -205,7 +175,8 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.Ttime = Convert.ToDateTime(obj.Ttime);
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNote updated successfully.");
@@ -229,44 +200,5 @@ namespace HIMS.API.Controllers.NursingStation
 
       
 
-        //[HttpPost("TDoctorPatientHandoverList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> TDoctorPatientHandoverList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<TDoctorPatientHandoverListDto> TDoctorPatientHandoverList = await _ICanteenRequestService.TDoctorPatientHandoverList(objGrid);
-        //    return Ok(TDoctorPatientHandoverList.ToGridResponse(objGrid, "TDoctorPatientHandover App List"));
-        //}
-        //[HttpPost("CanteenRequestList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> List1(GridRequestModel objGrid)
-        //{
-        //    IPagedList<CanteenRequestListDto> CanteenRequestList = await _ICanteenRequestService.CanteenRequestsList(objGrid);
-        //    return Ok(CanteenRequestList.ToGridResponse(objGrid, "CanteenRequest App List"));
-        //}
-        //[HttpPost("CanteenRequestHeaderList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> HeaderList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<CanteenRequestHeaderListDto> CanteenRequestHeaderList = await _ICanteenRequestService.CanteenRequestHeaderList(objGrid);
-        //    return Ok(CanteenRequestHeaderList.ToGridResponse(objGrid, "CanteenRequestHeader App List"));
-        //}
-
-        //[HttpPost("CanteenInsert")]
-
-        ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> CanteenInsert(CanteenRequestModel obj)
-        //{
-        //    TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
-        //    if (obj.ReqId == 0)
-        //    {
-        //        model.Date = Convert.ToDateTime(obj.Date);
-        //        model.Time = Convert.ToDateTime(obj.Time);
-
-        //        await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CanteenRequest added successfully.", model);
-        //}
     }
 }
