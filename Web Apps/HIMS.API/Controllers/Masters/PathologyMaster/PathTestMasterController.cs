@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
+      //  [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathTestMasterModel obj)
         {
             MPathTestMaster model = obj.MapTo<MPathTestMaster>();
@@ -104,6 +104,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 model.TestTime = Convert.ToDateTime(obj.TestTime);
                 await _ITestmasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }

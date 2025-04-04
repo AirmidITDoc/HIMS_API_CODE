@@ -116,9 +116,13 @@ namespace HIMS.Services.Inventory
             {
                 // remove conditional records
                 if (objTest.IsTemplateTest == 1)
+                {
                     objTest.MPathTestDetailMasters = null;
+                }
                 else
+                {
                     objTest.MPathTemplateDetails = null;
+                }
                 // Add header table records
                 _context.MPathTestMasters.Add(objTest);
                 await _context.SaveChangesAsync();

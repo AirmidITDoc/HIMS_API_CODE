@@ -14,7 +14,7 @@ namespace HIMS.API.Models.Inventory
         public string? MachineName { get; set; }
         public string? SuggestionNote { get; set; }
         public string? FootNote { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
         public string? TestTime { get; set; }
