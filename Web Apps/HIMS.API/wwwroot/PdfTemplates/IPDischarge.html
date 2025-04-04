@@ -9,7 +9,7 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
 
                 {{NewHeader}}
@@ -23,43 +23,100 @@
                         </table>
                     </td>
                 </tr>
+
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>UHID No :</span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>Age | Gender :</span>
+                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>DOA | Time :</span>
+                                    <span>{{AdmissionTime}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Patient Name :</span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Patient Type :</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>DOD | Time :</span>
+                                    <span>{{DischargeTime}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span>Doctor Name :</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Department :</span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Ward | Bed Name : </span>
+                                    <span>{{RoomName}}|{{BedName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>IPD No :</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Ref.Doctor Name :</span>
+                                    <span>{{RefDocName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span>Company Name :</span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <hr />
                 <tr>
-                    <div style="font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;font-size:18px;">
+                    <div style="font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;font-size:18px;">
 
                         <div>
-                            <div style="display:flex;margin-top:10px;margin-left:20px;font-size:18px;">
-                                <div style="padding-top:10px;">This Is Certify that {{PatientName}}</div>
+                            <div style="display: flex; margin-top: 10px; margin-left: 20px; font-size: 15px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+                                <div style="padding-top:10px;">This Is Certify that <span style="font-weight:bold">{{PatientName}}</span><span> Is being dischared / Left Againt medical advice /dead today on date :</span><span style="font-weight:bold"> {{DischargeTime}}</span> </div>
 
-                                <div style="padding-top:10px;">
-                                    Is being dischared / Left Againt medical advice /dead today on date:{{DischargeTime}}
-                                </div>
-                                <div style="padding-top:10px;">   His / Her is Bill Generated Vide Bill No :{{BillNo}}</div>
-                                <div style="padding-top:10px;"> The Patient is Allowed to check out.</div>
+
+                                <div style="padding-top:20px;">   His / Her is Bill Generated Vide Bill No : {{BillNo}}</div>
+                                <div style="padding-top:50px;"> The Patient is Allowed to check out.</div>
                             </div>
 
-                        </div> <br />
-                        <div style="display:flex;margin-top:10px;margin-right:50px;font-size:18px;float:right;">
+                        </div>
+                        <div style="display:flex;margin-top:30px;margin-right:50px;font-size:18px;float:right;">
                             <div>{{BillingUserName}}</div>
                             <div style="font-weight:bold">Bill Clerk</div>
 
                         </div>
 
                     </div>
-                    <br />
-                    <br />
-                </tr>
-                <tr>
-                    <div>
-                        <div style="display:flex;margin-top:100px;margin-right:100px;font-size:18px;float:right;">
 
-                            <div>Name :</div>
-
-                        </div>
-                    </div>
-                    <br />
-                    <br />
                 </tr>
-               
+
             </table>
         </div>
     </div>
