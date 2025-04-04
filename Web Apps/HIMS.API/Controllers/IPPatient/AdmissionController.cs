@@ -57,10 +57,10 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpGet("{id?}")]
         //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetByRegId(int id1)
+        public async Task<ApiResponse> GetByRegId(int id)
         {
 
-            var data = await _repository1.GetById(x => x.RegId == id1);
+            var data = await _repository1.GetById(x => x.RegId == id);
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
 

@@ -65,15 +65,13 @@ namespace HIMS.Services.Inventory
             objTest.TestId = Convert.ToInt32(VTestId);
             //ObjMPathTemplateDetail.TestId = Convert.ToInt32(VTestId);
             //ObjMPathTestDetailMaster.TestId = Convert.ToInt32(VTestId);
+
             
-                    
 
 
             if (objTest.IsTemplateTest == 1 )
-
-            {
-
-                foreach (var item in ObjMPathTestDetailMaster)
+            { 
+                foreach (var item in ObjMPathTemplateDetail)
 
                 {
                     item.TestId = Convert.ToInt32(VTestId);
@@ -87,14 +85,9 @@ namespace HIMS.Services.Inventory
                     odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
                 }
 
-            }
-
-
-
-             else if (objTest.IsTemplateTest == 0 )
-
-             {
-                 foreach (var Titem in ObjMPathTemplateDetail)
+            }else if (objTest.IsTemplateTest == 0 )
+            {
+                 foreach (var Titem in ObjMPathTestDetailMaster)
                  {
 
                     Titem.TestId = Convert.ToInt32(VTestId);
