@@ -5,7 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class MPathTestMaster
     {
-       
+        public MPathTestMaster()
+        {
+            MPathTemplateDetails = new HashSet<MPathTemplateDetail>();
+            MPathTestDetailMasters = new HashSet<MPathTestDetailMaster>();
+        }
 
         public long TestId { get; set; }
         public string? TestName { get; set; }
@@ -30,6 +34,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
-       
+        public virtual ICollection<MPathTemplateDetail> MPathTemplateDetails { get; set; }
+        public virtual ICollection<MPathTestDetailMaster> MPathTestDetailMasters { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -45,69 +46,73 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
         }
-       
 
 
-        public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
+
+        public virtual async Task InsertAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
         {
-            try
+
+
+            //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
+            var entity = objTest.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                //Add header table records
-                DatabaseHelper odal = new();
-                string[] rEntity = { "UpdatedBy", "CreatedBy", "CreatedDate", "TestTime", "TestDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
-                var entity = objTest.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                string TestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
-                objTest.TestId = Convert.ToInt32(TestId);
-             
-                // Add sub table records
-                if (objTest.IsTemplateTest == 1)
-                {
-                    foreach (var item in objTest.MPathTemplateDetails)
-                    {
-                        item.TestId = objTest.TestId;
-                    }
-                    _context.MPathTemplateDetails.AddRange(objTest.MPathTemplateDetails);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    foreach (var item in objTest.MPathTestDetailMasters)
-                    {
-                        item.TestId = objTest.TestId;
-                    }
-                    _context.MPathTestDetailMasters.AddRange(objTest.MPathTestDetailMasters);
-                    await _context.SaveChangesAsync();
-                }
+                entity.Remove(rProperty);
             }
-            catch (Exception)
+            string VTestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
+            objTest.TestId = Convert.ToInt32(VTestId);
+            //ObjMPathTemplateDetail.TestId = Convert.ToInt32(VTestId);
+            //ObjMPathTestDetailMaster.TestId = Convert.ToInt32(VTestId);
+            
+                    
+
+
+            if (objTest.IsTemplateTest == 1 )
+
             {
-                // Delete header table realted records
-                MPathTestMaster? objtest = await _context.MPathTestMasters.FindAsync(objTest.TestId);
-                if (objtest != null)
+
+                foreach (var item in ObjMPathTestDetailMaster)
+
                 {
-                    _context.MPathTestMasters.Remove(objtest);
+                    item.TestId = Convert.ToInt32(VTestId);
+
+                    string[] Entity = { "PtemplateId", "Test" };
+                    var Tentity = item.ToDictionary();
+                    foreach (var rProperty in Entity)
+                    {
+                        Tentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
                 }
 
-                // Delete details table realted records
-                var lst = await _context.MPathTemplateDetails.Where(x => x.TestId == objTest.TestId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.MPathTemplateDetails.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
-
-                var lst1 = await _context.MPathTestDetailMasters.Where(x => x.TestId == objTest.TestId).ToListAsync();
-                if (lst1.Count > 0)
-                {
-                    _context.MPathTestDetailMasters.RemoveRange(lst1);
-                }
-                await _context.SaveChangesAsync();
             }
+
+
+
+             else if (objTest.IsTemplateTest == 0 )
+
+             {
+                 foreach (var Titem in ObjMPathTemplateDetail)
+                 {
+
+                    Titem.TestId = Convert.ToInt32(VTestId);
+
+
+                    string[] DEntity = { "Test", "TestDetId", "Parameter" };
+                    var dentity = Titem.ToDictionary();
+                    foreach (var rProperty in DEntity)
+                    {
+                        dentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("m_insert_PathTestDetailMaster_1", CommandType.StoredProcedure, dentity);
+                 }
+             }
         }
+
+
+        
 
 
         public virtual async Task InsertAsync(MPathTestMaster objTest, int UserId, string Username)
@@ -189,5 +194,69 @@ namespace HIMS.Services.Inventory
         //}
     }
 }
+
+
+//public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
+//{
+
+
+//    try
+//    {
+//        //Add header table records
+//        DatabaseHelper odal = new();
+//        string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
+//        var entity = objTest.ToDictionary();
+//        foreach (var rProperty in rEntity)
+//        {
+//            entity.Remove(rProperty);
+//        }
+//        string TestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
+//        objTest.TestId = Convert.ToInt32(TestId);
+
+//        // Add sub table records
+//        if (objTest.IsTemplateTest == 1)
+//        {
+//            foreach (var item in objTest.MPathTemplateDetails)
+//            {
+//                item.TestId = objTest.TestId;
+//            }
+//            _context.MPathTemplateDetails.AddRange(objTest.MPathTemplateDetails);
+//            await _context.SaveChangesAsync();
+//        }
+//        else
+//        {
+//            foreach (var item in objTest.MPathTestDetailMasters)
+//            {
+//                item.TestId = objTest.TestId;
+//            }
+//            _context.MPathTestDetailMasters.AddRange(objTest.MPathTestDetailMasters);
+//            await _context.SaveChangesAsync();
+//        }
+//    }
+//    catch (Exception)
+//    {
+//        // Delete header table realted records
+//        MPathTestMaster? objtest = await _context.MPathTestMasters.FindAsync(objTest.TestId);
+//        if (objtest != null)
+//        {
+//            _context.MPathTestMasters.Remove(objtest);
+//        }
+
+//        // Delete details table realted records
+//        var lst = await _context.MPathTemplateDetails.Where(x => x.TestId == objTest.TestId).ToListAsync();
+//        if (lst.Count > 0)
+//        {
+//            _context.MPathTemplateDetails.RemoveRange(lst);
+//        }
+//        await _context.SaveChangesAsync();
+
+//        var lst1 = await _context.MPathTestDetailMasters.Where(x => x.TestId == objTest.TestId).ToListAsync();
+//        if (lst1.Count > 0)
+//        {
+//            _context.MPathTestDetailMasters.RemoveRange(lst1);
+//        }
+//        await _context.SaveChangesAsync();
+//    }
+//}
 
 

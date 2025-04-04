@@ -10,6 +10,7 @@ namespace HIMS.Data.Models
         public long? ParameterId { get; set; }
         public long? SubTestId { get; set; }
 
-        
+        public virtual MPathParameterMaster? Parameter { get; set; }
+        public virtual MPathTestMaster Test { get; set; } = null!;
     }
 }
