@@ -205,6 +205,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<IssueToDepartmentDetailModel, TIssueToDepartmentDetail>();
+         //   CreateMap<TMaterialConsumptionHeader, MaterialConsumptionHeaderModel>();
+            CreateMap<MaterialConsumptionHeaderModel, TMaterialConsumptionHeader>();
+            CreateMap<MaterialConsumptionDetailModel, TMaterialConsumptionDetail>();
 
 
 
