@@ -2164,7 +2164,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
                             html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
-                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                             html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
                             html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));

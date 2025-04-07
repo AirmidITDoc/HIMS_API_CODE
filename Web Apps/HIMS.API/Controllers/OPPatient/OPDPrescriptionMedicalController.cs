@@ -97,12 +97,12 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(List.ToGridResponse(objGrid, "OP Rtrv Dignosis  List"));
         }
 
-        //[HttpGet("GetDescriptionType")]
-        //public async Task<ApiResponse> GetDescriptionType(int Id, string DescriptionType)
-        //{
-        //    var resultList = await _OPDPrescriptionService.GetOPrtrvDignosisList(Id, DescriptionType);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList");
-        //}
+        [HttpGet("GetDescriptionType")]
+        public async Task<ApiResponse> GetDescriptionType(int Id, string DescriptionType)
+        {
+            //var resultList = await _OPDPrescriptionService.GetOPrtrvDignosisList(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList");
+        }
 
         [HttpPost("OPPrescriptionTemplateList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]

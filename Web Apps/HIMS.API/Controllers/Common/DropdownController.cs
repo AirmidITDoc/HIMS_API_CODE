@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MUnitofMeasurementMaster> _IMUnitOfMeasurmentService;
 
         private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
-        private readonly IGenericService<TNursingNote> _IMNurNoteervice;
+       
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
         private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
         private readonly IGenericService<MenuMaster> _IMmenuMasterService;
@@ -80,6 +80,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MSupplierMaster> _IMSupplierMaster;
         private readonly IGenericService<MConstant> _IMConstant;
         private readonly IGenericService<MRadiologyTemplateMaster> _IMradiotemp;
+        private readonly IGenericService<MCanItemMaster> _IMcanteen;
+        private readonly IGenericService<MDoctorNotesTemplateMaster> _IMDrnote;
+        private readonly IGenericService<MNursingTemplateMaster> _IMNurNoteervice;
 
 
 
@@ -98,8 +101,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MItemClassMaster> iMDItemClassMaster, IGenericService<MItemCategoryMaster> iMDItemCategoryMaster, IGenericService<MItemTypeMaster> iMDItemTypeMaster
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
-            , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<TNursingNote> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
-            , IGenericService<RoleMaster> iMDrolerMaster,
+            , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<MNursingTemplateMaster> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
+            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote,
               IGenericService<MenuMaster> iMDmenuMaster,
               IGenericService<MDoseMaster> IMDdoseMaster,
               IGenericService<MPresTemplateH> IMDPresTemplateH,
@@ -107,7 +110,7 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
               IGenericService<MSupplierMaster> iMSupplierMaster,
-              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp
+              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen
               )
         {
             _IAreaService = areaservice;
@@ -171,6 +174,8 @@ namespace HIMS.API.Controllers.Common
             _IMSupplierMaster = iMSupplierMaster;
             _IMConstant = iMConstant;
             _IMradiotemp = iMRadioTemp;
+            _IMcanteen = iMCanteen;
+            _IMDrnote = iMDrNote;
         }
 
         [HttpGet]
@@ -259,7 +264,9 @@ namespace HIMS.API.Controllers.Common
 
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
-                "NurNote" => (await _IMNurNoteervice.GetAll()).ToList().ToDropDown(nameof(TNursingNote.DocNoteId), nameof(TNursingNote.NursingNotes)),
+                "NurNote" => (await _IMNurNoteervice.GetAll()).ToList().ToDropDown(nameof(MNursingTemplateMaster.NursingId), nameof(MNursingTemplateMaster.NursTempName)),
+                "DoctorNote" => (await _IMDrnote.GetAll()).ToList().ToDropDown(nameof(MDoctorNotesTemplateMaster.DocNoteTempId), nameof(MDoctorNotesTemplateMaster.DocsTempName)),
+
                 "Parameter" => (await _IMparameterservice.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathParameterMaster.ParameterId), nameof(MPathParameterMaster.ParameterName)),
                 "MenuMain" => (await _IMmenuMasterService.GetAll()).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
 
@@ -273,6 +280,10 @@ namespace HIMS.API.Controllers.Common
                 "ModeOfDischarge" => (await _IMModeofdischarge.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MModeOfDischarge.ModeOfDischargeId), nameof(MModeOfDischarge.ModeOfDischargeName)),
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
+                //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
+
+
+                
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };

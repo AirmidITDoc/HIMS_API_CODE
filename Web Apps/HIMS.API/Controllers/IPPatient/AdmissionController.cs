@@ -55,14 +55,14 @@ namespace HIMS.API.Controllers.IPPatient
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
 
-        [HttpGet("{RegId?}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetByRegId(int RegId)
-        {
+        //[HttpGet("{Id1?}")]
+        ////[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetByRegId(int Id1)
+        //{
 
-            var data = await _repository1.GetById(x => x.RegId == RegId);
-            return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
-        }
+        //    var data = await _repository1.GetById(x => x.RegId == Id1);
+        //    return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
+        //}
 
 
 

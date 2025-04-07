@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HIMS.API.Controllers.Masters.Personal_Information;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.Inventory;
@@ -479,6 +480,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TMrpAdjustment, MRPAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, TCurrentStockModellll>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MReportTemplateConfig, ReportTemplateConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         }
     }

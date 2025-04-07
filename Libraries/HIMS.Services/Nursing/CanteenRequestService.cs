@@ -1,6 +1,8 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Nursing;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
@@ -9,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static LinqToDB.Sql;
+using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.Nursing
 {
@@ -46,7 +50,21 @@ namespace HIMS.Services.Nursing
             }
         }
 
-
+        public virtual async Task<List<CanteenListDto>> GetItemList(string ItemName)
+        {
+            var qry = from s in _context.MCanItemMasters
+                      where (ItemName == "" || s.ItemName.Contains(ItemName))
+                                    
+                      select new CanteenListDto()
+                      {
+                          ItemID = s.ItemId,
+                          ItemName = s.ItemName,
+                          //Price = s.Price,
+                          //IsBatchRequired = s.IsBatchRequired,
+                         
+                      };
+            return await qry.Take(50).ToListAsync();
+        }
     }
 }
 

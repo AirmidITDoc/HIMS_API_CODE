@@ -2,10 +2,12 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,12 +32,14 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                _context.TMaterialConsumptionHeaders.Add(ObjTMaterialConsumptionHeader);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                rentity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("PS_insert_IMaterialConsumptionDetails", CommandType.StoredProcedure, rentity);
+
         }
+         
+        }
+        
 
         public virtual async Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
         {
@@ -75,5 +79,6 @@ namespace HIMS.Services.Inventory
             }
         }
 
+       
     }
 }
