@@ -19,14 +19,6 @@ namespace HIMS.API.Models.Inventory
         public long? IsTemplateTest { get; set; }
         public int TestId { get; set; }
 
-        //public string? TestTime { get; set; }
-        //public string? TestDate { get; set; }
-        //public List<PathTemplateDetailModel> MPathTemplateDetails { get; set; }
-        //public List<PathTestDetailModel> MPathTestDetailMasters { get; set; }
-
-
-        //public List<PathTemplateDetailModel>? MPathTemplateDetails { get; set; }
-        //public List<PathTestDetailModel>? MPathTestDetailMasters { get; set; }
     }
     public class PathTestMasterModelValidator : AbstractValidator<PathTestMasterModel>
     {
@@ -79,5 +71,30 @@ namespace HIMS.API.Models.Inventory
         public List<PathTestDetailModel> PathTestDetail{ get; set; }
 
     }
+    public class PathTestMasterModel1
+    {
+        public int TestId { get; set; }
+        public string? TestName { get; set; }
+        public string? PrintTestName { get; set; }
+        public long? CategoryId { get; set; }
+        public bool? IsSubTest { get; set; }
+        public string? TechniqueName { get; set; }
+        public string? MachineName { get; set; }
+        public string? SuggestionNote { get; set; }
+        public string? FootNote { get; set; }
+        public bool? IsActive { get; set; }
+        public long? @UpdatedBy { get; set; }
+        public long? ServiceId { get; set; }
+        public long? IsTemplateTest { get; set; }
+
+    }
+
+    public class TestMasterUpdate
+    {
+        public PathTestMasterModel1 PathTest { get; set; }
+        public PathTemplateDetailModel PathTemplateDetail { get; set; }
+        public PathTestDetailModel PathTestDetail { get; set; }
+    }
+
 }
 

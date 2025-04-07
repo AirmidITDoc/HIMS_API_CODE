@@ -63,13 +63,8 @@ namespace HIMS.Services.Inventory
             }
             string VTestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
             objTest.TestId = Convert.ToInt32(VTestId);
-            //ObjMPathTemplateDetail.TestId = Convert.ToInt32(VTestId);
-            //ObjMPathTestDetailMaster.TestId = Convert.ToInt32(VTestId);
 
-            
-
-
-            if (objTest.IsTemplateTest == 1 )
+             if (objTest.IsTemplateTest == 1 )
             { 
                 foreach (var item in ObjMPathTemplateDetail)
 
@@ -85,7 +80,8 @@ namespace HIMS.Services.Inventory
                     odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
                 }
 
-            }else if (objTest.IsTemplateTest == 0 )
+            }
+            else if (objTest.IsTemplateTest == 0 )
             {
                  foreach (var Titem in ObjMPathTestDetailMaster)
                  {
@@ -104,9 +100,47 @@ namespace HIMS.Services.Inventory
              }
         }
 
+        public virtual async Task UpdateAsyncSP(MPathTestMaster objTest, MPathTemplateDetail ObjMPathTemplateDetail, MPathTestDetailMaster ObjMPathTestDetailMaster, int UserId, string Username)
+        {
 
-        
 
+            //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "AddedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
+            var entity = objTest.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_PathologyTestMaster_1", CommandType.StoredProcedure, entity);
+            var tokensObj = new
+            {
+                TestId = Convert.ToInt32(ObjMPathTemplateDetail.TestId)
+
+            };
+            odal.ExecuteNonQuery("m_Delete_M_PathTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            string[] TEntity = { "PtemplateId", "Test" };
+            var Tentity = ObjMPathTemplateDetail.ToDictionary();
+            foreach (var rProperty in TEntity)
+            {
+                Tentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
+            var tokenObj = new
+            {
+                TestId = Convert.ToInt32(ObjMPathTestDetailMaster.TestId)
+
+            };
+            odal.ExecuteNonQuery("m_Delete_M_PathTestDetailMaster", CommandType.StoredProcedure, tokensObj.ToDictionary());
+
+            string[] DEntity = { "Test", "TestDetId", "Parameter" };
+            var dentity = ObjMPathTestDetailMaster.ToDictionary();
+            foreach (var rProperty in DEntity)
+            {
+                dentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_insert_PathTestDetailMaster_1", CommandType.StoredProcedure, dentity);
+        }
 
         public virtual async Task InsertAsync(MPathTestMaster objTest, int UserId, string Username)
         {
