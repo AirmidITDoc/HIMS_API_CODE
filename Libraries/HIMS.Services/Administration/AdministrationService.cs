@@ -39,5 +39,9 @@ namespace HIMS.Services.Administration
             return await DatabaseHelper.GetGridDataBySp<BrowseIPAdvPayPharReceiptListDto>(model, "Retrieve_BrowseIPAdvPayPharReceipt");
         }
 
+        public virtual async Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ReportTemplateListDto>(model, "m_Rtrv_ReportTemplateConfig");
+        }
     }
 }

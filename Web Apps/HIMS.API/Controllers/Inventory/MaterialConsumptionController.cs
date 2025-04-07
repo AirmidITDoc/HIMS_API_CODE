@@ -29,6 +29,14 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption App List"));
         }
 
+        [HttpPost("MaterialConsumptionDetailList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DetailList(GridRequestModel objGrid)
+        {
+            IPagedList<MaterialConsumDetailListDto> MaterialConsumptionList = await _IMaterialConsumption.MaterialConsumptionDetailList(objGrid);
+            return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption Detail List"));
+        }
+
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeaderModel obj)

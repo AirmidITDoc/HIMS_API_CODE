@@ -52,33 +52,9 @@ namespace HIMS.Services.OutPatient
         }
 
 
-        //public virtual async Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(int Id, string DescriptionType)
-        //{
-        //    //  select DescriptionName, DescriptionType from M_OPCasepaperDignosisMaster
-        //    //Where DescriptionType = @DescriptionType
+       
 
 
-        //    var qry = (from MOpcasepaperDignosisMaster in _context.MOpcasepaperDignosisMasters
-        //                  //Where DescriptionType = @DescriptionType
-        //              where (string.IsNullOrEmpty(DescriptionType) || MOpcasepaperDignosisMaster.DescriptionType.Contains(DescriptionType))
-        //               && (assignItem == null || assignItem.StoreId == StoreId)
-        //               orderby MOpcasepaperDignosisMaster.Id
-
-
-        //               select new OPrtrvDignosisListDto
-        //               {
-                           
-        //                   //StoreId = assignItem != null ? assignItem.StoreId : 0,
-        //                   DescriptionType = MOpcasepaperDignosisMaster.DescriptionType,
-        //                   DescriptionName = MOpcasepaperDignosisMaster.DescriptionName
-                        
-                          
-        //               });
-
-        //    return await qry.Take(50).ToListAsync();
-        //}
-
-        
 
 
         //Ashu///
@@ -169,5 +145,30 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
+        //public virtual async Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(string DescriptionType)
+        //{
+        //    //  select DescriptionName, DescriptionType from M_OPCasepaperDignosisMaster
+        //    //Where DescriptionType = @DescriptionType
+
+
+        //    var qry = (from MOpcasepaperDignosisMaster in _context.MOpcasepaperDignosisMasters
+        //                   //Where DescriptionType = @DescriptionType
+        //               where (string.IsNullOrEmpty(DescriptionType) || MOpcasepaperDignosisMaster.DescriptionType.Contains(DescriptionType))
+        //                orderby MOpcasepaperDignosisMaster.Id
+
+
+        //               select new OPrtrvDignosisListDto
+        //               {
+
+        //                   //StoreId = assignItem != null ? assignItem.StoreId : 0,
+        //                   DescriptionType = MOpcasepaperDignosisMaster.DescriptionType,
+        //                   DescriptionName = MOpcasepaperDignosisMaster.DescriptionName
+
+
+        //               });
+
+        //    return await qry.Take(50).ToListAsync();
+        //}
+       
     }
 }
