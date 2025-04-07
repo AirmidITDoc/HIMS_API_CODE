@@ -141,10 +141,18 @@ namespace HIMS.Services.Pharmacy
                 foreach (var objDet in objPurDetails)
                 {
                     TPurchaseDetail DetailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
-                    DetailsInfo.PobalQty = objDet.PobalQty;
-                    DetailsInfo.IsClosed = objDet.IsClosed;
-                    DetailsInfo.IsGrnQty = DetailsInfo.Qty - objDet.PobalQty;
-                    objPurDetailsList.Add(DetailsInfo);
+                  //  if (DetailsInfo != null)
+                 //   {
+                        DetailsInfo.PobalQty = objDet.PobalQty;
+                        DetailsInfo.IsClosed = objDet.IsClosed;
+                        DetailsInfo.IsGrnQty = DetailsInfo.Qty - objDet.PobalQty;
+                        objPurDetailsList.Add(DetailsInfo);
+                //    }
+                //    else
+                //    {
+                //        // Log or throw exception for missing PurchaseDetail
+                //        throw new Exception($"PurchaseDetail not found for PurchaseId: {objDet.PurchaseId}, PurDetId: {objDet.PurDetId}");
+                //    }
                 }
                 _context.TPurchaseDetails.UpdateRange(objPurDetailsList);
                 _context.Entry(objPurDetailsList).State = EntityState.Modified;

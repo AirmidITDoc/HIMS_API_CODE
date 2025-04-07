@@ -12,8 +12,6 @@ namespace HIMS.Services.Inventory
     public partial interface IMaterialConsumption
     {
         Task<IPagedList<MaterialConsumptionListDto>> MaterialConsumptionList(GridRequestModel objGrid);
-        Task<IPagedList<MaterialConsumDetailListDto>> MaterialConsumptionDetailList(GridRequestModel objGrid);
-
         Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader,int UserId, string Username);
         Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username);
 

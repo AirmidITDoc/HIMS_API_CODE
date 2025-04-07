@@ -59,13 +59,13 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("InsertPO")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+    //    [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
-            List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
-            List<TPurchaseDetail> objPurDetails = obj.GrnPODetails.MapTo<List<TPurchaseDetail>>();
-            List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders.MapTo<List<TPurchaseHeader>>();
+            List<MItemMaster> objItems = obj.GrnItems?.MapTo<List<MItemMaster>>();
+            List<TPurchaseDetail> objPurDetails = obj.GrnPODetails?.MapTo<List<TPurchaseDetail>>();
+            List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders?.MapTo<List<TPurchaseHeader>>();
             if (obj.Grn.Grnid == 0)
             {
                 model.Grndate = DateTime.Now.Date;
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("EditPO/{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+     //   [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> EditPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+     //   [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
             TGrndetail model = obj.MapTo<TGrndetail>();
