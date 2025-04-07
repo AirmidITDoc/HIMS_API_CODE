@@ -16,9 +16,13 @@ namespace HIMS.Services.Nursing
 
         Task<IPagedList<NursingNoteListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<TDoctorPatientHandoverListDto>> SGetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<DoctorsNoteListDto>> DoctorsNoteAsync(GridRequestModel objGrid);
+
         Task InsertAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
         Task UpdateAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
         Task InsertAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
+        Task UpdateAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
+
         Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
         Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel objGrid);
         Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel objGrid);

@@ -424,6 +424,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TNursingChart> TNursingCharts { get; set; } = null!;
         public virtual DbSet<TNursingFluidChart> TNursingFluidCharts { get; set; } = null!;
         public virtual DbSet<TNursingMedicationChart> TNursingMedicationCharts { get; set; } = null!;
+        public virtual DbSet<TNursingNote> TNursingNotes { get; set; } = null!;
         public virtual DbSet<TNursingOrygenVentilator> TNursingOrygenVentilators { get; set; } = null!;
         public virtual DbSet<TNursingPainAssessment> TNursingPainAssessments { get; set; } = null!;
         public virtual DbSet<TNursingSugarLevel> TNursingSugarLevels { get; set; } = null!;
@@ -10569,6 +10570,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdmId).HasColumnName("AdmID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PatHandA)
                     .HasMaxLength(500)
                     .HasColumnName("PatHand_A");
@@ -12236,6 +12241,29 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.NurseName).HasMaxLength(50);
 
                 entity.Property(e => e.Route).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TNursingNote>(entity =>
+            {
+                entity.HasKey(e => e.DocNoteId);
+
+                entity.ToTable("T_Nursing_Notes");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.NursingNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.Tdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TDate");
+
+                entity.Property(e => e.Ttime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TTime");
             });
 
             modelBuilder.Entity<TNursingOrygenVentilator>(entity =>

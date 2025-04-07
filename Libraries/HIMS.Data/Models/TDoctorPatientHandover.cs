@@ -17,5 +17,8 @@ namespace HIMS.Data.Models
         public string? PatHandR { get; set; }
         public long? IsAddedBy { get; set; }
         public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

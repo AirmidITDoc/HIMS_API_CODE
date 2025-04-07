@@ -30,6 +30,10 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<TDoctorPatientHandoverListDto>(model, "m_Rtrv_T_Doctor_PatientHandoverList");
         }
+        public virtual async Task<IPagedList<DoctorsNoteListDto>> DoctorsNoteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorsNoteListDto>(model, "Rtrv_DoctorsNotesList");
+        }
         public virtual async Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestListDto>(model, "m_Rtrv_CanteenRequestDet");
@@ -75,8 +79,20 @@ namespace HIMS.Services.Nursing
                 scope.Complete();
             }
         }
+        public virtual async Task UpdateAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.TDoctorPatientHandovers.Update(ObjTDoctorPatientHandover);
+                _context.Entry(ObjTDoctorPatientHandover).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
-       
+                scope.Complete();
+            }
+        }
+
+
 
 
 
@@ -84,10 +100,10 @@ namespace HIMS.Services.Nursing
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                //_context.TNursingNote.Add(objTNursingNote);
-                //await _context.SaveChangesAsync();
+                _context.TNursingNotes.Add(objTNursingNote);
+                await _context.SaveChangesAsync();
 
-                //scope.Complete();
+                scope.Complete();
             }
         }
 

@@ -27,9 +27,6 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ICanteenRequestService _ICanteenRequestService;
         private readonly INursingNoteService _INursingNoteService;
-
-        
-
         private readonly IGenericService<TNursingNote> _repository;
         public NursingController(ILabRequestService repository, IMPrescriptionService repository1 ,IPriscriptionReturnService repository2, ICanteenRequestService repository3, IGenericService<TNursingNote> repository4,
             INursingNoteService INursingNoteService)
@@ -52,7 +49,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingNoteList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<IActionResult> NursingNoteList(GridRequestModel objGrid)
         {
             IPagedList<NursingNoteListDto> List = await _INursingNoteService.GetListAsync(objGrid);
@@ -66,10 +63,17 @@ namespace HIMS.API.Controllers.NursingStation
             IPagedList<TDoctorPatientHandoverListDto> DoctorPatientHandoverList = await _INursingNoteService.SGetListAsync(objGrid);
             return Ok(DoctorPatientHandoverList.ToGridResponse(objGrid, "DoctorPatientHandoverList"));
         }
+        [HttpPost("DoctorsNotesList")]
+        [Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        public async Task<IActionResult> DoctorsNotesList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorsNoteListDto> DoctorsNotesList = await _INursingNoteService.DoctorsNoteAsync(objGrid);
+            return Ok(DoctorsNotesList.ToGridResponse(objGrid, "DoctorsNotesList"));
+        }
 
 
 
-       [HttpPost("CanteenInsert")]
+        [HttpPost("CanteenInsert")]
 
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
@@ -90,7 +94,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -101,15 +105,15 @@ namespace HIMS.API.Controllers.NursingStation
             return data.ToSingleResponse<TNursingNote, NursingNoteModel>("TNursingNote");
         }
         //Add API
-        [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(NursingNoteModel obj)
+        [HttpPost("NursingNoteInsert")]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
             if (obj.DocNoteId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDateTime = DateTime.Now;
+                model.CreatedDatetime = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -117,8 +121,8 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingNote  added successfully.");
         }
         //Edit API
-        [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [HttpPut("NursingNoteUpdate/{id:int}")]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
@@ -127,21 +131,21 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDatetime = DateTime.Now;
+                model.ModifiedDateTime = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDatetime" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingNote  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TNursingNote model = await _repository.GetById(x => x.DocNoteId == Id);
             if ((model?.DocNoteId ?? 0) > 0)
             {
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDatetime = DateTime.Now;
+                model.ModifiedDateTime = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingNote  deleted successfully.");
             }
@@ -150,8 +154,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNoteInsert")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(DoctorNoteModel obj)
+        [Permission(PageCode = "DoctorNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
             if (obj.DoctNoteId == 0)
@@ -167,7 +171,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("DoctorNoteUpdate/{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -181,24 +185,39 @@ namespace HIMS.API.Controllers.NursingStation
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNote updated successfully.");
         }
+       
 
-        [HttpPost("TDoctorPatientHandoverInsert")]
+        [HttpPost("DoctorPatientHandoverInsert")]
         //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(TDoctorPatientHandoverModel obj)
+        public async Task<ApiResponse> Insert(TDoctorPatientHandoverModel obj)
         {
             TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
             if (obj.DocHandId == 0)
             {
                 model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TDoctorPatient Handover  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorPatientHandover  added successfully.");
         }
 
-
-      
+        [HttpPut("DoctorPatientHandover/{id:int}")]
+        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(TDoctorPatientHandoverModel obj)
+        {
+            TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
+            if (obj.DocHandId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorPatientHandover updated successfully.");
+        }
 
     }
 }
