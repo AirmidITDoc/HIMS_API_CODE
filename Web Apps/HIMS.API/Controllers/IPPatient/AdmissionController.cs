@@ -46,21 +46,21 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdmissionDischargeList.ToGridResponse(objGrid, "Admission Discharge List"));
         }
 
-        //[HttpGet("{id?}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> Get(int id)
-        //{
-
-        //    var data = await _repository1.GetById(x => x.AdmissionId == id);
-        //    return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
-        //}
-
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetByRegId(int id)
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
         {
 
-            var data = await _repository1.GetById(x => x.RegId == id);
+            var data = await _repository1.GetById(x => x.AdmissionId == id);
+            return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
+        }
+
+        [HttpGet("{RegId?}")]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetByRegId(int RegId)
+        {
+
+            var data = await _repository1.GetById(x => x.RegId == RegId);
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
 
