@@ -21,6 +21,8 @@ namespace HIMS.Services.Inventory
 
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
         Task InsertAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster ,int UserId, string Username);
+        Task UpdateAsyncSP(MPathTestMaster objTest, MPathTemplateDetail ObjMPathTemplateDetail, MPathTestDetailMaster ObjMPathTestDetailMaster, int UserId, string Username);
+
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
 
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HIMS.API.Controllers.Masters.Personal_Information;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.Inventory;
@@ -72,6 +73,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathTestMaster, PathTestMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathTemplateDetail, PathTemplateDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathTestDetailMaster, PathTestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPathTestMaster, PathTestMasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
             CreateMap<ACustomerInformation, CustomerInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ACustomerPaymentSummary, CustomerPaymentSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTemplateMaster, PathTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -476,6 +480,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TMrpAdjustment, MRPAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, TCurrentStockModellll>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MReportTemplateConfig, ReportTemplateConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         }
     }

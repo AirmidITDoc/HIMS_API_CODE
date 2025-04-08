@@ -81,22 +81,28 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
         }
 
-        //[HttpPost("Insert")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(PathTestMasterModel obj)
+        //[HttpPut("Update/{id:int}")]
+        ////[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Update(TestMasterUpdate obj)
         //{
-        //    MPathTestMaster model = obj.MapTo<MPathTestMaster>();
-        //    if (obj.TestId == 0)
+        //    MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
+        //    MPathTemplateDetail PathTemplate = obj.PathTemplateDetail.MapTo<MPathTemplateDetail>();
+        //    MPathTestDetailMaster TemplateDetail = obj.PathTestDetail.MapTo<MPathTestDetailMaster>();
+
+
+        //    if (obj.PathTest.TestId != 0)
         //    {
-        //        model.TestTime = Convert.ToDateTime(obj.TestTime);
-        //        model.AddedBy = CurrentUserId;
+        //        //PathTemplate.ForEach(x => { x.TestId = obj.PathTest.TestId;});
+        //        //TemplateDetail.ForEach(x => { x.TestId = obj.PathTest.TestId; });
         //        model.IsActive = true;
-        //        await _ITestmasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+
+        //        await _ITestmasterService.UpdateAsyncSP(model, PathTemplate, TemplateDetail, CurrentUserId, CurrentUserName);
         //    }
         //    else
         //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  Update successfully.");
         //}
+
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
@@ -115,12 +121,12 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
         }
 
-        [HttpPut("Edit/{id:int}")]
+        [HttpPut("EditEDMX/{id:int}")]
       //  [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PathTestMasterModel obj)
+        public async Task<ApiResponse> Edit(TestMasterModel obj)
         {
-            MPathTestMaster model = obj.MapTo<MPathTestMaster>();
-            if (obj.TestId == 0)
+            MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
+            if (obj.PathTest.TestId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

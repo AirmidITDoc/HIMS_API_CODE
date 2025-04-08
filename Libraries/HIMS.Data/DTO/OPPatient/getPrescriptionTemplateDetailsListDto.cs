@@ -19,11 +19,11 @@ namespace HIMS.Data.DTO.OPPatient
         public string DoseName { get; set; }
         public long Days { get; set; }
         public long InstructionId { get; set; }
-        public long QtyPerDay { get; set; }
-        public long TotalQty { get; set; }
-        public string Instruction { get; set; }
-        public string Remark { get; set; }
-        public long IsEnglishOrIsMarathi { get; set; }
+        public double? QtyPerDay { get; set; }
+        public double? TotalQty { get; set; }
+        public string? Instruction { get; set; }
+        public string? Remark { get; set; }
+        public bool? IsEnglishOrIsMarathi { get; set; }
 
 
     }

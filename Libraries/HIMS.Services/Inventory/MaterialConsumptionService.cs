@@ -42,10 +42,10 @@ namespace HIMS.Services.Inventory
             ObjTMaterialConsumptionHeader.MaterialConsumptionId = Convert.ToInt32(VMaterialConsumptionId);
 
 
-
-            foreach (var item in ObjTMaterialConsumptionDetail)
-            {
-                item.MaterialConsumptionId = Convert.ToInt32(VMaterialConsumptionId);
+        public Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
 
                 string[] MEntity = { "MaterialConDetId", "AdmId", };
                 var rentity = item.ToDictionary();
@@ -73,6 +73,12 @@ namespace HIMS.Services.Inventory
         //        }
         //    }
 
+        //public virtual async Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TMaterialConsumptionDetails.Add(ObjTMaterialConsumptionDetail);
+        //        await _context.SaveChangesAsync();
 
         //    public virtual async Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
         //    {

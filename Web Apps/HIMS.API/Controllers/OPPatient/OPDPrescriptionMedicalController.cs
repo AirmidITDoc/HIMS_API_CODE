@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.OPPatient
         [HttpGet("GetDescriptionType")]
         public async Task<ApiResponse> GetDescriptionType(int Id, string DescriptionType)
         {
-            var resultList = await _OPDPrescriptionService.GetOPrtrvDignosisList(Id, DescriptionType);
+            //var resultList = await _OPDPrescriptionService.GetOPrtrvDignosisList(DescriptionType);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList");
         }
 

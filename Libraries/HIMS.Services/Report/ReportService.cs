@@ -2164,7 +2164,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
                             html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
-                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                             html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
                             html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
@@ -3397,9 +3397,7 @@ namespace HIMS.Services.Report
                         {
 
                             i++; j++;
-
-
-                          
+                                                      
                             items.Append("<tr style=\"font-family: 'Helvetica Neue','Helvetica',, Arial, sans-serif;font-size:20px;\"><td style=\"border: 1px solid #000; text-align: center; padding: 6px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
@@ -4022,9 +4020,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
-
-                        //string finalamt = ConvertAmount(Bills.GetColValue("AdvanceAmount").ConvertToDouble());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        string finalamt = conversion(dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
                         html = html.Replace("{{chkresonflag}}", dt.GetColValue("reason").ConvertToString() != null ? "block" : "none");
@@ -4123,8 +4120,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
 
-                        //string finalamt = conversion(Bills.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        string finalamt = conversion(dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
                     }
@@ -4167,10 +4164,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
 
-                        //string finalamt = conversion(Bills.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        string finalamt = conversion(dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-                      
+
 
                     }
 
@@ -4614,19 +4611,10 @@ namespace HIMS.Services.Report
 
                             return html;
 
-
-                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-
                         }
 
-
-
-
-                    }
+                                            }
                     break;
-
-
 
 
                 case "PathresultEntry":
