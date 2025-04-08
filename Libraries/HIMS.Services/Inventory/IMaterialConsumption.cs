@@ -13,10 +13,10 @@ namespace HIMS.Services.Inventory
     {
         Task<IPagedList<MaterialConsumptionListDto>> MaterialConsumptionList(GridRequestModel objGrid);
         Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader,  List<TMaterialConsumptionDetail> ObjTMaterialConsumptionDetail, int UserId, string Username);
-        Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username);
+        //Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username);
 
-        Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username);
-        Task UpdateAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username);
+        //Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username);
+        //Task UpdateAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username);
 
     }
 }

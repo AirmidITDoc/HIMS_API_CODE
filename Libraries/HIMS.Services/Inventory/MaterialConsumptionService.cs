@@ -40,7 +40,7 @@ namespace HIMS.Services.Inventory
             }
             string VMaterialConsumptionId = odal.ExecuteNonQuery("PS_insert_MaterialConsumption_1", CommandType.StoredProcedure, "MaterialConsumptionId", entity);
             ObjTMaterialConsumptionHeader.MaterialConsumptionId = Convert.ToInt32(VMaterialConsumptionId);
-          
+
 
 
             foreach (var item in ObjTMaterialConsumptionDetail)
@@ -48,55 +48,56 @@ namespace HIMS.Services.Inventory
                 item.MaterialConsumptionId = Convert.ToInt32(VMaterialConsumptionId);
 
                 string[] MEntity = { "MaterialConDetId", "AdmId", };
-            var rentity = item.ToDictionary();
-            foreach (var rProperty in MEntity)
-            {
-                rentity.Remove(rProperty);
+                var rentity = item.ToDictionary();
+                foreach (var rProperty in MEntity)
+                {
+                    rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("PS_insert_IMaterialConsumptionDetails", CommandType.StoredProcedure, rentity);
+
             }
-            odal.ExecuteNonQuery("PS_insert_IMaterialConsumptionDetails", CommandType.StoredProcedure, rentity);
 
         }
-         
-        }
-        
-
-        public virtual async Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.TMaterialConsumptionHeaders.Update(ObjTMaterialConsumptionHeader);
-                _context.Entry(ObjTMaterialConsumptionHeader).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
 
 
-        public virtual async Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TMaterialConsumptionDetails.Add(ObjTMaterialConsumptionDetail);
-                await _context.SaveChangesAsync();
+        //    public virtual async Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
+        //    {
+        //        using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //        {
+        //            // Update header & detail table records
+        //            _context.TMaterialConsumptionHeaders.Update(ObjTMaterialConsumptionHeader);
+        //            _context.Entry(ObjTMaterialConsumptionHeader).State = EntityState.Modified;
+        //            await _context.SaveChangesAsync();
 
-                scope.Complete();
-            }
-        }
+        //            scope.Complete();
+        //        }
+        //    }
 
-        public virtual async Task UpdateAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.TMaterialConsumptionDetails.Update(ObjTMaterialConsumptionDetail);
-                _context.Entry(ObjTMaterialConsumptionDetail).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
-            }
-        }
+        //    public virtual async Task InsertAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
+        //    {
+        //        using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //        {
+        //            _context.TMaterialConsumptionDetails.Add(ObjTMaterialConsumptionDetail);
+        //            await _context.SaveChangesAsync();
 
+        //            scope.Complete();
+        //        }
+        //    }
+
+        //    public virtual async Task UpdateAsync1(TMaterialConsumptionDetail ObjTMaterialConsumptionDetail, int UserId, string Username)
+        //    {
+        //        using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //        {
+        //            // Update header & detail table records
+        //            _context.TMaterialConsumptionDetails.Update(ObjTMaterialConsumptionDetail);
+        //            _context.Entry(ObjTMaterialConsumptionDetail).State = EntityState.Modified;
+        //            await _context.SaveChangesAsync();
+
+        //            scope.Complete();
+        //        }
+        //    }
+
+        //}
     }
 }
