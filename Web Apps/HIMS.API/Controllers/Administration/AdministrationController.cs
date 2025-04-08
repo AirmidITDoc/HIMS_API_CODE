@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -24,10 +25,11 @@ namespace HIMS.API.Controllers.Administration
         
             private readonly IAdministrationService _IAdministrationService;
         private readonly IGenericService<MReportTemplateConfig> _repository;
-        public AdministrationController(IAdministrationService repository)
+        public AdministrationController(IAdministrationService repository, IGenericService<MReportTemplateConfig> repository1)
             {
                 _IAdministrationService = repository;
-            }
+            _repository = repository1;
+        }
         
         
         
@@ -65,15 +67,16 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-
+        //Add API
         [HttpPost]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
             if (obj.TemplateId == 0)
             {
-                
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -83,31 +86,32 @@ namespace HIMS.API.Controllers.Administration
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
-          
             if (obj.TemplateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TemplateName updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Report TemplateName updated successfully.");
         }
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "TemplateMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> delete(int Id)
         {
             MReportTemplateConfig model = await _repository.GetById(x => x.TemplateId == Id);
             if ((model?.TemplateId ?? 0) > 0)
             {
-              
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TemplateName deleted successfully.");
             }

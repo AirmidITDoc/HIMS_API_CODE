@@ -8,7 +8,8 @@ namespace HIMS.API.Models.Administration
         public long TemplateId { get; set; }
         public string? TemplateName { get; set; }
         public string? TemplateDescription { get; set; }
-       
+        public bool IsActive { get; set; }
+
     }
 
     public class PathologyTemplateModelValidator : AbstractValidator<PathologyTemplateModel>
