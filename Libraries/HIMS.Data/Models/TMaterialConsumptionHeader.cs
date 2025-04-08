@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TMaterialConsumptionHeader
     {
+        public TMaterialConsumptionHeader()
+        {
+            TMaterialConsumptionDetails = new HashSet<TMaterialConsumptionDetail>();
+        }
+
         public long MaterialConsumptionId { get; set; }
         public string? ConsumptionNo { get; set; }
         public DateTime? ConsumptionDate { get; set; }
@@ -17,5 +22,7 @@ namespace HIMS.Data.Models
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? AdmId { get; set; }
+
+        public virtual ICollection<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; }
     }
 }

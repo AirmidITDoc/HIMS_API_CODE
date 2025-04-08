@@ -21,5 +21,7 @@ namespace HIMS.Data.Models
         public DateTime? EndDate { get; set; }
         public string? Remark { get; set; }
         public long? AdmId { get; set; }
+
+        public virtual TMaterialConsumptionHeader? MaterialConsumption { get; set; }
     }
 }

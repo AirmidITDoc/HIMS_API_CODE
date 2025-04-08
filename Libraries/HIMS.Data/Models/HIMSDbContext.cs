@@ -11787,6 +11787,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Remark).HasMaxLength(100);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.MaterialConsumption)
+                    .WithMany(p => p.TMaterialConsumptionDetails)
+                    .HasForeignKey(d => d.MaterialConsumptionId)
+                    .HasConstraintName("FK_T_MaterialConsumptionDetails_T_MaterialConsumptionHeader");
             });
 
             modelBuilder.Entity<TMaterialConsumptionHeader>(entity =>
