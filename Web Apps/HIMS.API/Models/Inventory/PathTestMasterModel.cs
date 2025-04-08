@@ -92,8 +92,8 @@ namespace HIMS.API.Models.Inventory
     public class TestMasterUpdate
     {
         public PathTestMasterModel1 PathTest { get; set; }
-        public PathTemplateDetailModel PathTemplateDetail { get; set; }
-        public PathTestDetailModel PathTestDetail { get; set; }
+        public List<PathTemplateDetailModel> PathTemplateDetail { get; set; }
+        public List<PathTestDetailModel> PathTestDetail { get; set; }
     }
 
 }
