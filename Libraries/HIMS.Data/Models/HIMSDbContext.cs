@@ -7157,10 +7157,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_NursingTemplateMaster");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.NursTempName).HasMaxLength(100);
             });
 
@@ -7725,10 +7721,6 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.TemplateId);
 
                 entity.ToTable("M_ReportTemplateConfig");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TemplateName).HasMaxLength(100);
             });
