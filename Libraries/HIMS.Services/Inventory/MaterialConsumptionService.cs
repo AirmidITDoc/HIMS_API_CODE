@@ -42,23 +42,18 @@ namespace HIMS.Services.Inventory
             ObjTMaterialConsumptionHeader.MaterialConsumptionId = Convert.ToInt32(VMaterialConsumptionId);
 
 
-        public Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
-        {
-            throw new NotImplementedException();
-        }
-
-                string[] MEntity = { "MaterialConDetId", "AdmId", };
-                var rentity = item.ToDictionary();
-                foreach (var rProperty in MEntity)
-                {
-                    rentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("PS_insert_IMaterialConsumptionDetails", CommandType.StoredProcedure, rentity);
-
+            string[] MEntity = { "MaterialConDetId", "AdmId", };
+            var rentity = ObjTMaterialConsumptionDetail.ToDictionary();
+            foreach (var rProperty in MEntity)
+            {
+                rentity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("PS_insert_IMaterialConsumptionDetails", CommandType.StoredProcedure, rentity);
+
 
         }
-
+     }
+}
 
         //    public virtual async Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
         //    {
@@ -105,5 +100,5 @@ namespace HIMS.Services.Inventory
         //    }
 
         //}
-    }
-}
+    
+
