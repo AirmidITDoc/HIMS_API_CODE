@@ -29,22 +29,22 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption App List"));
         }
 
-        [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(MaterialConsumptionModel obj)
-        {
-            TMaterialConsumptionHeader model = obj.MaterialConsumptionHeader.MapTo<TMaterialConsumptionHeader>();
-          List<TMaterialConsumptionDetail> materialmodel = obj.MaterialConsumptionDetail.MapTo<List<TMaterialConsumptionDetail>>();
-            if (obj.MaterialConsumptionHeader.MaterialConsumptionId == 0)
-            {
+        //[HttpPost("InsertEDMX")]
+        ////[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(MaterialConsumptionModel obj)
+        //{
+        //    TMaterialConsumptionHeader model = obj.MaterialConsumptionHeader.MapTo<TMaterialConsumptionHeader>();
+        //  List<TMaterialConsumptionDetail> materialmodel = obj.MaterialConsumptionDetail.MapTo<List<TMaterialConsumptionDetail>>();
+        //    if (obj.MaterialConsumptionHeader.MaterialConsumptionId == 0)
+        //    {
  
-                model.AddedBy = CurrentUserId;       
-                await _IMaterialConsumption.InsertAsync(model ,materialmodel, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Material Consumption  added successfully.");
-        }
+        //        model.AddedBy = CurrentUserId;       
+        //        await _IMaterialConsumption.InsertAsync(model ,materialmodel, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Material Consumption  added successfully.");
+        //}
 
         //[HttpPut("Edit/{id:int}")]
         ////  [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
