@@ -7,7 +7,7 @@ namespace HIMS.API.Models.Inventory
     public class MaterialConsumptionHeaderModel
     {
         public long MaterialConsumptionId { get; set; }
-      //  public string? ConsumptionNo { get; set; }
+        public string? ConsumptionNo { get; set; }
         public DateTime? ConsumptionDate { get; set; }
         public string? ConsumptionTime { get; set; }
         public long? FromStoreId { get; set; }
@@ -16,10 +16,9 @@ namespace HIMS.API.Models.Inventory
         public decimal? MRPTotalAmount { get; set; }
         public string? Remark { get; set; }
         public long? AddedBy { get; set; }
-      //  public List<MaterialConsumptionDetailModel> MaterialConsumptionDetail { get; set; }
-        //   public long? UpdatedBy { get; set; }
-        //  public long? AdmId { get; set; }
-
+           public long? UpdatedBy { get; set; }
+          public long? AdmId { get; set; }
+        public List<MaterialConsumptionDetailModel> TMaterialConsumptionDetails { get; set; }
 
     }
 
@@ -34,7 +33,7 @@ namespace HIMS.API.Models.Inventory
 
     public class MaterialConsumptionDetailModel
     {
-     //   public long MaterialConDetId { get; set; }
+         public long MaterialConDetId { get; set; }
         public long? MaterialConsumptionId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
@@ -49,10 +48,10 @@ namespace HIMS.API.Models.Inventory
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? Remark { get; set; }
-  //      public long? AdmId { get; set; }
+        public long? AdmId { get; set; }
 
-    
- 
+
+
     }
 
     public class MaterialConsumptionDetailModelValidator : AbstractValidator<MaterialConsumptionDetailModel>
@@ -64,12 +63,7 @@ namespace HIMS.API.Models.Inventory
         }
     }
 
-    public class MaterialConsumptionModel
-    {
-        public MaterialConsumptionHeaderModel MaterialConsumptionHeader { get; set; }
-        public List<MaterialConsumptionDetailModel> MaterialConsumptionDetail { get; set; }
-     
-    }
+   
 
 
 }

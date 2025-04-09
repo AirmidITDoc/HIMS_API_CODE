@@ -122,14 +122,15 @@ namespace HIMS.API.Controllers.Report
                 case "OPPaymentReceipt":
                 case "AppointmentReceipt":
                 case "OpBillReceipt":
+                case "OPBillWithPackagePrint":
 
 
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 
