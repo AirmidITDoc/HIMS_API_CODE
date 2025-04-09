@@ -109,18 +109,23 @@ namespace HIMS.Services.Inventory
             }
             odal.ExecuteNonQuery("m_update_PathologyTestMaster_1", CommandType.StoredProcedure, entity);
 
+            foreach (var item in ObjMPathTemplateDetail)
+            {
+
+                var tokensObj = new
+                {
+                    TestId = Convert.ToInt32(item.TestId)
+
+                };
+
+                odal.ExecuteNonQuery("m_Delete_M_PathTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
             if (objTest.IsTemplateTest == 1)
             {
+               
                 foreach (var item in ObjMPathTemplateDetail)
 
                 {
-                    var tokensObj = new
-                    {
-                        TestId = Convert.ToInt32(item.TestId)
-
-                    };
-                    odal.ExecuteNonQuery("m_Delete_M_PathTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
-
                     string[] Entity = { "PtemplateId", "Test" };
                     var Tentity = item.ToDictionary();
                     foreach (var rProperty in Entity)
@@ -136,13 +141,15 @@ namespace HIMS.Services.Inventory
                 foreach (var Titem in ObjMPathTestDetailMaster)
                 {
 
-                    //Titem.TestId = Convert.ToInt32(VTestId);
                     var tokenObj = new
                     {
                         TestId = Convert.ToInt32(Titem.TestId)
 
                     };
                     odal.ExecuteNonQuery("m_Delete_M_PathTestDetailMaster", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                }
+                foreach (var Titem in ObjMPathTestDetailMaster)
+                {
 
                     string[] DEntity = { "Test", "TestDetId", "Parameter" };
                     var dentity = Titem.ToDictionary();
