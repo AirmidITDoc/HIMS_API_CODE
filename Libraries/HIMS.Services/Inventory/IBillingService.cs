@@ -22,6 +22,8 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<PackageServiceListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
+        Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel objGrid);
+        Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
 
     }
 }

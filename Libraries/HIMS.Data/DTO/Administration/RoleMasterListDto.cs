@@ -10,5 +10,7 @@ namespace HIMS.Data.DTO.Administration
     {
         public long RoleId { get; set; }
         public string? RoleName { get; set; }
+
+        public bool? IsActive { get; set; }
     }
 }

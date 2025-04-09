@@ -31,15 +31,15 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(MaterialConsumptionModel obj)
+        public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeaderModel obj)
         {
-            TMaterialConsumptionHeader model = obj.MaterialConsumptionHeader.MapTo<TMaterialConsumptionHeader>();
-            List<TMaterialConsumptionDetail> materialmodel = obj.MaterialConsumptionDetail.MapTo<List<TMaterialConsumptionDetail>>();
-            if (obj.MaterialConsumptionHeader.MaterialConsumptionId == 0)
+            TMaterialConsumptionHeader model = obj.MapTo<TMaterialConsumptionHeader>();
+        //    List<TMaterialConsumptionDetail> materialmodel = obj.MaterialConsumptionDetail.MapTo<List<TMaterialConsumptionDetail>>();
+            if (obj.MaterialConsumptionId == 0)
             {
 
                 model.AddedBy = CurrentUserId;
-                await _IMaterialConsumption.InsertAsync(model, materialmodel, CurrentUserId, CurrentUserName);
+                await _IMaterialConsumption.InsertAsync(model,  CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

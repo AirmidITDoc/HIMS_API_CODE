@@ -42,14 +42,19 @@ namespace HIMS.Services.Pathlogy
         {
 
             DatabaseHelper odal = new();
-          
             foreach (var item in ObjPathologyReportDetail)
             {
                 var tokensObj = new
                 {
                     PathReportID = Convert.ToInt32(item.PathReportId)
                 };
+
                 odal.ExecuteNonQuery("m_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
+
+            foreach (var item in ObjPathologyReportDetail)
+            {
+               
                 string[] rEntity = { "PathReportDetId", "PathReport" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)

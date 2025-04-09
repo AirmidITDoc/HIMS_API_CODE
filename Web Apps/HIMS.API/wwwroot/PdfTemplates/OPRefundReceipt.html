@@ -9,7 +9,7 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
 
                 {{NewHeader}}
@@ -27,37 +27,66 @@
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <td style="padding: 2px;">
-                                    <span><b>Refund No. :</b> </span>
-                                    <span>{{RefundNo}} </span>
-                                </td>
 
                                 <td style="padding: 2px;">
-                                    <span><b>Refund Time: </b></span>
-                                    <span>{{RefundTime}} </span>
+                                    <span><b>Refund No :</b> </span>
+                                    <span>{{ReceiptNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>OPD No:</b> </span>
+                                    <span>{{OPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Date | Time :</b>  </span>
+                                    <span>{{RefundTime}}</span>
                                 </td>
                             </tr>
-
                             <tr>
-
                                 <td style="padding: 2px;">
-                                    <span><b>Reg No : </b></span>
+                                    <span><b>UHID :</b> </span>
                                     <span>{{RegNo}}</span>
                                 </td>
-
                                 <td style="padding: 2px;">
-                                    <span><b>Age / Gender : </b></span>
-                                    <span> {{AgeYear}} / {{GenderName}}</span>
+                                    <span><b>Age | Sex:</b> </span>
+                                    <span>{{AgeYear}} Y |{{AgeYear}} M|{{AgeYear}} D | {{GenderName}}</span>
                                 </td>
+                                <td style="padding: 2px;">
+                                    <span><b>OPD | Time :</b> </span>
+                                    <span>{{VisitDate}}</span>
+                                </td>
+
                             </tr>
                             <tr>
+
                                 <td style="padding: 2px;">
-                                    <span><b>Patient Name : </b></span>
+                                    <span><b>Patient Name :</b> </span>
                                     <span>{{PatientName}}</span>
                                 </td>
 
+                                <td style="padding: 2px;">
+                                    <span><b>Patient Type :</b> </span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Company Name :</b> </span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
                             </tr>
 
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span><b>Doctor Name :</b> </span>
+                                    <span>{{ConsultantDocName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Department :</b></span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Ref Dr Name :</b> </span>
+                                    <span>{{RefDocName}}</span>
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -97,22 +126,7 @@
                                                     {{NetPayableAmt}}
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
-                                                    Total Amount in words :
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{finalamt}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
-                                                    Remark
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{Remark}}
-                                                </td>
-                                            </tr>
+
                                             <tr>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
                                                     Payment Date :
@@ -127,6 +141,22 @@
                                                 </td>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
                                                     {{RefundAmount}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Total Amount in words :
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                    {{finalamt}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                                    Remark
+                                                </td>
+                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                                    {{Remark}}
                                                 </td>
                                             </tr>
                                         </tbody>
