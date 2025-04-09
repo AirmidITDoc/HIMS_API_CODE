@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         //Add API
-        [HttpPost]
+        [HttpPost("TemplateInsert")]
         [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
         {
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         //Edit API
-        [HttpPut("{id:int}")]
+        [HttpPut("TemplateUpdate{id:int}")]
         [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
         {
