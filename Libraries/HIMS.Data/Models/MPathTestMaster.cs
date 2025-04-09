@@ -7,6 +7,7 @@ namespace HIMS.Data.Models
     {
         public MPathTestMaster()
         {
+            MPathTemplateDetail1s = new HashSet<MPathTemplateDetail1>();
             MPathTemplateDetails = new HashSet<MPathTemplateDetail>();
             MPathTestDetailMasters = new HashSet<MPathTestDetailMaster>();
         }
@@ -34,6 +35,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
+        public virtual ICollection<MPathTemplateDetail1> MPathTemplateDetail1s { get; set; }
         public virtual ICollection<MPathTemplateDetail> MPathTemplateDetails { get; set; }
         public virtual ICollection<MPathTestDetailMaster> MPathTestDetailMasters { get; set; }
     }

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
@@ -32,18 +33,32 @@ namespace HIMS.API.Controllers.IPPatient
         private readonly IIPBillwithCreditService _IPCreditBillService;
         private readonly IIPAdvanceService _IIPAdvanceService;
         private readonly IGenericService<AddCharge> _repository;
+        private readonly IGenericService<Admission> _repository2;
 
-
-
-        public IPBillController(IIPBillService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2,IGenericService<AddCharge> repository3)
+        public IPBillController(IIPBillService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2,IGenericService<AddCharge> repository3, IGenericService<Admission> _repository4)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
             _IIPAdvanceService = repository2;
             _repository = repository3;
+            _repository2 = _repository4;
+
 
         }
-        
+
+        //List API Get By Id
+        [HttpGet("RegID/{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetByRegId(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository2.GetById(x => x.RegId == id);
+            return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
+        }
+
         [HttpPost("IPPreviousBillList")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)

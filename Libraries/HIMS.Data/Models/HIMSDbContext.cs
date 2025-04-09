@@ -7446,6 +7446,11 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_PathTemplateDetails");
 
                 entity.Property(e => e.PtemplateId).HasColumnName("PTemplateId");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.MPathTemplateDetail1s)
+                    .HasForeignKey(d => d.TestId)
+                    .HasConstraintName("FK_M_PathTemplateDetails_M_PathTestMaster");
             });
 
             modelBuilder.Entity<MPathTestDetailMaster>(entity =>

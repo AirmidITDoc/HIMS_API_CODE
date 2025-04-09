@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingNoteList")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<IActionResult> NursingNoteList(GridRequestModel objGrid)
         {
             IPagedList<NursingNoteListDto> List = await _INursingNoteService.GetListAsync(objGrid);
@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Add API
         [HttpPost("NursingNoteInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
@@ -126,7 +126,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingNoteUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNursingNote model = obj.MapTo<TNursingNote>();
@@ -254,7 +254,6 @@ namespace HIMS.API.Controllers.NursingStation
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingTemplate updated successfully.");
         }
-
 
     }
 }
