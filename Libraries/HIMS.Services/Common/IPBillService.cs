@@ -693,10 +693,12 @@ namespace HIMS.Services.Common
             }
             string vDRBNo = odal.ExecuteNonQuery("insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
             ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
+          
 
             foreach (var item in ObjTDrbillDetList)
             {
-                string[] TEntity = { "DRBillDetId", };
+                item.Drno = Convert.ToInt32(vDRBNo);
+                string[] TEntity = { "DrbillDetId", };
                 var Dentity = item.ToDictionary();
                 foreach (var rProperty in TEntity)
                 {

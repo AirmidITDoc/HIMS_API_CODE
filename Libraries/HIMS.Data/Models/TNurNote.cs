@@ -11,5 +11,9 @@ namespace HIMS.Data.Models
         public DateTime? Ttime { get; set; }
         public string? NursingNotes { get; set; }
         public long? IsAddedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDatetime { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDatetime { get; set; }
     }
 }

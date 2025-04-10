@@ -202,6 +202,7 @@ namespace HIMS.API.Controllers.Report
                 case "IptemplateCasepaperReport":
                 case "AdmissionList":
                 case "IpDraftBill":
+                case "IpDraftBillNew":
                 case "IpFinalBill":
                 case "IpFinalBillClassservicewise":
                 case "IpFinalClasswiseBill":

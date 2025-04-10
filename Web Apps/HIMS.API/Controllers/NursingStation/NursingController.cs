@@ -27,10 +27,10 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ICanteenRequestService _ICanteenRequestService;
         private readonly INursingNoteService _INursingNoteService;
-        private readonly IGenericService<TNursingNote> _repository;
+        private readonly IGenericService<TNurNote> _repository;
         private readonly IGenericService<MNursingTemplateMaster> _repository1;
 
-        public NursingController(ILabRequestService repository, IMPrescriptionService repository1 ,IPriscriptionReturnService repository2, ICanteenRequestService repository3, IGenericService<TNursingNote> repository4,IGenericService<MNursingTemplateMaster> repository5, INursingNoteService INursingNoteService)
+        public NursingController(ILabRequestService repository, IMPrescriptionService repository1 ,IPriscriptionReturnService repository2, ICanteenRequestService repository3, IGenericService<TNurNote> repository4,IGenericService<MNursingTemplateMaster> repository5, INursingNoteService INursingNoteService)
         {
             _ILabRequestService = repository;
             _IMPrescriptionService = repository1;
@@ -106,14 +106,14 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.DocNoteId == id);
-            return data.ToSingleResponse<TNursingNote, NursingNoteModel>("TNursingNote");
+            return data.ToSingleResponse<TNurNote, NursingNoteModel>("TNursingNote");
         }
         //Add API
         [HttpPost("NursingNoteInsert")]
         //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingNoteModel obj)
         {
-            TNursingNote model = obj.MapTo<TNursingNote>();
+            TNurNote model = obj.MapTo<TNurNote>();
             if (obj.DocNoteId == 0)
             {
                 model.CreatedBy = CurrentUserId;
@@ -129,27 +129,27 @@ namespace HIMS.API.Controllers.NursingStation
         //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
-            TNursingNote model = obj.MapTo<TNursingNote>();
+            TNurNote model = obj.MapTo<TNurNote>();
             if (obj.DocNoteId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDateTime = DateTime.Now;
+                model.ModifiedDatetime = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDatetime" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingNote  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
+       // [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            TNursingNote model = await _repository.GetById(x => x.DocNoteId == Id);
+            TNurNote model = await _repository.GetById(x => x.DocNoteId == Id);
             if ((model?.DocNoteId ?? 0) > 0)
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDateTime = DateTime.Now;
+                model.ModifiedDatetime = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NursingNote  deleted successfully.");
             }

@@ -10,6 +10,7 @@ namespace HIMS.API.Models.Nursing
         public DateTime? Tdate { get; set; }
         public string? Ttime { get; set; }
         public string? NursingNotes { get; set; }
+        public long? IsAddedBy { get; set; }
     }
     public class NursingNoteModelValidator : AbstractValidator<NursingNoteModel>
     {

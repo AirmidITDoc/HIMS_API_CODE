@@ -216,7 +216,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", paymentModel.BillNo);
         }
         [HttpPost("InsertIPDraftBill")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+  //      [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertIP(TDrbillingModel obj)
         {
 

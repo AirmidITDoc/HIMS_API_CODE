@@ -17,8 +17,11 @@ namespace HIMS.Services.Administration
         Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
-   
 
+        Task InsertAsync(TExpense ObjTExpense, int UserId, string Username);
+        Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings);
+        Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
+        Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
 
     }
 }

@@ -1162,11 +1162,10 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<ConfigSetting>(entity =>
             {
-                entity.HasKey(e => e.ConfigId);
+                entity.HasKey(e => e.ConfigId)
+                    .HasName("PK_ConfigSetting_1");
 
                 entity.ToTable("ConfigSetting");
-
-                entity.Property(e => e.ConfigId).ValueGeneratedNever();
 
                 entity.Property(e => e.AnesthetishId).HasDefaultValueSql("((0))");
 
@@ -12050,6 +12049,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_Nur_Notes");
 
                 entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.NursingNotes).HasMaxLength(2000);
 
