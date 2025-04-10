@@ -1162,11 +1162,10 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<ConfigSetting>(entity =>
             {
-                entity.HasKey(e => e.ConfigId);
+                entity.HasKey(e => e.ConfigId)
+                    .HasName("PK_ConfigSetting_1");
 
                 entity.ToTable("ConfigSetting");
-
-                entity.Property(e => e.ConfigId).ValueGeneratedNever();
 
                 entity.Property(e => e.AnesthetishId).HasDefaultValueSql("((0))");
 
