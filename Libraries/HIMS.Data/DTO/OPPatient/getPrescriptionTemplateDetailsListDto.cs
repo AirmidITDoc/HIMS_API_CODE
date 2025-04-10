@@ -23,7 +23,11 @@ namespace HIMS.Data.DTO.OPPatient
         public double? TotalQty { get; set; }
         public string? Instruction { get; set; }
         public string? Remark { get; set; }
+
         public bool? IsEnglishOrIsMarathi { get; set; }
+        public string? GenericName { get; set; }
+
+        
 
 
     }

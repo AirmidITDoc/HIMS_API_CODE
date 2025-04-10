@@ -10,6 +10,6 @@ namespace HIMS.Data.DTO.Pathology
     {
         public long? TestId { get; set; }
         public string? ParameterName { get; set; }
-      
+        public string? SubTestID { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("PathSubTestList")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SubTestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(TestMasterModel obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPut("Update/{id:int}")]
-        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(TestMasterUpdate obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
