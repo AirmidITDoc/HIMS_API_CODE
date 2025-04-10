@@ -14,11 +14,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string VDate { get; set; }
         public string MTime { get; set; }
         public string ShiftInfo { get; set; }
-        public string PatHand_I { get; set; }
-        public string PatHand_S { get; set; }
-        public string PatHand_B { get; set; }
-        public string PatHand_A { get; set; }
-        public string PatHand_R { get; set; }
+        public string PatHandI { get; set; }
+        public string? PatHandS { get; set; }
+        public string? PatHandB { get; set; }
+        public string? PatHandA { get; set; }
+        public string? PatHandR { get; set; }
         public string CreatedBy { get; set; }
         public string PatientName { get; set; }
         public string GenderName { get; set; }

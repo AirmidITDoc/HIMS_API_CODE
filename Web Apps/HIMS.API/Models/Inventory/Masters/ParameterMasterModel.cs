@@ -13,6 +13,8 @@ namespace HIMS.API.Models.Masters
         public bool? IsPrintDisSummary { get; set; }
         public string? MethodName { get; set; }
         public string? Formula { get; set; }
+        public bool? IsBold { get; set; }
+
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
         public List<MPathParaRangeWithAgeMasterModel>? MPathParaRangeWithAgeMasters { get; set; }
     }

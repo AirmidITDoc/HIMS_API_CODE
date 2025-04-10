@@ -95,6 +95,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyTemplate   added successfully.");
         }
 
+
         [HttpGet]
         [Route("get-PathologyTemplates")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
