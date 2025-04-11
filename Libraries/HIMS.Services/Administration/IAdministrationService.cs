@@ -20,8 +20,11 @@ namespace HIMS.Services.Administration
 
         Task InsertAsync(TExpense ObjTExpense, int UserId, string Username);
         Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings);
+
+        Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel objGrid);
         Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
 
+       
     }
 }

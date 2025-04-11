@@ -119,6 +119,17 @@ namespace HIMS.API.Controllers.Administration
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+
+
+        [HttpPost("DailyExpencesList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DailyExpencesList(GridRequestModel objGrid)
+        {
+            IPagedList<DailyExpenceListtDto> MasterList = await _IAdministrationService.DailyExpencesList(objGrid);
+            return Ok(MasterList.ToGridResponse(objGrid, "Daily Expences App List"));
+        }
+
+
         [HttpPost("TExpenseInsert")]
         //  [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(TExpenseModel obj)

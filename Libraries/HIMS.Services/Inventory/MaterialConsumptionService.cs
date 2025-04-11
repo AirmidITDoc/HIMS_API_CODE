@@ -27,6 +27,11 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<MaterialConsumptionListDto>(model, "Rtrv_MaterialConsumption_ByName");
         }
 
+        public virtual async Task<IPagedList<MaterialConsumDetailListDto>> MaterialConsumptiondetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MaterialConsumDetailListDto>(model, "m_Rtrv_MaterialConsumptionDetails_ByName");
+        }
+
 
         //public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, List<TMaterialConsumptionDetail> ObjTMaterialConsumptionDetail, int UserId, string Username)
         //{
@@ -63,6 +68,8 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+
+       
     }
 }
 
