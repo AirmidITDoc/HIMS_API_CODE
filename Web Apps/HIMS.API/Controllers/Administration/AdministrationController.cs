@@ -165,7 +165,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TExpense delete successfully.");
         }
-        [HttpDelete("IP_DISCHARGE_CANCELLATION")]
+        [HttpPost("IP_DISCHARGE_CANCELLATION")]
         //[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
         {
@@ -180,6 +180,20 @@ namespace HIMS.API.Controllers.Administration
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP_DISCHARGE_CANCELLATION  successfully.");
+        }
+        [HttpPut("UpdateAdmissiondatetime{id:int}")]
+        //   [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(AdmissionModell obj)
+        {
+            Admission model = obj.MapTo<Admission>();
+            if (obj.AdmissionID == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Admissiondatetime updated successfully.");
         }
 
     }
