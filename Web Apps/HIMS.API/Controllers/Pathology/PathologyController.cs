@@ -32,13 +32,17 @@ namespace HIMS.API.Controllers.Pathology
         private readonly ILabRequestService _ILabRequestService;
         private readonly IPathlogyService _IPathlogyService;
         private readonly IGenericService<MTemplateMaster> _radiorepository;
+        private readonly IGenericService<MDoctorNotesTemplateMaster> _radiorepository1;
+        private readonly IGenericService<MNursingTemplateMaster> _radiorepository2;
 
-        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2, IGenericService<MTemplateMaster> pathrepository)
+        public PathologyController(IPathlogySampleCollectionService repository, ILabRequestService repository1, IPathlogyService repository2, IGenericService<MTemplateMaster> pathrepository, IGenericService<MDoctorNotesTemplateMaster> pathrepository1, IGenericService<MNursingTemplateMaster> pathrepository2)
         {
             _IPathlogySampleCollectionService = repository;
             _ILabRequestService = repository1;
             _IPathlogyService = repository2;
             _radiorepository = pathrepository;
+            _radiorepository1 = pathrepository1;
+            _radiorepository2 = pathrepository2;
         }
 
 
@@ -103,6 +107,22 @@ namespace HIMS.API.Controllers.Pathology
         {
             var MMasterList = await _radiorepository.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
+        }
+        [HttpGet]
+        [Route("get-DoctorNotesTemplateMaster")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown1()
+        {
+            var MMasterList = await _radiorepository1.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.DocNoteTempId, x.DocsTempName, x.TemplateDesc }));
+        }
+        [HttpGet]
+        [Route("get-NursingTemplateMaster")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown2()
+        {
+            var MMasterList = await _radiorepository2.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
         }
     }
 }

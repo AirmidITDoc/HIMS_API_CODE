@@ -113,7 +113,23 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("IP_DISCHARGE_CANCELLATION", CommandType.StoredProcedure, entity);
 
         }
+        public virtual async Task UpdateAsync(Admission ObjAdmission, int UserId, string UserName)
+        {
 
-       
+            DatabaseHelper odal = new();
+            string[] AEntity = { "RegId", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId","Ipdno", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "IPDNo", "IsCancelled", "CompanyId", "TariffId",
+            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate",
+            "IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt",
+            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
+            var Rentity = ObjAdmission.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("Update_Admissiondatetime", CommandType.StoredProcedure, Rentity);
+
+        }
     }
 }
