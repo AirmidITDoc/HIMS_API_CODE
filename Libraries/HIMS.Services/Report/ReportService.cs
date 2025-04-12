@@ -861,24 +861,27 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                #region :: IpRefundReceipt ::
+                #region :: IpBillRefundReceipt ::
                 case "IpBillRefundReceipt":
                     {
 
-                        model.RepoertName = "IpBill RefundReceipt";
-                        string[] headerList = Array.Empty<string>();
-                        string[] colList = Array.Empty<string>();
-                      
+                        model.RepoertName = "Ip Advance Refund  Receipt";
+                        string[] headerList = { };
+                        string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPRefundBillReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("rptIPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPRefundBillReceipt", "IPRefundBillReceipt", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt", Orientation.Portrait);
                         break;
+
+
                     }
                 #endregion
+
 
                 #region :: IpDischargeReceipt ::
                 case "IpDischargeReceipt":
@@ -4562,6 +4565,8 @@ namespace HIMS.Services.Report
                 case "IpBillRefundReceipt":
                     {
 
+                        int i = 0;
+
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RefundNo}}", dt.GetColValue("RefundNo"));
@@ -4596,13 +4601,13 @@ namespace HIMS.Services.Report
                         string finalamt = conversion(dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-
+                        return html;
 
                     }
 
 
                     break;
-                    case "IpDischargeReceipt":
+                case "IpDischargeReceipt":
                     {
 
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));

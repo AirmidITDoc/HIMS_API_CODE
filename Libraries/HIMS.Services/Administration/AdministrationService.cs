@@ -131,5 +131,22 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("Update_Admissiondatetime", CommandType.StoredProcedure, Rentity);
 
         }
+
+        public virtual async Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {"BillNo","CashPayAmount","ChequePayAmount","ChequeNo","BankName","ChequeDate","CardPayAmount", "CardNo",  "CardBankName",  "CardDate",  "AdvanceUsedAmount",  "AdvanceId",
+           "RefundId",  "TransactionType",  "Remark",  "AddBy",  "IsCancelled",  "IsCancelledBy",  "IsCancelledDate",  "OpdipdType",  "NeftpayAmount",  "Neftno",  "NeftbankMaster",  "Neftdate",  "PayTmamount",  "PayTmtranNo",  "PayTmdate",  "Tdsamount","TranMode",
+            "ReceiptNo","CashCounterId","IsSelfOrcompany","CompanyId","ChCashPayAmount","ChChequePayAmount","ChCardPayAmount","ChAdvanceUsedAmount","ChNeftpayAmount","ChPayTmamount"};
+            var Rentity = ObjPayment.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, Rentity);
+
+        }
     }
 }
