@@ -121,13 +121,13 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-        [HttpPost("DailyExpencesList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> DailyExpencesList(GridRequestModel objGrid)
-        {
-            IPagedList<DailyExpenceListtDto> MasterList = await _IAdministrationService.DailyExpencesList(objGrid);
-            return Ok(MasterList.ToGridResponse(objGrid, "Daily Expences App List"));
-        }
+        //[HttpPost("DailyExpencesList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DailyExpencesList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DailyExpenceListtDto> MasterList = await _IAdministrationService.DailyExpencesList(objGrid);
+        //    return Ok(MasterList.ToGridResponse(objGrid, "Daily Expences App List"));
+        //}
 
 
         [HttpPost("TExpenseInsert")]
@@ -155,7 +155,7 @@ namespace HIMS.API.Controllers.Administration
             else
             {
 
-                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2]);
+                await _IAdministrationService.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " TExpense updated successfully.");
         }

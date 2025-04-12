@@ -50,12 +50,10 @@ namespace HIMS.Services.Administration
             return await DatabaseHelper.GetGridDataBySp<ReportTemplateListDto>(model, "m_Rtrv_ReportTemplateConfig");
         }
 
-
-
-        public virtual async Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "m_Rtrv_T_Expenses");
-        }
+        //public virtual async Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "m_Rtrv_T_Expenses");
+        //}
 
         public virtual async Task InsertAsync(TExpense ObjTExpense, int UserId, string Username)
         {
@@ -68,7 +66,7 @@ namespace HIMS.Services.Administration
             }
         }
 
-        public virtual async Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings)
+        public virtual async Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
