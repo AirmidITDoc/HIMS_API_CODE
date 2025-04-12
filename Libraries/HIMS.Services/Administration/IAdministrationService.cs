@@ -25,5 +25,7 @@ namespace HIMS.Services.Administration
         Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
         Task UpdateAsync(Admission ObjAdmission, int UserId, string Username);
+
+        Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username);
     }
 }

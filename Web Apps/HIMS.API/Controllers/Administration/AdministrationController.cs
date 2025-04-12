@@ -207,5 +207,21 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Admissiondatetime updated successfully.");
         }
 
+
+        [HttpPut("UpdatePaymentdatetime{id:int}")]
+        //   [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> PaymentdatetimeUpdate(PaymentsModel obj)
+        {
+            Payment model = obj.MapTo<Payment>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                await _IAdministrationService.PaymentUpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Paymentdatetime updated successfully.");
+        }
+
     }
 }
