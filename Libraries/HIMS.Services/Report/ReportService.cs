@@ -1024,7 +1024,18 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargewithmarkstatus", "IPDDischargewithmarkstatus", Orientation.Landscape);
                         break;
                     }
-                #endregion
+                //#region :: DischargSummary ::
+                //case "DischargSummary":
+                //    {
+                //        model.RepoertName = "Discharge Summary Receipt ";
+                //        string[] headerList = { "Sr.No", "UHID", "PatientName" };
+                //        string[] colList = { "RegNo", "PatientName"};
+                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
+                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                //        var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargSummary", "DischargSummary", Orientation.Landscape);
+                //        break;
+                //    }
 
 
 
