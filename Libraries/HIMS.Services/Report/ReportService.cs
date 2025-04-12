@@ -751,13 +751,7 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPBillingReceiptclasswise.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NewIPBilClasswise", "NewIPBilClasswise", Orientation.Portrait);
-                        //break;
-
-
+                       
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPBillingReceiptclasswise.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
