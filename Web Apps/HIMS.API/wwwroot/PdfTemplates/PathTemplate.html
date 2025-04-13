@@ -1,118 +1,155 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<head style="height: 135px;">
+    <table style="width: 100%;line-height: inherit;text-align: left;">
+        <!--{{NewHeader}}-->
+        <tr class="title-date-row">
+            <td style="padding: 6px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="font-size: 18px">
+
+                        <td style="padding: 2px; padding-bottom:5px;text-align:left;padding-top:110px;font-size:22px;"><b>Laboratory Report</b></td>
+                        <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:110px;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </head>
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
-
-                {{NewHeader}}
-                <tr class="title-date-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>  PATHOLOGY TEMPLATE REPORT</b></td>
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                <!--{{NewHeader}}-->
+                
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-
+                        <table style="width: 100%; border-collapse: collapse; font-size: 19px; border: solid 1px black">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>IPD No. : </span>
-                                    <span>{{RegNo}} </span>
+                                    <span style="font-weight:bold;">UHID No:</span>
+                                    <span>{{RegNo}}</span>
                                 </td>
 
                                 <td style="padding: 2px;">
-                                    <span>PathDate Time: </span>
-                                    <span>{{PathTime}} </span>
+                                    <span style="font-weight:bold;">Sample Date|Time:</span>
+                                    <span>{{PathTime}}</span>
                                 </td>
                             </tr>
                             <tr>
+
                                 <td style="padding: 2px;">
-                                    <span>Patient Name : </span>
+                                    <span style="font-weight:bold;">Patient Name:</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Age / Gender : </span>
-                                    <span> {{AgeYear}} / {{GenderName}}</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td style="padding: 2px;">
-                                    <span>ConsultantDocName : </span>
-                                    <span>{{ConsultantDocName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span>Room /Bed  : </span>
-                                    <span>{{RoomName}} {{BedName}}</span>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span>ReportTime  : </span>
+                                    <span style="font-weight:bold;">Report Date|Time:</span>
                                     <span>{{ReportTime}}</span>
                                 </td>
+                            </tr>
+
+                            <tr>
+
+
+
                                 <td style="padding: 2px;">
-                                    <span>PathResultDr   : </span>
-                                    <span>{{PathResultDr1}}</span>
+                                    <span style="font-weight:bold;">Age|Gender:</span>
+                                    <span> {{AgeYear}}Y|{{AgeMonth}} M|{{AgeDay}}D|{{GenderName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">OP/IP No :</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Doctor Name:</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ref.Doctor Name:</span>
+                                    <span>{{RefDocName}}</span>
                                 </td>
                             </tr>
+                            <!--<tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ward Name :</span>
+                                    <span>{{RoomName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Bed No: </span>
+                                    <span>{{BedName}}</span>
+                                </td>
+
+                            </tr>-->
+
+                        </table>
+                    </td>
+                </tr>
+                </tr>
+                <tr><td></td></tr>
+                <tr colspan="2"><td style="text-align:center;font-size:20px;font-weight:bolder;">{{PrintTestName}}</td></tr>
+                <tr class="bill-table-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr>
+                                <div>
+                                    <div style="padding:5px;margin:5px;width:100%;">
+                                        <div>
+                                            <div style="width:100%;margin-left:5px;height:auto;">
+
+                                                <!--<div innerHtml={{PathTemplateDetailsResult}}></div>
+    {{PathTemplateDetailsResult}}-->
+
+                                                <div id="myDiv" runat="server" innerHtml={{PathTemplateDetailsResult}}></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+
 
                         </table>
                     </td>
                 </tr>
 
-                <hr />
-                <tr style=""><td style="text-align:center;font-size:20px;font-weight:bolder;">{{PrintTestName}}</td></tr>
-                <hr />
-                <tr style=" border-collapse: collapse;">
-                    <div>
-                        <div style="display:flex;justify-content:space-between;padding:10px;border:2px solid gray;margin:5px;width:100%;">
-                            <div style="display:flex;width:100%;margin-left:10px;height:auto">
-                                <div [innerHtml]="PathTemplateDetailsResult"></div>
-                                {{PathTemplateDetailsResult}}
-                            </div>
-                        </div>
-                    </div>
-                </tr>
-
-                <tr>
-                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
-
-                     
-                        <tr style="padding: 6px; text-align: right;">
-                            <td>
-
-                                <span>{{Path_DoctorName}}</span>
-                            </td>
-                        </tr>
-                        <tr style="padding: 6px; text-align: right;">
-
-                            <td>
-
-                                <span>Pathology Doc Name</span>
-                            </td>
-                        </tr>
-
-                    </table>
-                </tr>
             </table>
         </div>
     </div>
+
 </body>
+
+</html>
+
+
+<html>
+<body>
+    <table style="width: 100%; line-height: inherit; text-align: left;">
+        <tr>
+            <span style="margin-left:70%">
+                <img src="{{Signature}}" width="100">
+            </span>
+        </tr>
+        <tr>
+            <div style="margin-left: 70%; font-size: 19px;">
+                <div style="font-weight:bold;">{{PathResultDr1}}</div>
+                <div style="font-weight:bold;">{{Education}}</div>
+                <div style="font-weight:bold;">{{MahRegNo}}</div>
+
+            </div>
+        </tr>
+    </table>
+</body>
+
 
 </html>

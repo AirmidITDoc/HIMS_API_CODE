@@ -223,5 +223,19 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Paymentdatetime updated successfully.");
         }
 
+        [HttpPut("UpdateBilldatetime{id:int}")]
+        //   [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> BilldatetimeUpdate(BillingModel obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            //if (obj.BillNo == 0)
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            //else
+            //{
+
+                await _IAdministrationService.BilldateUpdateAsync(model, CurrentUserId, CurrentUserName);
+            //}
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill datetime updated successfully.");
+        }
     }
 }

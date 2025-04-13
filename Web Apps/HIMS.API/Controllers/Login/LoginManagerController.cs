@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();

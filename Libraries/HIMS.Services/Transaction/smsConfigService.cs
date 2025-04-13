@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System;
@@ -17,6 +20,13 @@ namespace HIMS.Services.Transaction
         {
             _context = HIMSDbContext;
         }
+
+        public virtual async Task<IPagedList<SMSConfigListDto>> GetSMSconfig(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SMSConfigListDto>(model, "Rtrv_Sent_SMS_List");
+        }
+
+      
         public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
         {
             DatabaseHelper odal = new();
