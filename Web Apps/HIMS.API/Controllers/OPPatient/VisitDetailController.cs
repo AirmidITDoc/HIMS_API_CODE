@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppVisitInsert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -134,19 +134,18 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully." ,objVisitDetail.VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.", objVisitDetail.VisitId);
         }
 
 
         [HttpPost("Update")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(AppointmentReqDtovisit obj)
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
-            Registration model = obj.Registration.MapTo<Registration>();
+            Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-            if (obj.Registration.RegId != 0)
+            if (obj.AppReistrationUpdate.RegId != 0)
             {
-                model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
                 model.AddedBy = CurrentUserId;
 
                 if (obj.Visit.VisitId == 0)
@@ -159,7 +158,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.",objVisitDetail.VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.", objVisitDetail.VisitId);
         }
 
         [HttpPost("Cancel")]

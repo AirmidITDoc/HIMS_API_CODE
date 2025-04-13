@@ -136,33 +136,10 @@ namespace HIMS.Services.OPPatient
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
 
-            // Add TokenNumber table records
-            //List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
-            //foreach (var item in objVisit)
-            //{
-            //    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
-            //    if (objToken != null)
-            //    {
-            //        objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
-
-            //        TTokenNumberWithDoctorWise objCurrentToken = new()
-            //        {
-            //            TokenNo = objToken.TokenNo,
-            //            VisitDate = item.VisitDate,
-            //            VisitId = item.VisitId,
-            //            DoctorId = item.ConsultantDocId,
-            //            IsStatus = false
-            //        };
-            //        _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //}
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-
-
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
