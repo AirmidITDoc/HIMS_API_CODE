@@ -31,6 +31,7 @@ namespace HIMS.Services.IPPatient
             return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamColllist_Pat_Dtls");
 
         }
+        
 
         public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
         {

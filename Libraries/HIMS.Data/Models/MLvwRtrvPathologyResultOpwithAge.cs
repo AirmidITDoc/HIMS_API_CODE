@@ -14,10 +14,10 @@ namespace HIMS.Data.Models
         public string? ParameterName { get; set; }
         public string? ParameterShortName { get; set; }
         public long? ServiceId { get; set; }
-        public long? PathparaRangeId { get; set; }
+        public long PathparaRangeId { get; set; }
         public string MinValue { get; set; } = null!;
         public string MaxValue { get; set; } = null!;
-        public string? UnitName { get; set; }
+        public string UnitName { get; set; } = null!;
         public long? UnitId { get; set; }
         public string? SuggestionNote { get; set; }
         public string ResultValue { get; set; } = null!;
@@ -31,7 +31,7 @@ namespace HIMS.Data.Models
         public int? MaxAge { get; set; }
         public long? SexId { get; set; }
         public string? AgeType { get; set; }
-        public string? Formula { get; set; }
+        public string Formula { get; set; } = null!;
         public long? ParaIsNumeric { get; set; }
         public string ParaBoldFlag { get; set; } = null!;
         public long? CategoryId { get; set; }

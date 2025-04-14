@@ -130,6 +130,8 @@ namespace HIMS.Services.IPPatient
             }
             string RefundId = odal.ExecuteNonQuery("insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
             Objrefund.RefundId = Convert.ToInt32(RefundId);
+            ObjPayment.RefundId = Convert.ToInt32(RefundId);
+
 
             string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
             var AdvanceHeaderEntity = ObjAdvanceHeader.ToDictionary();

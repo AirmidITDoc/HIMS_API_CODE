@@ -19,9 +19,15 @@ namespace HIMS.Services.Administration
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
 
         Task InsertAsync(TExpense ObjTExpense, int UserId, string Username);
-        Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings);
+        Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings);
+
+        //Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel objGrid);
         Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
         Task UpdateAsync(Admission ObjAdmission, int UserId, string Username);
+
+        Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username);
+
+        Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username);
     }
 }

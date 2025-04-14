@@ -23,5 +23,7 @@ namespace HIMS.Services.Inventory
         Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName);
         Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId);
 
+        Task<List<ItemListForBatchPopDTO>> GetItemListBalpopup(int StoreId, String ItemName);
+
     }
 }

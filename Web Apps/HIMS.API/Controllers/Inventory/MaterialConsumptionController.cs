@@ -28,6 +28,14 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<MaterialConsumptionListDto> MaterialConsumptionList = await _IMaterialConsumption.MaterialConsumptionList(objGrid);
             return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption App List"));
         }
+        [HttpPost("MaterialConsumptionDetailsList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> MaterialConsumptionDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<MaterialConsumDetailListDto> MaterialConsumptionList = await _IMaterialConsumption.MaterialConsumptiondetailList(objGrid);
+            return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption Detail App List"));
+        }
+
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]

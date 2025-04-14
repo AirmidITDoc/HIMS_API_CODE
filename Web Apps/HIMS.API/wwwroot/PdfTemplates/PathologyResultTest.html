@@ -9,15 +9,15 @@
 
 <body>
     <div class="main-content-wrapper" style="padding-left:20px;">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 <!-- {{NewHeader}}-->
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 18px">
-                                <td style="padding: 2px; padding-bottom:5px;text-align:left;padding-top:50px;font-size:22px;"><b>Laboratory Report</b></td>
-                                <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:50px;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
+                                <td style="padding: 2px; padding-bottom:5px;text-align:left;padding-top:135px;font-size:22px;"><b>Laboratory Report</b></td>
+                                <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:135px;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
 
                                 <!--  <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:135px; "><b>Print Date :{{CurrentDate}}</b></td>-->
 
@@ -37,7 +37,7 @@
 
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Sample Collection Date:</span>
-                                    <!--<span>{{PathTime}}</span>-->
+                                    <span>{{PathTime}}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -48,7 +48,7 @@
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Report Date:</span>
-                                    <!--<span>{{ReportTime}}</span>-->
+                                    <span>{{ReportTime}}</span>
                                 </td>
                             </tr>
 
@@ -58,7 +58,7 @@
 
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Age|Gender:</span>
-                                    <!--<span> {{AgeYear}}Y|{{AgeMonth}} M|{{AgeDay}}D|{{GenderName}}</span>-->
+                                    <span> {{AgeYear}}Y|{{AgeMonth}} M|{{AgeDay}}D|{{GenderName}}</span>
                                 </td>
 
                                 <td style="padding: 2px;">
@@ -77,10 +77,10 @@
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ref.Doctor Name:</span>
-                                    <!--<span>{{RefDocName}}</span>-->
+                                    <span>{{RefDocName}}</span>
                                 </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ward Name :</span>
                                     <span>{{RoomName}}</span>
@@ -91,7 +91,7 @@
                                     <span>{{BedName}}</span>
                                 </td>
 
-                            </tr>
+                            </tr>-->
 
                         </table>
                     </td>
@@ -136,13 +136,13 @@
         </tr>-->
 
         <tr>
-            <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:5px;">"END OF REPORT"</td>
+            <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">"END OF REPORT"</td>
         </tr>
     </table>
     <table style="width: 100%;line-height: inherit;text-align: left;">
         <tr>
             <span style="margin-left:70%">
-                <!--<img src="{{Signature}}" width="100">-->
+                <img src="{{Signature}}" width="100">
             </span>
             <footer style="margin-left: 70%; font-size: 19px;">
                 <div style="font-weight:bold;">{{PathResultDr1}}</div>

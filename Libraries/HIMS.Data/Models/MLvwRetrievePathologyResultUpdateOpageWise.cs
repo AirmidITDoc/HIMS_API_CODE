@@ -21,7 +21,7 @@ namespace HIMS.Data.Models
         public long? PisNumeric { get; set; }
         public long? PathReportId { get; set; }
         public long? CategoryId { get; set; }
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; } = null!;
         public string? PatientName { get; set; }
         public DateTime? VisitDate { get; set; }
         public DateTime? VisitTime { get; set; }
@@ -29,7 +29,7 @@ namespace HIMS.Data.Models
         public string? ConsultantDocName { get; set; }
         public string? AgeYear { get; set; }
         public string? RegNo { get; set; }
-        public string? CompanyName { get; set; }
+        public string CompanyName { get; set; } = null!;
         public string? PathResultDrName { get; set; }
         public long? PathResultDr1 { get; set; }
         public string? SuggestionNote { get; set; }
@@ -40,7 +40,7 @@ namespace HIMS.Data.Models
         public float? MinValue { get; set; }
         public float? MaxValue { get; set; }
         public long PathReportdetid { get; set; }
-        public string? Formula { get; set; }
+        public string Formula { get; set; } = null!;
         public string? ParaBoldFlag { get; set; }
     }
 }

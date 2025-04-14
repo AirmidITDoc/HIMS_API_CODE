@@ -4,6 +4,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,11 @@ namespace HIMS.Services.Administration
             return await DatabaseHelper.GetGridDataBySp<ReportTemplateListDto>(model, "m_Rtrv_ReportTemplateConfig");
         }
 
+        //public virtual async Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "m_Rtrv_T_Expenses");
+        //}
+
         public virtual async Task InsertAsync(TExpense ObjTExpense, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -61,7 +67,7 @@ namespace HIMS.Services.Administration
             }
         }
 
-        public virtual async Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings)
+        public virtual async Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -122,6 +128,41 @@ namespace HIMS.Services.Administration
             }
 
             odal.ExecuteNonQuery("Update_Admissiondatetime", CommandType.StoredProcedure, Rentity);
+
+        }
+
+        public virtual async Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {"BillNo","CashPayAmount","ChequePayAmount","ChequeNo","BankName","ChequeDate","CardPayAmount", "CardNo",  "CardBankName",  "CardDate",  "AdvanceUsedAmount",  "AdvanceId",
+           "RefundId",  "TransactionType",  "Remark",  "AddBy",  "IsCancelled",  "IsCancelledBy",  "IsCancelledDate",  "OpdipdType",  "NeftpayAmount",  "Neftno",  "NeftbankMaster",  "Neftdate",  "PayTmamount",  "PayTmtranNo",  "PayTmdate",  "Tdsamount","TranMode",
+            "ReceiptNo","CashCounterId","IsSelfOrcompany","CompanyId","ChCashPayAmount","ChChequePayAmount","ChCardPayAmount","ChAdvanceUsedAmount","ChNeftpayAmount","ChPayTmamount"};
+            var Rentity = ObjPayment.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, Rentity);
+
+        }
+
+        public virtual async Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "opdipdid","totalAmt","concessionAmt","netPayableAmt","paidAmt","balanceAmt","opdipdType","addedBy","totalAdvanceAmount", "concessionReasonId","isSettled","isPrinted","isFree","companyId","tariffId","unitId","interimOrFinal",
+            "companyRefNo","concessionAuthorizationName","speTaxPer","speTaxAmt","discComments","compDiscAmt","cashCounterId","billDetail","addCharge","addmission","payment","bills","advancesupdate","advancesHeaderupdate","addChargessupdate"};
+            var Rentity = ObjBill.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
+
+            //_context.Bills.Add(ObjBill);
+            //await _context.SaveChangesAsync();
 
         }
     }

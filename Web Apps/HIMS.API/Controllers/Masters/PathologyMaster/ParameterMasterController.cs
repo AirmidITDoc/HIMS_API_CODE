@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //Add API
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter updated successfully.");
         }
         [HttpDelete("ParameterCancel")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathParameterMaster model = await _repository.GetById(x => x.ParameterId == Id);
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter deleted successfully.");
+                //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("EditFormula/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateParameterFormulaModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();

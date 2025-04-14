@@ -83,7 +83,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MCanItemMaster> _IMcanteen;
         private readonly IGenericService<MDoctorNotesTemplateMaster> _IMDrnote;
         private readonly IGenericService<MNursingTemplateMaster> _IMNurNoteervice;
+        private readonly IGenericService<MExpensesHeadMaster> _IMExpHeade;
 
+        
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -109,7 +111,7 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
-              IGenericService<MSupplierMaster> iMSupplierMaster,
+              IGenericService<MSupplierMaster> iMSupplierMaster, IGenericService<MExpensesHeadMaster> iMExphede,
               IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen
               )
         {
@@ -176,6 +178,7 @@ namespace HIMS.API.Controllers.Common
             _IMradiotemp = iMRadioTemp;
             _IMcanteen = iMCanteen;
             _IMDrnote = iMDrNote;
+            _IMExpHeade = iMExphede;
         }
 
         [HttpGet]
@@ -282,8 +285,9 @@ namespace HIMS.API.Controllers.Common
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
 
-
                 
+
+                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };
