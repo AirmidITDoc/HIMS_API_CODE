@@ -24,6 +24,7 @@ using HIMS.Services.Nursing;
 using HIMS.Services.Administration;
 using HIMS.Services.Pathlogy;
 using HIMS.API.Utility;
+using HIMS.Services.Transaction;
 
 namespace HIMS.API.Infrastructure
 {
@@ -102,7 +103,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
-            //services.AddScoped<IsmsConfigService, smsConfigService>();
+            services.AddScoped<IsmsConfigService, smsConfigService>();
 
 
 
