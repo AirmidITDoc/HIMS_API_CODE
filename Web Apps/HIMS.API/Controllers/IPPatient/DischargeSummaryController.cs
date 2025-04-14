@@ -180,7 +180,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("DischargeUpdate")]
-        [Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Discharge", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
         {
             Discharge model = obj.Discharge.MapTo<Discharge>();

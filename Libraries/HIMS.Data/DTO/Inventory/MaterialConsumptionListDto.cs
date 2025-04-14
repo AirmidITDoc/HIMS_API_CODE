@@ -18,5 +18,8 @@ namespace HIMS.Data.DTO.Inventory
         public decimal LandedTotalAmount { get; set; }
         public string Remark { get; set; }
         public long AddedBy { get; set; }
+        public long AdmId { get; set; }
+
+
     }
 }

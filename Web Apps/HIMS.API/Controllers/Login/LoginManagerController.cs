@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("Insert")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Login
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
         [HttpPost("updatepassword")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
         {
             LoginManager model = new();

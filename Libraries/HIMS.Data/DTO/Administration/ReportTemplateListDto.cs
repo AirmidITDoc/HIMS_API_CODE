@@ -10,6 +10,6 @@ namespace HIMS.Data.DTO.Administration
     {
         public long TemplateId { get; set; }
         public string? TemplateName { get; set; }
-        //public string? TemplateDescription { get; set; }
+        public string? TemplateDescription { get; set; }
     }
 }

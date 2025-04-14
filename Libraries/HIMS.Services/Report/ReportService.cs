@@ -798,13 +798,7 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = Array.Empty<string>();
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SettlementReceipt.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("rptIPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPPaymentReceipt", "IPPaymentReceipt", Orientation.Landscape);
-                        //break;
-
-
+                     
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SettlementReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
@@ -891,23 +885,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-                #region :: IpDischargeReceipt ::
-                case "IpDischargeReceipt":
-                    {
-
-                        model.RepoertName = "Ip Discharge Receipt";
-                        string[] headerList = { };
-                        string[] colList = { };
-                                                string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischarge.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                        var html = GetHTMLView("m_rptDischargeCheckOutSlip", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeReceipt", "IpDischargeReceipt", Orientation.Portrait);
-                        break;
-                    }
-                #endregion
+               
                 #region :: IpDischargeSummaryReport ::
                 case "IpDischargeSummaryReport":
                     {
@@ -921,8 +899,23 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDischargeSummary", "IPDischargeSummary", Orientation.Landscape);
                         break;
                     }
-                    #endregion
-                    
+                #endregion
+                #region :: IpDischargeReceipt ::
+                case "IpDischargeReceipt":
+                    {
+
+                        string[] colList = Array.Empty<string>();
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischarge.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("v_rptDischargeCheckOutSlip", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeReceipt", "IpDischargeReceipt", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
                 #region :: IPDCurrentwardwisecharges ::
                 case "IPDCurrentwardwisecharges":
                     {
@@ -4618,7 +4611,6 @@ namespace HIMS.Services.Report
                     break;
                 case "IpDischargeReceipt":
                     {
-
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
                         html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
@@ -4655,10 +4647,6 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID"));
                         html = html.Replace("{{BillingUserName}}", dt.GetColValue("BillingUserName"));
-                        //string finalamt = conversion(Bills.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-
-
 
                     }
 

@@ -18,5 +18,7 @@ namespace HIMS.Services.IPPatient
         Task InsertRegAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task UpdateAdmissionAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword);
+        Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword);
+
     }
 }
