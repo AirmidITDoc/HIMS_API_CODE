@@ -29,7 +29,6 @@ namespace HIMS.Services.OPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OpBilllistforRefundDto>(model, "m_OPBillListforRefund");
         }
-
         public virtual async Task<IPagedList<OPBillservicedetailListDto>> GetBillservicedetailListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OPBillservicedetailListDto>(model, "m_rtrv_OPBill_For_Refund");

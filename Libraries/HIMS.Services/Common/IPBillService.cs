@@ -26,6 +26,7 @@ namespace HIMS.Services.Common
         public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListAsync1(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
+            
         }
         public virtual async Task<IPagedList<BrowseIPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
         {
