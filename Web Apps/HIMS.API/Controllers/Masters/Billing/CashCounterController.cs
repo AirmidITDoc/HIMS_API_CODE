@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security;
 
-namespace HIMS.API.Controllers.Masters
+namespace HIMS.API.Controllers.Masters.Billing
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters
             IPagedList<CashCounter> DocList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(DocList.ToGridResponse(objGrid, "CashCounter List"));
         }
-       
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "CashCounter", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
