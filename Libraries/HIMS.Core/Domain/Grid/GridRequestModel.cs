@@ -13,7 +13,7 @@ namespace HIMS.Core.Domain.Grid
         public ExportType ExportType { get; set; }
         //public string GlobalFilterText { get; set; }
         //public string GlobalFilterColumns { get; set; }
-        //public List<GridColumn> Columns { get; set; }
+        public List<GridColumn> Columns { get; set; }
     }
     public class GridColumn
     {
@@ -29,7 +29,7 @@ namespace HIMS.Core.Domain.Grid
 
     public enum ExportType
     {
-        JSON=1,Excel = 2, Pdf = 3
+        JSON = 1, Excel = 2, Pdf = 3, Csv = 4
     }
     public enum OperatorComparer
     {

@@ -13,6 +13,5 @@ namespace HIMS.Core.Infrastructure
         public string? BoolFor { get; set; }
         public string? DateFormat { get; set; }
         public string? ExportFormat { get; set; }
-        public bool IsIgnoreTimeZone { get; set; }
     }
 }
