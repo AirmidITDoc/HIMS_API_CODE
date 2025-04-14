@@ -4,6 +4,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
@@ -144,6 +145,24 @@ namespace HIMS.Services.Administration
             }
 
             odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, Rentity);
+
+        }
+
+        public virtual async Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "opdipdid","totalAmt","concessionAmt","netPayableAmt","paidAmt","balanceAmt","opdipdType","addedBy","totalAdvanceAmount", "concessionReasonId","isSettled","isPrinted","isFree","companyId","tariffId","unitId","interimOrFinal",
+            "companyRefNo","concessionAuthorizationName","speTaxPer","speTaxAmt","discComments","compDiscAmt","cashCounterId","billDetail","addCharge","addmission","payment","bills","advancesupdate","advancesHeaderupdate","addChargessupdate"};
+            var Rentity = ObjBill.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
+
+            //_context.Bills.Add(ObjBill);
+            //await _context.SaveChangesAsync();
 
         }
     }

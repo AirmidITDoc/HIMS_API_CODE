@@ -15,6 +15,13 @@ namespace HIMS.Services.Inventory
 
         Task<IPagedList<IssuetodeptListDto>> GetListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<TIssueToDepartmentDetail>> GetIssueItemListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IndentByIDListDto>> GetIndentById(GridRequestModel objGrid);
+
+        Task<IPagedList<IndentItemListDto>> GetIndentItemList(GridRequestModel objGrid);
+
+
         Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username);
 
      }
