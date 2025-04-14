@@ -227,21 +227,16 @@ namespace HIMS.API.Controllers.Report
                 case "IpMLCCasePaperPrint":
                 case "PathresultEntry":
                 case "PathTemplateReport":
+                case "RadiologyTemplateReport":
                 case "IpAdvanceReceipt":
                 case "IpAdvanceStatement":
 
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
-                //case "DischargSummary":
+                case "DischargSummary":
 
 
-                //case "PathresultEntry":
 
-                //    {
-                //        if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                //            return Unauthorized("You don't have permission to access this report.");
-                //        break;
-                //    }
                 #endregion
 
 

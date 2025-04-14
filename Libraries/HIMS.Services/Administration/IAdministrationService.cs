@@ -27,5 +27,7 @@ namespace HIMS.Services.Administration
         Task UpdateAsync(Admission ObjAdmission, int UserId, string Username);
 
         Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username);
+
+        Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username);
     }
 }

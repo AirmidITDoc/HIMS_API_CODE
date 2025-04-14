@@ -3,6 +3,9 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Transaction;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Transaction;
@@ -13,10 +16,22 @@ namespace HIMS.API.Controllers.Transaction
     public class smsConfigController : BaseController
     {
         private readonly IsmsConfigService _IsmsConfigService;
-        public smsConfigController(IsmsConfigService repository)
+        private readonly IGenericService<SmsoutGoing> _repository;
+        public smsConfigController(IsmsConfigService repository, IGenericService<SmsoutGoing> repository1)
         {
             _IsmsConfigService = repository;
+            _repository = repository1;
         }
+
+        [HttpPost("SMSconfigList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SMSList(GridRequestModel objGrid)
+        {
+            IPagedList<SMSConfigListDto> List = await _IsmsConfigService.GetSMSconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "SMS config List"));
+        }
+
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(smsConfigModel obj)

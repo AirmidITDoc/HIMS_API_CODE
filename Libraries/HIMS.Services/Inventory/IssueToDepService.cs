@@ -30,6 +30,20 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<IssuetodeptListDto>(model, "m_Rtrv_IssueToDep_list_by_Name");
         }
 
+        public virtual async Task<IPagedList<TIssueToDepartmentDetail>> GetIssueItemListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TIssueToDepartmentDetail>(model, "m_rtrv_IssueItemList");
+        }
+
+        public virtual async Task<IPagedList<IndentByIDListDto>> GetIndentById(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndentByIDListDto>(model, "m_Rtrv_Indent_by_ID");
+        }
+
+        public virtual async Task<IPagedList<IndentItemListDto>> GetIndentItemList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "retrieve_IndentItemList");
+        }
         public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username)
         {
             try
@@ -80,7 +94,8 @@ namespace HIMS.Services.Inventory
             }
 
         }
-        
+
+      
     }
 }
 

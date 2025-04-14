@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +14,8 @@ namespace HIMS.Services.Transaction
     {
         Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
+
+        Task<IPagedList<SMSConfigListDto>> GetSMSconfig(GridRequestModel objGrid);
+
     }
 }
