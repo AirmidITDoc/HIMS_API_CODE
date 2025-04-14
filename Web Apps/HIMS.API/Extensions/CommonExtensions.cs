@@ -24,6 +24,12 @@ using HIMS.Core.Infrastructure;
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Aspose.Cells;
+using ClosedXML.Excel;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.Web;
+using CsvHelper;
 
 namespace HIMS.API.Extensions
 {
@@ -31,59 +37,61 @@ namespace HIMS.API.Extensions
     {
         public static HttpContext HttpContextAccessor => new HttpContextAccessor().HttpContext;
         private static readonly DateTime epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        public static object ToGridResponse<T>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName)
+        //public static object ToGridResponse<T>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName)
+        //{
+        //    try
+        //    {
+        //        //return new ApiResponse { StatusCode = 200, Data = GridData.ToGrid() };
+        //        return objGrid.ExportType == 0 ? new ApiResponse { StatusCode = 200, Data = GridData.ToGrid() } : GridData.ExportToExcel(objGrid, FileName);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return new object();
+        //    }
+        //}
+        public static object ToGridResponse<T>(this IPagedList<T> list, GridRequestModel objGrid, string FileName = "File")
         {
-            try
+            if (objGrid.ExportType == ExportType.Excel)
             {
-                return new ApiResponse { StatusCode = 200, Data = GridData.ToGrid() };
-                // return objGrid.ExportType == 0 ? new ApiResponse { StatusCode = 200, Data = GridData.ToGrid() } : GridData.ExportToGrid(objGrid, FileName);
+                return ExportToExcel(list, objGrid.Columns, objGrid, "Sheet 1");
             }
-            catch (Exception)
+            else if (objGrid.ExportType == ExportType.Pdf)
             {
-                return new object();
+                return ExportToPdf(list, objGrid.Columns);
+            }
+            else if (objGrid.ExportType == ExportType.Csv)
+            {
+                return ExportToCsv(list);
+            }
+            else
+            {
+                return new
+                {
+                    StatusCode = (int)ApiStatusCode.Status200OK,
+                    StatusText = "Grid Data",
+                    Data = list.ToGrid()
+                };
             }
         }
 
-        public static object ToGridSaleResponse<T>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName, object ExtraData)
-        {
-            try
-            {
-                return new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(), ExtraData = ExtraData };
-                //return objGrid.ExportType == 0 ? new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(), ExtraData = ExtraData } : GridData.ExportToGrid(objGrid, FileName);
-            }
-            catch (Exception)
-            {
-                return new object();
-            }
-        }
+
+        //public static object ToGridResponse<T, TResult>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName, Func<T, TResult> selector)
+        //{
+        //    try
+        //    {
+        //        //return new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(selector) };
+        //        return objGrid.ExportType == 0 ? new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(selector) } : GridData.ExportToGrid(objGrid, FileName);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return new object();
+        //    }
+        //}
         public static GridResponseModel ToGrid<T>(this IPagedList<T> GridData)
         {
             try
             {
                 return new GridResponseModel() { Data = GridData, RecordsFiltered = GridData.TotalCount, RecordsTotal = GridData.TotalCount, PageIndex = GridData.PageIndex };
-            }
-            catch (Exception)
-            {
-                return new GridResponseModel();
-            }
-        }
-        public static object ToGridResponse<T, TResult>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName, Func<T, TResult> selector)
-        {
-            try
-            {
-                return new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(selector) };
-                //return objGrid.ExportType == 0 ? new ApiResponse { StatusCode = 200, Data = GridData.ToGrid(selector) } : GridData.ExportToGrid(objGrid, FileName);
-            }
-            catch (Exception)
-            {
-                return new object();
-            }
-        }
-        public static GridResponseModel ToGrid<T, TResult>(this IPagedList<T> GridData, Func<T, TResult> selector)
-        {
-            try
-            {
-                return new GridResponseModel() { Data = GridData.Select(selector), RecordsFiltered = GridData.TotalCount, RecordsTotal = GridData.TotalCount, PageIndex = GridData.PageIndex };
             }
             catch (Exception)
             {
@@ -337,6 +345,170 @@ namespace HIMS.API.Extensions
             return false;
         }
 
+        #region :: Export Functions ::
+
+        private static Stream ExportToExcel<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> columns, GridRequestModel objGrid, string sheetName = "Sheet 1")
+        {
+            using var excel = new XLWorkbook();
+            var workSheet = excel.Worksheets.Add(sheetName);
+
+            // Create and style the header row
+            AddHeader(workSheet, columns);
+            StyleHeaderRow(workSheet);
+
+            // Start from row 2 because row 1 is the header
+            int rowIndex = 2;
+            foreach (var item in list)
+            {
+                PopulateRow(workSheet, item, columns, objGrid, rowIndex);
+                workSheet.Row(rowIndex).Height = 30;
+                rowIndex++;
+            }
+
+            return SaveToStream(excel);
+        }
+        private static void AddHeader(IXLWorksheet workSheet, List<Core.Domain.Grid.GridColumn> columns)
+        {
+            int colIndex = 1;
+            foreach (var column in columns.Where(c => !c.Name.Equals("Action", StringComparison.OrdinalIgnoreCase)))
+            {
+                workSheet.Cell(1, colIndex++).Value = column.Name;
+            }
+        }
+        private static void StyleHeaderRow(IXLWorksheet workSheet)
+        {
+            var headerRow = workSheet.Row(1);
+            headerRow.Style.Font.Bold = true;
+            headerRow.Height = 30;
+        }
+
+        private static void PopulateRow<T>(IXLWorksheet workSheet, T item, List<Core.Domain.Grid.GridColumn> columns, GridRequestModel objGrid, int rowIndex)
+        {
+            var propInfoList = item.GetType().GetProperties();
+            int colIndex = 1;
+
+            foreach (var column in columns)
+            {
+                if (!column.Name.Equals("Action", StringComparison.OrdinalIgnoreCase) && propInfoList.Any(x => string.Equals(x.Name, column.Data, StringComparison.OrdinalIgnoreCase)))
+                {
+                    var propInfo = propInfoList.FirstOrDefault(x => string.Equals(x.Name, column.Data, StringComparison.OrdinalIgnoreCase));
+                    if (propInfo != null)
+                    {
+                        AddCellValue(workSheet, propInfo, item, objGrid, rowIndex, colIndex++);
+                    }
+                }
+            }
+        }
+
+        private static void AddCellValue(IXLWorksheet workSheet, PropertyInfo propInfo, object item, GridRequestModel objGrid, int rowIndex, int colIndex)
+        {
+            var auditProps = propInfo.GetCustomAttribute<AuditLogAttribute>();
+            var value = propInfo.GetValue(item);
+            if (value != null)
+            {
+                if (propInfo.PropertyType == typeof(DateTime) || propInfo.PropertyType == typeof(DateTime?))
+                {
+                    DateTime cellValue = Convert.ToDateTime(propInfo.GetValue(item));// GetDateTimeValue(propInfo, item, auditProps, objGrid);
+                    workSheet.Cell(rowIndex, colIndex).Style.NumberFormat.Format = auditProps?.ExportFormat ?? "dd MMM yyyy h:mm tt";
+                    workSheet.Cell(rowIndex, colIndex).Value = cellValue.ToString(auditProps?.ExportFormat ?? "dd MMM yyyy h:mm tt");
+                }
+                else if (propInfo.PropertyType == typeof(TimeSpan) || propInfo.PropertyType == typeof(TimeSpan?))
+                {
+                    TimeSpan cellValue = Convert.ToDateTime(propInfo.GetValue(item).ToString()).TimeOfDay;// GetTimeSpanValue(propInfo, item, auditProps, objGrid);
+                    workSheet.Cell(rowIndex, colIndex).Style.NumberFormat.Format = auditProps?.ExportFormat ?? "h:mm";
+                    workSheet.Cell(rowIndex, colIndex).Value = cellValue.ToString(auditProps?.ExportFormat ?? "h:mm");
+                }
+                else
+                {
+                    workSheet.Cell(rowIndex, colIndex).Value = value.ToString();
+                }
+
+                workSheet.Cell(rowIndex, colIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            }
+        }
+
+        public static Stream SaveToStream(XLWorkbook excel)
+        {
+            var memoryStream = new MemoryStream();
+            excel.SaveAs(memoryStream);
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+
+        private static System.IO.MemoryStream ExportToPdf<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> Columns)
+        {
+            StringBuilder html = new();
+            html.Append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>")
+                .Append("<html xmlns='http://www.w3.org/1999/xhtml'>")
+                .Append("<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>")
+                .Append("<meta name='viewport' content='width=device-width, initial-scale=1.0'>")
+                .Append("<meta http-equiv='X-UA-Compatible' content='IE=edge'>")
+                .Append("<title>SamplePdf</title></head><body>")
+                .Append("<table cellpadding='5' border='1' style='border-spacing:0px;'>");
+
+            // Add header row
+            AppendHeaderRow(html, Columns);
+            // Add data rows
+            AppendDataRows(html, list, Columns);
+            html.Append("</table></body></html>");
+
+            //HtmlConverter htmlConverter = new(html.ToString());
+            //byte[] outputByte = htmlConverter.Convert();
+
+            //// Create and return memory stream
+            //MemoryStream ms = new(outputByte)
+            //{
+            //    Position = 0
+            //};
+            //return ms;
+            return new MemoryStream();
+        }
+        private static void AppendHeaderRow(StringBuilder html, List<Core.Domain.Grid.GridColumn> columns)
+        {
+            html.Append("<tr>");
+            foreach (var column in columns.Where(c => !c.Name.Equals("Action", StringComparison.OrdinalIgnoreCase)))
+            {
+                html.Append("<th>").Append(HttpUtility.HtmlEncode(column.Name)).Append("</th>");
+            }
+            html.Append("</tr>");
+        }
+        private static void AppendDataRows<T>(StringBuilder html, IPagedList<T> list, List<Core.Domain.Grid.GridColumn> columns)
+        {
+            foreach (var item in list)
+            {
+                html.Append("<tr>");
+                var propInfoList = item.GetType().GetProperties();
+                foreach (var column in columns)
+                {
+                    if (!column.Name.Equals("Action", StringComparison.OrdinalIgnoreCase) && propInfoList.Any(p => string.Equals(p.Name, column.Data, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        var propInfo = propInfoList.FirstOrDefault(p => string.Equals(p.Name, column.Data, StringComparison.OrdinalIgnoreCase));
+                        if (propInfo != null)
+                        {
+                            var value = propInfo.GetValue(item);
+                            html.Append("<td>").Append(HttpUtility.HtmlEncode(value?.ToString() ?? string.Empty)).Append("</td>");
+                        }
+                    }
+                }
+                html.Append("</tr>");
+            }
+        }
+
+
+        private static System.IO.Stream ExportToCsv<T>(IPagedList<T> list)
+        {
+            var memoryStream = new MemoryStream();
+            using (var streamWriter = new StreamWriter(memoryStream))
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            {
+                csvWriter.WriteRecords(list);
+            }
+            Stream stream = memoryStream;
+            return stream;
+        }
+
+        #endregion
 
     }
 }
