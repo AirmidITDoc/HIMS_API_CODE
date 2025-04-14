@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Administration
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RoleMaster> RoleMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(RoleMasterList.ToGridResponse(objGrid, "RoleMaster  List"));
+            return Ok(RoleMasterList.ToGridResponse(objGrid, "Role Master List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleMaster  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Administration
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Administration
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RoleMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.Administration
         public ApiResponse PostPermission(List<PermissionModel> obj)
         {
             _IRoleService.SavePermission(obj);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Permission  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Permission updated successfully.");
         }
     }
 }

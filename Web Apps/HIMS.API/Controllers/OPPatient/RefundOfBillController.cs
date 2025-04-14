@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPRefund added successfully.", model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.", model.RefundId);
         }
 
 
@@ -138,75 +138,8 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPRefund added successfully.", model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.", model.RefundId);
         }
-
-        //[HttpPost("IPInsert")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(RefundBillModel obj)
-        //{
-        //    Refund model = obj.Refund.MapTo<Refund>();
-        //    TRefundDetail objTRefundDetail = obj.TRefundDetails.MapTo<TRefundDetail>();
-        //    AddCharge objAddCharge = obj.AddCharges.MapTo<AddCharge>();
-        //    Payment objPayment = obj.Payment.MapTo<Payment>();
-        //    if (obj.Refund.RefundId == 0)
-        //    {
-        //        model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
-        //        model.AddedBy = CurrentUserId;
-
-        //        obj.TRefundDetails.RefundId = obj.Refund.RefundId;
-        //        objTRefundDetail.AddBy = CurrentUserId;
-        //        objTRefundDetail.UpdatedBy = CurrentUserId;
-
-        //        obj.AddCharges.ChargesId = obj.Refund.RefundId;
-
-
-        //        obj.Payment.RefundId = obj.Refund.RefundId;
-        //        objPayment.AddBy = CurrentUserId;
-        //        objPayment.IsCancelledBy = CurrentUserId;
-
-        //        await _IRefundOfBillService.InsertAsyncIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.");
-        //}
-
-        //[HttpPost("InsertEDMX")]
-        ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertEDMX(OPRefundOfBillModel obj)
-        //{
-        //    Refund model = obj.MapTo<Refund>();
-        //    object returnId = 0;
-
-        //    if (obj.RefundId == 0)
-        //    {
-        //        model.RefundTime = Convert.ToDateTime(obj.RefundTime);
-        //        model.CreatedDate = DateTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        model.AddedBy = CurrentUserId;
-        //        returnId = await _IRefundOfBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund added successfully.", returnId);
-        //}
-
-        //[HttpPut("Edit/{id:int}")]
-        ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(OPRefundOfBillModel obj)
-        //{
-        //    Refund model = obj.MapTo<Refund>();
-        //    if (obj.RefundId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.RefundTime = Convert.ToDateTime(obj.RefundTime);
-        //        await _IRefundOfBillService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund updated successfully.");
-        //}
-
     }
 }
 
