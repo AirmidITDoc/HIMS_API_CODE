@@ -199,7 +199,7 @@ namespace HIMS.API.Controllers.Report
                 #region"IP Reports"
 
                 case "IpCasepaperReport":
-                case "IpCasepaperReport1":
+                //case "IpCasepaperReport1":
 
                 case "IptemplateCasepaperReport":
                 case "AdmissionList":
@@ -233,10 +233,10 @@ namespace HIMS.API.Controllers.Report
 
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
-                //case "DischargSummary":
+                case "DischargSummary":
 
 
-          
+
                 #endregion
 
 
