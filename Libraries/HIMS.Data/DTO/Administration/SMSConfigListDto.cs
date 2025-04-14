@@ -11,12 +11,10 @@ namespace HIMS.Data.DTO.Administration
         
         public long? SMSOutGoingID { get; set; }
         public string? SMSString { get; set; }
-
-        //public long? SMSType { get; set; }
-        //public string? SMSDate { get; set; }
-        //public long? TemplateId { get; set; }
-        //public string? MobileNumber { get; set; }
-
-        //public bool? IsSent { get; set; }
+        public string? SMSType { get; set; }
+        public DateTime? SMSDate { get; set; }
+        public long? TemplateId { get; set; }
+        public string? MobileNumber { get; set; }
+        public bool? IsSent { get; set; }
     }
 }
