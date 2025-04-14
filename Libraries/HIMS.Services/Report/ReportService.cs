@@ -599,6 +599,7 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper", Orientation.Portrait);
                         break;
                     }
+                #endregion
                 //#region :: IpCasepaperReport1 ::
                 //case "IpCasepaperReport1":
                 //    {
