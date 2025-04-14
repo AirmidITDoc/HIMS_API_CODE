@@ -135,24 +135,24 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {"BillNo","CashPayAmount","ChequePayAmount","ChequeNo","BankName","ChequeDate","CardPayAmount", "CardNo",  "CardBankName",  "CardDate",  "AdvanceUsedAmount",  "AdvanceId",
+            string[] AEntity = {"BillNo","ReceiptNo","CashPayAmount","ChequePayAmount","ChequeNo","BankName","ChequeDate","CardPayAmount", "CardNo",  "CardBankName",  "CardDate",  "AdvanceUsedAmount",  "AdvanceId",
            "RefundId",  "TransactionType",  "Remark",  "AddBy",  "IsCancelled",  "IsCancelledBy",  "IsCancelledDate",  "OpdipdType",  "NeftpayAmount",  "Neftno",  "NeftbankMaster",  "Neftdate",  "PayTmamount",  "PayTmtranNo",  "PayTmdate",  "Tdsamount","TranMode",
             "ReceiptNo","CashCounterId","IsSelfOrcompany","CompanyId","ChCashPayAmount","ChChequePayAmount","ChCardPayAmount","ChAdvanceUsedAmount","ChNeftpayAmount","ChPayTmamount"};
-            var Rentity = ObjPayment.ToDictionary();
+            var pentity = ObjPayment.ToDictionary();
             foreach (var rProperty in AEntity)
             {
-                Rentity.Remove(rProperty);
+                pentity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, Rentity);
+            odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, pentity);
 
         }
 
         public virtual async Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = {  "opdipdid","totalAmt","concessionAmt","netPayableAmt","paidAmt","balanceAmt","opdipdType","addedBy","totalAdvanceAmount", "concessionReasonId","isSettled","isPrinted","isFree","companyId","tariffId","unitId","interimOrFinal",
-            "companyRefNo","concessionAuthorizationName","speTaxPer","speTaxAmt","discComments","compDiscAmt","cashCounterId","billDetail","addCharge","addmission","payment","bills","advancesupdate","advancesHeaderupdate","addChargessupdate"};
+            string[] AEntity = {  "OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","OpdIpdType","PbillNo","TotalAdvanceAmount","AddedBy","ConcessionReasonId","IsSettled", "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer",
+            "SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","AddCharges","IsCancelled","AdvanceUsedAmount","CashCounterId","CompDiscAmt","BillDetails","BillPrefix","BillMonth","BillYear","PrintBillNo"};
             var Rentity = ObjBill.ToDictionary();
             foreach (var rProperty in AEntity)
             {

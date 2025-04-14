@@ -216,7 +216,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", paymentModel.BillNo);
         }
         [HttpPost("InsertIPDraftBill")]
-  //      [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertIP(TDrbillingModel obj)
         {
 
@@ -237,7 +237,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPAddchargesdelete")]
-        //[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
         {
             AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
@@ -252,28 +252,6 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
         }
-
-
-
-        //[HttpDelete("Addchargesdelete")]
-        //public async Task<ApiResponse> Delete(int Id)
-        //{
-        //    AddCharge model = await _repository.GetById(x => x.ChargesId == Id);
-
-        //    if ((model?.ChargesId ?? 0) > 0)
-        //    {
-        //        model.IsCancelledBy = CurrentUserId;
-        //        model.IsCancelledDate = DateTime.Now; 
-
-        //        await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges deleted  successfully.");
-        //    }
-        //    else
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    }
-
-        //}
 
     }
 }

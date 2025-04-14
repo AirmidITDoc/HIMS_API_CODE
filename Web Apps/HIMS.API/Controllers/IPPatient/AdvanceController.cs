@@ -42,7 +42,6 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "Patient Wise Advance List"));
         }
 
-
         [HttpPost("BrowseAdvanceList")]
         [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)

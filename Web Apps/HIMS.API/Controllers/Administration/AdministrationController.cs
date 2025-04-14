@@ -210,7 +210,7 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPut("UpdatePaymentdatetime{id:int}")]
         //   [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> PaymentdatetimeUpdate(PaymentsModel obj)
+        public async Task<ApiResponse> PaymentdatetimeUpdate(PaymenntModel obj)
         {
             Payment model = obj.MapTo<Payment>();
             if (obj.PaymentId == 0)
@@ -225,16 +225,16 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPut("UpdateBilldatetime{id:int}")]
         //   [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> BilldatetimeUpdate(BillingModel obj)
+        public async Task<ApiResponse> BilldatetimeUpdate(BilllsModel obj)
         {
             Bill model = obj.MapTo<Bill>();
-            //if (obj.BillNo == 0)
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            //else
-            //{
+            if (obj.BillNo == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
 
                 await _IAdministrationService.BilldateUpdateAsync(model, CurrentUserId, CurrentUserName);
-            //}
+            }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill datetime updated successfully.");
         }
     }

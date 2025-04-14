@@ -30,14 +30,14 @@ namespace HIMS.Services.Transaction
         public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { " " };
+            string[] rEntity = { "  " };
             var entity = objSsSmsConfig.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("M_insert_SMS_Config", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("PS_M_insert_SMS_Config", CommandType.StoredProcedure, entity);
 
             await _context.SaveChangesAsync(UserId, Username);
         }
@@ -51,7 +51,7 @@ namespace HIMS.Services.Transaction
                 entity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("m_Update_SMS_Config", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("PS_m_Update_SMS_Config", CommandType.StoredProcedure, entity);
 
             await _context.SaveChangesAsync(UserId, Username);
         }
