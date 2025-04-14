@@ -92,11 +92,11 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "RegID", "AdmissionDate", "AdmissionTime", "PatientTypeID", "HospitalID", "DocNameID", "RefDocNameID", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "IPDNo", "IsCancelled", "CompanyId", "TariffId",
-            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMLC","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
+            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
             "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate",
-            "isUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDOD","IsPharClearance","IPNumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","C_BillNo","C_FinalBillAmt","C_DisallowedAmt","ClaimNo","HDiscAmt","C_OutsideInvestAmt","RecoveredByPatient","H_ChargeAmt",
-            "H_AdvAmt","H_BillId","H_BillDate","H_BillNo","H_TotalAmt","H_DiscAmt","H_NetAmt","H_PaidAmt","H_BalAmt","IsOpToIPConv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTPAComp","IsCtoH","IsInitinatedDischarge"};
+            "IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt",
+            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
             var entity = ObjAdmission.ToDictionary();
             foreach (var rProperty in AEntity)
             {
