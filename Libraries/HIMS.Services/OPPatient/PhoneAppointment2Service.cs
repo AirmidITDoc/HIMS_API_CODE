@@ -57,7 +57,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            string vPhoneAppId = odal.ExecuteNonQuery("v_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
+            string vPhoneAppId = odal.ExecuteNonQuery("ps_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
             objTPhoneAppointment.PhoneAppId = Convert.ToInt32(vPhoneAppId);
 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);

@@ -42,7 +42,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-            string RegId = odal.ExecuteNonQuery("v_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
 
             await _context.SaveChangesAsync(UserId, Username);
