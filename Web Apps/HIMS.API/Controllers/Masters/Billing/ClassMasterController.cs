@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Controllers.Masters.Billing
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
