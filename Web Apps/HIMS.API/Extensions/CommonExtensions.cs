@@ -30,6 +30,9 @@ using System.Formats.Asn1;
 using System.Globalization;
 using System.Web;
 using CsvHelper;
+using DocumentFormat.OpenXml.Office2010.Ink;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace HIMS.API.Extensions
 {
@@ -49,11 +52,11 @@ namespace HIMS.API.Extensions
         //        return new object();
         //    }
         //}
-        public static object ToGridResponse<T>(this IPagedList<T> list, GridRequestModel objGrid, string FileName = "File")
+        public static object ToGridResponse<T>(this IPagedList<T> list, GridRequestModel objGrid, string Msg = "Grid Data")
         {
             if (objGrid.ExportType == ExportType.Excel)
             {
-                return ExportToExcel(list, objGrid.Columns, objGrid, "Sheet 1");
+                return ExportToExcel(list, objGrid.Columns, "Sheet 1");
             }
             else if (objGrid.ExportType == ExportType.Pdf)
             {
@@ -61,14 +64,14 @@ namespace HIMS.API.Extensions
             }
             else if (objGrid.ExportType == ExportType.Csv)
             {
-                return ExportToCsv(list);
+                return ExportToCsv(list, objGrid.Columns);
             }
             else
             {
                 return new
                 {
                     StatusCode = (int)ApiStatusCode.Status200OK,
-                    StatusText = "Grid Data",
+                    StatusText = Msg,
                     Data = list.ToGrid()
                 };
             }
@@ -176,7 +179,7 @@ namespace HIMS.API.Extensions
         }
         public static List<SelectListItem> ToSelectListItems(this Type enumType)
         {
-            List<SelectListItem> items = new List<SelectListItem>();
+            List<SelectListItem> items = new();
             foreach (Enum cur in Enum.GetValues(enumType))
             {
                 items.Add(new SelectListItem()
@@ -347,7 +350,7 @@ namespace HIMS.API.Extensions
 
         #region :: Export Functions ::
 
-        private static Stream ExportToExcel<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> columns, GridRequestModel objGrid, string sheetName = "Sheet 1")
+        private static Stream ExportToExcel<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> columns, string sheetName = "Sheet 1")
         {
             using var excel = new XLWorkbook();
             var workSheet = excel.Worksheets.Add(sheetName);
@@ -360,7 +363,7 @@ namespace HIMS.API.Extensions
             int rowIndex = 2;
             foreach (var item in list)
             {
-                PopulateRow(workSheet, item, columns, objGrid, rowIndex);
+                PopulateRow(workSheet, item, columns, rowIndex);
                 workSheet.Row(rowIndex).Height = 30;
                 rowIndex++;
             }
@@ -382,7 +385,7 @@ namespace HIMS.API.Extensions
             headerRow.Height = 30;
         }
 
-        private static void PopulateRow<T>(IXLWorksheet workSheet, T item, List<Core.Domain.Grid.GridColumn> columns, GridRequestModel objGrid, int rowIndex)
+        private static void PopulateRow<T>(IXLWorksheet workSheet, T item, List<Core.Domain.Grid.GridColumn> columns, int rowIndex)
         {
             var propInfoList = item.GetType().GetProperties();
             int colIndex = 1;
@@ -394,13 +397,13 @@ namespace HIMS.API.Extensions
                     var propInfo = propInfoList.FirstOrDefault(x => string.Equals(x.Name, column.Data, StringComparison.OrdinalIgnoreCase));
                     if (propInfo != null)
                     {
-                        AddCellValue(workSheet, propInfo, item, objGrid, rowIndex, colIndex++);
+                        AddCellValue(workSheet, propInfo, item, rowIndex, colIndex++);
                     }
                 }
             }
         }
 
-        private static void AddCellValue(IXLWorksheet workSheet, PropertyInfo propInfo, object item, GridRequestModel objGrid, int rowIndex, int colIndex)
+        private static void AddCellValue(IXLWorksheet workSheet, PropertyInfo propInfo, object item, int rowIndex, int colIndex)
         {
             var auditProps = propInfo.GetCustomAttribute<AuditLogAttribute>();
             var value = propInfo.GetValue(item);
@@ -494,19 +497,73 @@ namespace HIMS.API.Extensions
                 html.Append("</tr>");
             }
         }
-
-
-        private static System.IO.Stream ExportToCsv<T>(IPagedList<T> list)
+        private static Stream ExportToCsv<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> columns)
         {
+            var propertiesToKeep = new HashSet<string>(
+                columns.Select(x => x.Data),
+                StringComparer.OrdinalIgnoreCase
+            );
+
+            var propertyAccessors = typeof(T).GetProperties()
+                .Where(p => propertiesToKeep.Contains(p.Name))
+                .ToList();
+
             var memoryStream = new MemoryStream();
-            using (var streamWriter = new StreamWriter(memoryStream))
+
+            using (var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, leaveOpen: true))
             using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
             {
-                csvWriter.WriteRecords(list);
+                foreach (var prop in propertyAccessors)
+                {
+                    csvWriter.WriteField(prop.Name);
+                }
+                csvWriter.NextRecord();
+                foreach (var item in list)
+                {
+                    foreach (var prop in propertyAccessors)
+                    {
+                        var value = prop.GetValue(item);
+                        csvWriter.WriteField(value?.ToString() ?? string.Empty);
+                    }
+                    csvWriter.NextRecord();
+                }
             }
-            Stream stream = memoryStream;
-            return stream;
+            memoryStream.Position = 0;
+            return memoryStream;
         }
+
+        //private static System.IO.Stream ExportToCsv<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> Columns)
+        //{
+
+        //    List<string> propertiesToKeep = Columns.Select(x => x.Data).ToList();
+
+        //    List<dynamic> filteredList = new();
+
+        //    foreach (var item in list)
+        //    {
+        //        var itemDict = item.GetType().GetProperties();
+        //        dynamic filteredItem = new ExpandoObject();
+        //        var filteredDict = (IDictionary<string, object>)filteredItem;
+
+        //        foreach (var prop in itemDict)
+        //        {
+        //            if (propertiesToKeep.Contains(prop.Name, StringComparer.OrdinalIgnoreCase))
+        //            {
+        //                filteredDict[prop.Name] = prop.GetValue(item);
+        //            }
+        //        }
+        //        filteredList.Add(filteredItem);
+        //    }
+
+        //    var memoryStream = new MemoryStream();
+        //    using (var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, leaveOpen: true))
+        //    using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+        //    {
+        //        csvWriter.WriteRecords(filteredList);
+        //    }
+        //    memoryStream.Position = 0;
+        //    return memoryStream;
+        //}
 
         #endregion
 
