@@ -686,23 +686,7 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
-                #region :: IpFinalBill ::
-                case "IpFinalBill":
-                    {
-
-                        string[] colList = { };
-                       
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPFinalBillReceiptNew.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Final IPBill", "NewIPBill", Orientation.Portrait);
-                        break;
-
-                    }
-                #endregion
+              
                 #region :: IpDraftBill ::
                 case "IpDraftBill":
                     {
@@ -735,7 +719,23 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
+                #region :: IpFinalBill ::
+                case "IpFinalBill":
+                    {
 
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPFinalBillReceiptNew.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Final IPBill", "NewIPBill", Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
 
                 #region :: IpFinalBillClassservicewise ::
                 case "IpFinalBillClassservicewise":
@@ -754,6 +754,24 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
+
+                //#region :: IpFinalBillNew ::
+                //case "IpFinalBillNew":
+                //    {
+
+                //        string[] colList = { };
+
+                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPFinalBillReceiptNew.html");
+                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                //        var html = GetHTMLView("rptIPComBlPrtSummary_WithAdd_SR", model, htmlFilePath, htmlHeaderFilePath, colList);
+                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NewIPBillClassservicewise", "NewIPBillClassservicewise", Orientation.Portrait);
+                //        break;
+
+                //    }
+                //#endregion
                 #region :: IpFinalClasswiseBill ::
                 case "IpFinalClasswiseBill":
                     {
@@ -775,13 +793,7 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPBillGroupwiseReceipt.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("m_rptIPD_FINAL_BILL_GROUPWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NewIPBillGroupwise", "NewIPBillGroupwise", Orientation.Portrait);
-                        //break;
-
-
+                     
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPBillGroupwiseReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
@@ -903,9 +915,9 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeReceipt ::
                 case "IpDischargeReceipt":
                     {
-
-                        string[] colList = Array.Empty<string>();
-
+                        model.RepoertName = "Discharge Slip";
+                        string[] headerList = { "Sr.No", "UHID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
+                        string[] colList = { "RegID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischarge.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);

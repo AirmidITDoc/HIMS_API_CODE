@@ -400,6 +400,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
+        public virtual DbSet<TIpPrescription1> TIpPrescription1s { get; set; } = null!;
         public virtual DbSet<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; } = null!;
         public virtual DbSet<TIpmedicalRecord> TIpmedicalRecords { get; set; } = null!;
         public virtual DbSet<TIpprescriptionReturnD> TIpprescriptionReturnDs { get; set; } = null!;
@@ -427,6 +428,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TNursingNote> TNursingNotes { get; set; } = null!;
         public virtual DbSet<TNursingOrygenVentilator> TNursingOrygenVentilators { get; set; } = null!;
         public virtual DbSet<TNursingPainAssessment> TNursingPainAssessments { get; set; } = null!;
+        public virtual DbSet<TNursingPatientHandover> TNursingPatientHandovers { get; set; } = null!;
         public virtual DbSet<TNursingSugarLevel> TNursingSugarLevels { get; set; } = null!;
         public virtual DbSet<TNursingVital> TNursingVitals { get; set; } = null!;
         public virtual DbSet<TNursingWeight> TNursingWeights { get; set; } = null!;
@@ -512,7 +514,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6433,7 +6435,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_DoctorNotesTemplateMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DocsTempName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MDoctorPerGroupWiseMaster>(entity =>
@@ -11480,8 +11486,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TIpPrescription>(entity =>
             {
-                entity.HasKey(e => e.IppreId)
-                    .HasName("PK_T_IP_Prescription_1");
+                entity.HasKey(e => e.IppreId);
 
                 entity.ToTable("T_IP_Prescription");
 
@@ -11512,8 +11517,38 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Ipmed)
                     .WithMany(p => p.TIpPrescriptions)
                     .HasForeignKey(d => d.IpmedId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_T_IP_Prescription_T_IPMedicalRecord");
+            });
+
+            modelBuilder.Entity<TIpPrescription1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_IP_Prescription1");
+
+                entity.Property(e => e.ClassId).HasColumnName("ClassID");
+
+                entity.Property(e => e.IpmedId).HasColumnName("IPMedID");
+
+                entity.Property(e => e.IppreId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("IPPreId");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Pdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PDate");
+
+                entity.Property(e => e.Ptime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PTime");
+
+                entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.Property(e => e.WardId).HasColumnName("WardID");
             });
 
             modelBuilder.Entity<TIpPrescriptionDischarge>(entity =>
@@ -12355,6 +12390,51 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PainAssessmentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PainAssessmentTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TNursingPatientHandover>(entity =>
+            {
+                entity.HasKey(e => e.PatHandId);
+
+                entity.ToTable("T_Nursing_PatientHandover");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PatHandA)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_A");
+
+                entity.Property(e => e.PatHandB)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_B");
+
+                entity.Property(e => e.PatHandI)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_I");
+
+                entity.Property(e => e.PatHandR)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_R");
+
+                entity.Property(e => e.PatHandS)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_S");
+
+                entity.Property(e => e.ShiftInfo).HasMaxLength(50);
+
+                entity.Property(e => e.Tdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TDate");
+
+                entity.Property(e => e.Ttime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TTime");
             });
 
             modelBuilder.Entity<TNursingSugarLevel>(entity =>

@@ -71,5 +71,12 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CanteenRequest added successfully.", model);
         }
 
+        [HttpGet("GetItemListforCanteen")]
+        public async Task<ApiResponse> GetCanteenItemList(string ItemName)
+        {
+            var resultList = await _ICanteenRequestService.GetItemListForCanteen(ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Canteen List.", resultList);
+        }
+
     }
 }

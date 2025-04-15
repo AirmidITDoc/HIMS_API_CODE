@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.DTO.OPPatient;
@@ -63,6 +64,22 @@ namespace HIMS.Services.Nursing
                           //IsBatchRequired = s.IsBatchRequired,
                          
                       };
+            return await qry.Take(50).ToListAsync();
+        }
+
+        public virtual async Task<List<CanteenListDto>> GetItemListForCanteen(string ItemName)
+        {
+            var qry = (from MCanItemMaster in _context.MCanItemMasters
+                       where MCanItemMaster.ItemName == "" || MCanItemMaster.ItemName.Contains(ItemName)
+                         
+                       select new CanteenListDto
+                       {
+                           ItemID = MCanItemMaster.ItemId,
+                           ItemName = MCanItemMaster.ItemName,
+                           Price = MCanItemMaster.Price,
+                           IsBatchRequired = MCanItemMaster.IsBatchRequired
+
+                       });
             return await qry.Take(50).ToListAsync();
         }
     }
