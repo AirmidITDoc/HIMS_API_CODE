@@ -165,5 +165,28 @@ namespace HIMS.Services.Administration
             //await _context.SaveChangesAsync();
 
         }
+
+        public virtual async Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MDoctorPerMasters.Add(ObjMDoctorPerMaster);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.MDoctorPerMasters.Update(ObjMDoctorPerMaster);
+                _context.Entry(ObjMDoctorPerMaster).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
     }
 }

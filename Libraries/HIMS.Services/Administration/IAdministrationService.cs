@@ -29,5 +29,8 @@ namespace HIMS.Services.Administration
         Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username);
 
         Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username);
+
+        Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
+        Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
     }
 }
