@@ -26,7 +26,7 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task<IPagedList<OPBillListSettlementListDto>> OPBillListSettlementList(GridRequestModel objGrid)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "m_Rtrv_OP_Bill_List_Settlement");
+            return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "ps_Rtrv_OP_Bill_List_Settlement");
         }
 
         public virtual async Task InsertAsyncSP(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)

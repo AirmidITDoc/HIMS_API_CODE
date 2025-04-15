@@ -47,7 +47,7 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<RefundOfAdvancesListDto>> GetAdvancesListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvancesListDto>(model, "m_Rtrv_RefundOfAdvance");
+            return await DatabaseHelper.GetGridDataBySp<RefundOfAdvancesListDto>(model, "ps_Rtrv_RefundOfAdvance");
         }
         //SHILPA CODE////
         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName)
@@ -60,7 +60,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            string vAdvanceId = odal.ExecuteNonQuery("sp_insert_AdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
+            string vAdvanceId = odal.ExecuteNonQuery("ps_insert_AdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
             objAdvanceHeader.AdvanceId = Convert.ToInt32(vAdvanceId);
             objAdvanceDetail.AdvanceId = Convert.ToInt32(vAdvanceId);
 
@@ -72,7 +72,7 @@ namespace HIMS.Services.IPPatient
             {
                 AdvanceEntity.Remove(rProperty);
             }
-            string AdvanceDetailId = odal.ExecuteNonQuery("sp_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
+            string AdvanceDetailId = odal.ExecuteNonQuery("ps_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
             objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
 
 
@@ -82,7 +82,7 @@ namespace HIMS.Services.IPPatient
             {
                 PAdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("sp_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
 
 
         }
@@ -97,7 +97,7 @@ namespace HIMS.Services.IPPatient
             {
                 AdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("sp_Update_AdvHeader_1", CommandType.StoredProcedure, AdvanceEntity);
+            odal.ExecuteNonQuery("ps_Update_AdvHeader_1", CommandType.StoredProcedure, AdvanceEntity);
 
             string[] DetailEntity = { "AdvanceNo", "Advance" };
             var AAdvanceEntity = objAdvanceDetail.ToDictionary();
@@ -105,7 +105,7 @@ namespace HIMS.Services.IPPatient
             {
                 AAdvanceEntity.Remove(rProperty);
             }
-            string AdvanceDetailId = odal.ExecuteNonQuery("sp_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AAdvanceEntity);
+            string AdvanceDetailId = odal.ExecuteNonQuery("ps_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AAdvanceEntity);
             objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
 
 
@@ -115,7 +115,7 @@ namespace HIMS.Services.IPPatient
             {
                 PAdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("sp_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
 
         }
 
@@ -129,7 +129,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity.Remove(rProperty);
             }
-            string RefundId = odal.ExecuteNonQuery("insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
+            string RefundId = odal.ExecuteNonQuery("ps_insert_IPAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
             Objrefund.RefundId = Convert.ToInt32(RefundId);
             ObjPayment.RefundId = Convert.ToInt32(RefundId);
 
@@ -140,7 +140,7 @@ namespace HIMS.Services.IPPatient
             {
                 AdvanceHeaderEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+            odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
 
             foreach (var item in ObjadvRefundDetailList)
             {
@@ -151,7 +151,7 @@ namespace HIMS.Services.IPPatient
                 {
                     AdvDetailEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("insert_AdvRefundDetail_1", CommandType.StoredProcedure, AdvDetailEntity);
+                odal.ExecuteNonQuery("ps_insert_AdvRefundDetail_1", CommandType.StoredProcedure, AdvDetailEntity);
             }
 
             foreach (var item in ObjAdvanceDetailList)
@@ -162,7 +162,7 @@ namespace HIMS.Services.IPPatient
                 {
                     AdDetailEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
+                odal.ExecuteNonQuery("ps_update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
             }
             string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
             var entity1 = ObjPayment.ToDictionary();
@@ -170,7 +170,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, entity1);
         }
 
     }

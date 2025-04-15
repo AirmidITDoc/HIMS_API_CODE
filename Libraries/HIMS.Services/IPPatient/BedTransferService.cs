@@ -32,7 +32,7 @@ namespace HIMS.Services.IPPatient
             {
                 Entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_Insert_BedTransferDetails_1", CommandType.StoredProcedure, Entity);
+            odal.ExecuteNonQuery("ps_Insert_BedTransferDetails_1", CommandType.StoredProcedure, Entity);
 
             //throw new NotImplementedException();
             string[] rBedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
@@ -41,7 +41,7 @@ namespace HIMS.Services.IPPatient
             {
                 rbedentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
+            odal.ExecuteNonQuery("ps_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
 
             string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var bedentity = ObjBedMasterUpdate.ToDictionary();
@@ -49,7 +49,7 @@ namespace HIMS.Services.IPPatient
             {
                 bedentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_BedMaster", CommandType.StoredProcedure, bedentity);
+            odal.ExecuteNonQuery("ps_update_BedMaster", CommandType.StoredProcedure, bedentity);
 
             string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId", "DepartmentId",
                 "RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime",
@@ -61,7 +61,7 @@ namespace HIMS.Services.IPPatient
             {
                 aentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_Update_AdmissionforBedMaster", CommandType.StoredProcedure, aentity);
+            odal.ExecuteNonQuery("ps_Update_AdmissionforBedMaster", CommandType.StoredProcedure, aentity);
 
         }
 

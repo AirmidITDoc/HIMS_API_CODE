@@ -26,29 +26,29 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "m_Rtrv_OPRequestList");
+            return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "ps_Rtrv_OPRequestList");
         }
         public virtual async Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<GetVisitInfoListDto>(model, "m_Rtrv_GetVisitInfo");
+            return await DatabaseHelper.GetGridDataBySp<GetVisitInfoListDto>(model, "ps_Rtrv_GetVisitInfo");
         }
         public virtual async Task<IPagedList<PrescriptionDetailsVisitWiseListDto>> GetListAsyncL(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailsVisitWiseListDto>(model, "Get_PrescriptionDetailsVisitWise");
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailsVisitWiseListDto>(model, "sp_Rtrv_PrescriptionDetailsVisitWise");
         }
 
         public virtual async Task<IPagedList<MOpcasepaperDignosisMaster>> GetDignosisListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MOpcasepaperDignosisMaster>(model, "m_Rtrv_OPCasepaperDignosisList");
+            return await DatabaseHelper.GetGridDataBySp<MOpcasepaperDignosisMaster>(model, "ps_Rtrv_OPCasepaperDignosisList");
         }
 
         public virtual async Task<IPagedList<OPrtrvDignosisListDto>> TDignosisrRtrvList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPrtrvDignosisListDto>(model, "m_Rtrv_OPCasepaperDignosisMaster");
+            return await DatabaseHelper.GetGridDataBySp<OPrtrvDignosisListDto>(model, "ps_Rtrv_OPCasepaperDignosisMaster");
         }
         public virtual async Task<IPagedList<getPrescriptionTemplateDetailsListDto>> TemplateDetailsList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<getPrescriptionTemplateDetailsListDto>(model, "m_RtrvTemplate_PrescriptionList");
+            return await DatabaseHelper.GetGridDataBySp<getPrescriptionTemplateDetailsListDto>(model, "ps_RtrvTemplate_PrescriptionList");
         }
 
 
@@ -100,7 +100,7 @@ namespace HIMS.Services.OutPatient
                 {
                     PrescriptionEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("sp_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
+                odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
 
             }
             foreach (var item in objmOpcasepaperDignosisMaster)

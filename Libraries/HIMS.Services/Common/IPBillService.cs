@@ -25,20 +25,20 @@ namespace HIMS.Services.Common
         }
         public virtual async Task<IPagedList<IPBillListDto>> GetIPBillListAsync1(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "m_Rtrv_BrowseIPDBill");
+            return await DatabaseHelper.GetGridDataBySp<IPBillListDto>(model, "ps_Rtrv_BrowseIPDBill");
             
         }
         public virtual async Task<IPagedList<BrowseIPPaymentListDto>> GetIPPaymentListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPPaymentListDto>(model, "m_Rtrv_IPPaymentList");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPaymentListDto>(model, "ps_Rtrv_IPPaymentList");
         }
         public virtual async Task<IPagedList<BrowseIPRefundListDto>> GetIPRefundBillListListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPRefundListDto>(model, "m_Rtrv_IPRefundBillList");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPRefundListDto>(model, "ps_Rtrv_IPRefundBillList");
         }
         public virtual async Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<ServiceClassdetailListDto>(model, "m_Rtrv_ServiceClassdetail");
+            return await DatabaseHelper.GetGridDataBySp<ServiceClassdetailListDto>(model, "ps_Rtrv_ServiceClassdetail");
         }
         public virtual async Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
@@ -52,7 +52,7 @@ namespace HIMS.Services.Common
                 {
                     entity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("v_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -150,7 +150,7 @@ namespace HIMS.Services.Common
                 {
                     entity3.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, entity3);
+                odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, entity3);
                 //Edmx
                 //Bill objBill1 = new Bill();
                 //objBill1.BillNo = Convert.ToInt32(vBillNo);
@@ -195,7 +195,7 @@ namespace HIMS.Services.Common
                 {
                     entity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("v_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
+                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", entity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -299,7 +299,7 @@ namespace HIMS.Services.Common
 
         public virtual async Task<IPagedList<IPPreviousBillListDto>> GetIPPreviousBillAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IPPreviousBillListDto>(model, "Rtrv_IPPreviousBill_info");
+            return await DatabaseHelper.GetGridDataBySp<IPPreviousBillListDto>(model, "ps_Rtrv_IPPreviousBill_info");
         }
         public virtual async Task<IPagedList<IPAddchargesListDto>> GetIPAddchargesAsync(GridRequestModel model)
         {
@@ -307,15 +307,15 @@ namespace HIMS.Services.Common
         }
         public virtual async Task<IPagedList<BrowseIPDBillListDto>> GetIPBillListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPDBillListDto>(model, "m_Rtrv_IP_Bill_List_Settlement");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPDBillListDto>(model, "ps_Rtrv_IP_Bill_List_Settlement");
         }
         public virtual async Task<IPagedList<PreviousBillListDto>> GetPreviousBillListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PreviousBillListDto>(model, "m_Rtrv_IPBillInfo");
+            return await DatabaseHelper.GetGridDataBySp<PreviousBillListDto>(model, "ps_Rtrv_IPBillInfo");
         }
         public virtual async Task<IPagedList<PathRadRequestListDto>> PathRadRequestListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PathRadRequestListDto>(model, "Rtrv_PathRadRequestList");
+            return await DatabaseHelper.GetGridDataBySp<PathRadRequestListDto>(model, "ps_Rtrv_PathRadRequestList");
         }
         //public virtual async Task<IPagedList<IPBillForRefundListDto>> IPBillForRefundListAsync(GridRequestModel model)
         //{
@@ -383,7 +383,7 @@ namespace HIMS.Services.Common
                 entity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("Delete_IPAddcharges", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_Delete_IPAddcharges", CommandType.StoredProcedure, entity);
 
         }
 
@@ -412,7 +412,7 @@ namespace HIMS.Services.Common
             {
                 BillEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BillEntity);
+            odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BillEntity);
 
             foreach (var item in objadvanceDetailList)
             {
@@ -424,7 +424,7 @@ namespace HIMS.Services.Common
                 {
                     AdvanceDetailEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+                odal.ExecuteNonQuery("ps_update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
 
             }
 
@@ -436,7 +436,7 @@ namespace HIMS.Services.Common
             {
                 AdvanceHeaderEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+            odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
 
 
             await _context.SaveChangesAsync(UserId, UserName);

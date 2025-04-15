@@ -29,7 +29,7 @@ namespace HIMS.Services.OPPatient
                 entity.Remove(rProperty);
             }
             
-            odal.ExecuteNonQuery("v_OP_BILL_CANCELLATION", CommandType.StoredProcedure, entity);           
+            odal.ExecuteNonQuery("ps_OP_BILL_CANCELLATION", CommandType.StoredProcedure, entity);           
            
             await _context.SaveChangesAsync(UserId, Username);      
         }
@@ -43,7 +43,7 @@ namespace HIMS.Services.OPPatient
                 entity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("v_IP_BILL_CANCELLATION", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_IP_BILL_CANCELLATION", CommandType.StoredProcedure, entity);
 
             await _context.SaveChangesAsync(UserId, Username);
         }

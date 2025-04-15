@@ -71,7 +71,7 @@ namespace HIMS.Services.IPPatient
             {
                 BedId = Convert.ToInt32(objAdmission.BedId)
             };
-            odal.ExecuteNonQuery("m_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
         public virtual async Task InsertRegAsyncSP(Admission objAdmission, int currentUserId, string currentUserName)
@@ -89,14 +89,14 @@ namespace HIMS.Services.IPPatient
             {
                 visitentity.Remove(rProperty);
             }
-            string AdmissionId = odal.ExecuteNonQuery("insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
+            string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
             objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
 
             var tokenObj = new
             {
                 BedId = Convert.ToInt32(objAdmission.BedId)
             };
-            odal.ExecuteNonQuery("m_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
 
@@ -115,7 +115,7 @@ namespace HIMS.Services.IPPatient
             {
                 rAdmissentity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("v_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
+            odal.ExecuteNonQuery("ps_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
             // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
         }
 
