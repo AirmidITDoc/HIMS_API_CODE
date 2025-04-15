@@ -1,0 +1,117 @@
+
+alter table [VATSALYA_28_MARCH_NEW].dbo.Menumaster
+add [PermissionCode] [nvarchar](50) NULL,
+	[TableNames] [nvarchar](max) NULL
+	
+	
+UPDATE a
+SET a.PermissionCode = (
+    SELECT b.PermissionCode
+    FROM [SSWEB_AIRMID].dbo.Menumaster b
+    WHERE b.Id = a.Id
+)
+FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
+
+UPDATE a
+SET a.TableNames = (
+    SELECT b.TableNames
+    FROM [SSWEB_AIRMID].dbo.Menumaster b
+    WHERE b.Id = a.Id
+)
+FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
+
+
+Alter table loginManager
+add [CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL
+	
+Update loginManager set [CreatedBy] =1 ,[CreatedDate]= getdate(), [ModifiedBy]=1,[ModifiedDate]=getdate()
+
+CREATE TABLE [dbo].[AuditLog](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ActionId] [int] NOT NULL,
+	[ActionById] [bigint] NULL,
+	[ActionByName] [nvarchar](250) NULL,
+	[EntityId] [int] NULL,
+	[EntityName] [nvarchar](250) NULL,
+	[Description] [nvarchar](max) NULL,
+	[AdditionalInfo] [nvarchar](max) NULL,
+	[LogTypeId] [int] NOT NULL,
+	[LogSourceId] [int] NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+ CONSTRAINT [PK_AuditLog] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[AuditLog] ADD  CONSTRAINT [DF_AuditLog_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+alter table DB_PrefixMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
+
+alter table DB_GenderMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update DB_GenderMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table PatientTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table DoctorTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update DoctorTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+ALTER TABLE DoctorTypeMaster ALTER COLUMN IsActive Bit;
+
+alter table ClassMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update ClassMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
+
+alter table DoctorMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update DoctorMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table HospitalMaster add IsActive bit , [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update HospitalMaster set IsActive=1 , CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update M_CityMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_StateMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_CountryMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update M_DepartmentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update M_ConcessionReasonMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update M_BankMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+
+
+
+----------------------------------------------------- Ashutosh ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------- Meshram ----------------------------------------------------------
