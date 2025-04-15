@@ -63,23 +63,45 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+       
         public virtual async Task updatepassAsync(LoginManager objLogin, int CurrentUserId, string CurrentUserName)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled
+            );
+
+            LoginManager user = await _context.LoginManagers.FindAsync(objLogin.UserId);
+            if (user != null)
             {
-                // Update header table records
-                LoginManager user = await _context.LoginManagers.FindAsync(objLogin.UserId);
-                user.Password = user.Password;
-                user.ModifiedDate = objLogin.ModifiedDate;
+                user.UserName = objLogin.UserName;     
+                user.Password = objLogin.Password;    
                 user.ModifiedBy = objLogin.ModifiedBy;
-                _context.LoginManagers.Update(user);
+                user.ModifiedDate = objLogin.ModifiedDate;
+
                 _context.Entry(user).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
+        //public virtual async Task updatepassAsync(LoginManager objLogin, int CurrentUserId, string CurrentUserName)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header table records
+        //        LoginManager user = await _context.LoginManagers.FindAsync(objLogin.UserId);
+        //        user.Password = user.Password;
+        //        user.ModifiedDate = objLogin.ModifiedDate;
+        //        user.ModifiedBy = objLogin.ModifiedBy;
+        //        _context.LoginManagers.Update(user);
+        //        _context.Entry(user).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
 
+        //        scope.Complete();
+        //    }
+        //}
 
     }
 }

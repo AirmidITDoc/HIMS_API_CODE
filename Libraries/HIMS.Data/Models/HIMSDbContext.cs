@@ -427,6 +427,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TNursingNote> TNursingNotes { get; set; } = null!;
         public virtual DbSet<TNursingOrygenVentilator> TNursingOrygenVentilators { get; set; } = null!;
         public virtual DbSet<TNursingPainAssessment> TNursingPainAssessments { get; set; } = null!;
+        public virtual DbSet<TNursingPatientHandover> TNursingPatientHandovers { get; set; } = null!;
         public virtual DbSet<TNursingSugarLevel> TNursingSugarLevels { get; set; } = null!;
         public virtual DbSet<TNursingVital> TNursingVitals { get; set; } = null!;
         public virtual DbSet<TNursingWeight> TNursingWeights { get; set; } = null!;
@@ -512,7 +513,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6433,7 +6434,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_DoctorNotesTemplateMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DocsTempName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MDoctorPerGroupWiseMaster>(entity =>
@@ -12355,6 +12360,51 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PainAssessmentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PainAssessmentTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TNursingPatientHandover>(entity =>
+            {
+                entity.HasKey(e => e.PatHandId);
+
+                entity.ToTable("T_Nursing_PatientHandover");
+
+                entity.Property(e => e.AdmId).HasColumnName("AdmID");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PatHandA)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_A");
+
+                entity.Property(e => e.PatHandB)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_B");
+
+                entity.Property(e => e.PatHandI)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_I");
+
+                entity.Property(e => e.PatHandR)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_R");
+
+                entity.Property(e => e.PatHandS)
+                    .HasMaxLength(500)
+                    .HasColumnName("PatHand_S");
+
+                entity.Property(e => e.ShiftInfo).HasMaxLength(50);
+
+                entity.Property(e => e.Tdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TDate");
+
+                entity.Property(e => e.Ttime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TTime");
             });
 
             modelBuilder.Entity<TNursingSugarLevel>(entity =>

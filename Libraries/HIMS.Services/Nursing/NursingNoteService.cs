@@ -91,8 +91,28 @@ namespace HIMS.Services.Nursing
                 scope.Complete();
             }
         }
+        public virtual async Task InsertAsync(TNursingPatientHandover ObjTNursingPatientHandover, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TNursingPatientHandovers.Add(ObjTNursingPatientHandover);
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TNursingPatientHandover ObjTNursingPatientHandover, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.TNursingPatientHandovers.Update(ObjTNursingPatientHandover);
+                _context.Entry(ObjTNursingPatientHandover).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
 
 
 

@@ -21,8 +21,10 @@ namespace HIMS.Services.Nursing
         Task InsertAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
         Task UpdateAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username);
         Task InsertAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
-        Task UpdateAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
 
+        Task UpdateAsync(TDoctorPatientHandover ObjTDoctorPatientHandover, int UserId, string Username);
+        Task InsertAsync(TNursingPatientHandover ObjTNursingPatientHandover, int UserId, string Username);
+        Task UpdateAsync(TNursingPatientHandover ObjTNursingPatientHandover, int UserId, string Username);
         Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
         Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel objGrid);
         Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel objGrid);

@@ -8,21 +8,19 @@ namespace HIMS.Data.DTO.Administration
 {
     public class DailyExpenceListtDto
     {
-        //public long ExpID { get; set; }
-        //public string? ExpDate { get; set; }
-        //public string RExpDate { get; set; }
-        //public string? ExpTime { get; set; }
-        //public string ExpType { get; set; }
-        //public decimal? ExpAmount { get; set; }
-        public string PersonName { get; set; }
-        //public string? Narration { get; set; }
-
-        //public string? UserName { get; set; }
-        //public string ExpensesType { get; set; }
-        //public string? VoucharNo { get; set; }
-
-        //public string HeadName { get; set; }
-        //public long? ExpHeadId { get; set; }
+        public long ExpID { get; set; }
+        public string? ExpDate { get; set; }
+        public string RExpDate { get; set; }
+        public string? ExpTime { get; set; }
+        public string ExpType { get; set; }
+        public decimal? ExpAmount { get; set; }
+        public string PersonName { get; set; } 
+        public string? Narration { get; set; }
+        public string? UserName { get; set; }
+        public string ExpensesType { get; set; }
+        public string? VoucharNo { get; set; }
+        public string HeadName { get; set; }
+        public long? ExpHeadId { get; set; }
 
     }
 }

@@ -85,22 +85,44 @@ namespace HIMS.API.Controllers.Login
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
+       
         [HttpPost("updatepassword")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
         {
-            LoginManager model = new();
-            if (obj.UserId != 0)
+            if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
             {
-                model.UserId = obj.UserId;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _ILoginService.updatepassAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "password Updated successfully.");
+            }
+
+            LoginManager model = new()
+            {
+                UserId = obj.UserId,
+                UserName = obj.UserName,       
+                Password = obj.Password,         
+                ModifiedBy = CurrentUserId,
+                ModifiedDate = DateTime.Now
+            };
+
+            await _ILoginService.updatepassAsync(model, CurrentUserId, CurrentUserName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Password updated successfully.");
         }
+        //[HttpPut("updatepassword/{id:int}")]
+        ////[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
+        //{
+        //    LoginManager model = new();
+        //    if (obj.UserId != 0)
+        //    {
+        //        model.UserId = obj.UserId;
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = DateTime.Now;
+        //        await _ILoginService.updatepassAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "password Updated successfully.");
+        //}
+
 
     }
 }
