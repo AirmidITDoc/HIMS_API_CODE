@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
         [HttpPost("InsertPrescription")]
-        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
@@ -95,11 +95,14 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
+                DateTime now = DateTime.Now;
+                string formattedDate = now.ToString("yyyy-MM-dd");
+
                 //model.IsAddedBy = CurrentUserId;
                 await _IMPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            //else
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.", model);
         }
         [HttpPost("PrescriptionReturnInsert")]
@@ -119,7 +122,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestInsert")]
-        [Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPLabRequestModel obj)
         {
             THlabRequest model = obj.MapTo<THlabRequest>();

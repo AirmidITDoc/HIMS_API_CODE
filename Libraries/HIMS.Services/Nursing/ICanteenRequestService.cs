@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.DTO.OPPatient;
@@ -21,7 +22,10 @@ namespace HIMS.Services.Nursing
           Task<IPagedList<TDoctorPatientHandoverListDto>> TDoctorPatientHandoverList(GridRequestModel objGrid);
 
         Task<List<CanteenListDto>> GetItemList(string ItemName);
-      
+
+        Task<List<CanteenListDto>> GetItemListForCanteen(string ItemName);
+
+
 
     }
 }

@@ -400,6 +400,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
+        public virtual DbSet<TIpPrescription1> TIpPrescription1s { get; set; } = null!;
         public virtual DbSet<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; } = null!;
         public virtual DbSet<TIpmedicalRecord> TIpmedicalRecords { get; set; } = null!;
         public virtual DbSet<TIpprescriptionReturnD> TIpprescriptionReturnDs { get; set; } = null!;
@@ -11485,8 +11486,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TIpPrescription>(entity =>
             {
-                entity.HasKey(e => e.IppreId)
-                    .HasName("PK_T_IP_Prescription_1");
+                entity.HasKey(e => e.IppreId);
 
                 entity.ToTable("T_IP_Prescription");
 
@@ -11517,8 +11517,38 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Ipmed)
                     .WithMany(p => p.TIpPrescriptions)
                     .HasForeignKey(d => d.IpmedId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_T_IP_Prescription_T_IPMedicalRecord");
+            });
+
+            modelBuilder.Entity<TIpPrescription1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_IP_Prescription1");
+
+                entity.Property(e => e.ClassId).HasColumnName("ClassID");
+
+                entity.Property(e => e.IpmedId).HasColumnName("IPMedID");
+
+                entity.Property(e => e.IppreId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("IPPreId");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Pdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PDate");
+
+                entity.Property(e => e.Ptime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PTime");
+
+                entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.Property(e => e.WardId).HasColumnName("WardID");
             });
 
             modelBuilder.Entity<TIpPrescriptionDischarge>(entity =>

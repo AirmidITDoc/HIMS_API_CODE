@@ -6,7 +6,7 @@ namespace HIMS.Data.Models
     public partial class TIpPrescription
     {
         public long IppreId { get; set; }
-        public long IpmedId { get; set; }
+        public long? IpmedId { get; set; }
         public long? OpIpId { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Pdate { get; set; }
@@ -24,6 +24,6 @@ namespace HIMS.Data.Models
         public long? StoreId { get; set; }
         public long? WardId { get; set; }
 
-        public virtual TIpmedicalRecord Ipmed { get; set; } = null!;
+        public virtual TIpmedicalRecord? Ipmed { get; set; }
     }
 }

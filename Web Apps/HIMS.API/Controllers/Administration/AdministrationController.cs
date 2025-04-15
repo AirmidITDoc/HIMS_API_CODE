@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -110,7 +111,7 @@ namespace HIMS.API.Controllers.Administration
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MReportTemplateConfig model = await _repository.GetById(x => x.TemplateId == Id);
             if ((model?.TemplateId ?? 0) > 0)
@@ -242,5 +243,36 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill datetime updated successfully.");
         }
+
+
+        [HttpPost("InsertDoctorPerMaster")]
+       // [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(MDoctorPerMasterModel obj)
+        {
+            MDoctorPerMaster model = obj.MapTo<MDoctorPerMaster>();
+            if (obj.DoctorShareId == 0)
+            {
+             
+                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MDoctorPer Master   added successfully.");
+        }
+        [HttpPut("UpdateDoctorPerMaster Edit/{id:int}")]
+        //   [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(MDoctorPerMasterModel obj)
+        {
+            MDoctorPerMaster model = obj.MapTo<MDoctorPerMaster>();
+            if (obj.DoctorShareId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                
+                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MDoctorPer Master updated successfully.");
+        }
+
     }
 }
