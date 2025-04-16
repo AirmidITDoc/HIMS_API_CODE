@@ -23,6 +23,5 @@ namespace HIMS.Data.DTO.IPPatient
         public string PatientName { get; set; }
         public string GenderName { get; set; }
 
-
     }
 }

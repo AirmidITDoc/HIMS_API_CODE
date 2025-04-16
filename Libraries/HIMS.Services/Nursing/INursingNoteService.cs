@@ -29,5 +29,11 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel objGrid);
         Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel objGrid);
         Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel objGrid);
+        Task<IPagedList<MedicationChartListDto>> MedicationChartlist(GridRequestModel objGrid);
+        Task<IPagedList<NursingPatientHandoverListDto>> NursingPatientHandoverList(GridRequestModel objGrid);
+        Task<IPagedList<NursingMedicationListDto>> NursingMedicationlist(GridRequestModel objGrid);
+
+
+
     }
 }

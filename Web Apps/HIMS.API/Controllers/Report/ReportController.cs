@@ -123,6 +123,8 @@ namespace HIMS.API.Controllers.Report
                 case "AppointmentReceipt":
                 case "OpBillReceipt":
                 case "OPBillWithPackagePrint":
+                case "GRNReport":
+
 
 
 
@@ -186,11 +188,12 @@ namespace HIMS.API.Controllers.Report
                 case "DepartmentServiceGroupWiseCollectionDetails":
                 case "DepartmentServiceGroupWiseCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+
+                //{
+                //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
 

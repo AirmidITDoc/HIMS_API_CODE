@@ -29,14 +29,14 @@ namespace HIMS.API.Controllers.Login
             _ILoginService = repository;
         }
         [HttpPost("LoginList")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -87,6 +87,7 @@ namespace HIMS.API.Controllers.Login
         }
        
         [HttpPost("updatepassword")]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
