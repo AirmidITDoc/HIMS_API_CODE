@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Purchase;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Pharmacy
 {
@@ -8,5 +11,12 @@ namespace HIMS.Services.Pharmacy
         Task InsertAsyncSP(TPurchaseHeader objPurchase, int UserId, string Username);
         Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username);
         Task VerifyAsync(TPurchaseHeader objPurchase, int UserId, string Username);
+
+
+        Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel objGrid);
+
+
+        Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel objGrid);
+
     }
 }

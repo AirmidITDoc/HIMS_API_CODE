@@ -43,14 +43,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BrowseAdvanceList")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+      //  [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
         [HttpPost("PatientRefundOfAdvancesList")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+    //    [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);

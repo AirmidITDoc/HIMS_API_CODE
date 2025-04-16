@@ -21,6 +21,7 @@ using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet;
 using Aspose.Cells.Charts;
 using System.Text.Json;
+using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -45,6 +46,7 @@ builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 });
 var connectionString = Configuration.GetValue<string>("CONNECTION_STRING");
 ConnectionStrings.SetConnectionString(connectionString);
+CommonExtensions.PreloadDinkToPdfDll();
 DependencyRegistrar.Register(builder.Services);
 builder.Services.AddMvc(opt =>
 {
@@ -168,4 +170,12 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+using (var scope = app.Services.CreateScope())
+{
+    var pdfService = scope.ServiceProvider.GetRequiredService<DinkToPdfService>();
+    CommonExtensions.Initialize(pdfService);
+}
+
+
 app.Run();
+

@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pathology;
@@ -123,6 +124,24 @@ namespace HIMS.API.Controllers.Pathology
         {
             var MMasterList = await _radiorepository2.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
+        }
+
+
+        [HttpPost("PathResultentryrollback")]
+        //[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Delete(PathReportModel obj)
+        {
+            TPathologyReportDetail Model = obj.MapTo<TPathologyReportDetail>();
+
+            if (obj.PathReportID != 0)
+            {
+
+                //   Model.AddedBy = CurrentUserId;
+                await _IPathlogyService.DeleteAsync(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP_DISCHARGE_CANCELLATION  successfully.");
         }
     }
 }
