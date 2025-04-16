@@ -12,8 +12,8 @@ using HIMS.Services.Common;
 using HIMS.Services.Report;
 using HIMS.Services.Report.OPReports;
 using HIMS.Services.Utilities;
-using WkHtmlToPdfDotNet.Contracts;
-using WkHtmlToPdfDotNet;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using HIMS.Services.Masters;
 using HIMS.Services.Dashboard;
 using HIMS.Services.Inventory;
@@ -145,6 +145,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddScoped<DinkToPdfService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }
