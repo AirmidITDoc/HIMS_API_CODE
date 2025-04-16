@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -183,5 +186,18 @@ namespace HIMS.Services.Pharmacy
                 scope.Complete();
             }
         }
+      
+        public virtual async Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "m_Rtrv_PurchaseOrderList_by_Name_Pagn");
+        }
+
+        public virtual async Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "m_Rtrv_PurchaseItemList");
+        }
     }
+
+       
 }
+    

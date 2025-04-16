@@ -5,6 +5,8 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Users;
@@ -22,6 +24,24 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _IPurchaseService = repository;
         }
+        [HttpPost("PurchaseOrderList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Purchase Order List"));
+        }
+
+        [HttpPost("PurchaseItemList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List"));
+        }
+
+
+
         [HttpPost("Insert")]
         [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)

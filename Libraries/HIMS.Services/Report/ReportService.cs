@@ -2228,7 +2228,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
                             html = html.Replace("{{PaidAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
-                            html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{BillDate}}", dt.GetColValue("BillDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                             html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
                             html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                             html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
@@ -2244,7 +2244,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                             html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
                             html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
+                           
                             html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
@@ -3344,34 +3344,6 @@ namespace HIMS.Services.Report
 
                             i++; j++;
 
-
-                            //if (i == 1)
-                            //{
-                            //    String Label;
-                            //    Label = dr["GroupName"].ConvertToString();
-                            //    items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"border:1px solid #000;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(Label).Append("</td></tr>");
-                            //}
-                            //if (previousLabel != "" && previousLabel != dr["GroupName"].ConvertToString())
-                            //{
-                            //    j = 1;
-                            //    items.Append("<tr style='font-size:20px;border:1px solid black;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #000;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-
-                            //   .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                            //    T_TotalAmount = 0;
-
-                            //    //items.Append("<tr style=\"font-size:18px;border-bottom: 1px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #cccccc;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["GroupName"].ConvertToString()).Append("</td></tr>");
-
-                            //}
-
-
-                            //T_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-                            //F_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-                            ////ChargesTotalamt += dr["ChargesTotalAmt"].ConvertToDouble();
-
-
-                            //previousLabel = dr["GroupName"].ConvertToString();
-
-
                             items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:22px;\"><td style=\"border: 1px solid #000; text-align: center; padding: 6px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
@@ -3391,20 +3363,6 @@ namespace HIMS.Services.Report
                             {
                                 BalancewdudcAmt = (TotalNetPayAmt - Tot_Advamt).ConvertToDouble();
                             }
-
-
-
-                            //if (Bills.Rows.Count > 0 && Bills.Rows.Count == i)
-                            //{
-
-                            //    items.Append("<tr style='border:1px solid black;font-weight:bold'><td colspan='6' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #000;border-collapse: collapse;padding:3px;border-bottom:1px solid #000;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total Amount</td><td style=\"border-right:1px solid #000;border-bottom:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
-                            //        .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                            //    items.Append("<tr style='border:1px solid black;'><td colspan='7' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #000;border-top:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Total</td><td style=\"border-right:1px solid #000;border-top:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
-                            //    .Append(F_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-
-
-                            //}
-
 
 
                         }
@@ -3482,7 +3440,6 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkadminflag}}", dt.GetColValue("TaxAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
-
 
 
                     }
