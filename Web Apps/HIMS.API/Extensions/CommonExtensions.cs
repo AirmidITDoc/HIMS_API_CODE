@@ -33,11 +33,19 @@ using CsvHelper;
 using DocumentFormat.OpenXml.Office2010.Ink;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc.Filters;
+using AutoMapper;
+using System.Runtime.InteropServices;
 
 namespace HIMS.API.Extensions
 {
     public static class CommonExtensions
     {
+        private static DinkToPdfService _pdfService;
+        public static void Initialize(DinkToPdfService serviceProvider)
+        {
+            _pdfService = serviceProvider;
+        }
+
         public static HttpContext HttpContextAccessor => new HttpContextAccessor().HttpContext;
         private static readonly DateTime epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         //public static object ToGridResponse<T>(this IPagedList<T> GridData, GridRequestModel objGrid, string FileName)
@@ -439,7 +447,7 @@ namespace HIMS.API.Extensions
         }
 
 
-        private static System.IO.MemoryStream ExportToPdf<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> Columns)
+        private static MemoryStream ExportToPdf<T>(IPagedList<T> list, List<Core.Domain.Grid.GridColumn> Columns)
         {
             StringBuilder html = new();
             html.Append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>")
@@ -456,16 +464,12 @@ namespace HIMS.API.Extensions
             AppendDataRows(html, list, Columns);
             html.Append("</table></body></html>");
 
-            //HtmlConverter htmlConverter = new(html.ToString());
-            //byte[] outputByte = htmlConverter.Convert();
-
-            //// Create and return memory stream
-            //MemoryStream ms = new(outputByte)
-            //{
-            //    Position = 0
-            //};
-            //return ms;
-            return new MemoryStream();
+            byte[] pdfBytes = _pdfService.GenerateDinkPdfAsync(html.ToString()).Result;
+            MemoryStream ms = new(pdfBytes)
+            {
+                Position = 0
+            };
+            return ms;
         }
         private static void AppendHeaderRow(StringBuilder html, List<Core.Domain.Grid.GridColumn> columns)
         {
@@ -515,7 +519,7 @@ namespace HIMS.API.Extensions
             {
                 foreach (var prop in propertyAccessors)
                 {
-                    csvWriter.WriteField(prop.Name);
+                    csvWriter.WriteField(columns?.Find(x => x.Data.ToLower() == prop.Name.ToLower())?.Name ?? "");
                 }
                 csvWriter.NextRecord();
                 foreach (var item in list)
@@ -565,6 +569,17 @@ namespace HIMS.API.Extensions
         //    return memoryStream;
         //}
 
+        public static void PreloadDinkToPdfDll()
+        {
+            bool is64BitOS = Environment.Is64BitProcess;
+            string archFolder = is64BitOS ? "64bit" : "32bit";
+            string dllExtension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".dll" : ".so";
+            string dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DinkToPdfBinaries", archFolder, "libwkhtmltox" + dllExtension);
+            if (File.Exists(dllPath))
+            {
+                NativeLibrary.Load(dllPath);
+            }
+        }
         #endregion
 
     }
