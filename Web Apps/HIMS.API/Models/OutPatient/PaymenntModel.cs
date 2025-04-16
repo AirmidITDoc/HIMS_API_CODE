@@ -15,7 +15,7 @@ namespace HIMS.API.Models.OutPatient
     {
         public PaymenntModelValidator()
         {
-            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.PaymentTime).NotNull().NotEmpty().WithMessage("PaymentTime is required");
         }
     }
 

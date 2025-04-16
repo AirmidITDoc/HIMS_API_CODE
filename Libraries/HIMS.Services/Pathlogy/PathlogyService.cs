@@ -103,5 +103,20 @@ namespace HIMS.Services.Pathlogy
             odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
 
         }
+        public virtual async Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "PathReportDetId","CategoryId","TestId","SubTestId","ParameterId","ResultValue","UnitId","NormalRange","PrintOrder","PisNumeric","CategoryName","TestName","SubTestName","ParameterName","UnitName","PatientName","RegNo",
+            "SampleId","MinValue","MaxValue","ParaBoldFlag"};
+            var entity = ObjTPathologyReportDetail.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("m_RollBack_TestForResult", CommandType.StoredProcedure, entity);
+
+        }
     }
 }
