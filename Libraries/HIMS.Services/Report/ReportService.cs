@@ -1068,7 +1068,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-                        //Pthology
+                        //Pathology
                         #region :: PathresultEntry ::
                 case "PathresultEntry":
                     {
@@ -1093,6 +1093,22 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplate.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathTemplateReport", "PathTemplateReport", Orientation.Landscape);
+
+                        break;
+
+                    }
+                #endregion
+                #region :: PathTemplateHeaderReport ::
+                case "PathTemplateHeaderReport":
+                    {
+
+                        model.RepoertName = "Path template Report";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplateHeader.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathTemplateReport", "PathTemplateReport", Orientation.Landscape);
@@ -5473,8 +5489,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{Path_RefDoctorName}}", dt.GetColValue("Path_RefDoctorName"));
                         html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
-                        string s = dt.GetColValue("PathTemplateDetailsResult").ConvertToString();
-                        html = html.Replace("{{PathTemplateDetailsResult}}", s);
+                        //string s = dt.GetColValue("PathTemplateDetailsResult").ConvertToString();
+                        //html = html.Replace("{{PathTemplateDetailsResult}}", s);
                        
                         html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
                         html = html.Replace("{{Path_DoctorName}}", dt.GetColValue("Path_DoctorName"));
@@ -5487,6 +5503,62 @@ namespace HIMS.Services.Report
                        
                     }
                                         
+                    break;
+                case "PathTemplateHeaderReport":
+                    {
+
+                        int i = 0;
+                        Boolean chkresonflag = false;
+
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
+                        html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("bedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString());
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString());
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName").ConvertToString());
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName").ConvertToString());
+                        html = html.Replace("{{ComapanyName}}", dt.GetColValue("ComapanyName"));
+
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{Path_RefDoctorName}}", dt.GetColValue("Path_RefDoctorName"));
+                        html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
+                        string s = dt.GetColValue("PathTemplateDetailsResult").ConvertToString();
+                        html = html.Replace("{{PathTemplateDetailsResult}}", s);
+
+                        html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
+                        html = html.Replace("{{Path_DoctorName}}", dt.GetColValue("Path_DoctorName"));
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        html = html.Replace("{{SampleCollection}}", dt.GetColValue("SampleCollection").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
+                        //html = html.Replace("{{chkresonflag}}", dt.GetColValue("reason").ConvertToString() != null ? "block" : "none");
+
+                    }
+
                     break;
 
 

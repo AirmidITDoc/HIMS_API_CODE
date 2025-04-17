@@ -239,6 +239,9 @@ namespace HIMS.API.Controllers.Report
                 case "NurIPprescriptionReturnReport":
                 case "DischargSummary":
                 case "Purchaseorder":
+                case "PathTemplateHeaderReport":
+
+
 
 
 
