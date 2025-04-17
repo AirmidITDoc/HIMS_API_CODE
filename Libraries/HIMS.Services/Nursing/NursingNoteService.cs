@@ -42,6 +42,18 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "m_Rtrv_CanteenRequestListFromWard");
         }
+        public virtual async Task<IPagedList<MedicationChartListDto>> MedicationChartlist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MedicationChartListDto>(model, "m_rtrvNursingDrugListForMedication");
+        }
+        public virtual async Task<IPagedList<NursingPatientHandoverListDto>> NursingPatientHandoverList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<NursingPatientHandoverListDto>(model, "m_Rtrv_T_Nursing_PatientHandoverList");
+        }
+        public virtual async Task<IPagedList<NursingMedicationListDto>> NursingMedicationlist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<NursingMedicationListDto>(model, "m_Rtrv_NursingMedication_Scheduler_list");
+        }
 
         //Ashu//
         public virtual async Task InsertAsync(TDoctorsNote ObjTDoctorsNote, int UserId, string Username)

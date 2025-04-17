@@ -76,6 +76,28 @@ namespace HIMS.API.Controllers.NursingStation
             IPagedList<DoctorsNoteListDto> DoctorsNotesList = await _INursingNoteService.DoctorsNoteAsync(objGrid);
             return Ok(DoctorsNotesList.ToGridResponse(objGrid, "DoctorsNotesList"));
         }
+        [HttpPost("MedicationChartlist")]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        public async Task<IActionResult> MedicationChartlist(GridRequestModel objGrid)
+        {
+            IPagedList<MedicationChartListDto> MedicationChartlist = await _INursingNoteService.MedicationChartlist(objGrid);
+            return Ok(MedicationChartlist.ToGridResponse(objGrid, "MedicationChartlist"));
+        }
+        [HttpPost("NursingPatientHandoverList")]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        public async Task<IActionResult> NursingPatientHandoverList(GridRequestModel objGrid)
+        {
+            IPagedList<NursingPatientHandoverListDto> NursingPatientHandoverListDto = await _INursingNoteService.NursingPatientHandoverList(objGrid);
+            return Ok(NursingPatientHandoverListDto.ToGridResponse(objGrid, "NursingPatientHandoverListDto"));
+        }
+        [HttpPost("NursingMedicationList")]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        public async Task<IActionResult> NursingMedicationList(GridRequestModel objGrid)
+        {
+            IPagedList<NursingMedicationListDto> NursingMedicationList = await _INursingNoteService.NursingMedicationlist(objGrid);
+            return Ok(NursingMedicationList.ToGridResponse(objGrid, "NursingMedicationList"));
+        }
+
 
 
 
