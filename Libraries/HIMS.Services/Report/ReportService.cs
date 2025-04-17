@@ -30,13 +30,13 @@ namespace HIMS.Services.Report
         private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
-        public readonly IFileUtility _FileUtility;
-        public ReportService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IFileUtility fileUtility, IPdfUtility pdfUtility)
+        //public readonly IFileUtility _FileUtility;
+        public ReportService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility)
         {
             _context = HIMSDbContext;
             _hostingEnvironment = hostingEnvironment;
             _pdfUtility = pdfUtility;
-            _FileUtility = fileUtility;
+            //_FileUtility = fileUtility;
         }
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
