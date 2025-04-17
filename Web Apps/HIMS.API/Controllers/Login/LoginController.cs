@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Login
             _IPermissionService = permission;
             _IMenuService = iMenuService;
         }
-        
+
 
         [HttpPost]
         [Route("[action]")]
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Login
                             {
                                 user.UserToken,
                                 user.WebRoleId,
-                                Permissions = HIMS.Services.Utilities.AESEncrytDecry.EncryptStringAES(JsonConvert.SerializeObject(permissions)),
+                                Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
                                 Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
                                 UserName = user.FirstName + " " + user.LastName,
                                 user.UserId

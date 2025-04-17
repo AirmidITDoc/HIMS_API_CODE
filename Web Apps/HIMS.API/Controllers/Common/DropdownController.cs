@@ -9,6 +9,8 @@ using HIMS.Services.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using HIMS.Core.Infrastructure;
+using Microsoft.VisualBasic;
+using ClosedXML.Excel;
 
 namespace HIMS.API.Controllers.Common
 {
@@ -84,8 +86,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MDoctorNotesTemplateMaster> _IMDrnote;
         private readonly IGenericService<MNursingTemplateMaster> _IMNurNoteervice;
         private readonly IGenericService<MExpensesHeadMaster> _IMExpHeade;
+        //private readonly IGenericService<MConstants> _IMconstant;
 
-        
+
 
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
@@ -104,7 +107,7 @@ namespace HIMS.API.Controllers.Common
               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
             , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<MNursingTemplateMaster> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
-            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote,
+            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote, IGenericService<Constants> iconstant,
               IGenericService<MenuMaster> iMDmenuMaster,
               IGenericService<MDoseMaster> IMDdoseMaster,
               IGenericService<MPresTemplateH> IMDPresTemplateH,
@@ -179,6 +182,7 @@ namespace HIMS.API.Controllers.Common
             _IMcanteen = iMCanteen;
             _IMDrnote = iMDrNote;
             _IMExpHeade = iMExphede;
+            //_IMconstant = iconstant;
         }
 
         [HttpGet]
@@ -284,7 +288,7 @@ namespace HIMS.API.Controllers.Common
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
-
+                //"GSTConstant" => (await _IMconstant.GetAll(x => x.IsA.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 
 
                  "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),

@@ -40,10 +40,33 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(List1.ToGridResponse(objGrid, "Purchase Item List"));
         }
 
+        [HttpPost("OldPurchaseOrderList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));
+        }
+
+        [HttpPost("LastThreeItemList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " Item List"));
+        }
+
+        [HttpPost("SupplierrateList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<SupplierRatelistDto> List1 = await _IPurchaseService.GetSupplierRatetAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " Supplier Rate List"));
+        }
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -61,7 +84,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
