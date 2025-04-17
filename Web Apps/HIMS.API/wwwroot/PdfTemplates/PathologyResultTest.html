@@ -8,20 +8,20 @@
 </head>
 
 <body>
-    <div class="main-content-wrapper" style="padding-left:20px;">
+    <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+
             <table style="width: 100%;line-height: inherit;text-align: left;">
-                <!-- {{NewHeader}}-->
+                <tr class="top-header-row">
+                    <!--{{ImgHeader}}-->
+                    <!--{{NewHeader}}-->
+                </tr>
                 <tr class="title-date-row">
-                    <td style="padding: 6px;">
+                    <td>
                         <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 18px">
-                                <td style="padding: 2px; padding-bottom:5px;text-align:left;padding-top:135px;font-size:22px;"><b>Laboratory Report</b></td>
-                                <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:135px;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
-
-                                <!--  <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:135px; "><b>Print Date :{{CurrentDate}}</b></td>-->
-
-                                <td></td>
+                            <tr style="font-size: 18px; font-weight: bold;">
+                                <td style="padding: 2px; padding-bottom:5px;text-align:left;font-size:22px;"><b>Laboratory Report</b></td>
+                                <td style="padding: 2px; padding-bottom:5px;text-align:right;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
                             </tr>
                         </table>
                     </td>
@@ -58,7 +58,7 @@
 
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Age|Gender:</span>
-                                    <span> {{AgeYear}}Y|{{AgeMonth}} M|{{AgeDay}}D|{{GenderName}}</span>
+                                    <span> {{AgeYear}}Y|{{GenderName}}</span>
                                 </td>
 
                                 <td style="padding: 2px;">
@@ -77,7 +77,7 @@
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ref.Doctor Name:</span>
-                                    <span>{{RefDocName}}</span>
+                                    <span></span>
                                 </td>
                             </tr>
                             <!--<tr>
@@ -126,15 +126,6 @@
         </div>
     </div>
     <table style="width: 100%;line-height: inherit;text-align: left;padding-left:20px;">
-
-
-        <!--<tr style="display:{{chkSuggestionNote}}">
-            <td style="font-size:20px;font-weight:bold;">Interpretation Remark</td>
-        </tr>
-        <tr style="display:{{chkSuggestionNote}}">
-            <td style="font-size:18px;font-weight:bold;">{{SuggestionNote}}</td>
-        </tr>-->
-
         <tr>
             <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">"END OF REPORT"</td>
         </tr>
@@ -146,10 +137,15 @@
             </span>
             <footer style="margin-left: 70%; font-size: 19px;">
                 <div style="font-weight:bold;">{{PathResultDr1}}</div>
+                <!--<div style="font-weight:bold;">{{DoctorType}}</div>-->
                 <div style="font-weight:bold;">{{Education}}</div>
                 <div style="font-weight:bold;">{{MahRegNo}}</div>
             </footer>
         </tr>
+
+        <!--<tr>
+            {{Imgfooter}}
+        </tr>-->
     </table>
 
 </html>

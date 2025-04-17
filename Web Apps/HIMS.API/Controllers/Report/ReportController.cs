@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -35,8 +36,9 @@ namespace HIMS.API.Controllers.Report
         private readonly IReportService _reportService;
         public readonly IConfiguration _configuration;
         public readonly IPdfUtility _pdfUtility;
+        public readonly IFileUtilitys _FileUtility;
         public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
-            IGenericService<MReportConfig> reportlistRepository,
+            IGenericService<MReportConfig> reportlistRepository, IFileUtilitys fileUtility,
             IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
         {
             _IRegistrationService = repository;
@@ -45,6 +47,7 @@ namespace HIMS.API.Controllers.Report
             _reportService = reportService;
             _configuration = configuration;
             _pdfUtility = pdfUtility;
+            _FileUtility = fileUtility;
         }
 
         [HttpPost("ReportList")]
@@ -230,6 +233,7 @@ namespace HIMS.API.Controllers.Report
                 case "IPDDischargewithmarkstatus":
                 case "IpMLCCasePaperPrint":
                 case "PathresultEntry":
+                case "PathresultEntryWithHeader":
                 case "PathTemplateReport":
                 case "RadiologyTemplateReport":
                 case "IpAdvanceReceipt":
