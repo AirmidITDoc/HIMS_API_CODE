@@ -4546,6 +4546,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
