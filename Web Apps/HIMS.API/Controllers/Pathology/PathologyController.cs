@@ -141,7 +141,7 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP_DISCHARGE_CANCELLATION  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathResult entry rollback  successfully.");
         }
     }
 }
