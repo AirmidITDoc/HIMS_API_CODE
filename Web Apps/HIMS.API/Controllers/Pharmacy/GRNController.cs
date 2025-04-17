@@ -2,8 +2,11 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +24,27 @@ namespace HIMS.API.Controllers.Pharmacy
             _IGRNService = repository;
         }
 
+        [HttpPost("GRNUpdateList")]
+        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNUpdateList(GridRequestModel objGrid)
+        {
+            IPagedList<ItemDetailsForGRNUpdateListDto> GRNUpdateList = await _IGRNService.GRNUpdateList(objGrid);
+            return Ok(GRNUpdateList.ToGridResponse(objGrid, "GRNUpdateList"));
+        }
+        [HttpGet("{id?}")]
+        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _IGRNService.GetById(id);
+            return data.ToSingleResponse<TGrnheader, GRNModel>("TGrnheader ");
+        }
+
         [HttpPost("Insert")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -41,7 +63,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -59,7 +81,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("InsertPO")]
-    //    [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -80,7 +102,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("EditPO/{id:int}")]
-     //   [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> EditPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -100,7 +122,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-     //   [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
             TGrndetail model = obj.MapTo<TGrndetail>();

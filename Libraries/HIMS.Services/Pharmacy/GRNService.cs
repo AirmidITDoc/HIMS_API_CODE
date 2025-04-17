@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,16 @@ namespace HIMS.Services.Pharmacy
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<ItemDetailsForGRNUpdateListDto>> GRNUpdateList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemDetailsForGRNUpdateListDto>(model, "m_Rtrv_ItemDetailsForGRNUpdate");
+        }
+        public virtual async Task<TGrnheader> GetById(int Id)
+        {
+            return await this._context.TGrnheaders.Include(x => x.TGrndetails).FirstOrDefaultAsync(x => x.Grnid == Id);
+
+        }
+
 
         public virtual async Task InsertAsyncSP(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {

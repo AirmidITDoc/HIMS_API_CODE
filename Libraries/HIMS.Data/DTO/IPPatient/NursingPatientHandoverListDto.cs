@@ -14,6 +14,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MTime { get; set; }
         public string? ShiftInfo { get; set; }
         public string? PatHandI { get; set; }
+        public string? PatHandA { get; set; }
         public string? PatHandR { get; set; }
         public string? PatHandB { get; set; }
         public string? PatHandS { get; set; }

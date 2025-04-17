@@ -19,7 +19,6 @@ namespace HIMS.Data.DTO.Administration
         public decimal? CardPayAmount { get; set; }
         public decimal? AdvanceUsedAmount { get; set; }
         public decimal? PaidAmount { get; set; }
-
         public long? OP_IP_Type { get; set; }
         public decimal? NEFTPayAmount { get; set; }
         public decimal? PayTMAmount { get; set; }

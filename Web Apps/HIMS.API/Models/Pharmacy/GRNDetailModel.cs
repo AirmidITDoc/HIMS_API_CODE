@@ -38,6 +38,10 @@ namespace HIMS.API.Models.Pharmacy
         public long? StkId { get; set; }
         public float? DiscPerc2 { get; set; }
         public decimal? DiscAmt2 { get; set; }
+        public bool? IsVerified { get; set; }
+        public DateTime? IsVerifiedDatetime { get; set; }
+        public long? IsVerifiedUserId { get; set; }
+
         public class GRNDetailModelValidator : AbstractValidator<GRNDetailModel>
         {
             public GRNDetailModelValidator()
