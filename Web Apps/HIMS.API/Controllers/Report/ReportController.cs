@@ -36,9 +36,9 @@ namespace HIMS.API.Controllers.Report
         private readonly IReportService _reportService;
         public readonly IConfiguration _configuration;
         public readonly IPdfUtility _pdfUtility;
-        public readonly IFileUtilitys _FileUtility;
+        public readonly IFileUtility _FileUtility;
         public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
-            IGenericService<MReportConfig> reportlistRepository, IFileUtilitys fileUtility,
+            IGenericService<MReportConfig> reportlistRepository, IFileUtility fileUtility,
             IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
         {
             _IRegistrationService = repository;
