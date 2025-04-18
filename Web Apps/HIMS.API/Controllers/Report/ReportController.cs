@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Security;
 using WkHtmlToPdfDotNet;
+using HIMS.API.Utility;
 
 namespace HIMS.API.Controllers.Report
 {

@@ -56,7 +56,7 @@ namespace HIMS.API.Extensions
                     context.Request.Body.Seek(0, SeekOrigin.Begin);
                     using (StreamReader stream = new(context.Request.Body))
                     {
-                        param = stream.ReadToEnd();
+                        param = await stream.ReadToEndAsync();
                     }
                     context.Request.Body.Dispose();
                 }

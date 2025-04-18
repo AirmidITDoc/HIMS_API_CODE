@@ -1140,15 +1140,14 @@ namespace HIMS.Services.Report
                 case "PathTemplateHeaderReport":
                     {
 
-                        model.RepoertName = "Path template Report";
-                        string[] headerList = Array.Empty<string>();
-                        string[] colList = Array.Empty<string>();
+                        string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplateHeader.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathTemplateReport", "PathTemplateReport", Orientation.Portrait);
 
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathTemplateHeaderReport", "PathTemplateHeaderReport", Orientation.Portrait);
                         break;
 
                     }
