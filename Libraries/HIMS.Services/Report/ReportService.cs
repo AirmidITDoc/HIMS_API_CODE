@@ -3786,7 +3786,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
 
-                        html = html.Replace("{{AgeYear}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));

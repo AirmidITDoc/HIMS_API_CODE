@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
+using HIMS.API.Models.Pathology;
 
 namespace HIMS.API.Controllers.Masters.PathologyMaster
 {
@@ -18,9 +19,12 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
     public class PathologyTemplateController : BaseController
     {
         private readonly IGenericService<MTemplateMaster> _repository;
-        public PathologyTemplateController(IGenericService<MTemplateMaster> repository)
+        private readonly IGenericService<TPathologyReportTemplateDetail> _temprepository;
+
+        public PathologyTemplateController(IGenericService<MTemplateMaster> repository, IGenericService<TPathologyReportTemplateDetail> repository1)
         {
             _repository = repository;
+            _temprepository = repository1;
         }
 
         //List API
@@ -43,6 +47,19 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             }
             var data = await _repository.GetById(x => x.TemplateId == id);
             return data.ToSingleResponse<MTemplateMaster, PathologyTemplateModel>("TemplateMaster");
+        }
+
+        //List API Get By Id
+        [HttpGet("PathReportId /{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetByPathReportId(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _temprepository.GetById(x => x.PathReportId == id);
+            return data.ToSingleResponse<TPathologyReportTemplateDetail, PathologyReportTemplateModel>("TPathologyReportTemplateDetail");
         }
 
         //Add API

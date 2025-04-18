@@ -4,6 +4,8 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.GRN;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +17,49 @@ namespace HIMS.API.Controllers.Pharmacy
     [ApiVersion("1")]
     public class GRNReturnController : BaseController
     {
-        private readonly IGRNReturnService _IGRNReturnService;
+        //private readonly IGRNReturnService _IGRNReturnService;
+
+        private readonly IGRNReturnService _gRNReturnService;
         public GRNReturnController(IGRNReturnService repository)
         {
-            _IGRNReturnService = repository;
+            _gRNReturnService = repository;
         }
+
+        [HttpPost("GRNReturnlistbynameList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<GrnListByNameListDto> List1 = await _gRNReturnService.GetGRnListbynameAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " GRN Return List By Name"));
+        }
+
+
+        [HttpPost("GRNReturnList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "GRN Return  List"));
+        }
+
+
+        [HttpPost("ItemListBYSupplierName")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<ItemListBysupplierNameDto> List1 = await _gRNReturnService.GetItemListbysuppliernameAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " Item List By supplier Name"));
+        }
+
+
+        [HttpPost("GRNListBynameforGrnReturn")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
+        {
+            IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _gRNReturnService.Getgrnlistbynameforgrnreturn(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
+        }
+
 
         [HttpPost("Insert")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
@@ -34,7 +74,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.GrnreturnTime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                await _IGRNReturnService.InsertAsync(model, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
+                await _gRNReturnService.InsertAsync(model, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -49,7 +89,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.GrnreturnId != 0)
             {
 
-                await _IGRNReturnService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+                await _gRNReturnService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
