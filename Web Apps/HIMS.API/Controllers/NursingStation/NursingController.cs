@@ -216,7 +216,7 @@ namespace HIMS.API.Controllers.NursingStation
        
 
         [HttpPost("DoctorPatientHandoverInsert")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(TDoctorPatientHandoverModel obj)
         {
             TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
@@ -232,7 +232,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("DoctorPatientHandover/{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(TDoctorPatientHandoverModel obj)
         {
             TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
@@ -248,7 +248,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingPatientHandoverInsert")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingPatientHandoverModel obj)
         {
             TNursingPatientHandover model = obj.MapTo<TNursingPatientHandover>();
@@ -264,7 +264,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("NursingPatientHandover/{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(NursingPatientHandoverModel obj)
         {
             TNursingPatientHandover model = obj.MapTo<TNursingPatientHandover>();
@@ -280,7 +280,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingTemplateInsert")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
@@ -297,7 +297,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("NursingTemplateUpdate/{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
@@ -313,7 +313,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNotesTemplateInsert")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorNotesTemplateModel obj)
         {
             MDoctorNotesTemplateMaster model = obj.MapTo<MDoctorNotesTemplateMaster>();
@@ -329,7 +329,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("DoctorNotesTemplate/{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(DoctorNotesTemplateModel obj)
         {
             MDoctorNotesTemplateMaster model = obj.MapTo<MDoctorNotesTemplateMaster>();
