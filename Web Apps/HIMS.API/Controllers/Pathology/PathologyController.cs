@@ -6,6 +6,7 @@ using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pathology;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
@@ -48,7 +49,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("PathologyPatientTestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
         {
             IPagedList<PathPatientTestListDto> PatientList = await _IPathlogyService.GetListAsync(objGrid);
@@ -56,7 +57,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTestList")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
@@ -66,7 +67,7 @@ namespace HIMS.API.Controllers.Pathology
 
       
         [HttpPost("InsertResultEntry")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
@@ -81,7 +82,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTemplateSave")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
@@ -128,7 +129,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("PathResultentryrollback")]
-        //[Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(PathReportModel obj)
         {
             TPathologyReportDetail Model = obj.MapTo<TPathologyReportDetail>();
