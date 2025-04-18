@@ -933,7 +933,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                          //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDischargeSummary", "IPDischargeSummary", Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummary", "DischargeSummary", Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1070,7 +1070,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargSummary", "DischargSummary", Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryWithTemplate", "DischargeSummaryWithTemplate", Orientation.Landscape);
                         break;
                     }
 
