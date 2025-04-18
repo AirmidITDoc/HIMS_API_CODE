@@ -601,7 +601,7 @@ namespace HIMS.Data.DataProviders
             }
             finally
             {
-                //objCommand.Parameters.Clear();
+                Command.Parameters.Clear();
                 if (Command.Transaction == null)
                 {
                     objConnection.Close();

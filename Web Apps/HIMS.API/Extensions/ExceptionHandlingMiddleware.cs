@@ -56,13 +56,13 @@ namespace HIMS.API.Extensions
                     context.Request.Body.Seek(0, SeekOrigin.Begin);
                     using (StreamReader stream = new(context.Request.Body))
                     {
-                        param = stream.ReadToEnd();
+                        param = await stream.ReadToEndAsync();
                     }
                     context.Request.Body.Dispose();
                 }
                 var msg = ex == null ? "{Params:" + param + "}" : "{ Params: " + param + ",DetailError: " + (ex.InnerException != null ? (ex.InnerException.ToString().ToLower() == "undefined" ? ex.Message : ex.InnerException) : ex?.Message ?? "") + "}";
               
-                    string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
+                string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
 
                 await response.WriteAsync(errorJson);
 

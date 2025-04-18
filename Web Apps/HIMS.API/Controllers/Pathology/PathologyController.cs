@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pathology
 
       
         [HttpPost("InsertResultEntry")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTemplateSave")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
