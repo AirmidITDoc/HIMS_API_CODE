@@ -42,7 +42,8 @@ namespace HIMS.Services.Administration
                         IsView = ItemData.IsView,
                         IsAdd = ItemData.IsAdd,
                         IsDelete = ItemData.IsDelete,
-                        IsEdit = ItemData.IsEdit
+                        IsEdit = ItemData.IsEdit,
+                        IsExport = ItemData.IsExport
                     };
                     var levelData = lstMenu.Where(x => x.UpId == Convert.ToInt32(obj.Id));
                     foreach (var lData in levelData)
@@ -58,7 +59,8 @@ namespace HIMS.Services.Administration
                             IsView = lData.IsView,
                             IsAdd = lData.IsAdd,
                             IsDelete = lData.IsDelete,
-                            IsEdit = lData.IsEdit
+                            IsEdit = lData.IsEdit,
+                            IsExport = lData.IsExport
                         };
                         test.Children = AddChildtems(lstMenu, test, isActiveMenuOnly);
                         if (test.Children.Count == 0)
@@ -79,6 +81,8 @@ namespace HIMS.Services.Administration
                                     test.IsDelete = true;
                                 if (test.Children.Count > 0 && test.Children.Count == test.Children.Count(x => x.IsView))
                                     test.IsView = true;
+                                if (test.Children.Count > 0 && test.Children.Count == test.Children.Count(x => x.IsExport))
+                                    test.IsExport = true;
                             }
                             obj.Children.Add(test);
                         }
@@ -101,6 +105,8 @@ namespace HIMS.Services.Administration
                                 obj.IsDelete = true;
                             if (obj.Children.Count > 0 && obj.Children.Count == obj.Children.Count(x => x.IsView))
                                 obj.IsView = true;
+                            if (obj.Children.Count > 0 && obj.Children.Count == obj.Children.Count(x => x.IsExport))
+                                obj.IsExport = true;
                         }
                         finalList.Add(obj);
                     }
@@ -153,6 +159,8 @@ namespace HIMS.Services.Administration
                                 objData.IsDelete = true;
                             if (objData.Children.Count > 0 && objData.Children.Count == objData.Children.Count(x => x.IsView))
                                 objData.IsView = true;
+                            if (objData.Children.Count > 0 && objData.Children.Count == objData.Children.Count(x => x.IsExport))
+                                objData.IsExport = true;
                         }
                         lstChilds.Add(objData);
                     }
@@ -182,6 +190,7 @@ namespace HIMS.Services.Administration
             dt.Columns.Add("IsAdd", typeof(int));
             dt.Columns.Add("IsEdit", typeof(int));
             dt.Columns.Add("IsDelete", typeof(int));
+            dt.Columns.Add("IsExport", typeof(int));
             foreach (var item in lst)
                 dt.Rows.Add(item.RoleId, item.MenuId, item.IsView, item.IsAdd, item.IsEdit, item.IsDelete);
             DatabaseHelper sql = new();

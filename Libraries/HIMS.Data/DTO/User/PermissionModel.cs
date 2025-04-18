@@ -8,5 +8,6 @@
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsExport { get; set; }
     }
 }

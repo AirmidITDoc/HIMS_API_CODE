@@ -23,6 +23,7 @@ namespace HIMS.Data.Models
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsExport { get; set; }
     }
     public class MenuModel
     {
@@ -33,6 +34,7 @@ namespace HIMS.Data.Models
         public string Icon { get; set; }
         public string Url { get; set; }
         public bool IsView { get; set; }
+        public bool IsExport { get; set; }
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
