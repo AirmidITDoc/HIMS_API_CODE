@@ -21,11 +21,20 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<ItemDetailsForGRNUpdateListDto>(model, "m_Rtrv_ItemDetailsForGRNUpdate");
         }
+        public virtual async Task<IPagedList<GRNListDto>> GRNHeaderList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GRNListDto>(model, "m_Rtrv_GRNList_by_Name");
+        }
+        public virtual async Task<IPagedList<GRNDetailsListDto>> GRNDetailsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GRNDetailsListDto>(model, "Retrieve_GrnItemList");
+        }
         public virtual async Task<TGrnheader> GetById(int Id)
         {
             return await this._context.TGrnheaders.Include(x => x.TGrndetails).FirstOrDefaultAsync(x => x.Grnid == Id);
 
         }
+
 
 
         public virtual async Task InsertAsyncSP(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
