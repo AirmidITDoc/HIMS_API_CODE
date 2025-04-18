@@ -926,7 +926,7 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryReport":
                     {
 
-                        model.RepoertName = "Ip Discharge Summary Receipt";
+                        model.RepoertName = "DischargeSummary";
                         string[] headerList = { };
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargeSummary.html");
@@ -1064,7 +1064,7 @@ namespace HIMS.Services.Report
                 #region :: DischargSummary ::
                 case "DischargSummary":
                     {
-                        model.RepoertName = "Discharge Summary Receipt ";
+                        model.RepoertName = "DischargeSummaryWithTemplate";
                         string[] headerList = { "Sr.No", "UHID", "PatientName" };
                         string[] colList = { "RegNo", "PatientName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
