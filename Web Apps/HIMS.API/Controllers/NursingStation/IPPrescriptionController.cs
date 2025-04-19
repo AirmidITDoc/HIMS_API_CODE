@@ -86,40 +86,40 @@ namespace HIMS.API.Controllers.NursingStation
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
-        [HttpPost("InsertPrescription")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(MPrescriptionModel obj)
-        {
-            TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
-            if (obj.MedicalRecoredId == 0)
-            {
-                model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
-                model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
-                DateTime now = DateTime.Now;
-                string formattedDate = now.ToString("yyyy-MM-dd");
+        //[HttpPost("InsertPrescription")]
+        ////[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(MPrescriptionModel obj)
+        //{
+        //    TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
+        //    if (obj.MedicalRecoredId == 0)
+        //    {
+        //        model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
+        //        model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
+        //        DateTime now = DateTime.Now;
+        //        string formattedDate = now.ToString("yyyy-MM-dd");
 
-                //model.IsAddedBy = CurrentUserId;
-                await _IMPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            //else
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.", model);
-        }
-        [HttpPost("PrescriptionReturnInsert")]
-        [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
-        {
-            TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
-            if (obj.PresReId == 0)
-            {
-                model.PresTime = Convert.ToDateTime(obj.PresTime);
-                model.Addedby = CurrentUserId;
-                await _IPriscriptionReturnService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.", model);
-        }
+        //        //model.IsAddedBy = CurrentUserId;
+        //        await _IMPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    //else
+        //    //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.", model);
+        //}
+        //[HttpPost("PrescriptionReturnInsert")]
+        //[Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
+        //{
+        //    TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
+        //    if (obj.PresReId == 0)
+        //    {
+        //        model.PresTime = Convert.ToDateTime(obj.PresTime);
+        //        model.Addedby = CurrentUserId;
+        //        await _IPriscriptionReturnService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.", model);
+        //}
 
         [HttpPost("LabRequestInsert")]
         //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]

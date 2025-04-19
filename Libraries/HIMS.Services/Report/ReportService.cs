@@ -332,14 +332,37 @@ namespace HIMS.Services.Report
                 #region :: GRNReport ::
                 case "GRNReport":
                     {
-                        model.RepoertName = "GRNReport";
-                        string[] headerList = { };
+                       
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReport", "GRNReport", Orientation.Portrait);
                         break;
+
+                         
+
+                        }
+                #endregion
+                #region :: GRNReturnReport ::
+                case "GRNReturnReport":
+                    {
+
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReturn.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReturnReport", "GRNReturnReport", Orientation.Portrait);
+                        break;
+
+
+
                     }
                 #endregion
 
@@ -3382,6 +3405,124 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
+
+
+                        return html;
+
+
+                    }
+                    break;
+
+                case "GRNReturnReport":
+                    {
+
+
+                        int i = 0;
+                        Boolean chkdiscflag = false;
+                        Boolean chkponoflag = false;
+
+                        double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr  style=\"font-size:15px;border: 1px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828 \"><td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["Conversion"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BatchNo"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BatchExpiryDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["LandedRate"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["ReturnQty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["LandedTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatPercentage"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["TotalDiscAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+
+                            T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
+                            T_TotalVatAmount += dr["VatAmount"].ConvertToDouble();
+                            T_TotalDiscAmount += dr["TotalDiscAmount"].ConvertToDouble();
+                            T_TotalNETAmount += dr["NetAmount"].ConvertToDouble();
+                            //T_TotalBalancepay += dr["BalanceAmount"].ConvertToDouble();
+                            //T_TotalCGST += dr["CGSTAmt"].ConvertToDouble();
+                            //T_TotalSGST += dr["SGSTAmt"].ConvertToDouble();
+                            //T_TotalIGST += dr["IGSTAmt"].ConvertToDouble();
+
+
+                        }
+
+                        //| currency:'INR':'symbol-narrow':'0.2'
+                        html = html.Replace("{{Items}}", items.ToString());
+                        //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
+                        html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalNETAmount}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
+
+
+                        html = html.Replace("{{TotCGSTAmt}}", dt.GetColValue("TotCGSTAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{GrandTotalAount}}", dt.GetColValue("TotalAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalAmount}}", dt.GetColValue("TotalAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{HandlingCharges}}", dt.GetColValue("HandlingCharges").ConvertToDouble().To2DecimalPlace());
+
+                        html = html.Replace("{{TransportChanges}}", dt.GetColValue("TransportChanges").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotSGSTAmt}}", dt.GetColValue("TotSGSTAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{OtherCharge}}", dt.GetColValue("OtherCharge").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CreditNote}}", dt.GetColValue("CreditNote").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName").ConvertToString());
+                        html = html.Replace("{{DebitNote}}", dt.GetColValue("DebitNote").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Remark").ConvertToString());
+                        html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NetPayble}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
+
+                        html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
+
+                        html = html.Replace("{{GRNDate}}", dt.GetColValue("GRNDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{GRNTime}}", dt.GetColValue("GRNReturnTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{PurchaseTime}}", dt.GetColValue("PurchaseTime").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{InvDate}}", dt.GetColValue("InvDate").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{GateEntryNo}}", dt.GetColValue("GateEntryNo"));
+
+                        html = html.Replace("{{GrnNumber}}", dt.GetColValue("GRNReturnNo"));
+                        html = html.Replace("{{EwayBillDate}}", dt.GetColValue("EwayBillDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{GSTNo}}", dt.GetColValue("GSTNo").ConvertToString());
+                        html = html.Replace("{{EwayBillNo}}", dt.GetColValue("EwayBillNo"));
+
+
+                        html = html.Replace("{{SupplierName}}", dt.GetColValue("SupplierName").ConvertToString());
+                        html = html.Replace("{{PONo}}", dt.GetColValue("PONo").ConvertToString());
+                        html = html.Replace("{{InvoiceNo}}", dt.GetColValue("InvoiceNo").ConvertToString());
+                        html = html.Replace("{{StoreName}}", dt.GetColValue("StoreName"));
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+
+                        html = html.Replace("{{Email}}", dt.GetColValue("Email").ConvertToString());
+                        html = html.Replace("{{GateEntryNo}}", dt.GetColValue("GateEntryNo").ConvertToString());
+                        html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                        html = html.Replace("{{VatAmount}}", dt.GetColValue("VatAmount").ConvertToString());
+                        html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                        html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                       html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
+
+
+                        html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
+
 
 
                         return html;

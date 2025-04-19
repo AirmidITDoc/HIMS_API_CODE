@@ -345,5 +345,22 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
 
+        [HttpPost("NursingMedicationChartInsert")]
+      //  [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(TNursingMedicationChartModel obj)
+        {
+            TNursingMedicationChart model = obj.MapTo<TNursingMedicationChart>();
+            if (obj.MedChartId == 0)
+            {
+                //model.CreatedBy = CurrentUserId;
+                //model.CreatedDate = DateTime.Now;
+                model.IsAddedBy = CurrentUserId;
+                await _INursingNoteService.InsertAsyncSp(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TNursingMedicationChart  added successfully.");
+        }
+
     }
 }

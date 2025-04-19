@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNUpdateList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+     //   [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNUpdateList(GridRequestModel objGrid)
         {
             IPagedList<ItemDetailsForGRNUpdateListDto> GRNUpdateList = await _IGRNService.GRNUpdateList(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNHeaderList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+    //    [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNHeaderList(GridRequestModel objGrid)
         {
             IPagedList<GRNListDto> GRNUpdateList = await _IGRNService.GRNHeaderList(objGrid);
@@ -41,14 +41,14 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNDetailsList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+    //    [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNDetailsList(GridRequestModel objGrid)
         {
             IPagedList<GRNDetailsListDto> GRNUpdateList = await _IGRNService.GRNDetailsList(objGrid);
             return Ok(GRNUpdateList.ToGridResponse(objGrid, "GRNList"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+     //   [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();

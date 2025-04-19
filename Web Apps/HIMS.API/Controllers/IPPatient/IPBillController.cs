@@ -95,13 +95,13 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<PathRadRequestListDto> RequestList = await _IPBillService.PathRadRequestListAsync(objGrid);
             return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
         }
-        //[HttpPost("IPBillForRefundList")]
-        ////[Permission(PageCode = "Advance", Permission = PagePermission.View)]
-        //public async Task<IActionResult> IPBillForRefundListAsync(GridRequestModel objGrid)
-        //{
-        //    IPagedList<IPBillForRefundListDto> RequestList = await _IPBillService.IPBillForRefundListAsync(objGrid);
-        //    return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
-        //}
+        [HttpPost("PackageDetailsList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPPackageDetailsListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<IPPackageDetailsListDto> IPPackageDetailsList = await _IPBillService.IPPackageDetailsListAsync(objGrid);
+            return Ok(IPPackageDetailsList.ToGridResponse(objGrid, "IPPackageDetails List"));
+        }
 
         [HttpPost("AddChargeInsert")]
      //   [Permission(PageCode = "Charges", Permission = PagePermission.Add)]

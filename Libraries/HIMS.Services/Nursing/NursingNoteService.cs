@@ -3,10 +3,12 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -155,5 +157,59 @@ namespace HIMS.Services.Nursing
         {
             throw new NotImplementedException();
         }
+
+        //public virtual async Task InsertAsync(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TNursingMedicationCharts.Add(ObjTNursingMedicationChart);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+
+        public virtual async Task InsertAsyncSp(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDateTime", "ModifiedBy", "ModifiedDateTime"};
+            var entity = ObjTNursingMedicationChart.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+
+        }
+
+
+        public virtual async Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TIpmedicalRecords.Add(objmedicalRecord);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+
+        public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+
+
+
     }
 }
