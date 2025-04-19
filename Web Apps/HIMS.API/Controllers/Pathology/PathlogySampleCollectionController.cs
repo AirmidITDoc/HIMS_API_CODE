@@ -9,6 +9,7 @@ using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology

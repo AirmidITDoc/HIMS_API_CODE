@@ -16,9 +16,9 @@ namespace HIMS.Data.DTO.GRN
         public string? StoreName { get; set; }
         public long? SupplierId { get; set; }
         public String? SupplierName { get; set; }
-        //public double? Cash_Credit { get; set; }
-        //public double? TotalVatAmount { get; set; }
-        //public double? NetAmount { get; set; }
+        public bool? Cash_Credit { get; set; }
+        public decimal? TotalVatAmount { get; set; }
+        public decimal? NetAmount { get; set; }
         public String? Remark { get; set; }
 
         public bool? IsVerified { get; set; }
