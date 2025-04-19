@@ -63,16 +63,16 @@ namespace HIMS.Services.Nursing
                 scope.Complete();
             }
         }
-        public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
-                await _context.SaveChangesAsync();
+        //public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
+        //        await _context.SaveChangesAsync();
 
-                scope.Complete();
-            }
-        }
+        //        scope.Complete();
+        //    }
+        //}
         public virtual async Task UpdateAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
