@@ -223,10 +223,13 @@ namespace HIMS.API.Controllers.Report
                 case "IpAdvanceRefundReceipt":
                 case "IpBillRefundReceipt":
                 case "IpDischargeReceipt":
+
+                    //DISCHARGE Summary Reports
                 case "IpDischargeSummaryReport":
                 case "IpDischargeSummaryReportWithoutHeader":
                 case "IpDischargeSummaryTemplate":
                 case "IpDischargeSummaryTemplateWithoutHeader":
+
                 case "IPDRefrancefDoctorwise":
                 case "IPDCurrentrefDoctorAdmissionList":
                 case "IPDDoctorWiseCountSummaryList":
