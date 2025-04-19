@@ -6,6 +6,7 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -115,5 +116,43 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
+
+        //GRnreturn
+
+        [HttpPost("GRNReturnlistbynameList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<GrnListByNameListDto> List1 = await _IPurchaseService.GetGRnListbynameAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " GRN Return List By Name"));
+        }
+
+
+        [HttpPost("GRNReturnList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<GRNReturnListDto> List1 = await _IPurchaseService.GetGRNReturnList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "GRN Return  List"));
+        }
+
+
+        [HttpPost("ItemListBYSupplierName")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GeItemListbysuppliernameAsync(GridRequestModel objGrid)
+        {
+            IPagedList<ItemListBysupplierNameDto> List1 = await _IPurchaseService.GetItemListbysuppliernameAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, " Item List By supplier Name"));
+        }
+
+
+        [HttpPost("GRNListBynameforGrnReturn")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
+        {
+            IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _IPurchaseService.Getgrnlistbynameforgrnreturn(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
+        }
+
     }
 }

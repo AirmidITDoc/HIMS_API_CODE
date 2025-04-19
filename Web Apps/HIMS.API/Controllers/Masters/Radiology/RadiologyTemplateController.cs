@@ -21,6 +21,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         private readonly IGenericService<MRadiologyTemplateMaster> _repository;
         private readonly IGenericService<MRadiologyTemplateMaster> _radiorepository;
 
+
         public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository, IGenericService<MRadiologyTemplateMaster> repository1)
         {
             _repository = repository;
@@ -37,7 +38,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -108,6 +109,15 @@ namespace HIMS.API.Controllers.Masters.Radiology
             var MMasterList = await _radiorepository.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc}));
         }
+
+        //[HttpGet]
+        //[Route("get-Templates")]
+        ////[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetTemplates()
+        //{
+        //    var MMasterList = await _radiorepository.GetAll();
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDescription }));
+        //}
 
     }
 }

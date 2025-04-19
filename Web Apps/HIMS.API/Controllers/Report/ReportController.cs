@@ -224,6 +224,9 @@ namespace HIMS.API.Controllers.Report
                 case "IpBillRefundReceipt":
                 case "IpDischargeReceipt":
                 case "IpDischargeSummaryReport":
+                case "IpDischargeSummaryReportWithoutHeader":
+                case "IpDischargeSummaryTemplate":
+                case "IpDischargeSummaryTemplateWithoutHeader":
                 case "IPDRefrancefDoctorwise":
                 case "IPDCurrentrefDoctorAdmissionList":
                 case "IPDDoctorWiseCountSummaryList":
@@ -233,9 +236,14 @@ namespace HIMS.API.Controllers.Report
                 case "DepartmentwiseCount":
                 case "IPDDischargewithmarkstatus":
                 case "IpMLCCasePaperPrint":
-                case "PathresultEntry":
-                case "PathresultEntryWithHeader":
-                case "PathTemplateReport":
+
+                    //PATHOLOGY 
+                case "PathologyReport":
+                case "PathologyReportWithHeader":
+                case "PathologyReportTemplate":
+                case "PathologyReportTemplateWithHeader":
+
+
                 case "RadiologyTemplateReport":
                 case "IpAdvanceReceipt":
                 case "IpAdvanceStatement":
@@ -243,6 +251,9 @@ namespace HIMS.API.Controllers.Report
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
                 case "DischargSummary":
+                //case "IpDischargeSummaryReportTesting":
+
+                    
                 case "Purchaseorder":
                 case "PathTemplateHeaderReport":
 

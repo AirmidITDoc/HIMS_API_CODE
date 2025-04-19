@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="main-content-wrapper" style="padding-left:20px;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 102%;line-height: inherit;text-align: left;">
+                <!-- {{NewHeader}}-->
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 101%; border-collapse: collapse;">
+                            <tr style="font-size: 26px;font-weight:bold;">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: center;" colspan="2">
+                                    <b>
+                                        {{IsNormalOrDeath}} DISCHARGE SUMMARY
+                                    </b>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+
+                        <table style="width: 105%; border-collapse: collapse; font-size: 20px;">
+
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">UHID No :</span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age|Gender:</span>
+                                    <span> {{AgeYear}}Y|{{AgeMonth}}M|{{AgeDay}}D|{{GenderName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOA | Time :</span>
+                                    <span>{{AdmissionTime}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name :</span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">IPD No :</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOD | Time :</span>
+                                    <span>{{DischargeTime}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Doctor Name :</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Department :</span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ward | Bed Name : </span>
+                                    <span>{{RoomName}}|{{BedName}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #d4c3c3;">
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ref.Doctor Name :</span>
+                                    <span>{{RefDoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Type :</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Company Name :</span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+
+            <tr style="margin-top: 12px;">
+                <td colspan="6">
+                    <div>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+
+                            {{TemplateDescriptionHtml}}
+                        </table>
+                    </div>
+        </div>
+
+        <br />
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+
+
+<html>
+<body>
+    <table style="width: 101%; border-collapse: collapse;">
+        <tr style="display:{{chkSurgeryPrescriptionflag}}">
+            <td style="padding: 6px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <!-- <thead style="font-size: 14px; font-weight: bold; font-size: 24px;">-->
+                    <tr><td colspan="3" style="font-weight: bold; font-size: 24px; border-bottom: 1px solid #eee; padding: 6px;">Prescription Details :</td></tr>
+                    <tr>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            Drug
+                        </td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            Dose
+                        </td>
+                        <td style="border-left: 1px solid #d4c3c3; border-top: 1px solid #d4c3c3; border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px; ">DoseName</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">  Total Days</td>
+
+                    </tr>
+                    {{Items}}
+                    <!--</thead>-->
+
+                </table>
+            </td>
+        </tr>
+
+
+        <tr><td><span style="font-size:20px;font-weight:bold;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
+        <br />
+        <tr><td><sapn style="font-size:20px;font-weight:bold;">Emergency Contact</sapn></td></tr>
+        <tr>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px;">
+                <tr></tr>
+                <tr style="border-bottom: 1px solid #d4c3c3;">
+                    <td style="padding: 2px;">
+                        <span style="font-weight:bold;">Prepared By</span>
+                        <br />
+                        <span>{{AddedBy}}</span>
+                    </td>
+                    <td style="padding: 2px;">
+                        <span></span>
+                        <span></span>
+                    </td>
+                    <td style="padding: 2px;">
+                        <span style="font-weight:bold;">Doctor Signature</span>
+                        <br />
+                        <span>{{DoctorName}}</span>
+                    </td>
+                </tr>
+                <!--<tr style="padding: 6px; text-align: center;font-weight:bold;">-->
+                <!--<td>{{DischargeTime}}</td>-->
+                <!--<td>
+
+                        <span>{{AddedBy}}</span>
+                    </td>
+                    <td>
+
+
+                        <span>{{DoctorName}}</span>
+                    </td>
+                </tr>-->
+                <!--<tr><td><span style="font-size: 20px; font-weight: bold; text-align: right;">{{DoctorName}}</span></td></tr>
+                <br />
+                <tr><td><sapn style="font-size: 20px; text-align: right;">Doctor Signature</sapn></td></tr>-->
+                <!--<td> Discharge Time</td>-->
+                <!--<td>
+
+                    <span>Preapered By</span>
+                </td>-->
+                <!--<tr style="padding: 6px; text-align: center;">
+                    <td>
+
+                        <span>Doctor Signature</span>
+                    </td>
+                </tr>
+                <tr><td><sapn style="font-size:20px;font-weight:bold;">Preapered By</sapn></td></tr>-->
+            </table>
+        </tr>
+    </table>
+
+    <table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
+        <tr>
+            <footer style="margin-left: 70%; font-size: 19px;">
+
+            <td style="padding: 6px; text-align: right;">
+                <b>
+                    Print
+                    Date : {{CurrentDate}}
+                </b>
+            </td>
+            </footer>
+        </tr>
+    </table>
+</body>
+
+</html>
