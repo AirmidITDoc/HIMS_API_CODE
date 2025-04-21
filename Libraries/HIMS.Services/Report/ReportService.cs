@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient.Server;
 using System.Globalization;
 using System.IO;
+using Microsoft.VisualBasic;
 
 
 
@@ -3328,10 +3329,11 @@ namespace HIMS.Services.Report
                 case "GRNReport":
                     {
 
-
+                        double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0, T_ItemNetAmount=0;
                         int i = 0, j = 0;
                         double Dcount = 0;
                         string previousLabel = "";
+                        
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
                         foreach (DataRow dr in dt.Rows)
@@ -3354,15 +3356,16 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
 
-                            //T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
-                            //T_TotalVatAmount += dr["VatAmount"].ConvertToDouble();
-                            //T_TotalDiscAmount += dr["TotalDiscAmount"].ConvertToDouble();
-                            //T_TotalNETAmount += dr["NetAmount"].ConvertToDouble();
+                            T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
+                            T_TotalVatAmount += dr["VatAmount"].ConvertToDouble();
+                            T_TotalDiscAmount += dr["TotalDiscAmount"].ConvertToDouble();
+                            T_TotalNETAmount += dr["NetAmount"].ConvertToDouble();
                             //T_TotalBalancepay += dr["BalanceAmount"].ConvertToDouble();
-                            //T_TotalCGST += dr["CGSTAmt"].ConvertToDouble();
-                            //T_TotalSGST += dr["SGSTAmt"].ConvertToDouble();
-                            //T_TotalIGST += dr["IGSTAmt"].ConvertToDouble();
+                            T_TotalCGST += dr["CGSTAmt"].ConvertToDouble();
+                            T_TotalSGST += dr["SGSTAmt"].ConvertToDouble();
+                            T_TotalIGST += dr["IGSTAmt"].ConvertToDouble();
 
+                            //T_ItemNetAmount += dr["ItemNetAmount"].ConvertToDouble();
 
                         }
 
@@ -3391,10 +3394,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DebitNote}}", dt.GetColValue("DebitNote").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark").ConvertToString());
                         html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{NetPayble}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
-
-                        //html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().To2DecimalPlace());
-                        //html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NetPayble}}", dt.GetColValue("NetPayble").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
 
                         html = html.Replace("{{GRNDate}}", dt.GetColValue("GRNDate").ConvertToDateString("dd/MM/yyyy"));
                         html = html.Replace("{{GRNTime}}", dt.GetColValue("GRNReturnTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
@@ -3425,15 +3427,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
 
+                       
                         html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
-                        //string finalamt = NumberToWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().ToInt());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                     
+                        string finalamt = conversion(dt.GetColValue("NetPayble").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
 
-
                         html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
-
 
                         return html;
 
