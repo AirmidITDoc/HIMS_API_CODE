@@ -9,6 +9,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.API.Models.Radiology;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Controllers.Masters.Radiology
 {
@@ -20,12 +21,16 @@ namespace HIMS.API.Controllers.Masters.Radiology
 
         private readonly IGenericService<MRadiologyTemplateMaster> _repository;
         private readonly IGenericService<MRadiologyTemplateMaster> _radiorepository;
+        private readonly IGenericService<TRadiologyReportHeader> _radiorepository2;
+
+        
 
 
-        public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository, IGenericService<MRadiologyTemplateMaster> repository1)
+        public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository, IGenericService<MRadiologyTemplateMaster> repository1, IGenericService<TRadiologyReportHeader> repository12)
         {
             _repository = repository;
             _radiorepository = repository1;
+            _radiorepository2 = repository12;
         }
         //List API
         [HttpPost]
@@ -108,6 +113,18 @@ namespace HIMS.API.Controllers.Masters.Radiology
         {
             var MMasterList = await _radiorepository.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc}));
+        }
+
+        [HttpGet("RadReportId/{id?}")]
+        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetRadiologyTemplateHeader(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _radiorepository2.GetById(x => x.RadReportId == id);
+            return data.ToSingleResponse<TRadiologyReportHeader, TRadiologyReportModel>("TRadiologyReportHeader");
         }
 
         //[HttpGet]

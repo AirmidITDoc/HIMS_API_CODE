@@ -192,7 +192,7 @@ namespace HIMS.Services.Administration
             dt.Columns.Add("IsDelete", typeof(int));
             dt.Columns.Add("IsExport", typeof(int));
             foreach (var item in lst)
-                dt.Rows.Add(item.RoleId, item.MenuId, item.IsView, item.IsAdd, item.IsEdit, item.IsDelete);
+                dt.Rows.Add(item.RoleId, item.MenuId, item.IsView, item.IsAdd, item.IsEdit, item.IsDelete, item.IsExport);
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@tbl", SqlDbType.Structured)

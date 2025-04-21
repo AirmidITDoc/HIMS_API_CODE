@@ -27,6 +27,6 @@ namespace HIMS.Core
     }
     public enum PagePermission
     {
-        Add = 1, Edit = 2, Delete = 3, View = 4
+        Add = 1, Edit = 2, Delete = 3, View = 4, Export = 5
     }
 }
