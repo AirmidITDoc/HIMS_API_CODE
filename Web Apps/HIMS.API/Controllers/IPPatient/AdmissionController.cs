@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionList")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionDischargeList")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> AdmDiscList(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionDischargeList = await _IAdmissionService.GetAdmissionDischargeListAsync(objGrid);
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateSP(NewAdmission obj)
         {
 
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpGet("Dischargesearch-patient")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> DischargeSearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientDischargeListSearch(Keyword);
