@@ -8,10 +8,10 @@
 </head>
 
 <body>
-    <div class="main-content-wrapper">
+    <div class="main-content-wrapper" #WorkorderTemplate>
         <div class="invoice-box"
-             style="margin: auto;font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
-            <table cellpadding="5" cellspacing="5" style="width: 100%;line-height: inherit;text-align: left;">
+             style="max-width: 1000px; margin: 0 auto; font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
                 <tr class="top-header-row">
                     {{NewHeader}}
                 </tr>
@@ -39,11 +39,11 @@
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Patient Name:</span>
+                                    <span style="font-weight: bold;">Patient Name:</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Reg No:</span>
+                                    <span style="font-weight: bold;">Reg No:</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                             </tr>
@@ -56,11 +56,11 @@
                 </tr>-->
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>StoreName:</span>
+                                    <span style="font-weight: bold;">StoreName:</span>
                                     <span>{{StoreName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Patient Type:</span>
+                                    <span style="font-weight: bold;">Patient Type:</span>
                                     <span>{{PatientType}}</span>
                                 </td>
                             </tr>
@@ -117,28 +117,49 @@
                     </td>
                 </tr>
 
-              
-                <tr>
+
+                <!--<tr>
+        <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+
+            <tr style="margin-top: 12px;">
+            <tr>
+                <td style="padding: 6px;font-size: 12px;">Remark</td>
+                <td style="padding: 6px;font-size: 12px;">{{Remark}}</td>
+            </tr>
+            <tr>
+                <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+            </tr>
+            <tr></tr>
+            <tr style="padding: 6px; text-align: right;">
+                <td style="text-align: right;">
+                    <span>{{AddedBy}}</span><br>
+                    <span>Authorized Signature</span>
+                </td>
+            </tr>
+
+        </table>
+    </tr>-->
+                <tr class="footer-row">
                     <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
 
                         <tr style="margin-top: 12px;">
                         <tr>
-                            <td style="padding: 6px;font-size: 12px;">Remark</td>
-                            <td style="padding: 6px;font-size: 12px;">{{Remark}}</td>
+
+                            <td style="padding: 6px; text-align: left;">
+                                {{Remark}}  <br> Remark
+                            </td>
+                            <td style="padding: 6px; text-align: right;">
+                                {{AddedBy}} <br> Authorized Signature
+                            </td>
                         </tr>
                         <tr>
                             <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
                         </tr>
                         <tr></tr>
-                        <tr style="padding: 6px; text-align: right;">
-                            <td style="text-align: right;">
-                                <span>{{AddedBy}}</span><br>
-                                <span>Authorized Signature</span>
-                            </td>
-                        </tr>
 
                     </table>
                 </tr>
+
             </table>
         </div>
     </div>

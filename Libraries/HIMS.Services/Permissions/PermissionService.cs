@@ -43,7 +43,8 @@ namespace HIMS.Services.Permissions
                             IsAdd = P.IsAdd,
                             IsDelete = P.IsDelete,
                             IsEdit = P.IsEdit,
-                            IsView = P.IsView
+                            IsView = P.IsView,
+                            IsExport = P.IsExport
                         };
 
             return await query.ToListAsync();

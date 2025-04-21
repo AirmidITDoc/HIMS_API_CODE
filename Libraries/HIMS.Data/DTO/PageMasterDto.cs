@@ -14,6 +14,7 @@ namespace HIMS.Data.Models
         public bool? IsDelete { get; set; }
         public bool? IsEdit { get; set; }
         public bool? IsView { get; set; }
+        public bool? IsExport { get; set; }
         public bool PageType { get; set; }
     }
     public class MenuMasterDTO : MenuMaster

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
@@ -252,6 +253,58 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
         }
+
+
+        [HttpPost("IPAddcharges")]
+      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> IPAddcharges(AdddChargesModel obj)
+        {
+            AddCharge Model = obj.MapTo<AddCharge>();
+
+            if (obj.ChargesId == 0)
+            {
+
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.IPAddcharges(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges Added successfully.");
+        }
+
+        [HttpPut("UpdateAddcharges/{id:int}")]
+   //     [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateAddchargesModel obj)
+        {
+            AddCharge model = obj.MapTo<AddCharge>();
+            if (obj.ChargesId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+               // model.ModifiedBy = CurrentUserId;
+              //  model.ModifiedDate = DateTime.Now;
+                await _IPBillService.Update(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges updated successfully.");
+        }
+
+
+        [HttpPost("InsertLabRequest")]
+        //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertLabRequest(LabRequestsModel obj)
+        {
+            AddCharge Model = obj.MapTo<AddCharge>();
+
+            if (obj.ClassID != 0)
+            {
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.InsertLabRequest(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LabRequest Added successfully.");
+        }
+
 
     }
 }
