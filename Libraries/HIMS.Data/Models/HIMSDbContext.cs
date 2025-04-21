@@ -424,6 +424,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TNursingChart> TNursingCharts { get; set; } = null!;
         public virtual DbSet<TNursingFluidChart> TNursingFluidCharts { get; set; } = null!;
         public virtual DbSet<TNursingMedicationChart> TNursingMedicationCharts { get; set; } = null!;
+        public virtual DbSet<TNursingMedicationChart1> TNursingMedicationCharts1 { get; set; } = null!;
         public virtual DbSet<TNursingNote> TNursingNotes { get; set; } = null!;
         public virtual DbSet<TNursingOrygenVentilator> TNursingOrygenVentilators { get; set; } = null!;
         public virtual DbSet<TNursingPainAssessment> TNursingPainAssessments { get; set; } = null!;
@@ -513,7 +514,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -9980,6 +9981,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitMrp)
                     .HasColumnType("money")
                     .HasColumnName("UnitMRP");
+
+                entity.HasOne(d => d.Req)
+                    .WithMany(p => p.TCanteenRequestDetails)
+                    .HasForeignKey(d => d.ReqId)
+                    .HasConstraintName("FK_T_CanteenRequestDetails_T_CanteenRequestHeader");
             });
 
             modelBuilder.Entity<TCanteenRequestHeader>(entity =>
@@ -12243,6 +12249,37 @@ namespace HIMS.Data.Models
             });
 
             modelBuilder.Entity<TNursingMedicationChart>(entity =>
+            {
+                entity.HasKey(e => e.MedChartId);
+
+                entity.ToTable("T_Nursing_MedicationChart");
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.DoseId).HasColumnName("DoseID");
+
+                entity.Property(e => e.DoseName).HasMaxLength(100);
+
+                entity.Property(e => e.Freq).HasMaxLength(50);
+
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Mdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("MDate");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Mtime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("MTime");
+
+                entity.Property(e => e.NurseName).HasMaxLength(50);
+
+                entity.Property(e => e.Route).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TNursingMedicationChart1>(entity =>
             {
                 entity.HasKey(e => e.MedChartId);
 

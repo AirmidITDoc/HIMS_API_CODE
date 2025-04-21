@@ -33,8 +33,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<NursingPatientHandoverListDto>> NursingPatientHandoverList(GridRequestModel objGrid);
         Task<IPagedList<NursingMedicationListDto>> NursingMedicationlist(GridRequestModel objGrid);
 
-      //  Task InsertAsync(TNursingMedicationChart ObjTNursingMedicationChart , int currentUserId, string currentUserName);
-        Task InsertAsyncSp(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string Username);
+       Task InsertAsync(TNursingMedicationChart ObjTNursingMedicationChart , int currentUserId, string currentUserName);
+      //  Task InsertAsyncSp(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string Username);
         Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username);
         Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
     }

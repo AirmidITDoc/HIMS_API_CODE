@@ -354,8 +354,8 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 //model.CreatedBy = CurrentUserId;
                 //model.CreatedDate = DateTime.Now;
-                model.IsAddedBy = CurrentUserId;
-                await _INursingNoteService.InsertAsyncSp(model, CurrentUserId, CurrentUserName);
+                //  model.IsAddedBy = CurrentUserId;
+                await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

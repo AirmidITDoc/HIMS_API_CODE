@@ -158,31 +158,31 @@ namespace HIMS.Services.Nursing
             throw new NotImplementedException();
         }
 
-        //public virtual async Task InsertAsync(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TNursingMedicationCharts.Add(ObjTNursingMedicationChart);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
-
-        public virtual async Task InsertAsyncSp(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string UserName)
+        public virtual async Task InsertAsync(TNursingMedicationChart ObjTNursingMedicationChart, int UserId, string Username)
         {
-
-            DatabaseHelper odal = new();
-            string[] AEntity = {  "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDateTime", "ModifiedBy", "ModifiedDateTime"};
-            var entity = ObjTNursingMedicationChart.ToDictionary();
-            foreach (var rProperty in AEntity)
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                entity.Remove(rProperty);
+                _context.TNursingMedicationCharts.Add(ObjTNursingMedicationChart);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
             }
-
-            odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
-
         }
+
+        //public virtual async Task InsertAsyncSp(TNursingMedicationChart1 ObjTNursingMedicationChart, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = { "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime", "CreatedBy" };
+        //    var entity = ObjTNursingMedicationChart.ToDictionary();
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+
+        //    odal.ExecuteNonQuery("ps_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+
+        //}
 
 
         public virtual async Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)

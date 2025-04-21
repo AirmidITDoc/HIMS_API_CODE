@@ -300,6 +300,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MDoctorPerMaster, MDoctorPerMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportDetail, PathReportModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingMedicationChart, TNursingMedicationChartModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, AdddChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
@@ -384,6 +385,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TExpense, TExpenseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TExpense, TExpenseCancelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, LabRequestsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, UpdateAddchargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

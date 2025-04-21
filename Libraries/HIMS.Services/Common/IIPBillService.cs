@@ -31,6 +31,10 @@ namespace HIMS.Services.Common
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
         Task IPInterimBillCashCounterAsyncSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails,  Payment Objpayment, int UserId, string Username);
         Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
+
+        Task IPAddcharges(AddCharge objAddCharge, int UserId, string Username);
+        Task Update(AddCharge objAddCharge, int UserId, string Username);
+        Task InsertLabRequest(AddCharge objAddCharge, int UserId, string Username);
     }
 }
 
