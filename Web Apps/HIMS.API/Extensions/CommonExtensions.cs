@@ -335,7 +335,7 @@ namespace HIMS.API.Extensions
             {
                 string permissions = EncryptionUtility.DecryptText(currentUser.Claims?.FirstOrDefault(c => c.Type == "Permissions")?.Value ?? "", SecurityKeys.EnDeKey);
                 string[] AllPermissions = permissions.Split(',');
-                var Perms = AllPermissions.Where(x => pageCode.Split('|').Contains(x.Split('|')[0])).Select(x => new { IsAdd = x.Split('|')[1], IsEdit = x.Split('|')[2], IsDelete = x.Split('|')[3], IsView = x.Split('|')[4] });
+                var Perms = AllPermissions.Where(x => pageCode.Split('|').Contains(x.Split('|')[0])).Select(x => new { IsAdd = x.Split('|')[1], IsEdit = x.Split('|')[2], IsDelete = x.Split('|')[3], IsView = x.Split('|')[4], IsExport = x.Split('|')[5] });
                 if (permit == PagePermission.Add)
                 {
                     return Perms.Any(x => x.IsAdd == "1");
@@ -351,6 +351,10 @@ namespace HIMS.API.Extensions
                 else if (permit == PagePermission.View)
                 {
                     return Perms.Any(x => x.IsView == "1");
+                }
+                else if (permit == PagePermission.Export)
+                {
+                    return Perms.Any(x => x.IsExport == "1");
                 }
             }
             return false;
