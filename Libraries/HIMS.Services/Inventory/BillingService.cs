@@ -35,15 +35,8 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<PackageServiceListDto>(model, "m_Rtrv_PackageServiceInfo");
         }
-        public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
-        }
-        public virtual async Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
-        }
-
+       
+       
         public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
             {
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

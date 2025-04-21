@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
@@ -35,6 +36,23 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             IPagedList<DoctorMaster> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
+
+        [HttpPost("DoctorShareList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareListDto> DoctorShareList = await _IDoctorMasterService.GetList(objGrid);
+            return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareList "));
+        }
+
+        [HttpPost("DoctorShareLbyNameList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _IDoctorMasterService.GetList1(objGrid);
+            return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareLbyName List "));
+        }
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -47,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return data.ToSingleResponse<DoctorMaster, DoctorModel>("Doctor Master");
         }
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -65,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();

@@ -366,6 +366,24 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: IndentwiseReport ::
+                case "IndentwiseReport":
+                    {
+
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentwiseReport", "IndentwiseReport", Orientation.Portrait);
+                        break;
+
+
+                    }
+                #endregion
+
 
                 #region :: DoctorNotesReceipt ::
                 case "DoctorNotesReceipt":
@@ -3422,6 +3440,48 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+                case "IndentwiseReport":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        //var dynamicVariable = new Dictionary<string, double>();
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;border-bottom: 1px solid black;text-align:center;font-size:18px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:0;border-right:1px solid #000;height:10px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["Qty"].ConvertToString()).Append("</td></tr>");
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        //html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{FromStoreName}}", dt.GetColValue("FromStoreName"));
+
+                        html = html.Replace("{{VLabel}}", dt.GetColValue("VLabel"));
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Comments"));
+                        html = html.Replace("{{ToStoreName}}", dt.GetColValue("ToStoreName"));
+                        html = html.Replace("{{IndentNo}}", dt.GetColValue("IndentNo"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{IndentTime}}", dt.GetColValue("IndentTime").ConvertToDateString("dd.MM.yyyy hhLmm tt"));
+                        html = html.Replace("{{Isverify}}", dt.GetColValue("Isverify"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+                        return html;
+                    }
+                    break;
+
 
                 case "GRNReturnReport":
                     {
@@ -6926,4 +6986,5 @@ namespace HIMS.Services.Report
 
     }
 }
+
 
