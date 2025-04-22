@@ -5,7 +5,6 @@ namespace HIMS.API.Models.OutPatient
 {
     public class LabRequestsModel
     {
-
         public long? OpdIpdId { get; set; }
         public long ClassID { get; set; }
         public long? ServiceId { get; set; }
@@ -13,6 +12,7 @@ namespace HIMS.API.Models.OutPatient
         public long? ReqDetId { get; set; }
         public long? UserId { get; set; }
         public DateTime? ChargesDate { get; set; }
+        public long? DoctorId { get; set; }
 
     }
 }
