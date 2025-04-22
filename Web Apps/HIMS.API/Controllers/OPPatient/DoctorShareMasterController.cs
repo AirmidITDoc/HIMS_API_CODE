@@ -31,21 +31,7 @@ namespace HIMS.API.Controllers.OPPatient
             _BillingService = repository1;
 
         }
-        [HttpPost("DoctorShareList")]
-      //  [Permission(PageCode = "Doctorshare", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<DoctorShareListDto> DoctorShareList = await _BillingService.GetList(objGrid);
-            return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareList "));
-        }
-          
-        [HttpPost("DoctorShareLbyNameList")]
-        //  [Permission(PageCode = "Doctorshare", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetList(GridRequestModel objGrid)
-        {
-            IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _BillingService.GetList1(objGrid);
-            return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareLbyName List "));
-        }
+      
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "Doctorshare", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorShareMasterModel obj)

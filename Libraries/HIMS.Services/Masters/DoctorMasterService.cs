@@ -27,6 +27,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using System.Net.NetworkInformation;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.Services.Masters
 {
@@ -41,6 +42,16 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorMaster>(model, "m_Rtrv_DoctorMasterList_Pagi");
         }
+        public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
+        }
+        public virtual async Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
+        }
+
+
         public virtual async Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid)
         {
             var qry = from d in _context.DoctorMasters
