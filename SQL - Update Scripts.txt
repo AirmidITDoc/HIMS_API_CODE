@@ -52,44 +52,77 @@ ALTER TABLE [dbo].[AuditLog] ADD  CONSTRAINT [DF_AuditLog_CreatedOn]  DEFAULT (g
 GO
 
 
+alter table PermissionMaster add IsExport bit
+Update PermissionMaster set IsExport=0
+
+Drop PROCEDURE [dbo].[Insert_Permission]    
+
+/****** Object:  UserDefinedTableType [dbo].[Permission]    Script Date: 4/22/2025 3:05:12 PM ******/
+DROP TYPE [dbo].[Permission]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[Permission]    Script Date: 4/22/2025 3:05:12 PM ******/
+CREATE TYPE [dbo].[Permission] AS TABLE(
+	[RoleID] [int] NULL,
+	[MenuId] [int] NULL,
+	[IsView] [bit] NULL,
+	[IsAdd] [bit] NULL,
+	[IsEdit] [bit] NULL,
+	[IsDelete] [bit] NULL,
+	[IsExport] [bit] NULL
+)
+GO
+  
+  
+-- =============================================    
+-- Author:  <Author,,Name>    
+-- Create date: <Create Date,,>    
+-- Description: <Description,,>    
+-- =============================================    
+  
+CREATE PROCEDURE [dbo].[Insert_Permission]    
+@tbl dbo.Permission READONLY    
+AS    
+BEGIN    
+ SET NOCOUNT ON;    
+ DECLARE @RoleId INT=(SELECT Top 1 RoleId FROM @tbl)    
+ DELETE FROM PermissionMaster WHERE RoleId=@RoleId    
+ INSERT INTO PermissionMaster(RoleId,MenuId,IsAdd,IsEdit,IsDelete,IsView,IsExport)    
+ SELECT RoleID,MenuId,IsAdd,IsEdit,IsDelete,IsView,IsExport FROM @tbl    
+ --SELECT * FROM @tbl    
+END 
+
+
+
 alter table DB_PrefixMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
-
 alter table DB_GenderMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DB_GenderMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table PatientTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table DoctorTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DoctorTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 ALTER TABLE DoctorTypeMaster ALTER COLUMN IsActive Bit;
-
 alter table ClassMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update ClassMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
-
 alter table DoctorMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DoctorMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table HospitalMaster add IsActive bit , [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update HospitalMaster set IsActive=1 , CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+
+
+Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update DB_GenderMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update DoctorTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update ClassMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update DoctorMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update HospitalMaster set IsActive=1 , CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_CityMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_StateMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_CountryMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update M_DepartmentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update M_ConcessionReasonMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_BankMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 
 
 
@@ -356,13 +389,6 @@ ADD [IsActive] [bit] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
-
-
-
-
-select * from M_instructionmaster
-
-
 
 
 Update  M_MaritalStatusMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
