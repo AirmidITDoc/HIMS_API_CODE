@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnDetail model = obj.MapTo<TGrnreturnDetail>();

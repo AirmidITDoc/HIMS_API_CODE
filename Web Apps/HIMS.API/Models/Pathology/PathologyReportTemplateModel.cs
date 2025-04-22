@@ -10,6 +10,8 @@ namespace HIMS.API.Models.Pathology
         public string? PathTemplateDetailsResult { get; set; }
         public string? TemplateResultInHTML { get; set; }
         public long? TestId { get; set; }
+        public string? SuggestionNotes { get; set; }
+        public long? PathResultDr1 { get; set; }
 
     }
     public class PathologyReportTemplateModelValidator : AbstractValidator<PathologyReportTemplateModel>

@@ -94,7 +94,6 @@ Update M_BankMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy
 
 
 ----------------------------------------------------- Ashutosh ----------------------------------------------------------
-
 ALTER TABLE M_MaritalStatusMaster
 ADD [IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -178,7 +177,8 @@ ADD
 go
 
 ALTER TABLE     ClassMaster
-ADD [CreatedBy] [int] NULL,
+ADD[IsActive] [bit] NULL,
+[CreatedBy] [int] NULL,
 	[CreatedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
@@ -249,7 +249,8 @@ ADD[IsActive] [bit] NULL,
 go
 
 ALTER TABLE     DoctorTypeMaster
-ADD [CreatedBy] [int] NULL,
+ADD[IsActive] [bit] NULL,
+[CreatedBy] [int] NULL,
 	[CreatedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
@@ -289,7 +290,8 @@ ADD
 go
 
 ALTER TABLE     M_DrugMaster
-ADD [CreatedBy] [int] NULL,
+ADD [IsActive] [bit] NULL,
+[CreatedBy] [int] NULL,
 	[CreatedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
@@ -312,7 +314,8 @@ ADD [IsActive] [bit] NULL,
 go
 
 ALTER TABLE     M_instructionmaster
-ADD [CreatedBy] [int] NULL,
+ADD [IsActive] [bit] NULL,
+[CreatedBy] [int] NULL,
 	[CreatedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
@@ -360,7 +363,7 @@ go
 
 
 
-select * from M_instructionmaster
+
 
 
 
@@ -398,4 +401,70 @@ Update M_PathParameterMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),
 Update M_pathcategorymaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_radiology_Templatemaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_radiologyTestmaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---------------------------------------------------- Meshram ----------------------------------------------------------
+
+
+
+
+ALTER TABLE T_PathologyReportTemplateDetails
+
+ADD SuggestionNotes nvarchar(500);
+
+
+ALTER TABLE T_PathologyReportTemplateDetails
+
+ADD PathResultDr1 bigint;

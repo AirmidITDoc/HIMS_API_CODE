@@ -91,7 +91,7 @@ namespace HIMS.Services.Pathlogy
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
 
             string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
                 "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime"};

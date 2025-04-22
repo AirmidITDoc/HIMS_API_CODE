@@ -62,6 +62,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<IIssueToDepService, IssueToDepService>();
             services.AddScoped<IPrescriptionOPTemplateService, PrescriptionOPTemplateService>();
+            services.AddScoped<IGRNReturnService, GRNReturnService>();
+
 
 
 

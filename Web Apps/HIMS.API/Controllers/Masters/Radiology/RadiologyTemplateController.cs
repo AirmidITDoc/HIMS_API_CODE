@@ -23,9 +23,6 @@ namespace HIMS.API.Controllers.Masters.Radiology
         private readonly IGenericService<MRadiologyTemplateMaster> _radiorepository;
         private readonly IGenericService<TRadiologyReportHeader> _radiorepository2;
 
-        
-
-
         public RadiologyTemplateController(IGenericService<MRadiologyTemplateMaster> repository, IGenericService<MRadiologyTemplateMaster> repository1, IGenericService<TRadiologyReportHeader> repository12)
         {
             _repository = repository;
@@ -52,6 +49,19 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             var data = await _repository.GetById(x => x.TemplateId == id);
             return data.ToSingleResponse<MRadiologyTemplateMaster, RadiologyTemplateModel>("MRadiologyTemplateMaster");
+        }
+
+         //List API Get By Id
+        [HttpGet("RadReportId/{id?}")]
+        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> RGet(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _radiorepository2.GetById(x => x.RadReportId == id);
+            return data.ToSingleResponse<TRadiologyReportHeader, TRadiologyReportModel>("TRadiologyReportHeader");
         }
         //Add API
         [HttpPost]
@@ -115,18 +125,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc}));
         }
 
-        [HttpGet("RadReportId/{id?}")]
-        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetRadiologyTemplateHeader(int id)
-        {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-            var data = await _radiorepository2.GetById(x => x.RadReportId == id);
-            return data.ToSingleResponse<TRadiologyReportHeader, TRadiologyReportModel>("TRadiologyReportHeader");
-        }
-
+       
         //[HttpGet]
         //[Route("get-Templates")]
         ////[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]

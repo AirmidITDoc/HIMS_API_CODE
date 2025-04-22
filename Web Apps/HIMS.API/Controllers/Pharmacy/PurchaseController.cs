@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseService = repository;
         }
         [HttpPost("PurchaseOrderList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseItemList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("OldPurchaseOrderList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("LastThreeItemList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SupplierrateList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<SupplierRatelistDto> List1 = await _IPurchaseService.GetSupplierRatetAsync(objGrid);
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -120,7 +120,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //GRnreturn
 
         [HttpPost("GRNReturnlistbynameList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
         {
             IPagedList<GrnListByNameListDto> List1 = await _IPurchaseService.GetGRnListbynameAsync(objGrid);
@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _IPurchaseService.GetGRNReturnList(objGrid);
@@ -138,16 +138,16 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("ItemListBYSupplierName")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GeItemListbysuppliernameAsync(GridRequestModel objGrid)
         {
             IPagedList<ItemListBysupplierNameDto> List1 = await _IPurchaseService.GetItemListbysuppliernameAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, " Item List By supplier Name"));
+            return Ok(List1.ToGridResponse(objGrid, " ItemList By supplier Name"));
         }
 
 
         [HttpPost("GRNListBynameforGrnReturn")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
         {
             IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _IPurchaseService.Getgrnlistbynameforgrnreturn(objGrid);
