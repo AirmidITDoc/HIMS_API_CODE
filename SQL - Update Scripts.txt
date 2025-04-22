@@ -92,22 +92,24 @@ BEGIN
  --SELECT * FROM @tbl    
 END 
 
-
+======================================= *************************************************************************************************
 
 alter table DB_PrefixMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
 alter table DB_GenderMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table PatientTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table DoctorTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-ALTER TABLE DoctorTypeMaster ALTER COLUMN IsActive Bit;
 alter table ClassMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
 alter table DoctorMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table HospitalMaster add IsActive bit , [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+
+
+ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
+ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
+ALTER TABLE DoctorTypeMaster ALTER COLUMN IsActive Bit;
 
 
 Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
