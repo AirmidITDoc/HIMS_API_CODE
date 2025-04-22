@@ -52,48 +52,85 @@ ALTER TABLE [dbo].[AuditLog] ADD  CONSTRAINT [DF_AuditLog_CreatedOn]  DEFAULT (g
 GO
 
 
+alter table PermissionMaster add IsExport bit
+Update PermissionMaster set IsExport=0
+
+Drop PROCEDURE [dbo].[Insert_Permission]    
+
+/****** Object:  UserDefinedTableType [dbo].[Permission]    Script Date: 4/22/2025 3:05:12 PM ******/
+DROP TYPE [dbo].[Permission]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[Permission]    Script Date: 4/22/2025 3:05:12 PM ******/
+CREATE TYPE [dbo].[Permission] AS TABLE(
+	[RoleID] [int] NULL,
+	[MenuId] [int] NULL,
+	[IsView] [bit] NULL,
+	[IsAdd] [bit] NULL,
+	[IsEdit] [bit] NULL,
+	[IsDelete] [bit] NULL,
+	[IsExport] [bit] NULL
+)
+GO
+  
+  
+-- =============================================    
+-- Author:  <Author,,Name>    
+-- Create date: <Create Date,,>    
+-- Description: <Description,,>    
+-- =============================================    
+  
+CREATE PROCEDURE [dbo].[Insert_Permission]    
+@tbl dbo.Permission READONLY    
+AS    
+BEGIN    
+ SET NOCOUNT ON;    
+ DECLARE @RoleId INT=(SELECT Top 1 RoleId FROM @tbl)    
+ DELETE FROM PermissionMaster WHERE RoleId=@RoleId    
+ INSERT INTO PermissionMaster(RoleId,MenuId,IsAdd,IsEdit,IsDelete,IsView,IsExport)    
+ SELECT RoleID,MenuId,IsAdd,IsEdit,IsDelete,IsView,IsExport FROM @tbl    
+ --SELECT * FROM @tbl    
+END 
+
+======================================= *************************************************************************************************
+
 alter table DB_PrefixMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
-
 alter table DB_GenderMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DB_GenderMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table PatientTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 alter table DoctorTypeMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-Update DoctorTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+alter table ClassMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table DoctorMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table HospitalMaster add IsActive bit , [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+
+
+ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
+ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
 ALTER TABLE DoctorTypeMaster ALTER COLUMN IsActive Bit;
 
-alter table ClassMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+
+Update DB_PrefixMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update DB_GenderMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update DoctorTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update ClassMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
-
-alter table DoctorMaster add [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update DoctorMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table HospitalMaster add IsActive bit , [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update HospitalMaster set IsActive=1 , CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update M_CityMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_StateMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_CountryMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update M_DepartmentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 Update M_ConcessionReasonMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
-alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
+Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_BankMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 
 
-
 ----------------------------------------------------- Ashutosh ----------------------------------------------------------
+
+ALTER TABLE M_MaritalStatusMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL, [ModifiedDate] [datetime] NULL
 ALTER TABLE M_MaritalStatusMaster
 ADD [IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -101,81 +138,45 @@ ADD [IsActive] [bit] NULL,
 	[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
-
-
-ALTER TABLE M_RelationshipMaster  
-ADD [IsActive] [bit] NULL, 
-   [CreatedBy] [int] NULL,
-   [CreatedDate] [datetime] NULL,
-   [ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+ALTER TABLE M_RelationshipMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
+ALTER TABLE M_ReligionMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
 
-ALTER TABLE M_ReligionMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE  M_CountryMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE  M_CountryMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE   M_StateMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE   M_StateMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE    M_CityMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE    M_CityMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE M_TalukaMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_TalukaMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE M_AreaMaster ADD[CityId] [int] NULL,[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_AreaMaster
-ADD[CityId] [int] NULL, 
-[IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
+ALTER TABLE M_BankMaster ADD[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_BankMaster
-ADD[IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE CashCounter ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+ALTER TABLE ClassMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     CashCounter
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE TariffMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
+ALTER TABLE GroupMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 ALTER TABLE     ClassMaster
 ADD[IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -184,70 +185,32 @@ ADD[IsActive] [bit] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     TariffMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_SubGroupMaster ADD[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
+[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     GroupMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE ServiceMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_SubGroupMaster
-ADD[IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE CompanyTypeMaster ADD[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     ServiceMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE CompanyMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     CompanyTypeMaster
-ADD[IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_SubTPACompanyMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     CompanyMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_BankMaster ADD[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_SubTPACompanyMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE  DoctorTypeMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_BankMaster
-ADD[IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE locationmaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
+ALTER TABLE Bedmaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 ALTER TABLE     DoctorTypeMaster
 ADD[IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -256,39 +219,20 @@ ADD[IsActive] [bit] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-
-ALTER TABLE     locationmaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE DischargeTypemaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     Bedmaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_GenericMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     DischargeTypemaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_DrugMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_GenericMaster
-ADD
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_DoseMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
+ALTER TABLE M_CertificateMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
+[ModifiedDate] [datetime] NULL
 ALTER TABLE     M_DrugMaster
 ADD [IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -297,22 +241,14 @@ ADD [IsActive] [bit] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_DoseMaster
-ADD 
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_instructionmaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_CertificateMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_ItemCategoryMaster ADD [IsActive] [bit] NULL, [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 
+ALTER TABLE M_PathParameterMaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
+[ModifiedDate] [datetime] NULL
 ALTER TABLE     M_instructionmaster
 ADD [IsActive] [bit] NULL,
 [CreatedBy] [int] NULL,
@@ -321,44 +257,21 @@ ADD [IsActive] [bit] NULL,
 	[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_ItemCategoryMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_pathcategorymaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
+[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_PathParameterMaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_radiology_Templatemaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+ALTER TABLE M_radiologyTestmaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,
+[ModifiedDate] [datetime] NULL
 go
 
-ALTER TABLE     M_pathcategorymaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_ModeOfDischarge ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
-
-ALTER TABLE     M_radiology_Templatemaster
-ADD 
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
+ALTER TABLE M_Departmentmaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
-ALTER TABLE     M_radiologyTestmaster
-ADD [IsActive] [bit] NULL,
-[CreatedBy] [int] NULL,
-	[CreatedDate] [datetime] NULL,
-	[ModifiedBy] [int] NULL,
-	[ModifiedDate] [datetime] NULL
-go
+ALTER TABLE RoomMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 
 
 
@@ -401,6 +314,13 @@ Update M_PathParameterMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),
 Update M_pathcategorymaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_radiology_Templatemaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_radiologyTestmaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_ModeOfDischarge set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_Departmentmaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update RoomMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+
+
+---------------------------------------------------- Meshram ----------------------------------------------------------
 
 
 

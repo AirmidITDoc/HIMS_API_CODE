@@ -22,6 +22,7 @@ using WkHtmlToPdfDotNet;
 using Aspose.Cells.Charts;
 using System.Text.Json;
 using System.Runtime.InteropServices;
+using HIMS.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -29,6 +30,7 @@ builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<FormOptions>(o =>
@@ -149,10 +151,16 @@ builder.Services.AddCors(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        //.AllowCredentials()
+        builder =>
+        //builder.AllowAnyOrigin()
+        //.AllowAnyMethod()
+        //.AllowAnyHeader()
+        ////.AllowCredentials()
+        builder.WithOrigins("http://localhost:4200")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials()
+
         );
 });
 var app = builder.Build();
@@ -162,6 +170,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint(Configuration["SwaggerUrl"], "API v1"));
 
 app.UseAuthentication();
 app.UseCors("CorsPolicy");
+app.MapHub<NotificationHub>("/himshub");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseRouting();

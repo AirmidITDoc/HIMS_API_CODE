@@ -9,13 +9,13 @@ namespace HIMS.Data.DTO.IPPatient
     public class BrowseIPDBillListDto
     {
         public long BillNo { get; set; }
-        public long OPD_IPD_ID { get; set; }
+        public long OPDIPDID { get; set; }
         public decimal TotalAmt { get; set; }
         public double ConcessionAmt { get; set; }
         public decimal NetPayableAmt { get; set; }
         public decimal BalanceAmt { get; set; }
         public DateTime BillDate { get; set; }
-        public byte OPD_IPD_Type { get; set; }
+        public byte OPDIPDType { get; set; }
         public string? PaidAmount { get; set; }
         public long IsCancelled { get; set; }
         public string? PBillNo { get; set; }
