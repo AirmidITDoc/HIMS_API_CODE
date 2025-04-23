@@ -65,9 +65,9 @@ namespace HIMS.API.Controllers.Pathology
 
         }
 
-      
+
         [HttpPost("InsertResultEntry")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
@@ -78,11 +78,11 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyResult Entry  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         [HttpPost("PathologyTemplateSave")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
@@ -98,13 +98,13 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyTemplate   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
 
         [HttpGet]
         [Route("get-PathologyTemplates")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var MMasterList = await _radiorepository.GetAll();
@@ -112,7 +112,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet]
         [Route("get-DoctorNotesTemplateMaster")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown1()
         {
             var MMasterList = await _radiorepository1.GetAll();
@@ -120,7 +120,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet]
         [Route("get-NursingTemplateMaster")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _radiorepository2.GetAll();

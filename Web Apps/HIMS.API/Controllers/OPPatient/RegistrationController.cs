@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationInsert")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -76,8 +76,6 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.", model);
         }
-
-
 
         [HttpPost("RegistrationUpdate")]
         [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
