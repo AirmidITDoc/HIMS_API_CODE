@@ -306,5 +306,22 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
+        [HttpPost("InsertIPDPackageBill")]
+        //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertIPDPackage(IPAddChargesModel obj)
+        {
+            AddCharge Model = obj.MapTo<AddCharge>();
+         
+
+            if (obj.ChargesId == 0)
+            {
+
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.InsertIPDPackage(Model,  CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPDPackageBill Added successfully.");
+        }
     }
 }

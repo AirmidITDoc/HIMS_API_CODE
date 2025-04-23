@@ -1394,13 +1394,13 @@ namespace HIMS.Services.Report
 
             string[] headerList = model.headerList;
             string[] colList = model.colList;
-            //string[] totalList = model.totalFieldList;
+            string[] totalList = model.totalFieldList;
             string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlFilePath);
 
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
-            //var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
-            //var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
-            string byteFile = "";// Convert.ToBase64String(tuple.Item1);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName, Orientation.Portrait, PaperKind.A4);
+            string byteFile =  Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
         }
