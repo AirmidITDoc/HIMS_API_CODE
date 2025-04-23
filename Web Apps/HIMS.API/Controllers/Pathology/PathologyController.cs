@@ -81,6 +81,21 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPost("PathPrintResultentryInsert")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PathPrintResultentry obj)
+        {
+            List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
+            if (model.Count > 0)
+            {
+                await _IPathlogyService.InsertPathPrintResultentry(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry  added successfully.");
+        }
+
+
         [HttpPost("PathologyTemplateSave")]
         [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)

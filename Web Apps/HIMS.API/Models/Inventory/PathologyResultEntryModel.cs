@@ -68,5 +68,14 @@ namespace HIMS.API.Models.Inventory
         public TPathologyReportHeaderModel PathologyReport { get; set; }
 
     }
+    public class PathPrintResultentryModel
+    {
+        public long? PathReportId { get; set; }
 
+    }
+    public class PathPrintResultentry
+    {
+        public List<PathPrintResultentryModel> PathPrintResultEntry { get; set; }
+
+    }
 }

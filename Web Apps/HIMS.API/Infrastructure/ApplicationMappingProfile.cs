@@ -416,6 +416,8 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TPathologyReportTemplateDetail, PathologyReportTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyReportHeadermodel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TempPathReportId, PathPrintResultentryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             //Purchase
