@@ -42,26 +42,28 @@ namespace HIMS.API.Controllers.OPPatient
             _IVisitDetailsService = repository4;
         }
         [HttpPost("BrowseOPRefundList")]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
         {
             IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid);
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "BrowseOPDBillPagi App List"));
         }
         [HttpPost("BrowseOPPaymentList")]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
             return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
         }
         [HttpPost("OPBillListSettlementList")]
-        ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
