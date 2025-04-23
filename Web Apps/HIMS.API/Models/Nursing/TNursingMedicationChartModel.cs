@@ -14,7 +14,7 @@ namespace HIMS.API.Models.Nursing
         public string? Freq { get; set; }
         public long? IsAddedBy { get; set; }
         public string? NurseName { get; set; }
-        public bool? CreatedBy { get; set; }
+        public bool? IsCancelled { get; set; }
         public string? DoseName { get; set; }
 
     }

@@ -349,12 +349,11 @@ namespace HIMS.API.Controllers.NursingStation
       //  [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(TNursingMedicationChartModel obj)
         {
-            TNursingMedicationChart model = obj.MapTo<TNursingMedicationChart>();
+            TNursingMedicationChart1 model = obj.MapTo<TNursingMedicationChart1>();
             if (obj.MedChartId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
-                //  model.IsAddedBy = CurrentUserId;
+               
+                  model.IsAddedBy = CurrentUserId;
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
