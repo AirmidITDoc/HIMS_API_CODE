@@ -749,24 +749,69 @@ namespace HIMS.Services.Common
 
         }
 
+        //public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
+        //        "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+        //        "IsSelfOrCompanyService", "PackageId", "ChargesTime", "IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+        //        "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy"};
+        //    var entity = ObjaddCharge.ToDictionary();
+        //    ["Opipid"] = ObjaddCharge.OpdIpdId;
+        //    ["ClassID"] = ObjaddCharge.ClassId;
+        //    ["ServiceId"] = ObjaddCharge.ServiceId;
+        //    ["TraiffId"] = 1;               // Hardcoded
+        //    ["ReqDetId"] = 30253;           // Hardcoded
+        //    ["UserId"] = 1;                 // Hardcoded
+        //    ["ChargesDate"] = ObjaddCharge.ChargesDate != default ? ObjaddCharge.ChargesDate : DateTime.Now;
+        //    ["DoctorId"] = ObjaddCharge.DoctorId;
+
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+        //    //entity["TraiffId"] = 1;
+        //    //entity["ReqDetId"] = 30253;
+        //    //entity["UserId"] = 1;// Ensure objpayment has OPDIPDType
+        //    odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
+
+        //}
+
         public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
+        {
+            DatabaseHelper odal = new();
+
+            var entity = new Dictionary<string, object>
+            {
+                ["Opipid"] = ObjaddCharge.OpdIpdId,
+                ["ClassID"] = ObjaddCharge.ClassId,
+                ["ServiceId"] = ObjaddCharge.ServiceId,
+                ["TraiffId"] = 1,               // Hardcoded
+                ["ReqDetId"] = 30253,           // Hardcoded
+                ["UserId"] = 1,                 // Hardcoded
+                ["ChargesDate"] = ObjaddCharge.ChargesDate != default ? ObjaddCharge.ChargesDate : DateTime.Now,
+                ["DoctorId"] = ObjaddCharge.DoctorId
+            };
+
+            odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
+        }
+
+        public virtual async Task InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", 
-                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
-                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy"};
+            string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+                "IsHospMrk","BillNoNavigation","BillNo"};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
             {
                 entity.Remove(rProperty);
             }
-            entity["TraiffId"] = 1;
-            entity["ReqDetId"] = 432;
-            entity["UserId"] = 1;// Ensure objpayment has OPDIPDType
-            odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
+
+            string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
         }
 

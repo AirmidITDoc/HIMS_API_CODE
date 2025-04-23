@@ -387,7 +387,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmissionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, LabRequestsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, UpdateAddchargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            CreateMap<AddCharge, IPAddChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+   
 
 
 
