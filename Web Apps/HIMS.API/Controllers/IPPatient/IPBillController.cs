@@ -257,15 +257,16 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("IPAddcharges")]
       //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> IPAddcharges(AdddChargesModel obj)
+        public async Task<ApiResponse> IPAddcharges(AddChargModel obj)
         {
-            AddCharge Model = obj.MapTo<AddCharge>();
+            AddCharge Model = obj.AdddCharges.MapTo<AddCharge>();
+          List<AddCharge> Models = obj.AddCharge. MapTo<List<AddCharge>>();
 
-            if (obj.ChargesId == 0)
+            if (obj.AdddCharges.ChargesId == 0)
             {
 
                 Model.AddedBy = CurrentUserId;
-                await _IPBillService.IPAddcharges(Model, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPAddcharges(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -304,6 +305,14 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LabRequest Added successfully.");
         }
+        //[HttpPost("InsertLabRequest")]
+        //public async Task<IActionResult> InsertLabRequest([FromBody] AddCharge ObjaddCharge)
+        //{
+        //    await _IPBillService.InsertLabRequest(ObjaddCharge, ObjaddCharge.UserId, "SystemUser");
+        //    return Ok("Inserted Successfully");
+        //}
+
+
 
 
         [HttpPost("InsertIPDPackageBill")]
