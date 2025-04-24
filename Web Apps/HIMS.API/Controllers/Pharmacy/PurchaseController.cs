@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseService = repository;
         }
         [HttpPost("PurchaseOrderList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase added successfully.",model.PurchaseId);
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase updated successfully.", model.PurchaseId);
         }
 
         [HttpPost("Verify")]

@@ -763,7 +763,7 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId)
         {
 
             DatabaseHelper odal = new();
@@ -777,31 +777,12 @@ namespace HIMS.Services.Common
             {
                 entity.Remove(rProperty);
             }
-            //entity["TraiffId"] = 1;
-            //entity["ReqDetId"] = 30253;
-            //entity["UserId"] = 1;// Ensure objpayment has OPDIPDType
+            // Add TraiffId manually to dictionary
+            entity["TraiffId"] = traiffId;
+
             odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
 
         }
-
-        //public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
-        //{
-        //    DatabaseHelper odal = new();
-
-        //    var entity = new Dictionary<string, object>
-        //    {
-        //        ["Opipid"] = ObjaddCharge.OpdIpdId,
-        //        ["ClassID"] = ObjaddCharge.ClassId,
-        //        ["ServiceId"] = ObjaddCharge.ServiceId,
-        //        //["TraiffId"] = 1,               // Hardcoded
-        //        //["ReqDetId"] = 30253,           // Hardcoded
-        //        //["UserId"] = 1,                 // Hardcoded
-        //        ["ChargesDate"] = ObjaddCharge.ChargesDate != default ? ObjaddCharge.ChargesDate : DateTime.Now,
-        //        ["DoctorId"] = ObjaddCharge.DoctorId
-        //    };
-
-        //    odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
-        //}
 
         public virtual async Task InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
         {

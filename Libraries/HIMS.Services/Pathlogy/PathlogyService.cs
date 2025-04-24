@@ -73,7 +73,36 @@ namespace HIMS.Services.Pathlogy
                 }
                 odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
         }
-        
+        public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTempPathReportId)
+            {
+
+                var tokensObj = new
+                {
+                    PathReportId = Convert.ToInt32(item.PathReportId)
+                };
+
+                odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
+            foreach (var item in ObjTempPathReportId)
+            {
+
+                string[] rEntity = { };
+                var entity = item.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
+
+            }
+
+        }
+
+
 
         public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader,int UserId, string UserName)
         {

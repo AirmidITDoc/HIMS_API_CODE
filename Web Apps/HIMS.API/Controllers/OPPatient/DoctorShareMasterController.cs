@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorSharemaster added successfully.");
         }
 
-        [HttpPut("Update")]
+        [HttpPut("{id:int}")]
         [Permission(PageCode = "Doctorshare", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(DoctorShareMasterModel obj)
         {
