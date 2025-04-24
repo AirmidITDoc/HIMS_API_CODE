@@ -293,15 +293,23 @@ namespace HIMS.API.Controllers.IPPatient
         //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertLabRequest(LabRequestsModel obj)
         {
-            AddCharge Model = obj.MapTo<AddCharge>();
-
-            if (obj.ClassID != 0)
+            if (obj.ClassID == 0)
             {
-                Model.AddedBy = CurrentUserId;
-                await _IPBillService.InsertLabRequest(Model, CurrentUserId, CurrentUserName);
-            }
-            else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                
+            }
+            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            var model = new AddCharge
+            {
+                ClassId = obj.ClassID,
+                OpdIpdId = obj.OpdIpdId,
+                ServiceId = obj.ServiceId,
+                ChargesDate = obj.ChargesDate,
+                DoctorId = obj.DoctorId,
+                AddedBy = CurrentUserId
+            };
+            
+            await _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LabRequest Added successfully.");
         }
 
