@@ -40,7 +40,7 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdvanceListDto>(model, "ps_Rtrv_BrowseIPAdvanceList");
         }
-        
+
         public virtual async Task<IPagedList<RefundOfAdvanceListDto>> GetRefundOfAdvanceListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<RefundOfAdvanceListDto>(model, "ps_Rtrv_BrowseIPRefundAdvanceReceipt");
@@ -123,7 +123,7 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "RefundNo", "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails","AddBy" };
+            string[] rEntity = { "RefundNo", "CashCounterId", "IsRefundFlag", "CreatedBy", "ModifiedBy", "CreatedDate", "ModifiedDate", "TRefundDetails", "AddBy" };
             var entity = Objrefund.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -172,8 +172,22 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, entity1);
         }
+        public virtual async Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int UserId, string UserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] DetailEntity = { "TransactionId", "AdvanceId", "AdvanceNo", "RefId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "BalanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason" };
+            var UEntity = OBJAdvanceDetail.ToDictionary();
+            foreach (var rProperty in DetailEntity)
+            {
+                UEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("Ps_Update_advancedetail", CommandType.StoredProcedure, UEntity);
+
+        }
 
     }
+       
 }
 
 

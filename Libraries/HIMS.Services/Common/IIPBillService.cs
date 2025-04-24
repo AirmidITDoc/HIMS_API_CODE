@@ -36,6 +36,9 @@ namespace HIMS.Services.Common
         Task Update(AddCharge objAddCharge, int UserId, string Username);
         Task InsertLabRequest(AddCharge objAddCharge, int UserId, string Username);
         Task InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
+        Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName);
+
+
     }
 }
 

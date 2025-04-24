@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -145,47 +146,6 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("ClassId is required");
         }
     }
-
-    //public class InsertPathologyReportHeader
-    //{
-    //    public DateTime PathDate { get; set; }
-    //    public DateTime PathTime { get; set; }
-    //    public Boolean OPD_IPD_Type { get; set; }
-    //    public int OPD_IPD_Id { get; set; }
-    //    public int PathTestID { get; set; }
-    //    public int AddedBy { get; set; }
-    //    public int ChargeID { get; set; }
-    //    public Boolean IsCompleted { get; set; }
-    //    public Boolean IsPrinted { get; set; }
-    //    public Boolean IsSampleCollection { get; set; }
-    //    public Boolean TestType { get; set; }
-    //}
-
-    //public class InsertRadiologyReportHeader
-    //{
-    //    public DateTime RadDate { get; set; }
-    //    public DateTime RadTime { get; set; }
-    //    public Boolean OPD_IPD_Type { get; set; }
-    //    public int OPD_IPD_Id { get; set; }
-    //    public int RadTestID { get; set; }
-    //    public int AddedBy { get; set; }
-    //    public Boolean IsCancelled { get; set; }
-    //    public int ChargeID { get; set; }
-    //    public Boolean IsPrinted { get; set; }
-    //    public Boolean IsCompleted { get; set; }
-    //    public Boolean TestType { get; set; }
-    //}
-
-    //public class OPoctorShareGroupAdmChargeDoc
-    //{
-    //    public int BillNo { get; set; }
-
-    //}
-
-    //public class OPCalDiscAmountBill
-    //{
-    //    public int BillNo { get; set; }
-
-    //}
+   
 }
 

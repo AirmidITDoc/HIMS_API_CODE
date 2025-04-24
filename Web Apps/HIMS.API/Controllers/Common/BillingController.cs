@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -26,7 +27,6 @@ namespace HIMS.API.Controllers.Common
         private readonly IOPBillingService _oPBillingService;
         private readonly IOPSettlementCreditService _IOPCreditBillService;
         private readonly IIPBillService _IPBillService;
-       // private readonly IIPBILLCreditService _iPBILLCreditService;
         private readonly IIPDraftBillSerive _iPDraftBillSerive;
         private readonly IIPInterimBillSerive _iPInterimBillSerive;
 
@@ -37,7 +37,6 @@ namespace HIMS.API.Controllers.Common
             _oPBillingService = repository1;
             _IOPCreditBillService = repository2;
             _IPBillService = iPBIllwithpay;
-            //_iPBILLCreditService = iPBILLCreditService;
             _iPDraftBillSerive = iPDraftBill;
             _iPInterimBillSerive = iPInterimBill;
         }
@@ -70,6 +69,25 @@ namespace HIMS.API.Controllers.Common
             IPagedList<ServiceClassdetailListDto> ServiceClassdetailList = await _IPBillService.ServiceClassdetailList(objGrid);
             return Ok(ServiceClassdetailList.ToGridResponse(objGrid, "ServiceClassdetail App List"));
         }
+
+        [HttpPut("UpdateRefund")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateRefundModel obj)
+        {
+            Refund model = obj.MapTo<Refund>();
+
+
+            if (obj.RefundId != 0)
+            {
+                model.IsCancelledDate = Convert.ToDateTime(model.IsCancelledDate);
+                model.AddedBy = CurrentUserId;
+                await _IPBillService.UpdateRefund(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund  update successfully .");
+        }
+
 
 
         //[HttpPost("OPAddchargesInsert")]
@@ -142,13 +160,13 @@ namespace HIMS.API.Controllers.Common
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.");
         //}
 
-       
+
         //[HttpPost("OPSettlementCreditPayment")]
 
         ////[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> OPSettlementCreditPayment(OPSettlementpayment obj)
         //{
-                       
+
         //    Bill model = obj.OPSettlementCredit.MapTo<Bill>();
         //    Payment objpayment = obj.OPSettlementPayment.MapTo<Payment>();
         //    if (obj.OPSettlementCredit.BillNo != 0)
