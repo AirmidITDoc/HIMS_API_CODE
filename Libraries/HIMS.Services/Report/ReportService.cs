@@ -1416,7 +1416,7 @@ namespace HIMS.Services.Report
                 var param = new SqlParameter
                 {
                     ParameterName = "@" + property.Key,
-                    Value = ((property.Key == "FromDate" || property.Key == "ToDate") ? DateTime.ParseExact(property.Value, "dd-MM-yyyy", CultureInfo.InvariantCulture) : property.Value.ToString())
+                    Value = ((property.Key == "FromDate" || property.Key == "ToDate") ? DateTime.ParseExact(property.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture) : property.Value.ToString())
                 };
 
                 para[sp_Para] = param;
