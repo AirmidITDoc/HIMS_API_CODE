@@ -1,24 +1,27 @@
 
-alter table [VATSALYA_28_MARCH_NEW].dbo.Menumaster
+alter table dbo.Menumaster
 add [PermissionCode] [nvarchar](50) NULL,
 	[TableNames] [nvarchar](max) NULL
 	
 	
+select * from MenuMaster
+
 UPDATE a
 SET a.PermissionCode = (
     SELECT b.PermissionCode
-    FROM [SSWEB_AIRMID].dbo.Menumaster b
+    FROM SSWEB_AIRMID_API.dbo.Menumaster b
     WHERE b.Id = a.Id
 )
-FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
+FROM dbo.Menumaster a
+
 
 UPDATE a
 SET a.TableNames = (
     SELECT b.TableNames
-    FROM [SSWEB_AIRMID].dbo.Menumaster b
+    FROM SSWEB_AIRMID_API.dbo.Menumaster b
     WHERE b.Id = a.Id
 )
-FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
+FROM dbo.Menumaster a
 
 
 Alter table loginManager
@@ -272,14 +275,6 @@ go
 ALTER TABLE M_Departmentmaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 ALTER TABLE RoomMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
-
-
-
-
-
-
-
-
 
 Update  M_MaritalStatusMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update  M_RelationshipMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
