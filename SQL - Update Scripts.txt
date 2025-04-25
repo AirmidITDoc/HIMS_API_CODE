@@ -1,27 +1,24 @@
 
-alter table dbo.Menumaster
+alter table [VATSALYA_28_MARCH_NEW].dbo.Menumaster
 add [PermissionCode] [nvarchar](50) NULL,
 	[TableNames] [nvarchar](max) NULL
 	
 	
-select * from MenuMaster
-
 UPDATE a
 SET a.PermissionCode = (
     SELECT b.PermissionCode
-    FROM SSWEB_AIRMID_API.dbo.Menumaster b
+    FROM [SSWEB_AIRMID].dbo.Menumaster b
     WHERE b.Id = a.Id
 )
-FROM dbo.Menumaster a
-
+FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
 
 UPDATE a
 SET a.TableNames = (
     SELECT b.TableNames
-    FROM SSWEB_AIRMID_API.dbo.Menumaster b
+    FROM [SSWEB_AIRMID].dbo.Menumaster b
     WHERE b.Id = a.Id
 )
-FROM dbo.Menumaster a
+FROM [VATSALYA_28_MARCH_NEW].dbo.Menumaster a
 
 
 Alter table loginManager
@@ -275,6 +272,26 @@ go
 ALTER TABLE M_Departmentmaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
 go
 ALTER TABLE RoomMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+ALTER TABLE M_pathunitmaster ADD [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+ALTER TABLE M_Templatemaster ADD [Category] [Nvarchar] NULL, [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+ALTER TABLE M_pathtestmaster ADD [TestTime] [datetime] NULL,[TestDate] [datetime] NULL, [IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+
+
+ALTER TABLE M_radiology_Templatemaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+
+
+
+
+
+
+
+
+
+
 
 Update  M_MaritalStatusMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update  M_RelationshipMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
@@ -312,6 +329,127 @@ Update M_radiologyTestmaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),
 Update M_ModeOfDischarge set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_Departmentmaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update RoomMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_pathunitmaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update M_Templatemaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_pathtestmaster set TestTime=getdate(),TestDate=getdate(), IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+
+create sp---> m_Rtrv_ItemMaster_by_Name_Pagi
+      
+CREATE  proc [dbo].[m_Rtrv_ItemMaster_by_Name_Pagi]                      
+(                          
+@ItemName nvarchar(200) ,              
+@StoreID Bigint  ,          
+@Start INT,                
+@Length INT                               
+)                          
+          
+as                          
+IF @ItemName = '%'                                      
+ SET @ItemName = NULL          
+              
+IF @StoreID = 0                                     
+ SET @StoreID = NULL                              
+          
+Begin                                    
+          
+ SET NOCOUNT ON;                                
+      
+               
+    SELECT COUNT(1) total_row                    
+    From    dbo.M_ItemMaster INNER JOIN        
+        dbo.M_AssignItemToStore ON dbo.M_ItemMaster.ItemID = dbo.M_AssignItemToStore.ItemId INNER JOIN        
+        dbo.M_StoreMaster ON dbo.M_AssignItemToStore.StoreId = dbo.M_StoreMaster.StoreId LEFT OUTER JOIN        
+        dbo.M_ItemTypeMaster ON dbo.M_ItemMaster.ItemTypeID = dbo.M_ItemTypeMaster.ItemTypeId LEFT OUTER JOIN        
+        dbo.M_CurrencyMaster ON dbo.M_ItemMaster.CurrencyId = dbo.M_CurrencyMaster.CurrencyId LEFT OUTER JOIN        
+        dbo.M_UnitofMeasurementMaster AS M_UnitofMeasurementMaster_1 ON         
+        dbo.M_ItemMaster.StockUOMId = M_UnitofMeasurementMaster_1.UnitofMeasurementId LEFT OUTER JOIN        
+        dbo.M_UnitofMeasurementMaster ON dbo.M_ItemMaster.PurchaseUOMId = dbo.M_UnitofMeasurementMaster.UnitofMeasurementId LEFT OUTER JOIN        
+        dbo.M_ItemCategoryMaster ON dbo.M_ItemMaster.ItemCategaryId = dbo.M_ItemCategoryMaster.ItemCategoryId LEFT OUTER JOIN        
+        dbo.M_ItemClassMaster ON dbo.M_ItemMaster.ItemClassId = dbo.M_ItemClassMaster.ItemClassId LEFT OUTER JOIN        
+        dbo.M_ItemGenericNameMaster ON dbo.M_ItemMaster.ItemGenericNameId = dbo.M_ItemGenericNameMaster.ItemGenericNameId          
+    WHERE  (dbo.M_ItemMaster.ItemName LIKE COALESCE (@ItemName, dbo.M_ItemMaster.ItemName))      
+      
+      
+ SELECT dbo.M_ItemMaster.ItemID, dbo.M_ItemMaster.ItemShortName, dbo.M_ItemMaster.ItemName, dbo.M_ItemTypeMaster.ItemTypeName,         
+        dbo.M_ItemMaster.ItemTypeID, dbo.M_ItemMaster.ItemCategaryId, dbo.M_ItemCategoryMaster.ItemCategoryName, dbo.M_ItemMaster.ItemClassId,         
+        dbo.M_ItemClassMaster.ItemClassName, dbo.M_ItemMaster.ItemGenericNameId, dbo.M_ItemGenericNameMaster.ItemGenericName,         
+        dbo.M_ItemMaster.PurchaseUOMId, dbo.M_UnitofMeasurementMaster.UnitofMeasurementName AS PuchaseUOM, dbo.M_ItemMaster.StockUOMId,         
+        M_UnitofMeasurementMaster_1.UnitofMeasurementName AS StockUOM, dbo.M_ItemMaster.ConversionFactor, dbo.M_ItemMaster.CurrencyId,         
+        dbo.M_CurrencyMaster.CurrencyName, dbo.M_ItemMaster.TaxPer, dbo.M_ItemMaster.IsActive,       
+        dbo.M_ItemMaster.Addedby,           
+        dbo.M_ItemMaster.IsBatchRequired, dbo.M_ItemMaster.MinQty, dbo.M_ItemMaster.MaxQty, dbo.M_ItemMaster.ReOrder,         
+        dbo.M_StoreMaster.StoreName, dbo.M_AssignItemToStore.StoreId, dbo.M_ItemMaster.HSNcode, dbo.M_ItemMaster.CGST, dbo.M_ItemMaster.SGST,         
+        dbo.M_ItemMaster.IGST, dbo.M_ItemMaster.ManufId, dbo.M_ItemMaster.IsNarcotic, dbo.M_ItemMaster.ProdLocation, dbo.M_ItemMaster.IsH1Drug,         
+        dbo.M_ItemMaster.IsScheduleH, dbo.M_ItemMaster.IsHighRisk, dbo.M_ItemMaster.IsScheduleX, dbo.M_ItemMaster.IsLASA,         
+        dbo.M_ItemMaster.IsEmgerency, dbo.M_ItemMaster.DrugType, dbo.M_ItemMaster.DrugTypeName,        
+     ItemCompnayId        
+ FROM         dbo.M_ItemMaster INNER JOIN        
+        dbo.M_AssignItemToStore ON dbo.M_ItemMaster.ItemID = dbo.M_AssignItemToStore.ItemId INNER JOIN        
+        dbo.M_StoreMaster ON dbo.M_AssignItemToStore.StoreId = dbo.M_StoreMaster.StoreId LEFT OUTER JOIN        
+        dbo.M_ItemTypeMaster ON dbo.M_ItemMaster.ItemTypeID = dbo.M_ItemTypeMaster.ItemTypeId LEFT OUTER JOIN        
+        dbo.M_CurrencyMaster ON dbo.M_ItemMaster.CurrencyId = dbo.M_CurrencyMaster.CurrencyId LEFT OUTER JOIN        
+        dbo.M_UnitofMeasurementMaster AS M_UnitofMeasurementMaster_1 ON         
+        dbo.M_ItemMaster.StockUOMId = M_UnitofMeasurementMaster_1.UnitofMeasurementId LEFT OUTER JOIN        
+        dbo.M_UnitofMeasurementMaster ON dbo.M_ItemMaster.PurchaseUOMId = dbo.M_UnitofMeasurementMaster.UnitofMeasurementId LEFT OUTER JOIN        
+        dbo.M_ItemCategoryMaster ON dbo.M_ItemMaster.ItemCategaryId = dbo.M_ItemCategoryMaster.ItemCategoryId LEFT OUTER JOIN        
+        dbo.M_ItemClassMaster ON dbo.M_ItemMaster.ItemClassId = dbo.M_ItemClassMaster.ItemClassId LEFT OUTER JOIN        
+        dbo.M_ItemGenericNameMaster ON dbo.M_ItemMaster.ItemGenericNameId = dbo.M_ItemGenericNameMaster.ItemGenericNameId        
+ WHERE     (dbo.M_ItemMaster.ItemName LIKE COALESCE (@ItemName, dbo.M_ItemMaster.ItemName)) AND         
+        (dbo.M_AssignItemToStore.StoreId LIKE COALESCE (@StoreID, dbo.M_AssignItemToStore.StoreId))        
+    ORDER BY ItemID DESC       
+ OFFSET (@Start*@Length)+0 ROWS                
+    FETCH NEXT @Length ROWS ONLY       
+End 
+ 
+
+create SP--->m_Rtrv_SupplierMasterList_by_Name
+
+
+CREATE proc [dbo].[m_Rtrv_SupplierMasterList_by_Name]            
+(            
+@SupplierName Varchar(100),          
+@StoreID Bigint,  
+@Start INT,      
+@Length INT      
+)            
+as            
+IF @SupplierName = '%'                        
+ SET @SupplierName = NULL                
+      
+IF @StoreID = 0                                 
+ SET @StoreID = NULL              
+      
+Begin                      
+      
+      
+ SET NOCOUNT ON;    
+     SELECT COUNT(*) total_row          
+   
+ FROM            M_SupplierMaster INNER JOIN      
+                         M_CityMaster ON M_SupplierMaster.CityId = M_CityMaster.CityId INNER JOIN      
+                         M_CountryMaster ON M_SupplierMaster.CountryId = M_CountryMaster.CountryId INNER JOIN      
+                         M_StateMaster ON M_SupplierMaster.StateId = M_StateMaster.StateId INNER JOIN      
+                         M_AssignSupplierToStore ON M_SupplierMaster.SupplierId = dbo.M_AssignSupplierToStore.SupplierId      
+WHERE        (M_SupplierMaster.SupplierName LIKE COALESCE (@SupplierName, M_SupplierMaster.SupplierName)) AND (M_AssignSupplierToStore.StoreId LIKE COALESCE (@StoreID, M_AssignSupplierToStore.StoreId))      
+  
+      
+SELECT        M_SupplierMaster.SupplierId, M_SupplierMaster.SupplierName, M_SupplierMaster.ContactPerson, M_SupplierMaster.Address, M_SupplierMaster.CityId, M_SupplierMaster.StateId, M_SupplierMaster.CountryId,       
+                         M_SupplierMaster.CreditPeriod, M_SupplierMaster.Mobile, M_SupplierMaster.Phone, M_SupplierMaster.Fax, M_SupplierMaster.Email, M_SupplierMaster.ModeOfPayment, M_SupplierMaster.TermOfPayment,       
+                         M_SupplierMaster.TaxNature, M_SupplierMaster.CurrencyId, M_SupplierMaster.Octroi, M_SupplierMaster.Freight, M_SupplierMaster.IsDeleted, M_SupplierMaster.AddedBy, M_SupplierMaster.UpdatedBy,       
+                         M_CityMaster.CityName, M_StateMaster.StateName, M_CountryMaster.CountryName, M_AssignSupplierToStore.StoreId, M_SupplierMaster.GSTNo, M_SupplierMaster.PanNo      
+FROM            M_SupplierMaster INNER JOIN      
+                         M_CityMaster ON M_SupplierMaster.CityId = M_CityMaster.CityId INNER JOIN      
+                         M_CountryMaster ON M_SupplierMaster.CountryId = M_CountryMaster.CountryId INNER JOIN      
+                         M_StateMaster ON M_SupplierMaster.StateId = M_StateMaster.StateId INNER JOIN      
+                         M_AssignSupplierToStore ON M_SupplierMaster.SupplierId = dbo.M_AssignSupplierToStore.SupplierId      
+WHERE        (M_SupplierMaster.SupplierName LIKE COALESCE (@SupplierName, M_SupplierMaster.SupplierName)) AND (M_AssignSupplierToStore.StoreId LIKE COALESCE (@StoreID, M_AssignSupplierToStore.StoreId))      
+order by SupplierId desc    
+ OFFSET (@Start*@Length)+0 ROWS                    
+    FETCH NEXT @Length ROWS ONLY          
+End 
+
 
 
 
@@ -361,7 +499,7 @@ go
  
 ALTER TABLE M_ItemgenericNameMaster
 
-ADD 
+ADD [IsActive] [bit] NULL,
 
 [CreatedBy] [int] NULL,
 
@@ -404,7 +542,8 @@ go
  
 ALTER TABLE M_StoreMaster
 
-ADD 
+ADD [IsActive] [bit] NULL,
+
 
 [CreatedBy] [int] NULL,
 
@@ -512,13 +651,13 @@ Update  M_ItemTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,Mod
 
 Update  M_ItemCategoryMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
-Update  M_ItemgenericNameMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update  M_ItemgenericNameMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 Update  M_ItemClassMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 Update  M_ManuFactureMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
-Update  M_StoreMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update  M_StoreMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 Update  M_itemmaster set ItemTime=getdate(),CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
@@ -531,6 +670,9 @@ Update  M_ModeOfpayment set IsActive=1,CreatedBy=1, CreatedDate=getdate(),Modifi
 Update  M_TermsOfPaymentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 Update  Refund set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate(),AddedBy=1
+
+
+
  
  
  
