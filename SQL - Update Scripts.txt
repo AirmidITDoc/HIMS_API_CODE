@@ -455,20 +455,6 @@ End
 
 ---------------------------------------------------- Meshram ----------------------------------------------------------
 
-ALTER TABLE M_CurrencyMaster
-
-ADD 
-
-[CreatedBy] [int] NULL,
-
-	[CreatedDate] [datetime] NULL,
-
-	[ModifiedBy] [int] NULL,
-
-	[ModifiedDate] [datetime] NULL
-
-go
-
 ALTER TABLE M_ItemTypeMaster
 
 ADD 
@@ -645,7 +631,7 @@ ADD
  
 	
 
-Update  M_CurrencyMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
 
 Update  M_ItemTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
@@ -675,11 +661,25 @@ Update  Refund set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=
 
  
  
+ ----------------------------------------------------Syeda Masrat--------------------------------------------
  
  
- 
- 
+ALTER TABLE M_CurrencyMaster
 
+ADD 
+[IsActive] [bit] NULL,
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+
+ 
+Update  M_CurrencyMaster set IsActive = 1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 
 
 
