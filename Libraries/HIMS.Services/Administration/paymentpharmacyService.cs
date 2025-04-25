@@ -3,13 +3,16 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.Administration
 {
@@ -59,6 +62,27 @@ namespace HIMS.Services.Administration
                 scope.Complete();
             }
         }
+        public virtual async Task UpdateAsync(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] DetailEntity = { "SalesNo", "OpIpId", "OpIpType", "TotalAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "CashCounterId", "IsSellted", "IsPrint", "IsFree", "UnitId",
+                "AddedBy", "UpdatedBy", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription","ExtRegNo","CreditReason","CreditReasonId","RefundAmt","WardId","BedId","DiscperH","IsPurBill","IsBillCheck","IsRefundFlag","IsCancelled","SalesHeadName","SalesTypeId","RegId","PatientName","RegNo","ExtMobileNo","RoundOff","ExtAddress","TSalesDetails","VatAmount","ConcessionAuthorizationId"};
+            var UEntity = ObjTSalesHeader.ToDictionary();
+            foreach (var rProperty in DetailEntity)
+            {
+                UEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("Update_PharmSalesPaymentmodechange", CommandType.StoredProcedure, UEntity);
+
+        }
+
+
+
+
+
+
+
         //public virtual async Task CancelAsync(PaymentPharmacy objPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         //{
         //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

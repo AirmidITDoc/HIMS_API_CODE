@@ -23,6 +23,7 @@ namespace HIMS.Services.IPPatient
         Task IPInsertAsyncSP( Refund Objrefund, AdvanceHeader ObjAdvanceHeader,List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, int UserId, string UserName);
 
         // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
+        Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int CurrentUserId, string CurrentUserName);
 
     }
 }

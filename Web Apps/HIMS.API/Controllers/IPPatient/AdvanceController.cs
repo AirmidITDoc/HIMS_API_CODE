@@ -19,6 +19,9 @@ using HIMS.Data.DTO.Administration;
 using HIMS.API.Models.Masters;
 using HIMS.Data;
 using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.Pathology;
+using HIMS.API.Models.OPPatient;
+using HIMS.Services.OPPatient;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -43,14 +46,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BrowseAdvanceList")]
-      //  [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
         [HttpPost("PatientRefundOfAdvancesList")]
-    //    [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
@@ -59,7 +62,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -78,7 +81,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
         }
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelAdvance1 obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -101,7 +104,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.", objpayment.AdvanceId);
         }
         [HttpPut("Edit")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateAdvance obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -124,7 +127,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPRefundofAdvanceInsert")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInsertAsyncSP(RefundsModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
@@ -139,11 +142,6 @@ namespace HIMS.API.Controllers.IPPatient
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
                 model.AddedBy = CurrentUserId;
 
-                //objAdvanceDetail.Date = Convert.ToDateTime(obj.AdvanceDetail.Date);
-                //objAdvanceDetail.AddedBy = CurrentUserId;
-                //objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
-                //objpayment.AddBy = CurrentUserId;
-
                 await _IAdvanceService.IPInsertAsyncSP(model, AdvanceHeadermodel, AdvDetailmodel, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
@@ -151,6 +149,28 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPRefundofAdvance added successfully.", model.RefundId);
         }
 
+
+       
+        [HttpPut("UpdateAdvance")]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateAdvanceCancel obj)
+        {
+            AdvanceDetail model = obj.MapTo<AdvanceDetail>();
+            
+
+            if (obj.AdvanceDetailId != 0)
+            {
+                model.AddedBy = CurrentUserId;
+                model.IsCancelledDate = Convert.ToDateTime(model.IsCancelledDate);
+                model.IsCancelledby = CurrentUserId;
+               
+
+                await _IAdvanceService.UpdateAdvance(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvance successfully .");
+        }
 
     }
 }

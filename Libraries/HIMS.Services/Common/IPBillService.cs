@@ -712,7 +712,7 @@ namespace HIMS.Services.Common
         }
 
 
-        public virtual async Task IPAddcharges(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual async Task IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -720,7 +720,7 @@ namespace HIMS.Services.Common
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
                 "IsHospMrk","BillNoNavigation","BillNo"};
             var entity = ObjaddCharge.ToDictionary();
-           
+
             foreach (var rProperty in AEntity)
             {
                 entity.Remove(rProperty);
@@ -728,6 +728,20 @@ namespace HIMS.Services.Common
 
             string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
+            foreach (var item in objAddCharges)
+            { 
+            string[] Entity = {  "ChargesId","IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+                "IsHospMrk","BillNoNavigation","ClassId","BillNo"};
+            var Aentity = ObjaddCharge.ToDictionary();
+
+            foreach (var rProperty in Entity)
+            {
+                Aentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, Aentity);
+        }
         }
 
         public virtual async Task Update(AddCharge ObjaddCharge, int UserId, string UserName)
@@ -752,6 +766,10 @@ namespace HIMS.Services.Common
         public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId)
         {
 
+        
+
+        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
+        {
             DatabaseHelper odal = new();
             string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
@@ -787,8 +805,19 @@ namespace HIMS.Services.Common
             string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
         }
+        public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] DetailEntity = { "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CashCounterId", "IsRefundFlag", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy", "TRefundDetails" };
+            var UEntity = OBJRefund.ToDictionary();
+            foreach (var rProperty in DetailEntity)
+            {
+                UEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, UEntity);
+
+        }
 
     }
-
-
 }

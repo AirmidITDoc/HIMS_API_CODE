@@ -13,6 +13,7 @@ using HIMS.Api.Controllers;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -93,6 +94,23 @@ namespace HIMS.API.Controllers.Administration
                 await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy  updated successfully.");
+        }
+        [HttpPut("UpdatePharmSales")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(PharmSalesPaymentModel obj)
+        {
+            TSalesHeader model = obj.MapTo<TSalesHeader>();
+
+
+            if (obj.SalesId != 0)
+            {
+                model.Date = Convert.ToDateTime(model.Date);
+                model.AddedBy = CurrentUserId;
+                await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmSalesPaymentmodechange  update successfully .");
         }
 
 

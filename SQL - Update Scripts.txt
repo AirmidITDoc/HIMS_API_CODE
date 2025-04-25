@@ -317,6 +317,227 @@ Update RoomMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDa
 
 ---------------------------------------------------- Meshram ----------------------------------------------------------
 
+ALTER TABLE M_CurrencyMaster
+
+ADD 
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+
+ALTER TABLE M_ItemTypeMaster
+
+ADD 
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_ItemCategoryMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_ItemgenericNameMaster
+
+ADD 
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ 
+ALTER TABLE M_ItemClassMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+ 
+go
+ 
+ALTER TABLE M_ManuFactureMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+ 
+go
+ 
+ALTER TABLE M_StoreMaster
+
+ADD 
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ 
+ALTER TABLE M_itemmaster
+
+ADD [ItemTime][datetime] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_SupplierMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL,
+
+		[SupplierTime] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_TaxNatureMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_ModeOfpayment
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE M_TermsOfPaymentMaster
+
+ADD [IsActive] [bit] NULL,
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL
+
+go
+ 
+ALTER TABLE Refund
+
+ADD 
+
+[CreatedBy] [int] NULL,
+
+	[CreatedDate] [datetime] NULL,
+
+	[ModifiedBy] [int] NULL,
+
+	[ModifiedDate] [datetime] NULL,
+
+	[AddedBy] [int] NULL
+
+ 
+	
+
+Update  M_CurrencyMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ItemTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ItemCategoryMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ItemgenericNameMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ItemClassMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ManuFactureMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_StoreMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_itemmaster set ItemTime=getdate(),CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_SupplierMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate(),SupplierTime=getdate()
+
+Update  M_TaxNatureMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_ModeOfpayment set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  M_TermsOfPaymentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+Update  Refund set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate(),AddedBy=1
+ 
+ 
+ 
+ 
+ 
+ 
+
 
 
 
