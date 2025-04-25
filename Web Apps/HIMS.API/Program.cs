@@ -22,6 +22,7 @@ using WkHtmlToPdfDotNet;
 using Aspose.Cells.Charts;
 using System.Text.Json;
 using System.Runtime.InteropServices;
+using HIMS.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
@@ -29,6 +30,7 @@ builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<FormOptions>(o =>
@@ -136,25 +138,25 @@ builder.Services.AddSwaggerGen(c =>
 string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
 builder.Services.AddCors(options =>
 {
-    //options.AddPolicy(name: "corspolicy",
-    //                  builder =>
-    //                  {
-    //                      builder
-    //                      //.WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-    //                      .AllowAnyOrigin()
-    //                      .AllowAnyMethod()
-    //                      .AllowAnyHeader();
-    //                  });
+    options.AddPolicy(name: "CorsPolicy",
+                      builder =>
+                      {
+                          builder
+                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
+                      });
 });
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        //.AllowCredentials()
-        );
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy",
+//        builder => builder.AllowAnyOrigin()
+//        .AllowAnyMethod()
+//        .AllowAnyHeader()
+//        //.AllowCredentials()
+//        );
+//});
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();
@@ -162,6 +164,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint(Configuration["SwaggerUrl"], "API v1"));
 
 app.UseAuthentication();
 app.UseCors("CorsPolicy");
+app.MapHub<NotificationHub>("/himshub");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseRouting();

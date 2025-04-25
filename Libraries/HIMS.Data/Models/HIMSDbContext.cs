@@ -293,6 +293,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MisOpgroWiseTot> MisOpgroWiseTots { get; set; } = null!;
         public virtual DbSet<NeroOtdetail> NeroOtdetails { get; set; } = null!;
         public virtual DbSet<NewPriceList> NewPriceLists { get; set; } = null!;
+        public virtual DbSet<NotificationMaster> NotificationMasters { get; set; } = null!;
         public virtual DbSet<Obst> Obsts { get; set; } = null!;
         public virtual DbSet<OpIpColCashRefund> OpIpColCashRefunds { get; set; } = null!;
         public virtual DbSet<OpIpCollection> OpIpCollections { get; set; } = null!;
@@ -8358,6 +8359,15 @@ namespace HIMS.Data.Models
                     .HasColumnName("New_Price");
 
                 entity.Property(e => e.ServiceName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<NotificationMaster>(entity =>
+            {
+                entity.ToTable("NotificationMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReadDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Obst>(entity =>

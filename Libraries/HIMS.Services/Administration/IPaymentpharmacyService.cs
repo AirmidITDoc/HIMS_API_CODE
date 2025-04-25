@@ -19,5 +19,7 @@ namespace HIMS.Services.Administration
         Task InsertAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username);
 
         Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username);
+        Task UpdateAsync(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+
     }
 }
