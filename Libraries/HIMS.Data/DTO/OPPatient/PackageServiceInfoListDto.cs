@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.OPPatient
 {
-    public class PackageServiceListDto
+    public class PackageServiceInfoListDto
     {
         public string? ServiceName { get; set; }
         public long ServiceId {  get; set; }

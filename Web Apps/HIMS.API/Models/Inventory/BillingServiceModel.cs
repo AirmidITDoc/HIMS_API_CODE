@@ -61,5 +61,13 @@ namespace HIMS.API.Models.Inventory
 
             }
         }
- }
+        public class DifferTraiffModel
+        {
+        public long? OldTariffId { get; set; }
+        public long? NewTariffId { get; set; }
+
+        
+    }
+       
+}
 
