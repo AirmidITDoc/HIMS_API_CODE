@@ -19,10 +19,12 @@ namespace HIMS.Services.Inventory
         Task UpdateAsync(ServiceMaster objService, int UserId, string Username);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<PackageServiceListDto>> GetListAsync1(GridRequestModel objGrid);
+        Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
-        
+        Task UpdateDifferTraiff(ServiceDetail ObjServiceDetail, int UserId, string Username);
+
+
 
     }
 }

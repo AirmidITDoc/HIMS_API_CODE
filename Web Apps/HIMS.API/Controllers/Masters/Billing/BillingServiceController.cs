@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -29,7 +30,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("BillingList")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
@@ -39,9 +40,10 @@ namespace HIMS.API.Controllers.Masters.Billing
         //  [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
-            IPagedList<PackageServiceListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
+            IPagedList<PackageServiceInfoListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
             return Ok(ServiceList.ToGridResponse(objGrid, "PackageService List"));
         }
+        
 
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
@@ -115,6 +117,24 @@ namespace HIMS.API.Controllers.Masters.Billing
             var resultList = await _BillingService.GetServiceListwithGroupWise(TariffId, ClassId, IsPathRad, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
+
+        [HttpPut("UpdateDifferTraiff")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(DifferTraiffModel obj)
+        {
+            ServiceDetail model = obj.MapTo<ServiceDetail>();
+
+
+            if (obj.OldTariffId != 0)
+            {
+                
+                await _BillingService.UpdateDifferTraiff(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateDifferTraiff   successfully .");
+        }
+
     }
 }
 
