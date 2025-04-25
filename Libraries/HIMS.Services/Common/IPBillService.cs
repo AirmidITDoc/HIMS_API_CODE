@@ -763,12 +763,10 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId)
-        {
-
+     
         
 
-        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId)
         {
             DatabaseHelper odal = new();
             string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
