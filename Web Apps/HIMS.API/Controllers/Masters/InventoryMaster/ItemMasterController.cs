@@ -157,11 +157,11 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page Batch Pop.", resultList);
         }
 
-        [HttpGet("GetItemListBatchPopItemwise")]
-        public async Task<ApiResponse> GetItemListBatchPopItemwise(int StoreId, String ItemName)
+        [HttpGet("GetItemListforSalesPage")]
+        public async Task<ApiResponse> GetItemListforSalesPage(int StoreId, String ItemName)
         {
-            var resultList = await _ItemMasterServices.GetItemListBalpopup(StoreId, ItemName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page Batch Pop.", resultList);
+            var resultList = await _ItemMasterServices.GetItemListForSalesPage(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page", resultList);
         }
     }
 }

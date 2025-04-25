@@ -242,44 +242,67 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
         }
 
-        public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListBalpopup(int StoreId, String ItemName)
+        public virtual async Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName)
         {
-
-            var qry = (from currentStock in _context.TCurrentStocks
-                       join itemMaster in _context.MItemMasters
-                       on currentStock.ItemId equals itemMaster.ItemId
-                       join itemManufactureMaster in _context.MItemManufactureMasters
-                       on itemMaster.ManufId equals itemManufactureMaster.ItemManufactureId into manufactureGroup
-                       from manufacture in manufactureGroup.DefaultIfEmpty()
-                       where itemMaster.ItemName == "" || itemMaster.ItemName.Contains(ItemName)
-                          && currentStock.StoreId == StoreId
-                          && (currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0)) > 0
-                       orderby currentStock.BalanceQty descending
-                       select new ItemListForBatchPopDTO
-                       {
-                           StockId = currentStock.StockId,
-                           StoreId = currentStock.StoreId,
-                           ItemId = currentStock.ItemId,
-                           ItemName = itemMaster.ItemName,
-                           BalanceQty = currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0),
-                           LandedRate = currentStock.LandedRate,
-                           UnitMRP = currentStock.UnitMrp,
-                           PurchaseRate = currentStock.PurUnitRateWf,
-                           //currentStock.VatPercentage,
-                           //itemMaster.IsBatchRequired,
-                           BatchNo = currentStock.BatchNo,
-                           BatchExpDate = currentStock.BatchExpDate,
-                           ConverFactor = itemMaster.ConversionFactor,
-                           CGSTPer = currentStock.Cgstper,
-                           SGSTPer = currentStock.Sgstper,
-                           IGSTPer = currentStock.Igstper,
-                           ManufactureName = manufacture != null ? manufacture.ManufactureName : string.Empty,
-                           GrnRetQty = currentStock.GrnRetQty,
-                           DrugTypeName = itemMaster.DrugTypeName
-                       });
-            return await qry.Take(50).ToListAsync();
+            var qry = (
+                from item in _context.MItemMasters
+                join uom in _context.MUnitofMeasurementMasters
+                    on item.PurchaseUomid equals uom.UnitofMeasurementId
+                join stock in _context.TCurrentStocks
+                    on item.ItemId equals stock.ItemId into stockGroup
+                from stock in stockGroup.DefaultIfEmpty()
+                join gen in _context.MItemGenericNameMasters
+                    on item.ItemGenericNameId equals gen.ItemGenericNameId into genGroup
+                from gen in genGroup.DefaultIfEmpty()
+                where (string.IsNullOrEmpty(ItemName) || item.ItemName.Contains(ItemName))
+                      && stock.StoreId == StoreId
+                group new { item, stock, uom, gen } by new
+                {
+                    stock.StoreId,
+                    item.ItemId,
+                    item.ItemName,
+                    item.IsBatchRequired,
+                    item.IsNarcotic,
+                    uom.UnitofMeasurementName,
+                    item.ItemGenericNameId,
+                    gen.ItemGenericName,
+                    item.IsHighRisk,
+                    item.IsEmgerency,
+                    item.IsLasa,
+                    item.IsH1drug,
+                    item.DoseName,
+                    item.DoseDay,
+                    item.Instruction
+                } into g
+                select new ItemListForSalesPageDTO
+                {
+                    StoreId= g.Key.StoreId,
+                    ItemId=g.Key.ItemId,
+                    ItemName=g.Key.ItemName,
+                    BalanceQty = g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)),
+                    LandedRate = g.Max(x => x.stock.LandedRate),
+                    UnitMRP = g.Max(x => x.stock.UnitMrp),
+                    PurchaseRate = g.Max(x => x.stock.PurUnitRateWf),
+                    //VatPercentage = g.Max(x => x.stock.VatPercentage),
+                    //g.Key.IsBatchRequired,
+                    //ReOrder = g.Max(x => x.item.ReOrder),
+                    //IsNarcotic = g.Key.IsNarcotic ?? false,
+                    CGSTPer = g.Max(x => x.stock.Cgstper),
+                    SGSTPer = g.Max(x => x.stock.Sgstper),
+                    IGSTPer = g.Max(x => x.stock.Igstper),
+                    UOM = g.Key.UnitofMeasurementName,
+                    //g.Key.ItemGenericNameId,
+                    //g.Key.ItemGenericName,
+                    //g.Key.IsHighRisk,
+                    //g.Key.IsEmgerency,
+                    //g.Key.IsLasa,
+                    //g.Key.IsH1drug,
+                    //DoseName = g.Key.DoseName ?? "",
+                    //DoseDay = g.Key.DoseDay ?? 0,
+                    //Instruction = g.Key.Instruction ?? ""
+                }
+            );
+            return await qry.Take(50).ToListAsync(); 
         }
-
-
     }
 }
