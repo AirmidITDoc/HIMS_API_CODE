@@ -451,8 +451,214 @@ order by SupplierId desc
 End 
 
 
+Create SP--->[m_Rtrv_Rolemaster]
+
+CREATE PROCEDURE [dbo].[m_Rtrv_Rolemaster]    
+(    
+@RoleName [nvarchar](250),    
+@Start INT,                
+@Length INT      
+)    
+as    
+SELECT COUNT(*) total_row     
+FROM RoleMaster    
+ WHERE IsActive=1 AND RoleName LIKE '%'+@RoleName+'%'    
+SELECT dbo.Rolemaster.RoleId,dbo.Rolemaster.RoleName,IsActive    
+ FROM RoleMaster    
+ WHERE IsActive=1 AND RoleName LIKE '%'+@RoleName+'%'    
+ ORDER BY dbo.Rolemaster.RoleId DESC    
+  OFFSET (@Start*@Length)+0 ROWS            
+  FETCH NEXT @Length ROWS ONLY 
+
+Create SP-->  [m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls] 
+                 
+CREATE PROCEDURE [dbo].[m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls]                                                                
+(                                                
+ @F_Name     [nvarchar](50),                                                          
+ @L_Name     [nvarchar](50),                                                        
+ @Reg_No     [bigint],                                                        
+ @From_Dt    [DateTime],                                                           
+ @To_Dt      [DateTime],                                            
+ @IsCompleted [tinyint],                                                      
+ @OP_IP_Type [tinyint],                
+ @CategoryId [bigint],      
+@Start INT,      
+@Length INT                                                            
+ )                                                      
+AS                                                     
+                                                
+IF @F_Name = '%'                                                          
+ SET @F_Name = NULL                                                          
+                                                           
+IF @L_Name = '%'                                                          
+ SET @L_Name = NULL                                                          
+                                                           
+IF @Reg_No = 0                                                          
+ SET @Reg_No = NULL                                                          
+                                                       
+IF @From_Dt ='01/01/1900'                                                          
+ SET @From_Dt = NULL                                                          
+                                                           
+IF @To_Dt = '01/01/1900'                                                        
+ SET @To_Dt = NULL               
+               
+IF @CategoryId = 0                                                          
+ SET @CategoryId = NULL                                                             
+                                           
+If     @OP_IP_Type = 0                                                       
+Begin                 
+  select count(*) total_row      
+  From T_RadiologyReportHeader      
+  Where (dbo.T_RadiologyReportHeader.OPD_IPD_Type = 0) AND (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND                 
+                      COALESCE (@To_Dt, dbo.T_RadiologyReportHeader.RadDate))            
+      
+  SELECT  distinct   dbo.T_RadiologyReportHeader.RadReportId,               
+      CONVERT(Varchar(11), dbo.T_RadiologyReportHeader.RadDate, 103) AS RadDate,              
+         dbo.T_RadiologyReportHeader.RadTime,                 
+         dbo.VisitDetails.VisitId AS Visit_Adm_ID, dbo.Registration.RegNo,                 
+         dbo.DB_PrefixMaster.PrefixName + ' ' + dbo.Registration.FirstName + ' ' + dbo.Registration.MiddleName + ' ' + dbo.Registration.LastName AS PatientName,                 
+         dbo.DB_GenderMaster.GenderName, 'Dr.' + ' ' + dbo.DoctorMaster.FirstName + ' ' + dbo.DoctorMaster.LastName AS ConsultantDoctor, dbo.VisitDetails.VisitDate,                 
+         dbo.VisitDetails.VisitTime, dbo.M_RadiologyTestMaster.TestName, dbo.Bill.OPD_IPD_Type as opdipdtype, dbo.Bill.PBillNo, dbo.ServiceMaster.ServiceName,                 
+         dbo.T_RadiologyReportHeader.IsCompleted, dbo.T_RadiologyReportHeader.IsPrinted, dbo.VisitDetails.OPDNo AS OP_IP_Number,                 
+         dbo.T_RadiologyReportHeader.RadTestID, dbo.M_RadiologyTestMaster.TestId, dbo.T_RadiologyReportHeader.ChargeId,                 
+         dbo.M_Radiology_CategoryMaster.CategoryName, dbo.T_RadiologyReportHeader.OPD_IPD_ID as opdipdid,'OP' AS PatientType, dbo.Registration.AgeYear                
+  FROM         dbo.M_Radiology_CategoryMaster INNER JOIN                
+         dbo.M_RadiologyTestMaster ON dbo.M_Radiology_CategoryMaster.CategoryId = dbo.M_RadiologyTestMaster.CategoryId RIGHT OUTER JOIN                
+         dbo.ServiceMaster INNER JOIN                
+         dbo.T_RadiologyReportHeader LEFT OUTER JOIN                
+         dbo.Registration INNER JOIN                
+         dbo.VisitDetails ON dbo.Registration.RegId = dbo.VisitDetails.RegID INNER JOIN                
+         dbo.DB_PrefixMaster ON dbo.Registration.PrefixId = dbo.DB_PrefixMaster.PrefixID INNER JOIN          
+         dbo.DB_GenderMaster ON dbo.Registration.GenderId = dbo.DB_GenderMaster.GenderId INNER JOIN                
+         dbo.Bill ON dbo.VisitDetails.VisitId = dbo.Bill.OPD_IPD_ID INNER JOIN             
+         dbo.BillDetails ON dbo.Bill.BillNo = dbo.BillDetails.BillNo INNER JOIN                
+    dbo.AddCharges ON dbo.BillDetails.ChargesID = dbo.AddCharges.ChargesId ON dbo.T_RadiologyReportHeader.ChargeId = dbo.AddCharges.ChargesId AND                 
+         dbo.T_RadiologyReportHeader.OPD_IPD_ID = dbo.VisitDetails.VisitId ON dbo.ServiceMaster.ServiceId = dbo.AddCharges.ServiceId INNER JOIN                
+         dbo.DoctorMaster ON dbo.VisitDetails.ConsultantDocId = dbo.DoctorMaster.DoctorId ON                 
+         dbo.M_RadiologyTestMaster.ServiceId = dbo.T_RadiologyReportHeader.RadTestID                
+  WHERE     (dbo.Bill.OPD_IPD_Type = 0) AND (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND                 
+         COALESCE (@To_Dt, dbo.T_RadiologyReportHeader.RadDate)) AND (dbo.Registration.FirstName LIKE COALESCE (@F_Name, dbo.Registration.FirstName)) AND                 
+         (dbo.Registration.LastName LIKE COALESCE (@L_Name, dbo.Registration.LastName)) AND (dbo.Registration.RegNo = COALESCE (@Reg_No,                 
+         dbo.Registration.RegNo)) AND (dbo.T_RadiologyReportHeader.IsCompleted = COALESCE (@IsCompleted, dbo.T_RadiologyReportHeader.IsCompleted)) AND                 
+         (dbo.T_RadiologyReportHeader.OPD_IPD_Type = 0) AND (dbo.T_RadiologyReportHeader.IsCancelled = 0)              
+         -- AND (dbo.M_RadiologyTestMaster.CategoryId = COALESCE (@CategoryId, dbo.M_RadiologyTestMaster.CategoryId))               
+       --and dbo.Bill.PBillNo is null         
+  Order by dbo.T_RadiologyReportHeader.RadReportId desc      
+  OFFSET (@Start*@Length)+0 ROWS                            
+  FETCH NEXT @Length ROWS ONLY       
+End                    
+Else If   @OP_IP_Type = 1                                          
+     Begin                                
+    select count(*) total_row      
+    From T_RadiologyReportHeader      
+    Where (dbo.T_RadiologyReportHeader.OPD_IPD_Type = 1)       
+    AND (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND COALESCE (@To_Dt, dbo.T_RadiologyReportHeader.RadDate))            
+      
+  SELECT     dbo.T_RadiologyReportHeader.RadReportId,  CONVERT(Varchar(11), dbo.T_RadiologyReportHeader.RadDate, 103) AS RadDate, dbo.T_RadiologyReportHeader.RadTime,                 
+         dbo.Admission.AdmissionID AS Visit_Adm_ID, dbo.Registration.RegNo,                 
+         dbo.DB_PrefixMaster.PrefixName + ' ' + dbo.Registration.FirstName + ' ' + dbo.Registration.MiddleName + ' ' + dbo.Registration.LastName AS PatientName,                 
+         dbo.DB_GenderMaster.GenderName, 'Dr.' + ' ' + dbo.DoctorMaster.FirstName + ' ' + dbo.DoctorMaster.LastName AS ConsultantDoctor,                 
+         isnull(dbo.M_RadiologyTestMaster.TestName,'')  as TestName,               
+         dbo.Bill.OPD_IPD_Type as opdipdtype, dbo.Bill.PBillNo, dbo.ServiceMaster.ServiceName, dbo.T_RadiologyReportHeader.IsCompleted,                 
+         dbo.T_RadiologyReportHeader.IsPrinted,               
+         dbo.T_RadiologyReportHeader.RadTestID,               
+          isnull(dbo.M_RadiologyTestMaster.TestId,0) as TestId,               
+         dbo.T_RadiologyReportHeader.ChargeId,                 
+         isnull(dbo.M_Radiology_CategoryMaster.CategoryName,'') as CategoryName,               
+         dbo.T_RadiologyReportHeader.IsCancelled, dbo.Admission.AdmissionDate, dbo.Admission.AdmissionTime,                 
+         dbo.Admission.IPDNo AS OP_IP_Number, dbo.T_RadiologyReportHeader.OPD_IPD_ID as opdipdid, 'IP' AS PatientType, dbo.Registration.AgeYear                 
+  FROM         dbo.ServiceMaster INNER JOIN                
+         dbo.AddCharges ON dbo.ServiceMaster.ServiceId = dbo.AddCharges.ServiceId LEFT OUTER JOIN                
+         dbo.BillDetails INNER JOIN                
+         dbo.Bill ON dbo.BillDetails.BillNo = dbo.Bill.BillNo ON dbo.AddCharges.ChargesId = dbo.BillDetails.ChargesID LEFT OUTER JOIN                
+         dbo.M_Radiology_CategoryMaster INNER JOIN                
+         dbo.M_RadiologyTestMaster ON dbo.M_Radiology_CategoryMaster.CategoryId = dbo.M_RadiologyTestMaster.CategoryId RIGHT OUTER JOIN                
+         dbo.T_RadiologyReportHeader INNER JOIN                
+         dbo.Admission INNER JOIN                
+         dbo.DB_PrefixMaster INNER JOIN                
+         dbo.Registration ON dbo.DB_PrefixMaster.PrefixID = dbo.Registration.PrefixId INNER JOIN                
+         dbo.DB_GenderMaster ON dbo.Registration.GenderId = dbo.DB_GenderMaster.GenderId ON dbo.Admission.RegID = dbo.Registration.RegId INNER JOIN                
+      dbo.DoctorMaster ON dbo.Admission.DocNameID = dbo.DoctorMaster.DoctorId ON dbo.T_RadiologyReportHeader.OPD_IPD_ID = dbo.Admission.AdmissionID ON                 
+        dbo.M_RadiologyTestMaster.ServiceId = dbo.T_RadiologyReportHeader.RadTestID ON dbo.AddCharges.ChargesId = dbo.T_RadiologyReportHeader.ChargeId                
+  WHERE     (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND COALESCE (@To_Dt,                 
+         dbo.T_RadiologyReportHeader.RadDate)) AND (dbo.Registration.FirstName LIKE COALESCE (@F_Name, dbo.Registration.FirstName)) AND                 
+         (dbo.Registration.LastName LIKE COALESCE (@L_Name, dbo.Registration.LastName)) AND (dbo.Registration.RegNo = COALESCE (@Reg_No,                 
+         dbo.Registration.RegNo)) AND (dbo.T_RadiologyReportHeader.IsCompleted = COALESCE (@IsCompleted, dbo.T_RadiologyReportHeader.IsCompleted)) AND                 
+         (dbo.T_RadiologyReportHeader.OPD_IPD_Type = 1) AND (dbo.T_RadiologyReportHeader.IsCancelled = 0)                
+         -- AND (dbo.M_RadiologyTestMaster.CategoryId = COALESCE (@CategoryId, dbo.M_RadiologyTestMaster.CategoryId))                
+          --and dbo.Bill.PBillNo is null                              
+  Order by dbo.T_RadiologyReportHeader.RadReportId desc      
+  OFFSET (@Start*@Length)+0 ROWS                            
+  FETCH NEXT @Length ROWS ONLY       
+End      
+else                                           
+                  
+SELECT     dbo.T_RadiologyReportHeader.RadReportId,  CONVERT(Varchar(11), dbo.T_RadiologyReportHeader.RadDate, 103) AS RadDate, dbo.T_RadiologyReportHeader.RadTime,                 
+                      dbo.VisitDetails.VisitId AS Visit_Adm_ID, dbo.Registration.RegNo,                 
+                      dbo.DB_PrefixMaster.PrefixName + ' ' + dbo.Registration.FirstName + ' ' + dbo.Registration.MiddleName + ' ' + dbo.Registration.LastName AS PatientName,                 
+                      dbo.DB_GenderMaster.GenderName, 'Dr.' + ' ' + dbo.DoctorMaster.FirstName + ' ' + dbo.DoctorMaster.LastName AS ConsultantDoctor,                 
+                      dbo.M_RadiologyTestMaster.TestName, dbo.Bill.OPD_IPD_Type as opdipdtype, dbo.Bill.PBillNo, dbo.ServiceMaster.ServiceName, dbo.T_RadiologyReportHeader.IsCompleted,          
+                      dbo.T_RadiologyReportHeader.IsPrinted, dbo.VisitDetails.OPDNo AS OP_IP_Number, dbo.T_RadiologyReportHeader.RadTestID, dbo.M_RadiologyTestMaster.TestId,                 
+                      dbo.T_RadiologyReportHeader.ChargeId, dbo.M_Radiology_CategoryMaster.CategoryName, dbo.T_RadiologyReportHeader.OPD_IPD_ID as opdipdid, 'OP' AS PatientType,                 
+                      dbo.Registration.AgeYear                
+FROM         dbo.M_Radiology_CategoryMaster INNER JOIN                
+                      dbo.M_RadiologyTestMaster ON dbo.M_Radiology_CategoryMaster.CategoryId = dbo.M_RadiologyTestMaster.CategoryId RIGHT OUTER JOIN                
+                      dbo.T_RadiologyReportHeader INNER JOIN                
+                      dbo.VisitDetails ON dbo.T_RadiologyReportHeader.OPD_IPD_ID = dbo.VisitDetails.VisitId INNER JOIN                
+                      dbo.Registration ON dbo.VisitDetails.RegID = dbo.Registration.RegId INNER JOIN                
+                      dbo.DB_PrefixMaster ON dbo.Registration.PrefixId = dbo.DB_PrefixMaster.PrefixID INNER JOIN                
+                      dbo.DB_GenderMaster ON dbo.Registration.GenderId = dbo.DB_GenderMaster.GenderId INNER JOIN                
+                      dbo.Bill ON dbo.VisitDetails.VisitId = dbo.Bill.OPD_IPD_ID INNER JOIN              
+                      dbo.BillDetails ON dbo.Bill.BillNo = dbo.BillDetails.BillNo INNER JOIN                
+                      dbo.AddCharges ON dbo.BillDetails.ChargesID = dbo.AddCharges.ChargesId AND dbo.T_RadiologyReportHeader.ChargeId = dbo.AddCharges.ChargesId INNER JOIN                
+                      dbo.ServiceMaster ON dbo.AddCharges.ServiceId = dbo.ServiceMaster.ServiceId INNER JOIN                
+                      dbo.DoctorMaster ON dbo.VisitDetails.ConsultantDocId = dbo.DoctorMaster.DoctorId ON                 
+                      dbo.M_RadiologyTestMaster.ServiceId = dbo.T_RadiologyReportHeader.RadTestID                
+WHERE     (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND COALESCE (@To_Dt,                 
+                      dbo.T_RadiologyReportHeader.RadDate)) AND (dbo.Registration.FirstName LIKE COALESCE (@F_Name, dbo.Registration.FirstName)) AND                 
+ (dbo.Registration.LastName LIKE COALESCE (@L_Name, dbo.Registration.LastName)) AND (dbo.Registration.RegNo = COALESCE (@Reg_No,                 
+                      dbo.Registration.RegNo)) AND (dbo.T_RadiologyReportHeader.IsCompleted = COALESCE (@IsCompleted, dbo.T_RadiologyReportHeader.IsCompleted)) AND                 
+                      (dbo.T_RadiologyReportHeader.IsCancelled = 0) AND (dbo.Bill.OPD_IPD_Type = 0)                  
+                      -- AND (dbo.M_RadiologyTestMaster.CategoryId = COALESCE (@CategoryId, dbo.M_RadiologyTestMaster.CategoryId))               
+                       --and dbo.Bill.PBillNo is null                 
+                   
+ union all                  
+                   
+ SELECT     dbo.T_RadiologyReportHeader.RadReportId,  CONVERT(Varchar(11), dbo.T_RadiologyReportHeader.RadDate, 103) AS RadDate, dbo.T_RadiologyReportHeader.RadTime,                 
+                      dbo.Admission.AdmissionID AS Visit_Adm_ID, dbo.Registration.RegNo,                 
+                      dbo.DB_PrefixMaster.PrefixName + ' ' + dbo.Registration.FirstName + ' ' + dbo.Registration.MiddleName + ' ' + dbo.Registration.LastName AS PatientName,                 
+                      dbo.DB_GenderMaster.GenderName, 'Dr.' + ' ' + dbo.DoctorMaster.FirstName + ' ' + dbo.DoctorMaster.LastName AS ConsultantDoctor,                 
+                      dbo.M_RadiologyTestMaster.TestName, dbo.Bill.OPD_IPD_Type as opdipdtype, dbo.Bill.PBillNo, dbo.ServiceMaster.ServiceName, dbo.T_RadiologyReportHeader.IsCompleted,                 
+                      dbo.T_RadiologyReportHeader.IsPrinted, dbo.Admission.IPDNo AS OP_IP_Number, dbo.T_RadiologyReportHeader.RadTestID, dbo.M_RadiologyTestMaster.TestId,                 
+                      dbo.T_RadiologyReportHeader.ChargeId, dbo.M_Radiology_CategoryMaster.CategoryName, dbo.T_RadiologyReportHeader.OPD_IPD_ID as opdipdid, 'IP' AS PatientType,                 
+                      dbo.Registration.AgeYear                
+FROM         dbo.ServiceMaster INNER JOIN                
+                      dbo.AddCharges ON dbo.ServiceMaster.ServiceId = dbo.AddCharges.ServiceId LEFT OUTER JOIN                
+                      dbo.BillDetails INNER JOIN                
+                      dbo.Bill ON dbo.BillDetails.BillNo = dbo.Bill.BillNo ON dbo.AddCharges.ChargesId = dbo.BillDetails.ChargesID LEFT OUTER JOIN                
+                      dbo.M_Radiology_CategoryMaster INNER JOIN                
+                      dbo.M_RadiologyTestMaster ON dbo.M_Radiology_CategoryMaster.CategoryId = dbo.M_RadiologyTestMaster.CategoryId RIGHT OUTER JOIN                
+                      dbo.T_RadiologyReportHeader INNER JOIN                
+                      dbo.Admission INNER JOIN                
+                      dbo.DB_PrefixMaster INNER JOIN                
+                      dbo.Registration ON dbo.DB_PrefixMaster.PrefixID = dbo.Registration.PrefixId INNER JOIN                
+                      dbo.DB_GenderMaster ON dbo.Registration.GenderId = dbo.DB_GenderMaster.GenderId ON dbo.Admission.RegID = dbo.Registration.RegId INNER JOIN                
+                      dbo.DoctorMaster ON dbo.Admission.DocNameID = dbo.DoctorMaster.DoctorId ON dbo.T_RadiologyReportHeader.OPD_IPD_ID = dbo.Admission.AdmissionID ON                 
+                      dbo.M_RadiologyTestMaster.ServiceId = dbo.T_RadiologyReportHeader.RadTestID ON dbo.AddCharges.ChargesId = dbo.T_RadiologyReportHeader.ChargeId                
+WHERE     (dbo.T_RadiologyReportHeader.RadDate BETWEEN COALESCE (@From_Dt, dbo.T_RadiologyReportHeader.RadDate) AND COALESCE (@To_Dt,                 
+                      dbo.T_RadiologyReportHeader.RadDate)) AND (dbo.Registration.FirstName LIKE COALESCE (@F_Name, dbo.Registration.FirstName)) AND                 
+                      (dbo.Registration.LastName LIKE COALESCE (@L_Name, dbo.Registration.LastName)) AND (dbo.Registration.RegNo = COALESCE (@Reg_No,                 
+                      dbo.Registration.RegNo)) AND (dbo.T_RadiologyReportHeader.IsCompleted = COALESCE (@IsCompleted, dbo.T_RadiologyReportHeader.IsCompleted)) AND                 
+                      (dbo.T_RadiologyReportHeader.IsCancelled = 0)  AND (dbo.Bill.OPD_IPD_Type = 1)                   
+                   --    AND (dbo.M_RadiologyTestMaster.CategoryId = COALESCE (@CategoryId, dbo.M_RadiologyTestMaster.CategoryId))               
+                       --and dbo.Bill.PBillNo is null       
+Order by dbo.T_RadiologyReportHeader.RadReportId desc      
+OFFSET (@Start*@Length)+0 ROWS                            
+FETCH NEXT @Length ROWS ONLY 
 
 
+Alter sp--> [Retrieve_BrowseOPDPaymentReceipt]---> Add start and Length
+ Alter SP --> [Rtrv_LabOrRadRequestList]--> Add start and Length
 ---------------------------------------------------- -----********* ----------------------------------------------------------
 
 ALTER TABLE M_CurrencyMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
@@ -535,10 +741,16 @@ Update  M_TermsOfPaymentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate()
 Update  Refund set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate(),AddedBy=1
 Update  M_UnitOfMeasurementMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update  M_Radiology_Categorymaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+-----------------------------------------------------------------------------------------------
 
-
-
-
+ALTER TABLE M_PathunitMaster DROP COLUMN Isdeleted;
+ALTER TABLE M_RadiologyTestMaster DROP COLUMN Isdeleted;
+ALTER TABLE M_PathParameterMaster DROP COLUMN Isdeleted;
+ALTER TABLE M_CurrencyMaster DROP COLUMN Isdeleted;
+ 
+ALTER TABLE M_ManufactureMaster DROP COLUMN Isdeleted;  db command pending
+ 
+ 
 
  
  

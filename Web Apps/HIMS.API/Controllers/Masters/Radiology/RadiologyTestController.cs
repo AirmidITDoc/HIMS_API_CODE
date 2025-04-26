@@ -29,9 +29,20 @@ namespace HIMS.API.Controllers.Masters.Radiology
             _RadiologyTestService = repository;
             _repository = repository1;
         }
+
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //     [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MRadiologyTestMaster> MRadiologyTestMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MRadiologyTestMasterList.ToGridResponse(objGrid, "MRadiologyTestMaster  List"));
+        }
+
         [HttpPost("RadiologyList")]
         //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
             return Ok(RadiologyList.ToGridResponse(objGrid, "RadiologyList "));
