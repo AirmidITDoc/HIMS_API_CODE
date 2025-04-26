@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AddChargeInsert")]
-     //   [Permission(PageCode = "Charges", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("PaymentSettelment")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
             Payment model = obj.Payment.MapTo<Payment>();
@@ -140,7 +140,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.", model.PaymentId);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insertsp(BillingModel obj)
         {
 
@@ -167,7 +167,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertCreditSP(BillingModel obj)
         {
 
@@ -175,7 +175,6 @@ namespace HIMS.API.Controllers.IPPatient
           List<BillDetail> BillDetailModel = obj.BillDetail.MapTo<List<BillDetail>>();
             AddCharge AddChargeModel = obj.AddCharge.MapTo<AddCharge>();
             Admission AddmissionModel = obj.Addmission.MapTo<Admission>();
-            //   Payment paymentModel = obj.payment.MapTo<Payment>();
             Bill BillModel = obj.Bills.MapTo<Bill>();
             List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
             AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
@@ -183,8 +182,6 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
                 Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
-                //  paymentModel.PaymentDate = Convert.ToDateTime(obj.payment.PaymentDate);
-                //   paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
                 Model.AddedBy = CurrentUserId;
                 await _IPBillService.IPbillCreditAsyncSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
@@ -195,7 +192,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -256,7 +253,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPAddcharges")]
-      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPAddcharges(AddChargModel obj)
         {
             AddCharge Model = obj.AdddCharges.MapTo<AddCharge>();
@@ -274,7 +271,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("UpdateAddcharges/{id:int}")]
-   //     [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(UpdateAddchargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -282,22 +279,19 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-               // model.ModifiedBy = CurrentUserId;
-              //  model.ModifiedDate = DateTime.Now;
+              
                 await _IPBillService.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges updated successfully.");
         }
 
-
         [HttpPost("InsertLabRequest")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertLabRequest(LabRequestsModel obj)
         {
             if (obj.ClassID == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-                
             }
             // 👇 Manually assign fields from LabRequestsModel to AddCharge
             var model = new AddCharge
@@ -307,18 +301,12 @@ namespace HIMS.API.Controllers.IPPatient
                 ServiceId = obj.ServiceId,
                 ChargesDate = obj.ChargesDate,
                 DoctorId = obj.DoctorId,
-                AddedBy = CurrentUserId
+               
             };
-            
-            await _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId);
+            await _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId, obj.ReqDetId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LabRequest Added successfully.");
         }
-        //[HttpPost("InsertLabRequest")]
-        //public async Task<IActionResult> InsertLabRequest([FromBody] AddCharge ObjaddCharge)
-        //{
-        //    await _IPBillService.InsertLabRequest(ObjaddCharge, ObjaddCharge.UserId, "SystemUser");
-        //    return Ok("Inserted Successfully");
-        //}
+      
 
 
 

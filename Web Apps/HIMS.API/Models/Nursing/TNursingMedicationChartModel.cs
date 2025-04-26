@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -16,6 +17,23 @@ namespace HIMS.API.Models.Nursing
         public string? NurseName { get; set; }
         public bool? IsCancelled { get; set; }
         public string? DoseName { get; set; }
+
+    }
+
+
+    public class TNursingMedicationChartModelValidator : AbstractValidator<TNursingMedicationChartModel>
+    {
+        public TNursingMedicationChartModelValidator()
+        {
+            RuleFor(x => x.AdmId).NotNull().NotEmpty().WithMessage("AdmId is required");
+
+        }
+    }
+
+    public class NursingMedicationChartModel
+    {
+        public List<TNursingMedicationChartModel> NursingMedicationChart { get; set; }
+ 
 
     }
 }
