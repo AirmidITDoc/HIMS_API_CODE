@@ -30,14 +30,14 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("BillingList")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
         [HttpPost("PackageServiceInfoList")]
-        //  [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<PackageServiceInfoListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Canceled successfully.");
         }
         [HttpDelete("ServicDelete")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             ServiceMaster model = await _repository.GetById(x => x.ServiceId == Id);

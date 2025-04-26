@@ -9227,13 +9227,14 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<ServiceDetail>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ServiceDetail");
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
-                entity.Property(e => e.ServiceDetailId).ValueGeneratedOnAdd();
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.ServiceDetails)
+                    .HasForeignKey(d => d.ServiceId)
+                    .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
 
             modelBuilder.Entity<ServiceMaster>(entity =>
