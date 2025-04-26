@@ -31,9 +31,19 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             _repository = repository2;
             _IMPathParaRangeWithAgeMasterService = repository3;
         }
+
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //     [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MPathParameterMaster> MPathParameterMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MPathParameterMasterList.ToGridResponse(objGrid, "MPathParameterMaster  List"));
+        }
         [HttpPost("MPathParameterList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<MPathParameterListDto> MPathParameterList = await _IParameterMasterService.MPathParameterList(objGrid);
             return Ok(MPathParameterList.ToGridResponse(objGrid, "Pathology Parameter List"));

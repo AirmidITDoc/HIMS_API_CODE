@@ -28,6 +28,17 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             _ITestmasterService = repository;
             _repository = repository1;
         }
+
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MPathTestMaster> MPathTestMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MPathTestMasterList.ToGridResponse(objGrid, "MPathTestMaster  List"));
+        }
+
         [HttpPost("PathTestList")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> PathList(GridRequestModel objGrid)
@@ -45,7 +56,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         [HttpPost("PathSubTestList")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<SubTestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);
             return Ok(TestMasterList.ToGridResponse(objGrid, "PathSubTestList"));
