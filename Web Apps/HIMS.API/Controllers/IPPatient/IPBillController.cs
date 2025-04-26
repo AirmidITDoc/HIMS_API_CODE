@@ -286,7 +286,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertLabRequest")]
-      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertLabRequest(LabRequestsModel obj)
         {
             if (obj.ClassID == 0)
