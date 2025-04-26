@@ -7,7 +7,6 @@ namespace HIMS.Data.Models
     {
         public long UnitId { get; set; }
         public string? UnitName { get; set; }
-        public bool? Isdeleted { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public bool? IsActive { get; set; }
