@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("LastThreeItemList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);
@@ -153,6 +153,38 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _IPurchaseService.Getgrnlistbynameforgrnreturn(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
         }
+
+        [HttpPost("OpeningBalanceList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
+        {
+            IPagedList<OpeningBalListDto> List1 = await _IPurchaseService.GetOpeningBalanceList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Oening Balance List"));
+        }
+
+        [HttpPost("OpeningBalnceItemDetailList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetOpeningBalItemDetail(GridRequestModel objGrid)
+        {
+            IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IPurchaseService.GetOPningBalItemDetailList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
+        }
+
+        [HttpPost("WorkOrderList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetWorkorderlist(GridRequestModel objGrid)
+        {
+            IPagedList<WorkOrderListDto> List1 = await _IPurchaseService.GetWorkorderList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Work Order List"));
+        }
+
+        //[HttpPost("SupplierOaymnetStatusList")]
+        ////[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //public async Task<IActionResult> GetSupplierPaymentStatuslist(GridRequestModel objGrid)
+        //{
+        //    IPagedList<SupplierPaymentStatusListDto> List1 = await _IPurchaseService.GetSupplierPaymentStatusList(objGrid);
+        //    return Ok(List1.ToGridResponse(objGrid, "Supplier Payment Status List"));
+        //}
 
     }
 }
