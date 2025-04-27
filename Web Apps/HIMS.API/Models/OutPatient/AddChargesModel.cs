@@ -90,7 +90,7 @@ namespace HIMS.API.Models.OutPatient
     public class AddChargModel
     {
         public AdddChargesModel AdddCharges { get; set; }
-        public List< AddChargeModell> AddCharge { get; set; }
+        public List<AddChargeModell> AddCharge { get; set; }
 
     }
 }

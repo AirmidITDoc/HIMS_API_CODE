@@ -9,7 +9,7 @@ namespace HIMS.API.Models.OutPatient
         public long ClassID { get; set; }
         public long? ServiceId { get; set; }
         public long TraiffId { get; set; }
-        public long? ReqDetId { get; set; }
+        public long ReqDetId { get; set; }
         public long? UserId { get; set; }
         public DateTime? ChargesDate { get; set; }
         public long? DoctorId { get; set; }

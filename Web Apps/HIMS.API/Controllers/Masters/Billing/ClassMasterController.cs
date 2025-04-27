@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ClassMaster> ClassMasterList = await _repository.GetAllPagedAsync(objGrid);

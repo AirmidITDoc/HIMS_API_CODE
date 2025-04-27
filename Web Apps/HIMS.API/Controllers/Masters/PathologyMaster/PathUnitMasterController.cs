@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+   //     [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathUnitMaster> PathUnitMasterList = await _repository.GetAllPagedAsync(objGrid);

@@ -21,7 +21,7 @@ namespace HIMS.API.Models.Inventory
             public decimal? EmgAmt { get; set; }
             public double? EmgPer { get; set; }
             public bool? IsDocEditable { get; set; }
-            public List<ServiceDetailModel> ServiceDetails { get; set; }
+            public List<ServiceDetailModel> serviceDetails { get; set; }
         }
         public class BillingServiceModelValidator : AbstractValidator<BillingServiceModel>
         {
