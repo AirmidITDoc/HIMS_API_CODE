@@ -22,7 +22,8 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
-        Task UpdateDifferTraiff(ServiceDetail ObjServiceDetail, int UserId, string Username);
+        Task UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
+
 
 
 

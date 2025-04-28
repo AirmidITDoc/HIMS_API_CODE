@@ -118,6 +118,28 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
 
         }
+        public virtual async Task CancelAsync(AdvanceHeader ObjAdvanceHeader, /*AdvanceDetail ObjAdvanceDetail,*/ long AdvanceDetailId, double AdvanceAmount )
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rDetailEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "BalanceAmount", "AddedBy", "IsCancelledBy", "IsCancelledDate" };
+            var CAdvanceEntity = ObjAdvanceHeader.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                CAdvanceEntity.Remove(rProperty);
+            }
+            CAdvanceEntity["UserId"] = 1;
+            CAdvanceEntity["AdvanceDetailId"] = AdvanceDetailId;
+            CAdvanceEntity["AdvanceAmount"] = AdvanceAmount;
+            CAdvanceEntity["IsCancelled"] = 1;
+
+            odal.ExecuteNonQuery("m_UpdateAdvanceCancel", CommandType.StoredProcedure, CAdvanceEntity);
+        }
+    
+       
+
+
+
 
         public virtual async Task IPInsertAsyncSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, int UserId, string UserName)
         {

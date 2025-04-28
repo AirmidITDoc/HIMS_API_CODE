@@ -138,19 +138,42 @@ namespace HIMS.Services.Inventory
             // Return the results
             return await query.ToListAsync();
         }
-        public virtual async Task UpdateDifferTraiff(ServiceDetail ObjServiceDetail, int UserId, string UserName)
-        {
-            //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] DetailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", };
-            var SEntity = ObjServiceDetail.ToDictionary();
-            foreach (var rProperty in DetailEntity)
-            {
-                SEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, SEntity);
+        //public virtual async Task UpdateDifferTraiff(ServiceDetail ObjServiceDetail, long OldTariffId ,long NewTariffId ,int UserId, string UserName )
+        //{
+        //    //throw new NotImplementedException();
+        //    DatabaseHelper odal = new();
+        //    string[] DetailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "Service", "TariffId" };
+        //    var SEntity = ObjServiceDetail.ToDictionary();
+        //    foreach (var rProperty in DetailEntity)
+        //    {
+        //        SEntity.Remove(rProperty);
+        //    }
+        //    // Add TraiffId manually to dictionary
 
+        //    SEntity["OldTariffId"] = OldTariffId;
+        //    SEntity["NewTariffId"] = NewTariffId;
+        //    odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, SEntity);
+
+        //}
+
+        public virtual async Task UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId ,long NewTariffId ,int UserId, string UserName )
+        {
+            DatabaseHelper odal = new();
+
+            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "Service", "TariffId" };
+            var sEntity = ObjServiceDetail.ToDictionary();
+
+            foreach (var rProperty in detailEntity)
+            {
+                sEntity.Remove(rProperty);
+            }
+
+            // Add parameters manually
+            sEntity["OldTariffId"] = OldTariffId;
+            sEntity["NewTariffId"] = NewTariffId;
+            odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
+
 
     }
 }

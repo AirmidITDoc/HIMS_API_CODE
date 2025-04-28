@@ -118,22 +118,30 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
 
-        [HttpPut("UpdateDifferTraiff")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+       
+
+        [HttpPut("UpdateDifferTariff")]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(DifferTraiffModel obj)
         {
-            ServiceDetail model = obj.MapTo<ServiceDetail>();
-
-
-            if (obj.OldTariffId != 0)
+            if (obj.OldTariffId == 0 || obj.NewTariffId == 0)
             {
-                
-                await _BillingService.UpdateDifferTraiff(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid parameters: Tariff IDs cannot be zero.");
             }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateDifferTraiff   successfully .");
+
+            var model = new ServiceDetail
+            {
+                TariffId = obj.OldTariffId 
+            };
+
+            int userId = 1; 
+            string userName = "admin"; 
+
+            await _BillingService.UpdateDifferTariff(model, obj.OldTariffId, obj.NewTariffId, userId, userName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateDifferTraiff  successfully.");
         }
+
 
     }
 }
