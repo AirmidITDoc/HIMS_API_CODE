@@ -334,7 +334,7 @@ namespace HIMS.Services.Common
             {
                 entity.Remove(rProperty);
             }
-            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+            string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
             ObjBill.BillNo = Convert.ToInt32(vBillNo);
          //   ObjBillDetailsModel.BillNo = Convert.ToInt32(vBillNo);
             ObjAddCharge.BillNo = Convert.ToInt32(vBillNo);
@@ -350,7 +350,7 @@ namespace HIMS.Services.Common
                 {
                     Bentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+                odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
 
             string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
@@ -363,7 +363,7 @@ namespace HIMS.Services.Common
             {
                 AddEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
+            odal.ExecuteNonQuery("ps_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
 
             string[] rEntity2 = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId",
                              "TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur",
@@ -375,7 +375,7 @@ namespace HIMS.Services.Common
             {
                 entity2.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
+            odal.ExecuteNonQuery("ps_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
 
             string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
             var entity1 = Objpayment.ToDictionary();
@@ -383,7 +383,7 @@ namespace HIMS.Services.Common
             {
                 entity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+            odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, entity1);
 
             string[] rDetailEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt","BillDate", "OpdIpdType", "IsCancelled",
                                               "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled",
@@ -395,7 +395,7 @@ namespace HIMS.Services.Common
             {
                 BEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
+            odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
 
 
             foreach (var item in ObjadvanceDetailList)
@@ -407,7 +407,7 @@ namespace HIMS.Services.Common
                 {
                     AdvanceDetailEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+                odal.ExecuteNonQuery("ps_update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
 
             }
 
@@ -417,7 +417,7 @@ namespace HIMS.Services.Common
             {
                 AdvanceHeaderEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+            odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
 
 
         }
@@ -432,7 +432,7 @@ namespace HIMS.Services.Common
             {
                 entity.Remove(rProperty);
             }
-            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+            string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
             ObjBill.BillNo = Convert.ToInt32(vBillNo);
         //    ObjBillDetailsModel.BillNo = Convert.ToInt32(vBillNo);
             ObjAddCharge.BillNo = Convert.ToInt32(vBillNo);
@@ -447,7 +447,7 @@ namespace HIMS.Services.Common
                 {
                     Bentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+                odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
 
             string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
@@ -460,7 +460,7 @@ namespace HIMS.Services.Common
             {
                 AddEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
+            odal.ExecuteNonQuery("ps_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
 
             string[] rEntity2 = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId",
                              "TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur",
@@ -472,7 +472,7 @@ namespace HIMS.Services.Common
             {
                 entity2.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
+            odal.ExecuteNonQuery("ps_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
 
 
             string[] rDetailEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt","BillDate", "OpdIpdType", "IsCancelled",
@@ -485,7 +485,7 @@ namespace HIMS.Services.Common
             {
                 BEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
+            odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
 
 
             foreach (var item in ObjadvanceDetailList)
@@ -497,7 +497,7 @@ namespace HIMS.Services.Common
                 {
                     AdvanceDetailEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+                odal.ExecuteNonQuery("ps_update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
 
             }
 
@@ -507,7 +507,7 @@ namespace HIMS.Services.Common
             {
                 AdvanceHeaderEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+            odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
         }
 
 
@@ -526,7 +526,7 @@ namespace HIMS.Services.Common
             {
                 yentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
+            odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
             string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
             var entity = ObjBill.ToDictionary();
@@ -534,7 +534,7 @@ namespace HIMS.Services.Common
             {
                 entity.Remove(rProperty);
             }
-            string vBillNo = odal.ExecuteNonQuery("m_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+            string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
             ObjBill.BillNo = Convert.ToInt32(vBillNo);
         //    ObjBillDetails.BillNo = Convert.ToInt32(vBillNo);
             Objpayment.BillNo = Convert.ToInt32(vBillNo);
@@ -548,7 +548,7 @@ namespace HIMS.Services.Common
                 {
                     Bentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+                odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
             string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
             var entity1 = Objpayment.ToDictionary();
@@ -556,7 +556,7 @@ namespace HIMS.Services.Common
             {
                 entity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+            odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, entity1);
         }
         public virtual async Task IPDraftBillAsync(TDrbill ObjTDrbill,List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
         {
@@ -568,7 +568,7 @@ namespace HIMS.Services.Common
             {
                 entity.Remove(rProperty);
             }
-            string vDRBNo = odal.ExecuteNonQuery("insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
+            string vDRBNo = odal.ExecuteNonQuery("ps_insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
             ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
           
 
@@ -581,7 +581,7 @@ namespace HIMS.Services.Common
                 {
                     Dentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
+                odal.ExecuteNonQuery("ps_insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
             }
             
         }
@@ -601,7 +601,7 @@ namespace HIMS.Services.Common
                 entity.Remove(rProperty);
             }
 
-            string AChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+            string AChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
             ObjaddCharge.ChargesId = Convert.ToInt32(AChargesId);
 
             foreach (var item in objAddCharges)
@@ -636,7 +636,7 @@ namespace HIMS.Services.Common
                 entity.Remove(rProperty);
             }
 
-             odal.ExecuteNonQuery("m_update_IPAddCharges", CommandType.StoredProcedure, entity);
+             odal.ExecuteNonQuery("ps_update_IPAddCharges", CommandType.StoredProcedure, entity);
 
         }
 
@@ -661,7 +661,7 @@ namespace HIMS.Services.Common
             entity["ReqDetId"] = ReqDetId;
             entity["UserId"] = UserId;
 
-            odal.ExecuteNonQuery("m_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
 
         }
 
@@ -679,7 +679,7 @@ namespace HIMS.Services.Common
                 entity.Remove(rProperty);
             }
 
-            string ChargesId = odal.ExecuteNonQuery("m_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+            string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
         }
         public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)

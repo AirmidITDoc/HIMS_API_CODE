@@ -656,8 +656,42 @@ OFFSET (@Start*@Length)+0 ROWS
 FETCH NEXT @Length ROWS ONLY 
 
 
+Create SP--> [Ps_Rtrv_PathologyTestList]  
+
+  
+Create proc [dbo].[Ps_Rtrv_PathologyTestList]                    
+(                    
+ @ServiceName   [nvarchar](100),         
+ @Start INT,        
+ @Length INT        
+)                    
+as                     
+                    
+IF @ServiceName = '%'                          
+ SET @ServiceName = NULL         
+       
+   select count(*) total_row        
+   FROM     dbo.M_PathTestMaster INNER JOIN          
+                  dbo.M_PathCategoryMaster ON dbo.M_PathTestMaster.CategoryId = dbo.M_PathCategoryMaster.CategoryId LEFT OUTER JOIN          
+                  dbo.ServiceMaster ON dbo.M_PathTestMaster.ServiceID = dbo.ServiceMaster.ServiceId               
+      WHERE      (dbo.M_PathTestMaster.TestName LIKE COALESCE (@ServiceName, dbo.M_PathTestMaster.TestName))                 
+      
+SELECT dbo.M_PathTestMaster.TestId, dbo.M_PathTestMaster.TestName, dbo.M_PathTestMaster.PrintTestName, dbo.M_PathCategoryMaster.CategoryId, dbo.M_PathTestMaster.IsSubTest, dbo.M_PathTestMaster.TechniqueName,           
+                  dbo.M_PathTestMaster.MachineName, dbo.M_PathTestMaster.SuggestionNote, dbo.M_PathTestMaster.FootNote, dbo.M_PathTestMaster.AddedBy, dbo.M_PathCategoryMaster.CategoryName,           
+                  dbo.M_PathTestMaster.ServiceID, dbo.M_PathTestMaster.IsTemplateTest, dbo.ServiceMaster.ServiceName,dbo.M_PathTestMaster.IsActive          
+FROM     dbo.M_PathTestMaster INNER JOIN          
+                  dbo.M_PathCategoryMaster ON dbo.M_PathTestMaster.CategoryId = dbo.M_PathCategoryMaster.CategoryId LEFT OUTER JOIN          
+                  dbo.ServiceMaster ON dbo.M_PathTestMaster.ServiceID = dbo.ServiceMaster.ServiceId               
+WHERE      (dbo.M_PathTestMaster.TestName LIKE COALESCE (@ServiceName, dbo.M_PathTestMaster.TestName))                 
+    ORDER BY dbo.M_PathTestMaster.TestId        
+     OFFSET @Start ROWS   
+    FETCH NEXT @Length ROWS ONLY;
+
+
 Alter sp--> [Retrieve_BrowseOPDPaymentReceipt]---> Add start and Length
  Alter SP --> [Rtrv_LabOrRadRequestList]--> Add start and Length
+alter SP-->[m_Rtrv_PathParameterMaster_by_Name] ---> Add start and Length alter column is deleted
+
 ---------------------------------------------------- -----********* ----------------------------------------------------------
 
 ALTER TABLE M_CurrencyMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
@@ -711,6 +745,11 @@ go
 
  
 ALTER TABLE M_Radiology_Categorymaster ADD [IsActive] [bit] NULL, [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
+
+
+ALTER TABLE M_ClassMaster ADD [CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+go
 	
 
 Update  M_CurrencyMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
@@ -740,6 +779,8 @@ Update  M_TermsOfPaymentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate()
 Update  Refund set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate(),AddedBy=1
 Update  M_UnitOfMeasurementMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update  M_Radiology_Categorymaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+Update M_ClassMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE M_PathunitMaster DROP COLUMN Isdeleted;

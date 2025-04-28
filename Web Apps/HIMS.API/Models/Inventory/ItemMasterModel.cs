@@ -37,6 +37,13 @@ namespace HIMS.API.Models.Inventory
         public string? ProdLocation { get; set; }
         public long? ItemCompnayId { get; set; }
         public string? ItemTime { get; set; }
+        public long? Addedby { get; set; }
+        public long? UpDatedBy { get; set; }
+        public string? DoseName { get; set; }
+        public int? DoseDay { get; set; }
+        public string? Instruction { get; set; }
+      //  public DateTime? IsCreatedBy { get; set; }
+       // public DateTime? IsUpdatedBy { get; set; }
         public List<AssignItemToStoreModel> MAssignItemToStores { get; set; }
     }
     public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
