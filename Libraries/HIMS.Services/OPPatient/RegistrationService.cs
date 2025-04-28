@@ -24,7 +24,7 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<IPagedList<RegistrationListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "m_Rtrv_RegistrationList");
+            return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "ps_Rtrv_RegistrationList");
 
         }
         public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)

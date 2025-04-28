@@ -105,7 +105,7 @@ alter table M_CityMaster add [CreatedBy] [int] NULL, [CreatedDate] [datetime] NU
 alter table M_DepartmentMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_ConcessionReasonMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
 alter table M_BankMaster add IsActive bit, [CreatedBy] [int] NULL,	[CreatedDate] [datetime] NULL,	[ModifiedBy] [int] NULL,	[ModifiedDate] [datetime] NULL
-
+alter table ClassMaster add ClassRate float
 
 ALTER TABLE DB_PrefixMaster ALTER COLUMN IsActive Bit;
 ALTER TABLE ClassMaster ALTER COLUMN IsActive Bit;
@@ -125,7 +125,6 @@ Update M_DepartmentMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),Modi
 Update M_ConcessionReasonMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update PatientTypeMaster set CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
 Update M_BankMaster set IsActive=1,CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
-
 
 
 ----------------------------------------------------- Ashutosh ----------------------------------------------------------
