@@ -23,5 +23,8 @@ namespace HIMS.Data.DTO.Administration
         public decimal? NEFTPayAmount { get; set; }
         public decimal? PayTMAmount { get; set; }
         public string? PrintStoreName { get; set; }
+        public long? SalesId { get; set; }
+
     }
 }
+
