@@ -16,6 +16,8 @@ namespace HIMS.Data.DTO.Purchase
         public decimal? Rate { get; set; }
         public double? VatPercentage { get; set; }
         public string? SupplierName { get; set; }
+
+
      
     }
 }

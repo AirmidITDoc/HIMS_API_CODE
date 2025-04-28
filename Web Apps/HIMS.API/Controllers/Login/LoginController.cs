@@ -79,12 +79,14 @@ namespace HIMS.API.Controllers.Login
                             (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
                             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
                             {
+                              
                                 user.UserToken,
                                 user.WebRoleId,
                                 Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
                                 Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
                                 UserName = user.FirstName + " " + user.LastName,
-                                user.UserId
+                                user.UserId,
+                                User = user // This includes all fields of the user object
                             });
                         }
                     }
