@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Inventory
             _repository = repository1;
         }
         [HttpPost("ItemMasterList")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemMasterListDto> ItemMasterList = await _ItemMasterServices.GetItemMasterListAsync(objGrid);
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -77,8 +77,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
-                model.Addedby = CurrentUserId;
-                model.UpDatedBy = CurrentUserId;
+                model.IsCreatedBy = DateTime.Now;
                 await _ItemMasterServices.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -87,39 +86,27 @@ namespace HIMS.API.Controllers.Inventory
         }
 
          [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
+         [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
             if (obj.ItemId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.IsUpdatedBy = DateTime.Now;
                 model.ItemTime = Convert.ToDateTime(obj.ItemTime);
                 await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
         }
-    //    [HttpDelete("ItemCanceled")]
-    ////    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
-    //    public async Task<ApiResponse> Cancel(DeleteAssignItemToStore obj)
-    //    {
-    //        MItemMaster model = new();
-    //        if (obj.ItemId != 0)
-    //        {
-    //            model.ItemId = obj.ItemId;
-    //            model.CreatedBy = CurrentUserId;
-    //            model.CreatedDate = DateTime.Now;
-    //            await _ItemMasterServices.CancelAsync(model, CurrentUserId, CurrentUserName);
-    //        }
-    //        else
-    //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-    //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item Name Canceled successfully.");
-    //    }
-
         //Delete API
         [HttpDelete]
-    //    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MItemMaster model = await _repository.GetById(x => x.ItemId == Id);

@@ -113,11 +113,14 @@ namespace HIMS.API.Infrastructure
             CreateMap<PaymentPharmacy, paymentpharmacyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpmedicalRecord, TIPmedicalRecordModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescription, IpPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+         
+
             CreateMap<PaymentPharmacy, paymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             
 
+         
 
             CreateMap<AdvanceHeader, UpdateAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel2>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
