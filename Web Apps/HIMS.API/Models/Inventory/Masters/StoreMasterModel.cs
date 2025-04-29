@@ -40,6 +40,7 @@ namespace HIMS.API.Models.Masters
         public string? WhatsAppTemplateId { get; set; }
         public bool? IsSmsmsg { get; set; }
         public string? SmstemplateId { get; set; }
+        public string? Header { get; set; }
     }
 
     public class StoreMasterModelValidator : AbstractValidator<StoreMasterModel>
