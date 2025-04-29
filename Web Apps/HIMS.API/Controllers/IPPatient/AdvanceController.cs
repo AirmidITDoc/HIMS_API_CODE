@@ -125,6 +125,25 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objpayment.AdvanceId);
         }
+        //[HttpPut("Edit")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Update(UpdateAdvanceModel1 obj)
+        //{
+        //    AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
+        //    //AdvanceDetail ObjAdvanceDetail = obj.Advance.MapTo<AdvanceDetail>();
+
+        //    if (obj.Advance.AdvanceId != 0)
+        //    {
+        //        model.AddedBy = CurrentUserId;
+
+        //        await _IAdvanceService.CancelAsync(model,  CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvanceCancel  successfully.");
+        //}
+
+      
 
         [HttpPost("IPRefundofAdvanceInsert")]
         [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -170,6 +189,45 @@ namespace HIMS.API.Controllers.IPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvance successfully .");
+        }
+        //  [HttpPost("Cancel")]
+        ////[Permission(PageCode = "Advance", Permission = PagePermission.Delete)]
+        //public async Task<ApiResponse> Cancel(UpdateCancel obj)
+        //{
+        //    AdvanceHeader model = new();
+
+        //    if (obj.AdvanceId != 0)
+        //    {
+        //        model.AdvanceId = obj.AdvanceId;
+
+
+        //        model.IsCancelled = true;
+        //        model.IsCancelledBy = CurrentUserId;
+        //        model.IsCancelledDate = DateTime.Now;
+        //        await _IAdvanceService.CancelAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvanceCancel  successfully.", model);
+        //}
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateCancel obj)
+        {
+            if (obj.AdvanceId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            var model = new AdvanceHeader
+            {
+                AdvanceAmount = obj.AdvanceAmount,
+                AdvanceId = obj.AdvanceId,
+                AddedBy = obj.AddedBy
+
+            };
+            await _IAdvanceService.CancelAsync(model, obj.AdvanceDetailId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvanceCancel Added successfully.");
         }
 
     }

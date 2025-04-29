@@ -159,9 +159,16 @@ namespace HIMS.API.Models.IPPatient
         public AdvanceDetailModel2 AdvanceDetail { get; set; }
         public AdvancePayment AdvancePayment { get; set; }
     }
+    public class UpdateCancel
+    {
+        public long AdvanceId { get; set; }
+        public long AdvanceDetailId { get; set; }
+        public long AddedBy { get; set; }
+        public double AdvanceAmount { get; set; }
 
+
+    }
    
-
 }
 
 
