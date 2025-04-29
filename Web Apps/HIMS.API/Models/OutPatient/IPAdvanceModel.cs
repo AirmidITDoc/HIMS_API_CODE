@@ -27,10 +27,7 @@ namespace HIMS.API.Models.OutPatient
         public IPAdvanceModelValidator()
         {
             RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
-            //RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
-            //RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            //RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            //RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
+           
         }
     }
 
@@ -63,10 +60,7 @@ namespace HIMS.API.Models.OutPatient
         public IPAdvanceDetailValidator()
         {
             RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage("AdvanceId is required");
-            //RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
-            //RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
-            //RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-            //RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
+            
         }
     }
 

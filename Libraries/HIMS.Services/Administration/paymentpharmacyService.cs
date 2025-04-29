@@ -76,26 +76,21 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("Update_PharmSalesPaymentmodechange", CommandType.StoredProcedure, UEntity);
 
         }
+        public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int UserId, string UserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] DetailEntity = { "BillNo", "ReceiptNo", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId",
+                "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate","CashCounterId","IsSelfOrcompany","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","StrId","TranMode","CompanyId"};
+            var UEntity = ObjPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in DetailEntity)
+            {
+                UEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, UEntity);
 
+        }
 
-
-
-
-
-
-        //public virtual async Task CancelAsync(PaymentPharmacy objPaymentPharmacy, int CurrentUserId, string CurrentUserName)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header table records
-        //        PaymentPharmacy objsup = await _context.MSupplierMasters.FindAsync(objPaymentPharmacy.SupplierId);
-        //        _context.PaymentPharmacies.Update(objsup);
-        //        _context.Entry(objsup).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
     }
 }
  

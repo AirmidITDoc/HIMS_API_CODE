@@ -28,9 +28,7 @@ namespace HIMS.API.Controllers.Administration
             _paymentpharmacyService = repository;
         }
 
-
-
-        [HttpPost("IPDPaymentReceiptList")]
+         [HttpPost("IPDPaymentReceiptList")]
         //  [Permission(PageCode = "IPDPaymentReceiptList", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -62,7 +60,7 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<BrowsePharmacyPayReceiptListDto> PharmacyPayReceiptList = await _paymentpharmacyService.GetListAsync3(objGrid);
             return Ok(PharmacyPayReceiptList.ToGridResponse(objGrid, "BrowsePharmacyPayReceiptList"));
         }
-
+      
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(paymentpharmacyModel obj)
@@ -82,7 +80,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-     //   [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyModel obj)
         {
             PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
@@ -96,7 +94,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy  updated successfully.");
         }
         [HttpPut("UpdatePharmSales")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(PharmSalesPaymentModel obj)
         {
             TSalesHeader model = obj.MapTo<TSalesHeader>();
@@ -105,12 +103,31 @@ namespace HIMS.API.Controllers.Administration
             if (obj.SalesId != 0)
             {
                 model.Date = Convert.ToDateTime(model.Date);
+
                 model.AddedBy = CurrentUserId;
                 await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmSalesPaymentmodechange  update successfully .");
+        }
+        [HttpPost("paymentpharUpdateDate")]
+        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(paymentpharModel obj)
+        {
+            PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
+
+
+            if (obj.PaymentId != 0)
+            {
+                model.PaymentDate = Convert.ToDateTime(model.PaymentDate);
+
+                model.AddBy = CurrentUserId;
+                await _paymentpharmacyService.UpdateAsyncDate(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharUpdateDate   successfully .");
         }
 
 
