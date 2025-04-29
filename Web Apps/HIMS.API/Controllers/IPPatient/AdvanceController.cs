@@ -221,11 +221,12 @@ namespace HIMS.API.Controllers.IPPatient
             // 👇 Manually assign fields from LabRequestsModel to AddCharge
             var model = new AdvanceHeader
             {
-                AdvanceAmount = obj.AdvanceAmount
-                //AdvanceDetailId = obj.AdvanceDetailId,
+                AdvanceAmount = obj.AdvanceAmount,
+                AdvanceId = obj.AdvanceId,
+                AddedBy = obj.AddedBy
 
             };
-            await _IAdvanceService.CancelAsync(model,  obj.AdvanceDetailId, obj.AdvanceAmount);
+            await _IAdvanceService.CancelAsync(model, obj.AdvanceDetailId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvanceCancel Added successfully.");
         }
 

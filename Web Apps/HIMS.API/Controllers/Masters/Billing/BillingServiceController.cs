@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Canceled successfully.");
         }
         [HttpDelete("ServicDelete")]
-        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             ServiceMaster model = await _repository.GetById(x => x.ServiceId == Id);
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.Masters.Billing
        
 
         [HttpPut("UpdateDifferTariff")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(DifferTraiffModel obj)
         {
             if (obj.OldTariffId == 0 || obj.NewTariffId == 0)

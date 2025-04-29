@@ -24,7 +24,7 @@ namespace HIMS.Services.IPPatient
 
         // Task InsertAsyncSP(Refund objRefund, AdvanceHeader objAdvanceHeader, AdvRefundDetail objAdvRefundDetail, AdvanceDetail objAdvanceDetail, Payment objPayment, int UserId, string UserName);
         Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int CurrentUserId, string CurrentUserName);
-        Task CancelAsync(AdvanceHeader ObjAdvanceHeader,  long AdvanceDetailId, double AdvanceAmount  );
+        Task CancelAsync(AdvanceHeader ObjAdvanceHeader,  long AdvanceDetailId );
 
 
     }

@@ -161,10 +161,9 @@ namespace HIMS.API.Models.IPPatient
     }
     public class UpdateCancel
     {
-        public bool IsCancelled { get; set; }
         public long AdvanceId { get; set; }
         public long AdvanceDetailId { get; set; }
-        public long UserId { get; set; }
+        public long AddedBy { get; set; }
         public double AdvanceAmount { get; set; }
 
 
