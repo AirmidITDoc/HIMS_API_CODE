@@ -38,13 +38,13 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             return Ok(MStoreMastereList.ToGridResponse(objGrid, "StoreMastere List"));
         }
 
-        [HttpPost("StoreMasterList")]
-        [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<StoreMasterListDto> StoreMasterList = await _StoreMasterService.GetListAsync(objGrid);
-            return Ok(StoreMasterList.ToGridResponse(objGrid, "StoreMaster List"));
-        }
+        //[HttpPost("List")]
+        //[Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        //{
+        //    IPagedList<StoreMasterListDto> StoreMasterList = await _StoreMasterService.GetListAsync(objGrid);
+        //    return Ok(StoreMasterList.ToGridResponse(objGrid, "StoreMaster List"));
+        //}
 
         //List API Get By Id
         [HttpGet("{id?}")]

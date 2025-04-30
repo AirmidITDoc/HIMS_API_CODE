@@ -30,13 +30,13 @@ namespace HIMS.Services.Masters
         public virtual async Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Id", "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionMasters" };
+            string[] rEntity = {"RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionMasters" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_Insert_MenuMaster_1", CommandType.StoredProcedure, entity);
+            string vId = odal.ExecuteNonQuery("ps_Insert_MenuMaster_1", CommandType.StoredProcedure, "Id", entity);
 
         }
         public virtual async Task UpdateAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
