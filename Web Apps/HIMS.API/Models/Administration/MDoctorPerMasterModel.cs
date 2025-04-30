@@ -30,7 +30,6 @@ namespace HIMS.API.Models.Administration
     }
     public class DoctorShareProcessModel
     {
-        [Required]
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }

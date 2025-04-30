@@ -270,11 +270,12 @@ namespace HIMS.API.Controllers.Administration
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
         {
-            //if (obj.FromDate == 0)
-            //{
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            //}
-            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            if (obj.FromDate == new DateTime(1900/01/01))
+
+            {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+             //👇 Manually assign fields from LabRequestsModel to AddCharge
             var model = new AddCharge
             {
                 //FromDate = obj.FromDate,

@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();

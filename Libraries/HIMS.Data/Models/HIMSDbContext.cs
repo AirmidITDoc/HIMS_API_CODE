@@ -7885,6 +7885,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.StoreShortName).HasMaxLength(50);
 
+                entity.Property(e => e.TermsAndCondition)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.WhatsAppTemplateId).HasMaxLength(100);
 
                 entity.Property(e => e.WorkOrderNo)

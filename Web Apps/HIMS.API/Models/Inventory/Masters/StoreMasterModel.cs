@@ -19,6 +19,8 @@ namespace HIMS.API.Models.Masters
         public string? IssueToDeptNo { get; set; }
         public string? ReturnFromDeptNoPrefix { get; set; }
         public string? ReturnFromDeptNo { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public string? WorkOrderPrefix { get; set; }
         public string? WorkOrderNo { get; set; }
         public long? PharSalCountId { get; set; }
@@ -41,6 +43,8 @@ namespace HIMS.API.Models.Masters
         public bool? IsSmsmsg { get; set; }
         public string? SmstemplateId { get; set; }
         public string? Header { get; set; }
+        public string? TermsAndCondition { get; set; }
+
     }
 
     public class StoreMasterModelValidator : AbstractValidator<StoreMasterModel>
