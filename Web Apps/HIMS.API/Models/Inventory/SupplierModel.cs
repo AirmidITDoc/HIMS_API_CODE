@@ -15,12 +15,14 @@ namespace HIMS.API.Models.Inventory
         public string? Mobile { get; set; }
         public string? Phone { get; set; }
         public string? Fax { get; set; }
+        public bool? IsActive { get; set; }
         public string? Email { get; set; }
         public long? ModeofPayment { get; set; }
         public long? TermofPayment { get; set; }
         public long? CurrencyId { get; set; }
         public long? Octroi { get; set; }
         public long? Freight { get; set; }
+        public long? AddedBy { get; set; }
         public string? GSTNo { get; set; }
         public string? PanNo { get; set; }
         public string? SupplierTime { get; set; }

@@ -8,6 +8,9 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Services.Inventory;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Master;
 
 namespace HIMS.API.Controllers.Masters.InventoryMaster
 {
@@ -18,9 +21,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
     public class StoreMasterController : BaseController
     {
         private readonly IGenericService<MStoreMaster> _repository;
-        public StoreMasterController(IGenericService<MStoreMaster> repository)
+        private readonly IStoreMasterService _StoreMasterService;
+        public StoreMasterController(IStoreMasterService repository1, IGenericService<MStoreMaster> repository)
         {
             _repository = repository;
+            _StoreMasterService = repository1;
         }
 
         //List API
@@ -32,6 +37,15 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             IPagedList<MStoreMaster> MStoreMastereList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MStoreMastereList.ToGridResponse(objGrid, "StoreMastere List"));
         }
+
+        [HttpPost("StoreMasterList")]
+        [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<StoreMasterListDto> StoreMasterList = await _StoreMasterService.GetListAsync(objGrid);
+            return Ok(StoreMasterList.ToGridResponse(objGrid, "StoreMaster List"));
+        }
+
         //List API Get By Id
         [HttpGet("{id?}")]
         [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]

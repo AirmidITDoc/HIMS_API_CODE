@@ -127,14 +127,6 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-        //[HttpPost("DailyExpencesList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> DailyExpencesList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<DailyExpenceListtDto> MasterList = await _IAdministrationService.DailyExpencesList(objGrid);
-        //    return Ok(MasterList.ToGridResponse(objGrid, "Daily Expences App List"));
-        //}
-
 
         [HttpPost("TExpenseInsert")]
         //  [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
@@ -273,6 +265,26 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MDoctorPer Master updated successfully.");
         }
+
+        [HttpPost("DoctorShareProcess")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
+        {
+            //if (obj.FromDate == 0)
+            //{
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            //}
+            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            var model = new AddCharge
+            {
+                //FromDate = obj.FromDate,
+            };
+
+            await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorShareProcess Added successfully.");
+        }
+      
+
 
     }
 }

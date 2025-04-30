@@ -24,4 +24,11 @@ namespace HIMS.API.Models.IPPatient
         public long SalesId { get; set; }
 
     }
+    public class paymentpharModel
+    {
+        public DateTime? PaymentDate { get; set; }
+        public string  PaymentTime { get; set; }
+        public long PaymentId { get; set; }
+
+    }
 }

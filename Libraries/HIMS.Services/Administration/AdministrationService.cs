@@ -18,20 +18,19 @@ using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
-    public  class AdministrationService: IAdministrationService
+    public class AdministrationService : IAdministrationService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public AdministrationService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-        
+
         public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
         }
-        
-        
+
         public virtual async Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<RoleMasterListDto>(model, "m_Rtrv_Rolemaster");
@@ -84,7 +83,7 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby", "IsCancelled", "VoucharNo", "ExpHeadId"};
+            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby", "IsCancelled", "VoucharNo", "ExpHeadId" };
             var entity = ObjTExpense.ToDictionary();
             foreach (var rProperty in AEntity)
             {
@@ -187,6 +186,23 @@ namespace HIMS.Services.Administration
 
                 scope.Complete();
             }
+        }
+        public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username,DateTime FromDate,DateTime ToDate)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
+            "IsDoctorShareGenerated","IsInterimBillFlag","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk","BillNoNavigation"};
+            var Rentity = ObjAddCharges.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Rentity.Remove(rProperty);
+            }
+            Rentity["FromDate"] = FromDate;
+            Rentity["ToDate"] = ToDate;
+
+            odal.ExecuteNonQuery("OP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+            odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+
         }
     }
 }
