@@ -73,6 +73,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             {
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
                 model.IsActive = true;
                 await _SupplierService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -93,6 +94,8 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             {
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
+                model.IsActive = true;
                 await _SupplierService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name updated successfully.");
