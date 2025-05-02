@@ -204,5 +204,33 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
 
         }
+        public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            foreach (var modelItem in ObjMPackageDetail)
+            {
+
+                var tokensObj = new
+                {
+                    ServiceId = Convert.ToInt32(modelItem.ServiceId)
+
+                };
+                odal.ExecuteNonQuery("Delete_PackageDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
+            
+            foreach (var item in ObjMPackageDetail)
+            {
+                string[] AEntity = { };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in AEntity)
+                {
+                    Pentity.Remove(rProperty);
+                }
+                string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
+                item.PackageId = Convert.ToInt32(VPackageId);
+            }
+
+
+        }
     }
 }
