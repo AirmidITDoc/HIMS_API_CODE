@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("Insertsp")]
-        //[Permission(PageCode = "Menu", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
