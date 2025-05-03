@@ -81,6 +81,13 @@ namespace HIMS.Services.Common
                 //System Configuration
                 case "SysConfig": sp_Name = "ps_SS_ConfigSettingParam"; break;
 
+                //Pharmacy Sales return
+                case "IPSalesReturnCash": sp_Name = "m_Rtrv_IPSalesBillForReturn_Cash"; break;
+                case "IPSalesReturnCredit": sp_Name = "m_Rtrv_IPSalesBillForReturn_Credit"; break;
+                case "SalesReturnCash": sp_Name = "Retrieve_SalesBill_Return_Cash"; break;
+                case "SalesReturnCredit": sp_Name = "Retrieve_SalesBill_Return_Credit"; break;
+
+
                 default: break;
             }
             foreach (var property in fields)
