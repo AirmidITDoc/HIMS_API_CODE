@@ -308,6 +308,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<PermissionMaster> PermissionMasters { get; set; } = null!;
         public virtual DbSet<PharTotalSalesV> PharTotalSalesVs { get; set; } = null!;
         public virtual DbSet<ProcedureMaster> ProcedureMasters { get; set; } = null!;
+        public virtual DbSet<PsLvwRtrvPathologyResultIpwithAge> PsLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
+        public virtual DbSet<PsLvwRtrvPathologyResultOpwithAge> PsLvwRtrvPathologyResultOpwithAges { get; set; } = null!;
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
@@ -7320,8 +7322,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PackageDetails");
 
-                entity.Property(e => e.PackageId).ValueGeneratedNever();
-
                 entity.Property(e => e.Price)
                     .HasColumnType("money")
                     .HasColumnName("price");
@@ -8824,6 +8824,96 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.ProcedureName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<PsLvwRtrvPathologyResultIpwithAge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_lvwRtrv_PathologyResultIPWithAge");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<PsLvwRtrvPathologyResultOpwithAge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_lvwRtrv_PathologyResultOPWithAge");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Refund>(entity =>
