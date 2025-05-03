@@ -11,5 +11,8 @@ namespace HIMS.Services.Inventory
     public partial interface ICurrentStockService
     {
         Task<IPagedList<CurrentStockListDto>> CurrentStockList(GridRequestModel objGrid);
+        Task<IPagedList<DayWiseCurrentStockDto>> DayWiseCurrentStockList(GridRequestModel objGrid);
+        Task<IPagedList<ItemWiseSalesSummaryDto>> ItemWiseSalesList(GridRequestModel objGrid);
+
     }
 }

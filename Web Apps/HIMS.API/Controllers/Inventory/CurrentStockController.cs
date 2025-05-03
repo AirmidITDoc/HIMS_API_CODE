@@ -19,12 +19,27 @@ namespace HIMS.API.Controllers.Inventory
         {
             _ICurrentStockService = repository;
         }
-        [HttpPost("StockReportDayWiseList")]
+        
+        [HttpPost("StorewiseCurrentStockList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CurrentStockListDto> CurrentStockList = await _ICurrentStockService.CurrentStockList(objGrid);
-            return Ok(CurrentStockList.ToGridResponse(objGrid, "CurrentStock App List"));
+            return Ok(CurrentStockList.ToGridResponse(objGrid, "StorewiseCurrentStock  List"));
+        }
+        [HttpPost("DayWiseCurrentStockList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DList(GridRequestModel objGrid)
+        {
+            IPagedList<DayWiseCurrentStockDto> DayWiseCurrentStock = await _ICurrentStockService.DayWiseCurrentStockList(objGrid);
+            return Ok(DayWiseCurrentStock.ToGridResponse(objGrid, "DayWiseCurrentStock List"));
+        }
+        [HttpPost("ItemWiseSalesSummaryList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IList(GridRequestModel objGrid)
+        {
+            IPagedList<ItemWiseSalesSummaryDto> ItemWiseSalesSummaryList = await _ICurrentStockService.ItemWiseSalesList(objGrid);
+            return Ok(ItemWiseSalesSummaryList.ToGridResponse(objGrid, "ItemWiseSalesSummary List"));
         }
     }
 }
