@@ -25,5 +25,13 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<ItemMovementListDto> ItemMovementList = await _IItemMovementService.ItemMovementList(objGrid);
             return Ok(ItemMovementList.ToGridResponse(objGrid, "ItemMovement App List"));
         }
+
+        [HttpPost("ItemMovementSummeryList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IList(GridRequestModel objGrid)
+        {
+            IPagedList<ItemMovementSummeryListDto> summaryList = await _IItemMovementService.List(objGrid);
+            return Ok(summaryList.ToGridResponse(objGrid, "ItemMovementSummery  List"));
+        }
     }
 }

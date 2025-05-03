@@ -105,6 +105,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MenuMaster, MenuMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, DoctorShareProcessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPackageDetail, PackageDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPackageDetail, PackageDetailsModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

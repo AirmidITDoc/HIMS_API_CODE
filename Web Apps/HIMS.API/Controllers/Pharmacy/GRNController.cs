@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNHeaderList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNHeaderList(GridRequestModel objGrid)
         {
             IPagedList<GRNListDto> GRNUpdateList = await _IGRNService.GRNHeaderList(objGrid);
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Grntime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                await _IGRNService.InsertAsyncSP(model, objItems, CurrentUserId, CurrentUserName);
+                await _IGRNService.InsertAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();

@@ -23,19 +23,28 @@ namespace HIMS.API.Models.Pharmacy
         public string? ReceivedBy { get; set; }
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
-        public DateTime?  InvDate { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
+        public string? Prefix { get; set; }
+        public bool? IsCancelled { get; set; }
+        public bool? IsPaymentProcess { get; set; }
+        public DateTime? PaymentPrcDate { get; set; }
+        public string? ProcessDes { get; set; }
+        public DateTime? InvDate { get; set; }
         public decimal? DebitNote { get; set; }
         public decimal? CreditNote { get; set; }
         public decimal? OtherCharge { get; set; }
         public decimal? RoundingAmt { get; set; }
+        public decimal? PaidAmount { get; set; }
+        public decimal? BalAmount { get; set; }
         public decimal? TotCgstamt { get; set; }
         public decimal? TotSgstamt { get; set; }
         public decimal? TotIgstamt { get; set; }
-        public long? TranProcessId { get; set; }
+        public byte? TranProcessId { get; set; }
         public string? TranProcessMode { get; set; }
-        public string? EwayBillNo { get; set; }
-        public DateTime? EwayBillDate { get; set; }
         public decimal? BillDiscAmt { get; set; }
+        public string? EwayBillNo { get; set; }
+
         public List<GRNDetailModel> TGrndetails { get; set; }
     }
     public class GRNModelValidator : AbstractValidator<GRNModel>
