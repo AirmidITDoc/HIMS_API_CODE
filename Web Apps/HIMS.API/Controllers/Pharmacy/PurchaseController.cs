@@ -117,16 +117,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
 
-        //GRnreturn
-
-        [HttpPost("GRNReturnlistbynameList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<GrnListByNameListDto> List1 = await _IPurchaseService.GetGRnListbynameAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, " GRN Return List By Name"));
-        }
-
+       
 
 
         [HttpPost("OpeningBalanceList")]
@@ -144,22 +135,5 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IPurchaseService.GetOPningBalItemDetailList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
         }
-
-        [HttpPost("WorkOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetWorkorderlist(GridRequestModel objGrid)
-        {
-            IPagedList<WorkOrderListDto> List1 = await _IPurchaseService.GetWorkorderList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Work Order List"));
-        }
-
-        //[HttpPost("SupplierOaymnetStatusList")]
-        ////[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        //public async Task<IActionResult> GetSupplierPaymentStatuslist(GridRequestModel objGrid)
-        //{
-        //    IPagedList<SupplierPaymentStatusListDto> List1 = await _IPurchaseService.GetSupplierPaymentStatusList(objGrid);
-        //    return Ok(List1.ToGridResponse(objGrid, "Supplier Payment Status List"));
-        //}
-
     }
 }
