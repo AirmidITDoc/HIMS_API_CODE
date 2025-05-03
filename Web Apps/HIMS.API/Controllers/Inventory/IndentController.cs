@@ -32,11 +32,19 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IndentList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
             return Ok(AppList.ToGridResponse(objGrid, "Indent List"));
+        }
+
+        [HttpPost("IndentDetailsList")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<IndentDetailListDto> IndentDetailsList = await _IIndentService.GetIndentDetListAsync(objGrid);
+            return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent List"));
         }
         [HttpPost("Insert")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]

@@ -24,11 +24,16 @@ namespace HIMS.Data.DTO.Inventory
         public string? DIndentTime { get; set; }
         public bool? IsInchargeVerify { get; set; }
 
-
-
-
-
-
+    }
+    public class IndentDetailListDto
+    {
+        public long IndentDetailsId { get; set; }
+        public long IndentId { get; set; }
+        public string ItemName { get; set; }
+        public double Qty { get; set; }
+        public double IndQty { get; set; }
+        public double IssQty { get; set; }
+        public double BalanceQty { get; set; }
 
     }
 }
