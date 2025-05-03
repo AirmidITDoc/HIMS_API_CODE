@@ -24,7 +24,7 @@ namespace HIMS.API.Models.Inventory
         public long? Freight { get; set; }
         public string? GSTNo { get; set; }
         public string? PanNo { get; set; }
-        public string? Taluka { get; set; }
+        public long? Taluka { get; set; }
         public string? LicNo { get; set; }
         public string? PinCode { get; set; }
         public long? TaxNature { get; set; }
@@ -36,7 +36,7 @@ namespace HIMS.API.Models.Inventory
         public long? BankNo { get; set; }
         public string? Ifsccode { get; set; }
         public long? VenderTypeId { get; set; }
-        public long? OpeningBalance { get; set; }
+        public decimal? OpeningBalance { get; set; }
         public string? SupplierTime { get; set; }
 
         public List<AssignSupplierToStoreModel> MAssignSupplierToStores { get; set; }

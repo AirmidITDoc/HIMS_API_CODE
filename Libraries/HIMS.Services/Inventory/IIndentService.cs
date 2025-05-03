@@ -8,9 +8,7 @@ namespace HIMS.Services.Inventory
     {
 
         Task<IPagedList<IndentListDto>> GetListAsync(GridRequestModel objGrid);
-
-
-
+        Task<IPagedList<IndentDetailListDto>> GetIndentDetListAsync(GridRequestModel objGrid);
         Task InsertAsync(TIndentHeader objIndent, int UserId, string Username);
         Task InsertAsyncSP(TIndentHeader objIndent, int UserId, string Username);
         Task UpdateAsync(TIndentHeader objIndent, int UserId, string Username);
