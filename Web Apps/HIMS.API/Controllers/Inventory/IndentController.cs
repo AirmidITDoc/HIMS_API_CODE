@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IndentList")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
@@ -40,14 +40,14 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IndentDetailsList")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
         {
             IPagedList<IndentDetailListDto> IndentDetailsList = await _IIndentService.GetIndentDetListAsync(objGrid);
             return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent List"));
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(IndentVerifyModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.Inventory
 
         
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(IndentCancel obj)
         {
             TIndentHeader model = new();
