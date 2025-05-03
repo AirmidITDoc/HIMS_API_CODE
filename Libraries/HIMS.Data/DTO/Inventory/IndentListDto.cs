@@ -8,11 +8,27 @@ namespace HIMS.Data.DTO.Inventory
 {
     public class IndentListDto
     {
+        public long? IndentId { get; set; }
         public string? IndentNo { get; set; }
-
-        public long? ToStoreId { get; set; }
-       
+        public DateTime? IndentDate { get; set; }
+        public DateTime? IndentTime { get; set; }
         public long? FromStoreId { get; set; }
         public string? FromStoreName { get; set; }
+        public long? ToStoreId { get; set; }
+        public string? ToStoreName { get; set; }
+        public string? Addedby { get; set; }
+        public long? Isdeleted { get; set; }
+        public bool? Isverify { get; set; }
+        public bool? Isclosed { get; set; }
+        public string? DIndentDate { get; set; }
+        public string? DIndentTime { get; set; }
+        public bool? IsInchargeVerify { get; set; }
+
+
+
+
+
+
+
     }
 }

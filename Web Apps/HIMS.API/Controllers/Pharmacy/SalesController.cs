@@ -7,7 +7,9 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
+using HIMS.Services.Pharmacy;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,5 +50,29 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
         }
+
+        [HttpPost("SalesList")]
+     //   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> PharSalesList(GridRequestModel objGrid)
+        {
+            IPagedList<PharSalesListDto> PharSalesList = await _ISalesService.GetListAsync(objGrid);
+            return Ok(PharSalesList.ToGridResponse(objGrid, "Phar Sales  List"));
+        }
+        [HttpPost("SalesSummaryList")]
+        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<PharSalesCurrentSumryListDto> PharSalesList = await _ISalesService.GetList(objGrid);
+            return Ok(PharSalesList.ToGridResponse(objGrid, "Sales Summary  List"));
+        }
+
+        [HttpPost("SalesDetailsList")]
+        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<PharCurrentDetListDto> SalesDetailsList = await _ISalesService.SalesDetailsList(objGrid);
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
+        }
+
     }
 }

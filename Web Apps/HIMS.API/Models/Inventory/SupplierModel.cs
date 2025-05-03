@@ -24,7 +24,7 @@ namespace HIMS.API.Models.Inventory
         public long? Freight { get; set; }
         public string? GSTNo { get; set; }
         public string? PanNo { get; set; }
-        public long? Taluka { get; set; }
+        public string? Taluka { get; set; }
         public string? LicNo { get; set; }
         public string? PinCode { get; set; }
         public long? TaxNature { get; set; }
