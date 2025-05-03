@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             _repository = repository1;
         }
         [HttpPost("SupplierList")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+    //    [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(SupplierModel obj)
         {
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();

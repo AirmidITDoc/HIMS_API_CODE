@@ -19,5 +19,13 @@ namespace HIMS.Services.Users
 
         Task<IPagedList<SalesRetrunCurrentSumryListDto>> SalesReturnSummaryList(GridRequestModel objGrid);
         Task<IPagedList<SalesRetrunLCurrentDetListDto>> SalesReturnDetailsList(GridRequestModel objGrid);
+        Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel objGrid);
+
+        Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel objGrid);
+
+        Task<IPagedList<SalesReturnDetailsListDto>> salesreturndetaillist(GridRequestModel objGrid);
+
+        Task<IPagedList<SalesReturnBillListDto>> salesreturnlist(GridRequestModel objGrid);
+
     }
 }
