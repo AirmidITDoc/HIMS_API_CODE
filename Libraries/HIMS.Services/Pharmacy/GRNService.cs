@@ -72,7 +72,6 @@ namespace HIMS.Services.Pharmacy
             para[28] = new SqlParameter("@BillDiscAmt", objGRN.BillDiscAmt);
             para[29] = new SqlParameter("@EwayBillNo", objGRN.EwayBillNo);
             para[30] = new SqlParameter("@EwayBillDate", objGRN.EwayBillDate);
-
             para[31] = new SqlParameter("@GRNID", SqlDbType.BigInt)
             {
                 Direction = ParameterDirection.Output
@@ -111,11 +110,26 @@ namespace HIMS.Services.Pharmacy
                 _context.TGrnheaders.Add(objGRN);
                 await _context.SaveChangesAsync();
 
-                // Update item master table records
-                _context.MItemMasters.UpdateRange(objItems);
-                await _context.SaveChangesAsync();
+                //// Update item master table records
+                //_context.MItemMasters.UpdateRange(objItems);
+                //await _context.SaveChangesAsync();
+                //scope.Complete();
 
+                // Update item master table records (only specific fields)
+                foreach (var item in objItems)
+                {
+                    _context.MItemMasters.Attach(item);
+
+                    _context.Entry(item).Property(x => x.Hsncode).IsModified = true;
+                    _context.Entry(item).Property(x => x.Cgst).IsModified = true;
+                    _context.Entry(item).Property(x => x.Sgst).IsModified = true;
+                    _context.Entry(item).Property(x => x.Igst).IsModified = true;
+                }
+
+                await _context.SaveChangesAsync();
                 scope.Complete();
+
+
             }
         }
 
