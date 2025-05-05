@@ -53,6 +53,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.Addedby = CurrentUserId;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -73,6 +74,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
+                model.Updatedby = CurrentUserId;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Type updated successfully.");
