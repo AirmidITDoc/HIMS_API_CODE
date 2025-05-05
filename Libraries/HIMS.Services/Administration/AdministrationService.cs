@@ -207,16 +207,15 @@ namespace HIMS.Services.Administration
         public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            foreach (var modelItem in ObjMPackageDetail)
-            {
+            
 
                 var tokensObj = new
                 {
-                    ServiceId = Convert.ToInt32(modelItem.ServiceId)
+                    ServiceId = Convert.ToInt32(ObjMPackageDetail[0].ServiceId)
 
                 };
                 odal.ExecuteNonQuery("Delete_PackageDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            }
+            
             
             foreach (var item in ObjMPackageDetail)
             {

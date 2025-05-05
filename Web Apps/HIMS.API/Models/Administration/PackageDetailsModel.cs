@@ -11,7 +11,12 @@ namespace HIMS.API.Models.Administration
         public decimal? Price { get; set; }
 
     }
-     public class PackageDetailsModelValidator : AbstractValidator<PackageDetailsModel>
+    public class PackageDetailsModel1
+    {
+        public long? ServiceId { get; set; }
+
+    }
+    public class PackageDetailsModelValidator : AbstractValidator<PackageDetailsModel>
      {
         public PackageDetailsModelValidator()
         {
@@ -20,6 +25,8 @@ namespace HIMS.API.Models.Administration
      }
     public class PackageDetModel
     {
+        //public PackageDetailsModel1 PackageDetailservice { get; set; }
+
         public List<PackageDetailsModel> packageDetail { get; set; }
 
     }

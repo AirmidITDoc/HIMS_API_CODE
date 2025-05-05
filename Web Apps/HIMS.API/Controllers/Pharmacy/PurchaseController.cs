@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseService = repository;
         }
         [HttpPost("PurchaseOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseItemList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("OldPurchaseOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
@@ -117,42 +117,8 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
 
-        //GRnreturn
+       
 
-        [HttpPost("GRNReturnlistbynameList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<GrnListByNameListDto> List1 = await _IPurchaseService.GetGRnListbynameAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, " GRN Return List By Name"));
-        }
-
-
-        [HttpPost("GRNReturnList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<GRNReturnListDto> List1 = await _IPurchaseService.GetGRNReturnList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "GRN Return  List"));
-        }
-
-
-        [HttpPost("ItemListBYSupplierName")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GeItemListbysuppliernameAsync(GridRequestModel objGrid)
-        {
-            IPagedList<ItemListBysupplierNameDto> List1 = await _IPurchaseService.GetItemListbysuppliernameAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, " ItemList By supplier Name"));
-        }
-
-
-        [HttpPost("GRNListBynameforGrnReturn")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
-        {
-            IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _IPurchaseService.Getgrnlistbynameforgrnreturn(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
-        }
 
         [HttpPost("OpeningBalanceList")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
@@ -169,22 +135,5 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IPurchaseService.GetOPningBalItemDetailList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
         }
-
-        [HttpPost("WorkOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetWorkorderlist(GridRequestModel objGrid)
-        {
-            IPagedList<WorkOrderListDto> List1 = await _IPurchaseService.GetWorkorderList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Work Order List"));
-        }
-
-        //[HttpPost("SupplierOaymnetStatusList")]
-        ////[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        //public async Task<IActionResult> GetSupplierPaymentStatuslist(GridRequestModel objGrid)
-        //{
-        //    IPagedList<SupplierPaymentStatusListDto> List1 = await _IPurchaseService.GetSupplierPaymentStatusList(objGrid);
-        //    return Ok(List1.ToGridResponse(objGrid, "Supplier Payment Status List"));
-        //}
-
     }
 }

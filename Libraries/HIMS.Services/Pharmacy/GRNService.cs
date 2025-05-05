@@ -34,9 +34,6 @@ namespace HIMS.Services.Pharmacy
             return await this._context.TGrnheaders.Include(x => x.TGrndetails).FirstOrDefaultAsync(x => x.Grnid == Id);
 
         }
-
-
-
         public virtual async Task InsertAsyncSP(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {
             // Add header table records
@@ -121,6 +118,7 @@ namespace HIMS.Services.Pharmacy
                 scope.Complete();
             }
         }
+
         public virtual async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -168,12 +166,7 @@ namespace HIMS.Services.Pharmacy
                         DetailsInfo.IsClosed = objDet.IsClosed;
                         DetailsInfo.IsGrnQty = DetailsInfo.Qty - objDet.PobalQty;
                         objPurDetailsList.Add(DetailsInfo);
-                //    }
-                //    else
-                //    {
-                //        // Log or throw exception for missing PurchaseDetail
-                //        throw new Exception($"PurchaseDetail not found for PurchaseId: {objDet.PurchaseId}, PurDetId: {objDet.PurDetId}");
-                //    }
+                
                 }
                 _context.TPurchaseDetails.UpdateRange(objPurDetailsList);
                 _context.Entry(objPurDetailsList).State = EntityState.Modified;

@@ -32,5 +32,10 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<ItemWiseSalesSummaryDto>(model, "m_rpt_ItemWiseSalesReport");
 
         }
+        public virtual async Task<IPagedList<IssueWiseItemSummaryListDto>> IssueWiseItemSummaryList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IssueWiseItemSummaryListDto>(model, "m_rpt_ItemWisePurchaseReport");
+
+        }
     }
 }

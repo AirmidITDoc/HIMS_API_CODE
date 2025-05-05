@@ -74,5 +74,24 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
         }
 
+
+        [HttpPost("salesdetaillist")]
+        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
+        {
+            IPagedList<SalesDetailsListDto> SalesDetailsList = await _ISalesService.Getsalesdetaillist(objGrid);
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
+        }
+
+
+        [HttpPost("salesbrowselist")]
+        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
+        {
+            IPagedList<SalesBillListDto> SalesDetailsList = await _ISalesService.salesbrowselist(objGrid);
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
+        }
+
+     
     }
 }

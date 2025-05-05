@@ -9,11 +9,9 @@ namespace HIMS.Data.DTO.Purchase
     public class PurchaseDetailListDto
     {
         public long PurDetId { get; set; }
-
         public long? ItemId { get; set; }
-
         public long? UOMID { get; set; }
-        public String? ItemName { get; set; }
+        public string  ItemName { get; set; }
         public double? Qty { get; set; }
         public double? Rate { get; set; }
         public double? TotalAmount { get; set; }
@@ -24,8 +22,6 @@ namespace HIMS.Data.DTO.Purchase
         public double? GrandTotalAmount { get; set; }
         public double? MRP { get; set; }
         public long? PurchaseId { get; set; }
-
-
         public double? CGSTPer { get; set; }
         public decimal? CGSTAmt { get; set; }
         public double? SGSTPer { get; set; }
@@ -34,8 +30,7 @@ namespace HIMS.Data.DTO.Purchase
         public decimal? IGSTAmt { get; set; }
         public decimal? DefRate { get; set; }
         public decimal? VendDiscAmt { get; set; }
-
-        public String? Specification { get; set; }
+        public string? Specification { get; set; }
 
 
     }
