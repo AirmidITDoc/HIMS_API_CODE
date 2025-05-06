@@ -233,21 +233,8 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<grnlistbynameforgrnreturnlistDto>(model, "Rtrv_GRNList_by_Name_For_GRNReturn");
         }
 
-        //public virtual async Task<IPagedList<OpeningBalListDto>> GetOpeningBalanceList(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<OpeningBalListDto>(model, "m_Rtrv_OpeningItemList");
-        //}
-
-        //public virtual async Task<IPagedList<OpeningBalanaceItemDetailListDto>> GetOPningBalItemDetailList(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<OpeningBalanaceItemDetailListDto>(model, "m_Rtrv_OpeningItemDet");
-        //}
-
-        public virtual async Task<IPagedList<WorkOrderListDto>> GetWorkorderList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<WorkOrderListDto>(model, "Rtrv_WorkOrderList_by_Name");
-        }
-
+       
+       
         public virtual async Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SupplierPaymentStatusListDto>(model, "Rtrv_GRNList_ForAccount_payment");

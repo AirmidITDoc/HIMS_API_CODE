@@ -91,10 +91,7 @@ namespace HIMS.Services.Users
         }
 
 
-        public virtual async Task<IPagedList<PharSalesListDto>> GetListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharSalesListDto>(model, "m_PHAR_SalesList");
-        }
+        
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");

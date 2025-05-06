@@ -13,7 +13,6 @@ namespace HIMS.Services.Users
     public partial interface ISalesService
     {
         Task InsertAsync(TSalesHeader user, Payment objPayment, int UserId, string Username);
-        Task<IPagedList<PharSalesListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel objGrid);
         Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel objGrid);
        
