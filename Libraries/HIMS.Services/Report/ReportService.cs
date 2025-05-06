@@ -697,13 +697,14 @@ namespace HIMS.Services.Report
                 #region :: IpMLCCasePaperPrint ::
                 case "IpMLCCasePaperPrint":
                     {
-                        model.RepoertName = "MLC Case Paper ";
-                        string[] headerList = Array.Empty<string>();
-                        string[] colList = Array.Empty<string>();
+                        string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_MLCReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail", Orientation.Landscape);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail", Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -6876,9 +6877,9 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{DetailGiven}}", dt.GetColValue("DetailGiven"));
 
 
-                            //html = html.Replace("{{chkRemarkflag}}", dt.GetColValue("Remark") != null ? "table-row " : "none");
+                            html = html.Replace("{{chkRemarkflag}}", dt.GetColValue("Remark") != null ? "table-row " : "none");
 
-                            //html = html.Replace("{{chkgivenflag}}", dt.GetColValue("DetailGiven").ConvertToString() != "" ? "table -row " : "none");
+                            html = html.Replace("{{chkgivenflag}}", dt.GetColValue("DetailGiven").ConvertToString() != "" ? "table -row " : "none");
 
                             html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
