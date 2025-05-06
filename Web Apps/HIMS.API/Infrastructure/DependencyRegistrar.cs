@@ -25,6 +25,7 @@ using HIMS.Services.Administration;
 using HIMS.Services.Pathlogy;
 using HIMS.API.Utility;
 using HIMS.Services.Transaction;
+using HIMS.Services.Notification;
 
 namespace HIMS.API.Infrastructure
 {
@@ -92,10 +93,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IOPAddchargesService,OPAddchargesService>();
+            services.AddScoped<IOPAddchargesService, OPAddchargesService>();
             services.AddScoped<IOPPayment, OPPayment>();
-            services.AddScoped<IOPCreditBillService,OPCreditBillService>();
-            services.AddScoped<IOPSettlementCreditService,OPSettlementCreditService>();
+            services.AddScoped<IOPCreditBillService, OPCreditBillService>();
+            services.AddScoped<IOPSettlementCreditService, OPSettlementCreditService>();
             services.AddScoped<IIPBIllwithpaymentService, IPBIllwithpaymentService>();
             services.AddScoped<IIPBillwithCreditService, IPBillwithCreditService>();
             services.AddScoped<IIPAdvanceService, IPAdvanceService>();
@@ -114,9 +115,9 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
-           
+
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
-         
+
             services.AddScoped<IBedTransferService, BedTransferService>();
             services.AddScoped<IIPrescriptionService, IPPrescriptionService>();
             services.AddScoped<IDischargeServiceSP, DischargeServiceSP>();
@@ -128,14 +129,14 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
             services.AddScoped<IIPBillService, IPBIllService>();
-            services.AddScoped<IIPBILLCreditService,IPBILLCreditService>();
+            services.AddScoped<IIPBILLCreditService, IPBILLCreditService>();
             services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
             services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
-            services.AddScoped<IIPInterimBillSerive,IPInterimBillSerive>();
+            services.AddScoped<IIPInterimBillSerive, IPInterimBillSerive>();
 
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();
-            services.AddScoped<IAdmissionService,AdmissionService>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
             services.AddScoped<IPathlogySampleCollectionService, PathlogySampleCollectionService>();
             services.AddScoped<IDoctorSharePerCalculationService, DoctorSharePerCalculationService>();
             services.AddScoped<ICanteenRequestService, CanteenRequestService>();
@@ -147,7 +148,7 @@ namespace HIMS.API.Infrastructure
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();
             services.AddScoped<IBillCancellationService, BillCancellationService>();
-
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
