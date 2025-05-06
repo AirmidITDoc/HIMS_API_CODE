@@ -28,6 +28,8 @@ add [CreatedBy] [int] NULL,
 	
 Update loginManager set [CreatedBy] =1 ,[CreatedDate]= getdate(), [ModifiedBy]=1,[ModifiedDate]=getdate()
 
+Drop table AuditLog
+
 CREATE TABLE [dbo].[AuditLog](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ActionId] [int] NOT NULL,
