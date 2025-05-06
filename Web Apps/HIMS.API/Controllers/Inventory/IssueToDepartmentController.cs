@@ -59,27 +59,7 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(AppVisitList.ToGridResponse(objGrid, "Issue To dept Indent Item List"));
         }
 
-        [HttpPost("IssueSummaryList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> IssueSummaryList(GridRequestModel objGrid)
-        {
-            IPagedList<PharIssueCurrentSumryListDto> IssueSummaryList = await _IIssueToDepService.GetIssueSummaryList(objGrid);
-            return Ok(IssueSummaryList.ToGridResponse(objGrid, "Issue Summary List"));
-        }
-
-
-        [HttpPost("IssueDetailsList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> IssueDetailsList(GridRequestModel objGrid)
-        {
-            IPagedList<PharIssueCurrentDetListDto> IssueDetailsList = await _IIssueToDepService.GetIssueDetailsList(objGrid);
-            return Ok(IssueDetailsList.ToGridResponse(objGrid, "Issue Details List"));
-        }
-
-
-
-
-        [HttpPost("InsertSP")]
+         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(IssueToDepartmentModel obj)
         {

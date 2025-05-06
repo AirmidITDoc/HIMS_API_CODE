@@ -11,7 +11,7 @@ namespace HIMS.Services.Inventory
     public partial interface IItemMovementService
     {
         Task<IPagedList<ItemMovementListDto>> ItemMovementList(GridRequestModel objGrid);
-        Task<IPagedList<ItemMovementSummeryListDto>> List(GridRequestModel objGrid);
+
 
     }
 }
