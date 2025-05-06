@@ -35,7 +35,8 @@ namespace HIMS.Core.Domain.Grid
         public string[] headerList { get; set; } = null;
         public string[] colList { get; set; } = null;
         public string[] totalFieldList { get; set; } = null;
-        public string groupByLabel { get; set; } = string.Empty;
+        //public string[] groupbyList { get; set; } = null;
+        public string groupByLabel { get; set; } = null;
         public string htmlFilePath { get; set; } = string.Empty;
         public string htmlHeaderFilePath { get; set; } = string.Empty;
         public string SPName { get; set; } = string.Empty;
