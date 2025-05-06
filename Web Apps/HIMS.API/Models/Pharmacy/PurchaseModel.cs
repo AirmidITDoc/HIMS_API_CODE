@@ -6,6 +6,8 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long PurchaseId { get; set; }
         public string? PurchaseNo { get; set; }
+        public DateTime? PurchaseDate { get; set; }
+        public string? PurchaseTime { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public double? TotalAmount { get; set; }
@@ -24,7 +26,6 @@ namespace HIMS.API.Models.Pharmacy
         public float? RoundVal { get; set; }
         public string? Prefix { get; set; }
         public long? IsVerifiedId { get; set; }
-        public DateTime? VerifiedDateTime { get; set; }
         public decimal? TotCgstamt { get; set; }
         public decimal? TotSgstamt { get; set; }
         public decimal? TotIgstamt { get; set; }
