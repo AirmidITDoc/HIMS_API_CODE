@@ -1419,7 +1419,7 @@ namespace HIMS.Services.Report
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
-            string[] groupbyList = model.groupbyList;  //"Type,SectionType";
+            //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
             //Convert vPageOrientation from string to the appropriate Orientation enum
             Orientation vPageOrg;
