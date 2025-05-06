@@ -23,10 +23,10 @@ namespace HIMS.API.Controllers.Pharmacy
     [ApiVersion("1")]
     public class SalesReturnController : BaseController
     {
-        private readonly ISalesService _ISalesService;
-        public SalesReturnController(ISalesService repository)
+        private readonly ISalesReturnService _ISalesReturnService;
+        public SalesReturnController(ISalesReturnService repository)
         {
-            _ISalesService = repository;
+            _ISalesReturnService = repository;
         }
 
      //   [HttpPost("SalesList")]
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Pharmacy
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
         {
-            IPagedList<SalesRetrunCurrentSumryListDto> PharSalesList = await _ISalesService.SalesReturnSummaryList(objGrid);
+            IPagedList<SalesRetrunCurrentSumryListDto> PharSalesList = await _ISalesReturnService.SalesReturnSummaryList(objGrid);
             return Ok(PharSalesList.ToGridResponse(objGrid, "Sales Return Summary   List"));
         }
 
@@ -48,26 +48,26 @@ namespace HIMS.API.Controllers.Pharmacy
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesReturnDetailsList(GridRequestModel objGrid)
         {
-            IPagedList<SalesRetrunLCurrentDetListDto> SalesDetailsList = await _ISalesService.SalesReturnDetailsList(objGrid);
+            IPagedList<SalesRetrunLCurrentDetListDto> SalesDetailsList = await _ISalesReturnService.SalesReturnDetailsList(objGrid);
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Return Details  List"));
         }
-
-        [HttpPost("salesreturndetaillist")]
-        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
-        public async Task<IActionResult> salesreturndetaillist(GridRequestModel objGrid)
-        {
-            IPagedList<SalesReturnDetailsListDto> SalesDetailsList = await _ISalesService.salesreturndetaillist(objGrid);
-            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Return Details  List"));
-        }
-
-        [HttpPost("salesreturnlist")]
+        [HttpPost("SalesReturnBrowseList")]
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> salesreturnlist(GridRequestModel objGrid)
         {
-            IPagedList<SalesReturnBillListDto> salesreturnlist = await _ISalesService.salesreturnlist(objGrid);
+            IPagedList<SalesReturnBillListDto> salesreturnlist = await _ISalesReturnService.salesreturnlist(objGrid);
             return Ok(salesreturnlist.ToGridResponse(objGrid, "Sales Return Details  List"));
         }
 
+        [HttpPost("salesReturnBrowseDetaillist")]
+        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        public async Task<IActionResult> salesreturndetaillist(GridRequestModel objGrid)
+        {
+            IPagedList<SalesReturnDetailsListDto> SalesDetailsList = await _ISalesReturnService.salesreturndetaillist(objGrid);
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Return Details  List"));
+        }
+
+       
 
     }
 }

@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        [HttpPost("salesdetaillist")]
+        [HttpPost("SalesBrowseDetailList")]
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {

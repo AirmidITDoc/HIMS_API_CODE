@@ -103,14 +103,7 @@ namespace HIMS.Services.Users
         {
             return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
         }
-        public virtual async Task<IPagedList<SalesRetrunCurrentSumryListDto>> SalesReturnSummaryList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesRetrunCurrentSumryListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentSumry");
-        }
-        public virtual async Task<IPagedList<SalesRetrunLCurrentDetListDto>> SalesReturnDetailsList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesRetrunLCurrentDetListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentDet");
-        }
+      
         public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "Rtrv_SalesDetails");
@@ -120,13 +113,6 @@ namespace HIMS.Services.Users
         {
             return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "Rtrv_SalesBillList");
         }
-        public virtual async Task<IPagedList<SalesReturnDetailsListDto>> salesreturndetaillist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesReturnDetailsListDto>(model, "Rtrv_SalesReturnDetails");
-        }
-        public virtual async Task<IPagedList<SalesReturnBillListDto>> salesreturnlist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesReturnBillListDto>(model, "Rtrv_SalesReturnBillList");
-        }
+     
     }
 }

@@ -914,8 +914,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("Bedmaster");
 
-                entity.Property(e => e.BedId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.BedName).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -1458,8 +1456,6 @@ namespace HIMS.Data.Models
                 entity.ToTable("DischargeTypeMaster");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DischargeTypeId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DischargeTypeName).HasMaxLength(100);
 
@@ -3115,8 +3111,6 @@ namespace HIMS.Data.Models
                 entity.ToTable("LocationMaster");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.LocationId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.LocationName).HasMaxLength(100);
 
