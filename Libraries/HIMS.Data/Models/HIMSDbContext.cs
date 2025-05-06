@@ -910,7 +910,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<Bedmaster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.BedId);
 
                 entity.ToTable("Bedmaster");
 
@@ -1453,7 +1453,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<DischargeTypeMaster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.DischargeTypeId);
 
                 entity.ToTable("DischargeTypeMaster");
 
@@ -3110,7 +3110,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<LocationMaster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.LocationId);
 
                 entity.ToTable("LocationMaster");
 

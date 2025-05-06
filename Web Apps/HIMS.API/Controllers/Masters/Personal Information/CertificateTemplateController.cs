@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-     //   [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCertificateTemplateMaster model = await _repository.GetById(x => x.TemplateId == Id);

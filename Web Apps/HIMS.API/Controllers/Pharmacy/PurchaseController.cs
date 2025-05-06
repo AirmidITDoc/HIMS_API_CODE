@@ -117,23 +117,5 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
 
-       
-
-
-        [HttpPost("OpeningBalanceList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
-        {
-            IPagedList<OpeningBalListDto> List1 = await _IPurchaseService.GetOpeningBalanceList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Oening Balance List"));
-        }
-
-        [HttpPost("OpeningBalnceItemDetailList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetOpeningBalItemDetail(GridRequestModel objGrid)
-        {
-            IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IPurchaseService.GetOPningBalItemDetailList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
-        }
     }
 }
