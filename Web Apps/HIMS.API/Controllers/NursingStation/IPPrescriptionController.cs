@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Hubs;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
@@ -20,7 +21,9 @@ using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using System.Security;
+using System.Text.Json;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -32,13 +35,14 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly INotificationService _INotificationService;
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ILabRequestService _ILabRequestService;
-        private readonly IMPrescriptionService _IMPrescriptionService;
-        public IPPrescriptionController(INotificationService notificationService, IPriscriptionReturnService repository1, ILabRequestService repository2, IMPrescriptionService repository3)
+        private readonly IHubContext<NotificationHub> _hubContext;
+
+        public IPPrescriptionController(INotificationService notificationService, IPriscriptionReturnService repository1, ILabRequestService repository2, IHubContext<NotificationHub> repository3)
         {
             _INotificationService = notificationService;
             _IPriscriptionReturnService = repository1;
             _ILabRequestService = repository2;
-            _IMPrescriptionService = repository3;
+            _hubContext = repository3;
         }
 
         [HttpPost("PrescriptionPatientList")]
@@ -136,6 +140,7 @@ namespace HIMS.API.Controllers.NursingStation
                 // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
                 NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = "This is notification body", NotiTitle = "This is title", UserId = 1 };
                 await _INotificationService.Save(objNotification);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id }), objNotification.UserId);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
