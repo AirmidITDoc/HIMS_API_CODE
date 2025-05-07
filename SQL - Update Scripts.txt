@@ -726,6 +726,42 @@ ALTER TABLE M_PathParameterMaster DROP COLUMN Isdeleted;
 ALTER TABLE M_CurrencyMaster DROP COLUMN Isdeleted;
  
 ALTER TABLE M_ManufactureMaster DROP COLUMN Isdeleted;  db command pending
+
+
+
+
+====================================PORT 9094==========================================================================
+
+
+
+chagees in 9097 and 9094
+Set primary key
+
+select * from locationmaster order by 1 desc
+select * from bedmaster order by 1 desc
+select * from DischargeTypeMaster order by 1 desc
+
+
+Added in 9094 SSWeb_VATSALYA_API_23Apr database
+===========================
+
+ALTER TABLE M_ClassMaster ADD [TemplateDescName] NVARCHAR(100) NULL;
+
+
+ALTER TABLE M_CertificateTemplateMaster ADD[IsActive] [bit] NULL,[CreatedBy] [int] NULL,[CreatedDate] [datetime] NULL,[ModifiedBy] [int] NULL,[ModifiedDate] [datetime] NULL
+
+Update M_CertificateTemplateMaster set IsActive=1, CreatedBy=1, CreatedDate=getdate(),ModifiedBy=1,ModifiedDate=getdate()
+
+EXEC sp_rename 'M_CertificateTemplateMaster.Template', 'TemplateDesc', 'COLUMN'; 
+
+m_Rtrv_PathParameterMaster_by_Name ---->create procedure
+ alter Proc [dbo].[m_Retrieve_PathSubTestListForCombo]       ---> alter procedure
+ ALTER TABLE M_ItemMaster ADD [IsActive] [bit] NULL
+ m_Rtrv_ItemMaster_by_Name_Pagi----> Create procedure
+Ps_Rtrv_PathologyTestList ----> Create procedure                   
+
+alter proc [dbo].[ps_Rtrv_Menu_master]    ---> Alter procedure
+
  
  
 
