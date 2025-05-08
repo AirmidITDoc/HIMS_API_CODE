@@ -3,6 +3,7 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -143,9 +144,16 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IndentListDto>(model, "ps_Rtrv_IndentList_by_ID");
         }
-        public virtual async Task<IPagedList<IndentDetailListDto>> GetIndentDetListAsync(GridRequestModel model)
+
+        public virtual async Task<IPagedList<IndentItemListDto>> GetOldIndentAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IndentDetailListDto>(model, "ps_rtrv_IndentItemList");
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "m_rtrv_IndentItemList");
         }
+
+        public virtual async Task<IPagedList<IndentItemListDto>> GetIndentItemListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
+        }
+       
     }
 }

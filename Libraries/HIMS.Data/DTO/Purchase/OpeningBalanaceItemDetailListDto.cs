@@ -18,7 +18,7 @@ namespace HIMS.Data.DTO.Purchase
         public decimal? PerUnitMrp { get; set; }
         public double? VatPer { get; set; }
 
-        //public long? Qty { get; set; }
+        public float? Qty { get; set; }
 
 
     }

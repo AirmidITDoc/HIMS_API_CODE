@@ -11,7 +11,7 @@ namespace HIMS.Data.DTO.Purchase
         public long PurDetId { get; set; }
         public long? ItemId { get; set; }
         public long? UOMID { get; set; }
-        public string  ItemName { get; set; }
+        public string?  ItemName { get; set; }
         public double? Qty { get; set; }
         public double? Rate { get; set; }
         public double? TotalAmount { get; set; }

@@ -1387,7 +1387,68 @@ namespace HIMS.Services.Report
 
 
 
+                #region :: IndentWiseReport ::
+                case "IndentWiseReport":
+                    {
+                        string[] colList = { };
 
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: IndentverifyReport ::
+                case "IndentverifyReport":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: Issutodeptissuewise ::
+                case "Issutodeptissuewise":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InvIssuetoDept.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                #region :: Issutodeptsummarywise ::
+                case "Issutodeptsummarywise":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InvIssuetodeptsummary.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptIssueToDepartmentSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
 
 
 
@@ -7675,6 +7736,187 @@ namespace HIMS.Services.Report
 
                     }
 
+                    break;
+
+
+                case "IndentWiseReport":
+                    {
+                        int i = 0;
+                        String Verify = " ";
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;border-bottom: 1px solid black;text-align:center;font-size:18px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:0;border-right:1px solid #000;height:10px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["Qty"].ConvertToString()).Append("</td></tr>");
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromStoreName}}", dt.GetColValue("FromStoreName"));
+
+                        html = html.Replace("{{VLabel}}", dt.GetColValue("VLabel"));
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Comments"));
+                        html = html.Replace("{{ToStoreName}}", dt.GetColValue("ToStoreName"));
+                        html = html.Replace("{{IndentNo}}", dt.GetColValue("IndentNo"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{IndentTime}}", dt.GetColValue("IndentTime").ConvertToDateString("dd.MM.yyyy hhLmm tt"));
+                        html = html.Replace("{{Isverify}}", dt.GetColValue("Isverify"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+                        return html;
+
+                    }
+
+                    break;
+
+                case "IndentverifyReport":
+                    {
+                        int i = 0;
+                        String Verify = " ";
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;border-bottom: 1px solid black;text-align:center;font-size:18px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:0;border-right:1px solid #000;height:10px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["Qty"].ConvertToString()).Append("</td></tr>");
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromStoreName}}", dt.GetColValue("FromStoreName"));
+
+                        html = html.Replace("{{VLabel}}", dt.GetColValue("VLabel"));
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Comments"));
+                        html = html.Replace("{{ToStoreName}}", dt.GetColValue("ToStoreName"));
+                        html = html.Replace("{{IndentNo}}", dt.GetColValue("IndentNo"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{IndentTime}}", dt.GetColValue("IndentTime").ConvertToDateString("dd.MM.yyyy hhLmm tt"));
+                        html = html.Replace("{{Isverify}}", dt.GetColValue("Isverify"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+
+
+                    }
+                    break;
+                case "Issutodeptissuewise":
+                    {
+                        int i = 0;
+
+                        double T_TotalNETAmount = 0, T_TotalVatAmount = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["UnitofMeasurementName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["IssueQty"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["BatchNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["BatchExpDate"].ConvertToDateString("dd/Mm/yyyy")).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["PerUnitLandedRate"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["VatPercentage"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["VatAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["LandedTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+
+                            T_TotalVatAmount += dr["VatAmount"].ConvertToDouble();
+                            T_TotalNETAmount += dr["LandedTotalAmount"].ConvertToDouble();
+                            //   exec RptPharmacyCreditReport '11-01-2022','11-26-2023',11052,24879,0,10016
+
+                        }
+
+                        T_TotalVatAmount = Math.Round(T_TotalVatAmount);
+                        T_TotalNETAmount = Math.Round(T_TotalNETAmount);
+                        html = html.Replace("{{Items}}", items.ToString());
+                        //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        //html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{TotalNETAmount}}", T_TotalNETAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
+
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+
+                        html = html.Replace("{{StoreName}}", dt.GetColValue("StoreName"));
+                        html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName").ToString());
+
+
+                        html = html.Replace("{{IssueNo}}", dt.GetColValue("IssueNo"));
+
+                        html = html.Replace("{{IssueTime}}", dt.GetColValue("IssueTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+
+                        html = html.Replace("{{StoreName}}", dt.GetColValue("StoreName"));
+
+                        html = html.Replace("{{ToStreName}}", dt.GetColValue("ToStreName"));
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+
+                        string finalamt = conversion(T_TotalNETAmount.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                    }
+                    break;
+                case "Issutodeptsummarywise":
+                    {
+                        int i = 0;
+
+                        double T_TotalLRateAmount = 0, T_TotalVatAmount = 0, T_TotalMRPAmount = 0, T_NetAmount = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["IssueNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["IssueTime"].ConvertToDateString("dd/MM/yyyy hh:mm tt")).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:left;\">").Append(dr["FromStoreName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:left;\">").Append(dr["ToStoreName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["TotalVatAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["UserName"].ConvertToString()).Append("</td></tr>");
+
+
+                            T_TotalLRateAmount += dr["TotalAmount"].ConvertToDouble();
+                            T_TotalVatAmount += dr["TotalVatAmount"].ConvertToDouble();
+
+                            T_NetAmount += dr["NetAmount"].ConvertToDouble();
+                            // T_TotalBalancepay += dr["BalanceAmount"].ConvertToDouble();
+
+                            //   exec RptPharmacyCreditReport '11-01-2022','11-26-2023',11052,24879,0,10016
+
+                        }
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{T_TotalLRateAmount}}", T_TotalLRateAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_NetAmount}}", T_NetAmount.To2DecimalPlace());
+
+                        html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName").ToString());
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+                    }
                     break;
                     //end lopp
 

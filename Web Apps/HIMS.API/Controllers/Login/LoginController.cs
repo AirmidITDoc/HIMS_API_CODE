@@ -57,8 +57,8 @@ namespace HIMS.API.Controllers.Login
             }
             else
             {
-                model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
-                model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
+                //model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
+                //model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
                 if (string.IsNullOrWhiteSpace(model.Username))
                 {
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
