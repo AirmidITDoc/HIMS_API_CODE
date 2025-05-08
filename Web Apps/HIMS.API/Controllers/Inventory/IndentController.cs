@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Inventory
     public class IndentController : BaseController
     {
 
-        private readonly IIndentService _IIndentService;
+        public readonly IIndentService _IIndentService;
         public IndentController(IIndentService repository)
         {
             _IIndentService = repository;
@@ -40,11 +40,11 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IndentDetailsList")]
-        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
         {
-            IPagedList<IndentDetailListDto> IndentDetailsList = await _IIndentService.GetIndentDetListAsync(objGrid);
-            return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent List"));
+            IPagedList<IndentItemListDto> IndentDetailsList = await _IIndentService.GetIndentItemListAsync(objGrid);
+            return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent Item Detail List"));
         }
         [HttpPost("Insert")]
         [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
@@ -113,5 +113,13 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent Canceled successfully.");
         }
 
+
+        [HttpPost("OldIndentList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetOldIndentList(GridRequestModel objGrid)
+        {
+            IPagedList<IndentItemListDto> List1 = await _IIndentService.GetOldIndentAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Indent List"));
+        }
     }
 }

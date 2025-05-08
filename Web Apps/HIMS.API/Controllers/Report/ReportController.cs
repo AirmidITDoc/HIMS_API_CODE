@@ -262,6 +262,10 @@ namespace HIMS.API.Controllers.Report
                     
                 case "Purchaseorder":
                 case "PathTemplateHeaderReport":
+                case "IndentWiseReport":
+                case "IndentverifyReport":
+                case "Issutodeptissuewise":
+                case "Issutodeptsummarywise":
 
 
 
