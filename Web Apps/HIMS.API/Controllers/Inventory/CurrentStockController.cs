@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -48,5 +49,53 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<IssueWiseItemSummaryListDto> IssueWiseItemSummaryList = await _ICurrentStockService.IssueWiseItemSummaryList(objGrid);
             return Ok(IssueWiseItemSummaryList.ToGridResponse(objGrid, "IssueWiseItemSummaryList "));
         }
+
+        //Current Stock Page --> Click on Item Qty Button
+
+
+        [HttpPost("ItemMovementSummeryList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> ItemMovementSummeryList(GridRequestModel objGrid)
+        {
+            IPagedList<ItemMovementSummeryListDto> summaryList = await _ICurrentStockService.List(objGrid);
+            return Ok(summaryList.ToGridResponse(objGrid, "ItemMovementSummery  List"));
+        }
+
+        [HttpPost("BatchWiseList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BatchWiseList(GridRequestModel objGrid)
+        {
+            IPagedList<BatchWiseListDto> BatchWiseList = await _ICurrentStockService.BList(objGrid);
+            return Ok(BatchWiseList.ToGridResponse(objGrid, "ItemMovementSummery  List"));
+        }
+
+        [HttpPost("SalesList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesListDto> BatchWiseList = await _ICurrentStockService.SList(objGrid);
+            return Ok(BatchWiseList.ToGridResponse(objGrid, "SalesList"));
+        }
+
+        //Currebt stock Page --> Click On Receive Qty Button
+
+       
+        [HttpPost("IssueSummaryList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IssueSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<PharIssueCurrentSumryListDto> IssueSummaryList = await _ICurrentStockService.GetIssueSummaryList(objGrid);
+            return Ok(IssueSummaryList.ToGridResponse(objGrid, "Issue Summary List"));
+        }
+
+
+        [HttpPost("IssueDetailsList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> IssueDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<PharIssueCurrentDetListDto> IssueDetailsList = await _ICurrentStockService.GetIssueDetailsList(objGrid);
+            return Ok(IssueDetailsList.ToGridResponse(objGrid, "Issue Details List"));
+        }
+
     }
 }

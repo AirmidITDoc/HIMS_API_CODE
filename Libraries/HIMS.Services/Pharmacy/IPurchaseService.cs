@@ -34,14 +34,6 @@ namespace HIMS.Services.Pharmacy
 
         Task<IPagedList<grnlistbynameforgrnreturnlistDto>> Getgrnlistbynameforgrnreturn(GridRequestModel objGrid);
 
-
-        Task<IPagedList<OpeningBalListDto>> GetOpeningBalanceList(GridRequestModel objGrid);
-
-        Task<IPagedList<OpeningBalanaceItemDetailListDto>> GetOPningBalItemDetailList(GridRequestModel objGrid);
-
-        Task<IPagedList<WorkOrderListDto>> GetWorkorderList(GridRequestModel objGrid);
-
-
         Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel objGrid);
 
     }

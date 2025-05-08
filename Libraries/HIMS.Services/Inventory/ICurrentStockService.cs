@@ -14,7 +14,11 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<DayWiseCurrentStockDto>> DayWiseCurrentStockList(GridRequestModel objGrid);
         Task<IPagedList<ItemWiseSalesSummaryDto>> ItemWiseSalesList(GridRequestModel objGrid);
         Task<IPagedList<IssueWiseItemSummaryListDto>> IssueWiseItemSummaryList(GridRequestModel objGrid);
-
+        Task<IPagedList<ItemMovementSummeryListDto>> List(GridRequestModel objGrid);
+        Task<IPagedList<BatchWiseListDto>> BList(GridRequestModel objGrid);
+        Task<IPagedList<SalesListDto>> SList(GridRequestModel objGrid);
+        Task<IPagedList<PharIssueCurrentSumryListDto>> GetIssueSummaryList(GridRequestModel objGrid);
+        Task<IPagedList<PharIssueCurrentDetListDto>> GetIssueDetailsList(GridRequestModel objGrid);
 
     }
 }

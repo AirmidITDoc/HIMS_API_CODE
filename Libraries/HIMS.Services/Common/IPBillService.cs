@@ -204,6 +204,11 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<IPPackageDetailsListDto>(model, "ps_Rtrv_PackageDetails_List");
         }
+
+        public virtual async Task<IPagedList<PackageDetailsListDto>> Addpackagelist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PackageDetailsListDto>(model, "m_Retrieve_PackageDetails");
+        }
         public virtual async Task InsertAsync(AddCharge objAddCharge, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -636,7 +641,7 @@ namespace HIMS.Services.Common
                 entity.Remove(rProperty);
             }
 
-             odal.ExecuteNonQuery("ps_update_IPAddCharges", CommandType.StoredProcedure, entity);
+             odal.ExecuteNonQuery("m_update_IPAddCharges", CommandType.StoredProcedure, entity);
 
         }
 

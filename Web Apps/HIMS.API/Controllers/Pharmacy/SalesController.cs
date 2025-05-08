@@ -51,13 +51,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
         }
 
-        [HttpPost("SalesList")]
-     //   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
-        public async Task<IActionResult> PharSalesList(GridRequestModel objGrid)
-        {
-            IPagedList<PharSalesListDto> PharSalesList = await _ISalesService.GetListAsync(objGrid);
-            return Ok(PharSalesList.ToGridResponse(objGrid, "Phar Sales  List"));
-        }
+      
         [HttpPost("SalesSummaryList")]
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
@@ -75,7 +69,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        [HttpPost("salesdetaillist")]
+        [HttpPost("SalesBrowseDetailList")]
         ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {

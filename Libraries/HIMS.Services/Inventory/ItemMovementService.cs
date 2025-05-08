@@ -21,9 +21,6 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<ItemMovementListDto>(model, "m_rptItemMovementReport");
         }
-        public virtual async Task<IPagedList<ItemMovementSummeryListDto>> List(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemMovementSummeryListDto>(model, "m_Phar_ItemMovementReport");
-        }
+       
     }
 }

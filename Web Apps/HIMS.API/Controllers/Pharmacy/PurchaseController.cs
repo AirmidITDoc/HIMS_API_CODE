@@ -73,10 +73,14 @@ namespace HIMS.API.Controllers.Pharmacy
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
             if (obj.PurchaseId == 0)
             {
-                model.PurchaseDate = DateTime.Now.Date;
+                
+                model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
+                //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
                 model.PurchaseTime = DateTime.Now;
+
+
                 model.AddedBy = CurrentUserId;
-                model.UpdatedBy = 0;
+              //  model.UpdatedBy = 0;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -85,7 +89,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -93,7 +97,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.PurchaseDate = DateTime.Now.Date;
+                model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 model.PurchaseTime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
@@ -110,6 +114,7 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.IsVerified = true;
                 model.VerifiedDateTime = DateTime.Now.Date;
+
                 await _IPurchaseService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -117,23 +122,5 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase verify successfully.");
         }
 
-       
-
-
-        [HttpPost("OpeningBalanceList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
-        {
-            IPagedList<OpeningBalListDto> List1 = await _IPurchaseService.GetOpeningBalanceList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Oening Balance List"));
-        }
-
-        [HttpPost("OpeningBalnceItemDetailList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetOpeningBalItemDetail(GridRequestModel objGrid)
-        {
-            IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IPurchaseService.GetOPningBalItemDetailList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
-        }
     }
 }

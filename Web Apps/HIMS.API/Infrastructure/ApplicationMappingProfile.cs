@@ -15,6 +15,7 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.API.Models.Radiology;
 using HIMS.API.Models.Transaction;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
@@ -316,6 +317,14 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TNursingMedicationChartModel, TNursingMedicationChart>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddChargeModell, AddCharge>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+            CreateMap<GRNReturnVerifyModel, TGrnreturnDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<OpeningBalModel,TOpeningTransactionHeader> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<OpeningTransactionModel, TOpeningTransaction> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<OpeningTranItemStockModel, TOpeningTransactionHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
