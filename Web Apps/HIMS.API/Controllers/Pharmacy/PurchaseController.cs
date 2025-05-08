@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
                 model.AddedBy = CurrentUserId;
-                model.UpdatedBy = 0;
+              //  model.UpdatedBy = 0;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

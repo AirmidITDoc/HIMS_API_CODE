@@ -104,6 +104,16 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(IPPackageDetailsList.ToGridResponse(objGrid, "IPPackageDetails List"));
         }
 
+        [HttpPost("Addpackagelist")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> Addpackagelist(GridRequestModel objGrid)
+        {
+            IPagedList<PackageDetailsListDto> IPPackageDetailsList = await _IPBillService.Addpackagelist(objGrid);
+            return Ok(IPPackageDetailsList.ToGridResponse(objGrid, "IPPackageDetails List"));
+        }
+
+
+
         [HttpPost("AddChargeInsert")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)

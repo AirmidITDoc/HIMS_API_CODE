@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Purchase;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<OpeningBalListDto>> GetOpeningBalanceList(GridRequestModel objGrid);
 
         Task<IPagedList<OpeningBalanaceItemDetailListDto>> GetOPningBalItemDetailList(GridRequestModel objGrid);
+
+        Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransaction> ObjTOpeningTransaction, TOpeningTransactionHeader ObjTOpeningTransactionHeaders, int UserId, string Username);
+
     }
 }
