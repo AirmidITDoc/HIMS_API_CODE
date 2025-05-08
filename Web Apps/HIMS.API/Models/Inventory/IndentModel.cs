@@ -6,10 +6,14 @@ namespace HIMS.API.Models.Inventory
     public class IndentModel
     {
         public long IndentId { get; set; }
+        public string IndentNo { get; set; }
         public string? IndentDate { get; set; }
         public string? IndentTime { get; set; }
         public long? FromStoreId { get; set; }
         public long? ToStoreId { get; set; }
+        public long? Isdeleted { get; set; }
+        public bool? Isverify { get; set; }
+        public bool? Isclosed{ get; set; }
         public string? Comments { get; set; }
         public List<IndentDetailModel> TIndentDetails { get; set; }
     }
@@ -29,6 +33,10 @@ namespace HIMS.API.Models.Inventory
         public long IndentId { get; set; }
         public long ItemId { get; set; }
         public long Qty { get; set; }
+        public bool? Isclosed { get; set; }
+        public long? IndQty { get; set; }
+        public long? IssQty { get; set; }
+
     }
     public class IndentDetailModelValidator : AbstractValidator<IndentDetailModel>
     {
