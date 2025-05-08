@@ -130,6 +130,7 @@ namespace HIMS.API.Controllers.Report
                 case "GRNReport":
                 case "GRNReturnReport":
                 case "IndentwiseReport":
+                case "OPDSpineCasePaper":
 
 
 

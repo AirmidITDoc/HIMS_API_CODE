@@ -35,6 +35,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyPatientListDto>(model, "ps_Rtrv_RadiologyPatient_ResultEntry_List");
         }
+        public virtual async Task<IPagedList<RadTemplateMasterListDto>> TemplateListAsyn(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadTemplateMasterListDto>(model, "m_Retrieve_RadTemplateMasterForCombo");
+        }
         public virtual async Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username)
         {
             try
@@ -92,6 +96,12 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // Delete details table realted records
+                var lst = await _context.MRadiologyTemplateDetails.Where(x => x.TestId == objRadio.TestId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MRadiologyTemplateDetails.RemoveRange(lst);
+                }
                 // Update header & detail table records
                 _context.MRadiologyTestMasters.Update(objRadio);
                 _context.Entry(objRadio).State = EntityState.Modified;

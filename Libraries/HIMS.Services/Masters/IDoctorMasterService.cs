@@ -16,7 +16,7 @@ namespace HIMS.Services.Masters
         Task InsertAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
         Task InsertAsyncSP(DoctorMaster objDoctorMaster, int UserId, string Username);
         Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
-        Task<IPagedList<DoctorMaster>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<DoctorMasterListDto>> GetListAsync(GridRequestModel objGrid);
         Task<DoctorMaster> GetById(int Id);
 
         Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid);

@@ -38,9 +38,9 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<DoctorMaster>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<DoctorMasterListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctorMaster>(model, "m_Rtrv_DoctorMasterList_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<DoctorMasterListDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
         }
         public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
         {
@@ -153,6 +153,13 @@ namespace HIMS.Services.Masters
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // Delete details table realted records
+                var lst = await _context.MDoctorDepartmentDets.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorDepartmentDets.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
                 // Update header & detail table records
                 _context.DoctorMasters.Update(objDoctorMaster);
                 _context.Entry(objDoctorMaster).State = EntityState.Modified;

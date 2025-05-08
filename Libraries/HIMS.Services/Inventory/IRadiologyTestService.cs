@@ -16,6 +16,7 @@ namespace HIMS.Services.Inventory
     {
         Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<RadiologyPatientListDto>> GetListAsyn(GridRequestModel objGrid);
+        Task<IPagedList<RadTemplateMasterListDto>> TemplateListAsyn(GridRequestModel objGrid);
 
         Task InsertAsyncSP(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task InsertAsync(MRadiologyTestMaster objRadio, int UserId, string Username);

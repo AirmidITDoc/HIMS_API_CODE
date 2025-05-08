@@ -30,15 +30,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
         }
         [HttpPost("DoctorList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+    //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<DoctorMaster> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
+            IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
 
         [HttpPost("DoctorShareList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+     //   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> DList(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareListDto> DoctorShareList = await _IDoctorMasterService.GetList(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorShareLbyNameList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+      //  [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _IDoctorMasterService.GetList1(objGrid);
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+     //   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
+    //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();

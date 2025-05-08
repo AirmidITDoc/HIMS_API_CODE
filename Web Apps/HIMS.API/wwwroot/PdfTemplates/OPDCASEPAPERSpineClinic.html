@@ -1,0 +1,368 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    </style>
+</head>
+
+
+<body>
+    <div class="main-content-wrapper" style="height:1430px">
+        <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                            </tr>
+                            <tr style="font-size: 22px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>OPD CASE PAPER</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">UHID No. : </span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Visit Date : </span>
+                                    <span>{{VisitDate}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">OPD No : </span>
+                                    <span>{{OPDNo}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age | Gender : </span>
+                                    <span> {{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D| {{GenderName}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Cons.Doctor Name : </span>
+                                    <span>{{ConsultantDoctorName}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Address : </span>
+                                    <span>{{Address}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Department Name : </span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <hr />
+                <div>
+                    <div style="display: flex;">
+
+                        <h3 style="text-align: center; margin-top: 20px;">Sitting Examination</h3>
+
+                        <div>
+                            <div>
+                                <table style="width: 100%; border-collapse: collapse;margin-bottom:20px;">
+
+                                    <tr>
+                                        <td>
+
+                                            <img src="F:\AirmidHIMS\HIMS_Gangamai_API\HIMS.API\wwwroot\HumanBody.jpg" alt="Human Diagram" height="250" style="margin-top:800px;">
+
+                                            <!--<img src="{{BaseUrl}}/PdfTemplates/HumanBody.jpg" alt="Human Diagram" height="250" style="margin-top:800px;">-->
+
+                                        </td>
+                                        <td>
+                                            <table style="float:right;">
+                                                <tr style="text-align: center;height:55px;">
+
+                                                    <th style="border: 1px solid black; padding: 5px;">Nervo Scope</th>
+                                                    <th style="border: 1px solid black; padding: 5px; width: 10%;">LT</th>
+                                                    <th style="border: 1px solid black; padding: 5px; width: 10%;">RT</th>
+                                                    <th style="border: 1px solid black; padding: 5px;">Nervo Scope</th>
+
+                                                </tr>
+
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">C1</td><td style="border: 1px solid black; padding: 1px; ">C1</td><td style="border: 1px solid black; padding: 1px; "></tr>
+
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">6</td><td style="border: 1px solid black; padding: 1px; ">6</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">7</td><td style="border: 1px solid black; padding: 1px; ">7</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">T1</td><td style="border: 1px solid black; padding: 1px; ">T1</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">6</td><td style="border: 1px solid black; padding: 1px; ">6</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">7</td><td style="border: 1px solid black; padding: 1px; ">7</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">8</td><td style="border: 1px solid black; padding: 1px; ">8</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">9</td><td style="border: 1px solid black; padding: 1px; ">9</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">10</td><td style="border: 1px solid black; padding: 1px; ">10</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">11</td><td style="border: 1px solid black; padding: 1px; ">11</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">12</td><td style="border: 1px solid black; padding: 1px; ">12</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">L1</td><td style="border: 1px solid black; padding: 1px; ">L1</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">S1</td><td style="border: 1px solid black; padding: 1px; ">S1</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">1</td><td style="border: 1px solid black; padding: 1px; ">1</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; ">5</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">C1</td><td style="border: 1px solid black; padding: 1px; ">C1</td><td style="border: 1px solid black; padding:1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; ">2</td><td style="border: 1px solid black; padding: 1px; "></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px; ">3</td><td style="border: 1px solid black; padding: 1px;"></td></tr>
+
+                                                <tr><td style="border: 1px solid black; padding: 1px; "></td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px; ">4</td><td style="border: 1px solid black; padding: 1px;"></td></tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table style="float:left;">
+                                                <tr>
+                                                    <td>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 65px;">Hb</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 65px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">CBC</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">ESR</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">ASO</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Uric acid</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Sr Cr</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Vit D</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">VitB12</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">HIV</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Magnesium</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Calcium</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Urine</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Sprling Test</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">Gilet Test</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">SLR</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 50px;">RT</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 50px;"></td></tr>
+                                                <tr><td style="border: 1px solid black; padding: 4px; height: 62px;">LT</td><td style="border: 1px solid black; padding: 4px; width: 50%; height: 62px;"></td></tr>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <table>
+
+                            <div>
+                            <tr>
+                                <td>
+                                    <span>
+
+                                        <!-- <img src="C:\Users\shahu\source\repos\HIMS_Gangamai_API\HIMS.API\wwwroot\HumanBody.jpg" alt="Human Diagram" height="200">-->
+
+                                    </span>
+                                </td>
+                            </tr>
+                    </div>
+                </div>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+
+            </table>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+
+            </table>
+
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    </style>
+</head>
+
+
+<body>
+    <div class="main-content-wrapper" style="height:1430px">
+        <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                    </td>
+                    <div>
+
+                </tr>
+            </table>
+
+
+            <h2 style="text-align: center; margin-top: 100px; text-decoration: underline;">SPINE CASE PAPER</h2>
+
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <tr>
+                    <td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">1. Name - </td>
+                    <td colspan="4" style="border: 1px solid black; padding: 8px;"></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">2. Age -</td>
+                    <td colspan="4" style="border: 1px solid black; padding: 8px;"></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">3. Address -</td>
+                    <td colspan="4" style="border: 1px solid black; padding: 8px;"></td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">4. Present Symptoms -</td>
+                    <th style="background-color: #f0f0f0; border: 1px solid black; padding: 8px;">1st Day</th>
+                    <th style="background-color: #f0f0f0; border: 1px solid black; padding: 8px;">After 1st tret.</th>
+                    <th style="background-color: #f0f0f0; border: 1px solid black; padding: 8px;">After 2nd tret.</th>
+                    <th style="background-color: #f0f0f0; border: 1px solid black; padding: 8px;">After 3rd tret.</th>
+                </tr>
+
+                <tr><td style="border: 1px solid black; padding: 8px;">How many percent (%) pain.</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">A. Neck Pain -</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">B. Mid back Pain -</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">C. Lower Back Pain -</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">D. Tail Bone Pain -</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">E. Heaviness - (Which Part)</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">F. Tingling Sensation - (Which Part)</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">G. Numbness - (Which Part)</td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td><td style="border: 1px solid black;"></td></tr>
+
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">5. Bowel / stool -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">6. Urine -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">7. Appetite -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">8. If Female -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">Menses - How many days -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">How many pad used -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">Delivery -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">Abortion -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="border: 1px solid black; padding: 8px;">Normal delivery / Caesarean</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">9. Any Past History of Disease -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">10. Which / When Operation ?</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">11. Any Medicine taken -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+                <tr><td style="font-weight: bold; background-color: #e0e0e0; border: 1px solid black; padding: 8px;">12. X-ray / MRI / Blood Report -</td><td colspan="4" style="border: 1px solid black; padding: 8px;"></td></tr>
+
+                <tr>
+                    <td colspan="5" style="margin-top: 30px; font-weight: bold; padding: 10px; border: 1px solid black;">
+                        13. From 6 Ft. distance standing photo from four side Front Side, Back Side, Right Side, Left Side
+                        & Fill the form and send photo on WhatsApp : <strong>7020384188</strong>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="text-align: right; margin-top: 40px; font-weight: bold;">
+                Dr. Viraj Bhandari (MD)<br>
+                Mob: 7020384188
+            </div>
+
+</body>
+</html>

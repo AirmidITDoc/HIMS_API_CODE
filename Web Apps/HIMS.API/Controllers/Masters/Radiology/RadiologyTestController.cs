@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return Ok(RadiologyList.ToGridResponse(objGrid, "RadiologyList "));
         }
         [HttpPost("RadiologyTestList")]
-        //   [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RadiologyTestList(GridRequestModel objGrid)
         {
             IPagedList<RadiologyTestListDto> RadiologyTestList = await _RadiologyTestService.RadiologyTestList(objGrid);
@@ -56,11 +56,18 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
 
         [HttpPost("RadiologyPatientList")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RadiologyPatientList(GridRequestModel objGrid)
         {
             IPagedList<RadiologyPatientListDto> RadiologyPatientList = await _RadiologyTestService.GetListAsyn(objGrid);
             return Ok(RadiologyPatientList.ToGridResponse(objGrid, "RadiologyPatient List "));
+        }
+        [HttpPost("RetriveTemplateMasterList")]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> RadTemplateMasterList(GridRequestModel objGrid)
+        {
+            IPagedList<RadTemplateMasterListDto> RadTemplateMasterList = await _RadiologyTestService.TemplateListAsyn(objGrid);
+            return Ok(RadTemplateMasterList.ToGridResponse(objGrid, "RadiologyPatient List "));
         }
 
         [HttpPost("Insert")]
@@ -90,7 +97,6 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 model.Addedby = CurrentUserId;
-                model.Updatedby = CurrentUserId;
                 await _RadiologyTestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -108,6 +114,8 @@ namespace HIMS.API.Controllers.Masters.Radiology
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
+                model.Updatedby = CurrentUserId;
+                model.IsActive = true;
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTest updated successfully.");
