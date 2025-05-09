@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List"));
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List")); 
         }
 
         [HttpPost("OldPurchaseOrderList")]
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));  
         }
 
         [HttpPost("LastThreeItemList")]
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
