@@ -17,8 +17,8 @@ namespace HIMS.Data.DTO.Purchase
         public long? SupplierID { get; set; }
         public string? SupplierName { get; set; }
         public decimal? TotalAmount { get; set; }
-        public double? DiscAmount { get; set; }
-        public double? TaxAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
         public double? FreightAmount { get; set; }
         public double? OctriAmount { get; set; }
         public decimal? GrandTotal { get; set; }

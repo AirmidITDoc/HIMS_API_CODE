@@ -165,7 +165,8 @@ namespace HIMS.Services.Pharmacy
                 // Update header & detail table records
                 _context.TPurchaseHeaders.Update(objPurchase);
                 _context.Entry(objPurchase).State = EntityState.Modified;
-                    await _context.SaveChangesAsync();
+                _context.Entry(objPurchase).Property(x => x.AddedBy).IsModified = false;
+                await _context.SaveChangesAsync();
 
                 scope.Complete();
             }

@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
                 model.PurchaseTime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
-                model.UpdatedBy = 0;
+                model.UpdatedBy = CurrentUserId;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -98,9 +98,6 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 model.PurchaseTime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
-                model.AddedBy = CurrentUserId;
-
-
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase updated successfully.", model.PurchaseId);
