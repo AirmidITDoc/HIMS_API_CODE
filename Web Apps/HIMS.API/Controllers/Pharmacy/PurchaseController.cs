@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List"));
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List")); 
         }
 
         [HttpPost("OldPurchaseOrderList")]
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));  
         }
 
         [HttpPost("LastThreeItemList")]
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 model.PurchaseTime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
-                model.AddedBy = 0;
+                model.AddedBy = CurrentUserId;
 
 
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
