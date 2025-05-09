@@ -89,6 +89,7 @@ namespace HIMS.Services.Masters
                           AadharCardNo = d.AadharCardNo
                       };
             return await qry.BuildPredicate(objGrid);
+
         }
         public virtual async Task<DoctorMaster> GetById(int Id)
         {
