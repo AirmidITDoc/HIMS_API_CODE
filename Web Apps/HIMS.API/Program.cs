@@ -136,27 +136,27 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: "CorsPolicy",
-//                      builder =>
-//                      {
-//                          builder
-//                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-//                          .AllowAnyMethod()
-//                          .AllowAnyHeader()
-//                          .AllowCredentials();
-//                      });
-//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        //.AllowCredentials()
-        );
+    options.AddPolicy(name: "CorsPolicy",
+                      builder =>
+                      {
+                          builder
+                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
+                      });
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy",
+//        builder => builder.AllowAnyOrigin()
+//        .AllowAnyMethod()
+//        .AllowAnyHeader()
+//        //.AllowCredentials()
+//        );
+//});
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();
