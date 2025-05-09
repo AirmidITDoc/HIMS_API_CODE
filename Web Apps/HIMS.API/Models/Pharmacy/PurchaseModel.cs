@@ -32,6 +32,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? TransportChanges { get; set; }
         public decimal? HandlingCharges { get; set; }
         public decimal? FreightCharges { get; set; }
+        public bool? IsCancelled { get; set; }
+
         public List<PurchaseDetailModel> TPurchaseDetails { get; set; }
 
     }

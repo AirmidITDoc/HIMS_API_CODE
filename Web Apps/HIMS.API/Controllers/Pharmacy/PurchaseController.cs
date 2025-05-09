@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("LastThreeItemList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -77,10 +77,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
                 model.PurchaseTime = DateTime.Now;
-
-
                 model.AddedBy = CurrentUserId;
-              //  model.UpdatedBy = 0;
+                model.UpdatedBy = 0;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -100,6 +98,9 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 model.PurchaseTime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
+                model.AddedBy = 0;
+
+
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Purchase updated successfully.", model.PurchaseId);

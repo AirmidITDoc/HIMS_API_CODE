@@ -26,8 +26,8 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsConsultant { get; set; }
         public DateTime? RegDate1 { get; set; }
         public DateTime? MahRegDate1 { get; set; }
-        public DateTime? RegDate { get; set; }
-        public DateTime? MahRegDate { get; set; }
+        public string? RegDate { get; set; }
+        public string? MahRegDate { get; set; }
         public bool? IsRefDoc { get; set; }
         public bool? IsActive { get; set; }
         public string DoctorType { get; set; }
