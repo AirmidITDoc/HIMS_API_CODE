@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
