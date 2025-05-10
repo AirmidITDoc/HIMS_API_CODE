@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public decimal? AdvUsedPay { get; set; }
         public decimal? Neftpay { get; set; }
         public decimal? PayTmpay { get; set; }
+        public double? Tdsamount { get; set; }
         public int? PayCount { get; set; }
     }
 }
