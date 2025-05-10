@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using Aspose.Cells.Drawing;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
@@ -66,6 +67,20 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<SalesReturnDetailsListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentDet");
         }
+        public virtual async Task<IPagedList<SalesSummaryListDto>> SalesSummaryList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesSummaryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
+        }
+        public virtual async Task<IPagedList<SalesDetailsListDto>> SalesDetailsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentDet");
+        }
+
+
+
+
+
+
 
 
 

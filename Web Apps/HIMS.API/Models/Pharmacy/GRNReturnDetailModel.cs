@@ -7,7 +7,7 @@
         public long? Grnid { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
-        public DateTime? BatchExpiryDate { get; set; }
+        public DateTime BatchExpiryDate { get; set; }
         public float? ReturnQty { get; set; }
         public decimal? LandedRate { get; set; }
         public decimal? Mrp { get; set; }
