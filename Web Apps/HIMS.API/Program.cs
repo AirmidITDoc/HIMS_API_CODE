@@ -134,20 +134,44 @@ builder.Services.AddSwaggerGen(c =>
                     }
                 });
 });
-
-string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
+string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(url => url.Trim()).ToArray();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CorsPolicy",
-                      builder =>
-                      {
-                          builder
-                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials();
-                      });
+        policy =>
+        {
+            policy.SetIsOriginAllowed(origin =>
+            {
+                try
+                {
+                    var uri = new Uri(origin);
+                    if (uri.Host == "localhost")
+                        return true;
+                    return CorsAllowUrls.Contains(origin);
+                }
+                catch
+                {
+                    return false;
+                }
+            })
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("Content-Disposition");
+        });
 });
+//string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: "CorsPolicy",
+//                      builder =>
+//                      {
+//                          builder
+//                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+//                          .AllowAnyMethod()
+//                          .AllowAnyHeader()
+//                          .AllowCredentials();
+//                      });
+//});
 //builder.Services.AddCors(options =>
 //{
 //    options.AddPolicy("CorsPolicy",
