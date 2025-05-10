@@ -101,6 +101,7 @@ namespace HIMS.Services.Inventory
                 // Update header & detail table records
                 _context.TIndentHeaders.Update(objIndent);
                 _context.Entry(objIndent).State = EntityState.Modified;
+                _context.Entry(objIndent).Property(x => x.Addedby).IsModified = false;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

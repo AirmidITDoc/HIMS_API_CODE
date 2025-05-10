@@ -68,6 +68,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ISalesReturnService, SalesReturnService>();
 
             services.AddScoped<IOpeningBalanceService, OpeningBalanceService>();
+            services.AddScoped<IWorkOrderService, WorkOrderService>();
 
 
 

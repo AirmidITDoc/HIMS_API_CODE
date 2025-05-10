@@ -13514,6 +13514,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PurchaseId).HasColumnName("PurchaseID");
 
+                entity.Property(e => e.DiscAmount).HasColumnType("decimal(15, 4)");
+
                 entity.Property(e => e.FreightCharges).HasColumnType("money");
 
                 entity.Property(e => e.GrandTotal).HasColumnType("money");
@@ -13537,6 +13539,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Remarks).HasMaxLength(1000);
 
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
+
+                entity.Property(e => e.TaxAmount).HasColumnType("decimal(10, 4)");
 
                 entity.Property(e => e.TaxId).HasColumnName("TaxID");
 
@@ -14650,6 +14654,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PayTmpay)
                     .HasColumnType("money")
                     .HasColumnName("PayTMPay");
+
+                entity.Property(e => e.Tdsamount).HasColumnName("TDSAmount");
             });
 
             modelBuilder.Entity<VVisitMsg>(entity =>
