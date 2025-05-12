@@ -46,15 +46,12 @@ namespace HIMS.Services.Inventory
         }
 
         
-        public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, TCurrentStock OBjTCurrentStock, int UserId, string Username)
         {
-            try
-            {
+           
                 // //Add header table records
                 DatabaseHelper odal = new();
-
-
-                string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
+                 string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
                 var entity = objIssueToDepartment.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -71,35 +68,20 @@ namespace HIMS.Services.Inventory
                 _context.TIssueToDepartmentDetails.AddRange(objIssueToDepartment.TIssueToDepartmentDetails);
                 await _context.SaveChangesAsync(UserId, Username);
 
-                foreach (var rProperty in rEntity)
+                string[] Entity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+                var Ientity = OBjTCurrentStock.ToDictionary();
+                foreach (var rProperty in Entity)
                 {
-                    entity.Remove(rProperty);
+                  Ientity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("v_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure,  entity);
-                  }
-            catch (Exception)
-            {
-                // Delete header table realted records
-                TIssueToDepartmentHeader? obissue = await _context.TIssueToDepartmentHeaders.FindAsync(objIssueToDepartment.IndentId);
-                if (obissue != null)
-                {
-                    _context.TIssueToDepartmentHeaders.Remove(obissue);
-                }
-
-                // Delete details table realted records
-                var lst = await _context.TIssueToDepartmentDetails.Where(x => x.IssueId == objIssueToDepartment.IssueId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TIssueToDepartmentDetails.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
-            }
+                odal.ExecuteNonQuery("v_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Ientity);
 
         }
 
-      
     }
+
 }
+
 
 
 

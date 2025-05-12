@@ -191,31 +191,31 @@ namespace HIMS.Services.Pharmacy
       
         public virtual async Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "m_Rtrv_PurchaseOrderList_by_Name_Pagn");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "ps_Rtrv_PurchaseOrderList_by_Name_Pagn");
         }
 
         public virtual async Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "m_Rtrv_PurchaseItemList");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "ps_Rtrv_PurchaseItemList");
         }
 
         public virtual async Task<IPagedList<PurchaseDetailListDto>> GetOldPurchaseorderAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "m_Rtrv_ItemDetailsForPurchasepdate");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "ps_Rtrv_ItemDetailsForPurchasepdate");
         }
 
         public virtual async Task<IPagedList<LastthreeItemListDto>> GetLastthreeItemListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<LastthreeItemListDto>(model, "Rtrv_LastThreeItemInfo");
+            return await DatabaseHelper.GetGridDataBySp<LastthreeItemListDto>(model, "ps_Rtrv_LastThreeItemInfo");
         }
 
         public virtual async Task<IPagedList<SupplierRatelistDto>> GetSupplierRatetAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SupplierRatelistDto>(model, "Rtrv_SupplierRate");
+            return await DatabaseHelper.GetGridDataBySp<SupplierRatelistDto>(model, "ps_Rtrv_SupplierRate");
         }
 
     }
 
-       
+
 }
     

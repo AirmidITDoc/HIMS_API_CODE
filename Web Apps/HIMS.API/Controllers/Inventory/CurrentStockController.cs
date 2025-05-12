@@ -114,5 +114,23 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(IssueDetailsList.ToGridResponse(objGrid, "Issue Details List"));
         }
 
+
+        // Currebt stock Page --> Click On Issue Qty Button
+        [HttpPost("SalesSummaryList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesSummaryListDto> SalesSummaryList = await _ICurrentStockService.SalesSummaryList(objGrid);
+            return Ok(SalesSummaryList.ToGridResponse(objGrid, "Issue Details List"));
+        }
+
+        [HttpPost("SalesDetailsList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesDetailsListDto> SalesDetailsList = await _ICurrentStockService.SalesDetailsList(objGrid);
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Issue Details List"));
+        }
+
     }
 }
