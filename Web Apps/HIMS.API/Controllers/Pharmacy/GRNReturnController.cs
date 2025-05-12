@@ -6,6 +6,7 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.GRN;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,13 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
+        [HttpPost("GetSupplierPaymentStatusList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
+        {
+            IPagedList<SupplierPaymentStatusListDto> List1 = await _gRNReturnService.GetSupplierPaymentStatusList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
+        }
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
