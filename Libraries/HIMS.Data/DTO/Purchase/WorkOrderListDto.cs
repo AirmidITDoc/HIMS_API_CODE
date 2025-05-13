@@ -22,10 +22,10 @@ namespace HIMS.Data.DTO.Purchase
         public long? SupplierId { get; set; }
         public String? SupplierName { get; set; }
 
-        public decimal? WOTotalAmount { get; set; }
+        //public decimal? WOTotalAmount { get; set; }
 
-        public decimal? WOVatAmount { get; set; }
-        public decimal? WODiscAmount { get; set; }
+        //public decimal? WOVatAmount { get; set; }
+        //public decimal? WODiscAmount { get; set; }
 
         public decimal? WoNetAmount { get; set; }
         public String? WORemark { get; set; }

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>Opening Balance List</b> </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <!--<td style="padding: 2px;">
+                                    <i style="font-size: 20px;"> From Date : {{FromDate}} -- To Date : {{ToDate}}</i>
+                                </td>-->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <table class="table" style="width:100%;border-collapse:collapse">
+                    <tbody>
+
+                        <tr style="font-size: 20px; background-color: white; font-weight: 700;">
+
+
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 11%;">Opening Date</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Opening HId</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Item Name</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Batch No</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 11%;">Batch Exp Date</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">PerUnitPur Rate</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">PerUnit MRP</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Vat%</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">BalQty</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">OpeningDocNo</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">AddedBy</td>
+                        </tr>
+
+
+
+
+
+                        {{Items}}
+                        <tr>
+                            <td style="border: 1px solid #d4c3c3; padding: 6px; font-weight: bold; font-size: 20px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold; font-size: 20px;">TOTAL</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold; font-size: 20px; ">{{T_PerUnitPurRate}}</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold; font-size: 20px; ">{{T_PerUnitMrp}} </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold; font-size: 20px; ">{{T_BalQty}}</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"></td>
+
+
+
+                        </tr>
+                    </tbody>
+
+
+
+                </table>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
