@@ -102,6 +102,10 @@ namespace HIMS.Services.Inventory
                 _context.TIndentHeaders.Update(objIndent);
                 _context.Entry(objIndent).State = EntityState.Modified;
                 _context.Entry(objIndent).Property(x => x.Addedby).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.IndentNo).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.Isverify).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.IsInchargeVerify).IsModified = false;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
