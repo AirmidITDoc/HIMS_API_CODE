@@ -64,12 +64,14 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> InsertSP(IssueToDepartmentModel obj)
         {
             TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
+            TCurrentStock model1 = obj.MapTo<TCurrentStock>();
+
             if (obj.IssueId == 0)
             {
                 model.IssueDate = Convert.ToDateTime(obj.IssueDate);
                 model.IssueTime = Convert.ToDateTime(obj.IssueTime);
                 model.Addedby = CurrentUserId;
-                await _IIssueToDepService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IIssueToDepService.InsertAsyncSP(model, model1, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

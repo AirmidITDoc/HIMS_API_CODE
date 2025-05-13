@@ -25,16 +25,6 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<SupplierRatelistDto>> GetSupplierRatetAsync(GridRequestModel objGrid);
 
 
-        //Grn return
-        Task<IPagedList<GrnListByNameListDto>> GetGRnListbynameAsync(GridRequestModel objGrid);
-
-        Task<IPagedList<GRNReturnListDto>> GetGRNReturnList(GridRequestModel objGrid);
-
-        Task<IPagedList<ItemListBysupplierNameDto>> GetItemListbysuppliernameAsync(GridRequestModel objGrid);
-
-        Task<IPagedList<grnlistbynameforgrnreturnlistDto>> Getgrnlistbynameforgrnreturn(GridRequestModel objGrid);
-
-        Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel objGrid);
 
     }
 }

@@ -108,6 +108,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPackageDetail, PackageDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPackageDetail, PackageDetailsModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TWorkOrderHeader, WorkOrdersModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TWorkOrderDetail, WorkOrderDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TWorkOrderHeader, UpdateWorkOrdersModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TWorkOrderDetail, WorkOrderDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
@@ -223,14 +229,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<IssueToDepartmentDetailModel, TIssueToDepartmentDetail>();
-         //   CreateMap<TMaterialConsumptionHeader, MaterialConsumptionHeaderModel>();
             CreateMap<MaterialConsumptionHeaderModel, TMaterialConsumptionHeader>();
             CreateMap<MaterialConsumptionDetailModel, TMaterialConsumptionDetail>();
 
 
+          
+            CreateMap<TCurrentStock, IssueToDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-            //CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIssueToDepartmentHeader, IssueToDIndentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

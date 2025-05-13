@@ -191,57 +191,31 @@ namespace HIMS.Services.Pharmacy
       
         public virtual async Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "m_Rtrv_PurchaseOrderList_by_Name_Pagn");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "ps_Rtrv_PurchaseOrderList_by_Name_Pagn");
         }
 
         public virtual async Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "m_Rtrv_PurchaseItemList");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "ps_Rtrv_PurchaseItemList");
         }
 
         public virtual async Task<IPagedList<PurchaseDetailListDto>> GetOldPurchaseorderAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "m_Rtrv_ItemDetailsForPurchasepdate");
+            return await DatabaseHelper.GetGridDataBySp<PurchaseDetailListDto>(model, "ps_Rtrv_ItemDetailsForPurchasepdate");
         }
 
         public virtual async Task<IPagedList<LastthreeItemListDto>> GetLastthreeItemListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<LastthreeItemListDto>(model, "Rtrv_LastThreeItemInfo");
+            return await DatabaseHelper.GetGridDataBySp<LastthreeItemListDto>(model, "ps_Rtrv_LastThreeItemInfo");
         }
 
         public virtual async Task<IPagedList<SupplierRatelistDto>> GetSupplierRatetAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SupplierRatelistDto>(model, "Rtrv_SupplierRate");
+            return await DatabaseHelper.GetGridDataBySp<SupplierRatelistDto>(model, "ps_Rtrv_SupplierRate");
         }
 
-        public virtual async Task<IPagedList<GrnListByNameListDto>> GetGRnListbynameAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<GrnListByNameListDto>(model, "Rtrv_GRNReturnList_by_Name");
-        }
-
-        public virtual async Task<IPagedList<GRNReturnListDto>> GetGRNReturnList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<GRNReturnListDto>(model, "getGRNReturnList");
-        }
-
-        public virtual async Task<IPagedList<ItemListBysupplierNameDto>> GetItemListbysuppliernameAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemListBysupplierNameDto>(model, "Rtrv_ItemList_by_Supplier_Name_For_GRNReturn");
-        }
-
-        public virtual async Task<IPagedList<grnlistbynameforgrnreturnlistDto>> Getgrnlistbynameforgrnreturn(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<grnlistbynameforgrnreturnlistDto>(model, "Rtrv_GRNList_by_Name_For_GRNReturn");
-        }
-
-       
-       
-        public virtual async Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SupplierPaymentStatusListDto>(model, "Rtrv_GRNList_ForAccount_payment");
-        }
     }
 
-       
+
 }
     
