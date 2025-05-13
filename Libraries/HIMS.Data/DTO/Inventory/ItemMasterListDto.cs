@@ -87,6 +87,7 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? LandedRate { get; set; }
         public decimal? UnitMRP { get; set; }
         public decimal? PurchaseRate { get; set; }
+        public decimal? VatPercentage { get; set; }
         public double? CGSTPer { get; set; }
         public double? SGSTPer { get; set; }
         public double? IGSTPer { get; set; }

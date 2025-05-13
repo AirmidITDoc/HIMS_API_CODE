@@ -23,7 +23,7 @@
         public decimal? PurchaseTotalAmount { get; set; }
         public short? Conversion { get; set; }
         public string? Remarks { get; set; }
-        public long? StkId { get; set; }
+        public long? StockId { get; set; }
         public float? Cf { get; set; }
         public float? TotalQty { get; set; }
 

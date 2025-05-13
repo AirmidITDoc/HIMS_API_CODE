@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
 using System.Transactions;
+using System.Transactions;
 
 namespace HIMS.Services.Pharmacy
 {
@@ -84,46 +85,113 @@ namespace HIMS.Services.Pharmacy
                 List<TCurrentStock> objCStockList = new();
                 foreach (var objC in objCStock)
                 {
-                    TCurrentStock objCInfo = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == objC.ItemId && x.StockId == objC.StockId && x.StoreId == objC.StoreId);
-                    objC.GrnRetQty = Convert.ToInt32(objCInfo.GrnRetQty) + objCInfo.IssueQty;
-                    objCStockList.Add(objC);
+                    var objCInfo = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == objC.ItemId && x.StockId == objC.StockId && x.StoreId == objC.StoreId);
+                    if (objCInfo != null)
+                    {
+                        objCInfo.GrnRetQty = Convert.ToInt32(objCInfo.GrnRetQty) + objC.IssueQty;
+                        objCStockList.Add(objC);
+                        // Tell EF to only update this property
+                        _context.Entry(objCInfo).Property(x => x.GrnRetQty).IsModified = true; 
+                    }
                 }
-                _context.TCurrentStocks.UpdateRange(objCStockList);
-                _context.Entry(objCStockList).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
-                // Update grn details table records
+             //   Update grn details table records
                 List<TGrndetail> objGrnList = new();
                 foreach (var objGrn in objReturnQty)
                 {
-                    TGrndetail objGRNInfo = await _context.TGrndetails.FirstOrDefaultAsync(x => x.GrndetId == objGrn.GrndetId);
-                    objGRNInfo.ReturnQty = Convert.ToInt32(objGRNInfo.ReturnQty) + objGrn.ReturnQty;
-                    objGrnList.Add(objGRNInfo);
+                    var objGRNInfo = await _context.TGrndetails.FirstOrDefaultAsync(x => x.GrndetId == objGrn.GrndetId);
+                    if (objGRNInfo != null)
+                    {
+                        objGRNInfo.ReturnQty = Convert.ToInt32(objGRNInfo.ReturnQty) + objGrn.ReturnQty;
+                        objGrnList.Add(objGRNInfo);
+                        // Tell EF to only update this property
+                        _context.Entry(objGRNInfo).Property(x => x.ReturnQty).IsModified = true;
+                    }
                 }
-                _context.TGrndetails.UpdateRange(objGrnList);
-                _context.Entry(objGrnList).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
         }
-        public virtual async Task VerifyAsync(TGrnreturnDetail objGRNReturn, int UserId, string Username)
+
+        //public virtual async Task InsertAsync(TGrnreturnHeader objGRNReturn, List<TCurrentStock> objCStock, List<TGrndetail> objReturnQty, int UserId, string Username)
+
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update store table records
+        //        MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRNReturn.StoreId);
+        //        StoreInfo.GrnreturnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnreturnNo) + 1);
+        //        _context.MStoreMasters.Update(StoreInfo);
+        //        await _context.SaveChangesAsync();
+        //        // Add header & detail table records
+        //        objGRNReturn.GrnreturnNo = StoreInfo.GrnreturnNo;
+        //        _context.TGrnreturnHeaders.Add(objGRNReturn);
+        //        await _context.SaveChangesAsync();
+        //        // Update curren stock table records
+        //        List<TCurrentStock> objCStockList = new();
+        //        foreach (var objC in objCStock)
+        //        {
+        //            TCurrentStock objCInfo = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == objC.ItemId && x.StockId == objC.StockId && x.StoreId == objC.StoreId);
+        //            objC.GrnRetQty = Convert.ToInt32(objCInfo.GrnRetQty) + objCInfo.IssueQty;
+        //            objCStockList.Add(objC);
+        //        }
+        //        _context.TCurrentStocks.UpdateRange(objCStockList);
+        //        _context.Entry(objCStockList).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        // Update grn details table records
+        //        List<TGrndetail> objGrnList = new();
+        //        foreach (var objGrn in objReturnQty)
+        //        {
+        //            TGrndetail objGRNInfo = await _context.TGrndetails.FirstOrDefaultAsync(x => x.GrndetId == objGrn.GrndetId);
+        //            objGRNInfo.ReturnQty = Convert.ToInt32(objGRNInfo.ReturnQty) + objGrn.ReturnQty;
+        //            objGrnList.Add(objGRNInfo);
+        //        }
+        //        _context.TGrndetails.UpdateRange(objGrnList);
+        //        _context.Entry(objGrnList).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+
+        //    }
+
+        //}
+
+        public virtual async Task VerifyAsync( TGrnreturnHeader objGRN, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Delete details table realted records
-                var lst = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
-                _context.TGrnreturnDetails.RemoveRange(lst);
-
-                // Update header & detail table records
-                _context.TGrnreturnDetails.Update(objGRNReturn);
-                _context.Entry(objGRNReturn).State = EntityState.Modified;
+                
+                // Update header table records
+                TGrnreturnHeader objGRNH = await _context.TGrnreturnHeaders.FindAsync(objGRN.GrnreturnId);
+                objGRNH.IsVerified = true;
+                _context.TGrnreturnHeaders.Update(objGRNH);
+                _context.Entry(objGRNH).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
-      
+
+        //public virtual async Task VerifyAsync(TGrnreturnDetail objGRNReturn, int UserId, string Username)
+
+        //{
+
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Delete details table realted records
+        //        var lst = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
+        //        _context.TGrnreturnDetails.RemoveRange(lst);
+        //        // Update header & detail table records
+        //        _context.TGrnreturnDetails.Update(objGRNReturn);
+        //        _context.Entry(objGRNReturn).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+
+
+
+
+
         public virtual async Task<IPagedList<GrnListByNameListDto>> GetGRnListbynameAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<GrnListByNameListDto>(model, "Rtrv_GRNReturnList_by_Name");

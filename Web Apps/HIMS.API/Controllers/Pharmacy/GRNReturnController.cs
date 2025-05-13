@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNReturnlistbynameList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNReturnlistbynameListAsync(GridRequestModel objGrid)
         {
             IPagedList<GrnListByNameListDto> List1 = await _gRNReturnService.GetGRnListbynameAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("ItemListBYSupplierName")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<ItemListBysupplierNameDto> List1 = await _gRNReturnService.GetItemListbysuppliernameAsync(objGrid);
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNListBynameforGrnReturn")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
         {
             IPagedList<grnlistbynameforgrnreturnlistDto> List1 = await _gRNReturnService.Getgrnlistbynameforgrnreturn(objGrid);
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GetSupplierPaymentStatusList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
         {
             IPagedList<SupplierPaymentStatusListDto> List1 = await _gRNReturnService.GetSupplierPaymentStatusList(objGrid);
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -91,10 +91,10 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
         {
-            TGrnreturnDetail model = obj.MapTo<TGrnreturnDetail>();
+            TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
             if (obj.GrnreturnId != 0)
             {
 
