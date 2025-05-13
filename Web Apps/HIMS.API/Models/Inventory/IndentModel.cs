@@ -6,7 +6,6 @@ namespace HIMS.API.Models.Inventory
     public class IndentModel
     {
         public long IndentId { get; set; }
-        public string IndentNo { get; set; }
         public string? IndentDate { get; set; }
         public string? IndentTime { get; set; }
         public long? FromStoreId { get; set; }
