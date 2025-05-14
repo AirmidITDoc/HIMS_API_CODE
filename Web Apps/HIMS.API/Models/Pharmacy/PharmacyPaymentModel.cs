@@ -9,7 +9,7 @@ namespace HIMS.API.Models.Pharmacy
         public long? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public DateTime? PaymentTime { get; set; }
+        public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
         public decimal? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
@@ -45,6 +45,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? ChNeftpayAmount { get; set; }
         public decimal? ChPayTmamount { get; set; }
         public string? TranMode { get; set; }
+        public double? Tdsamount { get; set; }
+
     }
-    
+
 }
