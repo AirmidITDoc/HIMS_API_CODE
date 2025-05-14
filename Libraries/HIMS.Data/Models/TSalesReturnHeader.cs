@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TSalesReturnHeader
     {
+        public TSalesReturnHeader()
+        {
+            TSalesReturnDetails = new HashSet<TSalesReturnDetail>();
+        }
+
         public long SalesReturnId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
@@ -29,5 +34,7 @@ namespace HIMS.Data.Models
         public bool? IsPurBill { get; set; }
         public bool? IsBillCheck { get; set; }
         public string? Narration { get; set; }
+
+        public virtual ICollection<TSalesReturnDetail> TSalesReturnDetails { get; set; }
     }
 }

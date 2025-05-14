@@ -8,7 +8,9 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using HIMS.Services.OPPatient;
@@ -25,6 +27,13 @@ namespace HIMS.API.Controllers.IPPatient
         public BedTransferController(IBedTransferService repository)
         {
             _IBedTransferService = repository;
+        }
+        [HttpPost("BedTransferDetailsList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<BedTransferDetailListDto> BedTransferDetailList = await _IBedTransferService.BedTransferDetailList(objGrid);
+            return Ok(BedTransferDetailList.ToGridResponse(objGrid, "BedTransferDetail  List"));
         }
 
         [HttpPost("InsertSP")]

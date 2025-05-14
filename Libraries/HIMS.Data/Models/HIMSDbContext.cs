@@ -13949,6 +13949,11 @@ namespace HIMS.Data.Models
                     .HasColumnName("UnitMRP");
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.SalesReturn)
+                    .WithMany(p => p.TSalesReturnDetails)
+                    .HasForeignKey(d => d.SalesReturnId)
+                    .HasConstraintName("FK_T_SalesReturnDetails_T_SalesReturnHeader");
             });
 
             modelBuilder.Entity<TSalesReturnHeader>(entity =>
