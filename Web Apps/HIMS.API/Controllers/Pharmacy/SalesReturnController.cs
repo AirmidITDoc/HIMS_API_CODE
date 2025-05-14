@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         
         [HttpPost("SalesReturnInsert")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnModel obj)
         {
             TSalesReturnHeader model = obj.MapTo<TSalesReturnHeader>();
