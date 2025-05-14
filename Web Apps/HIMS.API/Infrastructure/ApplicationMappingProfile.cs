@@ -328,7 +328,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-            CreateMap<GRNReturnVerifyModel, TGrnreturnDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<GRNReturnVerifyModel, TGrnreturnHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<OpeningBalModel,TOpeningTransactionHeader> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<OpeningTransactionModel, TOpeningTransaction> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

@@ -260,13 +260,14 @@ namespace HIMS.API.Controllers.Report
                 case "DischargSummary":
                 //case "IpDischargeSummaryReportTesting":
 
-                    
+                    //Inventory
                 case "Purchaseorder":
                 case "PathTemplateHeaderReport":
                 case "IndentWiseReport":
                 case "IndentverifyReport":
                 case "Issutodeptissuewise":
                 case "Issutodeptsummarywise":
+                case "OpeningBalance":
 
 
 

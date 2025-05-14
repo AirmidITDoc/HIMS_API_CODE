@@ -20,11 +20,11 @@ namespace HIMS.Services.Pharmacy
         }
         public virtual async Task<IPagedList<SalesReturnDetailsListDto>> salesreturndetaillist(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SalesReturnDetailsListDto>(model, "Rtrv_SalesReturnDetails");
+            return await DatabaseHelper.GetGridDataBySp<SalesReturnDetailsListDto>(model, "ps_Rtrv_SalesReturnDetails");
         }
         public virtual async Task<IPagedList<SalesReturnBillListDto>> salesreturnlist(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SalesReturnBillListDto>(model, "Rtrv_SalesReturnBillList");
+            return await DatabaseHelper.GetGridDataBySp<SalesReturnBillListDto>(model, "ps_Rtrv_SalesReturnBillList");
         }
         public virtual async Task<IPagedList<SalesRetrunCurrentSumryListDto>> SalesReturnSummaryList(GridRequestModel model)
         {

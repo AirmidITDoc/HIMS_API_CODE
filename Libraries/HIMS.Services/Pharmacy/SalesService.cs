@@ -103,12 +103,12 @@ namespace HIMS.Services.Users
       
         public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "Rtrv_SalesDetails");
+            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
         }
 
         public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "Rtrv_SalesBillList");
+            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
         }
      
     }

@@ -102,6 +102,10 @@ namespace HIMS.Services.Inventory
                 _context.TIndentHeaders.Update(objIndent);
                 _context.Entry(objIndent).State = EntityState.Modified;
                 _context.Entry(objIndent).Property(x => x.Addedby).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.IndentNo).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.Isverify).IsModified = false;
+                _context.Entry(objIndent).Property(x => x.IsInchargeVerify).IsModified = false;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
@@ -114,6 +118,7 @@ namespace HIMS.Services.Inventory
             {
                 // Update header table records
                 TIndentHeader? objInd = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
+                objInd.Isverify = objIndent.IsInchargeVerify;
                 objInd.IsInchargeVerify = objIndent.IsInchargeVerify;
                 objInd.IsInchargeVerifyId = objIndent.IsInchargeVerifyId;
                 objInd.IsInchargeVerifyDate = objIndent.IsInchargeVerifyDate;
@@ -148,12 +153,12 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task<IPagedList<IndentItemListDto>> GetOldIndentAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "m_rtrv_IndentItemList");
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
         }
 
         public virtual async Task<IPagedList<IndentItemListDto>> GetIndentItemListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "m_rtrv_IndentItemList");
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
         }
        
     }

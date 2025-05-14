@@ -31,7 +31,7 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long? ItemId { get; set; }
         public float? IssueQty { get; set; }
-        public long? IstkId { get; set; }
+        public long? StockId { get; set; }
         public long? StoreId { get; set; }
     }
 
@@ -58,7 +58,7 @@ namespace HIMS.API.Models.Pharmacy
     public class GRNReturnVerifyModel
     {
         public long? GrnreturnId { get; set; }
-        //public long IsVerifiedUserId { get; set; }
+        public long IsVerifiedUserId { get; set; }
     }
     public class GRNReturnVerifyModelValidator : AbstractValidator<GRNReturnVerifyModel>
     {

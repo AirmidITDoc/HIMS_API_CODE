@@ -156,6 +156,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptAppointListWithService", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPAppoinmentListWithServiseAvailed", "OPAppoinmentListWithServiseAvailed", Orientation.Portrait);
+                      
                         break;
                     }
                 #endregion
@@ -984,16 +985,28 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryReport":
                     {
 
-                        model.RepoertName = "DischargeSummary";
-                        string[] headerList = { };
+                        //model.RepoertName = "DischargeSummary";
+                        //string[] headerList = { };
+                        //string[] colList = { };
+                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargeSummary.html");
+                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        // //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        //var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummary", "DischargeSummary", Orientation.Portrait);
+                        //break;
+
                         string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargeSummary.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummary", "DischargeSummary", Orientation.Portrait);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport", Orientation.Portrait);
                         break;
+
                     }
                 #endregion
                 #region :: IpDischargeSummaryReportWithoutHeader ::
@@ -1015,14 +1028,24 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryTemplate":
                     {
 
-                        model.RepoertName = "IpDischargeSummaryTemplate";
-                        string[] headerList = { };
+                        //    model.RepoertName = "IpDischargeSummaryTemplate";
+                        //    string[] headerList = { };
+                        //    string[] colList = { };
+                        //    string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplate.html");
+                        //    string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //    //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        //    var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        //    html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        //    tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate", Orientation.Portrait);
+                        //    break;
                         string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplate.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate", Orientation.Portrait);
                         break;
                     }
@@ -1193,11 +1216,15 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //var signature = _FileUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
-
-                        //html = html.Replace("{{Signature}}", signature);
+                        //html.Replace("{{Signature}}", signature);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReport", "PathologyReport", Orientation.Portrait);
+
+
+
+                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
+                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                      
 
                         break;
                     }
@@ -1450,8 +1477,23 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: OpeningBalance ::
+                case "OpeningBalance":
+                    {
+                        string[] colList = { };
 
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InventortReport_OpeningBalanceList.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rpt_Opening_Balance", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance", Orientation.Portrait);
+                        break;
+                    }
+                    #endregion
+
+                    
                 default:
 
 
@@ -3823,6 +3865,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
                             html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | HH:mm tt"));
 
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
 
                             html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("DoctorName"));
                             html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
@@ -7918,6 +7961,56 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
                     }
                     break;
+
+                case "OpeningBalance":
+                    {
+                        int i = 0, j = 0;
+                        double T_count = 0, T_PerUnitPurRate = 0, T_PerUnitMrp = 0, T_BalQty = 0;
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++; j++;
+
+                            items.Append("<tr style=\"text-align: center;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"text-align: center;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["OpeningDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["OpeningHId"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: left; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BatchNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: left;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BatchExpDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+                            items.Append("<td style=\"text-align: right;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["PerUnitPurRate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"text-align: right;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["PerUnitMrp"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatPer"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BalQty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["OpeningDocNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: left; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["UserName"].ConvertToString()).Append("</td></tr>");
+
+
+                            T_PerUnitPurRate += dr["PerUnitPurRate"].ConvertToDouble();
+                            T_PerUnitMrp += dr["PerUnitMrp"].ConvertToDouble();
+                            T_BalQty += dr["BalQty"].ConvertToDouble();
+
+                        }
+
+
+                        html = html.Replace("{{T_PerUnitPurRate}}", T_PerUnitPurRate.ToString());
+                        html = html.Replace("{{T_PerUnitMrp}}", T_PerUnitMrp.ToString());
+                        html = html.Replace("{{T_BalQty}}", T_BalQty.ToString());
+                        html = html.Replace("{{Items}}", items.ToString());
+                    }
+                    break;
+
+
+
+
+
+
+
+
+
+
+
+
                     //end lopp
 
 
