@@ -153,12 +153,12 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task<IPagedList<IndentItemListDto>> GetOldIndentAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "m_rtrv_IndentItemList");
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
         }
 
         public virtual async Task<IPagedList<IndentItemListDto>> GetIndentItemListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "m_rtrv_IndentItemList");
+            return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
         }
        
     }

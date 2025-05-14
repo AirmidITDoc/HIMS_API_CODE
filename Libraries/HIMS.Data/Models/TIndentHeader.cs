@@ -24,6 +24,7 @@ namespace HIMS.Data.Models
         public long? IsInchargeVerifyId { get; set; }
         public DateTime? IsInchargeVerifyDate { get; set; }
         public string? Comments { get; set; }
+        public bool? Priority { get; set; }
 
         public virtual ICollection<TIndentDetail> TIndentDetails { get; set; }
     }
