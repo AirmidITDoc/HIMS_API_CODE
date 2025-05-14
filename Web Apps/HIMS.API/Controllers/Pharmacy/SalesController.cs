@@ -39,6 +39,8 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = DateTime.Now.Date;
                 model.Time = DateTime.Now;
+                model.AddedBy = CurrentUserId;
+                model.UpdatedBy = 0;
                 foreach (var objItem in model.TSalesDetails)
                 {
                     objItem.Sgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
@@ -48,7 +50,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales added successfully.");
         }
 
       
