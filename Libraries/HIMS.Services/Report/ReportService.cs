@@ -1192,14 +1192,26 @@ namespace HIMS.Services.Report
                 #region :: DischargSummary ::
                 case "DischargSummary":
                     {
-                        model.RepoertName = "DischargeSummaryWithTemplate";
-                        string[] headerList = { "Sr.No", "UHID", "PatientName" };
-                        string[] colList = { "RegNo", "PatientName" };
+                        //model.RepoertName = "DischargeSummaryWithTemplate";
+                        //string[] headerList = { "Sr.No", "UHID", "PatientName" };
+                        //string[] colList = { "RegNo", "PatientName" };
+                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
+                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryWithTemplate", "DischargeSummaryWithTemplate", Orientation.Landscape);
+                        //break;
+
+                        string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryWithTemplate", "DischargeSummaryWithTemplate", Orientation.Landscape);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryReport", "DischargeSummaryReport", Orientation.Portrait);
                         break;
+
                     }
 
                 #endregion
@@ -4218,7 +4230,7 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
 
-
+                            i++;
                             items.Append("<tr  style=\"font-size:15px;border: 1px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828 \"><td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["UnitofMeasurementName"].ConvertToString()).Append("</td>");
