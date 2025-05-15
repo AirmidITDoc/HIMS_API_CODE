@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Pharmacy
 {
@@ -15,5 +16,8 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<SalesReturnBillListDto>> salesreturnlist(GridRequestModel objGrid);
         Task<IPagedList<SalesRetrunCurrentSumryListDto>> SalesReturnSummaryList(GridRequestModel objGrid);
         Task<IPagedList<SalesRetrunLCurrentDetListDto>> SalesReturnDetailsList(GridRequestModel objGrid);
+        Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, /*TCurrentStock  ObjTCurrentStock*/ int UserId, string Username);
+
+
     }
 }
