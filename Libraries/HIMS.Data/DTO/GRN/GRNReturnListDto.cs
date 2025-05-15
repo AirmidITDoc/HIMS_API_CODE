@@ -32,17 +32,17 @@ namespace HIMS.Data.DTO.GRN
         public decimal? LandedTotalAmount { get; set; }
         public decimal? MRPTotalAmount { get; set; }
         public decimal? PurchaseTotalAmount { get; set; }
-        //public int? Conversion { get; set; }
+          public short? Conversion { get; set; }
         public String? Remarks { get; set; }
 
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         //public bool? GrnType { get; set; }
         //public bool? IsGrnTypeFlag { get; set; }
-        //public long? StkId { get; set; }
+        public long? StkId { get; set; }
 
         //public float? Cf { get; set; }
         //public float? Mrp { get; set; }
-        //public float? TotalQty { get; set; }
+        public float? TotalQty { get; set; }
     }
 }

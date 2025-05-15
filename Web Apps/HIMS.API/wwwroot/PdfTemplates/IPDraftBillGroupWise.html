@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,7 +10,7 @@
 <div>
     <body>
         <div class="main-content-wrapper">
-            <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',  Arial, sans-serif;color: #101828;">
                 <table style="width: 100%;line-height: inherit;text-align: left;">
                     <tr class="top-header-row">
                         {{NewHeader}}
@@ -18,21 +18,22 @@
                     <tr class="title-date-row">
                         <td>
                             <table style="width: 100%; border-collapse: collapse;">
-                                <tr style="font-size: 20px;font-weight:bold;">
+                                <tr style="font-size: 20px">
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                         <b>
-                                            IP DRAFT BILL
+                                            IP ESTIMATED BILL
                                         </b>
                                     </td>
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
-                                        <!--<b>
+                                        <b>
                                             Print
                                             Date : {{CurrentDate}}
-                                        </b>-->
+                                        </b>
                                     </td>
                                 </tr>
                             </table>
                         </td>
+
                     </tr>
                     <tr class="bill-info-row">
                         <td>
@@ -47,10 +48,10 @@
                                         <span style="font-weight: bold;">IPD No :</span>
                                         <span>{{IPDNo}}</span>
                                     </td>
-                                    <!--<td style="padding: 2px;">
-                                        <span  style="font-weight: bold;"> Date | Time:</span>
+                                    <td style="padding: 2px;">
+                                        <span style="font-weight: bold;"> Date | Time:</span>
                                         <span>{{BillDate}}</span>
-                                    </td>-->
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 2px;">
@@ -115,9 +116,6 @@
                                     <td style="border: 1px solid #000; text-align: left; padding: 6px;">
                                         Doctor Name
                                     </td>
-                                    <td style="border: 1px solid #000; text-align: left; padding: 6px;">
-                                        Class Name
-                                    </td>
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">Price</td>
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">Qty </td>
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">
@@ -131,7 +129,7 @@
 
 
                                     <tr style="margin-top: 12px;">
-                                        <td colspan="7">
+                                        <td colspan="6">
                                             <table style="width: 100%; border-collapse: collapse; font-size: 20px; font-weight: bold;">
 
                                                 <tr>
@@ -159,21 +157,23 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{T_NetAmount}}</td>
                                                 </tr>
 
-                                                <!--<tr style="display:{{chkAdvflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Advance Amount</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{AdvanceAmount}}</td>
-                                                </tr>-->
                                                 <tr style="display:{{chkpaidflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Paid Amount </td>
 
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{PaidAmount}}</td>
                                                 </tr>
 
-                                                <tr style="display:{{chkbalflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount -After Advance Used</td>
+                                                <tr style="display:{{chkAftBalflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Balance Amount -After Advance Used</td>
 
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{balafteradvuseAmount}}</td>
+
+                                                </tr>
+                                                <tr style="display:{{chkBalflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Balance Amount </td>
+
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BalancewdudcAmt}}</td>
                                                 </tr>
 
 
@@ -203,55 +203,7 @@
 
 
                     <tr></tr>
-                    <!--<tr>
-                        <th style="text-align: left;" colspan="6">
-                            <h4 style="margin: 12px 0px; font-size: 22px;font-weight:bold;">
-                                Advance Information
-                            </h4>
-                        </th>
-                    </tr>
-                    <tr style="margin-top:10px;">
-
-
-                        <td colspan="6">
-                            <table style="text-align: center; border-collapse: collapse; width: 100%;">
-                                <thead style="font-size: 22px;">
-
-                                    <tr>
-                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Amount
-                                        </th>
-                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Used Amount
-                                        </th>
-                                        <div>
-                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Balance Amount
-                                        </th>
-                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Refund Amount
-                                        </th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody style="font-size: 20px;">
-                                    <tr>
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceAmount}}
-                                        </td>
-
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceUsedAmount}}
-                                        </td>
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceBalAmount}}
-                                        </td>
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceRefundAmount}}
-                                        </td>
-
-                                    </tr>-->
+                 
                     </tbody>
                 </table>
                 </td>
@@ -264,7 +216,7 @@
 
                         <tr style="margin-top: 12px;">
                         <tr>
-                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn�t require signature</td>
+                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
                         </tr>
                         <tr></tr>
                         <tr style="padding: 6px; text-align: right;">
