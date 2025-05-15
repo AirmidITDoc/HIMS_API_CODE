@@ -14,6 +14,8 @@ using Microsoft.Data.SqlClient.Server;
 using System.Globalization;
 using System.IO;
 using Microsoft.VisualBasic;
+using System.Linq;
+using Microsoft.Extensions.Primitives;
 
 
 
@@ -158,7 +160,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptAppointListWithService", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPAppoinmentListWithServiseAvailed", "OPAppoinmentListWithServiseAvailed", Orientation.Portrait);
-                      
+
                         break;
                     }
                 #endregion
@@ -351,7 +353,7 @@ namespace HIMS.Services.Report
                 #region :: GRNReport ::
                 case "GRNReport":
                     {
-                       
+
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -362,9 +364,9 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReport", "GRNReport", Orientation.Portrait);
                         break;
 
-                         
 
-                        }
+
+                    }
                 #endregion
                 #region :: GRNReturnReport ::
                 case "GRNReturnReport":
@@ -1238,7 +1240,7 @@ namespace HIMS.Services.Report
 
                         //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
                         //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                      
+
 
                         break;
                     }
@@ -1348,7 +1350,7 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-           
+
 
                 #region :: NurLabRequestTest ::
                 case "NurLabRequestTest":
@@ -1505,9 +1507,9 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance", Orientation.Portrait);
                         break;
                     }
-                    #endregion
+                #endregion
 
-                    
+
                 default:
 
 
@@ -1528,7 +1530,7 @@ namespace HIMS.Services.Report
             //string[] headerList = model.headerList;
             //string[] colList = model.colList;
             //string[] totalList = model.totalFieldList;
-            
+
             ////Convert vPageOrientation from string to the appropriate Orientation enum
             //Orientation vPageOrg;
             //if (!Enum.TryParse(model.vPageOrientation, true, out vPageOrg))
@@ -1610,7 +1612,8 @@ namespace HIMS.Services.Report
             StringBuilder ItemsTotal = new("");
             StringBuilder ItemsNetTotal = new("");
             StringBuilder itemsGroup = new("");
-
+            //dont remove code, vimal is creating common method for all reports..
+            //string final = GetCommonHtmlTableReports(dt, headerList, totalColList, totalColList, model.groupByLabel.Split(','));
             double T_Count = 0;
             switch (model.htmlFilePath)
             {
@@ -2016,7 +2019,7 @@ namespace HIMS.Services.Report
                             // Group changed? Print subtotal for previous group
                             if (!string.IsNullOrEmpty(previousLabel) && previousLabel != currentLabel)
                             {
-                               
+
                                 // Append subtotal row
                                 ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9;'>");
                                 //bool labelMerged = false;
@@ -2136,16 +2139,119 @@ namespace HIMS.Services.Report
             html = html.Replace("{{Items}}", items.ToString());
 
             html = html.Replace("{{itemsGroup}}", itemsGroup.ToString());
-            
+
             html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
-            
+
             html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
             html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
             return html;
 
         }
 
-        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null,string groupByLabel="")
+        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] totalColList, string[] footer, string[] groupBy)
+        {
+            StringBuilder table = new();
+            table.Append("<tr>");
+            foreach (var hr in headers)
+            {
+                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                table.Append(hr.ConvertToString());
+                table.Append("</th>");
+            }
+            table.Append("</tr>");
+            if (groupBy.Length > 0)
+            {
+                var groups1 = dt.AsEnumerable().Select(row => row.Field<string>(groupBy[0])).Distinct().ToList();
+                foreach (string group1 in groups1)
+                {
+                    var group1Data = dt.Select(groupBy[0] + "='" + group1 + "'");
+                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group1).Append("</th>");
+                    if (groupBy.Length > 1)
+                    {
+                        var groups2 = group1Data.AsEnumerable().Select(row => row.Field<string>(groupBy[1])).Distinct().ToList();
+                        foreach (string group2 in groups2)
+                        {
+                            var group2Data = group1Data.Where(x => x[groupBy[1]] == group2);
+                            table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group2).Append("</th>");
+                            if (groupBy.Length > 2)
+                            {
+                                var groups3 = group2Data.AsEnumerable().Select(row => row.Field<string>(groupBy[2])).Distinct().ToList();
+                                foreach (string group3 in groups3)
+                                {
+                                    var group3Data = group2Data.Where(x => x[groupBy[2]] == group3);
+                                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group3).Append("</th>");
+                                    if (groupBy.Length > 3)
+                                    {
+                                        var groups4 = group3Data.AsEnumerable().Select(row => row.Field<string>(groupBy[3])).Distinct().ToList();
+                                        foreach (string group4 in groups4)
+                                        {
+                                            table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group4).Append("</th>");
+                                            foreach (var row in group3Data.Where(x => x[groupBy[3]] == group4))
+                                            {
+                                                table.Append("<tr>");
+                                                foreach (var hr in totalColList)
+                                                {
+                                                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                                                    table.Append(row[hr].ToString());
+                                                    table.Append("</th>");
+                                                }
+                                                table.Append("</tr>");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var row in group3Data)
+                                        {
+                                            table.Append("<tr>");
+                                            foreach (var hr in totalColList)
+                                            {
+                                                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                                                table.Append(row[hr].ToString());
+                                                table.Append("</th>");
+                                            }
+                                            table.Append("</tr>");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var row in group2Data)
+                                {
+                                    table.Append("<tr>");
+                                    foreach (var hr in totalColList)
+                                    {
+                                        table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                                        table.Append(row[hr].ToString());
+                                        table.Append("</th>");
+                                    }
+                                    table.Append("</tr>");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var row in group1Data)
+                        {
+                            table.Append("<tr>");
+                            foreach (var hr in totalColList)
+                            {
+                                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                                table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                                table.Append("</th>");
+                            }
+                            table.Append("</tr>");
+                        }
+                    }
+                }
+            }
+
+            return table.ToString();
+        }
+
+        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "")
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -2233,7 +2339,7 @@ namespace HIMS.Services.Report
                             {
                                 if (!string.IsNullOrEmpty(colName) && colName != "space" && colName != "lableTotal")
                                     dynamicVariableSub[colName] = 0;
-                                    dynamicVariableGrandTotal[colName] = 0;
+                                dynamicVariableGrandTotal[colName] = 0;
                             }
 
                             int rowIndex = 0;
@@ -2261,7 +2367,7 @@ namespace HIMS.Services.Report
                                         //dynamicVariableSub[colName] += value;
                                         //dynamicVariableGrandTotal[colName] += value;
                                         dynamicVariableSub[colName] += dr[colName].ConvertToDouble();
-                                        dynamicVariableGrandTotal[colName] += dr[colName].ConvertToDouble();
+                                    dynamicVariableGrandTotal[colName] += dr[colName].ConvertToDouble();
 
                                 }
                             }
@@ -2405,7 +2511,7 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-               
+
             }
 
             if (!string.IsNullOrEmpty(T_Count.ToString()))
@@ -2423,7 +2529,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-        private static string GetHTMLViewWithTwoSPs( string sp_Name1,string sp_Name2, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null,string groupByCol = "")
+        private static string GetHTMLViewWithTwoSPs(string sp_Name1, string sp_Name2, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
             // Build parameter list from search fields
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
@@ -4226,11 +4332,11 @@ namespace HIMS.Services.Report
                 case "GRNReport":
                     {
 
-                        double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0, T_ItemNetAmount=0;
+                        double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0, T_ItemNetAmount = 0;
                         int i = 0, j = 0;
                         double Dcount = 0;
                         string previousLabel = "";
-                        
+
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
                         foreach (DataRow dr in dt.Rows)
@@ -4324,9 +4430,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
 
-                       
+
                         html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
-                     
+
                         string finalamt = conversion(dt.GetColValue("NetPayble").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
@@ -4485,7 +4591,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
                         string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
-                       html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
 
