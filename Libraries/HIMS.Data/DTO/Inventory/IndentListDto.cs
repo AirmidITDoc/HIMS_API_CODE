@@ -22,6 +22,8 @@ namespace HIMS.Data.DTO.Inventory
         public bool? Isclosed { get; set; }
         public string? DIndentDate { get; set; }
         public string? DIndentTime { get; set; }
+
+        public string? Comments { get; set; }
         public bool? IsInchargeVerify { get; set; }
 
     }

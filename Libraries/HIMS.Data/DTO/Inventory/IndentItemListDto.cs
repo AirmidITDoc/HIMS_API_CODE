@@ -19,6 +19,7 @@ namespace HIMS.Data.DTO.Inventory
         public long? IndQty { get; set; }
         public long? IssQty { get; set; }
 
+        public string? Comments { get; set; }
 
         public double? Bal { get; set; }
 
