@@ -113,6 +113,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<TWorkOrderDetail, WorkOrderDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TWorkOrderHeader, UpdateWorkOrdersModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TWorkOrderDetail, WorkOrderDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+          
+            CreateMap<MOttableMaster, OtTableMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOttypeMaster, OtTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MSurgeryCategoryMaster, SurgeryCategoryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MSurgeryMaster, SurgeryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
