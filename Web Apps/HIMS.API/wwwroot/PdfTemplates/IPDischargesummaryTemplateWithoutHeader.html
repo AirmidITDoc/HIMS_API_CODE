@@ -138,9 +138,9 @@
     <table style="width: 101%; border-collapse: collapse;">
         <tr style="display:{{chkSurgeryPrescriptionflag}}">
             <td style="padding: 6px;">
-                <table style="width: 100%; border-collapse: collapse;">
+                <table style="width: 100%; border-collapse: collapse; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">
                     <!-- <thead style="font-size: 14px; font-weight: bold; font-size: 24px;">-->
-                    <tr><td colspan="3" style="font-weight: bold; font-size: 24px; border-bottom: 1px solid #eee; padding: 6px;">Prescription Details :</td></tr>
+                    <tr><td colspan="3" style="font-weight: bold; font-size: 24px;padding: 6px;">Prescription Details :</td></tr>
                     <tr>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
@@ -161,55 +161,67 @@
         </tr>
 
 
-        <tr><td><span style="font-size:20px;font-weight:bold;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
+        <tr><td><span style="font-size: 20px; font-weight: bold; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
         <br />
-        <tr><td><sapn style="font-size:20px;font-weight:bold;">Emergency Contact</sapn></td></tr>
+        <tr><td><sapn style="font-size: 20px; font-weight: bold; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">Emergency Contact</sapn></td></tr>
         <tr>
             <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px;">
                 <tr></tr>
-                <tr style="border-bottom: 1px solid #d4c3c3;">
-                    <td style="padding: 2px;">
+                <tr>
+                    <td style="padding: 2px;font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial">
                         <span style="font-weight:bold;">Prepared By</span>
                         <br />
                         <span>{{AddedBy}}</span>
                     </td>
                     <td style="padding: 2px;">
-                        <span></span>
-                        <span></span>
+                        <span style="font-weight: bold; text-align: right; float: right; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial">RMO Doctor</span>
+                        <br />
+                        <span style="text-align: right; float: right;">{{DischargeDoctor2}}</span>
                     </td>
-                    <td style="padding: 2px;">
-                        <span style="font-weight:bold;">Doctor Signature</span>
+
+                    <!--<td style="padding: 2px;">
+            <span style="font-weight: bold;  text-align: right; float: right;font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial ">Doctor Signature</span>
+            <br />
+
+
+            <span style="text-align: right; float: right;">{{DoctorName}}</span>
+        </td>-->
+                    <td style="padding: 2px; text-align: right; font-family: Calibri, 'Helvetica Neue', Helvetica, Arial;">
+                        <span style="font-weight: bold;">Doctor Signature</span>
                         <br />
                         <span>{{DoctorName}}</span>
                     </td>
+
+
                 </tr>
+
                 <!--<tr style="padding: 6px; text-align: center;font-weight:bold;">-->
                 <!--<td>{{DischargeTime}}</td>-->
                 <!--<td>
 
-                        <span>{{AddedBy}}</span>
-                    </td>
-                    <td>
+            <span>{{AddedBy}}</span>
+        </td>
+        <td>
 
 
-                        <span>{{DoctorName}}</span>
-                    </td>
-                </tr>-->
+            <span>{{DoctorName}}</span>
+        </td>
+    </tr>-->
                 <!--<tr><td><span style="font-size: 20px; font-weight: bold; text-align: right;">{{DoctorName}}</span></td></tr>
-                <br />
-                <tr><td><sapn style="font-size: 20px; text-align: right;">Doctor Signature</sapn></td></tr>-->
+    <br />
+    <tr><td><sapn style="font-size: 20px; text-align: right;">Doctor Signature</sapn></td></tr>-->
                 <!--<td> Discharge Time</td>-->
                 <!--<td>
 
-                    <span>Preapered By</span>
-                </td>-->
+        <span>Preapered By</span>
+    </td>-->
                 <!--<tr style="padding: 6px; text-align: center;">
-                    <td>
+        <td>
 
-                        <span>Doctor Signature</span>
-                    </td>
-                </tr>
-                <tr><td><sapn style="font-size:20px;font-weight:bold;">Preapered By</sapn></td></tr>-->
+            <span>Doctor Signature</span>
+        </td>
+    </tr>
+    <tr><td><sapn style="font-size:20px;font-weight:bold;">Preapered By</sapn></td></tr>-->
             </table>
         </tr>
     </table>

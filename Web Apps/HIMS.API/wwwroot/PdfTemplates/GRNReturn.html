@@ -7,7 +7,7 @@
             <tr class="title-date-row">
                 <td>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-size: 16px">
+                        <tr style="font-size: 18px">
                             <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                 <b>
                                     GOODS RECEIPT NOTE RETURN
@@ -25,58 +25,57 @@
             </tr>
             <tr class="bill-info-row">
 
-                <table style="width: 100%; border-collapse: collapse;">
+
+                <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
                     <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Grn No : </span>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Grn No : </span>
                             <span>{{GrnNumber}}</span>
                         </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >GRN Date : </span>
-                            <span>{{GRNTime}}</span>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Invoice No. : </span>
+                            <span>{{InvoiceNo}}</span>
                         </td>
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Mobile No : </span>
+                            <span>{{Mobile}}</span>
+                        </td>
+                       
+
                     </tr>
-                   
                     <tr>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">GRN Date : </span>
+                            <span>{{GRNDate}}</span>
+                        </td>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Invoice Date : </span>
+                            <span>{{InvDate}}</span>
+                        </td>
+
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Gate Entry No : </span>
+                            <span>{{GateEntryNo}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Store Name : </span>
                             <span>{{PrintStoreName}}</span>
                         </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Address : </span>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Supplier Name : </span>
+                            <span>{{SupplierName}}</span>
+                        </td>
+
+
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Address : </span>
                             <span> {{Address}}</span>
                         </td>
                     </tr>
-                    <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Supplier Name : </span>
-                            <span>{{SupplierName}}</span>
-                        </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Mobile No : </span>
-                            <span>{{Mobile}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Invoice No. : </span>
-                            <span>{{InvoiceNo}}</span>
-                        </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Invoice Date : </span>
-                            <span>{{InvDate}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;" >Gate Entry No : </span>
-                            <span>{{GSTNo}}</span>
-                        </td>
-
-
-                    </tr>
-
-
+                   
                 </table>
             </tr>
 
@@ -85,19 +84,18 @@
                     <table style="width: 100%; border-collapse: collapse;">
                         <thead style="font-size: 15px; text-align: center;">
                             <tr>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">ItemName</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Packing</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">BatchNo</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">BatchExpDate</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">MRP</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">RQty</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Total Amt</td>
-
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">GST %</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">GST Amt</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Disc Amt</td>
-                                <td style="border: 1px solid #d4c3c3; padding: 6px;">Net Amt</td>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">ItemName</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">Packing</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">BatchNo</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">BatchExpDate</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">MRP</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">RQty</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">Total Amt</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">GST %</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">GST Amt</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">Disc Amt</th>
+                                <th style="border: 1px solid #d4c3c3; padding: 6px;">Net Amt</th>
                                 
                             </tr>
                         </thead>

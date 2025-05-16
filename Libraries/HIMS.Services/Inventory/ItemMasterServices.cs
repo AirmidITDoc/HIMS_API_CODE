@@ -239,7 +239,7 @@ namespace HIMS.Services.Inventory
                              LandedRate = currentStock.LandedRate,
                              UnitMRP = currentStock.UnitMrp,
                              PurchaseRate = currentStock.PurUnitRateWf,
-                             //currentStock.VatPercentage,
+                             VatPercentage = currentStock.VatPercentage,
                              //itemMaster.IsBatchRequired,
                              BatchNo = currentStock.BatchNo,
                              BatchExpDate = currentStock.BatchExpDate,

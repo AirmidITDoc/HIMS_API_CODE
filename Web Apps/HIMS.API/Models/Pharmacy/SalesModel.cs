@@ -6,6 +6,7 @@ namespace HIMS.API.Models.Pharmacy
     public class SalesModel
     {
         public long SalesId { get; set; }
+        public string? SalesNo { get; set; }
         public long? OpIpId { get; set; }
         public long? OpIpType { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -17,6 +18,10 @@ namespace HIMS.API.Models.Pharmacy
         public long? ConcessionReasonId { get; set; }
         public long? ConcessionAuthorizationId { get; set; }
         public long? CashCounterId { get; set; }
+        public bool? IsSellted { get; set; }
+        public bool? IsPrint { get; set; }
+        public bool? IsFree { get; set; }
+        public long? UnitId { get; set; }
         public string? ExternalPatientName { get; set; }
         public string? DoctorName { get; set; }
         public long? StoreId { get; set; }
@@ -28,6 +33,9 @@ namespace HIMS.API.Models.Pharmacy
         public long? WardId { get; set; }
         public long? BedId { get; set; }
         public float? DiscperH { get; set; }
+        public bool? IsPurBill { get; set; }
+        public bool? IsBillCheck { get; set; }
+        public bool? IsRefundFlag { get; set; }
         public string? SalesHeadName { get; set; }
         public long? SalesTypeId { get; set; }
         public long? RegId { get; set; }
@@ -35,6 +43,7 @@ namespace HIMS.API.Models.Pharmacy
         public string? RegNo { get; set; }
         public string? ExtMobileNo { get; set; }
         public decimal? RoundOff { get; set; }
+        public string? ExtAddress { get; set; }
 
         public List<SalesDetailModel> TSalesDetails { get; set; }
     }

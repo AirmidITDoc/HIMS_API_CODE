@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
@@ -21,7 +23,10 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<BedTransferDetailListDto>> BedTransferDetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BedTransferDetailListDto>(model, "ps_Rtrv_BedTransferDetails");
+        }
         public virtual async Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
 

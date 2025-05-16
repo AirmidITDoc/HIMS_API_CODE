@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.InkML;
 using HIMS.API.Controllers.Masters.Personal_Information;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
@@ -128,10 +129,12 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<PaymentPharmacy, paymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TSalesReturnHeader, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TSalesReturnDetail, SalesReturnDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCurrentStock, CurrentStockModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCurrentStock, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            
-
-         
+           
 
             CreateMap<AdvanceHeader, UpdateAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel2>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -325,7 +328,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-            CreateMap<GRNReturnVerifyModel, TGrnreturnDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<GRNReturnVerifyModel, TGrnreturnHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<OpeningBalModel,TOpeningTransactionHeader> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<OpeningTransactionModel, TOpeningTransaction> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
