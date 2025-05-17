@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using FluentValidation;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -25,8 +26,10 @@ namespace HIMS.API.Models.Pharmacy
         public long? StoreId { get; set; }
         public string? Narration { get; set; }
         public long SalesReturnId { get; set; }
-        public List<SalesReturnDetailsModel> TSalesReturnDetails { get; set; }
-        public List<CurrentStockModels> TCurrentStock { get; set; }
+      //  public List<SalesReturnDetailsModel> TSalesReturnDetails { get; set; }
+      //  public List<CurrentStockModels> TCurrentStock { get; set; }
+
+    //    public List<SalesDetailsModel> TSalesDetails { get; set; }
 
 
 
@@ -42,7 +45,7 @@ namespace HIMS.API.Models.Pharmacy
     }
     public class SalesReturnDetailsModel
     {
-        public long SalesReturnDetId { get; set; }
+        public long SalesReturnID { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -68,8 +71,8 @@ namespace HIMS.API.Models.Pharmacy
         public float? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
         public long? StkId { get; set; }
-        public decimal? Mrp { get; set; }
-        public decimal? Mrptotal { get; set; }
+        //public decimal? Mrp { get; set; }
+        //public decimal? Mrptotal { get; set; }
 
     }
     public class CurrentStockModels
@@ -80,5 +83,75 @@ namespace HIMS.API.Models.Pharmacy
         public long? IstkId { get; set; }
 
 
+    }
+
+    public class SalesDetailsModel
+    {
+        public long? SalesDetId { get; set; }
+        public float? ReturnQty { get; set; }
+     
+    }
+    public class TSalesReturnModel
+    {
+        public long? SalesReturnId { get; set; }
+       
+
+    }
+    public class TSalesReturnsModel
+    {
+        public long? SalesReturnId { get; set; }
+
+
+    }
+    public class SalesHeaderModel
+    {
+        public long? Id { get; set; }
+        public long? TypeId { get; set; }
+    }
+    public class PaymentModels
+    {
+        public long PaymentId { get; set; }
+        public long? BillNo { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public DateTime? ChequeDate { get; set; }
+        public decimal? CardPayAmount { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
+        public DateTime? CardDate { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+        public long? TransactionType { get; set; }
+        public string? Remark { get; set; }
+        public long? AddBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public int? OPDIPDType { get; set; }
+        public decimal? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public DateTime? Neftdate { get; set; }
+        public decimal? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+        public DateTime? PayTmdate { get; set; }
+
+    }
+    public class SalesReturnsModel
+    {
+
+        public SalesReturnModel? SalesReturn { get; set; }
+        public List<SalesReturnDetailsModel?> SalesReturnDetails { get; set; }
+        public List<CurrentStockModels>? CurrentStock { get; set; }
+        public List<SalesDetailsModel>? SalesDetail { get; set; }
+        public TSalesReturnModel? TSalesReturn { get; set; }
+        public TSalesReturnsModel? TSalesReturns { get; set; }
+        public SalesHeaderModel? SalesHeader { get; set; }
+       public PaymentModels? Payment { get; set; }
     }
 }
