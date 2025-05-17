@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Inventory
             _IStockAdjustmentService = repository;
         }
         [HttpPost("ItemWiseStockList")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseStockListDto> ItemWiseStockList = await _IStockAdjustmentService.StockAdjustmentList(objGrid);
