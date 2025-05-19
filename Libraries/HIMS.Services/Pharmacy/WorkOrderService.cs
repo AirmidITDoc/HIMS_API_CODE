@@ -150,6 +150,11 @@ namespace HIMS.Services.Pharmacy
 
             }
         }
+
+        public virtual async Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<WorkorderIteListDto>(model, "Rtrv_ItemDetailsForWorkOrderUpdate");
+        }
     }
 }
 

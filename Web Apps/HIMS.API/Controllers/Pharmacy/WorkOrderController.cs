@@ -31,6 +31,16 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<WorkOrderListDto> List1 = await _IWorkOrderService.GetWorkorderList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "WorkOrder List"));
         }
+
+        [HttpPost("OldWorkOrderList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<WorkorderIteListDto> List1 = await _IWorkOrderService.GetOldworkeorderAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Work Order Item List"));
+        }
+
+
         [HttpPost("WorkOrderSave")]
         // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderAsyncSp(WorksOrderModel obj)

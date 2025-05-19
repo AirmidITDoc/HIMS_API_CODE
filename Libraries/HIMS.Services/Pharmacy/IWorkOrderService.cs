@@ -13,10 +13,10 @@ namespace HIMS.Services.Pharmacy
     {
         Task<IPagedList<WorkOrderListDto>> GetWorkorderList(GridRequestModel objGrid);
         Task WorkOrderAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail,  int UserId, string Username);
-        //Task InsertAsync(TWorkOrderHeader ObjTWorkOrderHeader,int UserId, string Username);
-        //Task UpdateAsync(TWorkOrderHeader ObjTWorkOrderHeader, int UserId, string Username);
+      
         Task UpdateAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username);
 
+        Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel objGrid);
 
 
     }

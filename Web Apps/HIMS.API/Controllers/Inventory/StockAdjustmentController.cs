@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("StockUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PharStockAdjustmentModel obj)
         {
             TStockAdjustment model = obj.MapTo<TStockAdjustment>();
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("BatchUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> BatchUpdate(BatchAdjustmentModel obj)
         {
             TBatchAdjustment model = obj.MapTo<TBatchAdjustment>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Batch Update successfully.");
         }
         [HttpPost("GSTUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(GSTUpdateModel obj)
         {
             TGstadjustment model = obj.MapTo<TGstadjustment>();
