@@ -339,15 +339,9 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<GRNReturnVerifyModel, TGrnreturnHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            //Opening Balance Stock
             CreateMap<OpeningBalModel,TOpeningTransactionHeader> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<OpeningTransactionModel, TOpeningTransaction> ().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<OpeningTranItemStockModel, TOpeningTransactionHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
 
 
             //Appointment
