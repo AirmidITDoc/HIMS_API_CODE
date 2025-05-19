@@ -9,6 +9,6 @@ namespace HIMS.Data.Models
         public long SupPayId { get; set; }
         public long SupGrnId { get; set; }
 
-        public virtual TGrnheader SupGrn { get; set; } = null!;
+        public virtual TGrnsupPayment SupPay { get; set; } = null!;
     }
 }

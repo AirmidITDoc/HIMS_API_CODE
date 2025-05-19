@@ -14144,11 +14144,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_SupPayDet");
 
-                entity.HasOne(d => d.SupGrn)
+                entity.HasOne(d => d.SupPay)
                     .WithMany(p => p.TSupPayDets)
-                    .HasForeignKey(d => d.SupGrnId)
+                    .HasForeignKey(d => d.SupPayId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_T_SupPayDet_T_GRNHeader");
+                    .HasConstraintName("FK_T_SupPayDet_T_GRNSupPayment");
             });
 
             modelBuilder.Entity<TTokenNoDoctorWiseMannual>(entity =>
