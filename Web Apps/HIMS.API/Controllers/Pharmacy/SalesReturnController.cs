@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         
         [HttpPost("SalesReturnWithCash")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("SalesReturnWithCredit")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();

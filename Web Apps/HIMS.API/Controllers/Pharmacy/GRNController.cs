@@ -138,7 +138,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-    //    [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
