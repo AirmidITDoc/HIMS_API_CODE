@@ -138,15 +138,15 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+    //    [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
-            TGrndetail model = obj.MapTo<TGrndetail>();
+            TGrnheader model = obj.MapTo<TGrnheader>();
             if (obj.Grnid != 0)
             {
-                model.IsVerified = true;
-                model.IsVerifiedDatetime = DateTime.Now.Date;
-                await _IGRNService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+                //model.IsVerified = true;
+                //model.IsVerifiedDatetime = DateTime.Now.Date;
+                await _IGRNService.VerifyAsyncSp(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

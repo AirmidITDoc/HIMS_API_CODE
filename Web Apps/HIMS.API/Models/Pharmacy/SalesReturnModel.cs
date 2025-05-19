@@ -145,13 +145,13 @@ namespace HIMS.API.Models.Pharmacy
     public class SalesReturnsModel
     {
 
-        public SalesReturnModel? SalesReturn { get; set; }
-        public List<SalesReturnDetailsModel?> SalesReturnDetails { get; set; }
-        public List<CurrentStockModels>? CurrentStock { get; set; }
-        public List<SalesDetailsModel>? SalesDetail { get; set; }
-        public TSalesReturnModel? TSalesReturn { get; set; }
-        public TSalesReturnsModel? TSalesReturns { get; set; }
-        public SalesHeaderModel? SalesHeader { get; set; }
+        public SalesReturnModel SalesReturn { get; set; }
+        public List<SalesReturnDetailsModel> SalesReturnDetails { get; set; }
+        public List<CurrentStockModels> CurrentStock { get; set; }
+        public List<SalesDetailsModel> SalesDetail { get; set; }
+        public TSalesReturnModel TSalesReturn { get; set; }
+        public TSalesReturnsModel TSalesReturns { get; set; }
+        public SalesHeaderModel SalesHeader { get; set; }
        public PaymentModels? Payment { get; set; }
     }
 }

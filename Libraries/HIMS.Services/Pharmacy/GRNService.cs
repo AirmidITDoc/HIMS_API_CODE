@@ -1,7 +1,9 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -247,25 +249,49 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        public virtual async Task VerifyAsync(TGrndetail objGRN, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header table records
-                TGrnheader objGrnHeader = await _context.TGrnheaders.FindAsync(objGRN.Grnid);
-                objGrnHeader.IsVerified = objGRN.IsVerified;
-                foreach (var objDet in objGrnHeader.TGrndetails)
-                {
-                    objDet.IsVerified = objGRN.IsVerified;
-                    objDet.IsVerifiedUserId = objGRN.IsVerifiedUserId;
-                    objDet.IsVerifiedDatetime = objGRN.IsVerifiedDatetime;
-                }
-                _context.TGrnheaders.Update(objGrnHeader);
-                _context.Entry(objGrnHeader).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
+
+    
+
+
+        public virtual async Task VerifyAsyncSp(TGrnheader objGRN, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "GrnNumber", "Grndate", "Grntime", "StoreId", "SupplierId","InvoiceNo","DeliveryNo","GateEntryNo","CashCreditType",
+               "Grntype", "TotalAmount", "TotalDiscAmount", "TotalVatamount",  "NetAmount","InvDate",
+                "Remark","ReceivedBy","IsClosed","IsPaymentProcess","PaymentPrcDate","ProcessDes","DebitNote","CreditNote","OtherCharge",
+                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","TotIgstamt",
+                "TranProcessId","TranProcessMode","BillDiscAmt","PaymentDate","EwayBillNo","EwayBillDate","TGrndetails","TSupPayDets"};
+            var entity = objGRN.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("[m_Update_GRN_Verify_Status_1]", CommandType.StoredProcedure, entity);
+
+
         }
+
+        //public virtual async Task VerifyAsync(TGrndetail objGRN, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header table records
+        //        TGrnheader objGrnHeader = await _context.TGrnheaders.FindAsync(objGRN.Grnid);
+        //        objGrnHeader.IsVerified = objGRN.IsVerified;
+        //        foreach (var objDet in objGrnHeader.TGrndetails)
+        //        {
+        //            objDet.IsVerified = objGRN.IsVerified;
+        //            objDet.IsVerifiedUserId = objGRN.IsVerifiedUserId;
+        //            objDet.IsVerifiedDatetime = objGRN.IsVerifiedDatetime;
+        //        }
+        //        _context.TGrnheaders.Update(objGrnHeader);
+        //        _context.Entry(objGrnHeader).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
     }
 }
