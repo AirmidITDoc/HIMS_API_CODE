@@ -40,6 +40,8 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<SalesRetrunLCurrentDetListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentDet");
         }
+
+        //Changes Done By Ashutosh 19 May 2025 
         public virtual async Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, TSalesReturnDetail ObjTSalesReturnDetails, TSalesReturnDetail ObjSalesReturnDetails, TSalesHeader ObjTSalesHeader, Payment ObjPayment, int UserId, string Username)
         {
 
@@ -52,11 +54,11 @@ namespace HIMS.Services.Pharmacy
                 entity.Remove(rProperty);
             }
             string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
-              //ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+              ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
             foreach (var item in ObjTSalesReturnDetail)
             {
-                     //item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+                     item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
                 string[] TEntity = { "Mrp", "Mrptotal", "SalesReturn", "SalesReturnDetId" };
                 var Aentity = item.ToDictionary();
@@ -125,10 +127,10 @@ namespace HIMS.Services.Pharmacy
             }
             Sentity["OPDIPDType"] = 1;
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
-            //ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+            ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
         }
-
+        //Changes Done By Ashutosh 19 May 2025 
         public virtual async Task InsertAsyncSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, TSalesReturnDetail ObjTSalesReturnDetails, TSalesReturnDetail ObjSalesReturnDetails, TSalesHeader ObjTSalesHeader, int UserId, string Username)
         {
 
