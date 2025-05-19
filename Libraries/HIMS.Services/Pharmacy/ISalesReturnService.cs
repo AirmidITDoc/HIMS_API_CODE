@@ -17,5 +17,7 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<SalesRetrunCurrentSumryListDto>> SalesReturnSummaryList(GridRequestModel objGrid);
         Task<IPagedList<SalesRetrunLCurrentDetListDto>> SalesReturnDetailsList(GridRequestModel objGrid);
         Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader,List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock>  ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, TSalesReturnDetail ObjTSalesReturnDetails, TSalesReturnDetail ObjSalesReturnDetails, TSalesHeader ObjTSalesHeader, Payment ObjPayment, int UserId, string Username);
+        Task InsertAsyncSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, TSalesReturnDetail ObjTSalesReturnDetails, TSalesReturnDetail ObjSalesReturnDetails, TSalesHeader ObjTSalesHeader,  int UserId, string Username);
+
     }
 }
