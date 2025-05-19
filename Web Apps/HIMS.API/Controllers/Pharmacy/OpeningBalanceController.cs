@@ -22,24 +22,25 @@ namespace HIMS.API.Controllers.Pharmacy
             _IOpeningBalanceService = repository;
         }
         [HttpPost("OpeningBalanceList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalListDto> List1 = await _IOpeningBalanceService.GetOpeningBalanceList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Oening Balance List"));
+            return Ok(List1.ToGridResponse(objGrid, "Opening Balance List"));
         }
         
 
         [HttpPost("OpeningBalnceItemDetailList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpeningBalItemDetail(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IOpeningBalanceService.GetOPningBalItemDetailList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Opening Balance Item Detail List"));
         }
 
+        // changes done by Subhash -- Date : 19 May 2025
         [HttpPost("OpeningBalanceSave")]
-       // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
            TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
