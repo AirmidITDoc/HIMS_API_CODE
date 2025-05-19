@@ -31,7 +31,7 @@ namespace HIMS.Services.Pharmacy
 
 
 
-        public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransaction> ObjTOpeningTransaction, TOpeningTransactionHeader ObjTOpeningTransactionHeaders, int UserId, string UserName)
+        public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransaction> ObjTOpeningTransaction, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -45,32 +45,23 @@ namespace HIMS.Services.Pharmacy
             }
             string BOpeningHId = odal.ExecuteNonQuery("Insert_OpeningTransaction_header_1", CommandType.StoredProcedure, "OpeningHId",yentity);
             ObjTOpeningTransactionHeader.OpeningHid = Convert.ToInt32(BOpeningHId);
-            ObjTOpeningTransactionHeaders.OpeningHid = Convert.ToInt32(BOpeningHId);
-
-
+            
             foreach (var item in ObjTOpeningTransaction)
             {
-                string[] rEntity = { " " };
+                item.OpeningDocNo = ObjTOpeningTransactionHeader.OpeningHid;
+                string[] rEntity = { "OpeningId" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
-                string TOpeningId = odal.ExecuteNonQuery("Insert_OpeningTransaction_1", CommandType.StoredProcedure, "OpeningId", entity);
-             //   ObjTOpeningTransaction.OpeningId = Convert.ToInt32(TOpeningId);
+                odal.ExecuteNonQuery("Insert_OpeningTransaction_1", CommandType.StoredProcedure, entity);
             }
-             
-                string[] BillEntity = { "OpeningDocNo", "StoreId", "OpeningDate", "OpeningTime", "AddedBy" , "UpdatedBy",  "OPeningHId" };
-                var Bentity = ObjTOpeningTransactionHeaders.ToDictionary();
-                foreach (var rProperty in BillEntity)
-                {
-                    Bentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("Insert_Update_OpeningTran_ItemStock_1", CommandType.StoredProcedure, Bentity);
-         
+            var OpeningIdObj = new
+            {
+                OPeningHId = Convert.ToInt32(BOpeningHId)
+            };
+            odal.ExecuteNonQuery("Insert_Update_OpeningTran_ItemStock_1", CommandType.StoredProcedure, OpeningIdObj.ToDictionary());
         }
-
-
-
     }
 }

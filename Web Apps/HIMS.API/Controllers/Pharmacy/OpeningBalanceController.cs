@@ -42,15 +42,13 @@ namespace HIMS.API.Controllers.Pharmacy
        // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
-            TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
+           TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
            List<TOpeningTransaction> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransaction>>();
-            TOpeningTransactionHeader CurrentStock = obj.OpeningTranItemStock.MapTo<TOpeningTransactionHeader>();
-       
-
             if (obj.OpeningBal.OpeningHId == 0)
             {
-                
-                await _IOpeningBalanceService.OpeningBalAsyncSp( Model, Models, CurrentStock, CurrentUserId, CurrentUserName);
+                Model.AddedBy = CurrentUserId;
+                Model.UpdatedBy = CurrentUserId;
+                await _IOpeningBalanceService.OpeningBalAsyncSp( Model, Models,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
