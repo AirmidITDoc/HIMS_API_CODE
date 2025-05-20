@@ -58,25 +58,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Save successfully.");
         }
 
-        //    [HttpPut("Edit/{id:int}")]
-        ////    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
-        //    public async Task<ApiResponse> Edit(WorkOrdersModel obj)
-        //    {
-        //        TWorkOrderHeader model = obj.MapTo<TWorkOrderHeader>();
-        //        if (obj.Woid == 0)
-
-        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //        else
-        //        {
-
-        //            model.ModifiedDate = DateTime.Now;
-        //            model.ModifiedBy = CurrentUserId;
-        //            model.IsUpdatedBy = DateTime.Now;
-        //            model.ItemTime = Convert.ToDateTime(obj.ItemTime);
-        //            await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName);
-        //        }
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster updated successfully.");
-        //    }
+       
 
         [HttpPost("WorkOrderUpdate")]
         // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
