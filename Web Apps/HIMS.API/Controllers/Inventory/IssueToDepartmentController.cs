@@ -61,15 +61,15 @@ namespace HIMS.API.Controllers.Inventory
 
          [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(IssueToDepartmentModel obj)
+        public async Task<ApiResponse> InsertSP(IssueTODepModel obj)
         {
-            TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
-            TCurrentStock model1 = obj.MapTo<TCurrentStock>();
+            TIssueToDepartmentHeader model = obj.issue.MapTo<TIssueToDepartmentHeader>();
+           List<TCurrentStock> model1 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
 
-            if (obj.IssueId == 0)
+            if (obj.issue.IssueId == 0)
             {
-                model.IssueDate = Convert.ToDateTime(obj.IssueDate);
-                model.IssueTime = Convert.ToDateTime(obj.IssueTime);
+                model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.issue.IssueTime);
                 model.Addedby = CurrentUserId;
                 await _IIssueToDepService.InsertAsyncSP(model, model1, CurrentUserId, CurrentUserName);
             }
