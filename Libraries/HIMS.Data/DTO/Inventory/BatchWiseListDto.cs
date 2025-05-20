@@ -11,10 +11,12 @@ namespace HIMS.Data.DTO.Inventory
         public long ItemId {  get; set; }
         public long StoreId { get; set; }
         public string? BatchNo { get; set; }
+        public float? BalQty { get; set; }
         public string ExpDate { get; set; }
         public decimal? UnitMrp { get; set; }
         public decimal? PurchaseRate { get; set; }
         public decimal? LandedRate { get; set; }
+        public decimal? PurUnitRateWF { get; set; }
         public decimal? PurUnitRate { get; set; }
         public float TotalByMRP { get; set; }
         public float TotalByPTR { get; set; }

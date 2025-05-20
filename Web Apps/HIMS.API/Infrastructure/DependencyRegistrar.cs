@@ -113,6 +113,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IItemMasterService, ItemMasterServices>();
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IsmsConfigService, smsConfigService>();
+            services.AddScoped<ISupplierPaymentStatusService, SupplierPaymentStatusService>();
 
 
 

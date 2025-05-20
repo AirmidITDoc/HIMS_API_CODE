@@ -31,11 +31,13 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-        //SHILPA//
+         // Changes done by Rachana Date : 12/10/2025
         public virtual async Task<IPagedList<ItemWiseStockListDto>> StockAdjustmentList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ItemWiseStockListDto>(model, "ps_Rtrv_BatchNoForMrpAdj");
         }
+
+        
         public virtual async Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username)
         {
             

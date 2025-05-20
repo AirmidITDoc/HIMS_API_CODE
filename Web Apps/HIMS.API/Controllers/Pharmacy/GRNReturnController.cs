@@ -79,8 +79,8 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TGrndetail> objReturnQty = obj.GrnReturnReturnQt.MapTo<List<TGrndetail>>();
             if (obj.GrnReturn.GrnreturnId == 0)
             {
-                model.GrnreturnDate = DateTime.Now.Date;
-                model.GrnreturnTime = DateTime.Now;
+                model.GrnreturnDate = Convert.ToDateTime(obj.GrnReturn.GrnreturnDate);
+                model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
                 await _gRNReturnService.InsertAsync(model, objCStock, objReturnQty, CurrentUserId, CurrentUserName);

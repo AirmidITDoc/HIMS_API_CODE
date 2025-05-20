@@ -19,7 +19,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? InvoiceNo { get; set; }
         public string? DeliveryNo { get; set; }
         public string? GateEntryNo { get; set; }
-        public bool? CashCreditType { get; set; }
+        public bool? Cash_CreditType { get; set; }
         public bool? Grntype { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? TotalDiscAmount { get; set; }

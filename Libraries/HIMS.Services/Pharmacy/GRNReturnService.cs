@@ -2,7 +2,9 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Purchase;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -154,22 +156,75 @@ namespace HIMS.Services.Pharmacy
         //    }
 
         //}
-
-        public virtual async Task VerifyAsync( TGrnreturnHeader objGRN, int UserId, string Username)
+        public virtual async Task VerifyAsync(TGrnreturnHeader objGRN,  int UserId, string UserName)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                
-                // Update header table records
-                TGrnreturnHeader objGRNH = await _context.TGrnreturnHeaders.FindAsync(objGRN.GrnreturnId);
-                objGRNH.IsVerified = true;
-                _context.TGrnreturnHeaders.Update(objGRNH);
-                _context.Entry(objGRNH).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "GrnreturnNo", "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit",
+                "Remark","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","GrnType","IsGrnTypeFlag","TGrnreturnDetails" };
+            var entity = objGRN.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure,  entity);
+        
+
         }
+
+
+        //public virtual async Task VerifyAsync(TGrnreturnHeader objGRNReturn, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+
+        //        //// Update header table records
+        //        TGrnreturnHeader objGRNH = await _context.TGrnreturnHeaders.FindAsync(objGRNReturn.GrnreturnId);
+        //        objGRNH.IsVerified = true;
+        //        _context.TGrnreturnHeaders.Update(objGRNH);
+        //        _context.Entry(objGRNH).State = EntityState.Modified;
+        //        // Get all return details for the specified GRN Return ID
+
+        //        var grnReturnDetails = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
+
+        //        foreach (var detail in grnReturnDetails)
+
+        //        {
+
+        //            var itemId = detail.ItemId;
+
+        //        //    var storeId = detail.StoreId;
+
+        //            var stockId = detail.StkId;
+
+        //            var returnQty = detail.ReturnQty;
+
+        //            // Find the matching current stock entry
+
+        //            var currentStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == itemId && x.StockId == stockId);
+
+        //            if (currentStock != null)
+
+        //            {
+        //                currentStock.IssueQty += returnQty;
+
+        //                currentStock.BalanceQty -= returnQty;
+
+        //                currentStock.GrnRetQty -= returnQty;
+
+        //            }
+
+        //        }
+
+        //        // Save all changes at once after updating all entries
+
+        //        //   await _context.SaveChangesAsync();
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
 
         //public virtual async Task VerifyAsync(TGrnreturnDetail objGRNReturn, int UserId, string Username)
 
@@ -179,11 +234,24 @@ namespace HIMS.Services.Pharmacy
         //    {
         //        // Delete details table realted records
         //        var lst = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
-        //        _context.TGrnreturnDetails.RemoveRange(lst);
+
         //        // Update header & detail table records
         //        _context.TGrnreturnDetails.Update(objGRNReturn);
         //        _context.Entry(objGRNReturn).State = EntityState.Modified;
         //        await _context.SaveChangesAsync();
+
+        //        var currentStock = await _context.T_CurrentStock.FirstOrDefaultAsync(x => x.ItemId == itemId && x.StoreId == storeId && x.StockId == stockId);
+
+        //        if (currentStock != null)
+        //        {
+        //            currentStock.IssueQty += returnQty;
+        //            currentStock.BalanceQty -= returnQty;
+        //            currentStock.GrnRetQty -= returnQty;
+
+        //            await _context.SaveChangesAsync();
+        //        }
+
+
         //        scope.Complete();
         //    }
         //}

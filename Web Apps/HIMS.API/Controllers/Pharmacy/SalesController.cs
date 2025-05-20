@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
       
         [HttpPost("SalesSummaryList")]
-        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
         {
             IPagedList<PharSalesCurrentSumryListDto> PharSalesList = await _ISalesService.GetList(objGrid);
@@ -63,29 +63,29 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesDetailsList")]
-        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesDetailsList(GridRequestModel objGrid)
         {
             IPagedList<PharCurrentDetListDto> SalesDetailsList = await _ISalesService.SalesDetailsList(objGrid);
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
         }
 
-
+        // Changes done by Subhash Date : 17-May-2025
         [HttpPost("SalesBrowseDetailList")]
-        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<SalesDetailsListDto> SalesDetailsList = await _ISalesService.Getsalesdetaillist(objGrid);
-            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details List"));
         }
 
-
+        // Changes done by Subhash Date : 17-May-2025
         [HttpPost("salesbrowselist")]
-        ///   [Permission(PageCode = "Menu", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<SalesBillListDto> SalesDetailsList = await _ISalesService.salesbrowselist(objGrid);
-            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Details  List"));
+            return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Bill List"));
         }
 
      

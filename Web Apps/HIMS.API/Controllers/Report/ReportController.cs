@@ -214,15 +214,16 @@ namespace HIMS.API.Controllers.Report
 
                 case "IptemplateCasepaperReport":
                 case "AdmissionList":
-                case "IpDraftBill":
-                case "IpDraftBillNew":
+                case "IpDraftBillGroupWise"://Namechange
+                case "IpDraftBillClassWise"://Namechange
                 case "IpFinalBillNew":
-                case "IpFinalBill":
-                case "IpFinalBillClassservicewise":
-                case "IpFinalClasswiseBill":
-                case "IpFinalGroupwiseBill":
+                case "IPFinalBillClassWise"://Namechanges
+                case "IPFinalBillClassServiceWise"://Namechange
+
+           //     case "IpFinalClasswiseBill":
+                case "IPFinalBillGroupwise"://Namechanges
                 case "IpCreditBill":
-                case "IpInterimBill":
+                case "IpInterimBill"://change
                 case "IpPaymentReceipt":
                 case "IpAdvanceRefundReceipt":
                 case "IpBillRefundReceipt":

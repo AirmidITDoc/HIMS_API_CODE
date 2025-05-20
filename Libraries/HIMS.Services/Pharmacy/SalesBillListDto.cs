@@ -11,7 +11,7 @@ namespace HIMS.Services.Pharmacy
         public long SalesId { get; set; }
         public DateTime Date { get; set; }
         public string SalesNo { get; set; }
-        public long RegNo { get; set; }
+        public string RegNo { get; set; }
         public string PatientName { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal VatAmount { get; set; }
@@ -29,9 +29,7 @@ namespace HIMS.Services.Pharmacy
         public long IsPrescription { get; set; }
         public long CashCounterID { get; set; }
         public bool IsRefundFlag { get; set; }
-
-        public long IPNO { get; set; }
-
+        public string IPNO { get; set; }
         public bool IsPrint { get; set; }
     }
 }

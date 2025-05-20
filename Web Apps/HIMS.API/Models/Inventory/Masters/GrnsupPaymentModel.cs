@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+using FluentValidation;
+using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.Pharmacy;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Masters
 {
-    public partial class TGrnsupPayment
+    public class GrnsupPaymentModel
     {
-        public TGrnsupPayment()
-        {
-            TSupPayDets = new HashSet<TSupPayDet>();
-        }
 
         public long SupPayId { get; set; }
-        public DateTime? SupPayDate { get; set; }
-        public DateTime? SupPayTime { get; set; }
-        public string? SupPayNo { get; set; }
+        public DateTime SupPayDate { get; set; }
+        public string SupPayTime { get; set; }
         public long? GrnId { get; set; }
         public decimal? CashPayAmt { get; set; }
         public decimal? ChequePayAmt { get; set; }
+        public DateTime? CardPayDate { get; set; }
         public DateTime? ChequePayDate { get; set; }
         public string? ChequeBankName { get; set; }
+        public string? CardBankName { get; set; }
+        public string? CardNo { get; set; }
         public string? ChequeNo { get; set; }
         public string? Remarks { get; set; }
         public long? IsAddedBy { get; set; }
@@ -35,10 +34,35 @@ namespace HIMS.Data.Models
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public decimal? CardPayAmt { get; set; }
-        public DateTime? CardPayDate { get; set; }
-        public string? CardNo { get; set; }
-        public string? CardBankName { get; set; }
+        
 
-        public virtual ICollection<TSupPayDet> TSupPayDets { get; set; }
+    }
+
+    public class GRNModels
+    {
+        public long Grnid { get; set; }
+        public decimal PaidAmount { get; set; }
+       public decimal BalAmount { get; set; }
+     
+    
+    }
+    public class SupPayDetModel
+    {
+        public long SupPayId { get; set; }
+        public long SupGrnId { get; set; }
+
+
+    }
+
+
+
+
+    public class TGRNSupPayment
+    {
+        public GrnsupPaymentModel GrnsupPayment { get; set; }
+        public List<GRNModels> GRN { get; set; }
+        public List<SupPayDetModel> SupPayDet { get; set; }
+
+
     }
 }

@@ -8,7 +8,7 @@
             <tr class="title-date-row">
                 <td>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-size: 16px">
+                        <tr style="font-size: 18px">
                             <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                 <b>
                                     GOODS RECEIPT NOTE
@@ -26,66 +26,65 @@
             </tr>
             <tr class="bill-info-row">
 
-                <table style="width: 100%; border-collapse: collapse;">
+
+                <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
                     <tr>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Grn No : </span>
                             <span>{{GrnNumber}}</span>
                         </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;">GRN Date : </span>
-                            <span>{{GRNDate}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">PO NO : </span>
                             <span>{{PONo}}</span>
                         </td>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Invoice No. : </span>
+                            <span>{{InvoiceNo}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">GRN Date : </span>
+                            <span>{{GRNDate}}</span>
+                        </td>
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">PO Date : </span>
                             <span>{{PurchaseTime}}</span>
                         </td>
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Invoice Date : </span>
+                            <span>{{InvDate}}</span>
+                        </td>
+
                     </tr>
                     <tr>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Supplier Name : </span>
+                            <span>{{SupplierName}}</span>
+                        </td>
+
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Store Name : </span>
                             <span>{{PrintStoreName}}</span>
                         </td>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 40%;">
                             <span style="font-weight: bold;">Address : </span>
                             <span> {{Address}}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;">Supplier Name : </span>
-                            <span>{{SupplierName}}</span>
-                        </td>
-                        <td style="padding: 2px;">
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Mobile No : </span>
                             <span>{{Mobile}}</span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;">Invoice No. : </span>
-                            <span>{{InvoiceNo}}</span>
-                        </td>
-                        <td style="padding: 2px;">
-                            <span style="font-weight: bold;">Invoice Date : </span>
-                            <span>{{InvDate}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 2px;">
+
+                        <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Gate Entry No : </span>
                             <span>{{GateEntryNo}}</span>
                         </td>
 
-
                     </tr>
-
 
                 </table>
             </tr>
@@ -211,10 +210,10 @@
                                     {{AddedByName}}  <br> Added By
                                 </td>
                                 <td style="padding: 6px; text-align: center;">
-                                    {{AddedByName}}  <br> Checked By
+                                    <!--{{AddedByName}}-->  <br> Checked By
                                 </td>
                                 <td style="padding: 6px; text-align: right;">
-                                    {{AddedByName}} <br> Authorized Signature
+                                    <!--{{AddedByName}}--> <br> Authorized Signature
                                 </td>
                             </tr>
                         </tbody>

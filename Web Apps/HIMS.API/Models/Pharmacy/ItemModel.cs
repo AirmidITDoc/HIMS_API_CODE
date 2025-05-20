@@ -44,21 +44,21 @@ namespace HIMS.API.Models.Pharmacy
     public class GRNVerifyModel
     {
         public long? Grnid { get; set; }
-        public long IsVerifiedUserId { get; set; }
+        public long IsVerified { get; set; }
     }
     public class GRNVerifyModelValidator : AbstractValidator<GRNVerifyModel>
     {
         public GRNVerifyModelValidator()
         {
             RuleFor(x => x.Grnid).NotNull().NotEmpty().WithMessage("Grn id is required");
-            RuleFor(x => x.IsVerifiedUserId).NotNull().NotEmpty().WithMessage("Verified user id is required");
+         //   RuleFor(x => x.IsVerifiedUserId).NotNull().NotEmpty().WithMessage("Verified user id is required");
         }
     }
 
     public class GRNReturnVerifyModel
     {
         public long? GrnreturnId { get; set; }
-        public long IsVerifiedUserId { get; set; }
+        public long IsVerified { get; set; }
     }
     public class GRNReturnVerifyModelValidator : AbstractValidator<GRNReturnVerifyModel>
     {
