@@ -20,7 +20,7 @@ namespace HIMS.API.Models.Inventory
         public long? IndentId { get; set; }
 
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
-        public List<CurrentStockModel> TCurrentStock { get; set; }
+      
 
 
 
@@ -64,7 +64,7 @@ namespace HIMS.API.Models.Inventory
     {
         public int ItemId { get; set; }
         public int IssueQty { get; set; }
-        public int StkId { get; set; }
+        public int IStkId { get; set; }
         public int StoreID { get; set; }
     }
     public class CurrentStockModelValidator : AbstractValidator<CurrentStockModel>
@@ -77,13 +77,12 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    //public class IssueTODepModel
-    //{
-    //    public  IssueToDepartmentModel issue { get; set; }
+    public class IssueTODepModel
+    {
+        public IssueToDepartmentModel issue { get; set; }
 
-    //    public IssueToDepartmentDetailModel Depissue { get; set; }
-    //    public CurrentStockModel curruntissue { get; set; }
-
-    //}
+        //   public IssueToDepartmentDetailModel Depissue { get; set; }
+        public List<CurrentStockModel> TCurrentStock { get; set; }
+    }
 
 }

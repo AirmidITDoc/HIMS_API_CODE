@@ -46,7 +46,8 @@ namespace HIMS.Services.Inventory
         }
 
         
-        public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, TCurrentStock OBjTCurrentStock, int UserId, string Username)
+        //Changes Done By Ashutosh 20 May 2025  
+        public virtual async Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, List<TCurrentStock> OBjTCurrentStock, int UserId, string Username)
         {
            
                 // //Add header table records
@@ -68,14 +69,17 @@ namespace HIMS.Services.Inventory
                 _context.TIssueToDepartmentDetails.AddRange(objIssueToDepartment.TIssueToDepartmentDetails);
                 await _context.SaveChangesAsync(UserId, Username);
 
-                string[] Entity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
-                var Ientity = OBjTCurrentStock.ToDictionary();
+               foreach (var item in OBjTCurrentStock)
+               {
+
+                string[] Entity = { "StockId",  "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+                var Ientity = item.ToDictionary();
                 foreach (var rProperty in Entity)
                 {
-                  Ientity.Remove(rProperty);
+                    Ientity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("v_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Ientity);
-
+                odal.ExecuteNonQuery("m_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Ientity);
+               }
         }
 
     }
