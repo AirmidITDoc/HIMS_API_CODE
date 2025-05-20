@@ -20,6 +20,9 @@ namespace HIMS.Services.Users
 
         Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel objGrid);
 
+        Task InsertAsyncSP(TSalesHeader ObjSalesHeader,List<TCurrentStock> ObjTCurrentStock, Payment ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
+
+        Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock,TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
 
     }
 }
