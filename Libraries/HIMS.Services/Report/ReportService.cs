@@ -16,6 +16,8 @@ using System.IO;
 using Microsoft.VisualBasic;
 using System.Linq;
 using Microsoft.Extensions.Primitives;
+using Aspose.Cells;
+using System.Reflection.PortableExecutable;
 
 
 
@@ -259,7 +261,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptOPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -768,7 +770,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IpInterimBill"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IpInterimBill" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -801,7 +803,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWise"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -818,7 +820,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPDFinalBillClassWise"+ vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPDFinalBillClassWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -836,7 +838,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillClassServiceWise"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillClassServiceWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -996,7 +998,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1012,7 +1014,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "DischargeSummaryWithoutHeader"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "DischargeSummaryWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1020,7 +1022,7 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryTemplate":
                     {
 
-                       
+
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplate.html");
@@ -1029,7 +1031,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1044,7 +1046,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplateWithoutHeader"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1592,7 +1594,7 @@ namespace HIMS.Services.Report
             StringBuilder ItemsNetTotal = new("");
             StringBuilder itemsGroup = new("");
             //dont remove code, vimal is creating common method for all reports..
-            //string final = GetCommonHtmlTableReports(dt, headerList, totalColList, totalColList, model.groupByLabel.Split(','));
+            //string final = GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(','));
             double T_Count = 0;
             switch (model.htmlFilePath)
             {
@@ -2126,8 +2128,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-
-        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] totalColList, string[] footer, string[] groupBy)
+        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
             StringBuilder table = new();
             table.Append("<tr>");
@@ -2138,96 +2139,79 @@ namespace HIMS.Services.Report
                 table.Append("</th>");
             }
             table.Append("</tr>");
+            groupBy = new string[2] { "PaymentAddedByName", "PatientName" };
+            int RowNo = 1;
             if (groupBy.Length > 0)
             {
                 var groups1 = dt.AsEnumerable().Select(row => row.Field<string>(groupBy[0])).Distinct().ToList();
                 foreach (string group1 in groups1)
                 {
                     var group1Data = dt.Select(groupBy[0] + "='" + group1 + "'");
-                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group1).Append("</th>");
+                    table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group1).Append("</th></tr>");
                     if (groupBy.Length > 1)
                     {
                         var groups2 = group1Data.AsEnumerable().Select(row => row.Field<string>(groupBy[1])).Distinct().ToList();
                         foreach (string group2 in groups2)
                         {
-                            var group2Data = group1Data.Where(x => x[groupBy[1]] == group2);
-                            table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group2).Append("</th>");
+                            var group2Data = group1Data.Where(x => x[groupBy[1]].ToString().ToLower() == group2.ToLower());
+                            table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group2).Append("</th></tr>");
                             if (groupBy.Length > 2)
                             {
                                 var groups3 = group2Data.AsEnumerable().Select(row => row.Field<string>(groupBy[2])).Distinct().ToList();
                                 foreach (string group3 in groups3)
                                 {
-                                    var group3Data = group2Data.Where(x => x[groupBy[2]] == group3);
-                                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group3).Append("</th>");
+                                    var group3Data = group2Data.Where(x => x[groupBy[2]].ToString().ToLower() == group3.ToLower());
+                                    table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group3).Append("</th></tr>");
                                     if (groupBy.Length > 3)
                                     {
                                         var groups4 = group3Data.AsEnumerable().Select(row => row.Field<string>(groupBy[3])).Distinct().ToList();
                                         foreach (string group4 in groups4)
                                         {
-                                            table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group4).Append("</th>");
-                                            foreach (var row in group3Data.Where(x => x[groupBy[3]] == group4))
-                                            {
-                                                table.Append("<tr>");
-                                                foreach (var hr in totalColList)
-                                                {
-                                                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                                    table.Append(row[hr].ToString());
-                                                    table.Append("</th>");
-                                                }
-                                                table.Append("</tr>");
-                                            }
+                                            table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group4).Append("</th></tr>");
+                                            CreateRows(group3Data.Where(x => x[groupBy[3]].ToString().ToLower() == group4.ToLower()), table, headers, columnDataNames, ref RowNo);
                                         }
                                     }
                                     else
                                     {
-                                        foreach (var row in group3Data)
-                                        {
-                                            table.Append("<tr>");
-                                            foreach (var hr in totalColList)
-                                            {
-                                                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                                table.Append(row[hr].ToString());
-                                                table.Append("</th>");
-                                            }
-                                            table.Append("</tr>");
-                                        }
+                                        CreateRows(group3Data, table, headers, columnDataNames, ref RowNo);
                                     }
                                 }
                             }
                             else
                             {
-                                foreach (var row in group2Data)
-                                {
-                                    table.Append("<tr>");
-                                    foreach (var hr in totalColList)
-                                    {
-                                        table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                        table.Append(row[hr].ToString());
-                                        table.Append("</th>");
-                                    }
-                                    table.Append("</tr>");
-                                }
+                                CreateRows(group2Data, table, headers, columnDataNames, ref RowNo);
                             }
                         }
                     }
                     else
                     {
-                        foreach (var row in group1Data)
-                        {
-                            table.Append("<tr>");
-                            foreach (var hr in totalColList)
-                            {
-                                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                                table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
-                                table.Append("</th>");
-                            }
-                            table.Append("</tr>");
-                        }
+                        CreateRows(group1Data, table, headers, columnDataNames, ref RowNo);
                     }
                 }
             }
 
             return table.ToString();
+        }
+        public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
+        {
+            foreach (var row in group2Data)
+            {
+                table.Append("<tr>");
+                if (headers.Contains("Sr.No"))
+                {
+                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                    table.Append(RowNo);
+                    table.Append("</th>");
+                    RowNo++;
+                }
+                foreach (var hr in columnDataNames)
+                {
+                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                    table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    table.Append("</th>");
+                }
+                table.Append("</tr>");
+            }
         }
 
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "")
