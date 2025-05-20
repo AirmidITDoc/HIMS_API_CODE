@@ -44,15 +44,6 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        [HttpPost("ItemListBYSupplierName")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
-        public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
-        {
-            IPagedList<ItemListBysupplierNameDto> List1 = await _gRNReturnService.GetItemListbysuppliernameAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, " Item List By supplier Name"));
-        }
-
-
         [HttpPost("GRNListBynameforGrnReturn")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNListBynameforGrnReturnAsync(GridRequestModel objGrid)
