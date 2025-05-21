@@ -19,10 +19,16 @@ namespace HIMS.Services.Users
         Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel objGrid);
 
         Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel objGrid);
+        Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel objGrid);
+        Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel objGrid);
+        Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel objGrid);
+
+        Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel objGrid);
 
         Task InsertAsyncSP(TSalesHeader ObjSalesHeader,List<TCurrentStock> ObjTCurrentStock, Payment ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
 
         Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock,TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
+        Task InsertAsyncSPD( TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
 
     }
 }
