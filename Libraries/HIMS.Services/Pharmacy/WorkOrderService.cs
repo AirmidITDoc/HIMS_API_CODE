@@ -76,6 +76,7 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("Delete_WODetails_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
 
             foreach (var item in ObjTWorkOrderDetail)
+
             {
                 string[] DEntity = { "WodetId", "PendQty" };
                 var pentity = item.ToDictionary();

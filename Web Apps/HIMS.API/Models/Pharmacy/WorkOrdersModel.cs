@@ -20,7 +20,6 @@ namespace HIMS.API.Models.Pharmacy
         public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
-    //    public List<WorkOrderDetailsModel> TWorkOrderDetail { get; set; }
     }
 
     public class WorkOrdersModelValidator : AbstractValidator<WorkOrdersModel>
@@ -29,6 +28,10 @@ namespace HIMS.API.Models.Pharmacy
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("Store is required");
             RuleFor(x => x.SupplierID).NotNull().NotEmpty().WithMessage("SupplierID is required");
+            RuleFor(x => x.TotalAmount).NotNull().NotEmpty().WithMessage("TotalAmount is required");
+            RuleFor(x => x.VatAmount).NotNull().NotEmpty().WithMessage("VatAmount is required");
+            RuleFor(x => x.DiscAmount).NotNull().NotEmpty().WithMessage("DiscAmount is required");
+            RuleFor(x => x.NetAmount).NotNull().NotEmpty().WithMessage("NetAmount is required");
         }
     }
     public class WorkOrderDetailsModel
@@ -46,8 +49,20 @@ namespace HIMS.API.Models.Pharmacy
         public string? Remark { get; set; }
      
     }
+    public class WorkOrderDetailsModelValidator : AbstractValidator<WorkOrderDetailsModel>
+    {
+        public WorkOrderDetailsModelValidator()
+        {
+            RuleFor(x => x.Rate).NotNull().NotEmpty().WithMessage("Rate is required");
+            RuleFor(x => x.TotalAmount).NotNull().NotEmpty().WithMessage("TotalAmount is required");
+            RuleFor(x => x.DiscPer).NotNull().NotEmpty().WithMessage("DiscPer is required");
+            RuleFor(x => x.VatAmount).NotNull().NotEmpty().WithMessage("VatAmount is required");
+            RuleFor(x => x.DiscAmount).NotNull().NotEmpty().WithMessage("DiscAmount is required");
+            RuleFor(x => x.VatAmount).NotNull().NotEmpty().WithMessage("VatAmount is required");
+            RuleFor(x => x.NetAmount).NotNull().NotEmpty().WithMessage("NetAmount is required");
 
-
+        }
+    }
     public class WorksOrderModel
     {
 
