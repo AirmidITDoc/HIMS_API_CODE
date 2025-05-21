@@ -88,13 +88,45 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<SalesBillListDto> SalesDetailsList = await _ISalesService.salesbrowselist(objGrid);
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Bill List"));
         }
+        // done by Ashu Date : 20-May-2025
+        [HttpPost("salesDraftlist")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesDraftBillList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesDraftBillListDto> SalesDraftBillList = await _ISalesService.SalesDraftBillList(objGrid);
+            return Ok(SalesDraftBillList.ToGridResponse(objGrid, "Sales Draft List"));
+        }
+
+
+        [HttpPost("StockavailableList")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BalAvaStoreList(GridRequestModel objGrid)
+        {
+            IPagedList<BalAvaStoreListDto> BalAvaStoreList = await _ISalesService.BalAvaStoreList(objGrid);
+            return Ok(BalAvaStoreList.ToGridResponse(objGrid, "Stockavailable List"));
+        }
+
+        [HttpPost("Prescriptionheaderlist")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionListforSalesDto> PrescriptionList = await _ISalesService.PrescriptionList(objGrid);
+            return Ok(PrescriptionList.ToGridResponse(objGrid, "PrescriptionListforSales List"));
+        }
+
+        [HttpPost("PrescriptionDetaillist")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionDetList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionDetListDto> PrescriptionDetList = await _ISalesService.PrescriptionDetList(objGrid);
+            return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PrescriptionDet  List"));
+        }
 
 
         // done by Ashu Date : 20-May-2025
 
         [HttpPost("SalesSaveWithPayment")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -126,7 +158,6 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
             List<TCurrentStock> CurrentStock = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
-            //   Payment modelPayment = obj.Payment.MapTo<Payment>();
             TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
             TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
 
@@ -140,6 +171,24 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SalesSaveWithCredit added successfully.");
+        }
+
+        [HttpPost("SalesDraftBillSave")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSPD(SalesDraftHeadersModel obj)
+        {
+            TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
+         List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
+            if (obj.SalesDraft.DsalesId == 0)
+            {
+                model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
+                model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
+                model.AddedBy = CurrentUserId;
+                await _ISalesService.InsertAsyncSPD(model, modelTSales, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SalesDraftBill added successfully.");
         }
 
     }

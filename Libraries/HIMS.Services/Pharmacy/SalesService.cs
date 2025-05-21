@@ -94,7 +94,7 @@ namespace HIMS.Services.Users
         }
 
 
-        
+
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
@@ -103,7 +103,7 @@ namespace HIMS.Services.Users
         {
             return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
         }
-      
+
         public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
@@ -112,6 +112,24 @@ namespace HIMS.Services.Users
         public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
+        }
+        public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "m_Rtrv_SalesDraftBillList");
+        }
+        public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BalAvaStoreListDto>(model, "m_getBalAvaListStore");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionListforSalesDto>(model, "m_Retrieve_PrescriptionListforSales");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetListDto>(model, "Ret_PrescriptionDet");
         }
 
 
@@ -122,7 +140,7 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "RoundOff", "UpdatedBy", "IsCancelled" , "TSalesDetails" };
+            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "RoundOff", "UpdatedBy", "IsCancelled", "TSalesDetails" };
             var entity = ObjSalesHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -195,6 +213,7 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("m_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, Hentity);
         }
 
+        // done by Ashu Date : 20-May-2025
         public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
         {
 
@@ -274,5 +293,34 @@ namespace HIMS.Services.Users
         }
 
 
+        public virtual async Task InsertAsyncSPD( TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
+        {
+
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "SalesNo", "CashCounterId","UpdatedBy", "IsCancelled" };
+            var entity = ObjDraftHeader.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string DsalesId = odal.ExecuteNonQuery("m_insert_T_SalesDraftHeader_1", CommandType.StoredProcedure, "DsalesId", entity);
+             ObjDraftHeader.DsalesId = Convert.ToInt32(DsalesId);
+
+            foreach (var item in ObjTSalesDraftDet)
+            {
+                item.DsalesId = Convert.ToInt32(DsalesId);
+
+
+                string[] pEntity = { "SalDetId" };
+                var Tentity = item.ToDictionary();
+                foreach (var rProperty in pEntity)
+                {
+                    Tentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
+            }
+        } 
+        
     }
 }

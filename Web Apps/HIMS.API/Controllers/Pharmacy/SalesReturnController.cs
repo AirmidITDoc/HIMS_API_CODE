@@ -72,17 +72,14 @@ namespace HIMS.API.Controllers.Pharmacy
            List <TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
-            TSalesReturnDetail model4 = obj.TSalesReturn.MapTo<TSalesReturnDetail>();
-            TSalesReturnDetail model5 = obj.TSalesReturns.MapTo<TSalesReturnDetail>();
-            TSalesHeader model6 = obj.SalesHeader.MapTo<TSalesHeader>();
-            Payment model7 = obj.Payment.MapTo<Payment>();
+            Payment model4 = obj.Payment.MapTo<Payment>();
 
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                await _ISalesReturnService.InsertAsyncSP(model, model1, model2, model3, model4, model5, model6, model7, CurrentUserId, CurrentUserName);
+                await _ISalesReturnService.InsertAsyncSP(model, model1, model2, model3,  model4, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -97,17 +94,13 @@ namespace HIMS.API.Controllers.Pharmacy
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
             List<TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
-            List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
-            TSalesReturnDetail model4 = obj.TSalesReturn.MapTo<TSalesReturnDetail>();
-            TSalesReturnDetail model5 = obj.TSalesReturns.MapTo<TSalesReturnDetail>();
-            TSalesHeader model6 = obj.SalesHeader.MapTo<TSalesHeader>();
-        
+            List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();        
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                await _ISalesReturnService.InsertAsyncSPCredit(model, model1, model2, model3, model4, model5, model6, CurrentUserId, CurrentUserName);
+                await _ISalesReturnService.InsertAsyncSPCredit(model, model1, model2, model3,  CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
