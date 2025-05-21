@@ -24,25 +24,25 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _IWorkOrderService = repository;
         }
-        [HttpPost("WorkOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [HttpPost("WorkOrderHeaderList")]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetWorkorderlist(GridRequestModel objGrid)
         {
             IPagedList<WorkOrderListDto> List1 = await _IWorkOrderService.GetWorkorderList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "WorkOrder List"));
         }
 
-        [HttpPost("OldWorkOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [HttpPost("WorkOrderDetailsList")]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<WorkorderIteListDto> List1 = await _IWorkOrderService.GetOldworkeorderAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Work Order Item List"));
+            return Ok(List1.ToGridResponse(objGrid, "WorkOrderDetailsList"));
         }
 
 
         [HttpPost("WorkOrderSave")]
-        // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderAsyncSp(WorksOrderModel obj)
         {
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
@@ -60,8 +60,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
        
 
-        [HttpPost("WorkOrderUpdate")]
-        // [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [HttpPut("WorkOrderUpdate")]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.UpdateWorkOrders.MapTo<TWorkOrderHeader>();
@@ -76,7 +76,6 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Update successfully.");
         }
-
 
     }
 }

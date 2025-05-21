@@ -1,6 +1,7 @@
 using Aspose.Cells.Drawing;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -29,11 +30,17 @@ namespace HIMS.Services.Inventory
 
         }
 
+        public virtual async Task<IPagedList<ItemListBysupplierNameDto>> GetItemListbysuppliernameAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemListBysupplierNameDto>(model, "Rtrv_ItemList_by_Supplier_Name_For_GRNReturn");
+        }
+
+
         public virtual async Task InsertAsyncSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "SupPayNo" };
+            string[] rEntity = { "SupPayNo", "TSupPayDets" };
             var entity = ObjTGrnsupPayment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -43,12 +50,13 @@ namespace HIMS.Services.Inventory
             ObjTGrnsupPayment.SupPayId = Convert.ToInt32(PSupPayId);
 
 
+
             foreach (var item in ObjTGrnheader)
             {
 
                 string[] pEntity = { "GrnNumber","Grndate","Grntime","StoreId","SupplierId","InvoiceNo","DeliveryNo","GateEntryNo","CashCreditType","Grntype","TotalAmount","TotalDiscAmount","TotalVatamount","NetAmount","Remark","ReceivedBy",
-            "IsVerified","IsClosed","AddedBy","UpdatedBy","Prefix","IsCancelled","IsPaymentProcess","PaymentPrcDate","ProcessDes","InvDate","DebitNote","CreditNote","OtherCharge","RoundingAmt","TotCgstamt",
-            "TotSgstamt","TotIgstamt","TranProcessId","TranProcessMode","BillDiscAmt","EwayBillNo","PaymentDate","EwayBillDate","TGrndetails","TSupPayDets"};
+                "IsVerified","IsClosed","AddedBy","UpdatedBy","Prefix","IsCancelled","IsPaymentProcess","PaymentPrcDate","ProcessDes","InvDate","DebitNote","CreditNote","OtherCharge","RoundingAmt","TotCgstamt",
+               "TotSgstamt","TotIgstamt","TranProcessId","TranProcessMode","BillDiscAmt","EwayBillNo","PaymentDate","EwayBillDate","TGrndetails","TSupPayDets"};
                 var qentity = item.ToDictionary();
                 foreach (var rProperty in pEntity)
                 {
@@ -61,7 +69,7 @@ namespace HIMS.Services.Inventory
             {
                 item.SupPayId = Convert.ToInt32(PSupPayId);
 
-                string[] EEntity = { "SupTranId", "SupGrn" };
+                string[] EEntity = { "SupTranId", "SupGrn", "SupPay" };
                 var Rentity = item.ToDictionary();
                 foreach (var rProperty in EEntity)
                 {
