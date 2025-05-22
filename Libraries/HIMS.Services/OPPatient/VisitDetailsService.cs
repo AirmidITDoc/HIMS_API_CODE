@@ -268,7 +268,7 @@ namespace HIMS.Services.OPPatient
                            VisitId = visitDetails.VisitId,
                            RegId = visitDetails.RegId,
                            // VisitDate = visitDetails.VisitDate,
-                           // UnitId = visitDetails.UnitId,
+                           UnitId = visitDetails.UnitId,
                            PatientTypeId = visitDetails.PatientTypeId,
                            ConsultantDocId = visitDetails.ConsultantDocId,
                            RefDocId = visitDetails.RefDocId,

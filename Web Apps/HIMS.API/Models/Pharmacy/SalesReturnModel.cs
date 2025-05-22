@@ -7,6 +7,7 @@ namespace HIMS.API.Models.Pharmacy
 {
     public class SalesReturnModel
     {
+        public long SalesReturnId { get; set; }
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
         public long? SalesId { get; set; }
@@ -25,13 +26,6 @@ namespace HIMS.API.Models.Pharmacy
         public long? AddedBy { get; set; }
         public long? StoreId { get; set; }
         public string? Narration { get; set; }
-        public long SalesReturnId { get; set; }
-      //  public List<SalesReturnDetailsModel> TSalesReturnDetails { get; set; }
-      //  public List<CurrentStockModels> TCurrentStock { get; set; }
-
-    //    public List<SalesDetailsModel> TSalesDetails { get; set; }
-
-
 
     }
     public class SalesReturnModelValidator : AbstractValidator<SalesReturnModel>
@@ -71,9 +65,16 @@ namespace HIMS.API.Models.Pharmacy
         public float? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
         public long? StkId { get; set; }
-        //public decimal? Mrp { get; set; }
-        //public decimal? Mrptotal { get; set; }
+     
+    }
+    public class SalesReturnDetailsModelValidator : AbstractValidator<SalesReturnDetailsModel>
+    {
+        public SalesReturnDetailsModelValidator()
+        {
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+            RuleFor(x => x.Qty).NotNull().NotEmpty().WithMessage("Qty Time is required");
 
+        }
     }
     public class CurrentStockModels
     {
@@ -82,31 +83,47 @@ namespace HIMS.API.Models.Pharmacy
         public long? StoreId { get; set; }
         public long? IstkId { get; set; }
 
+    }
 
+    public class CurrentStockModelsValidator : AbstractValidator<CurrentStockModels>
+    {
+        public CurrentStockModelsValidator()
+        {
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty Time is required");
+
+        }
     }
 
     public class SalesDetailsModel
     {
         public long? SalesDetId { get; set; }
-        public float? ReturnQty { get; set; }
+        public double? ReturnQty { get; set; }
      
     }
-    public class TSalesReturnModel
+
+    public class SalesDetailsModelValidator : AbstractValidator<SalesDetailsModel>
     {
-        public long? SalesReturnId { get; set; }
-       
+        public SalesDetailsModelValidator()
+        {
+            RuleFor(x => x.SalesDetId).NotNull().NotEmpty().WithMessage("SalesDetId  is required");
+            RuleFor(x => x.ReturnQty).NotNull().NotEmpty().WithMessage("ReturnQty Time is required");
 
-    }
-    public class TSalesReturnsModel
-    {
-        public long? SalesReturnId { get; set; }
-
-
+        }
     }
     public class SalesHeaderModel
     {
         public long? Id { get; set; }
         public long? TypeId { get; set; }
+    }
+    public class SalesHeaderModelValidator : AbstractValidator<SalesHeaderModel>
+    {
+        public SalesHeaderModelValidator()
+        {
+            RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("Id  is required");
+           
+
+        }
     }
     public class PaymentModels
     {
@@ -142,6 +159,18 @@ namespace HIMS.API.Models.Pharmacy
         public DateTime? PayTmdate { get; set; }
 
     }
+
+    public class PaymentModelsValidator : AbstractValidator<PaymentModels>
+    {
+        public PaymentModelsValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo  is required");
+            RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount  is required");
+            RuleFor(x => x.BankName).NotNull().NotEmpty().WithMessage("BankName  is required");
+
+
+        }
+    }
     public class SalesReturnsModel
     {
 
@@ -149,9 +178,7 @@ namespace HIMS.API.Models.Pharmacy
         public List<SalesReturnDetailsModel> SalesReturnDetails { get; set; }
         public List<CurrentStockModels> CurrentStock { get; set; }
         public List<SalesDetailsModel> SalesDetail { get; set; }
-        public TSalesReturnModel TSalesReturn { get; set; }
-        public TSalesReturnsModel TSalesReturns { get; set; }
-        public SalesHeaderModel SalesHeader { get; set; }
+      //  public SalesHeaderModel SalesHeader { get; set; }
        public PaymentModels? Payment { get; set; }
     }
 }

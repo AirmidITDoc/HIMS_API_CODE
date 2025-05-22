@@ -7,12 +7,9 @@ namespace HIMS.API.Models.Pharmacy
     public class SalessModel
     {
 
-
         public long SalesId { get; set; }
-        //   public string? SalesNo { get; set; }
         public DateTime Date { get; set; }
         public string Time { get; set; }
-
         public long? OpIpId { get; set; }
         public long? OpIpType { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -23,7 +20,6 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? BalanceAmount { get; set; }
         public long? ConcessionReasonId { get; set; }
         public long? ConcessionAuthorizationId { get; set; }
-   //     public long? CashCounterId { get; set; }
         public bool? IsSellted { get; set; }
         public bool? IsPrint { get; set; }
         public bool? IsFree { get; set; }
@@ -35,31 +31,43 @@ namespace HIMS.API.Models.Pharmacy
         public long? AddedBy { get; set; }
         public string? CreditReason { get; set; }
         public long? CreditReasonId { get; set; }
-    //    public decimal? RefundAmt { get; set; }
         public long? WardId { get; set; }
         public long? BedId { get; set; }
         public float? DiscperH { get; set; }
         public bool? IsPurBill { get; set; }
         public bool? IsBillCheck { get; set; }
-     //   public bool? IsRefundFlag { get; set; }
         public string? SalesHeadName { get; set; }
         public long? SalesTypeId { get; set; }
         public long? RegId { get; set; }
-//        public string? PatientName { get; set; }
- //       public string? RegNo { get; set; }
         public string? ExtMobileNo { get; set; }
-        //public decimal? RoundOff { get; set; }
         public string? ExtAddress { get; set; }
 
         public List<SalesDetailModel> TSalesDetails { get; set; }
     }
 
+    public class SalessModelValidator : AbstractValidator<SalessModel>
+    {
+        public SalessModelValidator()
+        {
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");
+        }
+    }
     public class CurrentStocksModel
     {
-        public int ItemId { get; set; }
-        public int IssueQty { get; set; }
-        public int IStkId { get; set; }
-        public int StoreID { get; set; }
+        public long ItemId { get; set; }
+        public float IssueQty { get; set; }
+        public long IStkId { get; set; }
+        public long StoreID { get; set; }
+    }
+
+    public class CurrentStocksModelValidator : AbstractValidator<CurrentStocksModel>
+    {
+        public CurrentStocksModelValidator()
+        {
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty is required");
+        }
     }
     public class PaymentpharModel
     {
@@ -85,7 +93,7 @@ namespace HIMS.API.Models.Pharmacy
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public int? OPDIPDType { get; set; }
+        public long? OPDIPDType { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -94,18 +102,42 @@ namespace HIMS.API.Models.Pharmacy
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
     }
+    public class PaymentpharModelValidator : AbstractValidator<PaymentpharModel>
+    {
+        public PaymentpharModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
+        }
+    }
 
     public class IPPrescriptionsModel
     {
-        public int opipid { get; set; }
+        public long opipid { get; set; }
         public bool Isclosed { get; set; }
       
     }
+    public class IPPrescriptionsModelValidator : AbstractValidator<IPPrescriptionsModel>
+    {
+        public IPPrescriptionsModelValidator()
+        {
+            RuleFor(x => x.opipid).NotNull().NotEmpty().WithMessage("opipid is required");
+          
+        }
+    }
     public class SalesDraftHeaderModel
     {
-        public int DSalesId { get; set; }
+        public long DSalesId { get; set; }
         public bool Isclosed { get; set; }
 
+    }
+    public class SalesDraftHeaderModelValidator : AbstractValidator<SalesDraftHeaderModel>
+    {
+        public SalesDraftHeaderModelValidator()
+        {
+            RuleFor(x => x.DSalesId).NotNull().NotEmpty().WithMessage("DSalesId is required");
+          
+        }
     }
     public class SaleReqModel
     {

@@ -139,8 +139,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, CurrentStockModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDetail, SalesDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TSalesReturnDetail, TSalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TSalesReturnDetail, TSalesReturnsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SalesHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Payment, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -244,6 +242,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesDetail, SalesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Payment, PaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPurchaseHeader, PurchaseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<TSalesDraftHeader, TSalesDraftHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TSalesDraftDet, TSalesDraftDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             //Inventory 
