@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDepartment added successfully.",model.IssueId);
         }
     }
 }
