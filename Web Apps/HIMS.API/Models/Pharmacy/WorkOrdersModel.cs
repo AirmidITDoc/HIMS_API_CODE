@@ -13,8 +13,8 @@ namespace HIMS.API.Models.Pharmacy
         public long? SupplierID { get; set; }
         public decimal? TotalAmount { get; set; }
         public double? VatAmount { get; set; }
-        public double? DiscAmount { get; set; }
-        public double? NetAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? NetAmount { get; set; }
         public bool? Isclosed { get; set; }
         public string? Remark { get; set; }
         public long? AddedBy { get; set; }

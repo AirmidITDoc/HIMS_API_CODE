@@ -11,6 +11,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Core;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -76,6 +77,44 @@ namespace HIMS.API.Controllers.Inventory
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " GST Update successfully.");
+        }
+        //[HttpPost("MrpAdjustmentUpdate")]
+        ////[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
+        //{
+        //    TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
+        //    TCurrentStock CurruntStock = obj.CurruntStockModel.MapTo<TCurrentStock>();
+        //    if (model.StoreId != 0)
+        //    {
+        //        model.AddedBy = CurrentUserId;
+        //        await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " MrpAdjustmentUpdate successfully.");
+        //}
+
+
+        [HttpPost("MrpAdjustmentUpdate")]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
+        {
+            TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
+            TCurrentStock CurruntStock = obj.CurruntStockModel.MapTo<TCurrentStock>();
+            if (model.StoreId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            var CurruntStockModel = new TCurrentStock
+            {
+                StoreId = CurruntStock.StoreId,
+                ItemId = CurruntStock.ItemId,
+                BatchNo = CurruntStock.BatchNo,
+
+            };
+            await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MrpAdjustmentUpdate  successfully.");
         }
 
     }
