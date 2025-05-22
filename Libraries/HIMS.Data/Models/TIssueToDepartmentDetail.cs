@@ -24,6 +24,7 @@ namespace HIMS.Data.Models
         public float? ReturnQty { get; set; }
         public long? StkId { get; set; }
         public string? Status { get; set; }
+        public long? IsAccepted { get; set; }
 
         public virtual TIssueToDepartmentHeader Issue { get; set; } = null!;
     }
