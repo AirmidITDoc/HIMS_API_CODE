@@ -77,11 +77,11 @@ namespace HIMS.Services.Inventory
             }
             odal.ExecuteNonQuery("ps_Update_CurrentStock_GSTAdjustment", CommandType.StoredProcedure, Bentity);
         }
-        public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock , int UserId, string Username /*decimal PerUnitMrp, decimal PerUnitPurrate*/)
+        public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username )
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "MrpAdjId"};
+            string[] rEntity = { "MrpAdjId" };
             var Mentity = ObjTMrpAdjustment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -89,21 +89,61 @@ namespace HIMS.Services.Inventory
             }
             odal.ExecuteNonQuery("PS_insert_T_MrpAdjustment_1", CommandType.StoredProcedure, Mentity);
 
-            string[] Entity = { "OpeningBalance" , "ReceivedQty", "IssueQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchExpDate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "IstkId", "GrnRetQty", "IssDeptQty", "PurUnitRate" };
+            string[] Entity = { "OpeningBalance", "ReceivedQty", "IssueQty", "BalanceQty", "VatPercentage", "BatchExpDate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "IstkId", "GrnRetQty", "IssDeptQty", "PurUnitRate" };
             var Uentity = ObjTCurrentStock.ToDictionary();
             foreach (var rProperty in Entity)
             {
                 Uentity.Remove(rProperty);
             }
-            //Uentity["PerUnitMrp"] = UnitMrp; // Ensure objpayment
-            Uentity["PerUnitMrp"] = ObjTCurrentStock.UnitMrp;
-            Uentity["PerUnitPurrate"] = ObjTCurrentStock.PurchaseRate;
-            Uentity["PerUnitLanedrate"] = ObjTCurrentStock.LandedRate;
-            Uentity["OldUnitMrp"] = 0; // Ensure objpayment
-            Uentity["OldUnitPur"] = 0; // Ensure objpayment
-            Uentity["OldUnitLanded"] = 0; // Ensure objpayment
-            odal.ExecuteNonQuery("PS_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, Uentity);
+            Uentity["OldUnitMrp"] = 0; 
+            Uentity["OldUnitPur"] = 0; 
+            Uentity["OldUnitLanded"] = 0; 
+            odal.ExecuteNonQuery("m_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, Uentity);
+
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public virtual async Task MrpAdjustmentUpdate( TMrpAdjustment ObjTMrpAdjustment,TCurrentStock ObjTCurrentStock,int UserId,string Username, decimal PerUnitMrp, decimal PerUnitPurrate)
+        //{
+        //    DatabaseHelper odal = new();
+
+        //    // Insert into T_MrpAdjustment
+        //    var Mentity = ObjTMrpAdjustment.ToDictionary();
+        //    Mentity.Remove("MrpAdjId");
+        //    odal.ExecuteNonQuery("PS_insert_T_MrpAdjustment_1", CommandType.StoredProcedure, Mentity);
+
+        //    // Prepare parameters for PS_Update_Item_MRPAdjustment_New
+        //    var parameters = new Dictionary<string, object>
+        //    {
+        //        ["StoreId"] = ObjTCurrentStock.StoreId,
+        //        ["Stockid"] = ObjTCurrentStock.StockId,
+        //        ["ItemId"] = ObjTCurrentStock.ItemId,
+        //        ["BatchNo"] = ObjTCurrentStock.BatchNo,
+        //        ["PerUnitMrp"] = PerUnitMrp,
+        //        ["PerUnitPurrate"] = PerUnitPurrate,
+        //        ["PerUnitLanedrate"] = 0m,
+        //        ["OldUnitMrp"] = 0m,
+        //        ["OldUnitPur"] = 0m,
+        //        ["OldUnitLanded"] = 0m
+        //    };
+
+        //    odal.ExecuteNonQuery("PS_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, parameters);
+        //}
+
+
+
     }
 }
 

@@ -38,19 +38,19 @@ namespace HIMS.API.Models.Inventory
         public long StockId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
-        public decimal? PerUnitMrp { get; set; }
-        public decimal? PerUnitPurrate { get; set; }
-        public decimal? PerUnitLanedrate { get; set; }
+        public decimal? UnitMrp { get; set; }
+        public decimal? Purchaserate { get; set; }
+        public decimal? LandedRate { get; set; }
         public decimal? OldUnitMrp { get; set; }
         public decimal? OldUnitPur { get; set; }
         public decimal? OldUnitLanded { get; set; }
 
     }
     public class MRPAdjModel
-        {
+    {
             public MRPAdjustmentModels MRPAdjustmentMod {  get; set; }
             public CurStockModel CurruntStockModel { get; set; }
 
-        }
     }
+}
 
