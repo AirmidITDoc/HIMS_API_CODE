@@ -17,7 +17,7 @@ namespace HIMS.Services.Inventory
         Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username);
         Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int UserId, string Username);
         Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int UserId, string Username);
-        Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username /*decimal PerUnitMrp, decimal PerUnitPurrate */);
+        Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock ,int UserId, string Username );
 
 
 

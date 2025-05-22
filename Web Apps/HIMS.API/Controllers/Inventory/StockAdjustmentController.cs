@@ -78,25 +78,11 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " GST Update successfully.");
         }
-        //[HttpPost("MrpAdjustmentUpdate")]
-        ////[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
-        //{
-        //    TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
-        //    TCurrentStock CurruntStock = obj.CurruntStockModel.MapTo<TCurrentStock>();
-        //    if (model.StoreId != 0)
-        //    {
-        //        model.AddedBy = CurrentUserId;
-        //        await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " MrpAdjustmentUpdate successfully.");
-        //}
-
+      
+        //Shilpa//22/05/2025 updated
 
         [HttpPost("MrpAdjustmentUpdate")]
-        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
@@ -105,7 +91,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            // 👇 Manually assign fields from LabRequestsModel to AddCharge
+            // 👇 Manually assign fields 
             var CurruntStockModel = new TCurrentStock
             {
                 StoreId = CurruntStock.StoreId,
