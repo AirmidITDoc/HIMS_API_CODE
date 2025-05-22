@@ -40,7 +40,19 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<SalesRetrunLCurrentDetListDto>(model, "m_rtrv_Phar_SalesRetrunList_CurrentDet");
         }
+        public virtual async Task<IPagedList<BrowseSalesBillListDto>> BrowseSalesBillList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseSalesBillListDto>(model, "m_Retrieve_BrowseSalesBill");
+        }
 
+        public virtual async Task<IPagedList<SalesBillReturnCashListDto>> SalesBillReturnCashList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCashListDto>(model, "Retrieve_SalesBill_Return_Cash");
+        }
+        public virtual async Task<IPagedList<SalesBillReturnCreditListDto>> SalesBillReturnCreditList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
+        }
         //Changes Done By Ashutosh 19 May 2025 
         public virtual async Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, Payment ObjPayment, int UserId, string Username)
         {
