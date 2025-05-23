@@ -1,8 +1,9 @@
-using Aspose.Cells.Drawing;
+﻿using Aspose.Cells.Drawing;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -23,16 +24,18 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-
         public virtual async Task<IPagedList<SupplierNamelistDto>> SupplierNamelist(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SupplierNamelistDto>(model, "m_Rtrv_SupplierName_list");
 
         }
-
         public virtual async Task<IPagedList<ItemListBysupplierNameDto>> GetItemListbysuppliernameAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ItemListBysupplierNameDto>(model, "Rtrv_ItemList_by_Supplier_Name_For_GRNReturn");
+        }
+        public virtual async Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SupplierPaymentStatusListDto>(model, "Rtrv_GRNList_ForAccount_payment");
         }
 
 
@@ -79,11 +82,6 @@ namespace HIMS.Services.Inventory
             }
 
         }
-
-
-
-
-
 
     }
 

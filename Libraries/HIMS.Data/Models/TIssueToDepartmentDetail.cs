@@ -8,8 +8,6 @@ namespace HIMS.Data.Models
         public long IssueDepId { get; set; }
         public long IssueId { get; set; }
         public long? ItemId { get; set; }
-
-        public string? ItemName { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
         public double? IssueQty { get; set; }
@@ -24,7 +22,6 @@ namespace HIMS.Data.Models
         public float? ReturnQty { get; set; }
         public long? StkId { get; set; }
         public string? Status { get; set; }
-        public long? IsAccepted { get; set; }
 
         public virtual TIssueToDepartmentHeader Issue { get; set; } = null!;
     }
