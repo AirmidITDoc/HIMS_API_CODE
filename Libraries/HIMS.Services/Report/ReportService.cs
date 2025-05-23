@@ -1486,7 +1486,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_Opening_Balance", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance"+vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1667,7 +1667,8 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        HeaderItems.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList));
+                        items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
                         //HeaderItems.Append("<tr>");
                         //foreach (var hr in headerList)
                         //{
@@ -2082,7 +2083,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
+        public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
         {
             StringBuilder table = new();
             table.Append("<tr>");
@@ -2093,6 +2094,11 @@ namespace HIMS.Services.Report
                 table.Append("</th>");
             }
             table.Append("</tr>");
+            return table.ToString();
+        }
+        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
+        {
+            StringBuilder table = new();
             //groupBy = new string[2] { "PaymentAddedByName", "PatientName" };
             int RowNo = 1;
             if (groupBy.Length > 0)
@@ -2147,7 +2153,6 @@ namespace HIMS.Services.Report
                 }
                 CreateFooterGroupBy(dt.AsEnumerable(), table, footer, "Total", true);
             }
-
             return table.ToString();
         }
         public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
@@ -8065,7 +8070,7 @@ namespace HIMS.Services.Report
 
                 case "WorkOrder":
                     {
-                        int i=0;
+                        int i = 0;
                         double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0;
 
                         foreach (DataRow dr in dt.Rows)

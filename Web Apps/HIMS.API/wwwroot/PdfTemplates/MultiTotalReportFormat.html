@@ -5,6 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style type="text/css">
+        #dataTable thead {
+            display: table-header-group;
+        }
+
+        #dataTable tfoot {
+            display: table-footer-group;
+        }
+
+        #dataTable tr {
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,22 +48,16 @@
                         </table>
                     </td>
                 </tr>
-                <table class="table" style="width:100%;border-collapse:collapse;">
+                <table class="table" id="dataTable" style="width:100%;border-collapse:collapse;">
                     <thead style="font-size: 15px; text-align: center;">
                         {{HeaderItems}}
                     </thead>
                     <tbody style="font-size: 14px;">
                         {{Items}}
-                        {{ItemsTotal}}
-                        <!--<tr>
-                <td style="border:1px solid #000;font-weight:700;text-align:right;vertical-align:middle;padding:5px 5px;"></td>
-                <td style="border:1px solid #000;font-weight:700;text-align:right;vertical-align:middle;padding:5px 5px;"></td>
-                <td style="border:1px solid #000;font-weight:700;text-align:right;vertical-align:middle;padding:5px 5px;"></td>
-                <td style="border:1px solid #000;font-weight:700;text-align:right;vertical-align:middle;padding:5px 5px;"></td>
-                <td style="border:1px solid #000;font-weight:700;text-align:right;vertical-align:middle;padding:5px 5px;">Total Count</td>
-                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">{{T_Count}}</td>
-            </tr>-->
                     </tbody>
+                    <tfoot>
+                        {{ItemsTotal}}
+                    </tfoot>
                 </table>
 
             </table>
