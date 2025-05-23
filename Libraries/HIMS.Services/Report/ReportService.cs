@@ -1479,13 +1479,13 @@ namespace HIMS.Services.Report
                     {
                         string[] colList = { };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InventortReport_OpeningBalanceList.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpeningBalance.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rpt_Opening_Balance", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance"+vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
