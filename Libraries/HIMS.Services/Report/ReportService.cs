@@ -18,6 +18,7 @@ using System.Linq;
 using Microsoft.Extensions.Primitives;
 using Aspose.Cells;
 using System.Reflection.PortableExecutable;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 
@@ -1479,13 +1480,13 @@ namespace HIMS.Services.Report
                     {
                         string[] colList = { };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InventortReport_OpeningBalanceList.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpeningBalance.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rpt_Opening_Balance", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance"+vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1666,197 +1667,136 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        HeaderItems.Append("<tr>");
-                        foreach (var hr in headerList)
-                        {
-                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                            HeaderItems.Append(hr.ConvertToString());
-                            HeaderItems.Append("</th>");
-                        }
-                        HeaderItems.Append("</tr>");
+                        HeaderItems.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
+                        //HeaderItems.Append("<tr>");
+                        //foreach (var hr in headerList)
+                        //{
+                        //    HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                        //    HeaderItems.Append(hr.ConvertToString());
+                        //    HeaderItems.Append("</th>");
+                        //}
+                        //HeaderItems.Append("</tr>");
 
-                        //var dynamicVariable = new Dictionary<string, double>();
-                        var dynamicVariableSub = new Dictionary<string, double>();
-
-                        // Initialize both dictionaries
-                        foreach (var colName in totalColList)
-                        {
-                            if (!string.IsNullOrEmpty(colName) && colName != "lableTotal" && colName != "space")
-                            {
-                                //dynamicVariable[colName] = 0;
-                                dynamicVariableSub[colName] = 0;
-                            }
-                        }
-
-                        string previousLabel = "";
-                        int i = 0, j = 0, Dcount = 0;
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-
-                            i++; j++;
-
-                            string currentLabel = dr[groupByCol].ConvertToString();
-
-                            // Group changed? Print subtotal for previous group
-                            if (!string.IsNullOrEmpty(previousLabel) && previousLabel != currentLabel)
-                            {
-                                // Append subtotal row
-                                items.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9;'>");
-                                foreach (var colName in totalColList)
-                                {
-                                    if (colName == "space")
-                                        items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'></td>");
-                                    else if (colName == "lableTotal")
-                                        items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px; font-weight:bold;'>Sub Total for ")
-                                              .Append(previousLabel).Append("</td>");
-                                    else
-                                        items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'>")
-                                              .Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
-                                }
-                                items.Append("</tr>");
-
-                                // Reset group subtotals
-                                foreach (var key in totalColList)
-                                {
-                                    if (!string.IsNullOrEmpty(key) && key != "space" && key != "lableTotal")
-                                        dynamicVariableSub[key] = 0;
-                                }
-
-                                Dcount = 0;
-
-                                // New group header
-                                items.Append("<tr style='font-size:20px;color:black;'>")
-                                     .Append("<td colspan='13' style='border:1px solid #000;padding:3px;text-align:left;'>")
-                                     .Append(currentLabel).Append("</td></tr>");
-                            }
-
-                            // First group
-                            if (i == 1)
-                            {
-                                items.Append("<tr style='font-size:20px;color:black;'>")
-                                     .Append("<td colspan='13' style='border:1px solid #000;padding:3px;text-align:left;'>")
-                                     .Append(currentLabel).Append("</td></tr>");
-                            }
-
-                            // Append row data
-                            items.Append("<tr style='text-align: center; border: 1px solid #d4c3c3;'>")
-                                 .Append("<td style='border: 1px solid #d4c3c3;'>").Append(i).Append("</td>");
-                            foreach (var colName in colList)
-                            {
-                                items.Append("<td style='border: 1px solid #d4c3c3;'>")
-                                     .Append(dr[colName].ConvertToString()).Append("</td>");
-                            }
-                            items.Append("</tr>");
-
-                            previousLabel = currentLabel;
-                            Dcount++;
-
-                            // Accumulate both group and total values
-                            foreach (var colName in totalColList)
-                            {
-                                if (!string.IsNullOrEmpty(colName) && colName != "space" && colName != "lableTotal")
-                                {
-                                    double value = dr[colName].ConvertToDouble();
-                                    //dynamicVariable[colName] += value;
-                                    dynamicVariableSub[colName] += value;
-                                }
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(previousLabel))
-                        {
-                            items.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9;'>");
-                            foreach (var colName in totalColList)
-                            {
-                                if (colName == "space")
-                                    items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'></td>");
-                                else if (colName == "lableTotal")
-                                    items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px; font-weight:bold;'>Sub Total for ")
-                                          .Append(previousLabel).Append("</td>");
-                                else
-                                    items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'>")
-                                          .Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
-                            }
-                            items.Append("</tr>");
-                        }
-                        if (totalColList.Count() > 0 && totalColList != null)
-                        {
-                            ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
-                            foreach (var colName in totalColList)
-                            {
-                                if (colName == "space")
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
-                                else if (colName == "lableTotal")
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
-                                else if (!string.IsNullOrEmpty(colName))
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
-                                else
-                                    ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
-                            }
-                            ItemsTotal.Append("</tr>");
-                        }
-
-                        ////int i = 0, j = 0;
-                        ////double Dcount = 0;
-                        ////string previousLabel = "";
-                        ////int k = 0;
                         ////var dynamicVariable = new Dictionary<string, double>();
-                        ////if (totalColList.Count() > 0 && totalColList != null)
-                        ////{
-                        ////    foreach (var colName in totalColList)
-                        ////    {
-                        ////        if (!string.IsNullOrEmpty(colName) && colName != "space")
-                        ////        {
-                        ////            dynamicVariable.Add(colName, 0);
-                        ////        }
-                        ////    }
-                        ////}
+                        //var dynamicVariableSub = new Dictionary<string, double>();
 
-                        ////foreach (DataRow dr in dt.Rows)
-                        ////{
-                        ////    i++; j++;
-                        ////    if (i == 1)
-                        ////    {
-                        ////        String Label;
-                        ////        Label = dr[groupByCol].ConvertToString();
-                        ////        items.Append("<tr style=\"font-size:20px;border: 1px;color:black;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
-                        ////    }
-                        ////    if (previousLabel != "" && previousLabel != dr[groupByCol].ConvertToString())
-                        ////    {
-                        ////        j = 1;
-                        ////        items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
-                        ////           .Append(Dcount).Append("</td></tr>");
-                        ////        Dcount = 0;
-                        ////        items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr[groupByCol].ConvertToString()).Append("</td></tr>");
-                        ////    }
+                        //// Initialize both dictionaries
+                        //foreach (var colName in totalColList)
+                        //{
+                        //    if (!string.IsNullOrEmpty(colName) && colName != "lableTotal" && colName != "space")
+                        //    {
+                        //        //dynamicVariable[colName] = 0;
+                        //        dynamicVariableSub[colName] = 0;
+                        //    }
+                        //}
 
-                        ////    Dcount++;
-                        ////    T_Count++;
+                        //string previousLabel = "";
+                        //int i = 0, j = 0, Dcount = 0;
 
-                        ////    previousLabel = dr[groupByCol].ConvertToString();
-                        ////    items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
-                        ////    foreach (var colName in colList)
-                        ////    {
-                        ////        items.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
-                        ////    }
-                        ////    items.Append("</tr>");
-                        ////    if (totalColList.Count() > 0 && totalColList != null)
-                        ////    {
-                        ////        foreach (var colName in totalColList)
-                        ////        {
-                        ////            if (!string.IsNullOrEmpty(colName) && colName != "lableTotal" && colName != "space")
-                        ////                dynamicVariable[colName] += dr[colName].ConvertToDouble();
-                        ////        }
-                        ////    }
-                        ////    //T_Count += dr["PatientName"].ConvertToDouble();
-                        ////    if (totalColList.Count() > 0 && totalColList == null)
-                        ////    {
-                        ////        if (dt.Rows.Count > 0 && dt.Rows.Count == i)
-                        ////        {
-                        ////            items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">").Append(Dcount).Append("</td></tr>");
-                        ////        }
-                        ////    }
-                        ////}
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
+
+                        //    i++; j++;
+
+                        //    string currentLabel = dr[groupByCol].ConvertToString();
+
+                        //    // Group changed? Print subtotal for previous group
+                        //    if (!string.IsNullOrEmpty(previousLabel) && previousLabel != currentLabel)
+                        //    {
+                        //        // Append subtotal row
+                        //        items.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9;'>");
+                        //        foreach (var colName in totalColList)
+                        //        {
+                        //            if (colName == "space")
+                        //                items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'></td>");
+                        //            else if (colName == "lableTotal")
+                        //                items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px; font-weight:bold;'>Sub Total for ")
+                        //                      .Append(previousLabel).Append("</td>");
+                        //            else
+                        //                items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'>")
+                        //                      .Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
+                        //        }
+                        //        items.Append("</tr>");
+
+                        //        // Reset group subtotals
+                        //        foreach (var key in totalColList)
+                        //        {
+                        //            if (!string.IsNullOrEmpty(key) && key != "space" && key != "lableTotal")
+                        //                dynamicVariableSub[key] = 0;
+                        //        }
+
+                        //        Dcount = 0;
+
+                        //        // New group header
+                        //        items.Append("<tr style='font-size:20px;color:black;'>")
+                        //             .Append("<td colspan='13' style='border:1px solid #000;padding:3px;text-align:left;'>")
+                        //             .Append(currentLabel).Append("</td></tr>");
+                        //    }
+
+                        //    // First group
+                        //    if (i == 1)
+                        //    {
+                        //        items.Append("<tr style='font-size:20px;color:black;'>")
+                        //             .Append("<td colspan='13' style='border:1px solid #000;padding:3px;text-align:left;'>")
+                        //             .Append(currentLabel).Append("</td></tr>");
+                        //    }
+
+                        //    // Append row data
+                        //    items.Append("<tr style='text-align: center; border: 1px solid #d4c3c3;'>")
+                        //         .Append("<td style='border: 1px solid #d4c3c3;'>").Append(i).Append("</td>");
+                        //    foreach (var colName in colList)
+                        //    {
+                        //        items.Append("<td style='border: 1px solid #d4c3c3;'>")
+                        //             .Append(dr[colName].ConvertToString()).Append("</td>");
+                        //    }
+                        //    items.Append("</tr>");
+
+                        //    previousLabel = currentLabel;
+                        //    Dcount++;
+
+                        //    // Accumulate both group and total values
+                        //    foreach (var colName in totalColList)
+                        //    {
+                        //        if (!string.IsNullOrEmpty(colName) && colName != "space" && colName != "lableTotal")
+                        //        {
+                        //            double value = dr[colName].ConvertToDouble();
+                        //            //dynamicVariable[colName] += value;
+                        //            dynamicVariableSub[colName] += value;
+                        //        }
+                        //    }
+                        //}
+                        //if (!string.IsNullOrEmpty(previousLabel))
+                        //{
+                        //    items.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9;'>");
+                        //    foreach (var colName in totalColList)
+                        //    {
+                        //        if (colName == "space")
+                        //            items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'></td>");
+                        //        else if (colName == "lableTotal")
+                        //            items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px; font-weight:bold;'>Sub Total for ")
+                        //                  .Append(previousLabel).Append("</td>");
+                        //        else
+                        //            items.Append("<td style='border: 1px solid #d4c3c3; padding: 6px;'>")
+                        //                  .Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
+                        //    }
+                        //    items.Append("</tr>");
+                        //}
+                        //if (totalColList.Count() > 0 && totalColList != null)
+                        //{
+                        //    ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
+                        //    foreach (var colName in totalColList)
+                        //    {
+                        //        if (colName == "space")
+                        //            ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
+                        //        else if (colName == "lableTotal")
+                        //            ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
+                        //        else if (!string.IsNullOrEmpty(colName))
+                        //            ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariableSub[colName].ToString("F2")).Append("</td>");
+                        //        else
+                        //            ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
+                        //    }
+                        //    ItemsTotal.Append("</tr>");
+                        //}
 
                     }
                     break;
@@ -2153,7 +2093,7 @@ namespace HIMS.Services.Report
                 table.Append("</th>");
             }
             table.Append("</tr>");
-            groupBy = new string[2] { "PaymentAddedByName", "PatientName" };
+            //groupBy = new string[2] { "PaymentAddedByName", "PatientName" };
             int RowNo = 1;
             if (groupBy.Length > 0)
             {
@@ -2161,27 +2101,27 @@ namespace HIMS.Services.Report
                 foreach (string group1 in groups1)
                 {
                     var group1Data = dt.Select(groupBy[0] + "='" + group1 + "'");
-                    table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group1).Append("</th></tr>");
+                    table.Append("<tr style='font-size:20px;color:black;'><th style='border:1px solid #000;padding:3px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append(group1).Append("</th></tr>");
                     if (groupBy.Length > 1)
                     {
                         var groups2 = group1Data.AsEnumerable().Select(row => row.Field<string>(groupBy[1])).Distinct().ToList();
                         foreach (string group2 in groups2)
                         {
                             var group2Data = group1Data.Where(x => x[groupBy[1]].ToString().ToLower() == group2.ToLower());
-                            table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group2).Append("</th></tr>");
+                            table.Append("<tr style='font-size:18px;color:black;'><th style='border:1px solid #000;padding:3px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append(group2).Append("</th></tr>");
                             if (groupBy.Length > 2)
                             {
                                 var groups3 = group2Data.AsEnumerable().Select(row => row.Field<string>(groupBy[2])).Distinct().ToList();
                                 foreach (string group3 in groups3)
                                 {
                                     var group3Data = group2Data.Where(x => x[groupBy[2]].ToString().ToLower() == group3.ToLower());
-                                    table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group3).Append("</th></tr>");
+                                    table.Append("<tr style='font-size:16px;color:black;'><th style='border:1px solid #000;padding:3px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append(group3).Append("</th></tr>");
                                     if (groupBy.Length > 3)
                                     {
                                         var groups4 = group3Data.AsEnumerable().Select(row => row.Field<string>(groupBy[3])).Distinct().ToList();
                                         foreach (string group4 in groups4)
                                         {
-                                            table.Append("<tr><th style=\"border: 1px solid #d4c3c3; padding: 6px;\"><th colspan='").Append(headers.Length).Append("'>").Append(group4).Append("</th></tr>");
+                                            table.Append("<tr style='font-size:14px;color:black;'><th style='border:1px solid #000;padding:3px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append(group4).Append("</th></tr>");
                                             CreateRows(group3Data.Where(x => x[groupBy[3]].ToString().ToLower() == group4.ToLower()), table, headers, columnDataNames, ref RowNo);
                                         }
                                     }
@@ -2189,19 +2129,23 @@ namespace HIMS.Services.Report
                                     {
                                         CreateRows(group3Data, table, headers, columnDataNames, ref RowNo);
                                     }
+                                    CreateFooterGroupBy(group3Data, table, footer, group3);
                                 }
                             }
                             else
                             {
                                 CreateRows(group2Data, table, headers, columnDataNames, ref RowNo);
                             }
+                            CreateFooterGroupBy(group2Data, table, footer, group2);
                         }
                     }
                     else
                     {
                         CreateRows(group1Data, table, headers, columnDataNames, ref RowNo);
                     }
+                    CreateFooterGroupBy(group1Data, table, footer, group1);
                 }
+                CreateFooterGroupBy(dt.AsEnumerable(), table, footer, "Total", true);
             }
 
             return table.ToString();
@@ -2210,22 +2154,40 @@ namespace HIMS.Services.Report
         {
             foreach (var row in group2Data)
             {
-                table.Append("<tr>");
+                table.Append("<tr style='text-align: center; border: 1px solid #d4c3c3;'>");
                 if (headers.Contains("Sr.No"))
                 {
-                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                    table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px;'>");
                     table.Append(RowNo);
                     table.Append("</th>");
                     RowNo++;
                 }
                 foreach (var hr in columnDataNames)
                 {
-                    table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                    table.Append("<td style='border: 1px solid #d4c3c3;'>");
                     table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
-                    table.Append("</th>");
+                    table.Append("</td>");
                 }
                 table.Append("</tr>");
             }
+        }
+        public static void CreateFooterGroupBy(IEnumerable<DataRow> groupData, StringBuilder table, string[] footer, string groupName, bool isTotal = false)
+        {
+            table.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
+            int col = 1;
+            foreach (var hr in footer)
+            {
+                string total = "";
+                if (hr.ToLower() == "space")
+                    total = "";
+                else if (hr.ToLower() == "labletotal")
+                    total = isTotal ? "Total" : ("Sub Total for " + groupName);
+                else
+                    total = groupData.Sum(row => row.IsNull(hr) ? 0 : Convert.ToDecimal(row[hr])).ToString();
+                table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px;'>").Append(total).Append("</th>");
+                col++;
+            }
+            table.Append("</tr>");
         }
 
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "")

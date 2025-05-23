@@ -63,7 +63,29 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<SalesReturnDetailsListDto> SalesDetailsList = await _ISalesReturnService.salesreturndetaillist(objGrid);
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Return Details  List"));
         }
-        
+
+        [HttpPost("salesbilllist")]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> BrowseSalesBillList(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseSalesBillListDto> salesbilllist = await _ISalesReturnService.BrowseSalesBillList(objGrid);
+            return Ok(salesbilllist.ToGridResponse(objGrid, "sales bill  List"));
+        }
+
+        [HttpPost("salesbillwithcash")]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesBillReturnCashList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesBillReturnCashListDto> salesbillwithcash = await _ISalesReturnService.SalesBillReturnCashList(objGrid);
+            return Ok(salesbillwithcash.ToGridResponse(objGrid, "salesbillwithcash  List"));
+        }
+        [HttpPost("salesbillwithcredit")]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesBillReturnCreditList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesBillReturnCreditListDto> salesbillwithcredit = await _ISalesReturnService.SalesBillReturnCreditList(objGrid);
+            return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
+        }
         [HttpPost("SalesReturnWithCash")]
         [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)

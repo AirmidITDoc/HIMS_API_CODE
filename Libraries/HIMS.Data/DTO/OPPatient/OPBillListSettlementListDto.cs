@@ -9,7 +9,7 @@ namespace HIMS.Data.DTO.OPPatient
     public  class OPBillListSettlementListDto
     {
         public long BillNo { get; set; }
-        public long OPD_IPD_ID { get; set; }
+        public long OPDIPDID { get; set; }
         public long RegID { get; set; }
         public decimal TotalAmt { get; set; }
         public double ConcessionAmt { get; set; }

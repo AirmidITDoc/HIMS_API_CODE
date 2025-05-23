@@ -31,18 +31,17 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-         // Changes done by Rachana Date : 12/10/2025
+        // Changes done by Rachana Date : 12/10/2025
         public virtual async Task<IPagedList<ItemWiseStockListDto>> StockAdjustmentList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ItemWiseStockListDto>(model, "ps_Rtrv_BatchNoForMrpAdj");
         }
 
-        
+
         public virtual async Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username)
         {
-            
             DatabaseHelper odal = new();
-            string[] rEntity = { "CreatedOn","UpdatedBy","ModifiedOn", "Stk" };
+            string[] rEntity = { "CreatedOn", "UpdatedBy", "ModifiedOn", "Stk" };
 
             var entity = ObjTStockAdjustment.ToDictionary();
             foreach (var rProperty in rEntity)
@@ -56,7 +55,7 @@ namespace HIMS.Services.Inventory
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "BatchAdjId", "AddedDateTime","Stk" };
+            string[] rEntity = { "BatchAdjId", "AddedDateTime", "Stk" };
 
             var Bentity = ObjTBatchAdjustment.ToDictionary();
             foreach (var rProperty in rEntity)
@@ -77,7 +76,7 @@ namespace HIMS.Services.Inventory
             }
             odal.ExecuteNonQuery("ps_Update_CurrentStock_GSTAdjustment", CommandType.StoredProcedure, Bentity);
         }
-        public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username )
+        public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -95,64 +94,13 @@ namespace HIMS.Services.Inventory
             {
                 Uentity.Remove(rProperty);
             }
-            Uentity["OldUnitMrp"] = 0; 
-            Uentity["OldUnitPur"] = 0; 
-            Uentity["OldUnitLanded"] = 0; 
+            
+            Uentity["OldUnitMrp"] = 0; // Ensure objpayment
+            Uentity["OldUnitPur"] = 0; // Ensure objpayment
+            Uentity["OldUnitLanded"] = 0; // Ensure objpayment
             odal.ExecuteNonQuery("m_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, Uentity);
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public virtual async Task MrpAdjustmentUpdate( TMrpAdjustment ObjTMrpAdjustment,TCurrentStock ObjTCurrentStock,int UserId,string Username, decimal PerUnitMrp, decimal PerUnitPurrate)
-        //{
-        //    DatabaseHelper odal = new();
-
-        //    // Insert into T_MrpAdjustment
-        //    var Mentity = ObjTMrpAdjustment.ToDictionary();
-        //    Mentity.Remove("MrpAdjId");
-        //    odal.ExecuteNonQuery("PS_insert_T_MrpAdjustment_1", CommandType.StoredProcedure, Mentity);
-
-        //    // Prepare parameters for PS_Update_Item_MRPAdjustment_New
-        //    var parameters = new Dictionary<string, object>
-        //    {
-        //        ["StoreId"] = ObjTCurrentStock.StoreId,
-        //        ["Stockid"] = ObjTCurrentStock.StockId,
-        //        ["ItemId"] = ObjTCurrentStock.ItemId,
-        //        ["BatchNo"] = ObjTCurrentStock.BatchNo,
-        //        ["PerUnitMrp"] = PerUnitMrp,
-        //        ["PerUnitPurrate"] = PerUnitPurrate,
-        //        ["PerUnitLanedrate"] = 0m,
-        //        ["OldUnitMrp"] = 0m,
-        //        ["OldUnitPur"] = 0m,
-        //        ["OldUnitLanded"] = 0m
-        //    };
-
-        //    odal.ExecuteNonQuery("PS_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, parameters);
-        //}
-
-
-
     }
 }
-
-
-
-
-
-
-
-
 
 

@@ -89,6 +89,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public long? UnitId { get; set; }
+        public long? hospitalId { get; set; }
 
     }
 }
