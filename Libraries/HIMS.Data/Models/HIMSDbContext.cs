@@ -365,6 +365,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCompBlDt> TCompBlDts { get; set; } = null!;
         public virtual DbSet<TCompanyDetail> TCompanyDetails { get; set; } = null!;
         public virtual DbSet<TCompanyHeader> TCompanyHeaders { get; set; } = null!;
+        public virtual DbSet<TConsentInformation> TConsentInformations { get; set; } = null!;
         public virtual DbSet<TCurrentStk> TCurrentStks { get; set; } = null!;
         public virtual DbSet<TCurrentStkWithDaily> TCurrentStkWithDailies { get; set; } = null!;
         public virtual DbSet<TCurrentStock> TCurrentStocks { get; set; } = null!;
@@ -10310,6 +10311,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
 
                 entity.Property(e => e.WrfAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TConsentInformation>(entity =>
+            {
+                entity.HasKey(e => e.ConsentId);
+
+                entity.ToTable("T_ConsentInformation");
+
+                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ConsentName).HasMaxLength(500);
+
+                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
             });
 
             modelBuilder.Entity<TCurrentStk>(entity =>
