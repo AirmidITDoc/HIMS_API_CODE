@@ -1,4 +1,4 @@
-﻿stock,issueusing Microsoft.AspNetCore.Mvc;
+﻿//stock,issueusing Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("MrpAdjustmentUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();

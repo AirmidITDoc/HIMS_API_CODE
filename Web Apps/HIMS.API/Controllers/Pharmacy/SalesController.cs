@@ -122,6 +122,13 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PrescriptionDet  List"));
         }
 
+        [HttpPost("PharSalesSettlemet")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PharSalesBillSettlemet(GridRequestModel objGrid)
+        {
+            IPagedList<Pharbillsettlementlist> PrescriptionDetList = await _ISalesService.PharIPBillSettlement(objGrid);
+            return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PrescriptionDet  List"));
+        }
 
         // done by Ashu Date : 20-May-2025
 

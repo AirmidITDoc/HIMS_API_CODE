@@ -1489,7 +1489,21 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+                #region :: WorkOrder ::
+                case "WorkOrder":
+                    {
+                        string[] colList = { };
 
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PurWorkorder.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("rptWorkOrderPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "WorkOrder", "WorkOrder", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
 
                 default:
 
@@ -8087,6 +8101,70 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "WorkOrder":
+                    {
+                        int i=0;
+                        double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\"><td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;;\">").Append(dr["Rate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["DiscPer"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["VATPer"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+
+                            T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
+                            T_TotalVatAmount += dr["VATAmount"].ConvertToDouble();
+                            T_TotalDiscAmount += dr["DiscAmount"].ConvertToDouble();
+                            T_TotalNETAmount += dr["NetAmount"].ConvertToDouble();
+                            //T_TotalBalancepay += dr["BalanceAmount"].ConvertToDouble();
+                            //T_TotalCGST += dr["CGSTAmt"].ConvertToDouble();
+                            //T_TotalSGST += dr["SGSTAmt"].ConvertToDouble();
+                            //T_TotalIGST += dr["IGSTAmt"].ConvertToDouble();
+
+
+                        }
+                        //| currency:'INR':'symbol-narrow':'0.2'
+
+                        T_TotalNETAmount = Math.Round(T_TotalNETAmount);
+                        T_TotalVatAmount = Math.Round(T_TotalVatAmount);
+                        T_TotalDiscAmount = Math.Round(T_TotalDiscAmount);
+                        html = html.Replace("{{Items}}", items.ToString());
+                        //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
+                        html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
+                        html = html.Replace("{{TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace());
+                        html = html.Replace("{{TotalNETAmount}}", T_TotalNETAmount.To2DecimalPlace());
+                        html = html.Replace("{{T_TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace());
+
+
+                        html = html.Replace("{{AddedbyName}}", dt.GetColValue("AddedbyName"));
+                        html = html.Replace("{{SupplierName}}", dt.GetColValue("SupplierName").ConvertToString());
+                        html = html.Replace("{{WOId}}", dt.GetColValue("WOId").ConvertToString());
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                        html = html.Replace("{{Remarks}}", dt.GetColValue("WORemark"));
+
+                        string finalamt = conversion(T_TotalNETAmount.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
+
+                    }
+                    break;
 
 
 

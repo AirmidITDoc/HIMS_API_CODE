@@ -320,7 +320,11 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
             }
-        } 
-        
+        }
+
+        public virtual async Task<IPagedList<Pharbillsettlementlist>> PharIPBillSettlement(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<Pharbillsettlementlist>(model, "m_Rtrv_Phar_Bill_List_Settlement");
+        }
     }
 }
