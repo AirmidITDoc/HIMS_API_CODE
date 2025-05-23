@@ -29,9 +29,33 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
         {
-            return await this._context.Registrations.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str) || x.RegNo.ToLower().Contains(str) || x.MobileNo.ToLower().Contains(str)).Take(25).Select(x => new RegistrationAutoCompleteDto() { FirstName = x.FirstName, Id = x.RegId, LastName = x.LastName, Mobile = x.MobileNo, RegNo = x.RegNo }).OrderBy(x => x.FirstName).ToListAsync();
+
+            return await this._context.Registrations
+                .Where(x =>
+                    (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+                    x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
+                    x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
+                )
+                .Take(25)
+                .Select(x => new RegistrationAutoCompleteDto
+                {
+                    FirstName = x.FirstName,
+                    Id = x.RegId,
+                    LastName = x.LastName,
+                    Mobile = x.MobileNo,
+                    RegNo = x.RegNo,
+                    MobileNo = x.MobileNo,
+                    AgeYear = x.AgeYear,
+                    AgeMonth = x.AgeMonth,
+                    AgeDay = x.AgeDay
+
+                })
+                .OrderBy(x => x.FirstName)
+                .ToListAsync();
+
         }
-        
+
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
