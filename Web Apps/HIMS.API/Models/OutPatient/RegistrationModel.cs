@@ -5,6 +5,7 @@ namespace HIMS.API.Models.OutPatient
     public class RegistrationModel
     {
         public long RegId { get; set; }
+        public string? RegNo { get; set; }
         public DateTime? RegDate { get; set; }
         public DateTime? RegTime { get; set; }
         public long? PrefixId { get; set; }

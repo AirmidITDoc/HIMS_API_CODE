@@ -72,6 +72,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IOpeningBalanceService, OpeningBalanceService>();
             services.AddScoped<IWorkOrderService, WorkOrderService>();
+            services.AddScoped<INursingConsentService, NursingConsentService>();
+
 
 
 

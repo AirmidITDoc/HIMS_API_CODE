@@ -269,7 +269,7 @@ namespace HIMS.API.Controllers.Report
                 case "Issutodeptissuewise":
                 case "Issutodeptsummarywise":
                 case "OpeningBalance":
-
+                case "WorkOrder":
 
 
 
