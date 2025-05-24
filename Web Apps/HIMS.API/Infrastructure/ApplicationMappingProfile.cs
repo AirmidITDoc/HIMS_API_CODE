@@ -263,9 +263,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<IssueToDepartmentDetailModel, TIssueToDepartmentDetail>();
             CreateMap<MaterialConsumptionHeaderModel, TMaterialConsumptionHeader>();
             CreateMap<MaterialConsumptionDetailModel, TMaterialConsumptionDetail>();
+            CreateMap<TIssueToDepartmentHeader, UpdateIndentStatusAganistModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIssueToDepartmentDetail, IssueToDepartmentDetailsUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCurrentStock, TCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIndentHeader, IndentHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-          
+
+
+
+
+
             CreateMap<TCurrentStock, IssueToDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TIssueToDepartmentHeader, IssueToDIndentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

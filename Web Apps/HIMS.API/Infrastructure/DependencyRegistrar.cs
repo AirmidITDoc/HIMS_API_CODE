@@ -62,6 +62,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<IIssueToDepService, IssueToDepService>();
+            services.AddScoped<IIssueToDeptIndentService, IssueToDeptIndentService>();
+
+
             services.AddScoped<IPrescriptionOPTemplateService, PrescriptionOPTemplateService>();
             services.AddScoped<IGRNReturnService, GRNReturnService>();
             services.AddScoped<IStoreMasterService, StoreMasterService>();

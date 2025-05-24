@@ -1,24 +1,25 @@
-﻿using HIMS.Services.Utilities;
+﻿using Aspose.Cells;
+using Aspose.Cells.Drawing;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DataProviders;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Hosting;
-using System.Data;
-using System.Text;
-using WkHtmlToPdfDotNet;
 using HIMS.Data;
-using Microsoft.Data.SqlClient;
+using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.Server;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Primitives;
+using Microsoft.VisualBasic;
+using System.Data;
 using System.Globalization;
 using System.IO;
-using Microsoft.VisualBasic;
 using System.Linq;
-using Microsoft.Extensions.Primitives;
-using Aspose.Cells;
 using System.Reflection.PortableExecutable;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Text;
+using WkHtmlToPdfDotNet;
 
 
 
@@ -1486,7 +1487,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_Opening_Balance", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance"+vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1667,7 +1668,9 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        HeaderItems.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList));
+                        items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
+                        ItemsTotal.Append(CreateSummary(dt, totalColList, model.groupByLabel.Split(',')));
                         //HeaderItems.Append("<tr>");
                         //foreach (var hr in headerList)
                         //{
@@ -2082,7 +2085,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
+        public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
         {
             StringBuilder table = new();
             table.Append("<tr>");
@@ -2093,6 +2096,11 @@ namespace HIMS.Services.Report
                 table.Append("</th>");
             }
             table.Append("</tr>");
+            return table.ToString();
+        }
+        public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
+        {
+            StringBuilder table = new();
             //groupBy = new string[2] { "PaymentAddedByName", "PatientName" };
             int RowNo = 1;
             if (groupBy.Length > 0)
@@ -2147,7 +2155,6 @@ namespace HIMS.Services.Report
                 }
                 CreateFooterGroupBy(dt.AsEnumerable(), table, footer, "Total", true);
             }
-
             return table.ToString();
         }
         public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
@@ -2188,6 +2195,33 @@ namespace HIMS.Services.Report
                 col++;
             }
             table.Append("</tr>");
+        }
+
+        public static string CreateSummary(DataTable dt, string[] totalColList, string[] summaries)
+        {
+            StringBuilder table = new();
+            foreach (var summary in summaries)
+            {
+                var groups = dt.AsEnumerable().Select(row => row.Field<string>(summary)).Distinct().ToList();
+                foreach (var group in groups)
+                {
+                    table.Append("<tr style='border:1px solid black; color:black; background-color:#e6ffe6; font-weight:bold;'>");
+                    foreach (var colName in totalColList)
+                    {
+                        if (colName == "space")
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                        else if (colName == "lableTotal")
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>Total " + group + "</td>");
+                        else
+                        {
+                            string total = dt.Select(summaries[0] + "='" + group + "'").Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName])).ToString();
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>" + total + "</td>");
+                        }
+                    }
+                    table.Append("</tr>");
+                }
+            }
+            return table.ToString();
         }
 
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "")
@@ -8065,7 +8099,7 @@ namespace HIMS.Services.Report
 
                 case "WorkOrder":
                     {
-                        int i=0;
+                        int i = 0;
                         double T_TotalAmount = 0, T_TotalVatAmount = 0, T_TotalDiscAmount = 0, T_TotalNETAmount = 0, T_TotalBalancepay = 0, T_TotalCGST = 0, T_TotalSGST = 0, T_TotalIGST = 0;
 
                         foreach (DataRow dr in dt.Rows)
