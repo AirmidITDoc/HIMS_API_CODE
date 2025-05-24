@@ -1456,7 +1456,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept", Orientation.Portrait);
                         break;
                     }
                 #endregion
