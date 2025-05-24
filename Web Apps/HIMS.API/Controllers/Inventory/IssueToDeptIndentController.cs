@@ -45,14 +45,14 @@ namespace HIMS.API.Controllers.Inventory
             TIssueToDepartmentHeader model = obj.UpdateIndent.MapTo<TIssueToDepartmentHeader>();
             List<TCurrentStock> model1 = obj.TCurStockModel.MapTo<List<TCurrentStock>>();
             TIndentHeader model2 = obj.IndentHeader.MapTo<TIndentHeader>();
-
+            List<TIndentDetail> model3 = obj.TIndentDetails.MapTo<List<TIndentDetail>>();
 
             if (obj.UpdateIndent.IssueId == 0)
             {
                 model.IssueDate = Convert.ToDateTime(obj.UpdateIndent.IssueDate);
                 model.IssueTime = Convert.ToDateTime(obj.UpdateIndent.IssueTime);
                 model.Addedby = CurrentUserId;
-                await _IIssueToDeptIndentService.UpdateSP(model, model1, model2, CurrentUserId, CurrentUserName);
+                await _IIssueToDeptIndentService.UpdateSP(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

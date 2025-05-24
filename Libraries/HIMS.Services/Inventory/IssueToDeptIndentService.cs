@@ -51,7 +51,7 @@ namespace HIMS.Services.Inventory
 
         }
         //shilpa created 23/05/2025
-        public virtual async Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader,  List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader ,int UserId, string Username)
+        public virtual async Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader,  List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail>ObjTIndentDetail ,int UserId, string Username)
         {
             // //Add header table records
             DatabaseHelper odal = new();
@@ -89,6 +89,19 @@ namespace HIMS.Services.Inventory
                 Tentity.Remove(rProperty);
                 }
                odal.ExecuteNonQuery("Update_IndentHeader_Status_AganistIssue", CommandType.StoredProcedure, Tentity);
+
+            foreach (var item in ObjTIndentDetail)
+            {
+                string[] SEntity = {"ItemId","Qty","IssQty", "Indent" };
+                var STentity = item.ToDictionary();
+                foreach (var rProperty in SEntity)
+                {
+                    STentity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQuery("PS_Update_Indent_Status_AganistIss", CommandType.StoredProcedure, STentity);
+            }
+
 
         }
     }

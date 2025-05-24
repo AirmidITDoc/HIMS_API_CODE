@@ -20,6 +20,7 @@ namespace HIMS.API.Models.Inventory
         public long IssueId { get; set; }
         public List<IssueToDepartmentDetailsUpdateModel> TIssueToDepartmentDetails { get; set; }
 
+
     }
     public class UpdateIndentStatusAganistModelValidator : AbstractValidator<UpdateIndentStatusAganistModel>
     {
@@ -66,12 +67,23 @@ namespace HIMS.API.Models.Inventory
         public bool? IsClosed { get; set; }
        
     }
+    public class IndentDetailsModel
+    {
+        public long IndentId { get; set; }
+        public long IndentDetailsId { get; set; }
+        public bool? IsClosed { get; set; }
+        public long? IndQty { get; set; }
+
+
+    }
 
     public class UpdateIndentStatusModel
     {
         public UpdateIndentStatusAganistModel UpdateIndent { get; set; }
         public List<TCurrentStockModel> TCurStockModel { get; set; }
         public IndentHeaderModel IndentHeader { get; set; }
+        public List<IndentDetailsModel> TIndentDetails { get; set; }
+
 
 
 
