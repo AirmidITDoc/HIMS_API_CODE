@@ -7,6 +7,8 @@ namespace HIMS.Data.Models
     {
         public long IssueDepId { get; set; }
         public long IssueId { get; set; }
+        public string? ItemName { get; set; }
+
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }

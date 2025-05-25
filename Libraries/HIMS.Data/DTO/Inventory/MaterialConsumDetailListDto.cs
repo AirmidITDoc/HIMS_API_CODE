@@ -25,6 +25,6 @@ namespace HIMS.Data.DTO.Inventory
         public string EndDate { get; set; }
 
         public String Remark { get; set; }
-        //public long AddedBy { get; set; }
+        public String AddedBy { get; set; }
     }
 }
