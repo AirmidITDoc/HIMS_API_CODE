@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DocumentFormat.OpenXml.InkML;
 using HIMS.API.Controllers.Masters.Personal_Information;
+using HIMS.API.Controllers.Pharmacy;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
@@ -195,9 +196,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MTalukaMaster, TalukaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            //CreateMap<Admission, DischargeADMISSIONModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<Discharge, IPDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            //CreateMap<Bedmaster, BedReleaseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+           
             CreateMap<ConfigSetting, ConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
@@ -251,6 +250,12 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TSalesDraftHeader, TSalesDraftHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDraftDet, TSalesDraftDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhadvanceHeader, PharmacyAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhadvanceDetail, PharmacyAdvanceDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, PaymentPharmacyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+            
 
 
             //Inventory 

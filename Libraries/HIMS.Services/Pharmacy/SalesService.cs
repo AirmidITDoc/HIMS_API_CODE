@@ -95,42 +95,7 @@ namespace HIMS.Services.Users
 
 
 
-        public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
-        }
-        public virtual async Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
-        }
-
-        public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
-        }
-
-        public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
-        }
-        public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "m_Rtrv_SalesDraftBillList");
-        }
-        public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<BalAvaStoreListDto>(model, "m_getBalAvaListStore");
-        }
-
-        public virtual async Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionListforSalesDto>(model, "m_Retrieve_PrescriptionListforSales");
-        }
-
-        public virtual async Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetListDto>(model, "Ret_PrescriptionDet");
-        }
+       
 
 
         // done by Ashu Date : 20-May-2025
@@ -321,10 +286,87 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
             }
         }
+        //shilpa//26/05/2025
+        public virtual async Task InsertAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        {
+
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "StoreId" };
+            var entity = ObjTPhadvanceHeader.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VAdvanceId = odal.ExecuteNonQuery("PS_insert_T_PHAdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
+            ObjTPhadvanceHeader.AdvanceId = Convert.ToInt32(VAdvanceId);
+
+            string[] DEntity = { "AdvanceNo" };
+            var Dentity = ObjTPhadvanceDetail.ToDictionary();
+            foreach (var rProperty in DEntity)
+            {
+                Dentity.Remove(rProperty);
+            }
+            string VAdvanceDetailID = odal.ExecuteNonQuery("PS_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
+            ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
+
+            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
+            var Entity = ObjPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in PEntity)
+            {
+                Entity.Remove(rProperty);
+            }
+           odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
+
+        }
+        public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
+        }
+        public virtual async Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
+        }
+
+        public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
+        }
+
+        public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
+        }
+        public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "m_Rtrv_SalesDraftBillList");
+        }
+        public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BalAvaStoreListDto>(model, "m_getBalAvaListStore");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionListforSalesDto>(model, "m_Retrieve_PrescriptionListforSales");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetListDto>(model, "Ret_PrescriptionDet");
+        }
 
         public virtual async Task<IPagedList<Pharbillsettlementlist>> PharIPBillSettlement(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<Pharbillsettlementlist>(model, "m_Rtrv_Phar_Bill_List_Settlement");
+        }
+        public virtual async Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "Rtrv_BrowseIPPharAdvanceReceipt");
+        }
+        public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "m_Rtrv_Phar_AdvanceList");
         }
     }
 }
