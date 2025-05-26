@@ -12,6 +12,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.Services.Masters;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Utility;
 
 namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
@@ -22,15 +23,16 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
     {
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<LvwDoctorMasterList> _repository1;
+        private readonly IFileUtility _FileUtility;
 
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1)
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
-
+            _FileUtility = fileUtility;
         }
         [HttpPost("DoctorList")]
-    //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
@@ -47,21 +49,21 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return Ok(DoctorMasterList.ToGridResponse(objGrid, "DoctorMaster List "));
         }
 
-     //   [HttpPost("DoctorShareList")]
-     ////   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-     //   public async Task<IActionResult> DList(GridRequestModel objGrid)
-     //   {
-     //       IPagedList<DoctorShareListDto> DoctorShareList = await _IDoctorMasterService.GetList(objGrid);
-     //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareList "));
-     //   }
+        //   [HttpPost("DoctorShareList")]
+        ////   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //   public async Task<IActionResult> DList(GridRequestModel objGrid)
+        //   {
+        //       IPagedList<DoctorShareListDto> DoctorShareList = await _IDoctorMasterService.GetList(objGrid);
+        //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareList "));
+        //   }
 
-     //   [HttpPost("DoctorShareLbyNameList")]
-     // //  [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-     //   public async Task<IActionResult> GetList(GridRequestModel objGrid)
-     //   {
-     //       IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _IDoctorMasterService.GetList1(objGrid);
-     //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareLbyName List "));
-     //   }
+        //   [HttpPost("DoctorShareLbyNameList")]
+        // //  [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //   public async Task<IActionResult> GetList(GridRequestModel objGrid)
+        //   {
+        //       IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _IDoctorMasterService.GetList1(objGrid);
+        //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareLbyName List "));
+        //   }
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
@@ -94,9 +96,11 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpPost("InsertEDMX")]
-     //   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
+            if (!string.IsNullOrWhiteSpace(obj.Signature))
+                obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
@@ -110,18 +114,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
-        }
-
-        [HttpPut("Edit/{id:int}")]
-    //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DoctorModel obj)
-        {
-            DoctorMaster model = obj.MapTo<DoctorMaster>();
-            if (obj.DoctorId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
             {
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
                 if (model.RegDate.HasValue)
@@ -130,7 +122,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                     model.MahRegDate = Convert.ToDateTime(obj.MahRegDate.Value.ToLocalTime());
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
         [HttpDelete]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
@@ -165,6 +157,12 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         {
             var List = await _repository1.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { x.DoctorId, x.FirstName, x.MiddleName, x.LastName }));
+        }
+        [HttpGet("get-file")]
+        public ApiResponse DownloadFiles(string FileName)
+        {
+            var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
         }
     }
 }

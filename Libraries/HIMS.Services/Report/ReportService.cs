@@ -1670,6 +1670,7 @@ namespace HIMS.Services.Report
                     {
                         HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList));
                         items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',')));
+                        // if ((model?.summaryLabel ?? "").Split(',').Length > 0) // if need to display summary 
                         ItemsTotal.Append(CreateSummary(dt, totalColList, model.groupByLabel.Split(',')));
                         //HeaderItems.Append("<tr>");
                         //foreach (var hr in headerList)
