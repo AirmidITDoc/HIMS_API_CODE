@@ -15,6 +15,8 @@ namespace HIMS.Services.Nursing
         Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
 
         Task UpdateAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
+        Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel objGrid);
+
 
 
 

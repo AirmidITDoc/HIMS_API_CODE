@@ -71,5 +71,10 @@ namespace HIMS.Services.Nursing
             
 
         }
+
+        public virtual async Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ConsentpatientInfoListDto>(model, "m_rtrv_ConsentpatientInformation_List");
+        }
     }
 }
