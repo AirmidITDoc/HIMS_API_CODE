@@ -91,5 +91,13 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Update successfully.");
         }
+
+        [HttpPost("ConsentpatientInfoList")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> ConsentpatientInfoList(GridRequestModel objGrid)
+        {
+            IPagedList<ConsentpatientInfoListDto> ConsentpatientInfoList = await _NursingConsentService.ConsentpatientInfoList(objGrid);
+            return Ok(ConsentpatientInfoList.ToGridResponse(objGrid, "ConsentpatientInfo List"));
+        }
     }
 }

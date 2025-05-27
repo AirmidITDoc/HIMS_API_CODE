@@ -24,5 +24,7 @@ namespace HIMS.Data.DTO.Inventory
         public double BalQty { get; set; }
         public long MovementId { get; set; }
         public string SupplierName { get; set; }
+        public double ReturnQty { get; set; }
+
     }
 }
