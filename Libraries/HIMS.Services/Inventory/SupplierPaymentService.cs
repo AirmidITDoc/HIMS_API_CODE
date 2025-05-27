@@ -74,5 +74,5 @@ namespace HIMS.Services.Inventory
         }
     }
   
-    }
+}
 

@@ -10,7 +10,7 @@ namespace HIMS.Services.Inventory
     public partial interface IIssueToDeptIndentService
     {
         Task InsertAsync(TIssueToDepartmentHeader objIssueToDeptIndent, int UserId, string Username);
-        //Task UpdateAsync(TIssueToDepartmentHeader objIssueToDeptIndent, int UserId, string Username);
+        Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username);
     }
 
 }

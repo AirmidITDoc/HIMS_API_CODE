@@ -59,5 +59,9 @@ namespace HIMS.Data.DTO.OPPatient
         public string LastName { get; set; }
         public string RegNo { get; set; }
         public string Mobile { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public string? MobileNo { get; set; }
     }
 }

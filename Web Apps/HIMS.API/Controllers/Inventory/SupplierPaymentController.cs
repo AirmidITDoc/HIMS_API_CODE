@@ -9,6 +9,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +37,19 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("ItemListBYSupplierName")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<ItemListBysupplierNameDto> List1 = await _SupplierPaymentStatusService.GetItemListbysuppliernameAsync(objGrid);
             return Ok(List1.ToGridResponse(objGrid, " Item List By supplier Name"));
+        }
+
+        [HttpPost("GetSupplierPaymentStatusList")]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
+        {
+            IPagedList<SupplierPaymentStatusListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentStatusList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "GetSupplierPaymentStatusList"));
         }
 
 
@@ -56,7 +65,6 @@ namespace HIMS.API.Controllers.Inventory
                 model.SupPayDate = Convert.ToDateTime(obj.GrnsupPayment.SupPayDate);
                 model.SupPayTime = Convert.ToDateTime(obj.GrnsupPayment.SupPayTime);
                 model.IsAddedBy = CurrentUserId;
-                //   model.UpdatedBy = 0;
                 await _SupplierPaymentStatusService.InsertAsyncSP(model, model1, Model2, CurrentUserId, CurrentUserName);
             }
             else

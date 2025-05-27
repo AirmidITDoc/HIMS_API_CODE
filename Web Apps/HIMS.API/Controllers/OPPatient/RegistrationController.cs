@@ -48,13 +48,6 @@ namespace HIMS.API.Controllers.OPPatient
         [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
-            //if (id == 0)
-            //{
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            //}
-            //var data = await _repository.GetById(id);
-            //return data.ToSingleResponse<MSupplierMaster, SupplierModel>("Supplier Master");
-
             var data = await _repository.GetById(x => x.RegId == id);
             return data.ToSingleResponse<Registration, RegistrationModel>("Registration");
         }
@@ -97,7 +90,16 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IRegistrationService.SearchRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new { 
+                Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, 
+                Value = x.Id ,
+                RegNo = x.RegNo,
+                MobileNo = x.MobileNo,
+                AgeYear = x.AgeYear ,
+                AgeMonth = x.AgeMonth ,
+                AgeDay = x.AgeDay ,
+                PatientName = x.FirstName + " " + x.LastName
+            }));
         }
 
     }

@@ -122,6 +122,29 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PrescriptionDet  List"));
         }
 
+        [HttpPost("PharSalesSettlemet")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PharSalesBillSettlemet(GridRequestModel objGrid)
+        {
+            IPagedList<Pharbillsettlementlist> PrescriptionDetList = await _ISalesService.PharIPBillSettlement(objGrid);
+            return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PrescriptionDet  List"));
+        }
+
+        [HttpPost("BrowseIPPharAdvanceReceiptList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BrowseIPPharAdvanceReceiptList(GridRequestModel objGrid)
+        {
+            IPagedList<BrowseIPPharAdvanceReceiptListDto> PrescriptionDetList = await _ISalesService.BrowseIPPharAdvanceReceiptList(objGrid);
+            return Ok(PrescriptionDetList.ToGridResponse(objGrid, "BrowseIPPharAdvanceReceiptList"));
+        }
+
+        [HttpPost("PharAdvanceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PharAdvanceList(GridRequestModel objGrid)
+        {
+            IPagedList<PharAdvanceListDto> PrescriptionDetList = await _ISalesService.PharAdvanceList(objGrid);
+            return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PharAdvanceList"));
+        }
 
         // done by Ashu Date : 20-May-2025
 
@@ -178,7 +201,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<ApiResponse> InsertSPD(SalesDraftHeadersModel obj)
         {
             TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
-         List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
+            List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
             if (obj.SalesDraft.DsalesId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
@@ -189,6 +212,26 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SalesDraftBill added successfully.");
+        }
+
+        [HttpPost("PharmacyAdvanceInsert")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PharAdvanceModel obj)
+        {
+            TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
+            TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
+            PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+
+            
+            if (obj.PharmacyAdvance.AdvanceId == 0)
+            {
+                model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);
+                model.AddedBy = CurrentUserId;
+                await _ISalesService.InsertAsyncS(model, model1, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmacyAdvance added successfully.");
         }
 
     }

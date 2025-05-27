@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Pharmacy
        
 
         [HttpPut("WorkOrderUpdate")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.UpdateWorkOrders.MapTo<TWorkOrderHeader>();

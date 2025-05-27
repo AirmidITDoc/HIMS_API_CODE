@@ -53,13 +53,6 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        [HttpPost("GetSupplierPaymentStatusList")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
-        {
-            IPagedList<SupplierPaymentStatusListDto> List1 = await _gRNReturnService.GetSupplierPaymentStatusList(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
-        }
 
         [HttpPost("Insert")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]

@@ -10,7 +10,7 @@
 <body>
     <div class="main-content-wrapper" #WorkorderTemplate>
         <div class="invoice-box"
-             style="max-width: 1000px; margin: 0 auto; font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+             style="max-width: 1000px; margin: 0 auto; font-size: 13px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif; color: #000;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 <tr class="top-header-row">
                     {{NewHeader}}
@@ -19,12 +19,12 @@
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 16px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                <td style="border-bottom: 1px solid #000; padding: 6px; ">
                                     <b>
                                         MATERIAL CONSUMPTION REPORT
                                     </b>
                                 </td>
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                <td style="border-bottom: 1px solid #000; padding: 6px; text-align: right;">
                                     <b>
                                         Print
                                         Date : {{CurrentDate}}
@@ -73,39 +73,39 @@
                         <table style="width: 100%; border-collapse: collapse;">
 
                             <tr>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">Sr.No</td>
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     Item Name
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     Qty
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> MRP/unit</td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">TotalMRP </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">LanRate/Unit</td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Total LAmount</td>
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;"> MRP/unit</td>
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">TotalMRP </td>
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">LanRate/Unit</td>
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">Total LAmount</td>
                             </tr>
                             <!--cornflowerblue-->
                             {{Items}}
                             <tr style="border: 1px solid black;">
 
-                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                 </td>
 
-                                <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     Total
                                 </td>
 
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     {{T_TotalMrpAmount}}
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                 </td>
-                                <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     {{T_TotalLandAmount}}
                                 </td>
 

@@ -30,7 +30,7 @@ namespace HIMS.Data.DTO.Inventory
         public long? BarCodeSeqNo { get; set; }
         public long? IstkId { get; set; }
         public float? GrnRetQty { get; set; }
-        public string? LedgerDate { get; set; }
+        public DateTime? LedgerDate { get; set; }
         public float? ClosingBalance { get; set; }
 
 
