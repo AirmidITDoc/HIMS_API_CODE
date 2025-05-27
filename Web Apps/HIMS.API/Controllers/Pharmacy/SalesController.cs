@@ -146,6 +146,22 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(PrescriptionDetList.ToGridResponse(objGrid, "PharAdvanceList"));
         }
 
+        [HttpPost("PhAdvRefundReceiptList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PhAdvRefundReceiptList(GridRequestModel objGrid)
+        {
+            IPagedList<PhAdvRefundReceiptListDto> PhAdvRefundReceiptList = await _ISalesService.PhAdvRefundReceiptList(objGrid);
+            return Ok(PhAdvRefundReceiptList.ToGridResponse(objGrid, "PhAdvRefundReceiptList"));
+        }
+        [HttpPost("PhARefundOfAdvanceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PhARefundOfAdvanceList(GridRequestModel objGrid)
+        {
+            IPagedList<PhARefundOfAdvanceListDto> PhARefundOfAdvanceList = await _ISalesService.PhARefundOfAdvanceList(objGrid);
+            return Ok(PhARefundOfAdvanceList.ToGridResponse(objGrid, "PhARefundOfAdvanceList"));
+        }
+
+
         // done by Ashu Date : 20-May-2025
 
         [HttpPost("SalesSaveWithPayment")]
@@ -214,8 +230,10 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SalesDraftBill added successfully.");
         }
 
+        //shilpa 26/05/2025//
+
         [HttpPost("PharmacyAdvanceInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PharAdvanceModel obj)
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
@@ -232,6 +250,44 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmacyAdvance added successfully.");
+        }
+        [HttpPut("PharmacyAdvanceUpdate")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(PharmacyHeaderUpdate obj)
+        {
+            TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
+            TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
+            PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+
+
+            if (obj.PharmacyHeader.AdvanceId != 0)
+            {
+                model.AddedBy = CurrentUserId;
+                await _ISalesService.UpdateAsyncS(model, model1, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmacyAdvance Update  successfully.");
+        }
+        //shilpa 27/05/2025//
+
+        [HttpPost("PharmacyRefundInsert")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(PharRefundModel obj)
+        {
+            TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
+            TPhadvanceHeader model1 = obj.PhAdvanceHeader.MapTo<TPhadvanceHeader>();
+            List<AdvRefundDetail> model3 = obj.PHAdvRefundDetail.MapTo<List<AdvRefundDetail>>();
+
+
+            if (obj.PharmacyRefund.AdvanceId == 0)
+            {
+                model.AddBy = CurrentUserId;
+                await _ISalesService.InsertAsyncR(model, model1, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmacyRefund added   successfully.");
         }
 
     }

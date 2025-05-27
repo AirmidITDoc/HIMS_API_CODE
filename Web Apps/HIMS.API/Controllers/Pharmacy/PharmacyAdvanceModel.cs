@@ -89,6 +89,15 @@ namespace HIMS.API.Controllers.Pharmacy
        
 
     }
+    public class PharmacyHeaderUpdateModel
+    {
+        public double? AdvanceAmount { get; set; }
+        public double? BalanceAmount { get; set; }
+        public long AdvanceId { get; set; }
+
+        
+    }
+
 
 }
 public class PharAdvanceModel
@@ -98,4 +107,12 @@ public class PharAdvanceModel
     public PaymentPharmacyModel PaymentPharmacy { get; set; }
 
 }
+public class PharmacyHeaderUpdate
+{
+    public PharmacyHeaderUpdateModel PharmacyHeader { get; set; }
+    public PharmacyAdvanceDetailsModel PharmacyAdvanceDetails { get; set; }
+    public PaymentPharmacyModel PaymentPharmacy { get; set; }
+
+}
+
 

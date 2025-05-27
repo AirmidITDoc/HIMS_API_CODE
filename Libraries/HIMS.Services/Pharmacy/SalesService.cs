@@ -300,6 +300,8 @@ namespace HIMS.Services.Users
             }
             string VAdvanceId = odal.ExecuteNonQuery("PS_insert_T_PHAdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
             ObjTPhadvanceHeader.AdvanceId = Convert.ToInt32(VAdvanceId);
+            ObjTPhadvanceDetail.AdvanceId = Convert.ToInt32(VAdvanceId);
+
 
             string[] DEntity = { "AdvanceNo" };
             var Dentity = ObjTPhadvanceDetail.ToDictionary();
@@ -318,6 +320,72 @@ namespace HIMS.Services.Users
             }
            odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
 
+        }
+
+
+        public virtual async Task UpdateAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        {
+
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] Entity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId" };
+            var Uentity = ObjTPhadvanceHeader.ToDictionary();
+            foreach (var rProperty in Entity)
+            {
+                Uentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_Update_T_PHAdvanceHeader", CommandType.StoredProcedure, Uentity);
+
+            string[] DEntity = { "AdvanceNo" };
+            var Dentity = ObjTPhadvanceDetail.ToDictionary();
+            foreach (var rProperty in DEntity)
+            {
+                Dentity.Remove(rProperty);
+            }
+            string VAdvanceDetailID = odal.ExecuteNonQuery("m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
+            ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
+
+            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
+            var PPEntity = ObjPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in PEntity)
+            {
+                PPEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, PPEntity);
+
+        }
+        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader , List<AdvRefundDetail> ObjAdvRefundDetail ,int UserId, string Username)
+        {
+
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "CashCounterId", "IsRefundFlag", "RefundNo"};
+            var entity = ObjTPhRefund.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string VRefundId = odal.ExecuteNonQuery("PS_insert_T_PhAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
+            ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
+
+            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId"};
+            var Aentity = ObjTPhadvanceHeader.ToDictionary();
+            foreach (var rProperty in AEntity)
+            {
+                Aentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_PhAdvanceHeader_1", CommandType.StoredProcedure, Aentity);
+            foreach (var item in ObjAdvRefundDetail)
+            {
+
+                string[] DEntity = { "AdvRefId" };
+                var Dentity = item.ToDictionary();
+                foreach (var rProperty in DEntity)
+                {
+                    Dentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_insert_T_PHAdvRefundDetail_1", CommandType.StoredProcedure, Dentity);
+            }
         }
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
@@ -367,6 +435,14 @@ namespace HIMS.Services.Users
         public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "m_Rtrv_Phar_AdvanceList");
+        }
+        public virtual async Task<IPagedList<PhAdvRefundReceiptListDto>> PhAdvRefundReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PhAdvRefundReceiptListDto>(model, "Rtrv_BrowseT_PhAdvRefundReceipt");
+        }
+        public virtual async Task<IPagedList<PhARefundOfAdvanceListDto>> PhARefundOfAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PhARefundOfAdvanceListDto>(model, "m_Rtrv_Phar_RefundOfAdvance");
         }
     }
 }

@@ -17,35 +17,35 @@ namespace HIMS.Services.Pharmacy
         public byte? IsDischarged { get; set; }
         public byte? IsBillGenerated { get; set; }
         public long AdvanceDetailID { get; set; }
-        //public long Date { get; set; }
-        //public long AdvanceId { get; set; }
-        //public long AdvanceNo { get; set; }
-        //public long TransactionID { get; set; }
-        //public long OPD_IPD_Id { get; set; }
-        //public long OPD_IPD_Type { get; set; }
-        //public long AdvanceAmount { get; set; }
-        //public long UsedAmount { get; set; }
-        //public long BalanceAmount { get; set; }
-        //public long RefundAmount { get; set; }
-        //public long AddedBy { get; set; }
-        //public long IsCancelled { get; set; }
+        public string Date { get; set; }
+        public long AdvanceId { get; set; }
+        public string AdvanceNo { get; set; }
+        public long TransactionID { get; set; }
+        public long OPD_IPD_Id { get; set; }
+        public long OPD_IPD_Type { get; set; }
+        public decimal AdvanceAmount { get; set; }
+        public decimal UsedAmount { get; set; }
+        public decimal BalanceAmount { get; set; }
+        public decimal RefundAmount { get; set; }
+        public long AddedBy { get; set; }
+        public bool IsCancelled { get; set; }
 
-        //public long Reason { get; set; }
-        //public long PaymentId { get; set; }
-        //public long ReceiptNo { get; set; }
-        //public long PaymentDate { get; set; }
-        //public long PaymentTime { get; set; }
-        //public long CashPayAmount { get; set; }
-        //public long ChequePayAmount { get; set; }
-        //public string ChequeNo { get; set; }
-        //public string BankName { get; set; }
-        //public long ChequeDate { get; set; }
-        //public long CardPayAmount { get; set; }
-        //public string CardNo { get; set; }
-        //public string CardBankName { get; set; }
-        //public string CardDate { get; set; }
-        //public long TransactionType { get; set; }
-        //public string UserName { get; set; }
+        public string Reason { get; set; }
+        public long PaymentId { get; set; }
+        public string ReceiptNo { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public string PaymentTime { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public string ChequeNo { get; set; }
+        public string BankName { get; set; }
+        public DateTime ChequeDate { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public string CardNo { get; set; }
+        public string CardBankName { get; set; }
+        public DateTime CardDate { get; set; }
+        public long TransactionType { get; set; }
+        public string UserName { get; set; }
 
 
 

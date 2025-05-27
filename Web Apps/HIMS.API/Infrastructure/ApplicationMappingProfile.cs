@@ -253,9 +253,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPhadvanceHeader, PharmacyAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhadvanceDetail, PharmacyAdvanceDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PaymentPharmacy, PaymentPharmacyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhadvanceHeader, PharmacyHeaderUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhRefund, PharmacyRefundModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhadvanceHeader, PhAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AdvRefundDetail, PHAdvRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            
+
+
+
+
+
 
 
             //Inventory 
