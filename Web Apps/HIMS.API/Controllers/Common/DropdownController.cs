@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MDoctorNotesTemplateMaster> _IMDrnote;
         private readonly IGenericService<MNursingTemplateMaster> _IMNurNoteervice;
         private readonly IGenericService<MExpensesHeadMaster> _IMExpHeade;
-        //private readonly IGenericService<MConstants> _IMconstant;
+        private readonly IGenericService<MConsentMaster> _MConsentMaster;
 
 
 
@@ -115,7 +115,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MTalukaMaster> IMTalukaMaster,
               IGenericService<MModeOfDischarge> iMModeofdischarge,
               IGenericService<MSupplierMaster> iMSupplierMaster, IGenericService<MExpensesHeadMaster> iMExphede,
-              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen
+              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen,
+              IGenericService<MConsentMaster> iMConsentMaster
               )
         {
             _IAreaService = areaservice;
@@ -182,7 +183,7 @@ namespace HIMS.API.Controllers.Common
             _IMcanteen = iMCanteen;
             _IMDrnote = iMDrNote;
             _IMExpHeade = iMExphede;
-            //_IMconstant = iconstant;
+            _MConsentMaster = iMConsentMaster;
         }
 
         [HttpGet]
@@ -288,7 +289,8 @@ namespace HIMS.API.Controllers.Common
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
-                //"GSTConstant" => (await _IMconstant.GetAll(x => x.IsA.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
+                //Create by Ashu 27 May 2025
+                "ConsentMaster" => (await _MConsentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConsentMaster.ConsentId), nameof(MConsentMaster.ConsentName)),
                 
 
                  "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),

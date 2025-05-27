@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Save successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Save successfully.",Model.Woid);
         }
 
        
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Work Order Update successfully.", Model.Woid);
         }
 
     }

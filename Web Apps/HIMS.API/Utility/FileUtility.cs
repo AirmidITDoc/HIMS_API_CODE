@@ -75,7 +75,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
                 //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBasePath");
+                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
             if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
@@ -90,7 +90,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
                 //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBasePath");
+                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
             if (!File.Exists($"{FilePath}\\{filename}"))
                 return "";
