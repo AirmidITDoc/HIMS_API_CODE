@@ -1,7 +1,9 @@
-﻿using Asp.Versioning;
+﻿using System.Text.Json;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Hubs;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
@@ -11,9 +13,11 @@ using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
+using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
 //using HIMS.Services.NursingStation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -23,6 +27,8 @@ namespace HIMS.API.Controllers.NursingStation
     public class PrescriptionController : BaseController
     {
         private readonly INursingNoteService _INursingNoteService;
+
+
         public PrescriptionController( INursingNoteService INursingNoteService)
         {    
             _INursingNoteService = INursingNoteService;
@@ -48,6 +54,8 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.", model);
         }
+
+
         [HttpPost("PrescriptionReturnInsert")]
         [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
@@ -63,10 +71,6 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionReturn added successfully.", model);
         }
-
-
-
-
 
     }
 }

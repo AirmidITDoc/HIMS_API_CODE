@@ -32,6 +32,13 @@ ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
+//Changes by Ashu 28 May 2025
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.MaxDepth = 64;
+});//
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<FormOptions>(o =>
 {
@@ -203,6 +210,7 @@ using (var scope = app.Services.CreateScope())
     var pdfService = scope.ServiceProvider.GetRequiredService<DinkToPdfService>();
     CommonExtensions.Initialize(pdfService);
 }
+
 
 
 app.Run();

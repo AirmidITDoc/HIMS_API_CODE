@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharSalesSettlemet")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PharSalesBillSettlemet(GridRequestModel objGrid)
         {
             IPagedList<Pharbillsettlementlist> PrescriptionDetList = await _ISalesService.PharIPBillSettlement(objGrid);
@@ -131,7 +131,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("BrowseIPPharAdvanceReceiptList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseIPPharAdvanceReceiptList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPPharAdvanceReceiptListDto> PrescriptionDetList = await _ISalesService.BrowseIPPharAdvanceReceiptList(objGrid);
@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharAdvanceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PharAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PharAdvanceListDto> PrescriptionDetList = await _ISalesService.PharAdvanceList(objGrid);
@@ -147,20 +147,27 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PhAdvRefundReceiptList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PhAdvRefundReceiptList(GridRequestModel objGrid)
         {
             IPagedList<PhAdvRefundReceiptListDto> PhAdvRefundReceiptList = await _ISalesService.PhAdvRefundReceiptList(objGrid);
             return Ok(PhAdvRefundReceiptList.ToGridResponse(objGrid, "PhAdvRefundReceiptList"));
         }
         [HttpPost("PhARefundOfAdvanceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PhARefundOfAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PhARefundOfAdvanceListDto> PhARefundOfAdvanceList = await _ISalesService.PhARefundOfAdvanceList(objGrid);
             return Ok(PhARefundOfAdvanceList.ToGridResponse(objGrid, "PhARefundOfAdvanceList"));
         }
-
+        //Create By Ashu 28 May 2025
+        [HttpPost("BalqtysalesDraftlist")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BalqtysalesDraftlist(GridRequestModel objGrid)
+        {
+            IPagedList<ItemNameBalanceQtyListDto> BalqtysalesDraftlist = await _ISalesService.BalqtysalesDraftlist(objGrid);
+            return Ok(BalqtysalesDraftlist.ToGridResponse(objGrid, "BalqtysalesDraft List"));
+        }
 
         // done by Ashu Date : 20-May-2025
 
@@ -272,7 +279,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //shilpa 27/05/2025//
 
         [HttpPost("PharmacyRefundInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PharRefundModel obj)
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
