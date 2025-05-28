@@ -354,7 +354,7 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, PPEntity);
 
         }
-        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader , List<AdvRefundDetail> ObjAdvRefundDetail ,int UserId, string Username)
+        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader , List<AdvRefundDetail> ObjAdvRefundDetail , List<TPhadvanceDetail> ObjTPhadvanceDetail , PaymentPharmacy ObjPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
@@ -386,7 +386,26 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQuery("m_insert_T_PHAdvRefundDetail_1", CommandType.StoredProcedure, Dentity);
             }
+            foreach (var item in ObjTPhadvanceDetail)
+            {
+
+                string[] PEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "StoreId" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in PEntity)
+                {
+                    Pentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
+            }
+            string[] PHEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode"};
+            var Phentity = ObjPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in PHEntity)
+            {
+                Phentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
         }
+
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
