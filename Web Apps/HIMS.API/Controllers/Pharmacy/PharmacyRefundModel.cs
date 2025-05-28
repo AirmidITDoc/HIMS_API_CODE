@@ -47,18 +47,56 @@ namespace HIMS.API.Controllers.Pharmacy
         public string? RefundTime { get; set; }
         public double? AdvRefundAmt { get; set; }
 
-     
+    }
+    public class PHAdvanceDetailBalAmountModel
+    {
+        public long AdvanceDetailId { get; set; }
+        public decimal? BalanceAmount { get; set; }
+        public decimal? RefundAmount { get; set; }
 
     }
+    public class PharmacyPaymentModel
+    {
 
+        public long? BillNo { get; set; }
+        public string? ReceiptNo { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public DateTime? ChequeDate { get; set; }
+        public decimal? CardPayAmount { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
+        public DateTime? CardDate { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+        public long? TransactionType { get; set; }
+        public string? Remark { get; set; }
+        public long? AddBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public decimal? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public DateTime? Neftdate { get; set; }
+        public decimal? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+        public DateTime? PayTmdate { get; set; }
+        
+    }
 
     public class PharRefundModel
     {
         public PharmacyRefundModel PharmacyRefund {  get; set; }
         public PhAdvanceHeaderModel PhAdvanceHeader { get; set; }
         public List<PHAdvRefundDetailModel> PHAdvRefundDetail { get; set; }
-
-
+        public List<PHAdvanceDetailBalAmountModel> PHAdvanceDetailBalAmount { get; set; }
+        public PharmacyPaymentModel PharPayment { get; set; }
     }
 
 }

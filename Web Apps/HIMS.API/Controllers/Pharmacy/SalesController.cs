@@ -15,6 +15,7 @@ using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Security;
 
 namespace HIMS.API.Controllers.Pharmacy
@@ -272,22 +273,23 @@ namespace HIMS.API.Controllers.Pharmacy
         //shilpa 27/05/2025//
 
         [HttpPost("PharmacyRefundInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PharRefundModel obj)
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
             TPhadvanceHeader model1 = obj.PhAdvanceHeader.MapTo<TPhadvanceHeader>();
             List<AdvRefundDetail> model3 = obj.PHAdvRefundDetail.MapTo<List<AdvRefundDetail>>();
-
+            List<TPhadvanceDetail> model4 = obj.PHAdvanceDetailBalAmount.MapTo<List<TPhadvanceDetail>>();
+            PaymentPharmacy model5 = obj.PharPayment.MapTo<PaymentPharmacy>();
 
             if (obj.PharmacyRefund.AdvanceId == 0)
             {
                 model.AddBy = CurrentUserId;
-                await _ISalesService.InsertAsyncR(model, model1, model3, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertAsyncR(model, model1, model3, model4 , model5 ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmacyRefund added   successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Refund added successfully.");
         }
 
     }
