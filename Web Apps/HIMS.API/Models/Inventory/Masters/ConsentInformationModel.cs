@@ -21,7 +21,7 @@ namespace HIMS.API.Models.Inventory
     {
         public ConsentInformationModelValidator()
         {
-            RuleFor(x => x.ConsentName).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.ConsentName).NotNull().NotEmpty().WithMessage("ConsentName is required");
 
         }
     }
