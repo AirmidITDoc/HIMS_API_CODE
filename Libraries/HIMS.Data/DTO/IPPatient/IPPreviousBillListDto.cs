@@ -9,6 +9,7 @@ namespace HIMS.Data.DTO.IPPatient
     public class IPPreviousBillListDto
     {
         public long? BillNo { get; set; }
+        public string? BillTime { get; set; }
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
@@ -20,6 +21,8 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? CashPayAmount { get; set; }
         public decimal? ChequePayAmount { get; set; }
         public decimal? CardPayAmount { get; set; }
+        public decimal? NEFTPayAmount { get; set; }
+        public decimal? PayTMAmount { get; set; }
         public decimal? AdvanceUsedAmount { get; set; }
     }
 

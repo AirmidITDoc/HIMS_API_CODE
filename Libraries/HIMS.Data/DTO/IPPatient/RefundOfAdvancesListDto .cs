@@ -10,7 +10,9 @@ namespace HIMS.Data.DTO.IPPatient
     {
         public long AdvanceDetailID { get; set; }
         public string Date { get; set; }
+        public string Time { get; set; }
         public long AdvanceId { get; set; }
+        public string AdvanceNo { get; set; }
         public long OPD_IPD_Id { get; set; }
         public long ReasonOfAdvanceId { get; set; }
         public decimal AdvanceAmount { get; set; }
