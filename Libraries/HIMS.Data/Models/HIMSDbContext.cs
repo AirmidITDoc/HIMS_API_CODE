@@ -7764,6 +7764,10 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_SiteDescriptionMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.SiteDescriptionName).HasMaxLength(50);
 
                 entity.Property(e => e.SurgeryCategoryId).HasColumnName("SurgeryCategoryID");
