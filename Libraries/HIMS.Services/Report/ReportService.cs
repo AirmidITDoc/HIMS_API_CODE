@@ -6654,7 +6654,8 @@ namespace HIMS.Services.Report
                     {
 
                         int i = 0;
-
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RefundNo}}", dt.GetColValue("RefundNo"));
@@ -7086,6 +7087,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Items}}", items.ToString());
                         //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+
+
                         html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
                         html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
                         html = html.Replace("{{TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace());
@@ -7795,6 +7802,9 @@ namespace HIMS.Services.Report
 
                         }
 
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -7811,6 +7821,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
 
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
@@ -7844,6 +7855,10 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
 
                         }
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
 
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -8138,6 +8153,11 @@ namespace HIMS.Services.Report
                             T_BalQty += dr["BalQty"].ConvertToDouble();
 
                         }
+
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
 
 
                         html = html.Replace("{{T_PerUnitPurRate}}", T_PerUnitPurRate.ToString());

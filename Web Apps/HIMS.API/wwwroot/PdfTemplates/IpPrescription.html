@@ -9,7 +9,7 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 {{NewHeader}}
                 <tr class="title-date-row">
@@ -24,47 +24,49 @@
                 </tr>
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
                             <!--<tr>
-                                <td style="padding: 2px;">
-                                    <span>Bill No :</span>
-                                    <span>{{BillNo}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span>IPD No :</span>
-                                    <span>{{OPDNo}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span> Date | Time:</span>
-                                    <span>{{PDate}}</span>
-                                </td>
-                            </tr>-->
+                    <td style="padding: 2px;">
+                        <span>Bill No :</span>
+                        <span>{{BillNo}}</span>
+                    </td>
+                    <td style="padding: 2px;">
+                        <span>IPD No :</span>
+                        <span>{{OPDNo}}</span>
+                    </td>
+                    <td style="padding: 2px;">
+                        <span> Date | Time:</span>
+                        <span>{{PDate}}</span>
+                    </td>
+                </tr>-->
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>UHID No :</span>
+                                    <span style="font-weight:bold;">UHID No :</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Age | Gender :</span>
-                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                    <span style="font-weight:bold;">IPD No :</span>
+                                    <span>{{OPDNo}}</span>
                                 </td>
+                               
                                 <td style="padding: 2px;">
-                                    <span>DOA | Time :</span>
+                                    <span style="font-weight:bold;">DOA | Time :</span>
                                     <span>{{AdmissionTime}}</span>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Patient Name :</span>
+                                    <span style="font-weight:bold;">Patient Name :</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>IPD No :</span>
-                                    <span>{{OPDNo}}</span>
+                                    <span style="font-weight:bold;">Age | Gender :</span>
+                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
                                 </td>
+
                                 <td style="padding: 2px;">
-                                    <span>Patient Type :</span>
+                                    <span style="font-weight:bold;">Patient Type :</span>
                                     <span>{{PatientType}}</span>
                                 </td>
 
@@ -72,27 +74,27 @@
                             <tr>
 
                                 <td style="padding: 2px;">
-                                    <span>Doctor Name :</span>
-                                    <span>{{DoctorName}}</span>
+                                    <span style="font-weight:bold;">Doctor Name :</span>
+                                    <span>{{ConsultantDocName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Department :</span>
+                                    <span style="font-weight:bold;">Department :</span>
                                     <span>{{DepartmentName}} </span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Ward | Bed Name : </span>
+                                    <span style="font-weight:bold;">Ward | Bed Name : </span>
                                     <span>{{WardName}}|{{BedName}}</span>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="padding: 2px;">
-                                    <span>Ref.Doctor Name :</span>
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ref.Doctor Name :</span>
                                     <span>{{RefDocName}}</span>
-                                </td>
+                                </td>-->
 
                                 <td style="padding: 2px;">
-                                    <span>Company Name :</span>
+                                    <span style="font-weight:bold;">Company Name :</span>
                                     <span>{{CompanyName}}</span>
                                 </td>
                             </tr>
@@ -101,20 +103,20 @@
                     </td>
                 </tr>
                 <hr />
-                <tr><td colspan="3">Diagnosed With :{{Diagnosis}}</td></tr>
+                <tr><td colspan="3" style= "font-size: 18px;"><strong>Diagnosed With :</strong> {{Diagnosis}}</td></tr>
                 <hr />
                 <tr>
                     <td style="padding: 2px;">
-                        <span>Blood Pressure :</span>
+                        <span style="font-weight: bold; font-size: 16px;">Blood Pressure :</span>
                         <span>{{BP}}</span>
                     </td>
 
                     <td style="padding: 2px;">
-                        <span>Pluse Rate:</span>
+                        <span style="font-weight: bold; font-size: 16px;">Pulse Rate:</span>
                         <span>{{Pulse}}</span>
                     </td>
                     <td style="padding: 2px;">
-                        <span>Weight:</span>
+                        <span style="font-weight: bold; font-size: 16px;">Weight:</span>
                         <span>{{PWeight}}</span>
                     </td>
                 </tr>
@@ -122,16 +124,16 @@
                 <tr class="bill-table-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
-                            <thead style="font-size: 14px;">
+                            <thead style="font-size: 18px; font-weight: bold;">
                                 <tr>
-                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <td style="border: 1px solid ; text-align: center; padding: 6px;">Sr.No</td>
+                                    <td style="border: 1px solid ; text-align: center; padding: 6px;">
                                         Drug
                                     </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <td style="border: 1px solid ; text-align: center; padding: 6px;">
                                         Dose(Per day)
                                     </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Unit(Tablet / Syrup)</td>
+                                    <td style="border: 1px solid ; text-align: center; padding: 6px;">Unit(Tablet / Syrup)</td>
 
                                 </tr>
                                 {{Items}}
