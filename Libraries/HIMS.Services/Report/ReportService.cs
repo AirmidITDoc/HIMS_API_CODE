@@ -1064,7 +1064,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("v_rptDischargeCheckOutSlip", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeReceipt", "IpDischargeReceipt"+vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeCheckOut", "IpDischargeReceipt"+vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -5115,6 +5115,9 @@ namespace HIMS.Services.Report
 
                         int j = 0;
 
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -5594,7 +5597,9 @@ namespace HIMS.Services.Report
                             }
 
                         }
-
+                        //Added by Ashu 30 May 2025
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -5771,6 +5776,10 @@ namespace HIMS.Services.Report
                             }
 
                         }
+
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -6078,6 +6087,8 @@ namespace HIMS.Services.Report
                         }
 
 
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -6686,6 +6697,10 @@ namespace HIMS.Services.Report
                     break;
                 case "IpDischargeReceipt":
                     {
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
                         html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
