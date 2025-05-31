@@ -12,6 +12,12 @@ namespace HIMS.Services.Report
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
         Task<List<CashCounter>> SearchCashCounter(string str);
+        Task<List<RoomMaster>> SearchWard(string str);
+        //Task<List<Admission>> SearchAdmission(string str);
+        Task<List<CompanyMaster>> SearchCompany(string str);
+        Task<List<DischargeTypeMaster>> SearchDischargeType(string str);
+        Task<List<GroupMaster>> SearchGroupMaster(string str);
+        Task<List<ClassMaster>> SearchClassMaster(string str);
     }
     
 }

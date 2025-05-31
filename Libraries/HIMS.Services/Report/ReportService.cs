@@ -59,8 +59,40 @@ namespace HIMS.Services.Report
             return await this._context.CashCounters.Where(x => (x.CashCounterName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+        public virtual async Task<List<RoomMaster>> SearchWard(string str)
+        {
+            return await this._context.RoomMasters.Where(x => (x.RoomName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        //public virtual async Task<List<Admission>> SearchAdmission(string str)
+        //{
+        //    return await this._context.Admissions.Where(x => (x.AdmissionId).ToLower().Contains(str)).Take(25).ToListAsync();
+        //}
+        public virtual async Task<List<CompanyMaster>> SearchCompany(string str)
+        {
+            return await this._context.CompanyMasters.Where(x => (x.CompanyName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<DischargeTypeMaster>> SearchDischargeType(string str)
+        {
+            return await this._context.DischargeTypeMasters.Where(x => (x.DischargeTypeName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<GroupMaster>> SearchGroupMaster(string str)
+        {
+            return await this._context.GroupMasters.Where(x => (x.GroupName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<ClassMaster>> SearchClassMaster(string str)
+        {
+            return await this._context.ClassMasters.Where(x => (x.ClassName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+
+
         public string GetReportSetByProc(ReportRequestModel model)
         {
+
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
 

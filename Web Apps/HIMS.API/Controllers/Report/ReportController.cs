@@ -94,6 +94,51 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter Data.", data.Select(x => new { Text = x.CashCounterName, Value = x.CashCounterId }));
         }
 
+        [HttpGet("WardList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetWardListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchWard(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchWard Data.", data.Select(x => new { Text = x.RoomName, Value = x.RoomId }));
+        }
+        //[HttpGet("AdmissionList/auto-complete")]
+        ////[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetAdmissionListAutoComplete(string Keyword)
+        //{
+        //    var data = await _reportService.SearchAdmission(Keyword);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchAdmission Data.", data.Select(x => new { Text = x.Admissions, Value = x.AdmissionId }));
+        //}
+        [HttpGet("CompanyList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetCompanyListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchCompany(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchCompany Data.", data.Select(x => new { Text = x.CompanyName, Value = x.CompanyId }));
+        }
+
+        [HttpGet("DischargeTypeList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDischargeTypeListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchDischargeType(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchDischargeType Data.", data.Select(x => new { Text = x.DischargeTypeName, Value = x.DischargeTypeId }));
+        }
+
+        [HttpGet("GroupMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetGroupMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchGroupMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchGroupMaster Data.", data.Select(x => new { Text = x.GroupName, Value = x.GroupId }));
+        }
+
+        [HttpGet("ClassMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetClassMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchClassMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchClassMaster Data.", data.Select(x => new { Text = x.ClassName, Value = x.ClassId }));
+        }
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)
