@@ -7113,9 +7113,9 @@ namespace HIMS.Services.Report
                         }
                         //| currency:'INR':'symbol-narrow':'0.2'
 
-                        T_TotalNETAmount = Math.Round(T_TotalNETAmount);
-                        T_TotalVatAmount = Math.Round(T_TotalVatAmount);
-                        T_TotalDiscAmount = Math.Round(T_TotalDiscAmount);
+                        //T_TotalNETAmount = Math.Round(T_TotalNETAmount);
+                        //T_TotalVatAmount = Math.Round(T_TotalVatAmount);
+                        //T_TotalDiscAmount = Math.Round(T_TotalDiscAmount);
                         html = html.Replace("{{Items}}", items.ToString());
                         //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));

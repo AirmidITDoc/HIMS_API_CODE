@@ -105,7 +105,7 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "RoundOff", "UpdatedBy", "IsCancelled", "TSalesDetails" };
+            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo",  "UpdatedBy", "IsCancelled", "TSalesDetails" };
             var entity = ObjSalesHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -184,7 +184,7 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "RoundOff", "UpdatedBy", "IsCancelled", "TSalesDetails" };
+            string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo",  "UpdatedBy", "IsCancelled", "TSalesDetails" };
             var entity = ObjSalesHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {

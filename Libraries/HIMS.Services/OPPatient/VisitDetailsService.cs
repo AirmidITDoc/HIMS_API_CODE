@@ -282,8 +282,8 @@ namespace HIMS.Services.OPPatient
                            //AgeMonth = registration.AgeMonth,
                            //AgeDay = registration.AgeDay,
                            DepartmentName = departmentMaster.DepartmentName,
-                           RefDoctorName = refDoctor != null ? refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
-                           DoctorName = doctorMaster.FirstName + " " + doctorMaster.LastName
+                           RefDoctorName =   refDoctor != null ? "Dr. " + refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
+                           DoctorName = "Dr. "+ doctorMaster.FirstName + " " + doctorMaster.LastName
                        };
             return await qry.Take(25).ToListAsync();
 
