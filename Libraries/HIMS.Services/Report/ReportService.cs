@@ -1693,7 +1693,11 @@ namespace HIMS.Services.Report
                             {
                                 items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
                             }
-                            T_Count += dr["Lbl"].ConvertToDouble();
+                            if (dt.Columns.Contains("Lbl"))
+                            {
+                                T_Count += dr["Lbl"].ConvertToDouble();
+                            }
+                            //T_Count += dr["Lbl"].ConvertToDouble();
                         }
                         html = html.Replace("{{T_Count}}", T_Count.ToString());
                     }
