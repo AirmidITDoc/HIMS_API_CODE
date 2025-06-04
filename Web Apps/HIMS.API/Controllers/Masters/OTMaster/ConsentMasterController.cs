@@ -6,6 +6,7 @@ using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
 {
@@ -19,7 +20,8 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         [HttpPost]
         [Route("[action]")]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MConsentMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -27,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
 
         [HttpGet("{id?}")]
-        //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -39,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Insert API
         [HttpPost]
-        //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ConsentMasterModel obj)
         {
             MConsentMaster model = obj.MapTo<MConsentMaster>();
@@ -57,7 +59,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ConsentMasterModel obj)
         {
             MConsentMaster model = obj.MapTo<MConsentMaster>();
@@ -76,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Delete API
         [HttpDelete]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MConsentMaster? model = await _repository.GetById(x => x.ConsentId == Id);

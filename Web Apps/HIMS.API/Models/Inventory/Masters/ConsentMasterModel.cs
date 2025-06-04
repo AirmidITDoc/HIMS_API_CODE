@@ -16,7 +16,7 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public ConsentMasterModelValidator()
         {
-            RuleFor(x => x.ConsentDesc).NotNull().NotEmpty().WithMessage("DepartmentId is required");
+            RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId is required");
             RuleFor(x => x.ConsentName).NotNull().NotEmpty().WithMessage("ConsentName is required");
             RuleFor(x => x.ConsentDesc).NotNull().NotEmpty().WithMessage("ConsentDesc is required");
 
