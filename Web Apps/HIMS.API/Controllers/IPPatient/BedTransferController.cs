@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BTransferModel obj)
         {
             TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedTransfer Updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
         }
 
     }

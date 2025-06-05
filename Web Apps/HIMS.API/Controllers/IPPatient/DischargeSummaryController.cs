@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary added successfully.", model.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AdmissionId);
         }
         [HttpPut("DischargeSummaryUpdate")]
         //[Permission(PageCode = "DischargeSum", Permission = PagePermission.Edit)]
@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeSummary Update successfully.", Prescription);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.", Prescription);
         }
 
        
@@ -128,11 +128,11 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate added successfully.", model.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AdmissionId);
         }
 
         [HttpPut("DischargeTemplateUpdate")]
-        //[Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeTemplateUpdate(DischargeTemUpdate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
@@ -148,7 +148,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DischargeTemplate Update successfully.", Prescription);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.", Prescription);
         }
 
 
@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.",ObjAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", ObjAdmission.AdmissionId);
         }
 
         [HttpPut("DischargeUpdate")]
@@ -201,7 +201,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge Updated successfully.",ObjAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.", ObjAdmission.AdmissionId);
         }
 
        
@@ -218,7 +218,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Discharge added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("DischargeInitiateApprovalUpdate")]
         //[Permission(PageCode = "DischargeSummary", Permission = PagePermission.Edit)]
@@ -233,7 +233,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.ModifiedBy = CurrentUserId;
                 await _IDischargeSummaryService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "InitiateDischarge  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
     }
 }

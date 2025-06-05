@@ -127,7 +127,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AddCharge  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
 
         [HttpPost("PaymentSettelment")]
@@ -147,7 +147,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.", model.PaymentId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PaymentId);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
@@ -173,7 +173,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill added successfully.", paymentModel.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", paymentModel.BillNo);
         }
 
         [HttpPost("IPBilllCreditInsert")]
@@ -197,7 +197,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Credit Bill added successfully.", Model.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", Model.BillNo);
         }
 
 
@@ -221,7 +221,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Interim Bill added successfully.", paymentModel.BillNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record added successfully.", paymentModel.BillNo);
         }
         [HttpPost("InsertIPDraftBill")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
@@ -241,7 +241,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Draft Bill added successfully.", Model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", Model);
         }
 
         [HttpPost("IPAddchargesdelete")]
@@ -258,7 +258,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges delete successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record delete successfully.");
         }
 
 
@@ -277,11 +277,11 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
         [HttpPut("UpdateAddcharges/{id:int}")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
+       [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(UpdateAddchargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -289,10 +289,11 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-              
+
+                model.AddedBy = CurrentUserId;
                 await _IPBillService.Update(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPAddcharges updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("InsertLabRequest")]
@@ -313,8 +314,9 @@ namespace HIMS.API.Controllers.IPPatient
                 DoctorId = obj.DoctorId,
                
             };
+            model.AddedBy = CurrentUserId;
             await _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId, obj.ReqDetId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "LabRequest Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
       
 
@@ -336,7 +338,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPDPackageBill Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
     }
 }
