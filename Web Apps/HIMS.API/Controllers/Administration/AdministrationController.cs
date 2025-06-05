@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Add API
         [HttpPost("TemplateInsert")]
-        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Edit API
         [HttpPut("TemplateUpdate{id:int}")]
-        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReportTemplateConfig model = await _repository.GetById(x => x.TemplateId == Id);
@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TExpenseInsert")]
-        //  [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -144,7 +144,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]
-        //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -159,7 +159,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpDelete("TExpenseCancel")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
         {
             TExpense Model = obj.MapTo<TExpense>();
@@ -175,7 +175,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TExpense delete successfully.");
         }
         [HttpPost("IP_DISCHARGE_CANCELLATION")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
         {
             Admission Model = obj.MapTo<Admission>();
@@ -191,7 +191,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IP_DISCHARGE_CANCELLATION  successfully.");
         }
         [HttpPut("UpdateAdmissiondatetime{id:int}")]
-        //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(AdmissionModell obj)
         {
             Admission model = obj.MapTo<Admission>();
@@ -202,12 +202,12 @@ namespace HIMS.API.Controllers.Administration
 
                 await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Admissiondatetime updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
         [HttpPut("UpdatePaymentdatetime{id:int}")]
-        //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> PaymentdatetimeUpdate(PaymenntModel obj)
         {
             Payment model = obj.MapTo<Payment>();
@@ -218,11 +218,11 @@ namespace HIMS.API.Controllers.Administration
 
                 await _IAdministrationService.PaymentUpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Paymentdatetime updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPut("UpdateBilldatetime{id:int}")]
-        //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> BilldatetimeUpdate(BilllsModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -233,7 +233,7 @@ namespace HIMS.API.Controllers.Administration
 
                 await _IAdministrationService.BilldateUpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Bill datetime updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
@@ -249,7 +249,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MDoctorPer Master   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         [HttpPut("UpdateDoctorPerMaster Edit/{id:int}")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
@@ -263,11 +263,11 @@ namespace HIMS.API.Controllers.Administration
                 
                 await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MDoctorPer Master updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
         [HttpPost("DoctorShareProcess")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
         {
             if (obj.FromDate == new DateTime(1900/01/01))
@@ -282,11 +282,11 @@ namespace HIMS.API.Controllers.Administration
             };
 
             await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorShareProcess Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
         //Add API
         [HttpPost("PackageDetailsInsert")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PackageDetModel obj)
         {
             List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
@@ -298,7 +298,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PackageDetail   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
 
     }

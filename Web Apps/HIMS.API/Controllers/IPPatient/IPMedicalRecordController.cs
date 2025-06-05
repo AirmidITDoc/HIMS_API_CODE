@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MedicalRecord   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Edit)]
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
                 await _MedicalRecordService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MedicalRecord  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
        

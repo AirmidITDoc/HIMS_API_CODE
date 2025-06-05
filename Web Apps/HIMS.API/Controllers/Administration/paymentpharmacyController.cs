@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Administration
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
                 await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharmacy  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPut("UpdatePharmSales")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PharmSalesPaymentmodechange  update successfully .");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully .");
         }
         [HttpPost("paymentpharUpdateDate")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
@@ -127,7 +127,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "paymentpharUpdateDate   successfully .");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully .");
         }
 
 

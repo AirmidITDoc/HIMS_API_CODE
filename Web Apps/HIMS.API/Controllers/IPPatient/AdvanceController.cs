@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance added successfully.", objpayment.AdvanceId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objpayment.AdvanceId);
         }
         [HttpPut("Edit")]
         [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Advance Update successfully.", objpayment.AdvanceId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.", objpayment.AdvanceId);
         }
        
       
@@ -148,7 +148,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPRefundofAdvance added successfully.", model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
         }
 
 
@@ -171,11 +171,11 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvance successfully .");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully .");
         }
       
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateCancel obj)
         {
             if (obj.AdvanceId == 0)
@@ -191,7 +191,7 @@ namespace HIMS.API.Controllers.IPPatient
 
             };
             await _IAdvanceService.CancelAsync(model, obj.AdvanceDetailId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateAdvanceCancel Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancel  successfully.");
         }
 
     }
