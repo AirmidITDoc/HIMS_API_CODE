@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.IPPatient
 
             Admission objAdmission = obj.Admission.MapTo<Admission>();
             await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record added successfully.", objAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objAdmission.AdmissionId);
         }
         
         [HttpPut("Edit/{id:int}")]

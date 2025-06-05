@@ -191,7 +191,7 @@ namespace HIMS.API.Controllers.IPPatient
 
             };
             await _IAdvanceService.CancelAsync(model, obj.AdvanceDetailId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancel  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
     }
