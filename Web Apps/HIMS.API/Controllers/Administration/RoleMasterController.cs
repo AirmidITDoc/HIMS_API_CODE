@@ -9,6 +9,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.Services.Administration;
 using HIMS.Data.DTO.User;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -27,7 +28,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RoleMaster> RoleMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +36,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +48,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(RoleMasterModel obj)
         {
             RoleMaster model = obj.MapTo<RoleMaster>();
@@ -60,11 +61,12 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.Edit)]
+
         public async Task<ApiResponse> Edit(RoleMasterModel obj)
         {
             RoleMaster model = obj.MapTo<RoleMaster>();
@@ -77,11 +79,11 @@ namespace HIMS.API.Controllers.Administration
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             RoleMaster model = await _repository.GetById(x => x.RoleId == Id);
@@ -91,7 +93,7 @@ namespace HIMS.API.Controllers.Administration
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Role deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -107,7 +109,7 @@ namespace HIMS.API.Controllers.Administration
         public ApiResponse PostPermission(List<PermissionModel> obj)
         {
             _IRoleService.SavePermission(obj);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Permission updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
 }

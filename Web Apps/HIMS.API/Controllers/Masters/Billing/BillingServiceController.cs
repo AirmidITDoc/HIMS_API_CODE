@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             await _BillingService.UpdateDifferTariff(model, obj.OldTariffId, obj.NewTariffId, userId, userName);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateDifferTraiff  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
 
 

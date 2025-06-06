@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
 
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOttypeMaster> MOttypeMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         }
 
         [HttpGet("{id?}")]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         }
         //Insert API
         [HttpPost]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(OtTypeMasterModel obj)
         {
             MOttypeMaster model = obj.MapTo<MOttypeMaster>();
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OtTypeMasterModel obj)
         {
             MOttypeMaster model = obj.MapTo<MOttypeMaster>();
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
 
         //Delete API
         [HttpDelete]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOttypeMaster? model = await _repository.GetById(x => x.OttypeId == Id);
