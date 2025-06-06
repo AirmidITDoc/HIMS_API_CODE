@@ -211,8 +211,9 @@ namespace HIMS.Services.IPPatient
             {
                 Dentity.Remove(rProperty);
                 // Add the new parameter
-                Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
-                Dentity["ModifiedBy"] = 0; // Ensure objpayment 
+                //change by  Ashutosh 06 Jun 2025
+                //Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
+            //    Dentity["ModifiedBy"] = 0; // Ensure objpayment 
             }
             odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
 

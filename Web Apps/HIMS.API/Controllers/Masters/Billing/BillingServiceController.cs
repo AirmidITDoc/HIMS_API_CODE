@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedBy = CurrentUserId;
                 await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Name updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("ServiceCanceled")]
@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record cancelled successfully.");
         }
         [HttpDelete("ServicDelete")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Servic deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
