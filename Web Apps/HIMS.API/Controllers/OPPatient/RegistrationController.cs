@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration added successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
         [HttpPost("RegistrationUpdate")]
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration updated successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
         [HttpGet("auto-complete")]
         [Permission(PageCode = "Registration", Permission = PagePermission.View)]

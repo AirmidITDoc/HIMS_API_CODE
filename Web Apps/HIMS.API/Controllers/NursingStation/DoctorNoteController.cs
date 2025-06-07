@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorsNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -36,11 +36,11 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorsNote added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DoctorsNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -53,11 +53,11 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorsNote updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "DoctorsNote", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DoctorsNote", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TDoctorsNote model = await _repository.GetById(x => x.DoctNoteId == Id);
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorsNote  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

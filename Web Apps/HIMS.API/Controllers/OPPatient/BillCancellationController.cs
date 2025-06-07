@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IOpBillCancellationService = repository;
         }
         [HttpPut("OPCancelBill")]
-        //[Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> CancelOP(OpBillCancellationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -31,12 +31,12 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPBill updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
         [HttpPut("IPCancelBill")]
-        //[Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Cancellation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> CancelIp(OpBillCancellationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IPBill updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
  }
