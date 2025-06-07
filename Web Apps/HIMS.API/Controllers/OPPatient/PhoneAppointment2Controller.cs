@@ -50,8 +50,11 @@ namespace HIMS.API.Controllers.OPPatient
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
             {
-                model.AppDate = Convert.ToDateTime(obj.AppDate);
-                model.AppTime = Convert.ToDateTime(obj.AppTime);
+                model.AppDate = DateTime.Now.Date;
+                model.AppTime = DateTime.Now;
+
+                model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
+                model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
 
                 model.UpdatedBy = CurrentUserId;
                 await _IPhoneAppointment2Service.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
