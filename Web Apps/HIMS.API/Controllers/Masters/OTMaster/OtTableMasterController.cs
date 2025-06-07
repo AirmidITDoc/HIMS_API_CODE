@@ -23,11 +23,9 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
             _repository = repository;
         }
 
-
-
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOttableMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         }
 
         [HttpGet("{id?}")]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         }
         //Insert API
         [HttpPost]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(OtTableMasterModel obj)
         {
             MOttableMaster model = obj.MapTo<MOttableMaster>();
@@ -61,12 +59,12 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Ottable added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OtTableMasterModel obj)
         {
             MOttableMaster model = obj.MapTo<MOttableMaster>();
@@ -80,13 +78,13 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Ottable updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
         //Delete API
         [HttpDelete]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOttableMaster? model = await _repository.GetById(x => x.OttableId == Id);
@@ -96,7 +94,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OtTable deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

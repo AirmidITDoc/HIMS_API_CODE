@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Menu added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 await _MenuMasterService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Menu updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

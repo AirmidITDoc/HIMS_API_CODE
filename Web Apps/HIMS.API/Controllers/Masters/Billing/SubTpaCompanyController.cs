@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MSubTpacompanyMaster> SubTpacompanyMastereList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(SubTpaModel obj)
         {
             MSubTpacompanyMaster model = obj.MapTo<MSubTpacompanyMaster>();
@@ -59,12 +59,12 @@ namespace HIMS.API.Controllers.Masters.Billing
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubTpacompanyMaster added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SubTpaModel obj)
         {
             MSubTpacompanyMaster model = obj.MapTo<MSubTpacompanyMaster>();
@@ -77,11 +77,11 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubTpacompanyMaster   updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MSubTpacompanyMaster model = await _repository.GetById(x => x.SubCompanyId == Id);
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubTpacompanyMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

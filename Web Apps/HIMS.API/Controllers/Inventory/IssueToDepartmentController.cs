@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IssueToDeptList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IssuetodeptListDto> AppVisitList = await _IIssueToDepService.GetListAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IssueToDeptdetailList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> issueitemList(GridRequestModel objGrid)
         {
             IPagedList<TIssueToDepartmentDetail> AppVisitList = await _IIssueToDepService.GetIssueItemListAsync(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IssueToDeptIndentByIDList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentByIDList(GridRequestModel objGrid)
         {
             IPagedList<IndentByIDListDto> AppVisitList = await _IIssueToDepService.GetIndentById(objGrid);
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IssueToDeptIndentItemListList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> issueIndentitemList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> AppVisitList = await _IIssueToDepService.GetIndentItemList(objGrid);

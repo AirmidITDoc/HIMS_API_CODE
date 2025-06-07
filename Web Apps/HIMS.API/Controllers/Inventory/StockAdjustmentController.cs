@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Stock Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report Update successfully.");
         }
 
         [HttpPost("BatchUpdate")]
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Batch Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
         [HttpPost("GSTUpdate")]
         [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
@@ -76,13 +76,13 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " GST Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Update successfully.");
         }
       
         //Shilpa//22/05/2025 updated
 
         [HttpPost("MrpAdjustmentUpdate")]
-        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Inventory
 
             };
             await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MrpAdjustmentUpdate  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.");
         }
 
     }

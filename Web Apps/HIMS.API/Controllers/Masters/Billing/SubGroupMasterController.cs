@@ -55,11 +55,12 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.AddedBy = CurrentUserId;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubGroup added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -74,9 +75,10 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
+                model.UpdatedBy = CurrentUserId;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubGroup updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -90,7 +92,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SubGroup deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

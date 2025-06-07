@@ -62,13 +62,13 @@ namespace HIMS.API.Controllers.Masters.Billing
             model.IsActive = true;
             if (obj.DepartmentId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         //Edit API
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         //Delete API
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

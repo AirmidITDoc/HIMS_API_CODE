@@ -23,11 +23,9 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             _repository = repository;
         }
 
-
-
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
 
         [HttpGet("{id?}")]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
         //Insert API
         [HttpPost]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(SurgeryMasterModel obj)
         {
             MSurgeryMaster model = obj.MapTo<MSurgeryMaster>();
@@ -62,12 +60,12 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SurgeryMaster  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
 
         //Edit API
         [HttpPut("{id:int}")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SurgeryMasterModel obj)
         {
             MSurgeryMaster model = obj.MapTo<MSurgeryMaster>();
@@ -82,13 +80,13 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SurgeryMaster updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
         //Delete API
         [HttpDelete]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MSurgeryMaster? model = await _repository.GetById(x => x.SurgeryId == Id);
@@ -98,7 +96,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Surgery Master deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
