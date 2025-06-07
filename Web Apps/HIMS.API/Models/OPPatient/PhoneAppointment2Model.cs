@@ -6,7 +6,7 @@ namespace HIMS.API.Models.OPPatient
     public class PhoneAppointment2Model
     {
         public long PhoneAppId { get; set; }
-        public string? AppDate { get; set; }
+        public DateTime? AppDate { get; set; }
         public string? AppTime { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -16,8 +16,8 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? PhAppDate { get; set; }
         public string? PhAppTime { get; set; }
         public long? DepartmentId { get; set; }
-        public long? DoctorId { get; set; }
-        public long? AddedBy { get; set; }
+        public long DoctorId { get; set; }
+        public long AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? RegNo { get; set; }
     }
