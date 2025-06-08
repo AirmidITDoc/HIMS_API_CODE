@@ -183,7 +183,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription  update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  update successfully.");
         }
         [HttpPut("GenericEdit/{id:int}")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
@@ -205,7 +205,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPTemplateInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
@@ -220,7 +220,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPTemplate added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
     }

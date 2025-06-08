@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("InsertPO")]
@@ -114,7 +114,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         [HttpPut("EditPO/{id:int}")]
@@ -134,11 +134,11 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GRN verify successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
     }
 }

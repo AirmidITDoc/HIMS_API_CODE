@@ -96,7 +96,6 @@ namespace HIMS.API.Controllers.IPPatient
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionDischarge.MapTo<List<TIpPrescriptionDischarge>>();
-            //int AdmissionId = Prescription.OpdIpdId;
 
             if (obj.DischargModel.DischargeSummaryId != 0)
             {

@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Visit added successfully.", objVisitDetail.VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", objVisitDetail.VisitId);
         }
 
 
@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment added successfully.", objVisitDetail.VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objVisitDetail.VisitId);
         }
 
 
@@ -158,7 +158,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Updated successfully.", objVisitDetail.VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.", objVisitDetail.VisitId);
         }
 
         [HttpPost("Cancel")]
@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Appointment Canceled successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.", model);
         }
         
         [HttpGet("GetServiceListwithTraiff")]
@@ -222,7 +222,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully.");
         }
         [HttpPost("CrossConsultationInsert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();

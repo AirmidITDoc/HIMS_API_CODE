@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
@@ -25,28 +26,28 @@ namespace HIMS.API.Controllers.NursingStation
             _ICanteenRequestService = repository;
         }
         [HttpPost("DoctorNoteList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> DoctorNoteList(GridRequestModel objGrid)
         {
             IPagedList<DoctorNoteListDto> DoctorNoteList = await _ICanteenRequestService.DoctorNoteList(objGrid);
             return Ok(DoctorNoteList.ToGridResponse(objGrid, "DoctorNote App List"));
         }
         [HttpPost("TDoctorPatientHandoverList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> TDoctorPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<TDoctorPatientHandoverListDto> TDoctorPatientHandoverList = await _ICanteenRequestService.TDoctorPatientHandoverList(objGrid);
             return Ok(TDoctorPatientHandoverList.ToGridResponse(objGrid, "TDoctorPatientHandover App List"));
         }
         [HttpPost("CanteenRequestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestListDto> CanteenRequestList = await _ICanteenRequestService.CanteenRequestsList(objGrid);
             return Ok(CanteenRequestList.ToGridResponse(objGrid, "CanteenRequest App List"));
         }
         [HttpPost("CanteenRequestHeaderList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> HeaderList(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestHeaderListDto> CanteenRequestHeaderList = await _ICanteenRequestService.CanteenRequestHeaderList(objGrid);
@@ -55,7 +56,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("Insert")]
 
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {
             TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
@@ -68,14 +70,14 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CanteenRequest added successfully.", model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
         [HttpGet("GetItemListforCanteen")]
         public async Task<ApiResponse> GetCanteenItemList(string ItemName)
         {
             var resultList = await _ICanteenRequestService.GetItemListForCanteen(ItemName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Canteen List.", resultList);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetItemList For Canteen List.", resultList);
         }
 
     }
