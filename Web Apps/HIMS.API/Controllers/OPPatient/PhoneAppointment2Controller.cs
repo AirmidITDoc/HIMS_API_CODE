@@ -64,24 +64,6 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Phone Appointment added successfully.", model);
         }
 
-        //[HttpDelete("Cancel")]
-        ////[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
-        //public async Task<ApiResponse> Cancel(PhoneAppointmentCancel obj)
-        //{
-        //    TPhoneAppointment model = new();
-        //    if (obj.PhoneAppId != 0)
-        //    {
-        //        model.PhoneAppId = obj.PhoneAppId;
-        //        model.IsCancelled = true;
-        //        model.IsCancelledBy = CurrentUserId;
-        //        model.IsCancelledDate = DateTime.Now;
-        //        await _IPhoneAppointment2Service.CancelAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneAppointment Canceled successfully.");
-        //}
-
         [HttpDelete("Cancel")]
         //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(int Id)

@@ -24,6 +24,7 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal RefundAmount { get; set; }
         public decimal BalAmt { get; set; }
         public long BillNo { get; set; }
+        public object? ServiceWiseDisc { get; set; }
 
     }
 }
