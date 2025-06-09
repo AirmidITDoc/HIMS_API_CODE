@@ -116,7 +116,7 @@ namespace HIMS.Services.IPPatient
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "History", "Diagnosis", "Investigation", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "DischargeSummaryDate", "OpDate","Optime","DischargeSummaryTime","DoctorAssistantName","ClaimNumber","PreOthNumber","AddedByDate",
-                                 "UpdatedBy","UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","ClinicalFinding"};
+                                 "UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","ClinicalFinding"};
             var Tentity = ObjDischargeTemplate.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -141,7 +141,7 @@ namespace HIMS.Services.IPPatient
         {
             DatabaseHelper odal = new();
             string[] rEntity = {"History", "Diagnosis", "Investigation", "ClinicalFinding", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "OpDate", "Optime", "DischargeSummaryTime", "DoctorAssistantName", "ClaimNumber", "PreOthNumber",
-                                 "AddedByDate","UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","DischargeSummaryDate","AddedBy",};
+                                 "AddedByDate","UpdatedByDate","SurgeryProcDone","Icd10code","ClinicalConditionOnAdmisssion","OtherConDrOpinions","ConditionAtTheTimeOfDischarge","PainManagementTechnique","LifeStyle","WarningSymptoms","Radiology","DischargeSummaryDate"};
             var Sentity = ObjDischargeTemplate.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -171,7 +171,7 @@ namespace HIMS.Services.IPPatient
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy","CreatedDate","ModifiedDate" };
             var entity = ObjDischarge.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -205,7 +205,7 @@ namespace HIMS.Services.IPPatient
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "AdmissionId", "IsCancelled", "AddedBy", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName","CreatedBy","CreatedDate","ModifiedDate"};
+            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName","CreatedBy","CreatedDate","ModifiedDate"};
             var Dentity = ObjDischarge.ToDictionary();
             foreach (var rProperty in rEntity)
             {
