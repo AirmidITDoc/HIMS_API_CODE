@@ -64,7 +64,6 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
-
         [HttpDelete("Cancel")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(int Id)
