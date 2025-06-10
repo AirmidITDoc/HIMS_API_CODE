@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MTaxNatureMaster> TaxMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "TaxMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
@@ -58,11 +58,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "TaxMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TaxMasterModel obj)
         {
             MTaxNatureMaster model = obj.MapTo<MTaxNatureMaster>();
@@ -75,11 +75,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "TaxMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TaxMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MTaxNatureMaster model = await _repository.GetById(x => x.Id == Id);
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TaxMaster deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
