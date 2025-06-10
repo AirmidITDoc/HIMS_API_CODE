@@ -25,6 +25,7 @@ namespace HIMS.API.Models.IPPatient
         public string? ClaimNumber { get; set; }
         public string? PreOthNumber { get; set; }
         public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public string? SurgeryProcDone { get; set; }
         public string? Icd10code { get; set; }
         public string? ClinicalConditionOnAdmisssion { get; set; }
@@ -106,6 +107,7 @@ namespace HIMS.API.Models.IPPatient
         public string? DoctorAssistantName { get; set; }
         public string? ClaimNumber { get; set; }
         public string? PreOthNumber { get; set; }
+        public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? SurgeryProcDone { get; set; }
         public string? Icd10code { get; set; }
