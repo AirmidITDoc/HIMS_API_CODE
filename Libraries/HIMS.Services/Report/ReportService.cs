@@ -2133,7 +2133,7 @@ namespace HIMS.Services.Report
             table.Append("<tr>");
             foreach (var hr in headers)
             {
-                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px; width: 150px;\">");
+                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
                 table.Append(hr.ConvertToString());
                 table.Append("</th>");
             }
