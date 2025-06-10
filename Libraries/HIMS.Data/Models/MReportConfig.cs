@@ -15,6 +15,7 @@ namespace HIMS.Data.Models
         public string? ReportColumn { get; set; }
         public string? ReportTotalField { get; set; }
         public string? ReportGroupByLabel { get; set; }
+        public string? SummaryLabel { get; set; }
         public string? ReportHeaderFile { get; set; }
         public string? ReportBodyFile { get; set; }
         public string? ReportFolderName { get; set; }
