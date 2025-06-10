@@ -143,6 +143,7 @@ namespace HIMS.API.Models.IPPatient
         public long? DischargeDoctor2 { get; set; }
         public long? DischargeDoctor3 { get; set; }
         public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public byte? IsNormalOrDeath { get; set; }
         public long DischargeSummaryId { get; set; }
         public string? TemplateDescriptionHtml { get; set; }
@@ -190,6 +191,7 @@ namespace HIMS.API.Models.IPPatient
         public long? DischargeDoctor1 { get; set; }
         public long? DischargeDoctor2 { get; set; }
         public long? DischargeDoctor3 { get; set; }
+        public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public byte? IsNormalOrDeath { get; set; }
         public string? TemplateDescriptionHtml { get; set; }
