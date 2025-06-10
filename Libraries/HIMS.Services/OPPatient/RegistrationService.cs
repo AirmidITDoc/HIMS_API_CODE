@@ -30,7 +30,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
         {
 
-            return await this._context.Registrations
+            var qry = this._context.Registrations
                 .Where(x =>
                     (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
                     x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
@@ -50,9 +50,14 @@ namespace HIMS.Services.OPPatient
                     AgeMonth = x.AgeMonth,
                     AgeDay = x.AgeDay
 
-                })
-                .OrderBy(x => x.FirstName)
-                .ToListAsync();
+                });
+            if (str.ToInt() > 0)
+                qry = qry.OrderBy(x => x.RegNo).ThenBy(x => x.MobileNo);
+            else
+                qry = qry.OrderBy(x => x.FirstName);
+
+            return await qry.ToListAsync();
+
 
         }
 
