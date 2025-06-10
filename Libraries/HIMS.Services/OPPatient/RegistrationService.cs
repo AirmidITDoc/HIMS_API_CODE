@@ -51,8 +51,8 @@ namespace HIMS.Services.OPPatient
                     AgeDay = x.AgeDay
 
                 })
-                .OrderBy(x => x.FirstName)
-                .ToListAsync();
+               .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
+               .ThenBy(x => x.FirstName).ToListAsync();
 
         }
 

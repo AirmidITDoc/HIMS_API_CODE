@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+    //    [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
 
          [HttpPut("Edit/{id:int}")]

@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
     {
         public ItemManufactureModelValidator()
         {
-            RuleFor(x => x.ManufactureName).NotNull().NotEmpty().WithMessage("ItemManufacture is required");
+            RuleFor(x => x.ManufactureName).NotNull().NotEmpty().WithMessage("ManufactureName is required");
         }
     }
 
