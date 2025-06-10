@@ -54,7 +54,7 @@ namespace HIMS.Services.IPPatient
         public virtual async Task InsertAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "AddedByDate", "UpdatedBy", "UpdatedByDate", "TemplateDescriptionHtml" };
+            string[] rEntity = { "AddedByDate", "UpdatedByDate", "TemplateDescriptionHtml" };
             var entity = ObjDischargeSummary.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -79,7 +79,7 @@ namespace HIMS.Services.IPPatient
         public virtual async Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "AdmissionId", "DischargeSummaryDate", "DischargeSummaryTime", "AddedBy", "AddedByDate", "UpdatedByDate", "TemplateDescriptionHtml" };
+            string[] rEntity = { "AdmissionId", "DischargeSummaryDate", "DischargeSummaryTime", "AddedByDate", "UpdatedByDate", "TemplateDescriptionHtml" };
             var Uentity = ObjDischargeSummary.ToDictionary();
             foreach (var rProperty in rEntity)
             {

@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
          [HttpPut("Edit/{id:int}")]
-         [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
