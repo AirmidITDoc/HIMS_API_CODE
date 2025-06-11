@@ -1655,15 +1655,15 @@ namespace HIMS.Services.Report
                         if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
                                                                                      //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
                             ItemsTotal.Append(CreateSummary(dt, totalColList, model.summaryLabel.Split(',')));
-                       
+
 
                         else
-                            ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x=>!string.IsNullOrWhiteSpace(x)).ToArray()));
-
-                        ItemsTotal.Append(CreateSummaryIncome(dt, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
+                            ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
+                        if (model.Mode == "DailyCollectionSummary")
+                            ItemsTotal.Append(CreateSummaryIncome(dt, headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
                     }
                     break;
-                 
+
             }
 
             if (!string.IsNullOrEmpty(T_Count.ToString()))
@@ -1825,10 +1825,10 @@ namespace HIMS.Services.Report
         }
 
 
-        public static string CreateSummaryIncome(DataTable dt, string[] groupCol, string[] totalColList)
+        public static string CreateSummaryIncome(DataTable dt, string[] headers, string[] groupCol, string[] totalColList)
         {
 
-         
+
 
             StringBuilder table = new();
 
@@ -1837,6 +1837,7 @@ namespace HIMS.Services.Report
 
             // Dictionary to store totals for each group
             Dictionary<string, Dictionary<string, decimal>> groupTotals = new();
+            table.Append("<tr style='font-size:20px;color:black;'><th style='border:0;padding-top:10px;padding-bottom:10px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append("Summary").Append("</th></tr>");
 
             foreach (var group in groupNames)
             {
@@ -1849,9 +1850,7 @@ namespace HIMS.Services.Report
                                   .Distinct();
 
                 // Start new table for each group
-                table.Append($"<h3>Summary</h3>");
-                table.Append("<table style='border-collapse:collapse; width:100%;'>");
-
+               
                 foreach (var subGroup in subGroups)
                 {
                     table.Append("<tr style='border:1px solid black; color:black; background-color:#f0f0f0;'>");
