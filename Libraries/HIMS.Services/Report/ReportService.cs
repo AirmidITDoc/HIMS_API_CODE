@@ -1782,16 +1782,21 @@ namespace HIMS.Services.Report
         {
             table.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
             int col = 1;
+            int colspan = 1;
             foreach (var hr in footer)
             {
                 string total = "";
                 if (hr.ToLower() == "space")
-                    total = "";
+                    colspan++;
                 else if (hr.ToLower() == "labletotal")
                     total = isTotal ? "Total" : ("Sub Total for " + groupName);
                 else
                     total = groupData.Sum(row => row.IsNull(hr) ? 0 : Convert.ToDecimal(row[hr])).ToString();
-                table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px;'>").Append(total).Append("</th>");
+                if (!string.IsNullOrWhiteSpace(total) || footer.Length == col)
+                {
+                    table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px;' colspan='").Append(colspan).Append("'>").Append(total).Append("</th>");
+                    colspan = 1;
+                }
                 col++;
             }
             table.Append("</tr>");
@@ -1800,6 +1805,7 @@ namespace HIMS.Services.Report
         public static string CreateSummary(DataTable dt, string[] totalColList, string[] summaries)
         {
             StringBuilder table = new();
+            int col = 1; int colspan = 1;
             foreach (var summary in summaries)
             {
                 var groups = dt.AsEnumerable().Select(row => row.Field<string>(summary)).Distinct().ToList();
@@ -1809,14 +1815,23 @@ namespace HIMS.Services.Report
                     foreach (var colName in totalColList)
                     {
                         if (colName == "space")
-                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                        {
+                            if (totalColList.Length == col)
+                                table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                            else
+                                colspan++;
+                        }
                         else if (colName == "lableTotal")
-                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>Total " + group + "</td>");
+                        {
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'>Total " + group + "</td>");
+                            colspan = 1;
+                        }
                         else
                         {
                             string total = dt.Select(summaries[0] + "='" + group + "'").Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName])).ToString();
                             table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>" + total + "</td>");
                         }
+                        col++;
                     }
                     table.Append("</tr>");
                 }
@@ -1838,7 +1853,7 @@ namespace HIMS.Services.Report
             // Dictionary to store totals for each group
             Dictionary<string, Dictionary<string, decimal>> groupTotals = new();
             table.Append("<tr style='font-size:20px;color:black;'><th style='border:0;padding-top:10px;padding-bottom:10px;text-align:left;' colspan='").Append(headers.Length).Append("'>").Append("Summary").Append("</th></tr>");
-
+            int col = 1; int colspan = 1;
             foreach (var group in groupNames)
             {
                 groupTotals[group] = new Dictionary<string, decimal>();
@@ -1852,16 +1867,20 @@ namespace HIMS.Services.Report
 
                 // Group Total row
                 table.Append("<tr style='border:1px solid black; color:black; background-color:#e6ffe6; font-weight:bold;'>");
-
+                col = 1; colspan = 1;
                 foreach (var colName in totalColList)
                 {
                     if (colName == "space")
                     {
-                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                        if (totalColList.Length == col)
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                        else
+                            colspan++;
                     }
                     else if (colName == "lableTotal")
                     {
-                        table.Append($"<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>Total {group}</td>");
+                        table.Append($"<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'>Total ").Append(group).Append("</td>");
+                        colspan = 1;
                     }
                     else
                     {
@@ -1871,25 +1890,29 @@ namespace HIMS.Services.Report
 
                         table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{total:N2}</td>");
                     }
+                    col++;
                 }
 
                 table.Append("</tr>");
 
                 // Start new table for each group
-
                 foreach (var subGroup in subGroups)
                 {
                     table.Append("<tr style='border:1px solid black; color:black; background-color:#f0f0f0;'>");
-
+                    col = 1; colspan = 1;
                     foreach (var colName in totalColList)
                     {
                         if (colName == "space")
                         {
-                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                            if (totalColList.Length == col)
+                                table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                            else
+                                colspan++;
                         }
                         else if (colName == "lableTotal")
                         {
-                            table.Append($"<td style='text-align:left; border:1px solid #d4c3c3; padding:6px;'>{subGroup} Sub Total</td>");
+                            table.Append($"<td style='text-align:left; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'>").Append(subGroup).Append(" Sub Total</td>");
+                            colspan = 1;
                         }
                         else
                         {
@@ -1897,6 +1920,7 @@ namespace HIMS.Services.Report
                                                  .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]));
                             table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{subTotal:N2}</td>");
                         }
+                        col++;
                     }
 
                     table.Append("</tr>");
@@ -1905,16 +1929,20 @@ namespace HIMS.Services.Report
 
             // Grand Total row (Income - Expense)
             table.Append("<tr style='border:1px solid black; color:black; background-color:#ccffff; font-weight:bold;'>");
-
+            col = 1; colspan = 1;
             foreach (var colName in totalColList)
             {
                 if (colName == "space")
                 {
-                    table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                    if (totalColList.Length == col)
+                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                    else
+                        colspan++;
                 }
                 else if (colName == "lableTotal")
                 {
-                    table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>Grand Total</td>");
+                    table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'  colspan='").Append(colspan).Append("'>Grand Total</td>");
+                    colspan = 1;
                 }
                 else
                 {
@@ -1926,6 +1954,7 @@ namespace HIMS.Services.Report
 
                     table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{net:N2}</td>");
                 }
+                col++;
             }
 
             table.Append("</tr>");
@@ -1939,15 +1968,25 @@ namespace HIMS.Services.Report
         {
             // Add Grand Total Row (without grouping)
             StringBuilder table = new();
+            int colspan = 1;
             if (totalColList.Length > 0)
             {
+                int col = 1;
                 table.Append("<tr style='border:1px solid black; color:black; background-color:#f9f9f9; font-weight:bold;'>");
                 foreach (var colName in totalColList)
                 {
                     if (colName == "space")
-                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                    {
+                        if (totalColList.Length == col)
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                        else
+                            colspan++;
+                    }
                     else if (colName == "lableTotal")
-                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>Total Amount</td>");
+                    {
+                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'colspan='").Append(colspan).Append("'>Total Amount</td>");
+                        colspan++;
+                    }
                     else
                     {
                         string grandTotal = dt.AsEnumerable()
@@ -1955,6 +1994,7 @@ namespace HIMS.Services.Report
                                               .ToString();
                         table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>" + grandTotal + "</td>");
                     }
+                    col++;
                 }
                 table.Append("</tr>");
             }
