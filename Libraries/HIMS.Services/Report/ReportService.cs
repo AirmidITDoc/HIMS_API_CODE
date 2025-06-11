@@ -1602,7 +1602,7 @@ namespace HIMS.Services.Report
                 para[sp_Para] = param;
                 sp_Para++;
             }
-            var dt = odal.FetchDataTableBySP(sp_Name, para);
+            var dt = odal.FetchDataTableBySP(sp_Name, para, true);
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1849,32 +1849,6 @@ namespace HIMS.Services.Report
                                   .Select(row => row[groupCol[1]].ToString())
                                   .Distinct();
 
-                // Start new table for each group
-               
-                foreach (var subGroup in subGroups)
-                {
-                    table.Append("<tr style='border:1px solid black; color:black; background-color:#f0f0f0;'>");
-
-                    foreach (var colName in totalColList)
-                    {
-                        if (colName == "space")
-                        {
-                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
-                        }
-                        else if (colName == "lableTotal")
-                        {
-                            table.Append($"<td style='text-align:left; border:1px solid #d4c3c3; padding:6px;'>{subGroup} Sub Total</td>");
-                        }
-                        else
-                        {
-                            decimal subTotal = dt.Select($"{groupCol[0]} = '{group}' AND {groupCol[1]} = '{subGroup}'")
-                                                 .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]));
-                            table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{subTotal:N2}</td>");
-                        }
-                    }
-
-                    table.Append("</tr>");
-                }
 
                 // Group Total row
                 table.Append("<tr style='border:1px solid black; color:black; background-color:#e6ffe6; font-weight:bold;'>");
@@ -1900,6 +1874,33 @@ namespace HIMS.Services.Report
                 }
 
                 table.Append("</tr>");
+
+                // Start new table for each group
+
+                foreach (var subGroup in subGroups)
+                {
+                    table.Append("<tr style='border:1px solid black; color:black; background-color:#f0f0f0;'>");
+
+                    foreach (var colName in totalColList)
+                    {
+                        if (colName == "space")
+                        {
+                            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'></td>");
+                        }
+                        else if (colName == "lableTotal")
+                        {
+                            table.Append($"<td style='text-align:left; border:1px solid #d4c3c3; padding:6px;'>{subGroup} Sub Total</td>");
+                        }
+                        else
+                        {
+                            decimal subTotal = dt.Select($"{groupCol[0]} = '{group}' AND {groupCol[1]} = '{subGroup}'")
+                                                 .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]));
+                            table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{subTotal:N2}</td>");
+                        }
+                    }
+
+                    table.Append("</tr>");
+                }
             }
 
             // Grand Total row (Income - Expense)
