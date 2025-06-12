@@ -1740,16 +1740,19 @@ namespace HIMS.Services.Report
                             {
                                 CreateRows(group2Data, table, headers, columnDataNames, ref RowNo);
                             }
-                            CreateFooterGroupBy(group2Data, table, footer, group2);
+                            if (footer != null && footer.Any(x => !string.IsNullOrWhiteSpace(x)))
+                                CreateFooterGroupBy(group2Data, table, footer, group2);
                         }
                     }
                     else
                     {
                         CreateRows(group1Data, table, headers, columnDataNames, ref RowNo);
                     }
-                    CreateFooterGroupBy(group1Data, table, footer, group1);
+                    if (footer != null && footer.Any(x => !string.IsNullOrWhiteSpace(x)))
+                        CreateFooterGroupBy(group1Data, table, footer, group1);
                 }
-                CreateFooterGroupBy(dt.AsEnumerable(), table, footer, "Total", true);
+                if (footer != null && footer.Any(x => !string.IsNullOrWhiteSpace(x)))
+                    CreateFooterGroupBy(dt.AsEnumerable(), table, footer, "Total", true);
             }
             else
             {
