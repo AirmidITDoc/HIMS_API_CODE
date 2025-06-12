@@ -28,6 +28,14 @@ namespace HIMS.Services.OPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "ps_Rtrv_PhoneAppList");
         }
+        public virtual async Task<IPagedList<FutureAppointmentDetailListDto>> GetListAsyncF(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<FutureAppointmentDetailListDto>(model, "ps_Rtrv_ScheduledPhoneAppList");
+        }
+        public virtual async Task<IPagedList<FutureAppointmentListDto>> FutureAppointmentList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<FutureAppointmentListDto>(model, "s_Rtrv_ScheduledPhoneApp");
+        }
         public virtual async Task<IPagedList<TPhoneAppointment>> GetPhoneListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TPhoneAppointment>(model, "ps_Rtrv_PhoneAppointmentListSearch");

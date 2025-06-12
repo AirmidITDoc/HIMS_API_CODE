@@ -16,5 +16,10 @@ namespace HIMS.Services.OPPatient
         Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<TPhoneAppointment>> GetPhoneListAsync(GridRequestModel objGrid);
         Task<List<PhoneAutoCompleteDto>> SearchPhoneApp(string str);
+        Task<IPagedList<FutureAppointmentDetailListDto>> GetListAsyncF(GridRequestModel objGrid);
+        Task<IPagedList<FutureAppointmentListDto>> FutureAppointmentList(GridRequestModel objGrid);
+
+
+        
     }
 }
