@@ -460,7 +460,7 @@ namespace HIMS.Data.DataProviders
 
         #endregion ExecuteScalarAsync        
 
-       
+
 
         public DataSet ExecuteDataSet(string query)
         {
@@ -582,7 +582,7 @@ namespace HIMS.Data.DataProviders
 
         #endregion ExecuteDatasetAsync 
 
-        public DataTable FetchDataTableBySP(string Spname, SqlParameter[] para)
+        public DataTable FetchDataTableBySP(string Spname, SqlParameter[] para, bool IsForMoneyToDecimal = false)
         {
             DataTable dt = new();
             Command.CommandType = CommandType.StoredProcedure;
@@ -593,6 +593,22 @@ namespace HIMS.Data.DataProviders
             {
                 objConnection.Open();
                 da.Fill(dt);
+                if (IsForMoneyToDecimal)
+                {
+                    foreach (DataColumn column in dt.Columns)
+                    {
+                        if (column.DataType == typeof(decimal))
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row[column] != DBNull.Value)
+                                {
+                                    row[column] = Math.Round((decimal)row[column], 2);
+                                }
+                            }
+                        }
+                    }
+                }
                 return dt;
             }
             catch (Exception ex)

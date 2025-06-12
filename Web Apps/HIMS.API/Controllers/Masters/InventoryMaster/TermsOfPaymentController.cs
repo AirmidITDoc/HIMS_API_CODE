@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "TermsofPayment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MTermsOfPaymentMaster> TermsOfPaymentMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "TermsofPayment", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TermsofPayment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(TermsOfPaymentModel obj)
         {
             MTermsOfPaymentMaster model = obj.MapTo<MTermsOfPaymentMaster>();
@@ -58,11 +58,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TermsOfPaymentMaster  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TermsofPayment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TermsOfPaymentModel obj)
         {
             MTermsOfPaymentMaster model = obj.MapTo<MTermsOfPaymentMaster>();
@@ -75,11 +75,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TermsOfPaymentMaster  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TermsofPayment", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MTermsOfPaymentMaster model = await _repository.GetById(x => x.Id == Id);
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TermsOfPaymentMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
