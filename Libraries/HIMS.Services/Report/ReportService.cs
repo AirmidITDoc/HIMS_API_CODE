@@ -98,6 +98,9 @@ namespace HIMS.Services.Report
 
             switch (model.Mode)
             {
+               
+
+
                 #region :: RegistrationReport ::
                 case "RegistrationReport":
                     {
@@ -880,6 +883,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+              
+
+                #region :: RegistrationForm ::
+                case "RegistrationForm":
+                    {
+
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RegistrationForm.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationForm", "RegistrationForm" + vDate, Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
                 #region :: IpDraftBillGroupWise ::
                 case "IpDraftBillGroupWise":
                     {
@@ -1088,7 +1110,6 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
-
 
 
                 #region :: IpDischargeSummaryReport ::
@@ -3057,6 +3078,39 @@ namespace HIMS.Services.Report
                                     T_Count += dr["Lbl"].ConvertToDouble();
                         }
                         html = html.Replace("{{T_Count}}", T_Count.ToString());
+
+                    }
+                    break;
+
+                case "RegistrationForm":
+                    {
+
+                        int i = 0;
+
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{RegId}}", dt.GetColValue("RegId"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{City}}", dt.GetColValue("City"));
+                        html = html.Replace("{{PinNo}}", dt.GetColValue("PinNo"));
+
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                  
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+
+                       
+                        html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+
+                      
+
+                        return html;
 
                     }
                     break;

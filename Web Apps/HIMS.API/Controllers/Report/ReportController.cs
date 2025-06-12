@@ -157,6 +157,7 @@ namespace HIMS.API.Controllers.Report
             switch (model.Mode)
             {
                 #region"OP Reports"
+                case "RegistrationForm":
 
                 case "RegistrationReport":
                 case "AppointmentListReport":
