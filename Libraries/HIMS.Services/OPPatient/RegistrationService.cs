@@ -89,13 +89,16 @@ namespace HIMS.Services.OPPatient
                 objRegistration.IsIndientOrWeaker = objReg.IsIndientOrWeaker;
                 objRegistration.RationCardNo = objReg.RationCardNo;
                 objRegistration.IsMember = objReg.IsMember;
+                objRegistration.RegDate = objReg.RegDate;
+                objRegistration.RegTime = objReg.RegTime;
                 _context.Registrations.Update(objRegistration);
                 _context.Entry(objRegistration).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
-
+       
     }
 }
