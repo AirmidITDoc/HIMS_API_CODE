@@ -51,14 +51,8 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<getPrescriptionTemplateDetailsListDto>(model, "ps_RtrvTemplate_PrescriptionList");
         }
 
-
-       
-
-
-
-
-        //Ashu///
-        public virtual async Task InsertPrescriptionAsyncSP(List<TPrescription> objTPrescription, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
+        //Ashu///  Modifierd by shilpa 2025/14/06 m_Update_VisitFollowupDate//
+        public virtual async Task InsertPrescriptionAsyncSP(List<TPrescription> objTPrescription,VisitDetail ObjVisitDetail,List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
             foreach (var modelItem in objTPrescription)
@@ -88,6 +82,14 @@ namespace HIMS.Services.OutPatient
                 }
                 entity["IsAddBy"] = 0; // Ensure objpayment has OPDIPDType
                 odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
+
+                string[] VDetailEntity = { "RegId","VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","Opdno","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate", "ClassId", "DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "Height","Pweight","Bmi","Bsl","SpO2", "Temp", "Pulse", "Bp"};
+                var VEntity = ObjVisitDetail.ToDictionary();
+                foreach (var rProperty in VDetailEntity)
+                {
+                    VEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_Update_VisitFollowupDate", CommandType.StoredProcedure, VEntity);
 
             }
             foreach (var item in objTOprequestList)

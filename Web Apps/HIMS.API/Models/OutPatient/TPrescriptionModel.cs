@@ -57,6 +57,12 @@ namespace HIMS.API.Models.OutPatient
 
             }
         }
+    public class VisitFollowupDateUpdate
+    {
+        public long VisitId {  get; set; }
+        public DateTime FollowupDate { get; set; }
+
+    }
         public class TOPRequestListModel
         {
 
@@ -92,10 +98,9 @@ namespace HIMS.API.Models.OutPatient
         public class ModelTPrescription
         {
             public List<TPrescriptionModel> TPrescription { get; set; }
+            public VisitFollowupDateUpdate VisitDetails { get; set; }
             public List<TOPRequestListModel> TOPRequestList { get; set; }
             public List<MOPCasepaperDignosisMasterModel> MOPCasepaperDignosisMaster { get; set; }
-
-
         }
         public class UpdatePrescriptionModel
         {
