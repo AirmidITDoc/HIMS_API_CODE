@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refund  update successfully .");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  update successfully .");
         }
 
 

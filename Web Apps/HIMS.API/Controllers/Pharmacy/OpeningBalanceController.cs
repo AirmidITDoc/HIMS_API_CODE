@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // changes done by Subhash -- Date : 19 May 2025
         [HttpPost("OpeningBalanceSave")]
-        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
            TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Opening Balance Save successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
     }
 }

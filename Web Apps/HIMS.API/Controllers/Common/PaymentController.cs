@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Common
 
 
         [HttpPost("PaymentInsert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewPaymentModel obj)
         {
             Payment model = obj.MapTo<Payment>();
@@ -42,11 +42,11 @@ namespace HIMS.API.Controllers.Common
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
 
         }
         [HttpPut("Edit/{id:int}")]
-     //   [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NewPaymentModel obj)
         {
             Payment model = obj.MapTo<Payment>();
@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.Common
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
                 await _IPaymentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Payment  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
     }
