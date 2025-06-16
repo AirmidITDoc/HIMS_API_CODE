@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IndentList")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
@@ -40,14 +40,14 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IndentDetailsList")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> IndentDetailsList = await _IIndentService.GetIndentItemListAsync(objGrid);
             return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent Item Detail List"));
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -60,11 +60,11 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent added successfully.", model.IndentId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IndentId);
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -76,11 +76,11 @@ namespace HIMS.API.Controllers.Inventory
                 model.IndentTime = Convert.ToDateTime(obj.IndentTime);
                 await _IIndentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent updated successfully.", model.IndentId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.IndentId);
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(IndentVerifyModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -92,12 +92,12 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent verified successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verified successfully.");
         }
 
         
         [HttpPost("Cancel")]
-        [Permission(PageCode = "VisitDetail", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(IndentCancel obj)
         {
             TIndentHeader model = new();
@@ -110,12 +110,12 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Indent Canceled successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
 
         [HttpPost("OldIndentList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOldIndentList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> List1 = await _IIndentService.GetOldIndentAsync(objGrid);

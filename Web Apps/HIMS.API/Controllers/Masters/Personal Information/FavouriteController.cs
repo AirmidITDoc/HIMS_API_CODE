@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
                 await _favouriteService.InsertAsync(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Favourite added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
     }
 }

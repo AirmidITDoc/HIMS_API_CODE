@@ -116,7 +116,7 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-Examination")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetExaminationDropdown()
         {
             var MExaminationMasterList = await _Examination.GetAll();
@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-ChiefComplaint")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetChiefComplaintDropdown()
         {
             var MChiefComplaintMasterList = await _MComplaintMaster.GetAll();
