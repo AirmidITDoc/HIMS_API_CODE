@@ -139,6 +139,50 @@ namespace HIMS.API.Controllers.Report
             var data = await _reportService.SearchClassMaster(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchClassMaster Data.", data.Select(x => new { Text = x.ClassName, Value = x.ClassId }));
         }
+
+        [HttpGet("MStoreMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMStoreMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMStoreMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMStoreMaster Data.", data.Select(x => new { Text = x.StoreName, Value = x.StoreId }));
+        }
+
+        [HttpGet("MSupplierMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMSupplierMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMSupplierMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMSupplierMaster Data.", data.Select(x => new { Text = x.SupplierName, Value = x.SupplierId }));
+        }
+
+
+        [HttpGet("MItemDrugTypeMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMItemDrugTypeMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMItemDrugTypeMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemDrugTypeMaster Data.", data.Select(x => new { Text = x.DrugTypeName, Value = x.ItemDrugTypeId }));
+        }
+
+        [HttpGet("MCreditReasonMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMCreditReasonMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMCreditReasonMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMCreditReasonMaster Data.", data.Select(x => new { Text = x.CreditReason, Value = x.CreditId }));
+        }
+
+
+        [HttpGet("MItemMasterList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMItemMasterListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMItemMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemMaster Data.", data.Select(x => new { Text = x.ItemName, Value = x.ItemId }));
+        }
+
+
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)

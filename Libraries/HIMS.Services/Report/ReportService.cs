@@ -88,6 +88,36 @@ namespace HIMS.Services.Report
             return await this._context.ClassMasters.Where(x => (x.ClassName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+        public virtual async Task<List<MStoreMaster>> SearchMStoreMaster(string str)
+        {
+            return await this._context.MStoreMasters.Where(x => (x.StoreName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<MSupplierMaster>> SearchMSupplierMaster(string str)
+        {
+            return await this._context.MSupplierMasters.Where(x => (x.SupplierName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        //public virtual async Task<List<Payment>> SearchPayment(string str)
+        //{
+        //    return await this._context.Payments.Where(x => (x.PaymentId).ToLower().Contains(str)).Take(25).ToListAsync();
+        //}
+
+        public virtual async Task<List<MItemDrugTypeMaster>> SearchMItemDrugTypeMaster(string str)
+        {
+            return await this._context.MItemDrugTypeMasters.Where(x => (x.DrugTypeName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str)
+        {
+            return await this._context.MCreditReasonMasters.Where(x => (x.CreditReason).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+        public virtual async Task<List<MItemMaster>> SearchMItemMaster(string str)
+        {
+            return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
 
 
         public string GetReportSetByProc(ReportRequestModel model)

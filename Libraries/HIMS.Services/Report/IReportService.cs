@@ -18,6 +18,13 @@ namespace HIMS.Services.Report
         Task<List<DischargeTypeMaster>> SearchDischargeType(string str);
         Task<List<GroupMaster>> SearchGroupMaster(string str);
         Task<List<ClassMaster>> SearchClassMaster(string str);
+        Task<List<MStoreMaster>> SearchMStoreMaster(string str);
+        Task<List<MSupplierMaster>> SearchMSupplierMaster(string str);
+        //Task<List<Payment>> SearchPayment(string str);
+        Task<List<MItemDrugTypeMaster>> SearchMItemDrugTypeMaster(string str);
+        Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
+        Task<List<MItemMaster>> SearchMItemMaster(string str);
+       
     }
     
 }
