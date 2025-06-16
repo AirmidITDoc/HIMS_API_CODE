@@ -133,7 +133,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRequestList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRequestList(GridRequestModel objGrid)
         {
             IPagedList<OPRequestListDto> List = await _OPDPrescriptionService.TOprequestList(objGrid);
@@ -141,16 +141,17 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PrescriptionInsertSP")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
             List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();
+            VisitDetail model1 = obj.VisitDetails.MapTo<VisitDetail>();
             List<TOprequestList> objTOPRequest = obj.TOPRequestList.MapTo<List<TOprequestList>>();
             List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosis = obj.MOPCasepaperDignosisMaster.MapTo<List<MOpcasepaperDignosisMaster>>();
 
             if (model.Count > 0)
             {
-                await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+                await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -165,7 +166,7 @@ namespace HIMS.API.Controllers.OPPatient
             //}
             //else
             //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prescription added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         
         //Edit API
@@ -199,13 +200,13 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PrescriptionGeneric  update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  update successfully.");
         }
 
 
 
         [HttpPost("OPTemplateInsert")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
