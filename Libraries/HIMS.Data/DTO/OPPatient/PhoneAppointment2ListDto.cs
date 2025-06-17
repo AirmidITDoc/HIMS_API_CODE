@@ -24,6 +24,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? DoctorName {  get; set; }
         public bool? IsCancelled { get; set; }
         public string? AddedByName { get; set; }
+        public string? FlagAppDone { get; set; }
     }
     public class PhoneAutoCompleteDto
     {
