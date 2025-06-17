@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PatientTypeMaster> PatientTypeList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientTypeList.ToGridResponse(objGrid, "Patient Type List"));
+            return Ok(PatientTypeList.ToGridResponse(objGrid, "PatientType List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Type added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Type updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         //Delete API
         [HttpDelete]
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Type deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
