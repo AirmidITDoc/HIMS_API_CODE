@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Masters
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("{id:int}")]
         [Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpDelete]
         [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
@@ -88,14 +88,14 @@ namespace HIMS.API.Controllers.Masters
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
         [HttpGet]
         [Route("get-prefixs")]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);

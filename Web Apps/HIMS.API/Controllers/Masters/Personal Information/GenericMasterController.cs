@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "GenericMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "GenericMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MGenericMaster> MGenericMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "GenericMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "GenericMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "GenericMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GenericMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(GenericMasterModel obj)
         {
             MGenericMaster model = obj.MapTo<MGenericMaster>();
@@ -58,11 +58,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GenericName added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "GenericMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GenericMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GenericMasterModel obj)
         {
             MGenericMaster model = obj.MapTo<MGenericMaster>();
@@ -75,11 +75,11 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GenericName  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "GenericMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "GenericMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse>  Delete(int Id)
         {
             MGenericMaster model = await _repository.GetById(x => x.GenericId == Id);
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GenericName  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
