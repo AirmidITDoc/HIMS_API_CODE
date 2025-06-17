@@ -33,5 +33,6 @@ namespace HIMS.Data.DTO.OPPatient
         public string LastName { get; set; }
         public string RegNo { get; set; }
         public string Mobile { get; set; }
+        public long RegId { get; set; }
     }
 }
