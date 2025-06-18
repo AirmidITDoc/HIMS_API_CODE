@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSP")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
+        public async Task<ApiResponse> Insertsp(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
@@ -72,6 +72,30 @@ namespace HIMS.API.Controllers.OPPatient
 
                 model.UpdatedBy = CurrentUserId;
                 await _IPhoneAppointment2Service.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
+        }
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
+        {
+            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+            if (obj.PhoneAppId == 0)
+            {
+                model.AppDate = DateTime.Now.Date;
+                model.AppTime = DateTime.Now;
+
+                model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
+                model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
+
+                model.StartTime = Convert.ToDateTime(obj.StartTime);
+                model.EndTime = Convert.ToDateTime(obj.EndTime);
+
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _IPhoneAppointment2Service.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

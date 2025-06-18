@@ -20,6 +20,9 @@ namespace HIMS.API.Models.OPPatient
         public long AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? RegNo { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+
     }
     public class PhoneAppointment2ModelValidator : AbstractValidator<PhoneAppointment2Model>
     {

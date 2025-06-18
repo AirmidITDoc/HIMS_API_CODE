@@ -79,6 +79,39 @@ namespace HIMS.Services.OPPatient
             //).Take(25).ToListAsync();
 
         }
+        //public virtual async Task<TPhoneAppointment> InsertAsync(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
+        //{
+        //    DatabaseHelper odal = new();
+        //    string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
+        //    var entity = objTPhoneAppointment.ToDictionary();
+        //    foreach (var rProperty in rEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+        //    string vPhoneAppId = odal.ExecuteNonQuery("ps_insert_T_PhoneAppointment_1", CommandType.StoredProcedure, "PhoneAppId", entity);
+        //    objTPhoneAppointment.PhoneAppId = Convert.ToInt32(vPhoneAppId);
+
+        //    await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+        //    return objTPhoneAppointment;
+        //}
+
+        public virtual async Task InsertAsync(TPhoneAppointment objTPhoneAppointment, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Add Purchase Header
+                objTPhoneAppointment.SeqNo = "0";
+                _context.TPhoneAppointments.Add(objTPhoneAppointment);
+                await _context.SaveChangesAsync();
+
+                // Complete Transaction
+                scope.Complete();
+
+            }
+        }
+
+
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
