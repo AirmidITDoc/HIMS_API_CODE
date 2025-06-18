@@ -23,7 +23,11 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<getPrescriptionTemplateDetailsListDto>> TemplateDetailsList(GridRequestModel objGrid);
         Task UpdateAsync(TPrescription ObjTPrescription, int UserId, string Username);
         Task UpdateAsyncGeneric(TPrescription ObjTPrescription, int UserId, string Username);
-        //Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(string ItemName);
+        //Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(string DescriptionType);
+        Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string DescriptionType);
+
+
+
 
 
 

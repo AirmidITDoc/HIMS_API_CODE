@@ -95,6 +95,8 @@ namespace HIMS.API.Controllers.OPPatient
 
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _IPhoneAppointment2Service.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
