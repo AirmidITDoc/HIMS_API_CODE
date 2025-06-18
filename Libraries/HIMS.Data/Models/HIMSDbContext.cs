@@ -8970,17 +8970,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Age).HasMaxLength(10);
 
-                entity.Property(e => e.AgeDay)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.AgeDay).HasMaxLength(5);
 
-                entity.Property(e => e.AgeMonth)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.AgeMonth).HasMaxLength(5);
 
-                entity.Property(e => e.AgeYear)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.AgeYear).HasMaxLength(5);
 
                 entity.Property(e => e.AnnualIncome)
                     .HasColumnType("money")
@@ -13348,6 +13342,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AppTime).HasColumnType("datetime");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
@@ -13362,6 +13360,8 @@ namespace HIMS.Data.Models
                     .HasMaxLength(15)
                     .IsFixedLength();
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PhAppDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PhAppTime).HasColumnType("datetime");
@@ -13369,6 +13369,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>
