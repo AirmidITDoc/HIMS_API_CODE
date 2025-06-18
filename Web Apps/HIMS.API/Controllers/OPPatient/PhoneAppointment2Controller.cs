@@ -126,9 +126,31 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IPhoneAppointment2Service.SearchPhoneApp(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId= x.RegNo }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo }));
         }
-        
+        [HttpGet("get-appoinments")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAppoinments(int DocId, DateTime FromDate, DateTime ToDate)
+        {
+            var data = await _IPhoneAppointment2Service.GetAppoinments(DocId, FromDate, ToDate);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new
+            {
+                Start = x.PhAppTime,
+                End = x.PhAppTime.Value.AddMinutes(30),
+                Title = x.FirstName + " " + x.MiddleName + " " + x.LastName + " (" + x.MobileNo + ")",
+                resizable = new
+                {
+                    beforeStart = true,
+                    afterEnd = true,
+                },
+                draggable = true,
+                color = new
+                {
+                    primary = "#ad2121",
+                    secondary = "#FAE3E3",
+                }
+            }));
+        }
     }
 }
 

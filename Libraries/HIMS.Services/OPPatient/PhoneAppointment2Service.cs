@@ -144,5 +144,9 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task<List<TPhoneAppointment>> GetAppoinments(int DocId,DateTime FromDate,DateTime ToDate)
+        {
+            return await this._context.TPhoneAppointments.Where(x => x.DoctorId == DocId && x.PhAppDate >= FromDate && x.PhAppDate <= ToDate).ToListAsync();
+        }
     }
 }
