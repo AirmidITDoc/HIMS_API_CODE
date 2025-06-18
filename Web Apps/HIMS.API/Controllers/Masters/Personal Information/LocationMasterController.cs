@@ -14,7 +14,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class InstructionMastereController : BaseController
+    public class LocationMasterController : BaseController
     {
         private readonly IGenericService<LocationMaster> _repository;
         public LocationMasterController(IGenericService<LocationMaster> repository)
