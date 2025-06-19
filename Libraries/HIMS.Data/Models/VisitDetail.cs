@@ -40,5 +40,13 @@ namespace HIMS.Data.Models
         public string? Temp { get; set; }
         public string? Pulse { get; set; }
         public string? Bp { get; set; }
+        public DateTime? CheckInTime { get; set; }
+        public DateTime? CheckOutTime { get; set; }
+        public DateTime? ConStartTime { get; set; }
+        public DateTime? ConEndTime { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
