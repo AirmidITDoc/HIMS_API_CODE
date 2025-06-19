@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -78,7 +79,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
@@ -103,6 +104,24 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
+
+       
+        [HttpPut("RechedulePhoneAppointment")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PhoneAppointmentUpdate obj)
+        {
+            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+            if (obj.PhoneAppId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
+                model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
+                await _IPhoneAppointment2Service.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        
 
         [HttpDelete("Cancel")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
