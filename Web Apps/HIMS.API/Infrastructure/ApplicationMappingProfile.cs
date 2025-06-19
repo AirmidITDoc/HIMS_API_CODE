@@ -390,6 +390,10 @@ namespace HIMS.API.Infrastructure
              CreateMap<Payment, OPPaymentdetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhoneAppointment, PhoneAppointment2Model>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhoneAppointment, PhoneAppointmentUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, ConsulationStartEndProcess>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, CheckOutProcessUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

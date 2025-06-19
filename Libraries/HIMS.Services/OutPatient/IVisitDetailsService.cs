@@ -37,5 +37,9 @@ namespace HIMS.Services.OutPatient
         Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
 
         Task UpdateVitalAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
+        Task UpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
+        Task UpdateAsyncv(VisitDetail ObjVisitDetail, int UserId, string Username);
+
+
     }
 }

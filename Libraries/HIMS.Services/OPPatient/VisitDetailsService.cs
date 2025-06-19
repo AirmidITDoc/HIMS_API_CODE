@@ -348,21 +348,44 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
-             public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+            public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
             {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray" };
-            var entity = objCrossConsultation.ToDictionary();
-            foreach (var rProperty in rEntity)
-            {
+               DatabaseHelper odal = new();
+               string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray" };
+               var entity = objCrossConsultation.ToDictionary();
+               foreach (var rProperty in rEntity)
+               {
                 entity.Remove(rProperty);
+               }
+               string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+               objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
+
+               await _context.SaveChangesAsync(UserId, Username);
+
+                return objCrossConsultation;
+
             }
-            string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
-            objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
+        public virtual async Task UpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var existing = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == ObjVisitDetail.VisitId);
 
-            await _context.SaveChangesAsync(UserId, Username);
+            //  Update only the required fields
+            existing.ConStartTime = ObjVisitDetail.ConStartTime;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
 
-            return objCrossConsultation;
+        public virtual async Task UpdateAsyncv(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var existing = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == ObjVisitDetail.VisitId);
+
+            //  Update only the required fields
+            existing.ConEndTime = ObjVisitDetail.ConEndTime;
+            existing.CheckOutTime = ObjVisitDetail.CheckOutTime;
+            await _context.SaveChangesAsync();
+            scope.Complete();
         }
     }  
 }
