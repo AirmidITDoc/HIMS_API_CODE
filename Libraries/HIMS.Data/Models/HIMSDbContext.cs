@@ -14811,7 +14811,17 @@ namespace HIMS.Data.Models
                     .HasMaxLength(20)
                     .HasColumnName("BSL");
 
+                entity.Property(e => e.CheckInTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CheckOutTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.ConEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ConStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstFollowupVisit).HasDefaultValueSql("((0))");
 
@@ -14826,6 +14836,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsMark).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsXray).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Opdno)
                     .HasMaxLength(50)

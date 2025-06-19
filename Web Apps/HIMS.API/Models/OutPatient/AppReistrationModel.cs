@@ -127,15 +127,24 @@ namespace HIMS.API.Models.OutPatient
         public AppReistrationModel Registration { get; set; }
         public AppVisitDetailModel Visit { get; set; }
 
-
-
     }
     public class AppointmentUpdate
     {
         public AppReistrationUpdateModel AppReistrationUpdate { get; set; }
         public AppVisitDetailModel Visit { get; set; }
 
+    }
+    public class ConsulationStartEndProcess
+    {
+        public long VisitId { get; set; }
+        public string? ConStartTime { get; set; }
 
+    }
+    public class CheckOutProcessUpdate
+    {
+        public long VisitId { get; set; }
+        public string? ConEndTime { get; set; }
+        public string? CheckOutTime { get; set; }
     }
 }
 
