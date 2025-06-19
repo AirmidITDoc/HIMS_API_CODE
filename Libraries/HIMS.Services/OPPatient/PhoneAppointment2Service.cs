@@ -150,7 +150,6 @@ namespace HIMS.Services.OPPatient
             return await this._context.TPhoneAppointments.Where(x => x.DoctorId == DocId && x.PhAppDate >= FromDate && x.PhAppDate <= ToDate).ToListAsync();
         }
 
-
         public virtual async Task UpdateAsync(TPhoneAppointment objTPhoneApp, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -164,16 +163,4 @@ namespace HIMS.Services.OPPatient
         }
     }
 }
-        //public virtual async Task UpdateAsync(TPhoneAppointment objTPhoneApp, int CurrentUserId, string CurrentUserName)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update Registration table records
-        //        _context.TPhoneAppointments.Update(objTPhoneApp);
-        //        _context.Entry(objTPhoneApp).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-        //        scope.Complete();
-
-        //    }
-        //}
 

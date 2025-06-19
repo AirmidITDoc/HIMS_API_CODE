@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(FutureAppointmentList.ToGridResponse(objGrid, "FutureAppointmentList"));
         }
         [HttpPost("FutureAppointmentDetailList")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List2(GridRequestModel objGrid)
         {
             IPagedList<FutureAppointmentDetailListDto> FutureAppointmentDetailList = await _IPhoneAppointment2Service.GetListAsyncF(objGrid);
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
        
-        [HttpPut("RechedulePhoneAppointment")]
+        [HttpPut("ReschedulePhoneAppointment")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PhoneAppointmentUpdate obj)
         {
