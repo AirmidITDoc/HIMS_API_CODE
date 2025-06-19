@@ -24,7 +24,7 @@ namespace HIMS.Services.Masters
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel objGrid);
         Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
-
+        Task<List<DoctorMaster>> GetDoctorWithDepartment();
 
     }
 }

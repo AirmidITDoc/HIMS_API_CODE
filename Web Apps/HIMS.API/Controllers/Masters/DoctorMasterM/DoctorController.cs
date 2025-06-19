@@ -158,6 +158,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var List = await _repository1.GetAll();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { x.DoctorId, x.FirstName, x.MiddleName, x.LastName }));
         }
+        [HttpGet]
+        [Route("get-Doctor-depts")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDoctorWithDept()
+        {
+            var List = await _IDoctorMasterService.GetDoctorWithDepartment();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.MiddleName + " " + x.LastName, x.DeptNames }));
+        }
         [HttpGet("get-file")]
         public ApiResponse DownloadFiles(string FileName)
         {

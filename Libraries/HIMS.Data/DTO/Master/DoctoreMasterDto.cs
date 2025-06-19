@@ -13,5 +13,7 @@ namespace HIMS.Data.Models
         public string PrefixName { get; set; }
         [NotMapped]
         public string DoctorTypeName { get; set; }
+        [NotMapped]
+        public string DeptNames { get; set; }
     }
 }

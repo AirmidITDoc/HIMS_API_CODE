@@ -180,6 +180,28 @@ namespace HIMS.Services.Masters
             return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.IsConsultant.Value && y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
         }
 
+        public async Task<List<DoctorMaster>> GetDoctorWithDepartment()
+        {
+            var result = await _context.DoctorMasters
+    .Select(x => new
+    {
+        Doctor = x,
+        DepartmentNames = x.MDoctorDepartmentDets
+                          .Select(y => y.Department.DepartmentName)
+                          .ToList()
+    }).Where(y => y.Doctor.IsConsultant.Value)
+    .ToListAsync();
+            return result.Select(x => new DoctorMaster
+            {
+                DoctorId = x.Doctor.DoctorId,
+                FirstName = x.Doctor.FirstName,
+                MiddleName = x.Doctor.MiddleName,
+                LastName = x.Doctor.LastName,
+                DeptNames = string.Join(',', x.DepartmentNames)
+            }).ToList();
+            //return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets.Select(y=>y.Department.DepartmentName)).Where(y => y.IsConsultant.Value).ToListAsync();
+        }
+
         public virtual async Task<List<DoctorMaster>> SearchDoctor(string str)
         {
             return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
