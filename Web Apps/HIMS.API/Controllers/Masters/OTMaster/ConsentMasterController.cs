@@ -7,9 +7,13 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.Core;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class ConsentMasterController :BaseController
     {
         private readonly IGenericService<MConsentMaster> _repository;
