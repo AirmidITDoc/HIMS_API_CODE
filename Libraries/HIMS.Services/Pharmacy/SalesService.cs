@@ -152,7 +152,7 @@ namespace HIMS.Services.Users
             {
                 Sentity.Remove(rProperty);
             }
-            Sentity["OPDIPDType"] = 1;
+            Sentity["OPDIPDType"] = 3;
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
