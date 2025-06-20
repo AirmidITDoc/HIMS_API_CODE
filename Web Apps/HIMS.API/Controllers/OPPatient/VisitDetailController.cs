@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
             Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
