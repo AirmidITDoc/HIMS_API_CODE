@@ -71,6 +71,16 @@ namespace HIMS.Services.OPPatient
 
             await _context.SaveChangesAsync(UserId, Username);
         }
+        public virtual async Task InsertAsync(Registration objregistration, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.Registrations.Add(objregistration);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
 
         public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
         {

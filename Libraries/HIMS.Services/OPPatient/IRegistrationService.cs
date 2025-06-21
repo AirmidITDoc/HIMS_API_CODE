@@ -8,6 +8,8 @@ namespace HIMS.Services.OPPatient
     {
         Task<IPagedList<RegistrationListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, int UserId, string Username);
+        Task InsertAsync(Registration Registration, int UserId, string Username);
+
         Task UpdateAsync(Registration objRegistration, int UserId, string Username);
         Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str);
     }
