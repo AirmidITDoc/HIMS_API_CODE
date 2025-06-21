@@ -60,6 +60,10 @@ namespace HIMS.Data.DTO.OPPatient
         public string? RefDocName { get; set; }
         public long PhoneAppId { get; set; }
         public long CrossConsulFlag { get; set; }
+        public DateTime? CheckInTime { get; set; }
+        public DateTime? CheckOutTime { get; set; }
+        public DateTime? ConStartTime { get; set; }
+        public DateTime? ConEndTime { get; set; }
 
 
     }
