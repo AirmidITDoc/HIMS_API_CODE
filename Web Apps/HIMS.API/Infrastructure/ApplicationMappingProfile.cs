@@ -392,6 +392,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPhoneAppointment, PhoneAppointmentUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<VisitDetail, ConsulationStartEndProcess>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<VisitDetail, CheckOutProcessUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorQualificationDetail, DoctorQualificationDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DoctorMaster, DoctorQualificationDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorExperienceDetail, DoctorExperienceDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorScheduleDetail, MDoctorScheduleDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorChargesDetail, MDoctorChargesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+
+            
+
 
 
 

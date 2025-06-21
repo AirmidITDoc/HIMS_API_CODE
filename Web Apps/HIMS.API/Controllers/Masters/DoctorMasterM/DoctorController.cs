@@ -24,12 +24,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<LvwDoctorMasterList> _repository1;
         private readonly IFileUtility _FileUtility;
+        private readonly IGenericService<MDoctorQualificationDetail> _repository2;
 
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility)
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorQualificationDetail> repository2)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
             _FileUtility = fileUtility;
+            _repository2 = repository2;
+
         }
         [HttpPost("DoctorList")]
         //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
@@ -78,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
             DoctorMaster model = obj.MapTo<DoctorMaster>();
@@ -95,8 +98,38 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
+        //[HttpPost("InsertEDMX")]
+        ////   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(obj.Signature))
+        //        obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
+        //    DoctorMaster model = obj.MapTo<DoctorMaster>();
+        //    if (obj.DoctorId == 0)
+        //    {
+        //        model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
+        //        if (model.RegDate.HasValue)
+        //            model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime()).Date;
+        //        if (model.MahRegDate.HasValue)
+        //            model.MahRegDate = Convert.ToDateTime(obj.MahRegDate.Value.ToLocalTime()).Date;
+        //        model.Addedby = CurrentUserId;
+        //        model.IsActive = true;
+        //        await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //    {
+        //        model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
+        //        if (model.RegDate.HasValue)
+        //            model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime());
+        //        if (model.MahRegDate.HasValue)
+        //            model.MahRegDate = Convert.ToDateTime(obj.MahRegDate.Value.ToLocalTime());
+        //        await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
+        //}
+
         [HttpPost("InsertEDMX")]
-        //   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
@@ -104,6 +137,26 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             DoctorMaster model = obj.MapTo<DoctorMaster>();
             if (obj.DoctorId == 0)
             {
+                foreach (var q in model.MDoctorQualificationDetails)
+                {
+                    q.CreatedBy = CurrentUserId;   
+                    q.CreatedDate = DateTime.Now;    
+                }
+                foreach (var v in model.MDoctorExperienceDetails)
+                {
+                    v.CreatedBy = CurrentUserId;
+                    v.CreatedDate = DateTime.Now;
+                }
+                foreach (var p in model.MDoctorScheduleDetails)
+                {
+                    p.CreatedBy = CurrentUserId;
+                    p.CreatedDate = DateTime.Now;
+                }
+                foreach (var x in model.MDoctorChargesDetails)
+                {
+                    x.CreatedBy = CurrentUserId;
+                    x.CreatedDate = DateTime.Now;
+                }
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
                 if (model.RegDate.HasValue)
                     model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime()).Date;
@@ -124,6 +177,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
         }
+
+       
+
+
         [HttpDelete]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
@@ -172,5 +229,40 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
         }
+        ////Add API
+        //[HttpPost("DoctorQualificationDetail")]
+
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(MDoctorScheduleDetailModel obj)
+        //{
+        //    MDoctorQualificationDetail model = obj.MapTo<MDoctorQualificationDetail>();
+        //    //model.IsActive = true;
+        //    if (obj.DocSchedId == 0)
+        //    {
+        //        model.CreatedBy = CurrentUserId;
+        //        model.CreatedDate = DateTime.Now;
+        //        await _repository2.Add(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        //}
+        ////Edit API
+        //[HttpPut("{id:int/DoctorQualificationDetail}")]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edit(MDoctorScheduleDetailModel obj)
+        //{
+        //    MDoctorQualificationDetail model = obj.MapTo<MDoctorQualificationDetail>();
+        //    //model.IsActive = true;
+        //    if (obj.DocSchedId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = DateTime.Now;
+        //        await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        //}
     }
 }

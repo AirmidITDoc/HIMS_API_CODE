@@ -37,6 +37,15 @@ namespace HIMS.API.Models.Masters
         public string? AadharCardNo { get; set; }
         public string? Signature { get; set; }
         public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
+        public List<DoctorQualificationDetailModel> MDoctorQualificationDetails { get; set; }
+        public List<DoctorExperienceDetailsModel> MDoctorExperienceDetails { get; set; }
+        public List<MDoctorScheduleDetailModel> MDoctorScheduleDetails { get; set; }
+        public List<MDoctorChargesDetailModel> MDoctorChargesDetails { get; set; }
+
+
+
+
+
     }
     public class DoctorModelValidator : AbstractValidator<DoctorModel>
     {
@@ -53,7 +62,7 @@ namespace HIMS.API.Models.Masters
         public long? DoctorId { get; set; }
         public long? DepartmentId { get; set; }
     }
-public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
+    public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
     {
         public MDoctorDepartmentDetValidator()
         {
@@ -61,6 +70,54 @@ public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartment
            
         }
     }
+    public  class DoctorQualificationDetailModel
+    {
+        public long DocQualfiId { get; set; }
+        public long? DoctorId { get; set; }
+        public long? QualificationId { get; set; }
+        public string? PassingYear { get; set; }
+        public long? InstitutionNameId { get; set; }
+        public long? CityId { get; set; }
+    }
+    public class DoctorQualificationDetailModelValidator : AbstractValidator<DoctorQualificationDetailModel>
+    {
+        public DoctorQualificationDetailModelValidator()
+        {
+            RuleFor(x => x.QualificationId).NotNull().NotEmpty().WithMessage("QualificationId  is required");
+            RuleFor(x => x.PassingYear).NotNull().NotEmpty().WithMessage("PassingYear  is required");
+
+        }
+    }
+    public class DoctorExperienceDetailsModel
+    {
+        public long DocExpId { get; set; }
+        public long? DoctorId { get; set; }
+        public string? HospitalName { get; set; }
+        public string? Designation { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
+    public class MDoctorScheduleDetailModel
+    {
+        public long DocSchedId { get; set; }
+        public long? DoctorId { get; set; }
+        public string? ScheduleDays { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+        public int? Slot { get; set; }
+    }
+    public class MDoctorChargesDetailModel
+    {
+        public long DocChargeId { get; set; }
+        public long? DoctorId { get; set; }
+        public long? ServiceId { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
+        public decimal? Price { get; set; }
+        public int? Days { get; set; }
+
+    }
+
 }
 
 

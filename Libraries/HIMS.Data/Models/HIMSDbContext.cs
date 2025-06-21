@@ -195,11 +195,15 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDiagnosisMaster> MDiagnosisMasters { get; set; } = null!;
         public virtual DbSet<MDietChartDetail> MDietChartDetails { get; set; } = null!;
         public virtual DbSet<MDietChartMaster> MDietChartMasters { get; set; } = null!;
+        public virtual DbSet<MDoctorChargesDetail> MDoctorChargesDetails { get; set; } = null!;
         public virtual DbSet<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; } = null!;
+        public virtual DbSet<MDoctorExperienceDetail> MDoctorExperienceDetails { get; set; } = null!;
         public virtual DbSet<MDoctorHouseManMaster> MDoctorHouseManMasters { get; set; } = null!;
         public virtual DbSet<MDoctorNotesTemplateMaster> MDoctorNotesTemplateMasters { get; set; } = null!;
         public virtual DbSet<MDoctorPerGroupWiseMaster> MDoctorPerGroupWiseMasters { get; set; } = null!;
         public virtual DbSet<MDoctorPerMaster> MDoctorPerMasters { get; set; } = null!;
+        public virtual DbSet<MDoctorQualificationDetail> MDoctorQualificationDetails { get; set; } = null!;
+        public virtual DbSet<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; } = null!;
         public virtual DbSet<MDoseMaster> MDoseMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
@@ -518,7 +522,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6378,6 +6382,24 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MDoctorChargesDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocChargeId);
+
+                entity.ToTable("M_DoctorChargesDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorChargesDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorChargesDetails_DoctorMaster");
+            });
+
             modelBuilder.Entity<MDoctorDepartmentDet>(entity =>
             {
                 entity.HasKey(e => e.DocDeptId);
@@ -6395,6 +6417,30 @@ namespace HIMS.Data.Models
                     .HasForeignKey(d => d.DoctorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_M_DoctorDepartmentDet_DoctorMaster");
+            });
+
+            modelBuilder.Entity<MDoctorExperienceDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocExpId);
+
+                entity.ToTable("M_DoctorExperienceDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Designation).HasMaxLength(100);
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.HospitalName).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorExperienceDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorExperienceDetails_DoctorMaster");
             });
 
             modelBuilder.Entity<MDoctorHouseManMaster>(entity =>
@@ -6466,6 +6512,46 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ServiceAmount).HasColumnType("money");
 
                 entity.Property(e => e.ServicePercentage).HasColumnType("numeric(18, 0)");
+            });
+
+            modelBuilder.Entity<MDoctorQualificationDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocQualfiId);
+
+                entity.ToTable("M_DoctorQualificationDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PassingYear).HasMaxLength(10);
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorQualificationDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorQualificationDetails_DoctorMaster");
+            });
+
+            modelBuilder.Entity<MDoctorScheduleDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocSchedId);
+
+                entity.ToTable("M_DoctorScheduleDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ScheduleDays).HasMaxLength(50);
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorScheduleDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorScheduleDetails_DoctorMaster");
             });
 
             modelBuilder.Entity<MDoseMaster>(entity =>
@@ -9000,7 +9086,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PhoneNo).HasMaxLength(20);
 
-                entity.Property(e => e.Photo).HasMaxLength(200);
+                entity.Property(e => e.Photo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PinNo).HasMaxLength(10);
 

@@ -7,7 +7,11 @@ namespace HIMS.Data.Models
     {
         public DoctorMaster()
         {
+            MDoctorChargesDetails = new HashSet<MDoctorChargesDetail>();
             MDoctorDepartmentDets = new HashSet<MDoctorDepartmentDet>();
+            MDoctorExperienceDetails = new HashSet<MDoctorExperienceDetail>();
+            MDoctorQualificationDetails = new HashSet<MDoctorQualificationDetail>();
+            MDoctorScheduleDetails = new HashSet<MDoctorScheduleDetail>();
         }
 
         public long DoctorId { get; set; }
@@ -49,6 +53,10 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
+        public virtual ICollection<MDoctorChargesDetail> MDoctorChargesDetails { get; set; }
         public virtual ICollection<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; }
+        public virtual ICollection<MDoctorExperienceDetail> MDoctorExperienceDetails { get; set; }
+        public virtual ICollection<MDoctorQualificationDetail> MDoctorQualificationDetails { get; set; }
+        public virtual ICollection<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; }
     }
 }
