@@ -118,6 +118,7 @@ namespace HIMS.Services.Masters
                 }
                 _context.MDoctorDepartmentDets.AddRange(objDoctorMaster.MDoctorDepartmentDets);
                 await _context.SaveChangesAsync();
+              
             }
             catch (Exception)
             {
@@ -149,6 +150,7 @@ namespace HIMS.Services.Masters
                 scope.Complete();
             }
         }
+      
 
         public virtual async Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username)
         {

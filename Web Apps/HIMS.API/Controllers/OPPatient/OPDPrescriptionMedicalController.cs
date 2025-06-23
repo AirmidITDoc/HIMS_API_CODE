@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.OPPatient
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList");
         //}
 
-       [HttpGet("GetDiagnosisList")]
+        [HttpGet("GetDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
         {
