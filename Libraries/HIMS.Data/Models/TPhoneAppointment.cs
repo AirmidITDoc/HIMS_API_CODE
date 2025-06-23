@@ -18,6 +18,7 @@ namespace HIMS.Data.Models
         public DateTime? PhAppTime { get; set; }
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
+        public bool? IsRegistered { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
