@@ -11,15 +11,13 @@ namespace HIMS.API.Models.OPPatient
             public long CertificateId { get; set; }
             public DateTime CertificateDate { get; set; }
 
-            public DateTime CertificateTime { get; set; }
+            public String CertificateTime { get; set; }
             public long VisitId { get; set; }
-            //public long CertificateTempId { get; set; }
-            public string CertificateName { get; set; }
+            public long CertificateTempId { get; set; }
+           public string CertificateName { get; set; }
             public string CertificateText { get; set; }
 
-            public long AddedBy { get; set; }
-            public long UpdatedBy { get; set; }
-
+          
 
 
         }
@@ -27,17 +25,17 @@ namespace HIMS.API.Models.OPPatient
         {
             public TCertificateInformationParamModelValidator()
             {
-                ////RuleFor(x => x.CertificateTempId).NotNull().NotEmpty().WithMessage("CertificateId is required");
-                ////RuleFor(x => x.CertificateDate).NotNull().NotEmpty().WithMessage("CertificateDate is required");
-                ////RuleFor(x => x.CertificateTime).NotNull().NotEmpty().WithMessage("CertificateTime is required");
-                //RuleFor(x => x.VisitId).NotNull().NotEmpty().WithMessage("VisitId is required");
-                //RuleFor(x => x.CertificateName).NotNull().NotEmpty().WithMessage("CertificateName is required");
-                //RuleFor(x => x.CertificateText).NotNull().NotEmpty().WithMessage("CertificateText is required");
-              
-            }
-
+            RuleFor(x => x.CertificateTempId).NotNull().NotEmpty().WithMessage("CertificateId is required");
+            RuleFor(x => x.CertificateDate).NotNull().NotEmpty().WithMessage("CertificateDate is required");
+            RuleFor(x => x.CertificateTime).NotNull().NotEmpty().WithMessage("CertificateTime is required");
+            RuleFor(x => x.VisitId).NotNull().NotEmpty().WithMessage("VisitId is required");
+            RuleFor(x => x.CertificateName).NotNull().NotEmpty().WithMessage("CertificateName is required");
+            RuleFor(x => x.CertificateText).NotNull().NotEmpty().WithMessage("CertificateText is required");
 
         }
+
+
+    }
     }
 
 
