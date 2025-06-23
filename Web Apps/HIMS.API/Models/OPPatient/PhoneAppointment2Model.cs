@@ -40,4 +40,12 @@ namespace HIMS.API.Models.OPPatient
         public int PhoneAppId { get; set; }
     }
 
+    public class PhoneAppointmentUpdate
+    {
+        public long PhoneAppId { get; set; }
+        public DateTime? PhAppDate { get; set; }
+        public string? PhAppTime { get; set; }
+
+    }
+
 }

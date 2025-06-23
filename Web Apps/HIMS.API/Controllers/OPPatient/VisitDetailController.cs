@@ -266,5 +266,37 @@ namespace HIMS.API.Controllers.OPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpPut("ConsulationStartEndProcess")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ConsulationStartEndProcess obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ConStartTime = DateTime.Now;
+                await _visitDetailsService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPut("CheckOutProcess")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(CheckOutProcessUpdate obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ConEndTime = DateTime.Now;
+                model.CheckOutTime = DateTime.Now;
+                await _visitDetailsService.UpdateAsyncv(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
     }
 }

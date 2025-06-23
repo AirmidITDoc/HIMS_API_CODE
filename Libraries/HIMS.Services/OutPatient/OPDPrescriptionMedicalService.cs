@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
@@ -49,8 +50,10 @@ namespace HIMS.Services.OutPatient
         public virtual async Task<IPagedList<getPrescriptionTemplateDetailsListDto>> TemplateDetailsList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<getPrescriptionTemplateDetailsListDto>(model, "ps_RtrvTemplate_PrescriptionList");
+
         }
 
+     
         //Ashu///  Modifierd by shilpa 2025/14/06 m_Update_VisitFollowupDate//
         public virtual async Task InsertPrescriptionAsyncSP(List<TPrescription> objTPrescription,VisitDetail ObjVisitDetail,List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
@@ -147,7 +150,7 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
-        //public virtual async Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(string DescriptionType)
+        //public virtual async Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string DescriptionType)
         //{
         //    //  select DescriptionName, DescriptionType from M_OPCasepaperDignosisMaster
         //    //Where DescriptionType = @DescriptionType
@@ -156,13 +159,13 @@ namespace HIMS.Services.OutPatient
         //    var qry = (from MOpcasepaperDignosisMaster in _context.MOpcasepaperDignosisMasters
         //                   //Where DescriptionType = @DescriptionType
         //               where (string.IsNullOrEmpty(DescriptionType) || MOpcasepaperDignosisMaster.DescriptionType.Contains(DescriptionType))
-        //                orderby MOpcasepaperDignosisMaster.Id
+        //               orderby MOpcasepaperDignosisMaster.Id
 
 
         //               select new OPrtrvDignosisListDto
         //               {
 
-        //                   //StoreId = assignItem != null ? assignItem.StoreId : 0,
+        //                    Id = MOpcasepaperDignosisMaster.Id,
         //                   DescriptionType = MOpcasepaperDignosisMaster.DescriptionType,
         //                   DescriptionName = MOpcasepaperDignosisMaster.DescriptionName
 
@@ -171,6 +174,33 @@ namespace HIMS.Services.OutPatient
 
         //    return await qry.Take(50).ToListAsync();
         //}
-       
+
+        public virtual async Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string descriptionType)
+        {
+            var query = _context.MOpcasepaperDignosisMasters.AsQueryable();
+
+            if (!string.IsNullOrEmpty(descriptionType))
+            {
+                string lowered = descriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.Id)
+                .Select(d => new OPrtrvDignosisListDto
+                {
+                    Id = d.Id,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data; 
+        }
+
+
+
+
     }
 }

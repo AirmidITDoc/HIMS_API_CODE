@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Common
 {
@@ -7,5 +10,10 @@ namespace HIMS.Services.Common
         Task InsertAsyncSP(Bill objBill, Payment objPayment, int CurrentUserId, string CurrentUserName);
         Task InsertAsyncSP1(Bill objBill,int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int currentUserId, string currentUserName);
+
+        Task<IPagedList<CertificateInformationDto>> GetListAsync(GridRequestModel objGrid);
+        Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
+
+        Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
     }
 }

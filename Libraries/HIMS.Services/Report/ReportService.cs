@@ -1807,19 +1807,48 @@ namespace HIMS.Services.Report
             return html;
 
         }
+        //public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
+        //{
+        //    StringBuilder table = new();
+        //    table.Append("<tr>");
+        //    foreach (var hr in headers)
+        //    {
+        //        table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+        //        table.Append(hr.ConvertToString());
+        //        table.Append("</th>");
+        //    }
+        //    table.Append("</tr>");
+        //    return table.ToString();
+        //}
+
+       // Create  by Ashutosh 12 Jun 2025
         public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
         {
             StringBuilder table = new();
             table.Append("<tr>");
             foreach (var hr in headers)
             {
-                table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
+                string widthStyle = "";
+
+                // Set specific width for particular columns
+                if (hr == "Company Name")
+                {
+                    widthStyle = "width: 200px;";
+                }
+                else if (hr == "Address")
+                {
+                    widthStyle = "width: 200px;";
+                }
+               
+
+                table.Append($"<th style=\"border: 1px solid #d4c3c3; padding: 6px; {widthStyle}\">");
                 table.Append(hr.ConvertToString());
                 table.Append("</th>");
             }
             table.Append("</tr>");
             return table.ToString();
         }
+
         public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
             StringBuilder table = new();

@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -43,7 +44,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(FutureAppointmentList.ToGridResponse(objGrid, "FutureAppointmentList"));
         }
         [HttpPost("FutureAppointmentDetailList")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List2(GridRequestModel objGrid)
         {
             IPagedList<FutureAppointmentDetailListDto> FutureAppointmentDetailList = await _IPhoneAppointment2Service.GetListAsyncF(objGrid);
@@ -78,7 +79,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PhoneAppointment2Model obj)
         {
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
@@ -95,12 +96,32 @@ namespace HIMS.API.Controllers.OPPatient
 
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _IPhoneAppointment2Service.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
+
+       
+        [HttpPut("ReschedulePhoneAppointment")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PhoneAppointmentUpdate obj)
+        {
+            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
+            if (obj.PhoneAppId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
+                model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
+                await _IPhoneAppointment2Service.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        
 
         [HttpDelete("Cancel")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
@@ -126,9 +147,31 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IPhoneAppointment2Service.SearchPhoneApp(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId= x.RegNo }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo }));
         }
-        
+        [HttpGet("get-appoinments")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAppoinments(int DocId, DateTime FromDate, DateTime ToDate)
+        {
+            var data = await _IPhoneAppointment2Service.GetAppoinments(DocId, FromDate, ToDate);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new
+            {
+                Start = x.PhAppTime,
+                End = x.PhAppTime.Value.AddMinutes(30),
+                Title = x.FirstName + " " + x.MiddleName + " " + x.LastName + " (" + x.MobileNo + ")",
+                resizable = new
+                {
+                    beforeStart = true,
+                    afterEnd = true,
+                },
+                draggable = true,
+                color = new
+                {
+                    primary = "#ad2121",
+                    secondary = "#FAE3E3",
+                }
+            }));
+        }
     }
 }
 

@@ -4,7 +4,6 @@ using System.Transactions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using HIMS.Services.OutPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.Extensions;
 using System.Dynamic;
@@ -16,7 +15,7 @@ using HIMS.Data.DTO.IPPatient;
 using SkiaSharp;
 using static LinqToDB.SqlQuery.SqlPredicate;
 
-namespace HIMS.Services.OPPatient
+namespace HIMS.Services.OutPatient
 {
     public class VisitDetailsService : IVisitDetailsService
     {
@@ -102,11 +101,6 @@ namespace HIMS.Services.OPPatient
 
             }
         }
-
-
-
-
-
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
             // OLD CODE With SP
@@ -121,7 +115,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -153,7 +147,7 @@ namespace HIMS.Services.OPPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp","CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -244,47 +238,47 @@ namespace HIMS.Services.OPPatient
         public virtual async Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword)
         {
             var qry = from registration in _context.Registrations
-                       join visitDetails in _context.VisitDetails on registration.RegId equals visitDetails.RegId
-                       join tariffMaster in _context.TariffMasters on visitDetails.TariffId equals tariffMaster.TariffId
-                       join departmentMaster in _context.MDepartmentMasters on visitDetails.DepartmentId equals departmentMaster.DepartmentId
-                       join doctorMaster in _context.DoctorMasters on visitDetails.ConsultantDocId equals doctorMaster.DoctorId
-                       join refDoctorMaster in _context.DoctorMasters on visitDetails.RefDocId equals refDoctorMaster.DoctorId into refDoctorGroup
-                       from refDoctor in refDoctorGroup.DefaultIfEmpty()
-                       join companyMaster in _context.CompanyMasters on visitDetails.CompanyId equals companyMaster.CompanyId into companyGroup
-                       from company in companyGroup.DefaultIfEmpty()
-                       where visitDetails.VisitDate == DateTime.Today
-                          && (registration.FirstName + " " + registration.LastName).Contains(Keyword)
-                          || registration.RegNo.Contains(Keyword)
-                          || registration.MobileNo.Contains(Keyword)
-                       orderby registration.FirstName
+                      join visitDetails in _context.VisitDetails on registration.RegId equals visitDetails.RegId
+                      join tariffMaster in _context.TariffMasters on visitDetails.TariffId equals tariffMaster.TariffId
+                      join departmentMaster in _context.MDepartmentMasters on visitDetails.DepartmentId equals departmentMaster.DepartmentId
+                      join doctorMaster in _context.DoctorMasters on visitDetails.ConsultantDocId equals doctorMaster.DoctorId
+                      join refDoctorMaster in _context.DoctorMasters on visitDetails.RefDocId equals refDoctorMaster.DoctorId into refDoctorGroup
+                      from refDoctor in refDoctorGroup.DefaultIfEmpty()
+                      join companyMaster in _context.CompanyMasters on visitDetails.CompanyId equals companyMaster.CompanyId into companyGroup
+                      from company in companyGroup.DefaultIfEmpty()
+                      where visitDetails.VisitDate == DateTime.Today
+                         && (registration.FirstName + " " + registration.LastName).Contains(Keyword)
+                         || registration.RegNo.Contains(Keyword)
+                         || registration.MobileNo.Contains(Keyword)
+                      orderby registration.FirstName
 
-                       select new VisitDetailsListSearchDto
-                       {
-                           FirstName = registration.FirstName,
-                           MiddleName = registration.MiddleName,
-                           LastName = registration.LastName,
-                           RegNo = registration.RegNo,
-                           MobileNo = registration.MobileNo,
-                           VisitId = visitDetails.VisitId,
-                           RegId = visitDetails.RegId,
-                           // VisitDate = visitDetails.VisitDate,
-                           hospitalId = visitDetails.UnitId,
-                           PatientTypeId = visitDetails.PatientTypeId,
-                           ConsultantDocId = visitDetails.ConsultantDocId,
-                           RefDocId = visitDetails.RefDocId,
-                           OPDNo = visitDetails.Opdno,
-                           TariffId = visitDetails.TariffId,
-                           ClassId = visitDetails.ClassId,
-                           TariffName = tariffMaster.TariffName,
-                           CompanyId = visitDetails.CompanyId,
-                           CompanyName = company != null ? company.CompanyName : string.Empty,
-                           //AgeYear = registration.AgeYear,
-                           //AgeMonth = registration.AgeMonth,
-                           //AgeDay = registration.AgeDay,
-                           DepartmentName = departmentMaster.DepartmentName,
-                           RefDoctorName =   refDoctor != null ? "Dr. " + refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
-                           DoctorName = "Dr. "+ doctorMaster.FirstName + " " + doctorMaster.LastName
-                       };
+                      select new VisitDetailsListSearchDto
+                      {
+                          FirstName = registration.FirstName,
+                          MiddleName = registration.MiddleName,
+                          LastName = registration.LastName,
+                          RegNo = registration.RegNo,
+                          MobileNo = registration.MobileNo,
+                          VisitId = visitDetails.VisitId,
+                          RegId = visitDetails.RegId,
+                          // VisitDate = visitDetails.VisitDate,
+                          hospitalId = visitDetails.UnitId,
+                          PatientTypeId = visitDetails.PatientTypeId,
+                          ConsultantDocId = visitDetails.ConsultantDocId,
+                          RefDocId = visitDetails.RefDocId,
+                          OPDNo = visitDetails.Opdno,
+                          TariffId = visitDetails.TariffId,
+                          ClassId = visitDetails.ClassId,
+                          TariffName = tariffMaster.TariffName,
+                          CompanyId = visitDetails.CompanyId,
+                          CompanyName = company != null ? company.CompanyName : string.Empty,
+                          //AgeYear = registration.AgeYear,
+                          //AgeMonth = registration.AgeMonth,
+                          //AgeDay = registration.AgeDay,
+                          DepartmentName = departmentMaster.DepartmentName,
+                          RefDoctorName = refDoctor != null ? "Dr. " + refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
+                          DoctorName = "Dr. " + doctorMaster.FirstName + " " + doctorMaster.LastName
+                      };
             return await qry.Take(25).ToListAsync();
 
         }
@@ -348,8 +342,8 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
-             public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
-            {
+        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+        {
             DatabaseHelper odal = new();
             string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray" };
             var entity = objCrossConsultation.ToDictionary();
@@ -363,8 +357,31 @@ namespace HIMS.Services.OPPatient
             await _context.SaveChangesAsync(UserId, Username);
 
             return objCrossConsultation;
+
         }
-    }  
+        public virtual async Task UpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var existing = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == ObjVisitDetail.VisitId);
+
+            //  Update only the required fields
+            existing.ConStartTime = ObjVisitDetail.ConStartTime;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+
+        public virtual async Task UpdateAsyncv(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var existing = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == ObjVisitDetail.VisitId);
+
+            //  Update only the required fields
+            existing.ConEndTime = ObjVisitDetail.ConEndTime;
+            existing.CheckOutTime = ObjVisitDetail.CheckOutTime;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+    }
 }
 
 

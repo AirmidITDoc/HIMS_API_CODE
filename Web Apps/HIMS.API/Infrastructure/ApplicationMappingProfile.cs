@@ -29,7 +29,7 @@ namespace HIMS.API.Infrastructure
         {
 
             // Master
-
+            CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MPathParameterMaster, ParameterMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -389,6 +389,23 @@ namespace HIMS.API.Infrastructure
             CreateMap<Registration, AppReistrationUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
              CreateMap<Payment, OPPaymentdetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhoneAppointment, PhoneAppointment2Model>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhoneAppointment, PhoneAppointmentUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, ConsulationStartEndProcess>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, CheckOutProcessUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorQualificationDetail, DoctorQualificationDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DoctorMaster, DoctorQualificationDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorExperienceDetail, DoctorExperienceDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorScheduleDetail, MDoctorScheduleDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorChargesDetail, MDoctorChargesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+
+            
+
+
+
+
 
 
             CreateMap<Bill, DoctorSharePerCalculationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

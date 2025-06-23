@@ -7,6 +7,7 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -29,10 +30,13 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IRegistrationService _IRegistrationService;
         private readonly IGenericService<Registration> _repository;
-        public OutPatientController(IRegistrationService repository, IGenericService<Registration> repository1)
+        private readonly IFileUtility _FileUtility;
+
+        public OutPatientController(IRegistrationService repository, IGenericService<Registration> repository1, IFileUtility fileUtility)
         {
             _IRegistrationService = repository;
             _repository = repository1;
+            _FileUtility = fileUtility;
         }
 
         [HttpPost("RegistrationList")]
@@ -70,6 +74,28 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
+        // Create  by Ashutosh 12 Jun 2025
+        [HttpPost("InsertEDMX")]
+        //  [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(RegistrationModel obj)
+        {
+            
+                if (!string.IsNullOrWhiteSpace(obj.Photo))
+                    obj.Photo = _FileUtility.SaveImageFromBase64(obj.Photo, "Persons\\Photo");
+            Registration model = obj.MapTo<Registration>();
+            if (obj.RegId == 0)
+            {
+                //model.CreatedDate = DateTime.Now;
+                //model.CreatedBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
+                //model.IsActive = true;
+                await _IRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
         [HttpPost("RegistrationUpdate")]
         [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
@@ -100,6 +126,13 @@ namespace HIMS.API.Controllers.OPPatient
                 AgeDay = x.AgeDay ,
                 PatientName = x.FirstName + " " + x.LastName
             }));
+        }
+        // Create  by Ashutosh 12 Jun 2025
+        [HttpGet("get-file")]
+        public ApiResponse DownloadFiles(string FileName)
+        {
+            var data = _FileUtility.GetBase64FromFolder("Persons\\Photo", FileName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
         }
 
     }

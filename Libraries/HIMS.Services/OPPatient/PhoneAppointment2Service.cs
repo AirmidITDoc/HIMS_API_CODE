@@ -23,7 +23,7 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-       
+
         public virtual async Task<IPagedList<PhoneAppointment2ListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PhoneAppointment2ListDto>(model, "ps_Rtrv_PhoneAppList");
@@ -112,6 +112,7 @@ namespace HIMS.Services.OPPatient
         }
 
 
+
         public virtual async Task<TPhoneAppointment> InsertAsyncSP(TPhoneAppointment objTPhoneAppointment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
@@ -144,5 +145,22 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task<List<TPhoneAppointment>> GetAppoinments(int DocId, DateTime FromDate, DateTime ToDate)
+        {
+            return await this._context.TPhoneAppointments.Where(x => x.DoctorId == DocId && x.PhAppDate >= FromDate && x.PhAppDate <= ToDate).ToListAsync();
+        }
+
+        public virtual async Task UpdateAsync(TPhoneAppointment objTPhoneApp, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var existing = await _context.TPhoneAppointments.FirstOrDefaultAsync(x => x.PhoneAppId == objTPhoneApp.PhoneAppId);
+
+           //  Update only the required fields
+            existing.PhAppDate = objTPhoneApp.PhAppDate;
+            existing.PhAppTime = objTPhoneApp.PhAppTime;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
     }
 }
+
