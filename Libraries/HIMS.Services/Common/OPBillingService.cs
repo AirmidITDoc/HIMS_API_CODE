@@ -1,6 +1,9 @@
 ﻿using Aspose.Cells.Drawing;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
@@ -21,6 +24,11 @@ namespace HIMS.Services.Common
         {
             _context = HIMSDbContext;
         }
+
+        public virtual async Task<IPagedList<CertificateInformationDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CertificateInformationDto>(model, "m_Rtrv_T_CertificateInformation_List");
+        }
         public virtual async Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -31,33 +39,41 @@ namespace HIMS.Services.Common
                 scope.Complete();
             }
         }
-
         public virtual async Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                TCertificateInformation objReg = _context.TCertificateInformations.Where(x => x.CertificateId == TCertificateInformation.CertificateId).FirstOrDefault();
-                if (objReg != null)
-                    _context.Entry(objReg).State = EntityState.Detached;
+            // throw new NotImplementedException();
+            _context.TCertificateInformations.Update(TCertificateInformation);
+            _context.Entry(TCertificateInformation).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-                TCertificateInformation.CertificateId = objReg.CertificateId;
-                TCertificateInformation.CertificateDate = objReg.CertificateDate;
-                TCertificateInformation.CertificateTime = objReg.CertificateTime;
-                TCertificateInformation.VisitId = objReg.VisitId;
-                //TCertificateInformation.CertificateTempId = objReg.CertificateTempId;
-                TCertificateInformation.CertificateName = objReg.CertificateName;
-                TCertificateInformation.CertificateText = objReg.CertificateText;
-                //TCertificateInformation.ModifiedBy = objReg.ModifiedBy;
-              
-                _context.TCertificateInformations.Update(TCertificateInformation);
-                _context.Entry(TCertificateInformation).State = EntityState.Modified;
-
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
+            //scope.Complete();
         }
+        //public virtual async Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header & detail table records
+        //        TCertificateInformation objReg = _context.TCertificateInformations.Where(x => x.CertificateId == TCertificateInformation.CertificateId).FirstOrDefault();
+        //        if (objReg != null)
+        //            _context.Entry(objReg).State = EntityState.Detached;
+
+        //        TCertificateInformation.CertificateId = objReg.CertificateId;
+        //        TCertificateInformation.CertificateDate = objReg.CertificateDate;
+        //        TCertificateInformation.CertificateTime = objReg.CertificateTime;
+        //        TCertificateInformation.VisitId = objReg.VisitId;
+        //        //TCertificateInformation.CertificateTempId = objReg.CertificateTempId;
+        //        TCertificateInformation.CertificateName = objReg.CertificateName;
+        //        TCertificateInformation.CertificateText = objReg.CertificateText;
+        //        //TCertificateInformation.ModifiedBy = objReg.ModifiedBy;
+              
+        //        _context.TCertificateInformations.Update(TCertificateInformation);
+        //        _context.Entry(TCertificateInformation).State = EntityState.Modified;
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
 
         public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, int CurrentUserId, string CurrentUserName)
         {
