@@ -24,15 +24,45 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<LvwDoctorMasterList> _repository1;
         private readonly IFileUtility _FileUtility;
-        private readonly IGenericService<MDoctorQualificationDetail> _repository2;
-
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorQualificationDetail> repository2)
+        private readonly IGenericService<MDoctorScheduleDetail> _repository2;
+        private readonly IGenericService<MDoctorExperienceDetail> _repository3;
+        private readonly IGenericService<MDoctorChargesDetail> _repository4;
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
             _FileUtility = fileUtility;
             _repository2 = repository2;
+            _repository3 = repository3;
+            _repository4 = repository4;
 
+        }
+        //List API
+        [HttpPost]
+        [Route("DoctorScheduleDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<MDoctorScheduleDetail> DoctorScheduleDetailList = await _repository2.GetAllPagedAsync(objGrid);
+            return Ok(DoctorScheduleDetailList.ToGridResponse(objGrid, "DoctorScheduleDetail List"));
+        }
+        //List API
+        [HttpPost]
+        [Route("DoctorExperienceDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListD(GridRequestModel objGrid)
+        {
+            IPagedList<MDoctorExperienceDetail> DoctorExperienceDetailList = await _repository3.GetAllPagedAsync(objGrid);
+            return Ok(DoctorExperienceDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
+        }
+        //List API
+        [HttpPost]
+        [Route("DoctorChargesDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListC(GridRequestModel objGrid)
+        {
+            IPagedList<MDoctorChargesDetail> DoctorChargesDetailList = await _repository4.GetAllPagedAsync(objGrid);
+            return Ok(DoctorChargesDetailList.ToGridResponse(objGrid, "DoctorChargesDetail List"));
         }
         [HttpPost("DoctorList")]
         //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
