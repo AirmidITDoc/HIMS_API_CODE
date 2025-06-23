@@ -21,6 +21,43 @@ namespace HIMS.Services.Common
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TCertificateInformations.Add(TCertificateInformation);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                TCertificateInformation objReg = _context.TCertificateInformations.Where(x => x.CertificateId == TCertificateInformation.CertificateId).FirstOrDefault();
+                if (objReg != null)
+                    _context.Entry(objReg).State = EntityState.Detached;
+
+                TCertificateInformation.CertificateId = objReg.CertificateId;
+                TCertificateInformation.CertificateDate = objReg.CertificateDate;
+                TCertificateInformation.CertificateTime = objReg.CertificateTime;
+                TCertificateInformation.VisitId = objReg.VisitId;
+                //TCertificateInformation.CertificateTempId = objReg.CertificateTempId;
+                TCertificateInformation.CertificateName = objReg.CertificateName;
+                TCertificateInformation.CertificateText = objReg.CertificateText;
+                //TCertificateInformation.ModifiedBy = objReg.ModifiedBy;
+              
+                _context.TCertificateInformations.Update(TCertificateInformation);
+                _context.Entry(TCertificateInformation).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
 
         public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, int CurrentUserId, string CurrentUserName)
         {
