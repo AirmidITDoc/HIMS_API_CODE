@@ -110,14 +110,14 @@ namespace HIMS.API.Controllers.OPPatient
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PhoneAppointmentUpdate obj)
         {
-            TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
-                model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
-                await _IPhoneAppointment2Service.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                TPhoneAppointment model = await _repository.GetById(x => x.PhoneAppId == obj.PhoneAppId);
+                model.StartTime = obj.StartDate.ToLocalDateTime("5:30");
+                model.EndTime = obj.EndDate.ToLocalDateTime("5:30");
+                await _repository.Update(model, CurrentUserId, CurrentUserName, null);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
