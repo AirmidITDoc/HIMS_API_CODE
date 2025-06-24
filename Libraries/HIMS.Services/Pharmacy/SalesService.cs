@@ -17,6 +17,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static LinqToDB.Common.Configuration;
 
 namespace HIMS.Services.Users
 {
@@ -405,7 +406,58 @@ namespace HIMS.Services.Users
             }
             odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
         }
+        public virtual async Task InsertAsync( List<Payment> ObjPayment, List<TSalesHeader> ObjTSalesHeader,List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader,int UserId, string Username)
+        {
 
+            // //Add header table records
+            DatabaseHelper odal = new();
+
+            foreach (var item in ObjPayment)
+            {
+                string[] rEntity = { "Tdsamount", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+                var entity = item.ToDictionary();
+                foreach (var rProperty in rEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+                entity["OPDIPDType"] = 3;
+                string PaymentId = odal.ExecuteNonQuery("m_insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", entity);
+            //    ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+            }
+
+            foreach (var item in ObjTSalesHeader)
+            {
+                string[] REntity = {  "Date","Time","SalesNo","OpIpId", "OpIpType","NetAmount","PaidAmount", "TotalAmount", "VatAmount", "DiscAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy",
+                "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "CreditReason", "CreditReasonId", "ExtRegNo", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "IsRefundFlag", "RegId", "SalesHeadName", "SalesTypeId", "PatientName", "RegNo",
+                "UpdatedBy", "ExtMobileNo", "RoundOff","ExtAddress","IsCancelled", "TSalesDetails" };
+                var Tentity = item.ToDictionary();
+                foreach (var rProperty in REntity)
+                {
+                    Tentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_Pharmacy_BillBalAmount_1", CommandType.StoredProcedure, Tentity);
+            }
+            foreach (var item in ObjAdvanceDetail)
+            {
+
+                string[] Entity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason",  };
+                var Ientity = item.ToDictionary();
+                foreach (var rProperty in Entity)
+                {
+                    Ientity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_update_T_PHAdvanceDetail_1", CommandType.StoredProcedure, Ientity);
+            }
+
+            string[] TEntity = { "Date","RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate"};
+            var Nentity = ObjAdvanceHeader.ToDictionary();
+            foreach (var rProperty in TEntity)
+            {
+                Nentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_T_PHAdvanceHeader_1", CommandType.StoredProcedure, Nentity);
+
+        }
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
