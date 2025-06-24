@@ -49,13 +49,16 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IOPSettlementService _IOPSettlementService;
         private readonly IAdministrationService _IAdministrationService;
         private readonly IVisitDetailsService _IVisitDetailsService;
-        public OPDEMRCertificateController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
+        private readonly IGenericService<MCertificateMaster> _radiorepository1;
+
+        public OPDEMRCertificateController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4, IGenericService<MCertificateMaster> pathrepository1)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService = repository2;
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
+            _radiorepository1 = pathrepository1;
         }
         [HttpPost("CertificateInformationList")]
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
@@ -100,6 +103,15 @@ namespace HIMS.API.Controllers.OPPatient
             }
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
+        }
+
+        [HttpGet]
+        [Route("get-CertificateMaster")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown2()
+        {
+            var MMasterList = await _radiorepository1.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Certificate Master  dropdown", MMasterList.Select(x => new { x.CertificateId, x.CertificateName, x.CertificateDesc }));
         }
 
     }

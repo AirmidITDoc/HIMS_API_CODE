@@ -87,6 +87,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MNursingTemplateMaster> _IMNurNoteervice;
         private readonly IGenericService<MExpensesHeadMaster> _IMExpHeade;
         private readonly IGenericService<MConsentMaster> _MConsentMaster;
+        private readonly IGenericService<MCertificateMaster> _MCertificateMaster;
+
 
 
 
@@ -116,7 +118,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MModeOfDischarge> iMModeofdischarge,
               IGenericService<MSupplierMaster> iMSupplierMaster, IGenericService<MExpensesHeadMaster> iMExphede,
               IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen,
-              IGenericService<MConsentMaster> iMConsentMaster
+              IGenericService<MConsentMaster> iMConsentMaster,
+               IGenericService<MCertificateMaster> iMCertificateMaster
               )
         {
             _IAreaService = areaservice;
@@ -184,6 +187,7 @@ namespace HIMS.API.Controllers.Common
             _IMDrnote = iMDrNote;
             _IMExpHeade = iMExphede;
             _MConsentMaster = iMConsentMaster;
+            _MCertificateMaster = iMCertificateMaster;
         }
 
         [HttpGet]
@@ -291,9 +295,10 @@ namespace HIMS.API.Controllers.Common
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //Create by Ashu 27 May 2025
                 "ConsentMaster" => (await _MConsentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConsentMaster.ConsentId), nameof(MConsentMaster.ConsentName)),
-                
 
-                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
+                "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId),nameof(MCertificateMaster.CertificateName),nameof(MCertificateMaster.CertificateDesc)),
+
+                "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };
