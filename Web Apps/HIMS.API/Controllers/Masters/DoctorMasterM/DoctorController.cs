@@ -13,6 +13,8 @@ using HIMS.Services.Masters;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Administration;
 using HIMS.API.Utility;
+using System.Net.Mime;
+using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
 
 namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
@@ -55,48 +57,40 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             IPagedList<MDoctorExperienceDetail> DoctorExperienceDetailList = await _repository3.GetAllPagedAsync(objGrid);
             return Ok(DoctorExperienceDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
         }
-        //List API
-        [HttpPost]
-        [Route("DoctorChargesDetailList")]
+       
+        [HttpPost("DoctorChargesDetailList")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> ListC(GridRequestModel objGrid)
         {
-            IPagedList<MDoctorChargesDetail> DoctorChargesDetailList = await _repository4.GetAllPagedAsync(objGrid);
-            return Ok(DoctorChargesDetailList.ToGridResponse(objGrid, "DoctorChargesDetail List"));
+            IPagedList<DoctorChargesDetailListDto> DoctorChargesDetailList = await _IDoctorMasterService.ListAsync(objGrid);
+            return Ok(DoctorChargesDetailList.ToGridResponse(objGrid, "DoctorChargesDetailList"));
         }
         [HttpPost("DoctorList")]
-        //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorList"));
         }
 
+        [HttpGet("GetConstantList")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetConstantList(string ConstantType)
+        {
+            var result = await _IDoctorMasterService.ConstantListAsync(ConstantType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
+        }
+
         //List API
         [HttpPost]
         [Route("[action]")]
-        //    [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> ListLinq(GridRequestModel objGrid)
         {
             IPagedList<DoctorMaster> DoctorMasterList = await _IDoctorMasterService.GetAllPagedAsync(objGrid);
             return Ok(DoctorMasterList.ToGridResponse(objGrid, "DoctorMaster List "));
         }
 
-        //   [HttpPost("DoctorShareList")]
-        ////   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //   public async Task<IActionResult> DList(GridRequestModel objGrid)
-        //   {
-        //       IPagedList<DoctorShareListDto> DoctorShareList = await _IDoctorMasterService.GetList(objGrid);
-        //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareList "));
-        //   }
-
-        //   [HttpPost("DoctorShareLbyNameList")]
-        // //  [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //   public async Task<IActionResult> GetList(GridRequestModel objGrid)
-        //   {
-        //       IPagedList<DoctorShareLbyNameListDto> DoctorShareList = await _IDoctorMasterService.GetList1(objGrid);
-        //       return Ok(DoctorShareList.ToGridResponse(objGrid, "DoctorShareLbyName List "));
-        //   }
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
@@ -159,7 +153,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         //}
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
@@ -170,12 +164,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 foreach (var q in model.MDoctorQualificationDetails)
                 {
                     q.CreatedBy = CurrentUserId;   
-                    q.CreatedDate = DateTime.Now;    
+                    q.CreatedDate = DateTime.Now;
+                   
                 }
                 foreach (var v in model.MDoctorExperienceDetails)
                 {
                     v.CreatedBy = CurrentUserId;
                     v.CreatedDate = DateTime.Now;
+                   
                 }
                 foreach (var p in model.MDoctorScheduleDetails)
                 {

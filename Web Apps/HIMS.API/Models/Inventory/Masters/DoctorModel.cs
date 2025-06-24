@@ -36,15 +36,12 @@ namespace HIMS.API.Models.Masters
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
         public string? Signature { get; set; }
+       
         public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
         public List<DoctorQualificationDetailModel> MDoctorQualificationDetails { get; set; }
         public List<DoctorExperienceDetailsModel> MDoctorExperienceDetails { get; set; }
         public List<MDoctorScheduleDetailModel> MDoctorScheduleDetails { get; set; }
         public List<MDoctorChargesDetailModel> MDoctorChargesDetails { get; set; }
-
-
-
-
 
     }
     public class DoctorModelValidator : AbstractValidator<DoctorModel>
