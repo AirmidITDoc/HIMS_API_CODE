@@ -75,6 +75,8 @@ namespace HIMS.API.Models.Masters
         public string? PassingYear { get; set; }
         public long? InstitutionNameId { get; set; }
         public long? CityId { get; set; }
+        public long? CountryId { get; set; }
+
     }
     public class DoctorQualificationDetailModelValidator : AbstractValidator<DoctorQualificationDetailModel>
     {

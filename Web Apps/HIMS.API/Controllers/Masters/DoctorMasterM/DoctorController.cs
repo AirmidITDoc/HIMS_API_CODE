@@ -153,7 +153,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         //}
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
@@ -201,11 +201,71 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                     model.MahRegDate = Convert.ToDateTime(obj.MahRegDate.Value.ToLocalTime());
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
+      
+        [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(DoctorModel obj)
+        {
+            if (obj.DoctorId <= 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
 
-       
+            DoctorMaster model = obj.MapTo<DoctorMaster>();
 
+            model.DateofBirth = obj.DateofBirth?.ToLocalTime();
+            model.MahRegDate = obj.MahRegDate?.ToLocalTime();
+
+            foreach (var q in model.MDoctorQualificationDetails)
+            {
+                if (q.DocQualfiId == 0)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+                }
+                q.ModifiedBy = CurrentUserId;
+                q.ModifiedDate = DateTime.Now;
+            }
+
+            foreach (var v in model.MDoctorExperienceDetails)
+            {
+                if (v.DocExpId == 0)
+                {
+                    v.CreatedBy = CurrentUserId;
+                    v.CreatedDate = DateTime.Now;
+                }
+                v.ModifiedBy = CurrentUserId;
+                v.ModifiedDate = DateTime.Now;
+            }
+
+            foreach (var p in model.MDoctorScheduleDetails)
+            {
+                if (p.DocSchedId == 0)
+                {
+                    p.CreatedBy = CurrentUserId;
+                    p.CreatedDate = DateTime.Now;
+                }
+                p.ModifiedBy = CurrentUserId;
+                p.ModifiedDate = DateTime.Now;
+            }
+
+            foreach (var x in model.MDoctorChargesDetails)
+            {
+                if (x.DocChargeId == 0)
+                {
+                    x.CreatedBy = CurrentUserId;
+                    x.CreatedDate = DateTime.Now;
+                }
+                x.ModifiedBy = CurrentUserId;
+                x.ModifiedDate = DateTime.Now;
+            }
+
+            await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
 
         [HttpDelete]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
@@ -218,20 +278,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
 
-        //[HttpPost("DocList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> List1(GridRequestModel objGrid)
-        //{
-        //    IPagedList<LvwDoctorMasterList> List = await _IDoctorMasterService.GetListAsync1(objGrid);
-        //    return Ok(List.ToGridResponse(objGrid, "Doctor List"));
-        //}
+      
 
         [HttpGet]
         [Route("get-Doctor")]
@@ -255,40 +309,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
         }
-        ////Add API
-        //[HttpPost("DoctorQualificationDetail")]
-
-        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(MDoctorScheduleDetailModel obj)
-        //{
-        //    MDoctorQualificationDetail model = obj.MapTo<MDoctorQualificationDetail>();
-        //    //model.IsActive = true;
-        //    if (obj.DocSchedId == 0)
-        //    {
-        //        model.CreatedBy = CurrentUserId;
-        //        model.CreatedDate = DateTime.Now;
-        //        await _repository2.Add(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        //}
-        ////Edit API
-        //[HttpPut("{id:int/DoctorQualificationDetail}")]
-        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(MDoctorScheduleDetailModel obj)
-        //{
-        //    MDoctorQualificationDetail model = obj.MapTo<MDoctorQualificationDetail>();
-        //    //model.IsActive = true;
-        //    if (obj.DocSchedId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
-        //        await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
-        //}
+       
     }
 }
