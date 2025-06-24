@@ -30,7 +30,8 @@ namespace HIMS.Services.OPPatient
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
-            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp" };
+            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp","CheckInTime","CheckOutTime","ConStartTime",
+              "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var entity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -46,7 +47,8 @@ namespace HIMS.Services.OPPatient
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId","DepartmentId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
-            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp" };
+            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp",
+            "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {

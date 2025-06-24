@@ -9,6 +9,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
@@ -35,6 +36,20 @@ namespace HIMS.API.Controllers.NursingStation
 
         }
 
+
+        //[HttpGet("DeptConsentList")]
+        //public async Task<ApiResponse> DeptConsentList(int DeptId)
+        //{
+        //    var resultList = await _NursingConsentService.GetConsentByDepartment(DeptId);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.ConsentId, text = x.ConsentName }));
+        //}
+        [HttpGet("DeptConsentList")]
+        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<ConsentDeptListDto> SupplierList = await _NursingConsentService.GetListAsync(objGrid);
+            return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
+        }
         //[HttpPost("InsertEDMX")]
         ////    [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> InsertEDMX(ConsentInformationModel obj)

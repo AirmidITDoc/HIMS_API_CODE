@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
@@ -26,6 +27,18 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
+
+
+        //public async Task<List<MConsentMaster>> GetConsentByDepartment(int DeptId)
+        //{
+        //    return await _context.MConsentMasters.Include(x => x.MDepartmentMasters).Where(y => y.IsActive.Value && y.MDepartmentMasters.Any(y => y.DepartmentId == DeptId)).ToListAsync();
+        //}
+
+        public virtual async Task<IPagedList<ConsentDeptListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ConsentDeptListDto>(model, "m_rtrv_ConsentMasterList");
+        }
+
 
         //public virtual async Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username)
         //{

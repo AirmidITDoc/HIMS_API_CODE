@@ -147,7 +147,7 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<List<TPhoneAppointment>> GetAppoinments(int DocId, DateTime FromDate, DateTime ToDate)
         {
-            return await this._context.TPhoneAppointments.Where(x => x.DoctorId == DocId && x.PhAppDate >= FromDate && x.PhAppDate <= ToDate).ToListAsync();
+            return await this._context.TPhoneAppointments.Where(x => x.DoctorId == DocId && !x.IsCancelled.Value && x.PhAppDate >= FromDate && x.PhAppDate <= ToDate).ToListAsync();
         }
 
         public virtual async Task UpdateAsync(TPhoneAppointment objTPhoneApp, int CurrentUserId, string CurrentUserName)
@@ -155,7 +155,7 @@ namespace HIMS.Services.OPPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             var existing = await _context.TPhoneAppointments.FirstOrDefaultAsync(x => x.PhoneAppId == objTPhoneApp.PhoneAppId);
 
-           //  Update only the required fields
+            //  Update only the required fields
             existing.PhAppDate = objTPhoneApp.PhAppDate;
             existing.PhAppTime = objTPhoneApp.PhAppTime;
             await _context.SaveChangesAsync();
