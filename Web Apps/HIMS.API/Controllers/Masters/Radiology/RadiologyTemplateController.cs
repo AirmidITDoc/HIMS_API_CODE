@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
 
          //List API Get By Id
         [HttpGet("RadReportId/{id?}")]
-        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> RGet(int id)
         {
             if (id == 0)
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplate added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplate updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
            //Delete API
         [HttpDelete]
@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyTemplateMaster  deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

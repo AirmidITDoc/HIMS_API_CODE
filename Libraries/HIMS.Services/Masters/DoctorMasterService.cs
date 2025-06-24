@@ -42,6 +42,10 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorMasterListDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
         }
+        public virtual async Task<IPagedList<DoctorChargesDetailListDto>> ListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorChargesDetailListDto>(model, "m_DoctorChargesDetailList");
+        }
         public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
@@ -50,6 +54,30 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
         }
+        public virtual async Task<List<ContantListDto>> ConstantListAsync(string ConstantType)
+        {
+            var query = _context.MConstants.AsQueryable();
+
+            if (!string.IsNullOrEmpty(ConstantType))
+            {
+                string lowered = ConstantType.ToLower();
+                query = query.Where(d => d.ConstantType != null && d.ConstantType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.ConstantId)
+                .Select(d => new ContantListDto
+                {
+                    ConstantId = d.ConstantId,
+                    ConstantType = d.ConstantType,
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
+
+
 
 
         public virtual async Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid)
