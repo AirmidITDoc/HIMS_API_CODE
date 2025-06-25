@@ -89,6 +89,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MConsentMaster> _MConsentMaster;
         private readonly IGenericService<MCertificateMaster> _MCertificateMaster;
         private readonly IGenericService<MReportConfig> _MReportConfig;
+        private readonly IGenericService<MenuMaster> _MenuMaster;
 
 
 
@@ -121,7 +122,8 @@ namespace HIMS.API.Controllers.Common
               IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen,
               IGenericService<MConsentMaster> iMConsentMaster,
                IGenericService<MCertificateMaster> iMCertificateMaster,
-                              IGenericService<MReportConfig> iMReportConfig
+                              IGenericService<MReportConfig> iMReportConfig, IGenericService<MenuMaster> iMenuMaster
+
 
               )
         {
@@ -192,6 +194,7 @@ namespace HIMS.API.Controllers.Common
             _MConsentMaster = iMConsentMaster;
             _MCertificateMaster = iMCertificateMaster;
             _MReportConfig = iMReportConfig;
+            _MenuMaster = iMenuMaster;
 
         }
 
@@ -302,7 +305,8 @@ namespace HIMS.API.Controllers.Common
                 "ConsentMaster" => (await _MConsentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConsentMaster.ConsentId), nameof(MConsentMaster.ConsentName)),
 
                 "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId),nameof(MCertificateMaster.CertificateName),nameof(MCertificateMaster.CertificateDesc)),
-                "Report" => (await _MReportConfig.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MReportConfig.MenuId), nameof(MReportConfig.ReportSection)),
+                "ReportConfig" => (await _MReportConfig.GetAll(x => x.Parentid == null)).ToList().ToDropDown(nameof(MReportConfig.ReportId), nameof(MReportConfig.ReportSection)),
+                "MenuMaster" => (await _MenuMaster.GetAll(x => x.UpId == 10)).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
