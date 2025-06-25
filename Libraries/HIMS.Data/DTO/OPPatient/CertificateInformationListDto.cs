@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.OPPatient
 {
-    public class CertificateInformationDto
+    public class CertificateInformationListDto
     {
-        public long CertificateId {  get; set; }
+        public long? CertificateId {  get; set; }
         public DateTime? CertificateDate { get; set; }
         public string? CertificateTime { get; set; }
         public string? CertificateName { get; set; }
         public string? CertificateText { get; set; }
-        public long? CreatedBy { get; set; }
-        public long? ModifiedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
       
 
     }

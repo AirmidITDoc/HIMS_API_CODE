@@ -25,9 +25,9 @@ namespace HIMS.Services.Common
             _context = HIMSDbContext;
         }
 
-        public virtual async Task<IPagedList<CertificateInformationDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<CertificateInformationListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<CertificateInformationDto>(model, "m_Rtrv_T_CertificateInformation_List");
+            return await DatabaseHelper.GetGridDataBySp<CertificateInformationListDto>(model, "m_Rtrv_T_CertificateInformation_List");
         }
         public virtual async Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
         {

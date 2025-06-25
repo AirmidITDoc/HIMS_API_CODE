@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.OPPatient
         //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<CertificateInformationDto> CertificateInformationList = await _oPBillingService.GetListAsync(objGrid);
+            IPagedList<CertificateInformationListDto> CertificateInformationList = await _oPBillingService.GetListAsync(objGrid);
             return Ok(CertificateInformationList.ToGridResponse(objGrid, "CertificateInformation List"));
         }
         //Add API
