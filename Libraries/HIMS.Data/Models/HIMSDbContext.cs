@@ -6263,8 +6263,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_ConsentMaster");
 
-                entity.Property(e => e.ConsentDesc).HasColumnType("text");
-
                 entity.Property(e => e.ConsentName).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -10270,6 +10268,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CertificateText).HasColumnType("text");
 
                 entity.Property(e => e.CertificateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.VisitId).HasColumnName("VisitID");
             });
