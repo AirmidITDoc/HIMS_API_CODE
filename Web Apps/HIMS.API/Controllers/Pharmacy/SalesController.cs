@@ -299,6 +299,27 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+
+        [HttpPost("PaymentSettlement")]
+      ///  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
+        {
+            List<Payment> model = obj.Payment.MapTo<List<Payment>> ();
+           List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
+           List<AdvanceDetail> model2 = obj.AdvanceDetail.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader model3 = obj.AdvanceHeader.MapTo<AdvanceHeader>();
+
+
+            if (model.Count > 0)
+            {
+
+                await _ISalesService.InsertAsync(model, model1, model2, model3,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
     }
 
 }
