@@ -307,6 +307,8 @@ namespace HIMS.API.Controllers.Common
                 "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId),nameof(MCertificateMaster.CertificateName),nameof(MCertificateMaster.CertificateDesc)),
                 "ReportConfig" => (await _MReportConfig.GetAll(x => x.Parentid == null)).ToList().ToDropDown(nameof(MReportConfig.ReportId), nameof(MReportConfig.ReportSection)),
                 "MenuMaster" => (await _MenuMaster.GetAll(x => x.UpId == 10)).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
+                "Qualification" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorQualification")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "InstitueName" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "QulificationInstitueName")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),

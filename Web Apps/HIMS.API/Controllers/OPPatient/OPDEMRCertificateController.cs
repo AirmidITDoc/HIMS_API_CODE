@@ -7,6 +7,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
@@ -86,7 +87,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPost("TCertificateInformationUpdate")]
+        [HttpPut("TCertificateInformationUpdate")]
         //[Permission(PageCode = "TCertificateInformationUpdate", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(TCertificateInformationParamModel obj)
         {
@@ -99,7 +100,6 @@ namespace HIMS.API.Controllers.OPPatient
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _oPBillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-                //await _oPBillingService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);

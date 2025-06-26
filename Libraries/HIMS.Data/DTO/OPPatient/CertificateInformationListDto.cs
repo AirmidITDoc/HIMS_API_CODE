@@ -9,6 +9,7 @@ namespace HIMS.Data.DTO.OPPatient
     public class CertificateInformationListDto
     {
         public long? CertificateId {  get; set; }
+        public long? CertificateTemplateId { get; set; }
         public DateTime? CertificateDate { get; set; }
         public string? CertificateTime { get; set; }
         public string? CertificateName { get; set; }

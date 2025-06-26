@@ -29,21 +29,23 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<CertificateInformationListDto>(model, "m_Rtrv_T_CertificateInformation_List");
         }
-        public virtual async Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
+        public virtual async Task InsertAsync(TCertificateInformation ObjCertificateInformation, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                _context.TCertificateInformations.Add(TCertificateInformation);
+                _context.TCertificateInformations.Add(ObjCertificateInformation);
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username)
+
+
+        public virtual async Task UpdateAsync(TCertificateInformation ObjCertificateInformation, int UserId, string Username)
         {
             // throw new NotImplementedException();
-            _context.TCertificateInformations.Update(TCertificateInformation);
-            _context.Entry(TCertificateInformation).State = EntityState.Modified;
+            _context.TCertificateInformations.Update(ObjCertificateInformation);
+            _context.Entry(ObjCertificateInformation).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             //scope.Complete();
