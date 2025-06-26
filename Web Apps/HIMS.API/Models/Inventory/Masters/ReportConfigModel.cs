@@ -21,6 +21,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportFileName { get; set; }
         public string? ReportSpname { get; set; }
         public string? ReportPageOrientation { get; set; }
+        public string? ReportColumnWidths { get; set; }
         public string? ReportPageSize { get; set; }
         public string? ReportFilter { get; set; }
         public long? MenuId { get; set; }

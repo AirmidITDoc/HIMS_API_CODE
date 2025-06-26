@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.Design;
+using System.Text.Json.Serialization;
 
 namespace HIMS.Core.Domain.Grid
 {
@@ -35,6 +36,8 @@ namespace HIMS.Core.Domain.Grid
         public string[] headerList { get; set; } = null;
         public string[] colList { get; set; } = null;
         public string[] totalFieldList { get; set; } = null;
+        public string[] columnWidths { get; set; } = null; // widths in pixels or percentages
+
         //public string[] groupbyList { get; set; } = null;
         public string groupByLabel { get; set; } = null;
         public string summaryLabel { get; set; } = null;

@@ -301,7 +301,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PaymentSettlement")]
-      ///  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
         {
             List<Payment> model = obj.Payment.MapTo<List<Payment>> ();

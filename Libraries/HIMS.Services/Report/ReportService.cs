@@ -1685,6 +1685,7 @@ namespace HIMS.Services.Report
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
+           // string[] columnWidths = model.columnWidths;
             //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
             //Convert vPageOrientation from string to the appropriate Orientation enum
@@ -1700,7 +1701,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
 
-            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel);
+           var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1711,7 +1712,7 @@ namespace HIMS.Services.Report
 
         }
 
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "",string[] columnWidths =null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -1776,7 +1777,7 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList));
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList,columnWidths));
                         items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
                         if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
                                                                                      //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
@@ -1821,33 +1822,26 @@ namespace HIMS.Services.Report
         //    return table.ToString();
         //}
 
-       // Create  by Ashutosh 12 Jun 2025
-        public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
+        // Create  by Ashutosh 24 Jun 2025
+        public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers, string[] columnWidths = null)
         {
             StringBuilder table = new();
             table.Append("<tr>");
-            foreach (var hr in headers)
+            for (int i = 0; i < headers.Length; i++)
             {
-                string widthStyle = "";
-
-                // Set specific width for particular columns
-                if (hr == "Company Name")
-                {
-                    widthStyle = "width: 200px;";
-                }
-                else if (hr == "Address")
-                {
-                    widthStyle = "width: 200px;";
-                }
-               
+                string widthStyle = (columnWidths != null && i < columnWidths.Length && !string.IsNullOrWhiteSpace(columnWidths[i]))
+                    ? $"width: {columnWidths[i]}%;"
+                    : "";
 
                 table.Append($"<th style=\"border: 1px solid #d4c3c3; padding: 6px; {widthStyle}\">");
-                table.Append(hr.ConvertToString());
+                table.Append(headers[i]);
                 table.Append("</th>");
             }
             table.Append("</tr>");
             return table.ToString();
         }
+
+       
 
         public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
@@ -1936,6 +1930,7 @@ namespace HIMS.Services.Report
                 table.Append("</tr>");
             }
         }
+
         public static void CreateFooterGroupBy(IEnumerable<DataRow> groupData, StringBuilder table, string[] footer, string groupName, bool isTotal = false)
         {
             table.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
@@ -2158,7 +2153,7 @@ namespace HIMS.Services.Report
             }
             return table.ToString();
         }
-        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "")
+        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();

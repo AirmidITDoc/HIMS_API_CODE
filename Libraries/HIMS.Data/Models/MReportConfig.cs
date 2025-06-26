@@ -23,6 +23,7 @@ namespace HIMS.Data.Models
         public string? ReportSpname { get; set; }
         public string? ReportPageOrientation { get; set; }
         public string? ReportPageSize { get; set; }
+        public string? ReportColumnWidths { get; set; }
         public string? ReportFilter { get; set; }
         public bool? IsActive { get; set; }
         public long? CreatedBy { get; set; }
