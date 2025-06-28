@@ -18,6 +18,8 @@ namespace HIMS.Services.Pharmacy
         public string? RefundNo { get; set; }
         public decimal? RefundAmount { get; set; }
         public string Remark { get; set; }
+        public long PaymentId { get; set; }
+        public string? ReceiptNo { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentTime { get; set; }
         public decimal CashPayAmount { get; set; }
@@ -38,6 +40,8 @@ namespace HIMS.Services.Pharmacy
         public string Pin { get; set; }
         public string Phone { get; set; }
         public bool? IsCancelled { get; set; }
+        public DateTime? Date { get; set; }
+        public string? AdvanceNo { get; set; }
 
     }
 }

@@ -169,9 +169,15 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemNameBalanceQtyListDto> BalqtysalesDraftlist = await _ISalesService.BalqtysalesDraftlist(objGrid);
             return Ok(BalqtysalesDraftlist.ToGridResponse(objGrid, "BalqtysalesDraft List"));
         }
-
+        //Create By Ashu 28 jun 2025
+        [HttpPost("GetRefundByAdvanceList")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetRefundByAdvanceId(GridRequestModel objGrid)
+        {
+            IPagedList<GetRefundByAdvanceIdListDto> GetRefundByAdvancelist = await _ISalesService.GetRefundByAdvanceId(objGrid);
+            return Ok(GetRefundByAdvancelist.ToGridResponse(objGrid, "GetRefundByAdvance List"));
+        }
         // done by Ashu Date : 20-May-2025
-
         [HttpPost("SalesSaveWithPayment")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
@@ -198,7 +204,6 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         // done by Ashu Date : 20-May-2025
-
         [HttpPost("SalesSaveWithCredit")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SaleReqModel obj)
