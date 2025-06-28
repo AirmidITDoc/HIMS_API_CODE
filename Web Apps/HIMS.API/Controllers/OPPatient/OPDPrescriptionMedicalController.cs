@@ -47,15 +47,23 @@ namespace HIMS.API.Controllers.OPPatient
             _MComplaintMaster = MComplaintMasterrepository;
         }
         [HttpPost("GetVisitList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<GetVisitInfoListDto> GetVisitList = await _OPDPrescriptionService.GetListAsync(objGrid);
             return Ok(GetVisitList.ToGridResponse(objGrid, "GetVisitList "));
         }
+        [HttpPost("GetPrevVisitDiagnosisList")]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListG(GridRequestModel objGrid)
+        {
+            IPagedList<GetPrevVisitDiagnosisListDto> GetPrevVisitDiagnosisList = await _OPDPrescriptionService.VGetListAsync(objGrid);
+            return Ok(GetPrevVisitDiagnosisList.ToGridResponse(objGrid, "GetPrevVisitDiagnosisList "));
+        }
+
 
         [HttpPost("PrescriptionDetailsVisitList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListP(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionDetailsVisitWiseListDto> GetVisitList = await _OPDPrescriptionService.GetListAsyncL(objGrid);
