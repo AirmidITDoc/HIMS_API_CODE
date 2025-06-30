@@ -74,9 +74,26 @@ namespace HIMS.API.Models.Pharmacy
         }
     }
 
+  
+    public class TSalesDraftsHeaderModelValidator : AbstractValidator<TSalesDraftsHeaderModel>
+    {
+        public TSalesDraftsHeaderModelValidator()
+        {
+            RuleFor(x => x.DsalesId).NotNull().NotEmpty().WithMessage("DsalesId is required");
+        }
+    }
+
     public class SalesDraftHeadersModel
     {
         public TSalesDraftHeaderModel SalesDraft { get; set; }
         public List<TSalesDraftDetModel> SalesDraftDet { get; set; }
     }
+
+    public class TSalesDraftsHeaderModel
+    {
+        public long DsalesId { get; set; }
+
+
+    }
+   
 }
