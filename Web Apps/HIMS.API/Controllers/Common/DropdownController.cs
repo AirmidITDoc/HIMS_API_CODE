@@ -301,7 +301,7 @@ namespace HIMS.API.Controllers.Common
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
-                //Create by Ashu 27 May 2025
+               
                 "ConsentMaster" => (await _MConsentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConsentMaster.ConsentId), nameof(MConsentMaster.ConsentName)),
 
                 "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId),nameof(MCertificateMaster.CertificateName),nameof(MCertificateMaster.CertificateDesc)),

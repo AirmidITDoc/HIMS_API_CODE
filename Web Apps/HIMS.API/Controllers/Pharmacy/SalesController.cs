@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _ISalesService = repository;
         }
         [HttpPost]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public async Task<ApiResponse> Post(SalesReqDto obj)
         {
@@ -169,9 +169,32 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemNameBalanceQtyListDto> BalqtysalesDraftlist = await _ISalesService.BalqtysalesDraftlist(objGrid);
             return Ok(BalqtysalesDraftlist.ToGridResponse(objGrid, "BalqtysalesDraft List"));
         }
+        //Create By Ashu 28 jun 2025
+        [HttpPost("GetRefundByAdvanceList")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetRefundByAdvanceId(GridRequestModel objGrid)
+        {
+            IPagedList<GetRefundByAdvanceIdListDto> GetRefundByAdvancelist = await _ISalesService.GetRefundByAdvanceId(objGrid);
+            return Ok(GetRefundByAdvancelist.ToGridResponse(objGrid, "GetRefundByAdvance List"));
+        }
+
+        [HttpPost("SalesDraftBillItemDet")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> SalesDraftBillItemDet(GridRequestModel objGrid)
+        {
+            IPagedList<SalesDraftBillItemListDto> GetRefundByAdvancelist = await _ISalesService.SalesDraftBillItemDet(objGrid);
+            return Ok(GetRefundByAdvancelist.ToGridResponse(objGrid, "SalesDraftBillItemDet List"));
+        }
+
+        [HttpPost("PrescriptionItemDetList")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionItemDetList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionItemDetListDto> PrescriptionItemDetList = await _ISalesService.PrescriptionItemDetList(objGrid);
+            return Ok(PrescriptionItemDetList.ToGridResponse(objGrid, "PrescriptionItemDet List"));
+        }
 
         // done by Ashu Date : 20-May-2025
-
         [HttpPost("SalesSaveWithPayment")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
@@ -198,7 +221,6 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         // done by Ashu Date : 20-May-2025
-
         [HttpPost("SalesSaveWithCredit")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SaleReqModel obj)
@@ -238,6 +260,21 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPost("SalesDraftbillcancel")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Delete(TSalesDraftsHeaderModel obj)
+        {
+            TSalesDraftHeader model = obj.MapTo<TSalesDraftHeader>();
+            if (obj.DsalesId != 0)
+            {
+                await _ISalesService.DeleteAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancelled successfully.");
+        }
+
+        
         //shilpa 26/05/2025//
 
         [HttpPost("PharmacyAdvanceInsert")]

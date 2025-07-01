@@ -287,6 +287,26 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
             }
         }
+
+
+
+        public virtual async Task DeleteAsync(TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId",
+                "ConcessionAuthorizationId","IsSellted","IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo",
+                "ExtAddress","SalesNo","CashCounterId","UpdatedBy","IsCancelled" };
+            var entity = ObjDraftHeader.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_SalesDraftHeader", CommandType.StoredProcedure,  entity);
+          
+        }
+
+        
         //shilpa//26/05/2025
         public virtual async Task InsertAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
         {
@@ -520,6 +540,18 @@ namespace HIMS.Services.Users
         public virtual async Task<IPagedList<ItemNameBalanceQtyListDto>> BalqtysalesDraftlist(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDto>(model, "Retrieve_ItemName_BatchPOP_BalanceQty");
+        }
+        public virtual async Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GetRefundByAdvanceIdListDto>(model, "sp_GetRefundByAdvanceId");
+        }
+        public virtual async Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillItemListDto>(model, "ps_SalesDraftBillItemDet");
+        }
+        public virtual async Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionItemDetListDto>(model, "ps_PrescriptionItemDet");
         }
     }
 }
