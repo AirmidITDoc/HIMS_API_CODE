@@ -248,7 +248,6 @@ namespace HIMS.API.Controllers.Pharmacy
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
 
-            
             if (obj.PharmacyAdvance.AdvanceId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);

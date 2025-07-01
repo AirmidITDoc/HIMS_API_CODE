@@ -302,6 +302,8 @@ namespace HIMS.Services.Users
             string VAdvanceId = odal.ExecuteNonQuery("PS_insert_T_PHAdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
             ObjTPhadvanceHeader.AdvanceId = Convert.ToInt32(VAdvanceId);
             ObjTPhadvanceDetail.AdvanceId = Convert.ToInt32(VAdvanceId);
+            ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceId);
+
 
 
             string[] DEntity = { "AdvanceNo" };
