@@ -16,7 +16,8 @@ namespace HIMS.Data.DTO.Administration
         public string? DoctorName { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? Address { get; set; }
-        public string? City { get; set; }
+        public string? CityId { get; set; }
+        public string? CityName { get; set; }
         public string? Pin { get; set; }
         public string? Phone { get; set; }
         public string? Mobile { get; set; }
