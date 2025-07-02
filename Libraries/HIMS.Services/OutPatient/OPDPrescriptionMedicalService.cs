@@ -41,6 +41,11 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<PrescriptionDetailsVisitWiseListDto>(model, "sp_Rtrv_PrescriptionDetailsVisitWise");
         }
+        public virtual async Task<IPagedList<GetLabInformationListDto>> GetListAsynL(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GetLabInformationListDto>(model, "ps_Rtrv_OPInvestigation_List");
+        }
+
 
         public virtual async Task<IPagedList<MOpcasepaperDignosisMaster>> GetDignosisListAsync(GridRequestModel model)
         {

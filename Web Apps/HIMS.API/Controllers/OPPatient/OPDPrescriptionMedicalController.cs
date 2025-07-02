@@ -69,6 +69,14 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<PrescriptionDetailsVisitWiseListDto> GetVisitList = await _OPDPrescriptionService.GetListAsyncL(objGrid);
             return Ok(GetVisitList.ToGridResponse(objGrid, "PrescriptionDetailsVisitList "));
         }
+
+        [HttpPost("getlabifnormationList")]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListL(GridRequestModel objGrid)
+        {
+            IPagedList<GetLabInformationListDto> getlabifnormationList = await _OPDPrescriptionService.GetListAsynL(objGrid);
+            return Ok(getlabifnormationList.ToGridResponse(objGrid, "getlabifnormationList "));
+        }
         //List API
         [HttpGet]
         [Route("get-Service")]
