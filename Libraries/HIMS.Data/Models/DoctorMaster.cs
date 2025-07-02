@@ -10,8 +10,10 @@ namespace HIMS.Data.Models
             MDoctorChargesDetails = new HashSet<MDoctorChargesDetail>();
             MDoctorDepartmentDets = new HashSet<MDoctorDepartmentDet>();
             MDoctorExperienceDetails = new HashSet<MDoctorExperienceDetail>();
+            MDoctorLeaveDetails = new HashSet<MDoctorLeaveDetail>();
             MDoctorQualificationDetails = new HashSet<MDoctorQualificationDetail>();
             MDoctorScheduleDetails = new HashSet<MDoctorScheduleDetail>();
+            MDoctorSignPageDetails = new HashSet<MDoctorSignPageDetail>();
         }
 
         public long DoctorId { get; set; }
@@ -56,7 +58,9 @@ namespace HIMS.Data.Models
         public virtual ICollection<MDoctorChargesDetail> MDoctorChargesDetails { get; set; }
         public virtual ICollection<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; }
         public virtual ICollection<MDoctorExperienceDetail> MDoctorExperienceDetails { get; set; }
+        public virtual ICollection<MDoctorLeaveDetail> MDoctorLeaveDetails { get; set; }
         public virtual ICollection<MDoctorQualificationDetail> MDoctorQualificationDetails { get; set; }
         public virtual ICollection<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; }
+        public virtual ICollection<MDoctorSignPageDetail> MDoctorSignPageDetails { get; set; }
     }
 }
