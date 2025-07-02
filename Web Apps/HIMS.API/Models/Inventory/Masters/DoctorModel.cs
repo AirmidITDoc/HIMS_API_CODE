@@ -42,6 +42,8 @@ namespace HIMS.API.Models.Masters
         public List<DoctorExperienceDetailsModel> MDoctorExperienceDetails { get; set; }
         public List<MDoctorScheduleDetailModel> MDoctorScheduleDetails { get; set; }
         public List<MDoctorChargesDetailModel> MDoctorChargesDetails { get; set; }
+        public List<DoctorLeaveDetailsModel> MDoctorLeaveDetails { get; set; }
+        public List<DoctorSignPageDetailModel> MDoctorSignPageDetails { get; set; }
 
     }
     public class DoctorModelValidator : AbstractValidator<DoctorModel>
@@ -115,6 +117,22 @@ namespace HIMS.API.Models.Masters
         public decimal? Price { get; set; }
         public int? Days { get; set; }
 
+    }
+    public class DoctorLeaveDetailsModel
+    {
+        public long DocLeaveId { get; set; }
+        public long? DoctorId { get; set; }
+        public long? LeaveTypeId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? LeaveOption { get; set; }
+
+    }
+    public class DoctorSignPageDetailModel
+    {
+        public long DocSignId { get; set; }
+        public long? DoctorId { get; set; }
+        public long? PageId { get; set; }
     }
 
 }

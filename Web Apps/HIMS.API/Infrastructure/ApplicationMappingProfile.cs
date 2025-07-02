@@ -397,6 +397,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<MDoctorExperienceDetail, DoctorExperienceDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDoctorScheduleDetail, MDoctorScheduleDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDoctorChargesDetail, MDoctorChargesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorLeaveDetail, DoctorLeaveDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorSignPageDetail, DoctorSignPageDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             CreateMap<Payment, PharaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SaleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

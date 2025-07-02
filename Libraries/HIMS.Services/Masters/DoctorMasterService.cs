@@ -50,6 +50,10 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorQualificationDetailsListDto>(model, "ps_DoctorQualificationDetails");
         }
+        public virtual async Task<IPagedList<DoctorLeaveDetailsListDto>> ListAsyncL(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorLeaveDetailsListDto>(model, "ps_DoctorLeaveDetailsList");
+        }
         public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
@@ -194,12 +198,47 @@ namespace HIMS.Services.Masters
                 {
                     _context.MDoctorDepartmentDets.RemoveRange(lst);
                 }
+                // Delete details table realted records
+                var lsts = await _context.MDoctorQualificationDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorQualificationDetails.RemoveRange(lsts);
+                }
+                // Delete details table realted records
+                var lstd = await _context.MDoctorExperienceDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorExperienceDetails.RemoveRange(lstd);
+                }
+                // Delete details table realted records
+                var lstq = await _context.MDoctorScheduleDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorScheduleDetails.RemoveRange(lstq);
+                }
+                // Delete details table realted records
+                var lstp = await _context.MDoctorChargesDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorChargesDetails.RemoveRange(lstp);
+                }
+                // Delete details table realted records
+                var lsty = await _context.MDoctorLeaveDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorLeaveDetails.RemoveRange(lsty);
+                }
+                // Delete details table realted records
+                var lstz = await _context.MDoctorSignPageDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorSignPageDetails.RemoveRange(lstz);
+                }
                 await _context.SaveChangesAsync();
                 // Update header & detail table records
                 _context.DoctorMasters.Update(objDoctorMaster);
                 _context.Entry(objDoctorMaster).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
         }
@@ -240,5 +279,28 @@ namespace HIMS.Services.Masters
         {
             return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
+        //public virtual async Task<List<DrLeaveDetailsListDto>> LeaveDetailsListAsync(long LeaveTypeId)
+        //{
+        //    var query = _context.MOpcasepaperDignosisMasters.AsQueryable();
+
+        //    if (!string.IsNullOrEmpty(descriptionType))
+        //    {
+        //        string lowered = descriptionType.ToLower();
+        //        query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+        //    }
+
+        //    var data = await query
+        //        .OrderBy(d => d.Id)
+        //        .Select(d => new DrLeaveDetailsListDto
+        //        {
+        //            DocLeaveId = d.DocLeaveId,
+                    
+        //        })
+        //        .Take(50)
+        //        .ToListAsync();
+
+        //    return data;
+        //}
+
     }
 }

@@ -199,11 +199,13 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; } = null!;
         public virtual DbSet<MDoctorExperienceDetail> MDoctorExperienceDetails { get; set; } = null!;
         public virtual DbSet<MDoctorHouseManMaster> MDoctorHouseManMasters { get; set; } = null!;
+        public virtual DbSet<MDoctorLeaveDetail> MDoctorLeaveDetails { get; set; } = null!;
         public virtual DbSet<MDoctorNotesTemplateMaster> MDoctorNotesTemplateMasters { get; set; } = null!;
         public virtual DbSet<MDoctorPerGroupWiseMaster> MDoctorPerGroupWiseMasters { get; set; } = null!;
         public virtual DbSet<MDoctorPerMaster> MDoctorPerMasters { get; set; } = null!;
         public virtual DbSet<MDoctorQualificationDetail> MDoctorQualificationDetails { get; set; } = null!;
         public virtual DbSet<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; } = null!;
+        public virtual DbSet<MDoctorSignPageDetail> MDoctorSignPageDetails { get; set; } = null!;
         public virtual DbSet<MDoseMaster> MDoseMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
@@ -522,7 +524,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6471,6 +6473,26 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
             });
 
+            modelBuilder.Entity<MDoctorLeaveDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocLeaveId);
+
+                entity.ToTable("M_DoctorLeaveDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorLeaveDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorLeaveDetails_DoctorMaster");
+            });
+
             modelBuilder.Entity<MDoctorNotesTemplateMaster>(entity =>
             {
                 entity.HasKey(e => e.DocNoteTempId);
@@ -6550,6 +6572,22 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.MDoctorScheduleDetails)
                     .HasForeignKey(d => d.DoctorId)
                     .HasConstraintName("FK_M_DoctorScheduleDetails_DoctorMaster");
+            });
+
+            modelBuilder.Entity<MDoctorSignPageDetail>(entity =>
+            {
+                entity.HasKey(e => e.DocSignId);
+
+                entity.ToTable("M_DoctorSignPageDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.MDoctorSignPageDetails)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("FK_M_DoctorSignPageDetails_DoctorMaster");
             });
 
             modelBuilder.Entity<MDoseMaster>(entity =>

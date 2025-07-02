@@ -29,8 +29,8 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IGenericService<MDoctorScheduleDetail> _repository2;
         private readonly IGenericService<MDoctorExperienceDetail> _repository3;
         private readonly IGenericService<MDoctorChargesDetail> _repository4;
-
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4)
+        private readonly IGenericService<MDoctorSignPageDetail> _repository5;
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
@@ -38,6 +38,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             _repository2 = repository2;
             _repository3 = repository3;
             _repository4 = repository4;
+            _repository5 = repository5;
         }
         //List API
         [HttpPost]
@@ -56,6 +57,24 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         {
             IPagedList<MDoctorExperienceDetail> DoctorExperienceDetailList = await _repository3.GetAllPagedAsync(objGrid);
             return Ok(DoctorExperienceDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
+        }
+        //List API
+        [HttpPost]
+        [Route("MDoctorSignPageDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListS(GridRequestModel objGrid)
+        {
+            IPagedList<MDoctorSignPageDetail> MDoctorSignPageDetailList = await _repository5.GetAllPagedAsync(objGrid);
+            return Ok(MDoctorSignPageDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
+        }
+        //List API
+        [HttpPost]
+        [Route("DoctorLeaveDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListL(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorLeaveDetailsListDto> DoctorLeaveDetailList = await _IDoctorMasterService.ListAsyncL(objGrid);
+            return Ok(DoctorLeaveDetailList.ToGridResponse(objGrid, "DoctorLeaveDetailList"));
         }
         //List API
         [HttpPost]
@@ -90,6 +109,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var result = await _IDoctorMasterService.ConstantListAsync(ConstantType);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
         }
+
+        //[HttpGet("DrLeaveDetailList")]
+        ////[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
+        //{
+        //    var result = await _IDoctorMasterService.LeaveDetailsListAsync(descriptionType);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DrLeaveDetailList", result);
+        //}
 
         //List API
         [HttpPost]
@@ -193,6 +220,16 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                     x.CreatedBy = CurrentUserId;
                     x.CreatedDate = DateTime.Now;
                 }
+                foreach (var y in model.MDoctorLeaveDetails)
+                {
+                    y.CreatedBy = CurrentUserId;
+                    y.CreatedDate = DateTime.Now;
+                }
+                foreach (var z in model.MDoctorSignPageDetails)
+                {
+                    z.CreatedBy = CurrentUserId;
+                    z.CreatedDate = DateTime.Now;
+                }
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
                 if (model.RegDate.HasValue)
                     model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime()).Date;
@@ -275,7 +312,26 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 x.ModifiedBy = CurrentUserId;
                 x.ModifiedDate = DateTime.Now;
             }
-
+            foreach (var y in model.MDoctorLeaveDetails)
+            {
+                if (y.DocLeaveId == 0)
+                {
+                    y.CreatedBy = CurrentUserId;
+                    y.CreatedDate = DateTime.Now;
+                }
+                y.ModifiedBy = CurrentUserId;
+                y.ModifiedDate = DateTime.Now;
+            }
+            foreach (var z in model.MDoctorSignPageDetails)
+            {
+                if (z.DocSignId == 0)
+                {
+                    z.CreatedBy = CurrentUserId;
+                    z.CreatedDate = DateTime.Now;
+                }
+                z.ModifiedBy = CurrentUserId;
+                z.ModifiedDate = DateTime.Now;
+            }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");

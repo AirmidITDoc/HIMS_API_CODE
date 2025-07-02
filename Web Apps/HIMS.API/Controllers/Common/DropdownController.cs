@@ -310,6 +310,9 @@ namespace HIMS.API.Controllers.Common
                 "Qualification" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorQualification")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "InstitueName" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "QulificationInstitueName")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
+                "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
