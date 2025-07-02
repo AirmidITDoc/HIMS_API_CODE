@@ -29,10 +29,8 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IGenericService<MDoctorScheduleDetail> _repository2;
         private readonly IGenericService<MDoctorExperienceDetail> _repository3;
         private readonly IGenericService<MDoctorChargesDetail> _repository4;
-        private readonly IGenericService<MDoctorLeaveDetail> _repository5;
-
-
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorLeaveDetail> repository5)
+        private readonly IGenericService<MDoctorSignPageDetail> _repository5;
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
@@ -59,6 +57,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         {
             IPagedList<MDoctorExperienceDetail> DoctorExperienceDetailList = await _repository3.GetAllPagedAsync(objGrid);
             return Ok(DoctorExperienceDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
+        }
+        //List API
+        [HttpPost]
+        [Route("MDoctorSignPageDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListS(GridRequestModel objGrid)
+        {
+            IPagedList<MDoctorSignPageDetail> MDoctorSignPageDetailList = await _repository5.GetAllPagedAsync(objGrid);
+            return Ok(MDoctorSignPageDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
         }
         //List API
         [HttpPost]
@@ -102,6 +109,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var result = await _IDoctorMasterService.ConstantListAsync(ConstantType);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
         }
+
+        //[HttpGet("DrLeaveDetailList")]
+        ////[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
+        //{
+        //    var result = await _IDoctorMasterService.LeaveDetailsListAsync(descriptionType);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DrLeaveDetailList", result);
+        //}
 
         //List API
         [HttpPost]

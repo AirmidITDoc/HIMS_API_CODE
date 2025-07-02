@@ -322,7 +322,6 @@ namespace HIMS.Services.Users
             string VAdvanceId = odal.ExecuteNonQuery("PS_insert_T_PHAdvanceHeader_1", CommandType.StoredProcedure, "AdvanceId", entity);
             ObjTPhadvanceHeader.AdvanceId = Convert.ToInt32(VAdvanceId);
             ObjTPhadvanceDetail.AdvanceId = Convert.ToInt32(VAdvanceId);
-            ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceId);
 
 
 
@@ -334,6 +333,8 @@ namespace HIMS.Services.Users
             }
             string VAdvanceDetailID = odal.ExecuteNonQuery("PS_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
             ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
+            ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
+
 
             string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
             var Entity = ObjPaymentPharmacy.ToDictionary();
@@ -367,6 +368,7 @@ namespace HIMS.Services.Users
             }
             string VAdvanceDetailID = odal.ExecuteNonQuery("m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
             ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
+
 
             string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
             var PPEntity = ObjPaymentPharmacy.ToDictionary();
