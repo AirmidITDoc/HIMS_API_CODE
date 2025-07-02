@@ -29,8 +29,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IGenericService<MDoctorScheduleDetail> _repository2;
         private readonly IGenericService<MDoctorExperienceDetail> _repository3;
         private readonly IGenericService<MDoctorChargesDetail> _repository4;
+        private readonly IGenericService<MDoctorLeaveDetail> _repository5;
 
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4)
+
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorLeaveDetail> repository5)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
@@ -38,6 +40,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             _repository2 = repository2;
             _repository3 = repository3;
             _repository4 = repository4;
+            _repository5 = repository5;
         }
         //List API
         [HttpPost]
@@ -56,6 +59,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         {
             IPagedList<MDoctorExperienceDetail> DoctorExperienceDetailList = await _repository3.GetAllPagedAsync(objGrid);
             return Ok(DoctorExperienceDetailList.ToGridResponse(objGrid, "DoctorExperienceDetailList "));
+        }
+        //List API
+        [HttpPost]
+        [Route("DoctorLeaveDetailList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListL(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorLeaveDetailsListDto> DoctorLeaveDetailList = await _IDoctorMasterService.ListAsyncL(objGrid);
+            return Ok(DoctorLeaveDetailList.ToGridResponse(objGrid, "DoctorLeaveDetailList"));
         }
         //List API
         [HttpPost]
