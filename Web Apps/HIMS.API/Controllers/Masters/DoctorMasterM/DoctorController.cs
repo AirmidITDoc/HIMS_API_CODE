@@ -193,6 +193,16 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                     x.CreatedBy = CurrentUserId;
                     x.CreatedDate = DateTime.Now;
                 }
+                foreach (var y in model.MDoctorLeaveDetails)
+                {
+                    y.CreatedBy = CurrentUserId;
+                    y.CreatedDate = DateTime.Now;
+                }
+                foreach (var z in model.MDoctorSignPageDetails)
+                {
+                    z.CreatedBy = CurrentUserId;
+                    z.CreatedDate = DateTime.Now;
+                }
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
                 if (model.RegDate.HasValue)
                     model.RegDate = Convert.ToDateTime(obj.RegDate.Value.ToLocalTime()).Date;
@@ -275,7 +285,26 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 x.ModifiedBy = CurrentUserId;
                 x.ModifiedDate = DateTime.Now;
             }
-
+            foreach (var y in model.MDoctorLeaveDetails)
+            {
+                if (y.DocLeaveId == 0)
+                {
+                    y.CreatedBy = CurrentUserId;
+                    y.CreatedDate = DateTime.Now;
+                }
+                y.ModifiedBy = CurrentUserId;
+                y.ModifiedDate = DateTime.Now;
+            }
+            foreach (var z in model.MDoctorSignPageDetails)
+            {
+                if (z.DocSignId == 0)
+                {
+                    z.CreatedBy = CurrentUserId;
+                    z.CreatedDate = DateTime.Now;
+                }
+                z.ModifiedBy = CurrentUserId;
+                z.ModifiedDate = DateTime.Now;
+            }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");

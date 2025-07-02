@@ -194,12 +194,47 @@ namespace HIMS.Services.Masters
                 {
                     _context.MDoctorDepartmentDets.RemoveRange(lst);
                 }
+                // Delete details table realted records
+                var lsts = await _context.MDoctorQualificationDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorQualificationDetails.RemoveRange(lsts);
+                }
+                // Delete details table realted records
+                var lstd = await _context.MDoctorExperienceDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorExperienceDetails.RemoveRange(lstd);
+                }
+                // Delete details table realted records
+                var lstq = await _context.MDoctorScheduleDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorScheduleDetails.RemoveRange(lstq);
+                }
+                // Delete details table realted records
+                var lstp = await _context.MDoctorChargesDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorChargesDetails.RemoveRange(lstp);
+                }
+                // Delete details table realted records
+                var lsty = await _context.MDoctorLeaveDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorLeaveDetails.RemoveRange(lsty);
+                }
+                // Delete details table realted records
+                var lstz = await _context.MDoctorSignPageDetails.Where(x => x.DoctorId == objDoctorMaster.DoctorId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MDoctorSignPageDetails.RemoveRange(lstz);
+                }
                 await _context.SaveChangesAsync();
                 // Update header & detail table records
                 _context.DoctorMasters.Update(objDoctorMaster);
                 _context.Entry(objDoctorMaster).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
         }
