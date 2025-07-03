@@ -9,6 +9,7 @@ namespace HIMS.Data.DTO.Administration
     public  class DoctorLeaveDetailsListDto
     {
         public long DocLeaveId { get; set; }
+        public long DoctorId { get; set; }
         public long? LeaveTypeId { get; set; }
         public string? LeaveType { get; set; }
         public DateTime? StartDate { get; set; }

@@ -279,28 +279,6 @@ namespace HIMS.Services.Masters
         {
             return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-        //public virtual async Task<List<DrLeaveDetailsListDto>> LeaveDetailsListAsync(long LeaveTypeId)
-        //{
-        //    var query = _context.MOpcasepaperDignosisMasters.AsQueryable();
-
-        //    if (!string.IsNullOrEmpty(descriptionType))
-        //    {
-        //        string lowered = descriptionType.ToLower();
-        //        query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
-        //    }
-
-        //    var data = await query
-        //        .OrderBy(d => d.Id)
-        //        .Select(d => new DrLeaveDetailsListDto
-        //        {
-        //            DocLeaveId = d.DocLeaveId,
-                    
-        //        })
-        //        .Take(50)
-        //        .ToListAsync();
-
-        //    return data;
-        //}
-
+       
     }
 }

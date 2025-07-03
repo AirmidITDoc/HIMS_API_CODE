@@ -524,7 +524,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -2728,7 +2728,31 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
 
+                entity.Property(e => e.IpdAdvanceCounterId).HasColumnName("IPD_Advance_CounterId");
+
+                entity.Property(e => e.IpdBillingCounterId).HasColumnName("IPD_Billing_CounterId");
+
+                entity.Property(e => e.IpdReceiptCounterId).HasColumnName("IPD_Receipt_CounterId");
+
+                entity.Property(e => e.IpdRefundOfAdvanceCounterId).HasColumnName("IPD_Refund_of_Advance_CounterId");
+
+                entity.Property(e => e.IpdRefundOfBillCounterId).HasColumnName("IPD_Refund_of_Bill_CounterId");
+
+                entity.Property(e => e.IpdRefundOfBillReceiptCounterId).HasColumnName("IPD_Refund_of_Bill_Receipt_CounterId");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdAdvanceCounterId).HasColumnName("OPD_Advance_CounterId");
+
+                entity.Property(e => e.OpdBillingCounterId).HasColumnName("OPD_Billing_CounterId");
+
+                entity.Property(e => e.OpdReceiptCounterId).HasColumnName("OPD_Receipt_CounterId");
+
+                entity.Property(e => e.OpdRefundAdvanceCounterId).HasColumnName("OPD_Refund_Advance_CounterId");
+
+                entity.Property(e => e.OpdRefundBillCounterId).HasColumnName("OPD_Refund_Bill_CounterId");
+
+                entity.Property(e => e.OpdRefundBillReceiptCounterId).HasColumnName("OPD_Refund_Bill_Receipt_CounterId");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -6484,6 +6508,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Reason)
+                    .HasMaxLength(250)
+                    .HasColumnName("reason");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 

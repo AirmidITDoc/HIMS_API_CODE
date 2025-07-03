@@ -15,6 +15,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public string? Reason { get; set; }
 
         public virtual DoctorMaster? Doctor { get; set; }
     }

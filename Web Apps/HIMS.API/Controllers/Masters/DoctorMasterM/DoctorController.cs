@@ -110,13 +110,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
         }
 
-        //[HttpGet("DrLeaveDetailList")]
-        ////[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
-        //{
-        //    var result = await _IDoctorMasterService.LeaveDetailsListAsync(descriptionType);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DrLeaveDetailList", result);
-        //}
 
         //List API
         [HttpPost]
