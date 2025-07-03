@@ -375,7 +375,7 @@ namespace HIMS.API.Controllers.Report
             }
             model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GetReportSetByProc(model);
+            string byteFile = _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
 
 
