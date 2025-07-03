@@ -14,6 +14,19 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? EmailId { get; set; }
         public string? WebSiteInfo { get; set; }
         public string? Header { get; set; }
+        public bool? IsActive { get; set; }
+        public long? OpdBillingCounterId { get; set; }
+        public long? OpdReceiptCounterId { get; set; }
+        public long? OpdRefundBillCounterId { get; set; }
+        public long? OpdRefundBillReceiptCounterId { get; set; }
+        public long? OpdAdvanceCounterId { get; set; }
+        public long? OpdRefundAdvanceCounterId { get; set; }
+        public long? IpdAdvanceCounterId { get; set; }
+        public long? IpdBillingCounterId { get; set; }
+        public long? IpdReceiptCounterId { get; set; }
+        public long? IpdRefundOfBillCounterId { get; set; }
+        public long? IpdRefundOfBillReceiptCounterId { get; set; }
+        public long? IpdRefundOfAdvanceCounterId { get; set; }
     }
     public class HospitalMasterModelModelValidator : AbstractValidator<HospitalMasterModel>
     {

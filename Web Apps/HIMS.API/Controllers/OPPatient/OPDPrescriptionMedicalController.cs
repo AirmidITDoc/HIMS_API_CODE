@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("getlabifnormationList")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListL(GridRequestModel objGrid)
         {
             IPagedList<GetLabInformationListDto> getlabifnormationList = await _OPDPrescriptionService.GetListAsynL(objGrid);

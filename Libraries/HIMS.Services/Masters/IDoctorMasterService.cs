@@ -18,10 +18,9 @@ namespace HIMS.Services.Masters
         Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username);
         Task<IPagedList<DoctorMasterListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<DoctorChargesDetailListDto>> ListAsync(GridRequestModel objGrid);
+        Task<IPagedList<DoctorSignpageListDto>> ListAsyncs(GridRequestModel objGrid);
         Task<IPagedList<DoctorQualificationDetailsListDto>> ListAsyncQ(GridRequestModel objGrid);
         Task<IPagedList<DoctorLeaveDetailsListDto>> ListAsyncL(GridRequestModel objGrid);
-
-
         Task<DoctorMaster> GetById(int Id);
         Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid);
         Task<IPagedList<LvwDoctorMasterList>> GetListAsync1(GridRequestModel model);
