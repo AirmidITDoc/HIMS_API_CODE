@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
@@ -152,6 +153,22 @@ namespace HIMS.API.Controllers.Masters.Billing
                 x.IsDocEditable
             }));
         }
+        //Add API
+        [HttpPost("PackageDetailsInsert")]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PackageDetModel obj)
+        {
+            List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
+
+            if (model.Count > 0)
+            {
+              await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
+        }
+       
 
     }
 }

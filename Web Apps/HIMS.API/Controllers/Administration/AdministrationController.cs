@@ -284,22 +284,6 @@ namespace HIMS.API.Controllers.Administration
             await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
-        //Add API
-        [HttpPost("PackageDetailsInsert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PackageDetModel obj)
-        {
-            List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
-
-            if (model.Count > 0)
-            {
-
-                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
-        }
-
+     
     }
 }
