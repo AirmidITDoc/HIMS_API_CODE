@@ -7475,9 +7475,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PackageDetails");
 
-                entity.Property(e => e.Price)
-                    .HasColumnType("money")
-                    .HasColumnName("price");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Price).HasColumnType("money");
             });
 
             modelBuilder.Entity<MParameterDescriptiveMaster>(entity =>
@@ -9508,7 +9510,11 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.EmgEndTime).HasColumnType("datetime");
+
                 entity.Property(e => e.EmgPer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.EmgStartTime).HasColumnType("datetime");
 
                 entity.Property(e => e.IsDocEditable).HasDefaultValueSql("((0))");
 

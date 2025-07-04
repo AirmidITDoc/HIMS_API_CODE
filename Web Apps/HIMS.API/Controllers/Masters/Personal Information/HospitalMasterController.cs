@@ -9,6 +9,9 @@ using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Services.Inventory;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -16,20 +19,23 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [ApiController]
     [ApiVersion("1")]
     public class HospitalMasterController : BaseController
+
     {
+        private readonly IHospitalMasterService _IHospitalMasterService;
         private readonly IGenericService<HospitalMaster> _repository;
-        public HospitalMasterController(IGenericService<HospitalMaster> repository)
+        public HospitalMasterController(IHospitalMasterService repository, IGenericService<HospitalMaster> repository1)
         {
-            _repository = repository;
+            _IHospitalMasterService = repository;
+            _repository = repository1;
+
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
+
+        [HttpPost("HospitalMasterList")]
         [Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<HospitalMaster> HospitalMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(HospitalMasterList.ToGridResponse(objGrid, "HospitalMasterList  List"));
+               IPagedList<HospitalMasterListDto> HospitalMasterList = await _IHospitalMasterService.GetListAsyncH(objGrid);
+            return Ok(HospitalMasterList.ToGridResponse(objGrid, "HospitalMaster List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]

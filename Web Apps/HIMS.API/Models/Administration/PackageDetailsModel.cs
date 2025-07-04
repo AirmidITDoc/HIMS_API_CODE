@@ -9,6 +9,8 @@ namespace HIMS.API.Models.Administration
         public long? ServiceId { get; set; }
         public long? PackageServiceId { get; set; }
         public decimal? Price { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
 
     }
     public class PackageDetailsModel1
@@ -25,7 +27,6 @@ namespace HIMS.API.Models.Administration
      }
     public class PackageDetModel
     {
-        //public PackageDetailsModel1 PackageDetailservice { get; set; }
 
         public List<PackageDetailsModel> packageDetail { get; set; }
 
