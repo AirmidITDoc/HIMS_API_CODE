@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualBasic;
 using System.Data;
@@ -27,13 +28,6 @@ namespace HIMS.Services.Report
 {
     public class ReportService : IReportService
     {
-
-        //public ReportService(IFileUtilitys fileUtility) : base(fileUtility)
-        //{
-
-        //}
-
-
         private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
@@ -120,7 +114,7 @@ namespace HIMS.Services.Report
 
 
 
-        public string GetReportSetByProc(ReportRequestModel model)
+        public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
@@ -128,7 +122,7 @@ namespace HIMS.Services.Report
 
             switch (model.Mode)
             {
-               
+
 
 
                 #region :: RegistrationReport ::
@@ -418,25 +412,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-              
+
                 #region :: OPPrescription ::
                 case "OPPrescription":
                     {
 
                         model.RepoertName = "OPPrescription ";
-                    
+
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNew.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                         html.Replace("{{Signature}}", htmlHeaderFilePath);
+                        html.Replace("{{Signature}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescription" + vDate, Orientation.Portrait);
 
 
-                       
+
 
 
 
@@ -459,11 +453,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                       html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        html.Replace("{{Signature}}", htmlHeaderFilePath);
-
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{Signature}}", "");
+                        html = SetFonts(html, PdfFontPath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
-
 
 
 
@@ -917,7 +910,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-              
+
 
                 #region :: RegistrationForm ::
                 case "RegistrationForm":
@@ -1676,7 +1669,20 @@ namespace HIMS.Services.Report
             return byteFile;
 
         }
-
+        public string SetFonts(string html, string PdfFontPath)
+        {
+            string font = "";
+            int c = 0;
+            string fonts = "";
+            foreach (string path in PdfFontPath.Split(','))
+            {
+                c++;
+                font += "@font-face {font-family: 'NotoSans" + c + "';src: url('" + path + "') format('truetype');}";
+                fonts += "'NotoSans" + c + "', ";
+            }
+            font += "\nbody {font-family: " + fonts + " sans-serif;}";
+            return html.Replace("{{LoadFont}}", font);
+        }
         public string GetNewReportSetByProc(ReportNewRequestModel model)
         {
 
@@ -1685,7 +1691,7 @@ namespace HIMS.Services.Report
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
-           // string[] columnWidths = model.columnWidths;
+            // string[] columnWidths = model.columnWidths;
             //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
             //Convert vPageOrientation from string to the appropriate Orientation enum
@@ -1701,7 +1707,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
 
-           var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1712,7 +1718,7 @@ namespace HIMS.Services.Report
 
         }
 
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "",string[] columnWidths =null)
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -1777,7 +1783,7 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList,columnWidths));
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
                         items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
                         if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
                                                                                      //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
@@ -1841,7 +1847,7 @@ namespace HIMS.Services.Report
             return table.ToString();
         }
 
-       
+
 
         public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
@@ -3158,16 +3164,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PinNo}}", dt.GetColValue("PinNo"));
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
-                  
+
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
 
-                       
+
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
 
-                      
+
 
                         return html;
 
