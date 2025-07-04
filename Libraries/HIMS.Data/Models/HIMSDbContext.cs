@@ -9508,7 +9508,11 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.EmgEndTime).HasColumnType("datetime");
+
                 entity.Property(e => e.EmgPer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.EmgStartTime).HasColumnType("datetime");
 
                 entity.Property(e => e.IsDocEditable).HasDefaultValueSql("((0))");
 

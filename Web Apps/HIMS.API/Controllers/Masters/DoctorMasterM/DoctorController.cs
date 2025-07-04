@@ -114,7 +114,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpGet("GetConstantList")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetConstantList(string ConstantType)
         {
             var result = await _IDoctorMasterService.ConstantListAsync(ConstantType);
