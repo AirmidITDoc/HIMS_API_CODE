@@ -13,6 +13,8 @@ namespace HIMS.Data.DTO.Administration
         public long? LeaveTypeId { get; set; }
         public string? LeaveType { get; set; }
 
+        
+             public string? leaveOptionName { get; set; }
         public string? Reason { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
