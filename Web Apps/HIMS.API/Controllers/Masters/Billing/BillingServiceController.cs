@@ -30,12 +30,13 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("BillingList")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
+
         [HttpPost("PackageServiceInfoList")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
@@ -142,6 +143,31 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
 
+        [HttpGet("GetServiceListwithTraiff")]
+        public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, string ServiceName)
+        {
+            var resultList = await _BillingService.GetServiceListwithTraiff(TariffId,  ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List With Tariff Id.", resultList.Select(x => new
+            {
+                x.FormattedText,
+                x.ServiceId,
+                x.GroupId,
+                x.ServiceShortDesc,
+                x.ServiceName,
+                x.ClassRate,
+                x.TariffId,
+                x.ClassId,
+                x.IsEditable,
+                x.CreditedtoDoctor,
+                x.IsPathology,
+                x.IsRadiology,
+                x.IsActive,
+                x.PrintOrder,
+                x.IsPackage,
+                x.DoctorId,
+                x.IsDocEditable
+            }));
+        }
 
     }
 }

@@ -174,6 +174,38 @@ namespace HIMS.Services.Inventory
             odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
 
+        public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName)
+        {
+            var qry = from s in _context.ServiceMasters
+                      join d in _context.ServiceDetails on s.ServiceId equals d.ServiceId
+                      where s.IsActive == true
+                            && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+                            && (TariffId == 0 || d.TariffId == TariffId)
+                      select new ServiceMasterDTO()
+                      {
+                          ServiceId = s.ServiceId,
+                          GroupId = s.GroupId,
+                          ServiceShortDesc = s.ServiceShortDesc,
+                          ServiceName = s.ServiceName,
+                          ClassRate = d.ClassRate ?? 0,
+                          TariffId = d.TariffId ?? 0,
+                          ClassId = d.ClassId ?? 0,
+                          IsEditable = s.IsEditable,
+                          CreditedtoDoctor = s.CreditedtoDoctor,
+                          IsPathology = s.IsPathology,
+                          IsRadiology = s.IsRadiology,
+                          IsActive = s.IsActive,
+                          PrintOrder = s.PrintOrder,
+                          IsPackage = s.IsPackage,
+                          DoctorId = s.DoctorId,
+                          IsDocEditable = s.IsDocEditable
+                      };
+
+            return await qry.Take(50).ToListAsync();
+
+        }
+
+
 
     }
 }

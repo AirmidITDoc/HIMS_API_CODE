@@ -23,8 +23,7 @@ namespace HIMS.Services.Inventory
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
         Task UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
-
-
+        Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
 
 
     }
