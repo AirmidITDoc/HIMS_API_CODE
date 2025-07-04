@@ -153,6 +153,8 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IDoctorMasterService, DoctorMasterService>();
             services.AddScoped<IDoctorShareMasterService, DoctorShareMasterService>();
+            services.AddScoped<IHospitalMasterService, HospitalMasterService>();
+
 
             //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
             services.AddScoped<IOPBillingService, OPBillingService>();

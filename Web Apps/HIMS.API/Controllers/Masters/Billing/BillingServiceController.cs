@@ -79,22 +79,6 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpPost("ServiceCanceled")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(BillingServiceModel obj)
-        {
-            ServiceMaster model = new();
-            if (obj.ServiceId != 0)
-            {
-                model.ServiceId = obj.ServiceId;
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _BillingService.CancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record cancelled successfully.");
-        }
         [HttpDelete("ServicDelete")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
