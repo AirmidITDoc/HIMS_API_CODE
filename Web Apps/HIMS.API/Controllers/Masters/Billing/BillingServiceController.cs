@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
@@ -36,6 +37,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
             return Ok(BillingList.ToGridResponse(objGrid, "Billing List"));
         }
+
         [HttpPost("PackageServiceInfoList")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
@@ -78,22 +80,6 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpPost("ServiceCanceled")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(BillingServiceModel obj)
-        {
-            ServiceMaster model = new();
-            if (obj.ServiceId != 0)
-            {
-                model.ServiceId = obj.ServiceId;
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _BillingService.CancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record cancelled successfully.");
-        }
         [HttpDelete("ServicDelete")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
@@ -142,6 +128,47 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
 
+        [HttpGet("GetServiceListwithTraiff")]
+        public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, string ServiceName)
+        {
+            var resultList = await _BillingService.GetServiceListwithTraiff(TariffId,  ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List With Tariff Id.", resultList.Select(x => new
+            {
+                x.FormattedText,
+                x.ServiceId,
+                x.GroupId,
+                x.ServiceShortDesc,
+                x.ServiceName,
+                x.ClassRate,
+                x.TariffId,
+                x.ClassId,
+                x.IsEditable,
+                x.CreditedtoDoctor,
+                x.IsPathology,
+                x.IsRadiology,
+                x.IsActive,
+                x.PrintOrder,
+                x.IsPackage,
+                x.DoctorId,
+                x.IsDocEditable
+            }));
+        }
+        //Add API
+        [HttpPost("PackageDetailsInsert")]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PackageDetModel obj)
+        {
+            List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
+
+            if (model.Count > 0)
+            {
+              await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
+        }
+       
 
     }
 }

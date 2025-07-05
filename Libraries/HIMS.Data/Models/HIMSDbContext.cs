@@ -270,6 +270,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MRelationshipMaster> MRelationshipMasters { get; set; } = null!;
         public virtual DbSet<MReligionMaster> MReligionMasters { get; set; } = null!;
         public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
+        public virtual DbSet<MReportConfigDetail> MReportConfigDetails { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -524,7 +525,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -2728,7 +2729,31 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
 
+                entity.Property(e => e.IpdAdvanceCounterId).HasColumnName("IPD_Advance_CounterId");
+
+                entity.Property(e => e.IpdBillingCounterId).HasColumnName("IPD_Billing_CounterId");
+
+                entity.Property(e => e.IpdReceiptCounterId).HasColumnName("IPD_Receipt_CounterId");
+
+                entity.Property(e => e.IpdRefundOfAdvanceCounterId).HasColumnName("IPD_Refund_of_Advance_CounterId");
+
+                entity.Property(e => e.IpdRefundOfBillCounterId).HasColumnName("IPD_Refund_of_Bill_CounterId");
+
+                entity.Property(e => e.IpdRefundOfBillReceiptCounterId).HasColumnName("IPD_Refund_of_Bill_Receipt_CounterId");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdAdvanceCounterId).HasColumnName("OPD_Advance_CounterId");
+
+                entity.Property(e => e.OpdBillingCounterId).HasColumnName("OPD_Billing_CounterId");
+
+                entity.Property(e => e.OpdReceiptCounterId).HasColumnName("OPD_Receipt_CounterId");
+
+                entity.Property(e => e.OpdRefundAdvanceCounterId).HasColumnName("OPD_Refund_Advance_CounterId");
+
+                entity.Property(e => e.OpdRefundBillCounterId).HasColumnName("OPD_Refund_Bill_CounterId");
+
+                entity.Property(e => e.OpdRefundBillReceiptCounterId).HasColumnName("OPD_Refund_Bill_Receipt_CounterId");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -6485,6 +6510,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Reason)
+                    .HasMaxLength(250)
+                    .HasColumnName("reason");
+
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Doctor)
@@ -7447,9 +7476,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PackageDetails");
 
-                entity.Property(e => e.Price)
-                    .HasColumnType("money")
-                    .HasColumnName("price");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Price).HasColumnType("money");
             });
 
             modelBuilder.Entity<MParameterDescriptiveMaster>(entity =>
@@ -7843,6 +7874,34 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SummaryLabel).HasColumnName("summaryLabel");
 
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MReportConfigDetail>(entity =>
+            {
+                entity.HasKey(e => e.ReportColId);
+
+                entity.ToTable("M_ReportConfigDetails");
+
+                entity.Property(e => e.ProcedureName).HasMaxLength(200);
+
+                entity.Property(e => e.ReportColumn).HasMaxLength(100);
+
+                entity.Property(e => e.ReportColumnAligment).HasMaxLength(50);
+
+                entity.Property(e => e.ReportColumnWidth).HasMaxLength(50);
+
+                entity.Property(e => e.ReportGroupByLabel).HasMaxLength(100);
+
+                entity.Property(e => e.ReportHeader).HasMaxLength(100);
+
+                entity.Property(e => e.ReportTotalField).HasMaxLength(100);
+
+                entity.Property(e => e.SummaryLabel).HasMaxLength(50);
+
+                entity.HasOne(d => d.Report)
+                    .WithMany(p => p.MReportConfigDetails)
+                    .HasForeignKey(d => d.ReportId)
+                    .HasConstraintName("FK_M_ReportConfigDetails_M_ReportConfig");
             });
 
             modelBuilder.Entity<MReportConfiguration>(entity =>
@@ -9480,7 +9539,11 @@ namespace HIMS.Data.Models
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.EmgEndTime).HasColumnType("datetime");
+
                 entity.Property(e => e.EmgPer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.EmgStartTime).HasColumnType("datetime");
 
                 entity.Property(e => e.IsDocEditable).HasDefaultValueSql("((0))");
 

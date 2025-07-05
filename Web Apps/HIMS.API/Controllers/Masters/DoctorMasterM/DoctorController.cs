@@ -30,7 +30,9 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IGenericService<MDoctorExperienceDetail> _repository3;
         private readonly IGenericService<MDoctorChargesDetail> _repository4;
         private readonly IGenericService<MDoctorSignPageDetail> _repository5;
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5)
+        private readonly IGenericService<MConstant> _repository6;
+
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5, IGenericService<MConstant> repository6)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
@@ -39,6 +41,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             _repository3 = repository3;
             _repository4 = repository4;
             _repository5 = repository5;
+            _repository6 = repository6;
         }
         //List API
         [HttpPost]
@@ -94,6 +97,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return Ok(DoctorChargesDetailList.ToGridResponse(objGrid, "DoctorChargesDetailList"));
         }
 
+        [HttpPost("DoctorSignpagelist")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorSignpageListDto> DoctorSignpagelist = await _IDoctorMasterService.ListAsyncs(objGrid);
+            return Ok(DoctorSignpagelist.ToGridResponse(objGrid, "DoctorSignpagelist"));
+        }
+
         [HttpPost("DoctorList")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -103,20 +114,22 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpGet("GetConstantList")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetConstantList(string ConstantType)
         {
             var result = await _IDoctorMasterService.ConstantListAsync(ConstantType);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
         }
+        //List API
+        [HttpGet]
+        [Route("get-DoctorConstantsList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdownD()
+        {
+            var DoctorConstantsList = await _repository6.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorContant dropdown", DoctorConstantsList.Select(x => new { x.ConstantType, x.ConstantId }));
+        }
 
-        //[HttpGet("DrLeaveDetailList")]
-        ////[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
-        //{
-        //    var result = await _IDoctorMasterService.LeaveDetailsListAsync(descriptionType);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DrLeaveDetailList", result);
-        //}
 
         //List API
         [HttpPost]

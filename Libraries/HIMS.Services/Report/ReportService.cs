@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Transactions;
 using WkHtmlToPdfDotNet;
 
 
@@ -30,13 +31,6 @@ namespace HIMS.Services.Report
 {
     public class ReportService : IReportService
     {
-
-        //public ReportService(IFileUtilitys fileUtility) : base(fileUtility)
-        //{
-
-        //}
-
-
         private readonly Data.Models.HIMSDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
@@ -48,6 +42,7 @@ namespace HIMS.Services.Report
             _pdfUtility = pdfUtility;
             //_FileUtility = fileUtility;
         }
+      
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
         {
@@ -135,7 +130,7 @@ namespace HIMS.Services.Report
 
             switch (model.Mode)
             {
-               
+
 
 
                 #region :: RegistrationReport ::
@@ -425,25 +420,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-              
+
                 #region :: OPPrescription ::
                 case "OPPrescription":
                     {
 
                         model.RepoertName = "OPPrescription ";
-                    
+
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNew.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                         html.Replace("{{Signature}}", htmlHeaderFilePath);
+                        html.Replace("{{Signature}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescription" + vDate, Orientation.Portrait);
 
 
-                       
+
 
 
 
@@ -466,11 +461,10 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                       html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        html.Replace("{{Signature}}", htmlHeaderFilePath);
-
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{Signature}}", "");
+                        html = SetFonts(html, PdfFontPath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
-
 
 
 
@@ -924,7 +918,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-              
+
 
                 #region :: RegistrationForm ::
                 case "RegistrationForm":
@@ -1683,7 +1677,20 @@ namespace HIMS.Services.Report
             return byteFile;
 
         }
-
+        public string SetFonts(string html, string PdfFontPath)
+        {
+            string font = "";
+            int c = 0;
+            string fonts = "";
+            foreach (string path in PdfFontPath.Split(','))
+            {
+                c++;
+                font += "@font-face {font-family: 'NotoSans" + c + "';src: url('" + path + "') format('truetype');}";
+                fonts += "'NotoSans" + c + "', ";
+            }
+            font += "\nbody {font-family: " + fonts + " sans-serif;}";
+            return html.Replace("{{LoadFont}}", font);
+        }
         public string GetNewReportSetByProc(ReportNewRequestModel model)
         {
 
@@ -3269,16 +3276,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PinNo}}", dt.GetColValue("PinNo"));
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
-                  
+
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
 
-                       
+
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
 
-                      
+
 
                         return html;
 
@@ -8712,7 +8719,34 @@ namespace HIMS.Services.Report
             }
             return words;
         }
+        public virtual async Task InsertAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MReportConfigs.Add(ObjMReportConfig);
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Delete details table realted records
+                var lst = await _context.MReportConfigDetails.Where(x => x.ReportId == ObjMReportConfig.ReportId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MReportConfigDetails.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
+                // Update header & detail table records
+                _context.MReportConfigs.Update(ObjMReportConfig);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
     }
 }
 

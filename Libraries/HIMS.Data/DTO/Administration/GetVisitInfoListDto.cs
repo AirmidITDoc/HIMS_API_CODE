@@ -48,6 +48,7 @@ namespace HIMS.Data.DTO.Administration
         public string? DoseOption3 { get; set; }
         public string? DoseNameOption3 { get; set; }
         public string? DaysOption3 { get; set; }
+        public string? OPDNo { get; set; }
 
     }
 }

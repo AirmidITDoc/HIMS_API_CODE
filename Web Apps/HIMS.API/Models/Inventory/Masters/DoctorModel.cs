@@ -126,6 +126,8 @@ namespace HIMS.API.Models.Masters
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? LeaveOption { get; set; }
+        public string? Reason { get; set; }
+
 
     }
     public class DoctorSignPageDetailModel

@@ -19,16 +19,16 @@ using System.Transactions;
 
 namespace HIMS.Services.Inventory
 {
-    public  class BillingService : IBillingService
+    public class BillingService : IBillingService
     {
-         private readonly Data.Models.HIMSDbContext _context;
-            public BillingService(HIMSDbContext HIMSDbContext)
-            {
-                _context = HIMSDbContext;
-            }
+        private readonly Data.Models.HIMSDbContext _context;
+        public BillingService(HIMSDbContext HIMSDbContext)
+        {
+            _context = HIMSDbContext;
+        }
         public virtual async Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BillingServiceDto>(model, "m_Rtrv_ServiceList_Pagn");
+            return await DatabaseHelper.GetGridDataBySp<BillingServiceDto>(model, "ps_Rtrv_ServiceList_Pagn");
         }
 
         public virtual async Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel model)
@@ -41,15 +41,15 @@ namespace HIMS.Services.Inventory
         }
 
         public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-                {
-                    _context.ServiceMasters.Add(objService);
-                    await _context.SaveChangesAsync();
+                _context.ServiceMasters.Add(objService);
+                await _context.SaveChangesAsync();
 
-                    scope.Complete();
-                }
+                scope.Complete();
             }
+        }
         public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -68,7 +68,7 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-         public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
+        public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -94,7 +94,7 @@ namespace HIMS.Services.Inventory
             return await query.ToListAsync();
         }
 
-        
+
         public virtual async Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string isPathRad, string ServiceName)
         {
             // If serviceName is '%' (wildcard), set it to null for filtering
@@ -156,7 +156,7 @@ namespace HIMS.Services.Inventory
 
         //}
 
-        public virtual async Task UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId ,long NewTariffId ,int UserId, string UserName )
+        public virtual async Task UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId, long NewTariffId, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
 
@@ -174,7 +174,63 @@ namespace HIMS.Services.Inventory
             odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
 
+        public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName)
+        {
+            var qry = from s in _context.ServiceMasters
+                      join d in _context.ServiceDetails on s.ServiceId equals d.ServiceId
+                      where s.IsActive == true
+                            && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+                            && (TariffId == 0 || d.TariffId == TariffId)
+                      select new ServiceMasterDTO()
+                      {
+                          ServiceId = s.ServiceId,
+                          GroupId = s.GroupId,
+                          ServiceShortDesc = s.ServiceShortDesc,
+                          ServiceName = s.ServiceName,
+                          ClassRate = d.ClassRate ?? 0,
+                          TariffId = d.TariffId ?? 0,
+                          ClassId = d.ClassId ?? 0,
+                          IsEditable = s.IsEditable,
+                          CreditedtoDoctor = s.CreditedtoDoctor,
+                          IsPathology = s.IsPathology,
+                          IsRadiology = s.IsRadiology,
+                          IsActive = s.IsActive,
+                          PrintOrder = s.PrintOrder,
+                          IsPackage = s.IsPackage,
+                          DoctorId = s.DoctorId,
+                          IsDocEditable = s.IsDocEditable
+                      };
 
+            return await qry.Take(50).ToListAsync();
+
+        }
+        public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+
+
+            var tokensObj = new
+            {
+                ServiceId = Convert.ToInt32(ObjMPackageDetail[0].ServiceId)
+
+            };
+            odal.ExecuteNonQuery("Delete_PackageDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            foreach (var item in ObjMPackageDetail)
+            { 
+                  
+                    string[] AEntity = {"CreatedBy","CreatedDate","ModifiedBy", "ModifiedDate" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in AEntity)
+                    {
+                        Pentity.Remove(rProperty);
+                    }
+                    string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
+                    item.PackageId = Convert.ToInt32(VPackageId);
+            }
+        }
     }
-}
+ }
+
+
+    
 

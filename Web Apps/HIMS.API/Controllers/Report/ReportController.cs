@@ -53,6 +53,40 @@ namespace HIMS.API.Controllers.Report
             _FileUtility = fileUtility;
         }
 
+        [HttpPost("ReportConfigsave")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(ReportConfigModel obj)
+        {
+            MReportConfig model = obj.MapTo<MReportConfig>();
+            if (obj.ReportId == 0)
+            {
+                model.CreatedOn = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.IsActive = true;
+                await _reportService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        [HttpPut("ReportConfig/{id:int}")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ReportConfigModel obj)
+        {
+            MReportConfig model = obj.MapTo<MReportConfig>();
+            if (obj.ReportId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.UpdatedOn = DateTime.Now;
+                model.UpdateBy = CurrentUserId;
+                model.IsActive = true;
+                await _reportService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
         [HttpPost("ReportList")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> ReportList(GridRequestModel objGrid)
@@ -386,7 +420,7 @@ namespace HIMS.API.Controllers.Report
             }
             model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GetReportSetByProc(model);
+            string byteFile = _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
 
 
