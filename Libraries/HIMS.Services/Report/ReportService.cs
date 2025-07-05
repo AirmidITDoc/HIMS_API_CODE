@@ -3,14 +3,17 @@ using Aspose.Cells.Drawing;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualBasic;
 using System.Data;
@@ -116,6 +119,10 @@ namespace HIMS.Services.Report
         public virtual async Task<List<MItemMaster>> SearchMItemMaster(string str)
         {
             return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+        public virtual async Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MReportConfigListDto>(model, "M_ReportConfigList");
         }
 
 
@@ -1685,7 +1692,8 @@ namespace HIMS.Services.Report
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
-           // string[] columnWidths = model.columnWidths;
+         //   string[] columnAlignments = model.columnAlignments;
+            // string[] columnWidths = model.columnWidths;
             //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
             //Convert vPageOrientation from string to the appropriate Orientation enum
@@ -1701,7 +1709,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
 
-           var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths);
+           var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1712,7 +1720,7 @@ namespace HIMS.Services.Report
 
         }
 
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "",string[] columnWidths =null)
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "",string[] columnWidths =null, string[] columnAlignments= null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -1777,6 +1785,7 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
+                        
                         HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList,columnWidths));
                         items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
                         if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
@@ -1808,19 +1817,6 @@ namespace HIMS.Services.Report
             return html;
 
         }
-        //public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers)
-        //{
-        //    StringBuilder table = new();
-        //    table.Append("<tr>");
-        //    foreach (var hr in headers)
-        //    {
-        //        table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-        //        table.Append(hr.ConvertToString());
-        //        table.Append("</th>");
-        //    }
-        //    table.Append("</tr>");
-        //    return table.ToString();
-        //}
 
         // Create  by Ashutosh 24 Jun 2025
         public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers, string[] columnWidths = null)
@@ -1840,8 +1836,33 @@ namespace HIMS.Services.Report
             table.Append("</tr>");
             return table.ToString();
         }
+        /// changes 4 july 2025
+        //public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers,string[] columnWidths = null,string[] columnAlignments = null)
+        //{
+        //    StringBuilder table = new();
+        //    table.Append("<tr>");
 
-       
+        //    for (int i = 0; i < headers.Length; i++)
+        //    {
+        //        string widthStyle = (columnWidths != null && i < columnWidths.Length && !string.IsNullOrWhiteSpace(columnWidths[i]))
+        //            ? $"width: {columnWidths[i].Trim()}%;"
+        //            : "";
+
+        //        string alignStyle = (columnAlignments != null && i < columnAlignments.Length && !string.IsNullOrWhiteSpace(columnAlignments[i]))
+        //            ? $"text-align: {columnAlignments[i].Trim().ToLower()};"
+        //            : ""; // default
+
+        //        table.Append($"<th style=\"border: 1px solid #d4c3c3; padding: 6px; {widthStyle} {alignStyle}\">");
+        //        table.Append(headers[i]);
+        //        table.Append("</th>");
+        //    }
+
+        //    table.Append("</tr>");
+        //    return table.ToString();
+        //}
+
+
+
 
         public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
@@ -1931,6 +1952,47 @@ namespace HIMS.Services.Report
             }
         }
 
+        ///  chnages by 4 july
+        //public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
+        //{
+        //    foreach (var row in group2Data)
+        //    {
+        //        table.Append("<tr style='border: 1px solid #d4c3c3;'>");
+
+        //        // Sr.No Column
+        //        if (headers.Contains("Sr.No"))
+        //        {
+        //            table.Append("<td style='border: 1px solid #d4c3c3; padding: 6px; text-align: center;'>");
+        //            table.Append(RowNo);
+        //            table.Append("</td>");
+        //            RowNo++;
+        //        }
+
+        //        foreach (var hr in columnDataNames)
+        //        {
+        //            string value = row.Table.Columns.Contains(hr) ? row[hr]?.ToString() ?? "" : "";
+
+        //            string alignment = "left"; // default alignment
+
+        //            // Determine alignment
+        //            if (DateTime.TryParse(value, out _))
+        //                alignment = "center";
+        //            else if (double.TryParse(value, out _))
+        //                alignment = "right";
+
+        //            table.Append($"<td style='border: 1px solid #d4c3c3; text-align: {alignment}; padding: 6px;'>");
+        //            table.Append(value);
+        //            table.Append("</td>");
+        //        }
+
+        //        table.Append("</tr>");
+        //    }
+        //}
+
+
+
+
+
         public static void CreateFooterGroupBy(IEnumerable<DataRow> groupData, StringBuilder table, string[] footer, string groupName, bool isTotal = false)
         {
             table.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
@@ -1954,6 +2016,55 @@ namespace HIMS.Services.Report
             }
             table.Append("</tr>");
         }
+        // chnages 4 july 2025
+        //public static void CreateFooterGroupBy(IEnumerable<DataRow> groupData, StringBuilder table, string[] footer, string groupName, bool isTotal = false)
+        //{
+        //    table.Append("<tr style='border:1px solid black;color:black;background-color:#f9f9f9; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'>");
+
+        //    int col = 1;
+        //    int colspan = 1;
+
+        //    foreach (var hr in footer)
+        //    {
+        //        string total = "";
+        //        string align = "center"; // default
+
+        //        if (hr.ToLower() == "space")
+        //        {
+        //            colspan++;
+        //            continue;
+        //        }
+        //        else if (hr.ToLower() == "labletotal")
+        //        {
+        //            total = isTotal ? "Total" : ("Sub Total for " + groupName);
+        //            align = "center";
+        //        }
+        //        else
+        //        {
+        //            // Calculate total if column exists and is numeric
+        //            decimal sum = groupData.Sum(row => row.IsNull(hr) ? 0 : Convert.ToDecimal(row[hr]));
+        //            total = sum.ToString("0.00"); // format as needed
+        //            align = "right";
+        //        }
+
+        //        // Append the cell only when it's non-empty or last column
+        //        if (!string.IsNullOrWhiteSpace(total) || footer.Length == col)
+        //        {
+        //            table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px; text-align:")
+        //                 .Append(align)
+        //                 .Append("' colspan='")
+        //                 .Append(colspan)
+        //                 .Append("'>")
+        //                 .Append(total)
+        //                 .Append("</th>");
+        //            colspan = 1;
+        //        }
+
+        //        col++;
+        //    }
+
+        //    table.Append("</tr>");
+        //}
 
         public static string CreateSummary(DataTable dt, string[] totalColList, string[] summaries)
         {
@@ -2153,7 +2264,7 @@ namespace HIMS.Services.Report
             }
             return table.ToString();
         }
-        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null)
+        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();

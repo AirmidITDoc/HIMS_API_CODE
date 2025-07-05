@@ -23,6 +23,8 @@ using System.Data;
 using System.Security;
 using WkHtmlToPdfDotNet;
 using HIMS.API.Utility;
+using HIMS.Services.Pharmacy;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -180,6 +182,15 @@ namespace HIMS.API.Controllers.Report
         {
             var data = await _reportService.SearchMItemMaster(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemMaster Data.", data.Select(x => new { Text = x.ItemName, Value = x.ItemId }));
+        }
+
+
+        [HttpPost("MReportConfigDetailsList")]
+        // [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)
+        {
+            IPagedList<MReportConfigListDto> MReportConfigList = await _reportService.MReportConfigList(objGrid);
+            return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfigDetails  List"));
         }
 
 
