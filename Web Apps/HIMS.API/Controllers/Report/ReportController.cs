@@ -25,6 +25,7 @@ using WkHtmlToPdfDotNet;
 using HIMS.API.Utility;
 using HIMS.Services.Pharmacy;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Report
 {

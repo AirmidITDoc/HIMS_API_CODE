@@ -27,6 +27,9 @@ namespace HIMS.Services.Report
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
         Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel objGrid);
+        Task InsertAsync(MReportConfig ObjMReportConfig, int UserId, string Username);
+        Task UpdateAsync(MReportConfig ObjMReportConfig, int UserId, string Username);
+
 
 
 
