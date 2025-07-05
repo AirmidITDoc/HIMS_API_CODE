@@ -270,6 +270,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MRelationshipMaster> MRelationshipMasters { get; set; } = null!;
         public virtual DbSet<MReligionMaster> MReligionMasters { get; set; } = null!;
         public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
+        public virtual DbSet<MReportConfigDetail> MReportConfigDetails { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -7873,6 +7874,34 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SummaryLabel).HasColumnName("summaryLabel");
 
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MReportConfigDetail>(entity =>
+            {
+                entity.HasKey(e => e.ReportColId);
+
+                entity.ToTable("M_ReportConfigDetails");
+
+                entity.Property(e => e.ProcedureName).HasMaxLength(200);
+
+                entity.Property(e => e.ReportColumn).HasMaxLength(100);
+
+                entity.Property(e => e.ReportColumnAligment).HasMaxLength(50);
+
+                entity.Property(e => e.ReportColumnWidth).HasMaxLength(50);
+
+                entity.Property(e => e.ReportGroupByLabel).HasMaxLength(100);
+
+                entity.Property(e => e.ReportHeader).HasMaxLength(100);
+
+                entity.Property(e => e.ReportTotalField).HasMaxLength(100);
+
+                entity.Property(e => e.SummaryLabel).HasMaxLength(50);
+
+                entity.HasOne(d => d.Report)
+                    .WithMany(p => p.MReportConfigDetails)
+                    .HasForeignKey(d => d.ReportId)
+                    .HasConstraintName("FK_M_ReportConfigDetails_M_ReportConfig");
             });
 
             modelBuilder.Entity<MReportConfiguration>(entity =>

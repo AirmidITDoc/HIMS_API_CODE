@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             _repository = repository1;
         }
         [HttpPost("SupplierList")]
-     //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierListDto> SupplierList = await _SupplierService.GetListAsync(objGrid);

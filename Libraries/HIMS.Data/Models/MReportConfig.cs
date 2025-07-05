@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class MReportConfig
     {
+        public MReportConfig()
+        {
+            MReportConfigDetails = new HashSet<MReportConfigDetail>();
+        }
+
         public long ReportId { get; set; }
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
@@ -31,5 +36,7 @@ namespace HIMS.Data.Models
         public long? UpdateBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public long? MenuId { get; set; }
+
+        public virtual ICollection<MReportConfigDetail> MReportConfigDetails { get; set; }
     }
 }

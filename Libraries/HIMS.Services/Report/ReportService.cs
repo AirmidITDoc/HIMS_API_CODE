@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Transactions;
 using WkHtmlToPdfDotNet;
 
 
@@ -39,6 +40,7 @@ namespace HIMS.Services.Report
             _pdfUtility = pdfUtility;
             //_FileUtility = fileUtility;
         }
+      
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
         {
@@ -111,9 +113,7 @@ namespace HIMS.Services.Report
         {
             return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-
-
-
+       
         public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
 
@@ -8607,7 +8607,34 @@ namespace HIMS.Services.Report
             }
             return words;
         }
+        public virtual async Task InsertAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MReportConfigs.Add(ObjMReportConfig);
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Delete details table realted records
+                var lst = await _context.MReportConfigDetails.Where(x => x.ReportId == ObjMReportConfig.ReportId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MReportConfigDetails.RemoveRange(lst);
+                }
+                await _context.SaveChangesAsync();
+                // Update header & detail table records
+                _context.MReportConfigs.Update(ObjMReportConfig);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
     }
 }
 
