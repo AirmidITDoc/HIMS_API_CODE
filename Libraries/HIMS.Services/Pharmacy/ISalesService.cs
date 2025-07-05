@@ -34,6 +34,7 @@ namespace HIMS.Services.Users
         Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel objGrid);
         Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel objGrid);
+        Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel objGrid);
 
 
 

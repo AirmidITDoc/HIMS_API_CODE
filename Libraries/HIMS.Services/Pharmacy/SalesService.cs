@@ -555,5 +555,9 @@ namespace HIMS.Services.Users
         {
             return await DatabaseHelper.GetGridDataBySp<PrescriptionItemDetListDto>(model, "ps_PrescriptionItemDet");
         }
+        public virtual async Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<salespatientwiseListDto>(model, "ps_rptget_CreditAmount");
+        }
     }
 }

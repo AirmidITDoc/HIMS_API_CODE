@@ -140,7 +140,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharAdvanceList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+     //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PharAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PharAdvanceListDto> PrescriptionDetList = await _ISalesService.PharAdvanceList(objGrid);
@@ -192,6 +192,14 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             IPagedList<PrescriptionItemDetListDto> PrescriptionItemDetList = await _ISalesService.PrescriptionItemDetList(objGrid);
             return Ok(PrescriptionItemDetList.ToGridResponse(objGrid, "PrescriptionItemDet List"));
+        }
+
+        [HttpPost("SalesPatientWiseCreditAmountList")]
+     //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> salespatientwiseList(GridRequestModel objGrid)
+        {
+            IPagedList<salespatientwiseListDto> salespatientwiseList = await _ISalesService.salespatientwiseList(objGrid);
+            return Ok(salespatientwiseList.ToGridResponse(objGrid, "salespatientwiseList List"));
         }
 
         // done by Ashu Date : 20-May-2025
