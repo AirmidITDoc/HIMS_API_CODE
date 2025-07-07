@@ -91,6 +91,8 @@ namespace HIMS.Services.Common
                 case "SalesReturnCash": sp_Name = "Retrieve_SalesBill_Return_Cash"; break;
                 case "SalesReturnCredit": sp_Name = "Retrieve_SalesBill_Return_Credit"; break;
 
+                // Report - Get Procedure column     
+                case "GetProcedureReportcol": sp_Name = "ps_get_ProcedureCol"; break;
 
                 default: break;
             }
