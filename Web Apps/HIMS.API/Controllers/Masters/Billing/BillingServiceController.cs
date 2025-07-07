@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("PackageServiceInfoList")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<PackageServiceInfoListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);

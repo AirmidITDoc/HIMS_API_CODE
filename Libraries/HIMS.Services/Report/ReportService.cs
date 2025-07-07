@@ -115,11 +115,7 @@ namespace HIMS.Services.Report
         {
             return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-        public virtual async Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<MReportConfigListDto>(model, "M_ReportConfigList");
-        }
-
+      
 
 
         public string GetReportSetByProc(ReportRequestModel model)
@@ -463,7 +459,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
-                        html = SetFonts(html, PdfFontPath);
+                        //html = SetFonts(html, PdfFontPath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
 
 
@@ -8719,33 +8715,11 @@ namespace HIMS.Services.Report
             }
             return words;
         }
-        public virtual async Task InsertAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.MReportConfigs.Add(ObjMReportConfig);
-                await _context.SaveChangesAsync();
+      
 
-                scope.Complete();
-            }
-        }
-        public virtual async Task UpdateAsync(MReportConfig ObjMReportConfig, int UserId, string Username)
+        public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Delete details table realted records
-                var lst = await _context.MReportConfigDetails.Where(x => x.ReportId == ObjMReportConfig.ReportId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.MReportConfigDetails.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
-                // Update header & detail table records
-                _context.MReportConfigs.Update(ObjMReportConfig);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
+            throw new NotImplementedException();
         }
     }
 }

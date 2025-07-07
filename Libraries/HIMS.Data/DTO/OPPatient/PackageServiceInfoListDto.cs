@@ -12,8 +12,11 @@ namespace HIMS.Data.DTO.OPPatient
         public long ServiceId {  get; set; }
         public string? PackageServiceName { get; set; }
         public long? PackageServiceId { get; set; }
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
         public long? PackageId { get; set; }
-      
-   }
+        public long TariffId { get; set; }
+        public long ClassId { get; set; }
+
+
+    }
 }

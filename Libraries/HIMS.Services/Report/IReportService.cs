@@ -9,7 +9,7 @@ namespace HIMS.Services.Report
 {
     public partial interface IReportService
     {
-        string GetReportSetByProc(ReportRequestModel model,string PdfFontPath="");
+        string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
         string GetNewReportSetByProc(ReportNewRequestModel model);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
@@ -26,10 +26,7 @@ namespace HIMS.Services.Report
         Task<List<MItemDrugTypeMaster>> SearchMItemDrugTypeMaster(string str);
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
-        Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel objGrid);
-        Task InsertAsync(MReportConfig ObjMReportConfig, int UserId, string Username);
-        Task UpdateAsync(MReportConfig ObjMReportConfig, int UserId, string Username);
-
+      
 
 
 

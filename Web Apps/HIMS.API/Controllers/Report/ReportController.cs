@@ -54,39 +54,7 @@ namespace HIMS.API.Controllers.Report
             _FileUtility = fileUtility;
         }
 
-        [HttpPost("ReportConfigsave")]
-        //[Permission(PageCode = "Report", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(ReportConfigModel obj)
-        {
-            MReportConfig model = obj.MapTo<MReportConfig>();
-            if (obj.ReportId == 0)
-            {
-                model.CreatedOn = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.IsActive = true;
-                await _reportService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        }
-        [HttpPut("ReportConfig/{id:int}")]
-        //[Permission(PageCode = "Report", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ReportConfigModel obj)
-        {
-            MReportConfig model = obj.MapTo<MReportConfig>();
-            if (obj.ReportId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.UpdatedOn = DateTime.Now;
-                model.UpdateBy = CurrentUserId;
-                model.IsActive = true;
-                await _reportService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        }
-
+       
 
         [HttpPost("ReportList")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
@@ -220,15 +188,7 @@ namespace HIMS.API.Controllers.Report
         }
 
 
-        [HttpPost("MReportConfigDetailsList")]
-        // [Permission(PageCode = "Report", Permission = PagePermission.View)]
-        public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)
-        {
-            IPagedList<MReportConfigListDto> MReportConfigList = await _reportService.MReportConfigList(objGrid);
-            return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfigDetails  List"));
-        }
-
-
+     
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)
@@ -292,11 +252,11 @@ namespace HIMS.API.Controllers.Report
                 case "OPDailyCollectionReport":
                 case "OPCollectionSummary":
 
-                    //{
-                    //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                    //        return Unauthorized("You don't have permission to access this report.");
-                    //    break;
-                    //}
+                //{
+                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
+                //        return Unauthorized("You don't have permission to access this report.");
+                //    break;
+                //}
                 #endregion
 
                 #region"Nursing Reports"
@@ -359,7 +319,7 @@ namespace HIMS.API.Controllers.Report
                 case "IPFinalBillClassWise"://Namechanges
                 case "IPFinalBillClassServiceWise"://Namechange
 
-           //     case "IpFinalClasswiseBill":
+                //     case "IpFinalClasswiseBill":
                 case "IPFinalBillGroupwise"://Namechanges
                 case "IpCreditBill":
                 case "IpInterimBill"://change
@@ -368,7 +328,7 @@ namespace HIMS.API.Controllers.Report
                 case "IpBillRefundReceipt":
                 case "IpDischargeReceipt":
 
-                    //DISCHARGE Summary Reports
+                //DISCHARGE Summary Reports
                 case "IpDischargeSummaryReport":
                 case "IpDischargeSummaryReportWithoutHeader":
                 case "IpDischargeSummaryTemplate":
@@ -384,7 +344,7 @@ namespace HIMS.API.Controllers.Report
                 case "IPDDischargewithmarkstatus":
                 case "IpMLCCasePaperPrint":
 
-                    //PATHOLOGY 
+                //PATHOLOGY 
                 case "PathologyReport":
                 case "PathologyReportWithHeader":
                 case "PathologyReportTemplate":
@@ -400,7 +360,7 @@ namespace HIMS.API.Controllers.Report
                 case "DischargSummary":
                 //case "IpDischargeSummaryReportTesting":
 
-                    //Inventory
+                //Inventory
                 case "Purchaseorder":
                 case "PathTemplateHeaderReport":
                 case "IndentWiseReport":
