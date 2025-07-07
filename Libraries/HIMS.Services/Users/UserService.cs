@@ -21,6 +21,10 @@ namespace HIMS.Services.Users
         {
             return await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserName.ToLower() == UserName.ToLower() && x.Password == Password && x.IsActive == true);
         }
+        public virtual async Task<LoginManager> GetById(int Id)
+        {
+            return await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserId == Id);
+        }
         public virtual async Task UpdateAsync(LoginManager user, int UserId, string Username)
         {
             _context.Entry(user).State = EntityState.Modified;

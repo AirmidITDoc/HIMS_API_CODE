@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Spreadsheet;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
@@ -72,22 +73,14 @@ namespace HIMS.API.Controllers.Login
                         {
                             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
                         }
+                        else if (!string.IsNullOrWhiteSpace(user.UserToken) && user.UserId > 0)
+                        {
+                            string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+                            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
+                        }
                         else
                         {
-                            user.UserToken = Guid.NewGuid().ToString();
-                            await _userService.UpdateAsync(user, 0, "");
-                            (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
-                            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
-                            {
-                              
-                                user.UserToken,
-                                user.WebRoleId,
-                                Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
-                                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
-                                UserName = user.FirstName + " " + user.LastName,
-                                user.UserId,
-                                User = user // This includes all fields of the user object
-                            });
+                            return await AfterLogin(user);
                         }
                     }
                     else
@@ -100,6 +93,45 @@ namespace HIMS.API.Controllers.Login
             //else {
             //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "API product key expired.");
             //}
+        }
+        [HttpPost]
+        [Route("[action]")]
+        [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
+        public async Task<ApiResponse> ConfirmAuthenticate([FromBody] ADAuthenticateModel model)
+        {
+
+            string[] decrypt = EncryptionUtility.DecryptText(model.Token, SecurityKeys.EnDeKey).Split('|');
+            if (Convert.ToDateTime(decrypt[2]).AddMinutes(10) >= DateTime.Now)
+            {
+                LoginManager user = await _userService.CheckLogin(decrypt[0], decrypt[1]);
+                if (user == null)
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+                }
+                else
+                {
+                    return await AfterLogin(user);
+                }
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Token is expired.");
+        }
+        [NonAction]
+        private async Task<ApiResponse> AfterLogin(LoginManager user)
+        {
+            user.UserToken = Guid.NewGuid().ToString();
+            await _userService.UpdateAsync(user, 0, "");
+            (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
+            {
+                status = "Ok",
+                user.UserToken,
+                user.WebRoleId,
+                Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
+                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
+                UserName = user.FirstName + " " + user.LastName,
+                user.UserId,
+                User = user // This includes all fields of the user object
+            });
         }
         [NonAction]
         public async Task<(string menuHideString, List<PageMasterDto> permissions)> GetPermissions(long RoleId)
@@ -149,6 +181,29 @@ namespace HIMS.API.Controllers.Login
         {
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", _IMenuService.GetMenus(CurrentRoleId, true));
             //return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
+        }
+        [HttpPost("logout")]
+        [Permission]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            string? authHeader = Request.Headers["Authorization"];
+            if (authHeader is null || !authHeader.StartsWith("Bearer "))
+                return BadRequest("No token provided.");
+            if (CurrentUserId > 0)
+            {
+                LoginManager user = await _userService.GetById(CurrentUserId);
+
+                if ((user?.UserId ?? 0) == 0)
+                {
+                    return NotFound("User not found.");
+                }
+                else
+                {
+                    user.UserToken = null;
+                    await _userService.UpdateAsync(user, CurrentUserId, CurrentUserName);
+                }
+            }
+            return Ok(new { message = "Logged out successfully." });
         }
     }
 }
