@@ -30,6 +30,7 @@ namespace HIMS.Data.Models
         public double? EmgPer { get; set; }
         public DateTime? EmgStartTime { get; set; }
         public DateTime? EmgEndTime { get; set; }
+        public bool? IsProcedure { get; set; }
         public long? PrintOrder { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDocEditable { get; set; }

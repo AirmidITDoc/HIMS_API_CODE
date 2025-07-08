@@ -74,7 +74,7 @@ namespace HIMS.API.Models.OutPatient
         public DateTime? FollowupDate { get; set; }
         public byte? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
-
+        public long? CampId { get; set; }
     }
     public class AppVisitDetailModelValidator : AbstractValidator<AppVisitDetailModel>
     {

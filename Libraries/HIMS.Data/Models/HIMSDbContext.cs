@@ -178,6 +178,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MAssignItemToStore> MAssignItemToStores { get; set; } = null!;
         public virtual DbSet<MAssignSupplierToStore> MAssignSupplierToStores { get; set; } = null!;
         public virtual DbSet<MBankMaster> MBankMasters { get; set; } = null!;
+        public virtual DbSet<MCampMaster> MCampMasters { get; set; } = null!;
         public virtual DbSet<MCanItemMaster> MCanItemMasters { get; set; } = null!;
         public virtual DbSet<MCertificateMaster> MCertificateMasters { get; set; } = null!;
         public virtual DbSet<MCertificateTemplateMaster> MCertificateTemplateMasters { get; set; } = null!;
@@ -525,7 +526,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1129,33 +1130,41 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(500);
 
-                entity.Property(e => e.City)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
-
                 entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.CompanyShortName).HasMaxLength(50);
+
+                entity.Property(e => e.ContactNumber).HasMaxLength(10);
+
+                entity.Property(e => e.ContactPerson).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.FaxNo)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.EmailId).HasMaxLength(200);
 
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+                entity.Property(e => e.FaxNo).HasMaxLength(10);
 
-                entity.Property(e => e.MobileNo)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Gstin)
+                    .HasMaxLength(50)
+                    .HasColumnName("GSTIN");
+
+                entity.Property(e => e.LoginWebsitePassword).HasMaxLength(50);
+
+                entity.Property(e => e.LoginWebsiteUser).HasMaxLength(50);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PhoneNo)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.PanNo).HasMaxLength(20);
 
-                entity.Property(e => e.PinNo)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.PhoneNo).HasMaxLength(10);
+
+                entity.Property(e => e.PinNo).HasMaxLength(10);
+
+                entity.Property(e => e.Tanno)
+                    .HasMaxLength(50)
+                    .HasColumnName("TANNo");
+
+                entity.Property(e => e.Website).HasMaxLength(200);
             });
 
             modelBuilder.Entity<CompanyTypeMaster>(entity =>
@@ -6160,6 +6169,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.BankName)
                     .HasMaxLength(100)
                     .IsFixedLength();
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MCampMaster>(entity =>
+            {
+                entity.HasKey(e => e.CampId);
+
+                entity.ToTable("M_CampMaster");
+
+                entity.Property(e => e.CampId).ValueGeneratedNever();
+
+                entity.Property(e => e.CampLocation).HasMaxLength(100);
+
+                entity.Property(e => e.CampName).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

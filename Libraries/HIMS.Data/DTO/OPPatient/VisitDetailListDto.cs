@@ -64,7 +64,8 @@ namespace HIMS.Data.DTO.OPPatient
         public DateTime? CheckOutTime { get; set; }
         public DateTime? ConStartTime { get; set; }
         public DateTime? ConEndTime { get; set; }
-
+        public long CampId { get; set; }
+        public string CampName { get; set; }
 
     }
     public class VisitDetailsListSearchDto
