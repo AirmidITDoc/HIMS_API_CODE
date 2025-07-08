@@ -254,7 +254,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPhadvanceHeader, PharmacyHeaderUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhRefund, PharmacyRefundModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhadvanceHeader, PhAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<AdvRefundDetail, PHAdvRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPhadvRefundDetail, PHAdvRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhadvanceDetail, PHAdvanceDetailBalAmountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PaymentPharmacy, PharmacyPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MSiteDescriptionMaster, SiteDescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

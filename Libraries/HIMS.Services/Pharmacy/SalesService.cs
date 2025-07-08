@@ -368,6 +368,8 @@ namespace HIMS.Services.Users
             }
             string VAdvanceDetailID = odal.ExecuteNonQuery("m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
             ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
+            ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
+
 
 
             string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
@@ -379,7 +381,7 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, PPEntity);
 
         }
-        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader , List<AdvRefundDetail> ObjAdvRefundDetail , List<TPhadvanceDetail> ObjTPhadvanceDetail , PaymentPharmacy ObjPaymentPharmacy ,int UserId, string Username)
+        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader , List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail , PaymentPharmacy ObjPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
@@ -400,7 +402,7 @@ namespace HIMS.Services.Users
                 Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_PhAdvanceHeader_1", CommandType.StoredProcedure, Aentity);
-            foreach (var item in ObjAdvRefundDetail)
+            foreach (var item in ObjTPhadvRefundDetail)
             {
 
                 string[] DEntity = { "AdvRefId" };
