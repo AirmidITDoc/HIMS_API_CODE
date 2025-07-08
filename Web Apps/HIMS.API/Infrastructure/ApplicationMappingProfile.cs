@@ -30,6 +30,7 @@ namespace HIMS.API.Infrastructure
         {
 
             // Master
+            CreateMap<MCampMaster, CampMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
