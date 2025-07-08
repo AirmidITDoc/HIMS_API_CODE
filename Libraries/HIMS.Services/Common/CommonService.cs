@@ -93,6 +93,9 @@ namespace HIMS.Services.Common
 
                 // Report - Get Procedure column     
                 case "GetProcedureReportcol": sp_Name = "ps_get_ProcedureCol"; break;
+                case "GetReportDetailList": sp_Name = "ps_getReportDetaillist"; break;
+
+
 
 
                 default: break;
