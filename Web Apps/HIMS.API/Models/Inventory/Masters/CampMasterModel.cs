@@ -4,7 +4,7 @@ namespace HIMS.API.Models.Masters
 {
     public class CampMasterModel
     {
-        public long CampId { get; set; }
+        public long? CampId { get; set; }
         public string? CampName { get; set; }
         public string? CampLocation { get; set; }
         

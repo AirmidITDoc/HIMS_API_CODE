@@ -20,10 +20,23 @@ namespace HIMS.API.Controllers.Administration
     public class ReportConfigController : BaseController
     {
         private readonly IReportConfigService _ReportConfigService;
-        public ReportConfigController(IReportConfigService  repository)
+        private readonly IGenericService<MReportConfig> _repository1;
+
+        public ReportConfigController(IGenericService<MReportConfig> repository1, IReportConfigService  repository)
         {
             _ReportConfigService = repository;
+            _repository1 = repository1;
         }
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+   //     [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MReportConfig> MReportConfigList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfig List"));
+        }
+
         [HttpPost("MReportConfigDetailsList")]
         // [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)

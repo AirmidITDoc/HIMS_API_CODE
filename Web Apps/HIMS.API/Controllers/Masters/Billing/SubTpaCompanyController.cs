@@ -42,12 +42,12 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.SubCompanyId == id);
-            return data.ToSingleResponse<MSubTpacompanyMaster, SubTpaModel>("SubTpacompanyMaster");
+            return data.ToSingleResponse<MSubTpacompanyMaster, SubTpaCompanyModel>("SubTpacompanyMaster");
         }
         //Add API
         [HttpPost]
         [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(SubTpaModel obj)
+        public async Task<ApiResponse> Post(SubTpaCompanyModel obj)
         {
             MSubTpacompanyMaster model = obj.MapTo<MSubTpacompanyMaster>();
             model.IsActive = true;
@@ -64,8 +64,8 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(SubTpaModel obj)
+       [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(SubTpaCompanyModel obj)
         {
             MSubTpacompanyMaster model = obj.MapTo<MSubTpacompanyMaster>();
             model.IsActive = true;

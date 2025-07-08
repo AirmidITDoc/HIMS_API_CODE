@@ -24,6 +24,7 @@ namespace HIMS.API.Models.Inventory
         public double? EmgPer { get; set; }
         public string? EmgStartTime { get; set; }
         public string? EmgEndTime { get; set; }
+        public bool? IsProcedure { get; set; }
         public long? PrintOrder { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDocEditable { get; set; }
