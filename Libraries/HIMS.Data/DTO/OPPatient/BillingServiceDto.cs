@@ -34,6 +34,7 @@ namespace HIMS.Data.DTO.OPPatient
         public bool? IsPathOutSource { get; set; }
         public bool? IsRadOutSource { get; set; }
         public bool? IsDiscount { get; set; }
+        public bool? IsProcedure { get; set; }
 
     }
 

@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-   //     [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfig> MReportConfigList = await _repository1.GetAllPagedAsync(objGrid);
@@ -38,12 +38,68 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("MReportConfigDetailsList")]
-        // [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)
         {
             IPagedList<MReportConfigListDto> MReportConfigList = await _ReportConfigService.MReportConfigList(objGrid);
             return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfigDetails  List"));
         }
+
+        //Add API
+        [HttpPost]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(MReportConfigModel obj)
+        {
+            MReportConfig model = obj.MapTo<MReportConfig>();
+            model.IsActive = true;
+            if (obj.ReportId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedOn = DateTime.Now;
+                await _repository1.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        //Edit API
+        [HttpPut("{id:int}")]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edits(MReportConfigModel obj)
+        {
+            MReportConfig model = obj.MapTo<MReportConfig>();
+            model.IsActive = true;
+            if (obj.ReportId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.UpdateBy = CurrentUserId;
+                model.UpdatedOn = DateTime.Now;
+                await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "UpdateBy", "UpdatedOn" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
+        [HttpDelete]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            MReportConfig model = await _repository1.GetById(x => x.ReportId == Id);
+            if ((model?.ReportId ?? 0) > 0)
+            {
+                model.IsActive = false;
+                model.UpdateBy = CurrentUserId;
+                model.UpdatedOn = DateTime.Now;
+                await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+   
 
         [HttpPost("ReportConfigsave")]
         //[Permission(PageCode = "Report", Permission = PagePermission.Add)]
@@ -77,6 +133,11 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+
+
+
+
 
     }
 }

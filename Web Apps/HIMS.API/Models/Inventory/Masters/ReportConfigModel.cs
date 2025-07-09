@@ -39,7 +39,7 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.ReportName).NotNull().NotEmpty().WithMessage("ReportName is required");
             RuleFor(x => x.ReportMode).NotNull().NotEmpty().WithMessage("ReportMode is required");
             RuleFor(x => x.ReportTitle).NotNull().NotEmpty().WithMessage("ReportTitle is required");
-            RuleFor(x => x.ReportHeader).NotNull().NotEmpty().WithMessage("ReportHeader is required");
+         //   RuleFor(x => x.ReportHeader).NotNull().NotEmpty().WithMessage("ReportHeader is required");
 
 
         }

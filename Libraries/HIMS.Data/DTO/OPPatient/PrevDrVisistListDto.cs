@@ -14,5 +14,6 @@ namespace HIMS.Data.DTO.OPPatient
         public long? DepartmentId { get; set; }
         public long? ConsultantDocId { get; set; }
         public DateTime VisitDate { get; set; }
+        public long CampId { get; set; }
     }
 }
