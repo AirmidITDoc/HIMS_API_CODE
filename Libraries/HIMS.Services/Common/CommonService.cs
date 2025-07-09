@@ -95,6 +95,8 @@ namespace HIMS.Services.Common
                 case "GetProcedureReportcol": sp_Name = "ps_get_ProcedureCol"; break;
                 case "GetReportDetailList": sp_Name = "ps_getReportDetaillist"; break;
 
+                // CompanyWiseTraiffList
+                case "CompanyWiseTraiffList": sp_Name = "ps_Rtrv_ServiceList_TariffWise"; break;
 
 
 
