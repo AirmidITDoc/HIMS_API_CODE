@@ -63,6 +63,15 @@ namespace HIMS.API.Controllers.Report
             IPagedList<MReportConfig> ReportList = await _reportlistRepository.GetAllPagedAsync(objGrid);
             return Ok(ReportList.ToGridResponse(objGrid, "Report List"));
         }
+
+        [HttpPost("NewList")]
+     //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<IActionResult> MReportListDto(GridRequestModel objGrid)
+        {
+            IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
+            return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfig  List"));
+        }
+
         [HttpGet("UserList/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetUserListAutoComplete(string Keyword)

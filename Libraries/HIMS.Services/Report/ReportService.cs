@@ -115,7 +115,10 @@ namespace HIMS.Services.Report
         {
             return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-      
+        public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
+        }
 
 
         public string GetReportSetByProc(ReportRequestModel model)

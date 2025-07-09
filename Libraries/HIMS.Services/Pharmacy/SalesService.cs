@@ -394,6 +394,7 @@ namespace HIMS.Services.Users
             }
             string VRefundId = odal.ExecuteNonQuery("PS_insert_T_PhAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
             ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
+            ObjPaymentPharmacy.RefundId = Convert.ToInt32(VRefundId);
 
             string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId"};
             var Aentity = ObjTPhadvanceHeader.ToDictionary();
@@ -402,6 +403,7 @@ namespace HIMS.Services.Users
                 Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_PhAdvanceHeader_1", CommandType.StoredProcedure, Aentity);
+
             foreach (var item in ObjTPhadvRefundDetail)
             {
 
@@ -413,6 +415,7 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQuery("m_insert_T_PHAdvRefundDetail_1", CommandType.StoredProcedure, Dentity);
             }
+
             foreach (var item in ObjTPhadvanceDetail)
             {
 
@@ -424,6 +427,7 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
             }
+
             string[] PHEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode"};
             var Phentity = ObjPaymentPharmacy.ToDictionary();
             foreach (var rProperty in PHEntity)

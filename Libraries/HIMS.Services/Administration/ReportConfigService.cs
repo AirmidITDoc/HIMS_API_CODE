@@ -23,7 +23,7 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MReportConfigListDto>(model, "M_ReportConfigList");
+            return await DatabaseHelper.GetGridDataBySp<MReportConfigListDto>(model, "ps_ReportConfigList");
         }
 
 

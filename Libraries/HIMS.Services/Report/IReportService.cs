@@ -26,7 +26,8 @@ namespace HIMS.Services.Report
         Task<List<MItemDrugTypeMaster>> SearchMItemDrugTypeMaster(string str);
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
-      
+        Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
+
 
 
 

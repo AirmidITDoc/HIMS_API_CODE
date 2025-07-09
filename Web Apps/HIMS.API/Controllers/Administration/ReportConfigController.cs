@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Administration
             return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfig List"));
         }
 
-        [HttpPost("MReportConfigDetailsList")]
+        [HttpPost("NewList")]
         [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)
         {
