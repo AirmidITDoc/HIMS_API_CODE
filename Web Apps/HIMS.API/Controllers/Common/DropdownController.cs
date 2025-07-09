@@ -90,8 +90,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MCertificateMaster> _MCertificateMaster;
         private readonly IGenericService<MReportConfig> _MReportConfig;
         private readonly IGenericService<MenuMaster> _MenuMaster;
-
-
+        private readonly IGenericService<MCampMaster> _MCampMaster;
 
 
 
@@ -101,28 +100,29 @@ namespace HIMS.API.Controllers.Common
             , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<ClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
                                   , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
-            , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster,
+                                , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster,
                                  IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
                                 , IGenericService<MBankMaster> iMDoBankMaster, IGenericService<MStoreMaster> iMDoStoreMaster, IGenericService<MTermsOfPaymentMaster> iMDoTemofpaymentMaster
-            , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster, IGenericService<MPathCategoryMaster> iMDopathcateMaster,
-             IGenericService<MRadiologyCategoryMaster> iMDoradiologycateMaster, IGenericService<MPathUnitMaster> iMDpathunitMaster, IGenericService<CompanyTypeMaster> iMDcompanytypeMaster,
-              IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster, IGenericService<MTemplateMaster> iMDtemplateMaster,
-              IGenericService<MItemClassMaster> iMDItemClassMaster, IGenericService<MItemCategoryMaster> iMDItemCategoryMaster, IGenericService<MItemTypeMaster> iMDItemTypeMaster
-              , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
-            , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
-            , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<MNursingTemplateMaster> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
-            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote, IGenericService<Constants> iconstant,
-              IGenericService<MenuMaster> iMDmenuMaster,
-              IGenericService<MDoseMaster> IMDdoseMaster,
-              IGenericService<MPresTemplateH> IMDPresTemplateH,
-              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
-              IGenericService<MTalukaMaster> IMTalukaMaster,
-              IGenericService<MModeOfDischarge> iMModeofdischarge,
-              IGenericService<MSupplierMaster> iMSupplierMaster, IGenericService<MExpensesHeadMaster> iMExphede,
-              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen,
-              IGenericService<MConsentMaster> iMConsentMaster,
-               IGenericService<MCertificateMaster> iMCertificateMaster,
-                              IGenericService<MReportConfig> iMReportConfig, IGenericService<MenuMaster> iMenuMaster
+                            , IGenericService<CashCounter> iMDoCashcounterMaster, IGenericService<DoctorTypeMaster> iMDoDoctorTyperMaster, IGenericService<MPathCategoryMaster> iMDopathcateMaster,
+                             IGenericService<MRadiologyCategoryMaster> iMDoradiologycateMaster, IGenericService<MPathUnitMaster> iMDpathunitMaster, IGenericService<CompanyTypeMaster> iMDcompanytypeMaster,
+                              IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster, IGenericService<MTemplateMaster> iMDtemplateMaster,
+                              IGenericService<MItemClassMaster> iMDItemClassMaster, IGenericService<MItemCategoryMaster> iMDItemCategoryMaster, IGenericService<MItemTypeMaster> iMDItemTypeMaster
+                              , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
+                            , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
+                            , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<MNursingTemplateMaster> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
+                            , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote, IGenericService<Constants> iconstant,
+                              IGenericService<MenuMaster> iMDmenuMaster,
+                              IGenericService<MDoseMaster> IMDdoseMaster,
+                              IGenericService<MPresTemplateH> IMDPresTemplateH,
+                              IGenericService<MOpcasepaperDignosisMaster> IMDOPCasepaperDignosisMaster, IGenericService<MReportTemplateConfig> IMReportTemplateConfig,
+                              IGenericService<MTalukaMaster> IMTalukaMaster,
+                              IGenericService<MModeOfDischarge> iMModeofdischarge,
+                              IGenericService<MSupplierMaster> iMSupplierMaster, IGenericService<MExpensesHeadMaster> iMExphede,
+                              IGenericService<MConstant> iMConstant, IGenericService<MRadiologyTemplateMaster> iMRadioTemp, IGenericService<MCanItemMaster> iMCanteen,
+                              IGenericService<MConsentMaster> iMConsentMaster,
+                              IGenericService<MCertificateMaster> iMCertificateMaster,
+                              IGenericService<MReportConfig> iMReportConfig, IGenericService<MenuMaster> iMenuMaster,
+                              IGenericService<MCampMaster> iMCampMaster
 
 
               )
@@ -195,6 +195,7 @@ namespace HIMS.API.Controllers.Common
             _MCertificateMaster = iMCertificateMaster;
             _MReportConfig = iMReportConfig;
             _MenuMaster = iMenuMaster;
+            _MCampMaster = iMCampMaster;
 
         }
 
@@ -312,6 +313,8 @@ namespace HIMS.API.Controllers.Common
 
                 "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+                "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
