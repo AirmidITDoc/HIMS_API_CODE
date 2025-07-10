@@ -64,6 +64,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIssueToDepService, IssueToDepService>();
             services.AddScoped<IIssueToDeptIndentService, IssueToDeptIndentService>();
             services.AddScoped<IReportConfigService, ReportConfigService>();
+            services.AddScoped<IOTService, OTService>();
+
 
 
 

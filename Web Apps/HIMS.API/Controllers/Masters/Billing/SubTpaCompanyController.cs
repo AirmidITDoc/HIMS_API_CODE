@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         //Edit API
         [HttpPut("{id:int}")]
-       [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SubTpaCompanyModel obj)
         {
             MSubTpacompanyMaster model = obj.MapTo<MSubTpacompanyMaster>();
