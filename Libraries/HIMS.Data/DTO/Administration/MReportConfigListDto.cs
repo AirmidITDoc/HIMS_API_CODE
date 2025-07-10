@@ -29,6 +29,7 @@ namespace HIMS.Data.DTO.Administration
         public string ReportSpname { get; set; }
         public string ReportPageOrientation { get; set; }
         public string ReportPageSize { get; set; }
+        public string ReportFilter { get; set; }
         public bool IsActive { get; set; }
         public long? MenuId { get; set; }
     }
