@@ -11,7 +11,7 @@ namespace HIMS.Data.DTO.Administration
         public long ReportId { get; set; }
         public string ReportSection { get; set; }
         public string ReportName { get; set; }
-        public long? ParentId { get; set; }
+        public long? Parentid { get; set; }
         public string ReportMode { get; set; }
         public string ReportTitle { get; set; }
         public string ReportHeader { get; set; }
@@ -26,7 +26,7 @@ namespace HIMS.Data.DTO.Administration
         public string ReportBodyFile { get; set; }
         public string ReportFolderName { get; set; }
         public string ReportFileName { get; set; }
-        public string ReportSPName { get; set; }
+        public string ReportSpname { get; set; }
         public string ReportPageOrientation { get; set; }
         public string ReportPageSize { get; set; }
         public bool IsActive { get; set; }
