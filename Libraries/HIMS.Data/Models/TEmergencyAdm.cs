@@ -22,5 +22,10 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+        public long? PrefixId { get; set; }
+        public string? City { get; set; }
+        public long? CityId { get; set; }
+        public long? AgeYear { get; set; }
+        public long? GenderId { get; set; }
     }
 }

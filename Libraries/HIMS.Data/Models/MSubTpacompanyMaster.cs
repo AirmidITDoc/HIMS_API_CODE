@@ -6,6 +6,7 @@ namespace HIMS.Data.Models
     public partial class MSubTpacompanyMaster
     {
         public long SubCompanyId { get; set; }
+        public long? CompanyId { get; set; }
         public long? CompTypeId { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyShortName { get; set; }
