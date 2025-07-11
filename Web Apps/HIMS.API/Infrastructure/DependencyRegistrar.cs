@@ -115,6 +115,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAdvanceService, AdvanceService>();
             services.AddScoped<IParameterMasterService, ParameterMasterService>();
             services.AddScoped<IPathlogyService, PathlogyService>();
+            services.AddScoped<ISubTPACompanyService, SubTPACompanyService>();
+
 
 
 

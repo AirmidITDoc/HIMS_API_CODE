@@ -8,6 +8,10 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Services.Inventory;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Services.Common;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -18,19 +22,21 @@ namespace HIMS.API.Controllers.Masters.Billing
     public class SubTpaCompanyController : BaseController
     {
         private readonly IGenericService<MSubTpacompanyMaster> _repository;
-        public SubTpaCompanyController(IGenericService<MSubTpacompanyMaster> repository)
+        private readonly ISubTPACompanyService _SubTPACompanyService;
+        public SubTpaCompanyController(ISubTPACompanyService repository, IGenericService<MSubTpacompanyMaster> repository1)
         {
-            _repository = repository;
+            _SubTPACompanyService = repository;
+             _repository = repository1;
+
+
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
+        [HttpPost("SubTpacompanyMasterList")]
         [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
-            IPagedList<MSubTpacompanyMaster> SubTpacompanyMastereList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(SubTpacompanyMastereList.ToGridResponse(objGrid, "SubTpacompanyMastere List"));
+            IPagedList<SubTpaCompanyListDto> SubTpacompanyMasterList = await _SubTPACompanyService.GetListAsync(objGrid);
+            return Ok(SubTpacompanyMasterList.ToGridResponse(objGrid, "SubTpacompanyMasterList"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
