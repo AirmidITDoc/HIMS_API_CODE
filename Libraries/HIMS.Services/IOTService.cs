@@ -13,9 +13,6 @@ namespace HIMS.Services
     public partial  interface IOTService
     {
         Task<IPagedList<OTBookinglistDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<EmergencyListDto>> GetListAsyncE(GridRequestModel objGrid);
-
-
         Task InsertAsync(TOtbooking OBJTOtbooking, int UserId, string Username);
         Task UpdateAsync(TOtbooking OBJTOtbooking, int UserId, string Username);
 

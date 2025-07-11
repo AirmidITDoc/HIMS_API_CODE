@@ -24,10 +24,7 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "m_Rtrv_OTBookinglist");
         }
-        public virtual async Task<IPagedList<EmergencyListDto>> GetListAsyncE(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<EmergencyListDto>(model, "m_Rtrv_OTBookinglist");
-        }
+       
         public virtual async Task InsertAsync(TOtbooking OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
