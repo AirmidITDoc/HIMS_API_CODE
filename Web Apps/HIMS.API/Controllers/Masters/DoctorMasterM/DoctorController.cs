@@ -31,8 +31,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         private readonly IGenericService<MDoctorChargesDetail> _repository4;
         private readonly IGenericService<MDoctorSignPageDetail> _repository5;
         private readonly IGenericService<MConstant> _repository6;
+        private readonly IGenericService<FileMaster> _repository7;
 
-        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5, IGenericService<MConstant> repository6)
+        public DoctorController(IDoctorMasterService repository, IGenericService<LvwDoctorMasterList> repository1, IFileUtility fileUtility, IGenericService<MDoctorScheduleDetail> repository2, IGenericService<MDoctorExperienceDetail> repository3, IGenericService<MDoctorChargesDetail> repository4, IGenericService<MDoctorSignPageDetail> repository5, IGenericService<MConstant> repository6,
+            IGenericService<FileMaster> repository7)
         {
             _IDoctorMasterService = repository;
             _repository1 = repository1;
@@ -42,6 +44,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             _repository4 = repository4;
             _repository5 = repository5;
             _repository6 = repository6;
+            _repository7 = repository7;
         }
         //List API
         [HttpPost]
@@ -204,7 +207,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
+        public async Task<ApiResponse> InsertEDMX([FromForm] DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
                 obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
@@ -213,15 +216,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             {
                 foreach (var q in model.MDoctorQualificationDetails)
                 {
-                    q.CreatedBy = CurrentUserId;   
+                    q.CreatedBy = CurrentUserId;
                     q.CreatedDate = DateTime.Now;
-                   
+
                 }
                 foreach (var v in model.MDoctorExperienceDetails)
                 {
                     v.CreatedBy = CurrentUserId;
                     v.CreatedDate = DateTime.Now;
-                   
+
                 }
                 foreach (var p in model.MDoctorScheduleDetails)
                 {
@@ -251,6 +254,17 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 model.Addedby = CurrentUserId;
                 model.IsActive = true;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                if (model.DoctorId > 0)
+                {
+                    foreach (var item in obj.MDoctorFiles)
+                    {
+                        if (item.Document != null)
+                        {
+                            item.DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files");
+                        }
+                    }
+                    await _repository7.
+                }
             }
             else
             {
@@ -263,10 +277,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
-      
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DoctorModel obj)
+        public async Task<ApiResponse> Edit([FromForm] DoctorModel obj)
 
         {
             if (obj.DoctorId <= 0)
@@ -274,8 +288,8 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            if (!string.IsNullOrWhiteSpace(obj.Signature))
-                obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
+            //if (!string.IsNullOrWhiteSpace(obj.Signature))
+            //    obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
 
             DoctorMaster model = obj.MapTo<DoctorMaster>();
 
@@ -346,7 +360,16 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 z.ModifiedDate = DateTime.Now;
             }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-
+            if (model.DoctorId > 0)
+            {
+                foreach (var item in obj.MDoctorFiles)
+                {
+                    if (item.DocName != null)
+                    {
+                        item.DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files");
+                    }
+                }
+            }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
@@ -368,7 +391,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
 
-      
+
 
         [HttpGet]
         [Route("get-Doctor")]
@@ -392,6 +415,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
         }
-       
+
     }
 }
