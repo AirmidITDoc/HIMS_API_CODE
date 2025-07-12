@@ -95,9 +95,14 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesDraftHeader, TSalesDraftsHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OtbookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TEmergencyAdm, EmergencyMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TEmergencyAdm, EmergencyupdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TEmergencyAdm, EmergencyCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             
+
+
 
 
             CreateMap<TGrnheader, SupplierPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

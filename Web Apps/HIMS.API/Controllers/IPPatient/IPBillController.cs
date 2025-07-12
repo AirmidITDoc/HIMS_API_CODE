@@ -32,15 +32,13 @@ namespace HIMS.API.Controllers.IPPatient
     {
         private readonly IIPBillService _IPBillService;
         private readonly IIPBillwithCreditService _IPCreditBillService;
-        private readonly IIPAdvanceService _IIPAdvanceService;
         private readonly IGenericService<AddCharge> _repository;
         private readonly IGenericService<Admission> _repository2;
 
-        public IPBillController(IIPBillService repository, IIPBillwithCreditService repository1, IIPAdvanceService repository2,IGenericService<AddCharge> repository3, IGenericService<Admission> _repository4)
+        public IPBillController(IIPBillService repository, IIPBillwithCreditService repository1,IGenericService<AddCharge> repository3, IGenericService<Admission> _repository4)
         {
             _IPBillService = repository;
             _IPCreditBillService = repository1;
-            _IIPAdvanceService = repository2;
             _repository = repository3;
             _repository2 = _repository4;
 

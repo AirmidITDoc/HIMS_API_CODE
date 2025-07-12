@@ -28,14 +28,36 @@ namespace HIMS.Services.OTManagment
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "PrefixId", "City", "AgeYear", "GenderId" };
+            string[] Entity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate","City"};
             var entity = objTEmergencyAdm.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Entity)
             {
                 entity.Remove(rProperty);
             }
-            string VEmgId = odal.ExecuteNonQuery("ps_insert_T_EmergencyAdm_1", CommandType.StoredProcedure, "AdvanceId", entity);
+            string VEmgId = odal.ExecuteNonQuery("ps_insert_T_EmergencyAdm_1", CommandType.StoredProcedure, "EmgId", entity);
             objTEmergencyAdm.EmgId = Convert.ToInt32(VEmgId);
+        }
+        public virtual async Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
+        {
+            DatabaseHelper odal = new();
+            string[] UEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "City", "AddedBy" };
+            var Entity = objTEmergencyAdm.ToDictionary();
+            foreach (var rProperty in UEntity)
+            {
+                Entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_update_T_EmergencyAdm_1", CommandType.StoredProcedure, Entity);
+        }
+        public virtual async Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
+        {
+            DatabaseHelper odal = new();
+            string[] CEntity = { "RegId", "EmgDate", "EmgTime", "SeqNo", "FirstName", "MiddleName", "LastName", "Address", "MobileNo", "DepartmentId", "DoctorId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledDate", "PrefixId", "City", "AgeYear", "GenderId","CityId", "IsCancelledBy" };
+            var Entity = objTEmergencyAdm.ToDictionary();
+            foreach (var rProperty in CEntity)
+            {
+                Entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_Cancel_T_EmergencyAdm_1", CommandType.StoredProcedure, Entity);
         }
     }
 }

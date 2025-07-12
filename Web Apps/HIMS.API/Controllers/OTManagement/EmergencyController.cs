@@ -43,13 +43,46 @@ namespace HIMS.API.Controllers.OTManagement
             {
                 model.EmgTime = Convert.ToDateTime(obj.EmgTime);
                 model.AddedBy = CurrentUserId;
-                //model.IsActive = true;
                 await _EmergencyService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
+        {
+            TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
+            if (obj.EmgId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.EmgDate = DateTime.Now;
+                model.UpdatedBy = CurrentUserId;
+                //model.IsActive = true;
+                await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(EmergencyCancel obj)
+        {
+            TEmergencyAdm model = new();
+            if (obj.EmgId != 0)
+            {
+                model.EmgId = obj.EmgId;
+                await _EmergencyService.CancelSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+
+
+
 
     }
 }
