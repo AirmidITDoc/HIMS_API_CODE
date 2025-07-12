@@ -256,13 +256,26 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
                 if (model.DoctorId > 0)
                 {
+                    List<FileMaster> Files = new List<FileMaster>();
                     foreach (var item in obj.MDoctorFiles)
                     {
-                        if (item.Document != null)
+                        if (item.DocName != null)
                         {
-                            item.DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files");
+                            Files.Add(new FileMaster
+                            {
+                                DocName = item.DocName,
+                                DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files"),
+                                CreatedById = CurrentUserId,
+                                Id = 0,
+                                IsDelete = false,
+                                RefId = item.RefId,
+                                RefType = item.RefType,
+                                CreatedDate = DateTime.Now
+                            });
                         }
                     }
+                    if (Files.Count > 0)
+                        await _repository7.Add(Files, CurrentUserId, CurrentUserName);
                 }
             }
             else
@@ -287,8 +300,8 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            //if (!string.IsNullOrWhiteSpace(obj.Signature))
-            //    obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
+            if (!string.IsNullOrWhiteSpace(obj.Signature))
+                obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
 
             DoctorMaster model = obj.MapTo<DoctorMaster>();
 
