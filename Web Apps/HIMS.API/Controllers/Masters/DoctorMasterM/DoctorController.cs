@@ -263,7 +263,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                             item.DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files");
                         }
                     }
-                    await _repository7.
                 }
             }
             else
