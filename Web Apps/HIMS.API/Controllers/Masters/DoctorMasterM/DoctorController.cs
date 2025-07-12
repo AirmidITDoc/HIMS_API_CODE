@@ -304,6 +304,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 q.ModifiedBy = CurrentUserId;
                 q.ModifiedDate = DateTime.Now;
+                q.DocQualfiId = 0;
             }
 
             foreach (var v in model.MDoctorExperienceDetails)
@@ -315,6 +316,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 v.ModifiedBy = CurrentUserId;
                 v.ModifiedDate = DateTime.Now;
+                v.DocExpId = 0;
             }
 
             foreach (var p in model.MDoctorScheduleDetails)
@@ -326,6 +328,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 p.ModifiedBy = CurrentUserId;
                 p.ModifiedDate = DateTime.Now;
+                p.DocSchedId = 0;
             }
 
             foreach (var x in model.MDoctorChargesDetails)
@@ -337,6 +340,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 x.ModifiedBy = CurrentUserId;
                 x.ModifiedDate = DateTime.Now;
+                x.DocChargeId = 0;
             }
             foreach (var y in model.MDoctorLeaveDetails)
             {
@@ -347,6 +351,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 y.ModifiedBy = CurrentUserId;
                 y.ModifiedDate = DateTime.Now;
+                y.DocLeaveId = 0;
             }
             foreach (var z in model.MDoctorSignPageDetails)
             {
@@ -357,17 +362,31 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 z.ModifiedBy = CurrentUserId;
                 z.ModifiedDate = DateTime.Now;
+                z.DocSignId = 0;
             }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             if (model.DoctorId > 0)
             {
+                List<FileMaster> Files = new List<FileMaster>();
                 foreach (var item in obj.MDoctorFiles)
                 {
                     if (item.DocName != null)
                     {
-                        item.DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files");
+                        Files.Add(new FileMaster
+                        {
+                            DocName = item.DocName,
+                            DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files"),
+                            CreatedById = CurrentUserId,
+                            Id = 0,
+                            IsDelete = false,
+                            RefId = item.RefId,
+                            RefType = item.RefType,
+                            CreatedDate = DateTime.Now
+                        });
                     }
                 }
+                if (Files.Count > 0)
+                    await _repository7.Add(Files, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }

@@ -59,6 +59,14 @@ namespace HIMS.Data
 
             return entity;
         }
+        public async Task<List<TModel>> Add(List<TModel> entities, int UserId, string Username)
+        {
+            _dbContext.Set<TModel>().AddRange(entities);
+
+            await _dbContext.SaveChangesAsync(UserId, Username);
+
+            return entities;
+        }
 
         public async Task<TModel> Update(TModel entity, int UserId, string Username, string[]? ignoreColumns = null)
         {
