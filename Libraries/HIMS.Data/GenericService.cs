@@ -59,6 +59,14 @@ namespace HIMS.Data
 
             return entity;
         }
+        public async Task<List<TModel>> Add(List<TModel> entities, int UserId, string Username)
+        {
+            _dbContext.Set<TModel>().AddRange(entities);
+
+            await _dbContext.SaveChangesAsync(UserId, Username);
+
+            return entities;
+        }
 
         public async Task<TModel> Update(TModel entity, int UserId, string Username, string[]? ignoreColumns = null)
         {
@@ -90,6 +98,22 @@ namespace HIMS.Data
 
             _dbContext.Set<TModel>().Remove(entity);
             await _dbContext.SaveChangesAsync(UserId, Username);
+
+            return true;
+        }
+        public async Task<bool> HardDeleteBulk(Expression<Func<TModel, bool>>? where, int UserId, string Username)
+        {
+            var query = _dbContext.Set<TModel>().AsQueryable();
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+            var entities = await query.ToListAsync();
+            if (entities.Count > 0)
+            {
+                _dbContext.Set<TModel>().RemoveRange(entities);
+                await _dbContext.SaveChangesAsync(UserId, Username);
+            }
 
             return true;
         }
