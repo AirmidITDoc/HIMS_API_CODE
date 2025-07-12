@@ -381,7 +381,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             if (model.DoctorId > 0)
             {
                 List<FileMaster> Files = new List<FileMaster>();
-                foreach (var item in obj.MDoctorFiles)
+                foreach (var item in obj.MDoctorFiles.Where(x => !x.IsDelete.Value))
                 {
                     if (item.DocName != null)
                     {
@@ -400,6 +400,14 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 }
                 if (Files.Count > 0)
                     await _repository7.Add(Files, CurrentUserId, CurrentUserName);
+                if (obj.MDoctorFiles.Any(x => x.Id > 0 && x.IsDelete.Value))
+                {
+                    foreach (var item in obj.MDoctorFiles.Where(x => x.Id > 0 && x.IsDelete.Value))
+                    {
+                        _FileUtility.RemoveFile(item.DocSavedName, "Doctors\\Files");
+                    }
+                    await _repository7.HardDeleteBulk(x => x.Id > 0 && x.IsDelete.Value, CurrentUserId, CurrentUserName);
+                }
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }

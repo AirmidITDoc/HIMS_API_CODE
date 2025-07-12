@@ -53,7 +53,7 @@ namespace HIMS.API.Utility
         public string SaveImageFromBase64(string Base64, string Folder)
         {
             var DestinationPath = "";
-                //_Sales.GetFilePath();
+            //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
             if (!Directory.Exists(DestinationPath))
@@ -76,7 +76,7 @@ namespace HIMS.API.Utility
             if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
                 Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
-            string FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.Name);
+            string FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(FilePath, FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -85,10 +85,24 @@ namespace HIMS.API.Utility
             // File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
             return FileName;
         }
+        public void RemoveFile(string FileName, string Folder)
+        {
+            var DestinationPath = "";
+            //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
+            string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
+            if (File.Exists(Path.Combine(FilePath, FileName)))
+                File.Delete(Path.Combine(FilePath, FileName));
+        }
         public async Task<string> GetBase64FromFolder(string Folder, string filename)
         {
             var DestinationPath = "";
-                //_Sales.GetFilePath();
+            //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
