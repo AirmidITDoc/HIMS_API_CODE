@@ -26,6 +26,7 @@ using HIMS.Services.Pathlogy;
 using HIMS.API.Utility;
 using HIMS.Services.Transaction;
 using HIMS.Services.Notification;
+using HIMS.Services.OTManagment;
 
 namespace HIMS.API.Infrastructure
 {
@@ -65,6 +66,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIssueToDeptIndentService, IssueToDeptIndentService>();
             services.AddScoped<IReportConfigService, ReportConfigService>();
             services.AddScoped<IOTService, OTService>();
+            services.AddScoped<IEmergencyService, EmergencyService>();
+
 
 
 

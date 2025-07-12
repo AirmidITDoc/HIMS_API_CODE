@@ -29,13 +29,13 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OTBookinglistDto> OTBookinglist = await _OTService.GetListAsync(objGrid);
             return Ok(OTBookinglist.ToGridResponse(objGrid, "OTBookinglist "));
         }
-        [HttpPost("Emergencylist")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> ListE(GridRequestModel objGrid)
-        {
-            IPagedList<EmergencyListDto> Emergencylist = await _OTService.GetListAsyncE(objGrid);
-            return Ok(Emergencylist.ToGridResponse(objGrid, "Emergencylist "));
-        }
+        //[HttpPost("Emergencylist")]
+        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> ListE(GridRequestModel objGrid)
+        //{
+        //    IPagedList<EmergencyListDto> Emergencylist = await _OTService.GetListAsyncE(objGrid);
+        //    return Ok(Emergencylist.ToGridResponse(objGrid, "Emergencylist "));
+        //}
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(OtbookingModel obj)

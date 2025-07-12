@@ -10,7 +10,7 @@ namespace HIMS.Data.DTO.Inventory
     {
         public long SubCompanyId { get; set; }
         public long? CompanyId { get; set; }
-        public long? CompTypeId { get; set; }
+        public long? CompTypeId { get; set; } 
         public string? CompanyName { get; set; }
         public string? CompanyShortName { get; set; }
         public string? Address { get; set; }

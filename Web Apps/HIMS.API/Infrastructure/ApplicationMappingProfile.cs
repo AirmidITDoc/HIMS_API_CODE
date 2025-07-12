@@ -11,6 +11,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.OTManagement;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pathology;
 using HIMS.API.Models.Pharmacy;
@@ -93,6 +94,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MTermsOfPaymentMaster, TermsOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDraftHeader, TSalesDraftsHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbooking, OtbookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TEmergencyAdm, EmergencyMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             
 
