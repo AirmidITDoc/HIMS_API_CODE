@@ -25,7 +25,6 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.CompanyName).NotNull().NotEmpty().WithMessage("CompanyName is required");
             RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
-            RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
         }
     }
 }

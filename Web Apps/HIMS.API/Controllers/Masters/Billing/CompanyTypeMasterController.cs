@@ -9,16 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
 using Asp.Versioning;
 
-namespace HIMS.API.Controllers
+namespace HIMS.API.Controllers.Masters.Billing
 {
-
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class CompanyMasterController : BaseController
+    public class CompanyTypeMasterController : BaseController
     {
-        private readonly IGenericService<CompanyMaster> _repository;
-        public CompanyMasterController(IGenericService<CompanyMaster> repository)
+        private readonly IGenericService<CompanyTypeMaster> _repository;
+        public CompanyTypeMasterController(IGenericService<CompanyTypeMaster> repository)
         {
             _repository = repository;
         }
@@ -26,32 +25,32 @@ namespace HIMS.API.Controllers
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<CompanyMaster> CompanyMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(CompanyMasterList.ToGridResponse(objGrid, "Company List"));
+            IPagedList<CompanyTypeMaster> CompanyTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(CompanyTypeMasterList.ToGridResponse(objGrid, "CompanyType List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.CompanyId == id);
-            return data.ToSingleResponse<CompanyMaster, CompanyMasterModel>("CompanyMaster");
+            var data = await _repository.GetById(x => x.CompanyTypeId == id);
+            return data.ToSingleResponse<CompanyTypeMaster, CompanyTypeMasterModel>("CompanyTypeMaster");
         }
 
 
         [HttpPost]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(CompanyMasterModel obj)
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(CompanyTypeMasterModel obj)
         {
-            CompanyMaster model = obj.MapTo<CompanyMaster>();
+            CompanyTypeMaster model = obj.MapTo<CompanyTypeMaster>();
             model.IsActive = true;
-            if (obj.CompanyId == 0)
+            if (obj.CompanyTypeId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
@@ -63,12 +62,12 @@ namespace HIMS.API.Controllers
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(CompanyMasterModel obj)
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(CompanyTypeMasterModel obj)
         {
-            CompanyMaster model = obj.MapTo<CompanyMaster>();
+            CompanyTypeMaster model = obj.MapTo<CompanyTypeMaster>();
             model.IsActive = true;
-            if (obj.CompanyId == 0)
+            if (obj.CompanyTypeId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -80,11 +79,11 @@ namespace HIMS.API.Controllers
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CompanyTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            CompanyMaster model = await _repository.GetById(x => x.CompanyId == Id);
-            if ((model?.CompanyId ?? 0) > 0)
+            CompanyTypeMaster model = await _repository.GetById(x => x.CompanyTypeId == Id);
+            if ((model?.CompanyTypeId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
@@ -95,7 +94,6 @@ namespace HIMS.API.Controllers
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
 
 
     }

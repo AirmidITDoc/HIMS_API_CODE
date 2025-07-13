@@ -97,7 +97,7 @@ namespace HIMS.Services.Common
 
                 // CompanyWiseTraiffList
                 case "CompanyWiseTraiffList": sp_Name = "ps_Rtrv_ServiceList_TariffWise"; break;
-
+                case "CompanyWiseSubTPAList": sp_Name = "ps_SubTPACompanyList_CompanyWise"; break;
 
 
                 default: break;

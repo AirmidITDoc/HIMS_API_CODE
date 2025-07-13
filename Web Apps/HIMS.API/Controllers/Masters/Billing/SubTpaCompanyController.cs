@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         }
 
-        [HttpPost("SubTpacompanyMasterList")]
+        [HttpPost("List")]
         [Permission(PageCode = "SubTpacompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
