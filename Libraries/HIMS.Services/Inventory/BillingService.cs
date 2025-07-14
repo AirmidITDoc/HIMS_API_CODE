@@ -5,9 +5,11 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -216,21 +218,62 @@ namespace HIMS.Services.Inventory
             };
             odal.ExecuteNonQuery("Delete_PackageDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
             foreach (var item in ObjMPackageDetail)
-            { 
-                  
-                    string[] AEntity = {"CreatedBy","CreatedDate","ModifiedBy", "ModifiedDate" };
-                    var Pentity = item.ToDictionary();
-                    foreach (var rProperty in AEntity)
-                    {
-                        Pentity.Remove(rProperty);
-                    }
-                    string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
-                    item.PackageId = Convert.ToInt32(VPackageId);
+            {
+
+                string[] AEntity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in AEntity)
+                {
+                    Pentity.Remove(rProperty);
+                }
+                string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
+                item.PackageId = Convert.ToInt32(VPackageId);
             }
         }
+        public virtual async Task<BillingServiceNewDto> GetServiceListNew(int TariffId)
+        {
+            BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@TariffId", TariffId);
+            DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
+            foreach (DataColumn dc in dt.Columns)
+            {
+                if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                {
+                    objMain.Columns.Add(new BillingServiceColumns()
+                    {
+                        ClassId = dc.ColumnName.Split('|')[1].ToInt(),
+                        ClassName = dc.ColumnName.Split('|')[0]
+                    });
+                }
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                BillingServiceNew obj = new()
+                {
+                    ServiceId = dr["ServiceId"].ToInt(),
+                    ServiceName = HIMS.Data.Extensions.DynamicLinqExpressionBuilder.ConvertToString(dr["ServiceName"]), // Explicitly specify the namespace
+                    ColumnValues = new List<BillingServiceColumnValue>()
+                };
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                    {
+                        obj.ColumnValues.Add(new BillingServiceColumnValue()
+                        {
+                            ClassId = dc.ColumnName.Split('|')[1].ToInt(),
+                            ClassValue = dr[dc].ToInt()
+                        });
+                    }
+                }
+                objMain.Data.Add(obj);
+            }
+            return objMain;
+        }
     }
- }
+}
 
 
-    
+
 

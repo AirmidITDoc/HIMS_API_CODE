@@ -8,7 +8,7 @@ namespace HIMS.Data.DTO.OPPatient
 {
     public class BillingServiceDto
     {
-        public long ServiceId {  get; set; }
+        public long ServiceId { get; set; }
         public long? GroupId { get; set; }
         public string? GroupName { get; set; }
         public string? ServiceShortDesc { get; set; }
@@ -46,5 +46,27 @@ namespace HIMS.Data.DTO.OPPatient
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
         public long? TariffId { get; set; }
+    }
+    public class BillingServiceNewDto
+    {
+        public List<BillingServiceNew> Data { get; set; }
+        public List<BillingServiceColumns> Columns { get; set; }
+    }
+
+    public class BillingServiceNew
+    {
+        public int ServiceId { get; set; }
+        public string ServiceName { get; set; }
+        public List<BillingServiceColumnValue> ColumnValues { get; set; }
+    }
+    public class BillingServiceColumns
+    {
+        public int ClassId { get; set; }
+        public string ClassName { get; set; }
+    }
+    public class BillingServiceColumnValue
+    {
+        public int ClassId { get; set; }
+        public int ClassValue { get; set; }
     }
 }
