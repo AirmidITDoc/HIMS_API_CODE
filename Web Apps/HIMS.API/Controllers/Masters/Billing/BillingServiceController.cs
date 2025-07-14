@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             IPagedList<PackageServiceInfoListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
             return Ok(ServiceList.ToGridResponse(objGrid, "PackageService List"));
         }
-        
+
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
 
-       
+
 
         [HttpPut("UpdateDifferTariff")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
@@ -117,11 +117,11 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             var model = new ServiceDetail
             {
-                TariffId = obj.OldTariffId 
+                TariffId = obj.OldTariffId
             };
 
-            int userId = 1; 
-            string userName = "admin"; 
+            int userId = 1;
+            string userName = "admin";
 
             await _BillingService.UpdateDifferTariff(model, obj.OldTariffId, obj.NewTariffId, userId, userName);
 
@@ -131,7 +131,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         [HttpGet("GetServiceListwithTraiff")]
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, string ServiceName)
         {
-            var resultList = await _BillingService.GetServiceListwithTraiff(TariffId,  ServiceName);
+            var resultList = await _BillingService.GetServiceListwithTraiff(TariffId, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List With Tariff Id.", resultList.Select(x => new
             {
                 x.FormattedText,
@@ -162,13 +162,20 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             if (model.Count > 0)
             {
-              await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
-       
+        [HttpGet("GetServicesNew")]
+        public async Task<ApiResponse> GetServices(int TariffId)
+        {
+            var resultList = await _BillingService.GetServiceListNew(TariffId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
+        }
+
+
 
     }
 }
