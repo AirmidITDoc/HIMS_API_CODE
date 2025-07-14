@@ -8,6 +8,8 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
 using Asp.Versioning;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Services.Inventory;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -18,20 +20,24 @@ namespace HIMS.API.Controllers.Masters.Billing
     public class CompanyMasterController : BaseController
     {
         private readonly IGenericService<CompanyMaster> _repository;
-        public CompanyMasterController(IGenericService<CompanyMaster> repository)
+        private readonly IGenericService<ServiceWiseCompanyCode> _temprepository;
+        private readonly ICompanyMasterService _CompanyMasterService;
+
+        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1 , IGenericService<ServiceWiseCompanyCode> repository2)
         {
-            _repository = repository;
+            _CompanyMasterService = repository;
+            _repository = repository1;
+            _temprepository = repository2;
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        [HttpPost("CompanyMasterList")]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
-            IPagedList<CompanyMaster> CompanyMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(CompanyMasterList.ToGridResponse(objGrid, "Company List"));
+            IPagedList<CompanyMasterListDto> CompanyMasterList = await _CompanyMasterService.GetListAsync(objGrid);
+            return Ok(CompanyMasterList.ToGridResponse(objGrid, "CompanyMasterList"));
         }
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -94,6 +100,43 @@ namespace HIMS.API.Controllers.Masters.Billing
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+
+
+        [HttpPost("ServiceWiseCompanySave")]
+    //    [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(ServiceWiseCompanyModel obj)
+        {
+            ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
+       //       model.IsActive = true;
+            if (obj.ServiceDetCompId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _temprepository.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        //Edit API
+        [HttpPut("ServiceWiseCompanyUpdate")]
+      //  [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ServiceWiseCompanyModel obj)
+        {
+            ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
+         //   model.IsActive = true;
+            if (obj.ServiceDetCompId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _temprepository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 

@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OTManagement;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services;
@@ -27,13 +28,15 @@ namespace HIMS.API.Controllers.OTManagement
         {
             _EmergencyService = repository;
         }
+      
         [HttpPost("Emergencylist")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> ListE(GridRequestModel objGrid)
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsync(objGrid);
+            IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsyn(objGrid);
             return Ok(Emergencylist.ToGridResponse(objGrid, "Emergencylist "));
         }
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(EmergencyMode obj)

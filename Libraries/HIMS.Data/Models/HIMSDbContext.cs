@@ -338,6 +338,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SerPer> SerPers { get; set; } = null!;
         public virtual DbSet<ServiceDetail> ServiceDetails { get; set; } = null!;
         public virtual DbSet<ServiceMaster> ServiceMasters { get; set; } = null!;
+        public virtual DbSet<ServiceWiseCompanyCode> ServiceWiseCompanyCodes { get; set; } = null!;
         public virtual DbSet<SmsoutGoing> SmsoutGoings { get; set; } = null!;
         public virtual DbSet<Sonography> Sonographies { get; set; } = null!;
         public virtual DbSet<SsConfigInitiateDischarge> SsConfigInitiateDischarges { get; set; } = null!;
@@ -9175,11 +9176,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Age).HasMaxLength(10);
 
-                entity.Property(e => e.AgeDay).HasMaxLength(5);
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
 
-                entity.Property(e => e.AgeMonth).HasMaxLength(5);
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
 
-                entity.Property(e => e.AgeYear).HasMaxLength(5);
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
 
                 entity.Property(e => e.AnnualIncome)
                     .HasColumnType("money")
@@ -9187,7 +9188,21 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.City).HasMaxLength(100);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.EmgAadharCardNo).HasMaxLength(20);
+
+                entity.Property(e => e.EmgContactPersonName).HasMaxLength(50);
+
+                entity.Property(e => e.EmgDrivingLicenceNo).HasMaxLength(20);
+
+                entity.Property(e => e.EmgLandlineNo).HasMaxLength(12);
+
+                entity.Property(e => e.EmgMobileNo).HasMaxLength(12);
+
+                entity.Property(e => e.EngAddress).HasMaxLength(100);
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
 
@@ -9197,9 +9212,29 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.LastName).HasMaxLength(100);
 
+                entity.Property(e => e.MedTourismDateOfEntry).HasColumnType("datetime");
+
+                entity.Property(e => e.MedTourismNationalityId)
+                    .HasMaxLength(20)
+                    .HasColumnName("MedTourismNationalityID");
+
+                entity.Property(e => e.MedTourismOfficeWorkAddress).HasMaxLength(100);
+
+                entity.Property(e => e.MedTourismPassportNo).HasMaxLength(20);
+
+                entity.Property(e => e.MedTourismPortOfEntry).HasMaxLength(20);
+
+                entity.Property(e => e.MedTourismResidentialAddress).HasMaxLength(100);
+
+                entity.Property(e => e.MedTourismVisaIssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MedTourismVisaValidityDate).HasColumnType("datetime");
+
                 entity.Property(e => e.MiddleName).HasMaxLength(100);
 
                 entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PanCardNo).HasMaxLength(10);
 
@@ -9575,11 +9610,32 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.PackageConsumableAmount).HasColumnType("money");
+
+                entity.Property(e => e.PackageIcudays).HasColumnName("PackageICUDays");
+
+                entity.Property(e => e.PackageMedicineAmount).HasColumnType("money");
+
                 entity.Property(e => e.ServiceName).HasMaxLength(200);
 
                 entity.Property(e => e.ServiceShortDesc).HasMaxLength(200);
 
                 entity.Property(e => e.SubGroupId).HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<ServiceWiseCompanyCode>(entity =>
+            {
+                entity.HasKey(e => e.ServiceDetCompId);
+
+                entity.ToTable("ServiceWiseCompanyCode");
+
+                entity.Property(e => e.CompanyCode).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyServicePrint).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SmsoutGoing>(entity =>
@@ -11164,11 +11220,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
+                entity.Property(e => e.City).HasMaxLength(100);
+
                 entity.Property(e => e.EmgDate).HasColumnType("datetime");
 
                 entity.Property(e => e.EmgTime).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.GenderId).HasColumnName("GenderID");
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 

@@ -20,7 +20,7 @@ namespace HIMS.Services.OTManagment
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<EmergencyListDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<EmergencyListDto>> GetListAsyn(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<EmergencyListDto>(model, "m_Rtrv_Emergency_list");
         }

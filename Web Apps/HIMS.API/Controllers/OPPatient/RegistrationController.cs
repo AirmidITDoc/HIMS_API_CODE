@@ -65,8 +65,11 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
-                model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
+                //model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
                 model.AddedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+
                 await _IRegistrationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -97,7 +100,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationUpdate")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -107,6 +110,9 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
+                model.UpdatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
