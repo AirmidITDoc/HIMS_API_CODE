@@ -18,5 +18,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? Vst_Adm_Date { get; set; }
         public string? StoreName { get; set; }
         public byte OP_IP_Type { get; set; }
+        public long? IpmedId { get; set; }
+
     }
 }
