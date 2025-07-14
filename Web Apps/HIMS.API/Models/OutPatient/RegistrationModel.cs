@@ -12,6 +12,7 @@ namespace HIMS.API.Models.OutPatient
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
+
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? PinNo { get; set; }
@@ -20,6 +21,7 @@ namespace HIMS.API.Models.OutPatient
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
+
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
@@ -34,6 +36,25 @@ namespace HIMS.API.Models.OutPatient
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
         public string? Photo { get; set; }
+        public string? EmgContactPersonName { get; set; }
+        public long? EmgRelationshipId { get; set; }
+        public string? EmgMobileNo { get; set; }
+        public string? EmgLandlineNo { get; set; }
+        public string? EngAddress { get; set; }
+        public string? EmgAadharCardNo { get; set; }
+        public string? EmgDrivingLicenceNo { get; set; }
+        public string? MedTourismPassportNo { get; set; }
+        public DateTime? MedTourismVisaIssueDate { get; set; }
+        public DateTime? MedTourismVisaValidityDate { get; set; }
+        public string? MedTourismNationalityId { get; set; }
+        public long? MedTourismCitizenship { get; set; }
+        public string? MedTourismPortOfEntry { get; set; }
+        public DateTime? MedTourismDateOfEntry { get; set; }
+        public string? MedTourismResidentialAddress { get; set; }
+        public string? MedTourismOfficeWorkAddress { get; set; }
+        //public long? AddedBy { get; set; }
+        //public long? UpdatedBy { get; set; }
+     
     }
 
     public class RegistrationModelValidator : AbstractValidator<RegistrationModel>

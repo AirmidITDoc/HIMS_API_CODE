@@ -6,8 +6,11 @@ namespace HIMS.API.Models.Administration
     public class PackageDetailsModel
     {
         public long PackageId { get; set; }
+        public bool? IsPackageType { get; set; }
         public long? ServiceId { get; set; }
         public long? PackageServiceId { get; set; }
+        public int? QtyLimit { get; set; }
+       
         public decimal? Price { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
