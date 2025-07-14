@@ -8,6 +8,8 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
 using Asp.Versioning;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Services.Inventory;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -19,21 +21,23 @@ namespace HIMS.API.Controllers.Masters.Billing
     {
         private readonly IGenericService<CompanyMaster> _repository;
         private readonly IGenericService<ServiceWiseCompanyCode> _temprepository;
-        public CompanyMasterController(IGenericService<CompanyMaster> repository , IGenericService<ServiceWiseCompanyCode> repository1)
+        private readonly ICompanyMasterService _CompanyMasterService;
+
+        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1 , IGenericService<ServiceWiseCompanyCode> repository2)
         {
-            _repository = repository;
-            _temprepository = repository1;
+            _CompanyMasterService = repository;
+            _repository = repository1;
+            _temprepository = repository2;
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        [HttpPost("CompanyMasterList")]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
-            IPagedList<CompanyMaster> CompanyMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(CompanyMasterList.ToGridResponse(objGrid, "Company List"));
+            IPagedList<CompanyMasterListDto> CompanyMasterList = await _CompanyMasterService.GetListAsync(objGrid);
+            return Ok(CompanyMasterList.ToGridResponse(objGrid, "CompanyMasterList"));
         }
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)

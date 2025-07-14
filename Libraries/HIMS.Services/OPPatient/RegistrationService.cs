@@ -60,7 +60,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy" ,"CreatedBy", "CreatedDate", "ModifiedBy","ModifiedDate" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {

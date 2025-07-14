@@ -11,7 +11,7 @@ namespace HIMS.Services.OTManagment
 {
     public partial interface IEmergencyService
     {
-        Task<IPagedList<EmergencyListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<EmergencyListDto>> GetListAsyn(GridRequestModel objGrid);
         Task InsertAsyncSP(TEmergencyAdm objTEmergencyAdm, int UserId, string Username);
         Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
         Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);

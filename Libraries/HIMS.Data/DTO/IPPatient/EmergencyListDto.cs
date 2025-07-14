@@ -9,7 +9,7 @@ namespace HIMS.Data.DTO.IPPatient
     public  class EmergencyListDto
     {
         public long EmgId { get; set; }
-        public long? RegId { get; set; }
+        public long RegId { get; set; }
         public DateTime? EmgDate { get; set; }
         public DateTime? EmgTime { get; set; }
         public string? SeqNo { get; set; }
@@ -20,8 +20,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MobileNo { get; set; }
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+        public string AddedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }

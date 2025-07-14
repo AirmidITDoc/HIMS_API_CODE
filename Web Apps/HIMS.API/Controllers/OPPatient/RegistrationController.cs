@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationInsert")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
-                model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
+                //model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
