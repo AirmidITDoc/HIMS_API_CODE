@@ -34,6 +34,12 @@ namespace HIMS.Data.Models
         public long? PrintOrder { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDocEditable { get; set; }
+        public bool? IsServiceTaxApplicable { get; set; }
+        public int? IsApplicableFor { get; set; }
+        public long? PackageTotalDays { get; set; }
+        public long? PackageIcudays { get; set; }
+        public decimal? PackageMedicineAmount { get; set; }
+        public decimal? PackageConsumableAmount { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
