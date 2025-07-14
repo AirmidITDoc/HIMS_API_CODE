@@ -20,8 +20,6 @@ namespace HIMS.Data.Models
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public string? RegNo { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
@@ -42,5 +40,27 @@ namespace HIMS.Data.Models
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
         public string? Photo { get; set; }
+        public string? EmgContactPersonName { get; set; }
+        public long? EmgRelationshipId { get; set; }
+        public string? EmgMobileNo { get; set; }
+        public string? EmgLandlineNo { get; set; }
+        public string? EngAddress { get; set; }
+        public string? EmgAadharCardNo { get; set; }
+        public string? EmgDrivingLicenceNo { get; set; }
+        public string? MedTourismPassportNo { get; set; }
+        public DateTime? MedTourismVisaIssueDate { get; set; }
+        public DateTime? MedTourismVisaValidityDate { get; set; }
+        public string? MedTourismNationalityId { get; set; }
+        public long? MedTourismCitizenship { get; set; }
+        public string? MedTourismPortOfEntry { get; set; }
+        public DateTime? MedTourismDateOfEntry { get; set; }
+        public string? MedTourismResidentialAddress { get; set; }
+        public string? MedTourismOfficeWorkAddress { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }
