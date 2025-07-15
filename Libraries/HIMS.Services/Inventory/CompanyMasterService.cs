@@ -27,6 +27,25 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<CompanyMasterListDto>(model, "PS_Rtrv_CompanyMasterList");
         }
+
+        public virtual async Task InsertAsyncsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
+        {
+            DatabaseHelper odal = new();
+
+            foreach (var item in ObjServiceWiseCompanyCode)
+            {
+                string[] AEntity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "ServiceDetCompId" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in AEntity)
+                {
+                    Pentity.Remove(rProperty);
+                }
+                Pentity["userId"] = userId;
+                odal.ExecuteNonQuery("ps_insert_update_ServiceWiseCompany", CommandType.StoredProcedure, Pentity);
+
+            }
+        }
+
         public virtual async Task UpdateAsync(ServiceDetail objServiceDetail, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

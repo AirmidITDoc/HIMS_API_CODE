@@ -124,23 +124,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        //Edit API
-        [HttpPut("ServiceWiseCompanyUpdate")]
-      //  [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ServiceWiseCompanyModel obj)
-        {
-            ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
-         //   model.IsActive = true;
-            if (obj.ServiceDetCompId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _temprepository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        }
+  
         ////Edit API
         //[HttpPut("updatecompanywiseservicerate")]
         ////[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
