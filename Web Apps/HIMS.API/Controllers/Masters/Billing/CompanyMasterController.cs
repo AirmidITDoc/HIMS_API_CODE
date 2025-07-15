@@ -15,6 +15,7 @@ using HIMS.API.Models.Administration;
 using HIMS.Services.Common;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using System.Transactions;
+using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -25,18 +26,24 @@ namespace HIMS.API.Controllers.Masters.Billing
     public class CompanyMasterController : BaseController
     {
         private readonly IGenericService<CompanyMaster> _repository;
+        private readonly IGenericService<MCompanyWiseServiceDiscount> _repository1;
+
         private readonly IGenericService<ServiceWiseCompanyCode> _temprepository;
         private readonly ICompanyMasterService _CompanyMasterService;
 
-        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1 , IGenericService<ServiceWiseCompanyCode> repository2)
+        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1, IGenericService<MCompanyWiseServiceDiscount> repository2,IGenericService<ServiceWiseCompanyCode> repository3)
         {
             _CompanyMasterService = repository;
             _repository = repository1;
-            _temprepository = repository2;
+            _repository1 = repository2;
+            _temprepository = repository3;
+
+
+
         }
 
         [HttpPost("CompanyMasterList")]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
             IPagedList<CompanyMasterListDto> CompanyMasterList = await _CompanyMasterService.GetListAsync(objGrid);
@@ -108,7 +115,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("ServiceWiseCompanySave")]
-        //  [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Insert(ServiceWiseModel obj)
         {
             List<ServiceWiseCompanyCode> model = obj.ServiceWise.MapTo<List<ServiceWiseCompanyCode>>();
@@ -150,7 +157,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             foreach (var obj in objs)
             {
-                if (obj.ServiceDetailId == 0);
+                if (obj.ServiceId == 0);
 
                 ServiceDetail model = obj.MapTo<ServiceDetail>();
 
@@ -159,6 +166,40 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
+
+        [HttpPost("CompanyWiseServiceDiscount")]
+
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> postc(CompanyWiseServiceDiscountModel obj)
+        {
+            MCompanyWiseServiceDiscount model = obj.MapTo<MCompanyWiseServiceDiscount>();
+            //model.IsActive = true;
+            if (obj.CompServiceDetailId == 0)
+            {
+                await _repository1.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        ////Edit API
+        //[HttpPut("CompanyWiseServiceDiscount")]
+        ////[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> POST(CompanyWiseServiceDiscountModel obj)
+        //{
+        //    MCompanyWiseServiceDiscount model = obj.MapTo<MCompanyWiseServiceDiscount>();
+        //    //model.IsActive = true;
+        //    if (obj.CompServiceDetailId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+
+        //        await _repository1.Update(model, CurrentUserId, CurrentUserName);
+
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        //}
+
 
     }
 }
