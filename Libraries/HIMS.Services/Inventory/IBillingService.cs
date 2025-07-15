@@ -26,5 +26,6 @@ namespace HIMS.Services.Inventory
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
         Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username);
         Task<BillingServiceNewDto> GetServiceListNew(int TariffId);
+        Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data);
     }
 }

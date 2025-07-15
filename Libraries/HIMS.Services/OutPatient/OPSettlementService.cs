@@ -1,19 +1,10 @@
-﻿using Aspose.Cells.Drawing;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.OutPatient
 {

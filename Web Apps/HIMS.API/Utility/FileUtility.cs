@@ -1,15 +1,5 @@
-﻿using Aspose.Cells;
-using HIMS.Services.Users;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using HIMS.Services.Users;
 using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace HIMS.API.Utility
 {

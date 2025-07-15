@@ -1,26 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aspose.Cells.Drawing;
-using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
-using System.Transactions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using HIMS.Services.OutPatient;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
-using static LinqToDB.Common.Configuration;
-using HIMS.Data.DTO.Administration;
 
 namespace HIMS.Services.IPPatient
 {

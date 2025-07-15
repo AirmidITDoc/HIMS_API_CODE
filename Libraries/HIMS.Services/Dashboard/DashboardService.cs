@@ -1,19 +1,8 @@
-﻿using Aspose.Cells;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Data;
 using HIMS.Data.DTO;
-using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.Common;
 using LinqToDB;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Dashboard
 {

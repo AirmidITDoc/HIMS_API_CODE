@@ -174,7 +174,12 @@ namespace HIMS.API.Controllers.Masters.Billing
             var resultList = await _BillingService.GetServiceListNew(TariffId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
-
+        [HttpPost("save-services-new")]
+        public async Task<ApiResponse> SaveServices(BillingServiceNewDto Data)
+        {
+            await _BillingService.SaveServicesNew(Data.TariffId, Data.Data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service list updated successfully.");
+        }
 
 
     }

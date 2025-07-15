@@ -1,15 +1,8 @@
-﻿using Aspose.Cells.Drawing;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.OPPatient
@@ -50,27 +43,31 @@ namespace HIMS.Services.OPPatient
 
 
                         // Bill Details Code
-                        BillDetail objBillDet = new BillDetail();
-                        objBillDet.BillNo = objBill.BillNo;
-                        objBillDet.ChargesId = objItem1?.ChargesId;
+                        BillDetail objBillDet = new()
+                        {
+                            BillNo = objBill.BillNo,
+                            ChargesId = objItem1?.ChargesId
+                        };
                         _context.BillDetails.Add(objBillDet);
                         await _context.SaveChangesAsync();
 
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
                         {
-                            TPathologyReportHeader objPatho = new TPathologyReportHeader();
-                            objPatho.PathDate = objItem1.ChargesDate;
-                            objPatho.PathTime = objItem1?.ChargesDate;
-                            objPatho.OpdIpdType = objItem1?.OpdIpdType;
-                            objPatho.OpdIpdId = objItem1?.OpdIpdId;
-                            objPatho.PathTestId = objItem1?.ServiceId;
-                            objPatho.AddedBy = objItem1?.AddedBy;
-                            objPatho.ChargeId = objItem1?.ChargesId;
-                            objPatho.IsCompleted = false;
-                            objPatho.IsPrinted = false;
-                            objPatho.IsSampleCollection = false;
-                            objPatho.TestType = false;
+                            TPathologyReportHeader objPatho = new()
+                            {
+                                PathDate = objItem1.ChargesDate,
+                                PathTime = objItem1?.ChargesDate,
+                                OpdIpdType = objItem1?.OpdIpdType,
+                                OpdIpdId = objItem1?.OpdIpdId,
+                                PathTestId = objItem1?.ServiceId,
+                                AddedBy = objItem1?.AddedBy,
+                                ChargeId = objItem1?.ChargesId,
+                                IsCompleted = false,
+                                IsPrinted = false,
+                                IsSampleCollection = false,
+                                TestType = false
+                            };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
                             await _context.SaveChangesAsync();
@@ -78,18 +75,20 @@ namespace HIMS.Services.OPPatient
                         // Radiology Code
                         if (objItem1?.IsRadiology == 1)
                         {
-                            TRadiologyReportHeader objRadio = new TRadiologyReportHeader();
-                            objRadio.RadDate = objItem1.ChargesDate;
-                            objRadio.RadTime = objItem1?.ChargesDate;
-                            objRadio.OpdIpdType = objItem1?.OpdIpdType;
-                            objRadio.OpdIpdId = objItem1?.OpdIpdId;
-                            objRadio.RadTestId = objItem1?.ServiceId;
-                            objRadio.AddedBy = objItem1?.AddedBy;
-                            objRadio.ChargeId = objItem1?.ChargesId;
-                            objRadio.IsCompleted = false;
-                            objRadio.IsCancelled = 0;
-                            objRadio.IsPrinted = false;
-                            objRadio.TestType = false;
+                            TRadiologyReportHeader objRadio = new()
+                            {
+                                RadDate = objItem1.ChargesDate,
+                                RadTime = objItem1?.ChargesDate,
+                                OpdIpdType = objItem1?.OpdIpdType,
+                                OpdIpdId = objItem1?.OpdIpdId,
+                                RadTestId = objItem1?.ServiceId,
+                                AddedBy = objItem1?.AddedBy,
+                                ChargeId = objItem1?.ChargesId,
+                                IsCompleted = false,
+                                IsCancelled = 0,
+                                IsPrinted = false,
+                                TestType = false
+                            };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
