@@ -10,6 +10,9 @@ using HIMS.Api.Controllers;
 using Asp.Versioning;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Services.Inventory;
+using HIMS.API.Models.Pharmacy;
+using HIMS.API.Models.Administration;
+using HIMS.Services.Common;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using System.Transactions;
 
@@ -104,20 +107,18 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
-
-
         [HttpPost("ServiceWiseCompanySave")]
-    //    [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(ServiceWiseCompanyModel obj)
+        //  [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Insert(ServiceWiseModel obj)
         {
-            ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
-       //       model.IsActive = true;
-            if (obj.ServiceDetCompId == 0)
+            List<ServiceWiseCompanyCode> model = obj.ServiceWise.MapTo<List<ServiceWiseCompanyCode>>();
+
+            if (model.Count > 0)
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _temprepository.Add(model, CurrentUserId, CurrentUserName);
+
+                await _CompanyMasterService.InsertAsyncsp(model, CurrentUserId, CurrentUserName, obj.userId);
             }
+
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
@@ -174,8 +175,6 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
-
-
 
     }
 }

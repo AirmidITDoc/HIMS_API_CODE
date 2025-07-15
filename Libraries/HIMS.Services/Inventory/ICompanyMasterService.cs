@@ -12,6 +12,7 @@ namespace HIMS.Services.Inventory
     public partial interface ICompanyMasterService
     {
         Task<IPagedList<CompanyMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task InsertAsyncsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId);
         Task UpdateAsync(ServiceDetail objServiceDetail, int UserId, string Username);
 
 
