@@ -28,6 +28,8 @@ namespace HIMS.Data.DTO.OPPatient
         public double? EmgPer { get; set; }
         public long? DoctorId { get; set; }
         public bool? IsDocEditable { get; set; }
+        public bool? IsServiceTaxApplicable { get; set; }
+        public int? IsApplicableFor { get; set; }
         public long? SubGroupid { get; set; }
         public DateTime? EmgStartTime { get; set; }
         public DateTime? EmgEndTime { get; set; }
