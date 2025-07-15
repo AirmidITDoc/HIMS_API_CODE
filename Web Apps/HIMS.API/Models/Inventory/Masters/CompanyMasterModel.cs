@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using FluentValidation;
 
 namespace HIMS.API.Models.Masters
 {
@@ -41,6 +42,17 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
             RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
             RuleFor(x => x.TraiffId).NotNull().NotEmpty().WithMessage("TraiffId is required");
+        }
+        public class updatecompanywiseservicerate
+
+        {
+            public long ServiceDetailId { get; set; }
+            public long? ServiceId { get; set; }
+            public decimal? ClassRate { get; set; }
+            public decimal? DiscountAmount { get; set; }
+            public double? DiscountPercentage { get; set; }
+
+
         }
     }
 }

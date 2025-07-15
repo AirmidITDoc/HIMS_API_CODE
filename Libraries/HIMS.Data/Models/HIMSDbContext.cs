@@ -186,6 +186,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MCityMaster> MCityMasters { get; set; } = null!;
         public virtual DbSet<MClassMaster> MClassMasters { get; set; } = null!;
         public virtual DbSet<MCompanyServiceAssignMaster> MCompanyServiceAssignMasters { get; set; } = null!;
+        public virtual DbSet<MCompanyWiseServiceDiscount> MCompanyWiseServiceDiscounts { get; set; } = null!;
         public virtual DbSet<MComplaintMaster> MComplaintMasters { get; set; } = null!;
         public virtual DbSet<MConcessionReasonMaster> MConcessionReasonMasters { get; set; } = null!;
         public virtual DbSet<MConsentMaster> MConsentMasters { get; set; } = null!;
@@ -6299,6 +6300,15 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MCompanyWiseServiceDiscount>(entity =>
+            {
+                entity.HasKey(e => e.CompServiceDetailId);
+
+                entity.ToTable("M_CompanyWiseServiceDiscount");
+
+                entity.Property(e => e.DiscountAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<MComplaintMaster>(entity =>
             {
                 entity.HasKey(e => e.ComplaintId);
@@ -9577,6 +9587,8 @@ namespace HIMS.Data.Models
                 entity.ToTable("ServiceDetail");
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
+
+                entity.Property(e => e.DiscountAmount).HasColumnType("money");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.ServiceDetails)

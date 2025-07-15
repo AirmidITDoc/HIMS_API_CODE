@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace HIMS.Services.Inventory
     public partial interface ICompanyMasterService
     {
         Task<IPagedList<CompanyMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task UpdateAsync(ServiceDetail objServiceDetail, int UserId, string Username);
+
 
     }
 }

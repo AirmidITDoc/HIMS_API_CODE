@@ -10,6 +10,8 @@ using HIMS.Api.Controllers;
 using Asp.Versioning;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Services.Inventory;
+using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
+using System.Transactions;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -137,6 +139,40 @@ namespace HIMS.API.Controllers.Masters.Billing
                 await _temprepository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        ////Edit API
+        //[HttpPut("updatecompanywiseservicerate")]
+        ////[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Editc(updatecompanywiseservicerate obj)
+        //{
+        //    ServiceDetail model = obj.MapTo<ServiceDetail>();
+        //    if (obj.ServiceDetailId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+
+        //        await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        //}
+
+        [HttpPut("updatecompanywiseservicerate")]
+        // [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
+        {
+            if (objs == null || objs.Count == 0)
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            foreach (var obj in objs)
+            {
+                if (obj.ServiceDetailId == 0);
+
+                ServiceDetail model = obj.MapTo<ServiceDetail>();
+
+                await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
 
 

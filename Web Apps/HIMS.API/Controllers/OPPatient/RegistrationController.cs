@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
-                //model.DateofBirth = Convert.ToDateTime(obj.DateOfBirth);
+                model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
@@ -83,8 +83,8 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> InsertEDMX(RegistrationModel obj)
         {
             
-                if (!string.IsNullOrWhiteSpace(obj.Photo))
-                    obj.Photo = _FileUtility.SaveImageFromBase64(obj.Photo, "Persons\\Photo");
+            if (!string.IsNullOrWhiteSpace(obj.Photo))
+            obj.Photo = _FileUtility.SaveImageFromBase64(obj.Photo, "Persons\\Photo");
             Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {

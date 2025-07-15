@@ -22,6 +22,7 @@ using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using static HIMS.API.Models.Inventory.Masters.ReportConfigModelModelValidator;
+using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 namespace HIMS.API.Infrastructure
 {
@@ -171,9 +172,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Payment, PaymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescription, IPPrescriptionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDraftHeader, SalesDraftHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
+            CreateMap<ServiceDetail, updatecompanywiseservicerate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<AdvanceHeader, UpdateAdvanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel2>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
