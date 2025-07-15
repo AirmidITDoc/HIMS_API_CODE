@@ -4,14 +4,9 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Transactions;
 
 
 namespace HIMS.Services.Inventory
@@ -49,7 +44,8 @@ namespace HIMS.Services.Inventory
         public virtual async Task UpdateAsync(ServiceDetail objServiceDetail, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            var existing = await _context.ServiceDetails.FirstOrDefaultAsync(x => x.ServiceDetailId == objServiceDetail.ServiceDetailId && x.ServiceId == objServiceDetail.ServiceId);
+            var existing = await _context.ServiceDetails.FirstOrDefaultAsync(x => x.ServiceId == objServiceDetail.ServiceId && x.TariffId == objServiceDetail.TariffId && x.ClassId == objServiceDetail.ClassId);
+
 
 
             //  Update only the required fields
@@ -63,8 +59,7 @@ namespace HIMS.Services.Inventory
 
 
 
-
     }
 }
 
-    
+
