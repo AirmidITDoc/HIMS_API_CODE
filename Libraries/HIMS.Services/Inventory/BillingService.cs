@@ -35,7 +35,7 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PackageServiceInfoListDto>(model, "m_Rtrv_PackageServiceInfo");
+            return await DatabaseHelper.GetGridDataBySp<PackageServiceInfoListDto>(model, "ps_Rtrv_PackageServiceInfo");
         }
         public virtual async Task<IPagedList<PackageServiceInfoListDto>> ListAsync(GridRequestModel model)
         {
