@@ -51,6 +51,7 @@ namespace HIMS.Data.DTO.OPPatient
     {
         public List<BillingServiceNew> Data { get; set; }
         public List<BillingServiceColumns> Columns { get; set; }
+        public int TariffId { get; set; }
     }
 
     public class BillingServiceNew

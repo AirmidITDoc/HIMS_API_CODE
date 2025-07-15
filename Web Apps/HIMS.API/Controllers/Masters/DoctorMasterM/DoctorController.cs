@@ -300,8 +300,8 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            if (!string.IsNullOrWhiteSpace(obj.Signature))
-                obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
+            //if (!string.IsNullOrWhiteSpace(obj.Signature))
+            //    obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
 
             DoctorMaster model = obj.MapTo<DoctorMaster>();
 
