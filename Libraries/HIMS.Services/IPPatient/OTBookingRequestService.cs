@@ -1,20 +1,6 @@
-﻿using HIMS.Data.DataProviders;
-using HIMS.Data.Models;
-using HIMS.Data.DataProviders;
-using System.Data;
-using System.Transactions;
-using HIMS.Services.Utilities;
+﻿using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aspose.Cells.Drawing;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.IPPatient;
-using LinqToDB;
+using System.Transactions;
 
 namespace HIMS.Services.IPPatient
 {
