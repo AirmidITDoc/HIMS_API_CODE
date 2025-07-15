@@ -6306,7 +6306,11 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_CompanyWiseServiceDiscount");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DiscountAmount).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MComplaintMaster>(entity =>
