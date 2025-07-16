@@ -206,7 +206,7 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
 
         }
-        public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username)
+        public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount)
         {
             DatabaseHelper odal = new();
 
@@ -226,8 +226,16 @@ namespace HIMS.Services.Inventory
                 {
                     Pentity.Remove(rProperty);
                 }
+                Pentity["PackageTotalDays"] = PackageTotalDays;
+
+                Pentity["PackageIcudays"] = PackageIcudays;
+
+                Pentity["PackageMedicineAmount"] = PackageMedicineAmount;
+                Pentity["PackageConsumableAmount"] = PackageConsumableAmount;
+
                 string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
                 item.PackageId = Convert.ToInt32(VPackageId);
+                
             }
         }
         public virtual async Task<BillingServiceNewDto> GetServiceListNew(int TariffId)

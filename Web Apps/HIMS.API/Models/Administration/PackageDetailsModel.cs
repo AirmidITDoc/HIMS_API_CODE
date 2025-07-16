@@ -14,6 +14,7 @@ namespace HIMS.API.Models.Administration
         public decimal? Price { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
+      
 
     }
     public class PackageDetailsModel1
@@ -32,6 +33,10 @@ namespace HIMS.API.Models.Administration
     {
 
         public List<PackageDetailsModel> packageDetail { get; set; }
+        public long? PackageTotalDays { get; set; }
+        public long? PackageIcudays { get; set; }
+        public decimal? PackageMedicineAmount { get; set; }
+        public decimal? PackageConsumableAmount { get; set; }
 
     }
 

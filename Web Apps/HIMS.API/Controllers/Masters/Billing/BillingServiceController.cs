@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("PackageServiceInfoList")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<PackageServiceInfoListDto> ServiceList = await _BillingService.GetListAsync1(objGrid);
@@ -162,7 +162,8 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             if (model.Count > 0)
             {
-                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+               
+                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName, obj.PackageTotalDays, obj.PackageIcudays, obj.PackageMedicineAmount, obj.PackageConsumableAmount);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
