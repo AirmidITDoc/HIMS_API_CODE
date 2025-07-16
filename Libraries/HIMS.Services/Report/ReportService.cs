@@ -2070,6 +2070,7 @@ namespace HIMS.Services.Report
                 foreach (var group in groups)
                 {
                     table.Append("<tr style='border:1px solid black; color:black; background-color:#e6ffe6; font-weight:bold;'>");
+                     col = 1;  colspan = 1;
                     foreach (var colName in totalColList)
                     {
                         if (colName == "space")
