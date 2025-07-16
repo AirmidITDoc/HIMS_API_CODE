@@ -162,7 +162,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             if (model.Count > 0)
             {
-                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+               
                 await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName, obj.PackageTotalDays, obj.PackageIcudays, obj.PackageMedicineAmount, obj.PackageConsumableAmount);
             }
             else
