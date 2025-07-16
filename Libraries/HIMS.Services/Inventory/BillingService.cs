@@ -271,6 +271,24 @@ namespace HIMS.Services.Inventory
             }
             return objMain;
         }
+        public virtual async Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data)
+        {
+            List<ServiceDetail> lst = new();
+            foreach (var item in Data)
+            {
+                int serviceId = item.ServiceId;
+                foreach (var cls in item.ColumnValues)
+                {
+                    lst.Add(new ServiceDetail() { ServiceId = serviceId, TariffId = TariffId, ClassId = cls.ClassId, ClassRate = cls.ClassValue });
+                }
+            }
+            if (lst.Count > 0)
+            {
+                _context.ServiceDetails.RemoveRange(_context.ServiceDetails.Where(x => x.TariffId == TariffId));
+                await _context.ServiceDetails.AddRangeAsync(lst);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
 

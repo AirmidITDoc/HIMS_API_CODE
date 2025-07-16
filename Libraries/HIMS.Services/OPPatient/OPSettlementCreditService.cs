@@ -1,18 +1,8 @@
 ﻿using HIMS.Data.DataProviders;
-using System.Data;
-using System.Transactions;
 using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aspose.Cells.Drawing;
-using System.ComponentModel.Design;
-using WkHtmlToPdfDotNet;
 using HIMS.Services.OutPatient;
+using HIMS.Services.Utilities;
+using System.Data;
 
 namespace HIMS.Services.OPPatient
 {

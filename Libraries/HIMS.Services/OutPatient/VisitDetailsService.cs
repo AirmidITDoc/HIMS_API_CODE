@@ -1,19 +1,13 @@
-﻿using HIMS.Data.DataProviders;
-using System.Data;
-using System.Transactions;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using Microsoft.EntityFrameworkCore;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.Extensions;
-using System.Dynamic;
 using Microsoft.Data.SqlClient;
-using static LinqToDB.Common.Configuration;
-using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.IPPatient;
-using SkiaSharp;
-using static LinqToDB.SqlQuery.SqlPredicate;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
@@ -137,7 +131,7 @@ namespace HIMS.Services.OutPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "ReligionId", "AreaId", "IsSeniorCitizen", "AddedBy", "RegDate", "RegTime" };
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {

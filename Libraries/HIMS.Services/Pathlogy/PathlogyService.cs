@@ -1,18 +1,10 @@
-﻿using Aspose.Cells.Drawing;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Pathlogy
 {
@@ -90,7 +82,7 @@ namespace HIMS.Services.Pathlogy
             foreach (var item in ObjTempPathReportId)
             {
 
-                string[] rEntity = { };
+                string[] rEntity = Array.Empty<string>();
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {

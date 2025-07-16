@@ -1,18 +1,9 @@
-﻿using Aspose.Cells.Drawing;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Common
@@ -217,18 +208,20 @@ namespace HIMS.Services.Common
                 await _context.SaveChangesAsync();
                 if (objAddCharge.IsPathology == 1)
                 {
-                    TPathologyReportHeader objPatho = new TPathologyReportHeader();
-                    objPatho.PathDate = objAddCharge.ChargesDate;
-                    objPatho.PathTime = objAddCharge?.ChargesDate;
-                    objPatho.OpdIpdType = objAddCharge?.OpdIpdType;
-                    objPatho.OpdIpdId = objAddCharge?.OpdIpdId;
-                    objPatho.PathTestId = objAddCharge?.ServiceId;
-                    objPatho.AddedBy = objAddCharge?.AddedBy;
-                    objPatho.ChargeId = objAddCharge?.ChargesId;
-                    objPatho.IsCompleted = false;
-                    objPatho.IsPrinted = false;
-                    objPatho.IsSampleCollection = false;
-                    objPatho.TestType = false;
+                    TPathologyReportHeader objPatho = new()
+                    {
+                        PathDate = objAddCharge.ChargesDate,
+                        PathTime = objAddCharge?.ChargesDate,
+                        OpdIpdType = objAddCharge?.OpdIpdType,
+                        OpdIpdId = objAddCharge?.OpdIpdId,
+                        PathTestId = objAddCharge?.ServiceId,
+                        AddedBy = objAddCharge?.AddedBy,
+                        ChargeId = objAddCharge?.ChargesId,
+                        IsCompleted = false,
+                        IsPrinted = false,
+                        IsSampleCollection = false,
+                        TestType = false
+                    };
 
                     _context.TPathologyReportHeaders.Add(objPatho);
                     await _context.SaveChangesAsync();
@@ -236,18 +229,20 @@ namespace HIMS.Services.Common
                 // Radiology Code
                 if (objAddCharge?.IsRadiology == 1)
                 {
-                    TRadiologyReportHeader objRadio = new TRadiologyReportHeader();
-                    objRadio.RadDate = objAddCharge.ChargesDate;
-                    objRadio.RadTime = objAddCharge?.ChargesDate;
-                    objRadio.OpdIpdType = objAddCharge?.OpdIpdType;
-                    objRadio.OpdIpdId = objAddCharge?.OpdIpdId;
-                    objRadio.RadTestId = objAddCharge?.ServiceId;
-                    objRadio.AddedBy = objAddCharge?.AddedBy;
-                    objRadio.ChargeId = objAddCharge?.ChargesId;
-                    objRadio.IsCompleted = false;
-                    objRadio.IsCancelled = 0;
-                    objRadio.IsPrinted = false;
-                    objRadio.TestType = false;
+                    TRadiologyReportHeader objRadio = new()
+                    {
+                        RadDate = objAddCharge.ChargesDate,
+                        RadTime = objAddCharge?.ChargesDate,
+                        OpdIpdType = objAddCharge?.OpdIpdType,
+                        OpdIpdId = objAddCharge?.OpdIpdId,
+                        RadTestId = objAddCharge?.ServiceId,
+                        AddedBy = objAddCharge?.AddedBy,
+                        ChargeId = objAddCharge?.ChargesId,
+                        IsCompleted = false,
+                        IsCancelled = 0,
+                        IsPrinted = false,
+                        TestType = false
+                    };
 
                     _context.TRadiologyReportHeaders.Add(objRadio);
                     await _context.SaveChangesAsync();

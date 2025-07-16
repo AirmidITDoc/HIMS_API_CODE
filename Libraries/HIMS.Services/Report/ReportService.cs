@@ -1,28 +1,16 @@
-﻿using Aspose.Cells;
-using Aspose.Cells.Drawing;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
-using Microsoft.Data.SqlClient.Server;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
-using Microsoft.VisualBasic;
 using System.Data;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Text;
-using System.Transactions;
 using WkHtmlToPdfDotNet;
 
 
