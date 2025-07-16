@@ -81,7 +81,7 @@ namespace HIMS.API.Models.OutPatient
         public int? UpdatedBy { get; set; }
         public long? IsCancelledBy { get; set; }
         public bool? IsCancelled { get; set; }
-        public string? IsCancelledDate { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
         public long? ClassId { get; set; }
         public long? DepartmentId { get; set; }
         public long? PatientOldNew { get; set; }
@@ -113,6 +113,7 @@ namespace HIMS.API.Models.OutPatient
     public class AppReistrationUpdateModel
     {
         public long RegId { get; set; }
+
         public DateTime? RegDate { get; set; }
         public string? RegTime { get; set; }
         public long? PrefixId { get; set; }
@@ -127,7 +128,7 @@ namespace HIMS.API.Models.OutPatient
         public long? GenderId { get; set; }
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
-        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
@@ -136,9 +137,9 @@ namespace HIMS.API.Models.OutPatient
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
         public bool? IsCharity { get; set; }
-        public long? ReligionId { get; set; }
-        public long? AreaId { get; set; }
-        public bool? IsSeniorCitizen { get; set; }
+        //public long? ReligionId { get; set; }
+        //public long? AreaId { get; set; }
+        //public bool? IsSeniorCitizen { get; set; }
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
         public string? Photo { get; set; }

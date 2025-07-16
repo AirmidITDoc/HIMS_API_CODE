@@ -131,7 +131,7 @@ namespace HIMS.Services.OutPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy" };
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy", "ReligionId", "AreaId", "IsSeniorCitizen" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {
