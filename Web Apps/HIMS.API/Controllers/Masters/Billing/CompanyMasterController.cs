@@ -132,22 +132,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
   
-        ////Edit API
-        //[HttpPut("updatecompanywiseservicerate")]
-        ////[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Editc(updatecompanywiseservicerate obj)
-        //{
-        //    ServiceDetail model = obj.MapTo<ServiceDetail>();
-        //    if (obj.ServiceDetailId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-
-        //        await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-
+      
         [HttpPut("updatecompanywiseservicerate")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
@@ -167,38 +152,25 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
 
-        [HttpPost("CompanyWiseServiceDiscount")]
+     
 
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> postc(CompanyWiseServiceDiscountModel obj)
+        [HttpPost("CompanyWiseServiceDiscount")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> postc(CompanyWiseServiceModel obj)
         {
-            MCompanyWiseServiceDiscount model = obj.MapTo<MCompanyWiseServiceDiscount>();
-            //model.IsActive = true;
-            if (obj.CompServiceDetailId == 0)
+            List<MCompanyWiseServiceDiscount> model = obj.CompanyWiseService.MapTo<List<MCompanyWiseServiceDiscount>>();
+
+            if (model.Count > 0)
             {
-                await _repository1.Add(model, CurrentUserId, CurrentUserName);
+
+                await _CompanyMasterService.InsertAsyncs(model, CurrentUserId, CurrentUserName, obj.userId);
             }
+
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        //Edit API
-        [HttpPut("CompanyWiseServiceDiscount")]
-
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(CompanyWiseServiceDiscountModel obj)
-        {
-            MCompanyWiseServiceDiscount model = obj.MapTo<MCompanyWiseServiceDiscount>();
-            if (obj.CompServiceDetailId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-
-                await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
-        }
 
     }
 }

@@ -56,7 +56,23 @@ namespace HIMS.Services.Inventory
             await _context.SaveChangesAsync();
             scope.Complete();
         }
+        public virtual async Task InsertAsyncs(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int UserId, string UserName, long? userId)
+        {
+            DatabaseHelper odal = new();
 
+            foreach (var item in objCompanyWiseServiceDiscount)
+            {
+                string[] Entity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "CompServiceDetailId" };
+                var entity = item.ToDictionary();
+                foreach (var rProperty in Entity)
+                {
+                    entity.Remove(rProperty);
+                }
+                entity["userId"] = userId;
+                odal.ExecuteNonQuery("ps_insert_update_CompanyWiseServiceDiscount", CommandType.StoredProcedure, entity);
+
+            }
+        }
 
 
     }
