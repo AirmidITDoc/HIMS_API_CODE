@@ -15,6 +15,10 @@ namespace HIMS.API.Utility
 
         public async Task<Tuple<MemoryStream, string, string>> DownloadFile(string filePath)
         {
+            var DestinationPath = "";
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+            string FilePath = Path.Combine(DestinationPath.Trim('\\'), filePath.Trim('\\'));
             var memoryStream = new MemoryStream();
             using (var stream = new FileStream(filePath, FileMode.Open))
             {

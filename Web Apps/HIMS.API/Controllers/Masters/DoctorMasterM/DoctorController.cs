@@ -207,7 +207,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX([FromForm] DoctorModel obj)
+        public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
                 obj.Signature = _FileUtility.SaveImageFromBase64(obj.Signature, "Doctors\\Signature");
@@ -254,29 +254,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 model.Addedby = CurrentUserId;
                 model.IsActive = true;
                 await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
-                if (model.DoctorId > 0)
-                {
-                    List<FileMaster> Files = new List<FileMaster>();
-                    foreach (var item in obj.MDoctorFiles)
-                    {
-                        if (item.DocName != null)
-                        {
-                            Files.Add(new FileMaster
-                            {
-                                DocName = item.DocName,
-                                DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files"),
-                                CreatedById = CurrentUserId,
-                                Id = 0,
-                                IsDelete = false,
-                                RefId = item.RefId,
-                                RefType = item.RefType,
-                                CreatedDate = DateTime.Now
-                            });
-                        }
-                    }
-                    if (Files.Count > 0)
-                        await _repository7.Add(Files, CurrentUserId, CurrentUserName);
-                }
             }
             else
             {
@@ -292,7 +269,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit([FromForm] DoctorModel obj)
+        public async Task<ApiResponse> Edit(DoctorModel obj)
 
         {
             if (obj.DoctorId <= 0)
@@ -378,37 +355,6 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 z.DocSignId = 0;
             }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            if (model.DoctorId > 0)
-            {
-                List<FileMaster> Files = new List<FileMaster>();
-                foreach (var item in obj.MDoctorFiles.Where(x => !x.IsDelete.Value))
-                {
-                    if (item.DocName != null)
-                    {
-                        Files.Add(new FileMaster
-                        {
-                            DocName = item.DocName,
-                            DocSavedName = await _FileUtility.UploadFileAsync(item.Document, "Doctors\\Files"),
-                            CreatedById = CurrentUserId,
-                            Id = 0,
-                            IsDelete = false,
-                            RefId = item.RefId,
-                            RefType = item.RefType,
-                            CreatedDate = DateTime.Now
-                        });
-                    }
-                }
-                if (Files.Count > 0)
-                    await _repository7.Add(Files, CurrentUserId, CurrentUserName);
-                if (obj.MDoctorFiles.Any(x => x.Id > 0 && x.IsDelete.Value))
-                {
-                    foreach (var item in obj.MDoctorFiles.Where(x => x.Id > 0 && x.IsDelete.Value))
-                    {
-                        _FileUtility.RemoveFile(item.DocSavedName, "Doctors\\Files");
-                    }
-                    await _repository7.HardDeleteBulk(x => x.Id > 0 && x.IsDelete.Value, CurrentUserId, CurrentUserName);
-                }
-            }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
