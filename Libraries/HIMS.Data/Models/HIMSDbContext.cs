@@ -11258,7 +11258,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
-                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
 
                 entity.Property(e => e.EmgDate).HasColumnType("datetime");
 
@@ -11279,6 +11283,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MobileNo)
                     .HasMaxLength(15)
                     .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
             });
