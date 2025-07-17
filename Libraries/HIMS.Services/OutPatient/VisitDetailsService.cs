@@ -109,7 +109,7 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -141,7 +141,9 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp","CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp","CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -325,7 +327,7 @@ namespace HIMS.Services.OutPatient
                 //await _context.SaveChangesAsync();
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId" };
+                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "CheckInTime", "CheckOutTime", "ConStartTime", "CampId", "CrossConsultantDrId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "ConEndTime" };
                 var entity = objPara.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {

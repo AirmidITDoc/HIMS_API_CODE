@@ -27,6 +27,8 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? FollowupDate { get; set; }
         public int? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
+        public long? CampId { get; set; }
+        public long? CrossConsultantDrId { get; set; }
         public long VisitId { get; set; }
 
     }

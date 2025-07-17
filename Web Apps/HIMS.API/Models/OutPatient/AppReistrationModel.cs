@@ -91,6 +91,7 @@ namespace HIMS.API.Models.OutPatient
         public byte? CrossConsulFlag { get; set; }
         public long? PhoneAppId { get; set; }
         public long? CampId { get; set; }
+        public long? CrossConsultantDrId { get; set; }
         public long VisitId { get; set; }
 
     }
@@ -137,9 +138,7 @@ namespace HIMS.API.Models.OutPatient
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
         public bool? IsCharity { get; set; }
-        //public long? ReligionId { get; set; }
-        //public long? AreaId { get; set; }
-        //public bool? IsSeniorCitizen { get; set; }
+       
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
         public string? Photo { get; set; }
