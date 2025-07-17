@@ -24,7 +24,11 @@ namespace HIMS.API.Models.Inventory.Masters
         public OTBokkingRequestModelValidator()
         {
             RuleFor(x => x.OtbookingDate).NotNull().NotEmpty().WithMessage("OtbookingDate is required");
-            RuleFor(x => x.OtbookingTime).NotNull().NotEmpty().WithMessage("OtbookingTime is required");  
+            RuleFor(x => x.OtbookingTime).NotNull().NotEmpty().WithMessage("OtbookingTime is required");
+            RuleFor(x => x.AddedDateTime).NotNull().NotEmpty().WithMessage("AddedDateTime is required");
+            RuleFor(x => x.UpdateDateTime).NotNull().NotEmpty().WithMessage("UpdateDateTime is required");
+            RuleFor(x => x.IsCancelledDateTime).NotNull().NotEmpty().WithMessage("IsCancelledDateTime is required");
+
 
         }
     }
