@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.StaticFiles;
 
 namespace HIMS.API.Controllers.Common
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class FilesController : BaseController
     {
