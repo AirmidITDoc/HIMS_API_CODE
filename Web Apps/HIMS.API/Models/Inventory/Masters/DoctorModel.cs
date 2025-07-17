@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Common;
 
-namespace HIMS.API.Models.Masters
+namespace HIMS.API.Models.Inventory.Masters
 {
     public class DoctorModel
     {

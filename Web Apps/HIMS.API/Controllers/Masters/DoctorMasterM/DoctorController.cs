@@ -2,7 +2,6 @@
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.Data.Models;
@@ -15,6 +14,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.API.Utility;
 using System.Net.Mime;
 using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
+using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {

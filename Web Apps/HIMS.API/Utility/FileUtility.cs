@@ -20,7 +20,7 @@ namespace HIMS.API.Utility
                 DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), filePath.Trim('\\'));
             var memoryStream = new MemoryStream();
-            using (var stream = new FileStream(filePath, FileMode.Open))
+            using (var stream = new FileStream(FilePath, FileMode.Open))
             {
                 await stream.CopyToAsync(memoryStream);
             }
