@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace HIMS.Data.DTO.IPPatient
         public DateTime? EmgDate { get; set; }
         public DateTime? EmgTime { get; set; }
         public string? SeqNo { get; set; }
+        public string? PatientName { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
@@ -32,10 +34,10 @@ namespace HIMS.Data.DTO.IPPatient
         public long? AgeYear { get; set; }
         public string? DoctorName { get; set; }
         public string? DepartmentName { get; set; }
+        public string? CityName { get; set; }
+        public int? CreatedBy { get; set; }
 
-
-
-
-       
     }
+
+
 }

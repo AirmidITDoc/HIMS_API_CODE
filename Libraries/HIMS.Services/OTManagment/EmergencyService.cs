@@ -28,7 +28,7 @@ namespace HIMS.Services.OTManagment
         {
 
             DatabaseHelper odal = new();
-            string[] Entity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate","City"};
+            string[] Entity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -40,7 +40,7 @@ namespace HIMS.Services.OTManagment
         public virtual async Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
-            string[] UEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "City", "AddedBy" };
+            string[] UEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in UEntity)
             {
@@ -51,7 +51,8 @@ namespace HIMS.Services.OTManagment
         public virtual async Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
-            string[] CEntity = { "RegId", "EmgDate", "EmgTime", "SeqNo", "FirstName", "MiddleName", "LastName", "Address", "MobileNo", "DepartmentId", "DoctorId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledDate", "PrefixId", "City", "AgeYear", "GenderId","CityId", "IsCancelledBy" };
+            string[] CEntity = { "RegId", "EmgDate", "EmgTime", "SeqNo", "FirstName", "MiddleName", "LastName", "Address", "MobileNo", "DepartmentId", "DoctorId", "IsCancelled", "IsCancelledDate", "PrefixId", "AgeYear", "GenderId","CityId", "IsCancelledBy",
+                "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","StateId","CountryId","DateofBirth","AgeMonth","AgeDay","Comment"};
             var Entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in CEntity)
             {
@@ -61,4 +62,10 @@ namespace HIMS.Services.OTManagment
         }
     }
 }
+
+
+
+
+
+
 
