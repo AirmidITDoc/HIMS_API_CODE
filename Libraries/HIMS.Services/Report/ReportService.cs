@@ -8709,10 +8709,10 @@ namespace HIMS.Services.Report
         }
       
 
-        public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
-        {
-            throw new NotImplementedException();
-        }
+        //public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 

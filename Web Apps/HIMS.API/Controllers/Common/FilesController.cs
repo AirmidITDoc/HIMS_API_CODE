@@ -29,7 +29,17 @@ namespace HIMS.API.Controllers.Common
         public async Task<ApiResponse> GetFiles(int RefId, PageNames RefType)
         {
             var result = await _FileService.GetAll(x => x.RefId == RefId && x.RefType == (int)RefType);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", result);
+            List<FileModel> bList = result.Select((a, index) => new FileModel()
+            {
+                DocName = a.DocName,
+                DocSavedName = a.DocSavedName,
+                Id = a.Id,
+                IsDelete = false,
+                RefId = a.RefId,
+                RefType = (PageNames)a.RefType,
+                SrNo = index + 1
+            }).ToList();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", bList);
         }
         [HttpGet("get-file")]
         [Permission]
@@ -82,14 +92,16 @@ namespace HIMS.API.Controllers.Common
                 await _FileService.Add(Files, CurrentUserId, CurrentUserName);
             if (MDoctorFiles.Any(x => x.Id > 0 && x.IsDelete.HasValue && x.IsDelete.Value))
             {
+                List<long> Ids = new();
                 foreach (var item in MDoctorFiles.Where(x => x.Id > 0 && x.IsDelete.HasValue && x.IsDelete.Value))
                 {
+                    Ids.Add(item.Id);
                     if (!string.IsNullOrEmpty(item.DocSavedName)) // Ensure DocSavedName is not null or empty
                     {
                         _FileUtility.RemoveFile(item.DocSavedName, item.RefType.ToDescription());
                     }
                 }
-                await _FileService.HardDeleteBulk(x => x.Id > 0 && x.IsDelete.HasValue && x.IsDelete.Value, CurrentUserId, CurrentUserName);
+                await _FileService.HardDeleteBulk(x => Ids.Contains(x.Id), CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", Files);
         }
