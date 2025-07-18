@@ -9,7 +9,7 @@ namespace HIMS.Services.Report
 {
     public partial interface IReportService
     {
-        string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
+        string GetReportSetByProc(ReportRequestModel model);
         string GetNewReportSetByProc(ReportNewRequestModel model);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
