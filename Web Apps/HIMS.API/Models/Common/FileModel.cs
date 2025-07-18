@@ -6,9 +6,10 @@ namespace HIMS.API.Models.Common
     public class FileModel
     {
         public long Id { get; set; }
+        public int SrNo { get; set; }
         public long? RefId { get; set; }
         public PageNames RefType { get; set; }
-        public IFormFile Document { get; set; }
+        public IFormFile? Document { get; set; }
         public string? DocName { get; set; }
         public string? DocSavedName { get; set; }
         public bool? IsDelete { get; set; }
@@ -19,7 +20,7 @@ namespace HIMS.API.Models.Common
     {
         public FileModelValidator()
         {
-            RuleFor(x => x.Document).NotNull().WithMessage("Document is required");
+            RuleFor(x => x.Document).NotNull().WithMessage("Document is required").When(x => x.Id == 0);
             RuleFor(x => x.DocName).NotNull().NotEmpty().WithMessage("DocName is required");
         }
     }
