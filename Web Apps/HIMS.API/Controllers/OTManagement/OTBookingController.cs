@@ -12,6 +12,7 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services;
 using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,14 @@ namespace HIMS.API.Controllers.IPPatient
         {
             _OTBookingRequestService = repository;
         }
+        [HttpPost("OtbookingRequestList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<OTBookingRequestListDto> OTBookinglist = await _OTBookingRequestService.GetListAsync(objGrid);
+            return Ok(OTBookinglist.ToGridResponse(objGrid, "OTBookinglist "));
+        }
+
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(OTBookingRequestModel obj)

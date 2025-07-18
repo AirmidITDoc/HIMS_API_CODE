@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
@@ -11,6 +14,11 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<OTBookingRequestListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OTBookingRequestListDto>(model, "m_rtrv_T_OTBooking_Request_List");
+        }
+
         public virtual async Task InsertAsync(TOtbookingRequest objOTBooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

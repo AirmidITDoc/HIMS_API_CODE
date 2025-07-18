@@ -14,5 +14,8 @@ namespace HIMS.Services.IPPatient
     {
         Task InsertAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
         Task UpdateAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
+        Task<IPagedList<OTBookingRequestListDto>> GetListAsync(GridRequestModel objGrid);
+
+
     }
 }

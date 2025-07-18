@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.OTManagement
             if (obj.EmgId == 0)
             {
                 model.EmgTime = Convert.ToDateTime(obj.EmgTime);
-                model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _EmergencyService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.OTManagement
             else
             {
                 model.EmgDate = DateTime.Now;
-                model.UpdatedBy = CurrentUserId;
+                model.ModifiedBy = CurrentUserId;
                 //model.IsActive = true;
                 await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }

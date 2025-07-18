@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Common;
 
-namespace HIMS.API.Models.Masters
+namespace HIMS.API.Models.Inventory.Masters
 {
     public class DoctorModel
     {
@@ -45,7 +45,6 @@ namespace HIMS.API.Models.Masters
         public List<MDoctorChargesDetailModel> MDoctorChargesDetails { get; set; }
         public List<DoctorLeaveDetailsModel> MDoctorLeaveDetails { get; set; }
         public List<DoctorSignPageDetailModel> MDoctorSignPageDetails { get; set; }
-        public List<FileModel> MDoctorFiles { get; set; } = new List<FileModel>();
     }
     public class DoctorModelValidator : AbstractValidator<DoctorModel>
     {
