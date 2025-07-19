@@ -59,9 +59,8 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
-        public virtual async Task InsertRegAsyncSP(/*Registration objRegistration,*/ Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual async Task InsertRegAsyncSP( Admission objAdmission, int currentUserId, string currentUserName)
         {
-            //throw new NotImplementedException();
 
             DatabaseHelper odal = new();
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag" , "IsCovidUserId", "IsCovidUpdateDate",

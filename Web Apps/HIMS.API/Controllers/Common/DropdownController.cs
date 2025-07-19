@@ -92,6 +92,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MenuMaster> _MenuMaster;
         private readonly IGenericService<MCampMaster> _MCampMaster;
         private readonly IGenericService<MOtSiteDescriptionMaster> _MOtSiteDescriptionMaster;
+        private readonly IGenericService<MOtSurgeryCategoryMaster> _MOtSurgeryCategoryMaster;
+
 
 
 
@@ -125,7 +127,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MCertificateMaster> iMCertificateMaster,
                               IGenericService<MReportConfig> iMReportConfig, IGenericService<MenuMaster> iMenuMaster,
                               IGenericService<MCampMaster> iMCampMaster,
-                              IGenericService<MOtSiteDescriptionMaster> iMOtSiteDescriptionMaster
+                              IGenericService<MOtSiteDescriptionMaster> iMOtSiteDescriptionMaster,
+                              IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster
+
 
 
 
@@ -201,6 +205,8 @@ namespace HIMS.API.Controllers.Common
             _MenuMaster = iMenuMaster;
             _MCampMaster = iMCampMaster;
             _MOtSiteDescriptionMaster = iMOtSiteDescriptionMaster;
+            _MOtSurgeryCategoryMaster = iMOtSurgeryCategoryMaster;
+
 
 
         }
@@ -322,6 +328,7 @@ namespace HIMS.API.Controllers.Common
 
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
                 "SiteDescription" => (await _MOtSiteDescriptionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSiteDescriptionMaster.SiteDescId), nameof(MOtSiteDescriptionMaster.SiteDescriptionName)),
+                "SurgeryCategory" => (await _MOtSurgeryCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryCategoryMaster.SurgeryCategoryId), nameof(MOtSurgeryCategoryMaster.SurgeryCategoryName)),
 
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
