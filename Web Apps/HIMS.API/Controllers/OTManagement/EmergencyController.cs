@@ -61,9 +61,9 @@ namespace HIMS.API.Controllers.OTManagement
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.EmgDate = DateTime.Now;
+                model.EmgDate = Convert.ToDateTime(obj.EmgDate);
+
                 model.ModifiedBy = CurrentUserId;
-                //model.IsActive = true;
                 await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

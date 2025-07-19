@@ -38,15 +38,13 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("InsertPrescription")]
         [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(MPrescriptionModel obj)
+        public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
             if (obj.MedicalRecoredId == 0)
             {
                 model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
-                DateTime now = DateTime.Now;
-                string formattedDate = now.ToString("yyyy-MM-dd");
 
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }

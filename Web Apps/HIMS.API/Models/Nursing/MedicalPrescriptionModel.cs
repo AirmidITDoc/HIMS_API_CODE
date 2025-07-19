@@ -2,26 +2,26 @@
 
 namespace HIMS.API.Models.Nursing
 {
-    public class MPrescriptionModel
+    public class MedicalPrescriptionModel
     {
         public long MedicalRecoredId { get; set; }
         public long? AdmissionId { get; set; }
         public DateTime? RoundVisitDate { get; set; }
         public string? RoundVisitTime { get; set; }
         public bool? InHouseFlag { get; set; }
-        public List<TIpPrescriptionModel> TIpPrescriptions { get; set; }
+        public List<PrescriptionModel> TIpPrescriptions { get; set; }
 
     }
-    public class MPrescriptionModelValidator : AbstractValidator<MPrescriptionModel>
+    public class MedicalPrescriptionModelValidator : AbstractValidator<MedicalPrescriptionModel>
     {
-        public MPrescriptionModelValidator()
+        public MedicalPrescriptionModelValidator()
         {
             RuleFor(x => x.RoundVisitDate).NotNull().NotEmpty().WithMessage("RoundVisitDate Date is required");
             RuleFor(x => x.RoundVisitTime).NotNull().NotEmpty().WithMessage("RoundVisitTime Time is required");
 
         }
     }
-    public class TIpPrescriptionModel
+    public class PrescriptionModel
     {
         public long IppreId { get; set; }
         public long? IpmedId { get; set; }
@@ -42,9 +42,9 @@ namespace HIMS.API.Models.Nursing
         public long? StoreId { get; set; }
         public long? WardId { get; set; }
     }
-    public class TIpPrescriptionModelValidator : AbstractValidator<TIpPrescriptionModel>
+    public class PrescriptionModelModelValidator : AbstractValidator<PrescriptionModel>
     {
-        public TIpPrescriptionModelValidator()
+        public PrescriptionModelModelValidator()
         {
             RuleFor(x => x.Pdate).NotNull().NotEmpty().WithMessage("Pdate Date is required");
             RuleFor(x => x.Ptime).NotNull().NotEmpty().WithMessage("Ptime Time is required");

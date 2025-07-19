@@ -5,6 +5,7 @@ namespace HIMS.API.Models.OTManagement
 {
     public class EmergencyMode
     {
+        public long EmgId { get; set; }
         public long? RegId { get; set; }
         public DateTime? EmgDate { get; set; }
         public string? EmgTime { get; set; }
@@ -15,14 +16,17 @@ namespace HIMS.API.Models.OTManagement
         public string? MobileNo { get; set; }
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
-        public long? prefixId { get; set; }
+        public long? PrefixId { get; set; }
         public long? GenderId { get; set; }
+        public long? StateId { get; set; }
+        public long? CountryId { get; set; }
         public long? CityId { get; set; }
-        public long? AgeYear { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
-        public long EmgId { get; set; }
-
+        public DateTime? DateofBirth { get; set; }
+        public int? AgeYear { get; set; }
+        public int? AgeMonth { get; set; }
+        public int? AgeDay { get; set; }
+        public string? Comment { get; set; }
+       
     }
     public class EmergencyModeValidator : AbstractValidator<EmergencyMode>
     {
@@ -41,19 +45,25 @@ namespace HIMS.API.Models.OTManagement
         public long? RegId { get; set; }
         public DateTime? EmgDate { get; set; }
         public string? EmgTime { get; set; }
-        public long? prefixId { get; set; }
+        public long? PrefixId { get; set; }
         public long? GenderId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public string? Address { get; set; }
         public long? CityId { get; set; }
-        public long? AgeYear { get; set; }
+        public int? AgeYear { get; set; }
+        public int? AgeMonth { get; set; }
+        public int? AgeDay { get; set; }
         public string? MobileNo { get; set; }
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
-        public long? UpdatedBy { get; set; }
-
+        public long? StateId { get; set; }
+        public long? CountryId { get; set; }
+        public DateTime? DateofBirth { get; set; }
+        public string? Comment { get; set; }
+       
+      
 
     }
     public class EmergencyCancel

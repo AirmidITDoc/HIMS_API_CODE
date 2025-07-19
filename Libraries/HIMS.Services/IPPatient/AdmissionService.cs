@@ -30,20 +30,15 @@ namespace HIMS.Services.IPPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "UpdatedBy", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember" };
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
             string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            //objRegistration.RegId = Convert.ToInt32(RegId);
-            //objAdmission.RegId = Convert.ToInt32(RegId);
-
             objRegistration.RegId = Convert.ToInt64(RegId);
             objAdmission.RegId = Convert.ToInt64(RegId);
-
-
 
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
             "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
@@ -64,10 +59,9 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
-        public virtual async Task InsertRegAsyncSP(Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual async Task InsertRegAsyncSP(/*Registration objRegistration,*/ Admission objAdmission, int currentUserId, string currentUserName)
         {
             //throw new NotImplementedException();
-
 
             DatabaseHelper odal = new();
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag" , "IsCovidUserId", "IsCovidUpdateDate",
@@ -75,12 +69,15 @@ namespace HIMS.Services.IPPatient
                 ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
                 "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
             var visitentity = objAdmission.ToDictionary();
+            //objAdmission.RegId = Convert.ToInt64(objRegistration.RegId);
+
             foreach (var rProperty in rVisitEntity)
             {
                 visitentity.Remove(rProperty);
             }
             string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
             objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+
 
             var tokenObj = new
             {
