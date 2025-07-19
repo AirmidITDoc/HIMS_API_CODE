@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Common
                 RefType = (PageNames)a.RefType,
                 SrNo = index + 1
             }).ToList();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", bList);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", bList);
         }
         [HttpGet("get-file")]
         [Permission]
@@ -103,7 +103,7 @@ namespace HIMS.API.Controllers.Common
                 }
                 await _FileService.HardDeleteBulk(x => Ids.Contains(x.Id), CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetConstantList", Files);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
         }
     }
 }
