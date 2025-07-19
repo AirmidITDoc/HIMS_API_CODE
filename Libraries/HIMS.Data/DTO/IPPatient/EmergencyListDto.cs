@@ -34,6 +34,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string? DepartmentName { get; set; }
         public string? CityName { get; set; }
         public long CreatedBy { get; set; }
+        public long? StateId { get; set; }
+        public long? CountryId { get; set; }
+        public DateTime? DateofBirth { get; set; }
+        public string? Comment { get; set; }
+
 
     }
 }
