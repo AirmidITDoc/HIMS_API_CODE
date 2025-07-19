@@ -22,8 +22,6 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MobileNo { get; set; }
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
-        public string AddedBy { get; set; }
-        public string UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
@@ -31,13 +29,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string? City { get; set; }
         public long? GenderID { get; set; }
         public long? CityId { get; set; }
-        public long? AgeYear { get; set; }
+        public string? AgeYear { get; set; }
         public string? DoctorName { get; set; }
         public string? DepartmentName { get; set; }
         public string? CityName { get; set; }
-        public int? CreatedBy { get; set; }
+        public long CreatedBy { get; set; }
 
     }
-
-
 }

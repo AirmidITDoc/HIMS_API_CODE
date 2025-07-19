@@ -22,7 +22,7 @@ namespace HIMS.Services.OTManagment
         }
         public virtual async Task<IPagedList<EmergencyListDto>> GetListAsyn(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<EmergencyListDto>(model, "m_Rtrv_Emergency_list");
+            return await DatabaseHelper.GetGridDataBySp<EmergencyListDto>(model, "ps_Rtrv_Emergency_list");
         }
         public virtual async Task InsertAsyncSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
         {
