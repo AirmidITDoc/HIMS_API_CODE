@@ -452,7 +452,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
-        public virtual DbSet<TOtbooking> TOtbookings { get; set; } = null!;
+        public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtbookingRequest> TOtbookingRequests { get; set; } = null!;
         public virtual DbSet<TOtcathLabBooking> TOtcathLabBookings { get; set; } = null!;
         public virtual DbSet<TPatIcdcdeD> TPatIcdcdeDs { get; set; } = null!;
@@ -13080,17 +13080,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
-            modelBuilder.Entity<TOtbooking>(entity =>
+            modelBuilder.Entity<TOtReservation>(entity =>
             {
-                entity.HasKey(e => e.OtbookingId);
+                entity.HasKey(e => e.OtreservationId);
 
-                entity.ToTable("T_OTBooking");
+                entity.ToTable("T_OT_Reservation");
 
-                entity.Property(e => e.OtbookingId).HasColumnName("OTBookingID");
-
-                entity.Property(e => e.AnesthType)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -13108,19 +13104,21 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("OPDate");
 
-                entity.Property(e => e.Optime)
+                entity.Property(e => e.OpendTime)
                     .HasColumnType("datetime")
-                    .HasColumnName("OPTime");
+                    .HasColumnName("OPEndTime");
+
+                entity.Property(e => e.OpstartTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OPStartTime");
 
                 entity.Property(e => e.OttableId).HasColumnName("OTTableID");
 
                 entity.Property(e => e.OttypeId).HasColumnName("OTTypeID");
 
-                entity.Property(e => e.Surgeryname).HasMaxLength(100);
+                entity.Property(e => e.ReservationDate).HasColumnType("datetime");
 
-                entity.Property(e => e.TranDate).HasColumnType("datetime");
-
-                entity.Property(e => e.TranTime).HasColumnType("datetime");
+                entity.Property(e => e.ReservationTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TOtbookingRequest>(entity =>
@@ -13158,11 +13156,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OtrequestTime)
                     .HasColumnType("datetime")
                     .HasColumnName("OTRequestTime");
-
-                entity.Property(e => e.SurgeryType)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength();
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>
