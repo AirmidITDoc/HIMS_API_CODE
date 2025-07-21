@@ -52,6 +52,8 @@ namespace HIMS.API.Controllers.OTManagement
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+     
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
@@ -62,8 +64,8 @@ namespace HIMS.API.Controllers.OTManagement
             else
             {
                 model.EmgDate = Convert.ToDateTime(obj.EmgDate);
-
                 model.ModifiedBy = CurrentUserId;
+
                 await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

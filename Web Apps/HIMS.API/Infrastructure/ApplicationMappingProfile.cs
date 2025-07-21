@@ -48,7 +48,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<MPathTestFormula, MPathTestFormulaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfiguration, MReportConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TOtbooking, OTBookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservation, OTReservationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbookingRequest, OTBookingRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfig, ReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfigDetail, ReportConfigDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -97,7 +97,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<MTermsOfPaymentMaster, TermsOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDraftHeader, TSalesDraftsHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TOtbooking, OtbookingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtbooking, OTReservationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TEmergencyAdm, EmergencyMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TEmergencyAdm, EmergencyupdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TEmergencyAdm, EmergencyCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

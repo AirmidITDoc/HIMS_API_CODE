@@ -34,6 +34,7 @@ namespace HIMS.Services.OTManagment
             {
                 entity.Remove(rProperty);
             }
+          
             string VEmgId = odal.ExecuteNonQuery("ps_insert_T_EmergencyAdm_1", CommandType.StoredProcedure, "EmgId", entity);
             objTEmergencyAdm.EmgId = Convert.ToInt32(VEmgId);
         }
@@ -52,7 +53,7 @@ namespace HIMS.Services.OTManagment
         {
             DatabaseHelper odal = new();
             string[] CEntity = { "RegId", "EmgDate", "EmgTime", "SeqNo", "FirstName", "MiddleName", "LastName", "Address", "MobileNo", "DepartmentId", "DoctorId", "IsCancelled", "IsCancelledDate", "PrefixId", "AgeYear", "GenderId","CityId", "IsCancelledBy",
-                "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","StateId","CountryId","DateofBirth","AgeMonth","AgeDay","Comment"};
+                "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","StateId","CountryId","DateofBirth","AgeMonth","AgeDay","Comment","Classid","Tariffid"};
             var Entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in CEntity)
             {

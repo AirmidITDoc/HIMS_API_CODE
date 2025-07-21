@@ -452,7 +452,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
-        public virtual DbSet<TOtbooking> TOtbookings { get; set; } = null!;
+        public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtbookingRequest> TOtbookingRequests { get; set; } = null!;
         public virtual DbSet<TOtcathLabBooking> TOtcathLabBookings { get; set; } = null!;
         public virtual DbSet<TPatIcdcdeD> TPatIcdcdeDs { get; set; } = null!;
@@ -530,7 +530,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -11258,6 +11258,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
+                entity.Property(e => e.Classid).HasColumnName("classid");
+
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -11287,6 +11289,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
+
+                entity.Property(e => e.Tariffid).HasColumnName("tariffid");
             });
 
             modelBuilder.Entity<TEndoscopyBooking>(entity =>
@@ -13080,17 +13084,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
-            modelBuilder.Entity<TOtbooking>(entity =>
+            modelBuilder.Entity<TOtReservation>(entity =>
             {
-                entity.HasKey(e => e.OtbookingId);
+                entity.HasKey(e => e.OtreservationId);
 
-                entity.ToTable("T_OTBooking");
+                entity.ToTable("T_OT_Reservation");
 
-                entity.Property(e => e.OtbookingId).HasColumnName("OTBookingID");
-
-                entity.Property(e => e.AnesthType)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -13108,19 +13108,21 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("OPDate");
 
-                entity.Property(e => e.Optime)
+                entity.Property(e => e.OpendTime)
                     .HasColumnType("datetime")
-                    .HasColumnName("OPTime");
+                    .HasColumnName("OPEndTime");
+
+                entity.Property(e => e.OpstartTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OPStartTime");
 
                 entity.Property(e => e.OttableId).HasColumnName("OTTableID");
 
                 entity.Property(e => e.OttypeId).HasColumnName("OTTypeID");
 
-                entity.Property(e => e.Surgeryname).HasMaxLength(100);
+                entity.Property(e => e.ReservationDate).HasColumnType("datetime");
 
-                entity.Property(e => e.TranDate).HasColumnType("datetime");
-
-                entity.Property(e => e.TranTime).HasColumnType("datetime");
+                entity.Property(e => e.ReservationTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TOtbookingRequest>(entity =>
@@ -13158,11 +13160,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OtrequestTime)
                     .HasColumnType("datetime")
                     .HasColumnName("OTRequestTime");
-
-                entity.Property(e => e.SurgeryType)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength();
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>
