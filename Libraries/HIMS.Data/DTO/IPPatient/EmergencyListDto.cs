@@ -38,6 +38,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long? CountryId { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? Comment { get; set; }
+        public int? Classid { get; set; }
+        public int? Tariffid { get; set; }
 
 
     }

@@ -26,7 +26,9 @@ namespace HIMS.API.Models.OTManagement
         public int? AgeMonth { get; set; }
         public int? AgeDay { get; set; }
         public string? Comment { get; set; }
-       
+        public int? Classid { get; set; }
+        public int? Tariffid { get; set; }
+
     }
     public class EmergencyModeValidator : AbstractValidator<EmergencyMode>
     {
@@ -62,8 +64,10 @@ namespace HIMS.API.Models.OTManagement
         public long? CountryId { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? Comment { get; set; }
-       
-      
+        public int? Classid { get; set; }
+        public int? Tariffid { get; set; }
+
+
 
     }
     public class EmergencyCancel

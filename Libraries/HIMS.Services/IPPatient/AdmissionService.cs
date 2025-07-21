@@ -59,10 +59,21 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
-        public virtual async Task InsertRegAsyncSP( Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual async Task InsertRegAsyncSP(Registration ObjRegistration, Admission objAdmission, int currentUserId, string currentUserName)
         {
-
             DatabaseHelper odal = new();
+
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var entity = ObjRegistration.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            ObjRegistration.RegId = Convert.ToInt64(RegId);
+            objAdmission.RegId = Convert.ToInt32(RegId);
+
+
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag" , "IsCovidUserId", "IsCovidUpdateDate",
                 "IsUpdatedBy", "MedicalApreAmt" , "IsPharClearance", "Ipnumber", "EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","IsUpdatedBy"
                 ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
@@ -75,7 +86,7 @@ namespace HIMS.Services.IPPatient
                 visitentity.Remove(rProperty);
             }
             string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
-            objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+            //objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
 
 
             var tokenObj = new

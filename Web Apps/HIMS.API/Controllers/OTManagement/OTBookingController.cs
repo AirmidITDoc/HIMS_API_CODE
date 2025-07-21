@@ -45,6 +45,7 @@ namespace HIMS.API.Controllers.IPPatient
             TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
             if (obj.OtbookingId == 0)
             {
+                model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
                 model.CreatedBy = CurrentUserId;
                 //model.IsActive = true;
@@ -63,7 +64,9 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
+                model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

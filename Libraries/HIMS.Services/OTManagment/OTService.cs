@@ -25,23 +25,23 @@ namespace HIMS.Services.IPPatient
             return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "m_Rtrv_OTBookinglist");
         }
        
-        public virtual async Task InsertAsync(TOtbooking OBJTOtbooking, int UserId, string Username)
+        public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                _context.TOtbookings.Add(OBJTOtbooking);
+                _context.TOtReservations.Add(OBJTOtbooking);
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
 
-        public virtual async Task UpdateAsync(TOtbooking OBJTOtbooking, int UserId, string Username)
+        public virtual async Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header & detail table records
-                _context.TOtbookings.Update(OBJTOtbooking);
+                _context.TOtReservations.Update(OBJTOtbooking);
                 _context.Entry(OBJTOtbooking).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 

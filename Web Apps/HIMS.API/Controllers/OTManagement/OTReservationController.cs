@@ -32,13 +32,14 @@ namespace HIMS.API.Controllers.IPPatient
         
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(OtbookingModel obj)
+        public async Task<ApiResponse> InsertEDMX(OTReservationModel obj)
         {
-            TOtbooking model = obj.MapTo<TOtbooking>();
-            if (obj.OtbookingId == 0)
+            TOtReservation model = obj.MapTo<TOtReservation>();
+            if (obj.OtreservationId == 0)
             {
-                model.TranDate = Convert.ToDateTime(obj.TranDate);
+                model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
                 model.CreatedBy = CurrentUserId;
+
                 //model.IsActive = true;
                 await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -48,14 +49,16 @@ namespace HIMS.API.Controllers.IPPatient
         }
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(OtbookingModel obj)
+        public async Task<ApiResponse> Edit(OTReservationModel obj)
         {
-            TOtbooking model = obj.MapTo<TOtbooking>();
-            if (obj.OtbookingId == 0)
+            TOtReservation model = obj.MapTo<TOtReservation>();
+            if (obj.OtreservationId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.TranTime = Convert.ToDateTime(obj.TranTime);
+                model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
+                model.ModifiedBy = CurrentUserId;
+
                 await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

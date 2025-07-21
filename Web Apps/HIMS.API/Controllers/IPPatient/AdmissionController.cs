@@ -77,9 +77,10 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewAdmission obj)
         {
+            Registration model = obj.AdmissionReg.MapTo<Registration>();
 
             Admission objAdmission = obj.Admission.MapTo<Admission>();
-            await _IAdmissionService.InsertRegAsyncSP(objAdmission, CurrentUserId, CurrentUserName);
+            await _IAdmissionService.InsertRegAsyncSP(model ,objAdmission, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objAdmission.AdmissionId);
         }
         
