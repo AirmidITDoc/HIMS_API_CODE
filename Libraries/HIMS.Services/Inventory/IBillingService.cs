@@ -19,6 +19,8 @@ namespace HIMS.Services.Inventory
         Task UpdateAsync(ServiceMaster objService, int UserId, string Username);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PackageDetListDto>> GetListAsyncD(GridRequestModel objGrid);
+
         Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();

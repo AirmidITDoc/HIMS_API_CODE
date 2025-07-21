@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.RegId == id);
-            return data.ToSingleResponse<Registration, RegistrationModel>("Registration");
+            return data.ToSingleResponse<Registration, RegistrationModel1>("Registration");
         }
 
         [HttpPost("RegistrationInsert")]

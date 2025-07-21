@@ -155,7 +155,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
         //Add API
         [HttpPost("PackageDetailsInsert")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PackageDetModel obj)
         {
             List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
@@ -169,6 +169,15 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
+
+        [HttpPost("PackageDetailList")]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListD(GridRequestModel objGrid)
+        {
+            IPagedList<PackageDetListDto> BillingList = await _BillingService.GetListAsyncD(objGrid);
+            return Ok(BillingList.ToGridResponse(objGrid, "PackageDetail List"));
+        }
+
         [HttpGet("GetServicesNew")]
         public async Task<ApiResponse> GetServices(int TariffId)
         {
