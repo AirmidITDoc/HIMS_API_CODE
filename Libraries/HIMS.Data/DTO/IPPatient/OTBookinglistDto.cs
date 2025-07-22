@@ -9,23 +9,23 @@ namespace HIMS.Data.DTO.IPPatient
 {
     public  class OTBookinglistDto
     {
-        public long OtbookingId { get; set; }
-        public DateTime? TranDate { get; set; }
-        public DateTime? TranTime { get; set; }
+        public long OtreservationId { get; set; }
+        public DateTime? ReservationDate { get; set; }
+        public DateTime? ReservationTime { get; set; }
         public long? OpIpId { get; set; }
         public bool? OpIpType { get; set; }
         public DateTime? Opdate { get; set; }
-        public DateTime? Optime { get; set; }
+        public DateTime? OpstartTime { get; set; }
+        public DateTime? OpendTime { get; set; }
         public int? Duration { get; set; }
         public long? OttableId { get; set; }
         public long? SurgeonId { get; set; }
         public long? SurgeonId1 { get; set; }
         public long? AnestheticsDr { get; set; }
         public long? AnestheticsDr1 { get; set; }
-        public string? Surgeryname { get; set; }
-        public long? ProcedureId { get; set; }
-        public string? AnesthType { get; set; }
         public bool? UnBooking { get; set; }
+        public long? SurgeryId { get; set; }
+        public long? AnesthTypeId { get; set; }
         public string? Instruction { get; set; }
         public long? OttypeId { get; set; }
         public int? CreatedBy { get; set; }

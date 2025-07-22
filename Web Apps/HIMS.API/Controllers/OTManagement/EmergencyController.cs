@@ -4,8 +4,10 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OTManagement;
+using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -24,11 +26,15 @@ namespace HIMS.API.Controllers.OTManagement
     public class EmergencyController : BaseController
     {
         private readonly IEmergencyService _EmergencyService;
-        public EmergencyController(IEmergencyService repository)
+        private readonly IGenericService<TEmergencyAdm> _repository;
+
+        public EmergencyController(IEmergencyService repository, IGenericService<TEmergencyAdm> repository1)
         {
             _EmergencyService = repository;
+            _repository = repository1;
+
         }
-      
+
         [HttpPost("Emergencylist")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -37,9 +43,18 @@ namespace HIMS.API.Controllers.OTManagement
             return Ok(Emergencylist.ToGridResponse(objGrid, "Emergencylist "));
         }
 
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            var data = await _repository.GetById(x => x.EmgId == id);
+            return data.ToSingleResponse<TEmergencyAdm, GetEmergencyModel>("TEmergencyAdm");
+        }
+
+
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(EmergencyMode obj)
+        public async Task<ApiResponse> Insert(EmergencyModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
