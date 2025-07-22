@@ -450,7 +450,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
-                        //html = SetFonts(html, PdfFontPath);
+                        html = SetFonts(html, PdfFontPath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
 
 
