@@ -33,4 +33,3 @@ namespace HIMS.Data.Models
         public DateTime? IsCancelledDateTime { get; set; }
     }
 }
-	//OPDate	Duration	OTTableID	SurgeonId	SurgeonId1	AnestheticsDr	AnestheticsDr1	UnBooking	Instruction	OTTypeID	CreatedBy	CreatedDate	ModifiedDate	ModifiedBy	IsCancelled	IsCancelledBy	IsCancelledDateTime

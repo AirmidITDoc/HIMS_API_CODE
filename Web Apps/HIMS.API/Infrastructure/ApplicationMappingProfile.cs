@@ -22,6 +22,7 @@ using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using static HIMS.API.Models.Inventory.Masters.ReportConfigModelModelValidator;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 namespace HIMS.API.Infrastructure
@@ -52,6 +53,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtbookingRequest, OTBookingRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfig, ReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfigDetail, ReportConfigDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservation, OTReservationCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             CreateMap<DbPrefixMaster, PrefixModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DbGenderMaster, GenderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
