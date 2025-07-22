@@ -240,7 +240,9 @@ namespace HIMS.API.Controllers.Report
                 case "OPPrescription":
                 case "OPPrescriptionwithoutHeader":
                 case "CertificateInformationReport":
-             
+                case "Certificate":
+
+
 
 
 

@@ -9,7 +9,7 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
 
                 {{NewHeader}}
@@ -25,26 +25,26 @@
                 </tr>
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
 
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>IPD No. : </span>
+                                    <span style="font-weight: bold;">IPD No. : </span>
                                     <span>{{RegNo}} </span>
                                 </td>
 
                                 <td style="padding: 2px;">
-                                    <span>PathDate Time: </span>
-                                    <span>{{PathTime}} </span>
+                                    <span style="font-weight: bold;" >PathDate Time: </span>
+                                    <span>{{RadTime}} </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>Patient Name : </span>
+                                    <span style="font-weight: bold;">Patient Name : </span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Age / Gender : </span>
+                                    <span style="font-weight: bold;">Age / Gender : </span>
                                     <span> {{AgeYear}} / {{GenderName}}</span>
                                 </td>
                             </tr>
@@ -52,22 +52,22 @@
                             <tr>
 
                                 <td style="padding: 2px;">
-                                    <span>ConsultantDocName : </span>
-                                    <span>{{ConsultantDocName}}</span>
+                                    <span style="font-weight: bold;" >ConsultantDocName : </span>
+                                    <span>{{ConsultantName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>Room /Bed  : </span>
+                                    <span style="font-weight: bold;" >Room /Bed  : </span>
                                     <span>{{RoomName}} {{BedName}}</span>
                                 </td>
 
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span>ReportTime  : </span>
+                                    <span style="font-weight: bold;" >ReportTime  : </span>
                                     <span>{{ReportTime}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span>RadiologyDocName  : </span>
+                                    <span style="font-weight: bold;" >RadiologyDocName  : </span>
                                     <span>{{RadiologyDocName}}</span>
                                 </td>
                             </tr>

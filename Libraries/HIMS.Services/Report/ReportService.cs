@@ -482,6 +482,24 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: Certificate ::
+                case "Certificate":
+                    {
+
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CertificateInformationPrint1.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Certificate", "CertificateInformation" + vDate, Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
+
                 #region :: OPBillWithPackagePrint ::
                 case "OPBillWithPackagePrint":
                     {
@@ -1363,24 +1381,7 @@ namespace HIMS.Services.Report
                     }
 
                 #endregion
-               #region :: Certificate ::
-                case "Certificate":
-                    {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CertificateInformationPrint.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                        var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Certificate", "Certificate" + vDate, Orientation.Portrait);
-                        break;
- 
-                    }
-
-                    #endregion
-
+              
 
                     
 
@@ -4628,10 +4629,59 @@ namespace HIMS.Services.Report
                     break;
 
 
+                case "Certificate":
+                    {
 
-             
+                        int i = 0;
+                        string previousLabel = "";
+                        String Label = "", Label1 = "", Label2 = "";
+                        double Dcount = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
 
 
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["CertificateText"].ConvertToString()).Append("</td></tr>");
+                        }
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{CertificateId}}", dt.GetColValue("CertificateId"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{CertificateName}}", dt.GetColValue("CertificateName"));
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{RequestId}}", dt.GetColValue("RequestId"));
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{ReqDate}}", dt.GetColValue("ReqDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{CertificateText}}", dt.GetColValue("CertificateText"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{OP_IP_Type}}", dt.GetColValue("OP_IP_Type"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+
+                        return html;
+                    }
+                    break;
 
                 case "OPBillWithPackagePrint":
                     {
@@ -8711,75 +8761,6 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-
-
-
-
-                case "Certificate":
-                    {
-                        int i = 0;
-                        string previousLabel = "";
-                        String Label = "", Label1 = "", Label2 = "";
-                        double Dcount = 0;
-                        var dynamicVariable = new Dictionary<string, double>();
-
-
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            i++;
-
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["CertificateText"].ConvertToString()).Append("</td></tr>");
-                        }
-
-
-                        //html = html.Replace("{{Items}}", items.ToString());
-                        //html = html.Replace("{{CertificateId}}", dt.GetColValue("CertificateId"));
-                        //html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                        //html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                        //html = html.Replace("{{CertificateName}}", dt.GetColValue("CertificateName"));
-
-                        //html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                        //html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                        //html = html.Replace("{{RequestId}}", dt.GetColValue("RequestId"));
-                        //html = html.Replace("{{OPDNo}}", dt.GetColValue("IPDNo"));
-                        //html = html.Replace("{{ReqDate}}", dt.GetColValue("ReqDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
-                        //html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
-
-                        //html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                        //html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                        //html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                        //html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-                        //html = html.Replace("{{CertificateText}}", dt.GetColValue("CertificateText"));
-                        //html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-                        //html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                        //html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        //html = html.Replace("{{OP_IP_Type}}", dt.GetColValue("OP_IP_Type"));
-                        //html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
-                        //html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                        //html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
-
-
-                        return html;
-
-                    }
-                    break;
-
-
-
-
-
-
-                    //end lopp
-
-
-
-
-
 
             }
 
