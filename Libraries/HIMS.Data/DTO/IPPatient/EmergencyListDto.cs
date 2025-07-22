@@ -40,6 +40,10 @@ namespace HIMS.Data.DTO.IPPatient
         public string? Comment { get; set; }
         public int? Classid { get; set; }
         public int? Tariffid { get; set; }
+        public long IsAfter24Hrs { get; set; }
+        public long HoursSinceAdmission { get; set; }
+
+        
 
 
     }

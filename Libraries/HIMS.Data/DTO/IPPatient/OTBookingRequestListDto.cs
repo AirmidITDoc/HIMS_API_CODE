@@ -9,8 +9,8 @@ namespace HIMS.Data.DTO.IPPatient
     public  class OTBookingRequestListDto
     {
         public long OTRequestId { get; set; }
-        public DateTime OTRequestDate { get; set; }
-        public string? OTRequestTime { get; set; }
+        public DateTime? OtbookingDate { get; set; }
+        public DateTime? OtbookingTime { get; set; }
         public byte? OpIpType { get; set; }
         public long VisitId { get; set; }
         public string? OPDNo { get; set; }
