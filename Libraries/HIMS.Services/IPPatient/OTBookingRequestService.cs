@@ -2,7 +2,9 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Transactions;
 
 namespace HIMS.Services.IPPatient
@@ -42,5 +44,19 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task CancelAsync(TOtbookingRequest OBJTOtbookingRequest, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] OEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "SurgeryType", "SiteDescId", "SurgeryId", "SurgeonId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime", "OtrequestDate", "OtrequestTime", "OtrequestId", "DepartmentId","CategoryId", "IsCancelled", "IsCancelledBy" };
+            var TEntity = OBJTOtbookingRequest.ToDictionary();
+            foreach (var rProperty in OEntity)
+            {
+                TEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("m_Cancel_T_OTBooking_Request", CommandType.StoredProcedure, TEntity);
+        }
+
     }
 }

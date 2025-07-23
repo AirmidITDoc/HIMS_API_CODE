@@ -16,6 +16,8 @@ using HIMS.Services;
 using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -73,5 +75,19 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(OTBookingRequestCancel obj)
+        {
+            TOtbookingRequest model = new();
+            if (obj.OtbookingId != 0)
+            {
+                model.OtbookingId = obj.OtbookingId;
+                await _OTBookingRequestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
     }
 }

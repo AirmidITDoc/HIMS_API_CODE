@@ -26,10 +26,11 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? PrefixId { get; set; }
-        public string? City { get; set; }
         public long? GenderID { get; set; }
         public long? CityId { get; set; }
-        public string? AgeYear { get; set; }
+        public int? AgeYear { get; set; }
+        public int? AgeMonth { get; set; }
+        public int? AgeDay { get; set; }
         public string? DoctorName { get; set; }
         public string? DepartmentName { get; set; }
         public string? CityName { get; set; }
@@ -42,8 +43,12 @@ namespace HIMS.Data.DTO.IPPatient
         public int? Tariffid { get; set; }
         public long IsAfter24Hrs { get; set; }
         public long HoursSinceAdmission { get; set; }
+        public string? GenderName { get; set; }
+        public string? TariffName { get; set; }
 
-        
+
+
+
 
 
     }

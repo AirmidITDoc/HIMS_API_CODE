@@ -639,6 +639,8 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("CompDOD");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DischargeDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DischargeTime).HasColumnType("datetime");
@@ -726,6 +728,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MobileNo)
                     .HasMaxLength(20)
                     .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MotherName).HasMaxLength(50);
 
@@ -11258,8 +11262,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(100);
 
-                entity.Property(e => e.Classid).HasColumnName("classid");
-
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -11282,15 +11284,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
 
-                entity.Property(e => e.MobileNo)
-                    .HasMaxLength(15)
-                    .IsFixedLength();
+                entity.Property(e => e.MobileNo).HasMaxLength(10);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
-
-                entity.Property(e => e.Tariffid).HasColumnName("tariffid");
             });
 
             modelBuilder.Entity<TEndoscopyBooking>(entity =>

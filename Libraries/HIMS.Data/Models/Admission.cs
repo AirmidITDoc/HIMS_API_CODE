@@ -80,6 +80,7 @@ namespace HIMS.Data.Models
         public decimal? HNetAmt { get; set; }
         public decimal? HPaidAmt { get; set; }
         public decimal? HBalAmt { get; set; }
+        public long? ConvertId { get; set; }
         public bool? IsOpToIpconv { get; set; }
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
@@ -89,5 +90,9 @@ namespace HIMS.Data.Models
         public long? SubTpacomp { get; set; }
         public int? IsCtoH { get; set; }
         public int? IsInitinatedDischarge { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
