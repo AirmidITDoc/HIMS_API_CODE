@@ -44,8 +44,7 @@ namespace HIMS.API.Models.IPPatient
         public class OTReservationCancel
         {
             public long OtreservationId {  get; set; }
-            public bool? IsCancelled { get; set; }
-            public long? IsCancelledBy { get; set; }
+         
 
         }
 
