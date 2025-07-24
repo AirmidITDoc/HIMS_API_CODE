@@ -54,14 +54,14 @@ namespace HIMS.Services.IPPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime" };
+            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime","IsCancelled", "IsCancelledBy" };
             var CAdvanceEntity = objTOtReservation.ToDictionary();
             foreach (var rProperty in rDetailEntity)
             {
                 CAdvanceEntity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("m_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
+            odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
         }
 
 
