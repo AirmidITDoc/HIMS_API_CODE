@@ -160,37 +160,24 @@ namespace HIMS.Services.Common
                                 {
                                     Packagescharge.Remove(rProperty);
                                 }
+                                Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
+                                Packagescharge["BillNo"] = objBill.BillNo;
                                 var VChargesId = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
 
+                                // //   Package Service add in Bill Details
+                                Dictionary<string, object> OPBillDet2 = new()
+                                {
+                                    ["BillNo"] = objBill.BillNo,
+                                    ["ChargesId"] = VChargesId
+                                };
 
+                                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
                             }
-
-
-
-                            //foreach (var obj in Packagescharge)
-                            //{
-
-
-                            //if (objItem1.ServiceId == obj.PackageId)
-                            //{
-                            //    var PEntity = obj.ToDictionary();
-                            //    PEntity["PackageMainChargeID"] = objItem1.ChargesId;
-                            //    PEntity["BillNo"] = objBill.BillNo;
-                            //    PEntity.Remove("ChargeID");
-                            //    var vPackChargeID = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, PEntity);
-
-                            // //   Package Service add in Bill Details
-                            //    Dictionary<string, object> OPBillDet2 = new()
-                            //    {
-                            //        ["BillNo"] = objBill.BillNo,
-                            //        ["ChargesID"] = vPackChargeID
-                            //    };
-
-                            //    odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure);
-                            //}
-
+                          
                         }
+
+                    
                     }
               
                     

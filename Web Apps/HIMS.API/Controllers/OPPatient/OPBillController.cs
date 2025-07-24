@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillingInsert")]
-     //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -95,11 +95,13 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
+            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
+
             if (obj.BillNo == 0)
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
-                await _IOPCreditBillService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IOPCreditBillService.InsertAsyncSP(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
