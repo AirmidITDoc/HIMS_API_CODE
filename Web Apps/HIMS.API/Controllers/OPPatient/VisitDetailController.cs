@@ -86,6 +86,12 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
+        [HttpGet("DoctorTypeDoctorList")]
+        public async Task<ApiResponse> DoctorTypeDoctorList(int DocTypeId)
+        {
+            var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DocTypeId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
+        }
 
         [HttpPost("AppVisitInsert")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
