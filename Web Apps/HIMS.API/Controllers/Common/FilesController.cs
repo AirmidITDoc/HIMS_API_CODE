@@ -1,4 +1,5 @@
-﻿using HIMS.Api.Controllers;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
@@ -104,6 +105,44 @@ namespace HIMS.API.Controllers.Common
                 await _FileService.HardDeleteBulk(x => Ids.Contains(x.Id), CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
+        }
+
+        [HttpPost("save-signature")]
+        [Permission]
+        public async Task<ApiResponse> SaveSignature([FromForm] FileModel objSignature)
+        {
+            FileMaster obj = new();
+            if (!string.IsNullOrWhiteSpace(objSignature.Base64))
+            {
+                await _FileService.HardDeleteBulk(x => x.RefId == objSignature.RefId && x.RefType == (int)objSignature.RefType, CurrentUserId, CurrentUserName);
+                obj = new()
+                {
+                    DocName = objSignature.DocName,
+                    DocSavedName = _FileUtility.SaveImageFromBase64(objSignature.Base64, objSignature.RefType.ToDescription()),
+                    CreatedById = CurrentUserId,
+                    Id = 0,
+                    IsDelete = false,
+                    RefId = objSignature.RefId,
+                    RefType = (long)objSignature.RefType,
+                    CreatedDate = DateTime.Now
+                };
+                await _FileService.Add(obj, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", obj);
+        }
+        [HttpGet("get-signature")]
+        [Permission]
+        public async Task<ApiResponse> GetSignature(int RefId, PageNames RefType)
+        {
+            var result = (await _FileService.GetAll(x => x.RefId == RefId && x.RefType == (int)RefType)).FirstOrDefault();
+
+            if (result == null || result.RefType == null || string.IsNullOrEmpty(result.DocSavedName))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "");
+            }
+
+            var data = await _FileUtility.GetBase64FromFolder(((PageNames)result.RefType).ToDescription(), result.DocSavedName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", data);
         }
     }
 }
