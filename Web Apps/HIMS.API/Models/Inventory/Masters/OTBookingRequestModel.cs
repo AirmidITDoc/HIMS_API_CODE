@@ -9,18 +9,19 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? OtbookingTime { get; set; }
         public long? OpIpId { get; set; }
         public byte? OpIpType { get; set; }
-        public long? SurgeryType { get; set; }
+        public DateTime? OtrequestDate { get; set; }
+        public string? OtrequestTime { get; set; }
+        public long? OtrequestId { get; set; }
+        public long? SurgeryCategoryId { get; set; }
         public long? DepartmentId { get; set; }
         public long? CategoryId { get; set; }
         public long? SiteDescId { get; set; }
         public long? SurgeryId { get; set; }
         public long? SurgeonId { get; set; }
+        public int? SurgeryTypeId { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
-        public DateTime? OtrequestDate { get; set; }
-        public string? OtrequestTime { get; set; }
-        public long? OtrequestId { get; set; }
         public class OTBokkingRequestModelValidator : AbstractValidator<OTBookingRequestModel>
         {
             public OTBokkingRequestModelValidator()

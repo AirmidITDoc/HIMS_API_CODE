@@ -93,6 +93,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MCampMaster> _MCampMaster;
         private readonly IGenericService<MOtSiteDescriptionMaster> _MOtSiteDescriptionMaster;
         private readonly IGenericService<MOtSurgeryCategoryMaster> _MOtSurgeryCategoryMaster;
+        private readonly IGenericService<MOtSurgeryMaster> _MOtSurgeryMaster;
+
+
 
 
 
@@ -101,8 +104,8 @@ namespace HIMS.API.Controllers.Common
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
-            , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<ClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
-                                  , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
+                                , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<ClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
+                                  ,IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
                                 , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster,
                                  IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
@@ -128,7 +131,10 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MReportConfig> iMReportConfig, IGenericService<MenuMaster> iMenuMaster,
                               IGenericService<MCampMaster> iMCampMaster,
                               IGenericService<MOtSiteDescriptionMaster> iMOtSiteDescriptionMaster,
-                              IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster
+                              IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster,
+                              IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster
+
+
 
 
 
@@ -206,6 +212,8 @@ namespace HIMS.API.Controllers.Common
             _MCampMaster = iMCampMaster;
             _MOtSiteDescriptionMaster = iMOtSiteDescriptionMaster;
             _MOtSurgeryCategoryMaster = iMOtSurgeryCategoryMaster;
+            _MOtSurgeryMaster = iMOtSurgeryMaster;
+
 
 
 
@@ -327,8 +335,13 @@ namespace HIMS.API.Controllers.Common
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
+                //OT MANAGMENT DROPDOWN//
+
                 "SiteDescription" => (await _MOtSiteDescriptionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSiteDescriptionMaster.SiteDescId), nameof(MOtSiteDescriptionMaster.SiteDescriptionName)),
                 "SurgeryCategory" => (await _MOtSurgeryCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryCategoryMaster.SurgeryCategoryId), nameof(MOtSurgeryCategoryMaster.SurgeryCategoryName)),
+                "SurgeryMaster" => (await _MOtSurgeryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryMaster.SurgeryId), nameof(MOtSurgeryMaster.SurgeryName)),
+
+
 
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
