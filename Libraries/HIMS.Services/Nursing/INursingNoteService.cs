@@ -35,7 +35,7 @@ namespace HIMS.Services.Nursing
 
        Task InsertAsync(List<TNursingMedicationChart> ObjTNursingMedicationChart , int currentUserId, string currentUserName);
    
-        Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username);
-        Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
+        //Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username);
+        //Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
     }
 }

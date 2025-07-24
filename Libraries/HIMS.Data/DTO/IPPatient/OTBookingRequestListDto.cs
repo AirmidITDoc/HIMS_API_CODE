@@ -14,16 +14,15 @@ namespace HIMS.Data.DTO.IPPatient
         public byte? OpIpType { get; set; }
         public long VisitId { get; set; }
         public string? OPDNo { get; set; }
-        public string? SurgeryType { get; set; }
         public string? DepartmentName { get; set; }
         public string? SiteDescriptionName { get; set; }
         public string? SurgeryName { get; set; }
-        public long? AddedBy { get; set; }
+        public string? AddedBy { get; set; }
         public string? UserName { get; set; }
         public string? SurgeryCategoryName { get; set; }
         public string? PatientName { get; set; }
-        public bool? DoctorName { get; set; }
-        public long? TariffName { get; set; }
+        public string? DoctorName { get; set; }
+        public string? TariffName { get; set; }
         public string? CompanyName { get; set; }
         public string? RegNo { get; set; }
         public string? AgeYear { get; set; }
