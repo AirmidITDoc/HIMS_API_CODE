@@ -399,6 +399,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDrbill> TDrbills { get; set; } = null!;
         public virtual DbSet<TDrbillDet> TDrbillDets { get; set; } = null!;
         public virtual DbSet<TEmergencyAdm> TEmergencyAdms { get; set; } = null!;
+        public virtual DbSet<TEmergencyMedicalHistory> TEmergencyMedicalHistories { get; set; } = null!;
         public virtual DbSet<TEndoscopyBooking> TEndoscopyBookings { get; set; } = null!;
         public virtual DbSet<TEndoscopyNote> TEndoscopyNotes { get; set; } = null!;
         public virtual DbSet<TExpense> TExpenses { get; set; } = null!;
@@ -7421,8 +7422,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
-
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SurgeryCategoryName).HasMaxLength(50);
@@ -11289,6 +11288,49 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TEmergencyMedicalHistory>(entity =>
+            {
+                entity.HasKey(e => e.EmgHistoryId);
+
+                entity.ToTable("T_EmergencyMedicalHistory");
+
+                entity.Property(e => e.Advice).HasMaxLength(500);
+
+                entity.Property(e => e.Bmi)
+                    .HasMaxLength(20)
+                    .HasColumnName("BMI");
+
+                entity.Property(e => e.Bp)
+                    .HasMaxLength(10)
+                    .HasColumnName("BP");
+
+                entity.Property(e => e.Bsl)
+                    .HasMaxLength(20)
+                    .HasColumnName("BSL");
+
+                entity.Property(e => e.ChiefComplaint).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Diagnosis).HasMaxLength(500);
+
+                entity.Property(e => e.Examination).HasMaxLength(500);
+
+                entity.Property(e => e.Height).HasMaxLength(10);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Pulse).HasMaxLength(10);
+
+                entity.Property(e => e.Pweight)
+                    .HasMaxLength(20)
+                    .HasColumnName("PWeight");
+
+                entity.Property(e => e.SpO2).HasMaxLength(20);
+
+                entity.Property(e => e.Temp).HasMaxLength(10);
             });
 
             modelBuilder.Entity<TEndoscopyBooking>(entity =>
