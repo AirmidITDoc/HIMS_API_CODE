@@ -70,7 +70,7 @@ namespace HIMS.Services.Common
         //    }
         //}
 
-        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment,  List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -104,7 +104,7 @@ namespace HIMS.Services.Common
                             ChargesId = objItem1?.ChargesId
                         };
                         _context.BillDetails.Add(objBillDet);
-                            await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync();
 
                         // Pathology Code
                         if (objItem1.IsPathology == 1)
@@ -148,8 +148,52 @@ namespace HIMS.Services.Common
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
                         }
+                        if (objItem1.IsPackage == 1)
+                        {
+                            foreach (var item in ObjaddCharge)
+                            {
+                                string[] AEntity = {"IsDoctorShareGenerated","ChargesTime","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName",
+                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","IsInterimBillFlag","BillNoNavigation"};
+                                var Packagescharge = item.ToDictionary();
 
+                                foreach (var rProperty in AEntity)
+                                {
+                                    Packagescharge.Remove(rProperty);
+                                }
+                                var VChargesId = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                item.ChargesId = Convert.ToInt32(VChargesId);
+
+
+                            }
+
+
+
+                            //foreach (var obj in Packagescharge)
+                            //{
+
+
+                            //if (objItem1.ServiceId == obj.PackageId)
+                            //{
+                            //    var PEntity = obj.ToDictionary();
+                            //    PEntity["PackageMainChargeID"] = objItem1.ChargesId;
+                            //    PEntity["BillNo"] = objBill.BillNo;
+                            //    PEntity.Remove("ChargeID");
+                            //    var vPackChargeID = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, PEntity);
+
+                            // //   Package Service add in Bill Details
+                            //    Dictionary<string, object> OPBillDet2 = new()
+                            //    {
+                            //        ["BillNo"] = objBill.BillNo,
+                            //        ["ChargesID"] = vPackChargeID
+                            //    };
+
+                            //    odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure);
+                            //}
+
+                        }
                     }
+              
+                    
 
                     string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
                     Payment objPay = new();

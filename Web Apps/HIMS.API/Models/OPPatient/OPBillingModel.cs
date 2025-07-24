@@ -36,6 +36,7 @@ namespace HIMS.API.Models.OPPatient
         public long? CashCounterId { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
+        public List<Packcagechargesmodel?> Packcagecharges { get; set; }
         public OPPaymentModel? Payments { get; set; }
     }
     public class BillModelValidator : AbstractValidator<OPBillIngModel>
@@ -151,18 +152,45 @@ namespace HIMS.API.Models.OPPatient
     }
 
 
+    public class Packcagechargesmodel
+    {
+        public long ChargesId { get; set; }
+        public string? ChargesDate { get; set; }
+        public int? OpdIpdType { get; set; }
+        public long? OpdIpdId { get; set; }
+        public long? ServiceId { get; set; }
+        public float? Price { get; set; }
+        public float? Qty { get; set; }
+        public float? TotalAmt { get; set; }
+        public float? ConcessionPercentage { get; set; }
+        public float? ConcessionAmount { get; set; }
+        public float? NetAmount { get; set; }
+        public long? DoctorId { get; set; }
+        public float? DocPercentage { get; set; }
+        public float? DocAmt { get; set; }
+        public float? HospitalAmt { get; set; }
+        public bool? IsGenerated { get; set; }
+        public int? AddedBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public string? IsCancelledDate { get; set; }
+        public bool? IsPathology { get; set; }
+        public bool? IsRadiology { get; set; }
+        public bool? IsPackage { get; set; }
+        public int? PackageMainChargeID { get; set; }
+        public bool? IsSelfOrCompanyService { get; set; }
+        public long? PackageId { get; set; }
+        public long? BillNo { get; set; }
 
-    //public class OPoctorShareGroupAdmChargeDoc
-    //{
-    //    public int BillNo { get; set; }
-
-    //}
-
-    //public class OPCalDiscAmountBill
-    //{
-    //    public int BillNo { get; set; }
-
-    //}
+    }
+    public class PackcagechargesmodelValidator : AbstractValidator<Packcagechargesmodel>
+    {
+        public PackcagechargesmodelValidator()
+        {
+          //  RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+        }
+    }
 
 
     public class NewOpBill
@@ -171,5 +199,7 @@ namespace HIMS.API.Models.OPPatient
         public ChargesModel ChargesModels { get; set; }
         public BillDetailsModel BillDetailsModels { get; set; }
         public PaymentModell PaymentModells { get; set; }
+        public Packcagechargesmodel ChargessModel { get; set; }
+
     }
 }
