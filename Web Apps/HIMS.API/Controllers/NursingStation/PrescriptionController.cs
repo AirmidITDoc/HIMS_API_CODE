@@ -26,12 +26,10 @@ namespace HIMS.API.Controllers.NursingStation
     [ApiVersion("1")]
     public class PrescriptionController : BaseController
     {
-        private readonly INursingNoteService _INursingNoteService;
-
-
-        public PrescriptionController( INursingNoteService INursingNoteService)
-        {    
-            _INursingNoteService = INursingNoteService;
+        private readonly IPrescriptionService _IPrescriptionService;
+        public PrescriptionController(IPrescriptionService IPrescriptionService)
+        {
+            _IPrescriptionService = IPrescriptionService;
 
         }
 
@@ -46,7 +44,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
 
-                await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -63,7 +61,7 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.PresTime = Convert.ToDateTime(obj.PresTime);
                 model.Addedby = CurrentUserId;
-                await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

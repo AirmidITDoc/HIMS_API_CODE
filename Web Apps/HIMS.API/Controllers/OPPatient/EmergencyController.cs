@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.OTManagement;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -27,11 +28,13 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IEmergencyService _EmergencyService;
         private readonly IGenericService<TEmergencyAdm> _repository;
-
-        public EmergencyController(IEmergencyService repository, IGenericService<TEmergencyAdm> repository1)
+        private readonly IGenericService<TEmergencyMedicalHistory> _repository1;
+        public EmergencyController(IEmergencyService repository, IGenericService<TEmergencyAdm> repository1, IGenericService<TEmergencyMedicalHistory> repository2)
         {
             _EmergencyService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+
 
         }
 
@@ -102,7 +105,40 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
-
+        //Add API
+        [HttpPost("EmergencyMedical")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(EmergencyMedicalHistoryModel obj)
+        {
+            TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
+            //model.IsActive = true;
+            if (obj.EmgHistoryId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedOn = DateTime.Now;
+                await _repository1.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
+        //Edit API
+        [HttpPut("EmergencyMedical/{id:int}")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(EmergencyMedicalHistoryModel obj)
+        {
+            TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
+            //model.IsActive = true;
+            if (obj.EmgHistoryId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedOn = DateTime.Now;
+                await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedOn" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
 
 
 
