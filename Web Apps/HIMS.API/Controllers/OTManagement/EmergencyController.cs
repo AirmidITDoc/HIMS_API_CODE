@@ -59,9 +59,9 @@ namespace HIMS.API.Controllers.OTManagement
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
             {
-                model.EmgDate = Convert.ToDateTime(obj.EmgDate);
+                //model.EmgDate = Convert.ToDateTime(obj.EmgDate);
                 //model.EmgTime = Convert.ToDateTime(obj.EmgTime);
-                model.EmgTime = DateTime.Now;
+                //model.EmgTime = DateTime.Now;
 
                 model.CreatedBy = CurrentUserId;
                 await _EmergencyService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
