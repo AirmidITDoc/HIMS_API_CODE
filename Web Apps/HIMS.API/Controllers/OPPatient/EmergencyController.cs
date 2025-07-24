@@ -16,7 +16,7 @@ using HIMS.Services.IPPatient;
 using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OTManagement
+namespace HIMS.API.Controllers.OPPatient
 {
 
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         [HttpPost("Emergencylist")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsyn(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.EmgId == id);
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.OTManagement
 
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(EmergencyModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
@@ -71,9 +71,9 @@ namespace HIMS.API.Controllers.OTManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-     
+
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.OTManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(EmergencyCancel obj)
         {
             TEmergencyAdm model = new();
