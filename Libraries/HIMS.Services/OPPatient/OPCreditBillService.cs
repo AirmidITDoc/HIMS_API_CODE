@@ -14,7 +14,7 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
             try
             {
@@ -92,6 +92,34 @@ namespace HIMS.Services.OPPatient
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
+                        }
+                        if (objItem1.IsPackage == 1)
+                        {
+                            foreach (var item in ObjaddCharge)
+                            {
+                                string[] AEntity = {"IsDoctorShareGenerated","ChargesTime","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName",
+                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","IsInterimBillFlag","BillNoNavigation"};
+                                var Packagescharge = item.ToDictionary();
+
+                                foreach (var rProperty in AEntity)
+                                {
+                                    Packagescharge.Remove(rProperty);
+                                }
+                                Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
+                                Packagescharge["BillNo"] = objBill.BillNo;
+                                var VChargesId = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                item.ChargesId = Convert.ToInt32(VChargesId);
+
+                                // //   Package Service add in Bill Details
+                                Dictionary<string, object> OPBillDet2 = new()
+                                {
+                                    ["BillNo"] = objBill.BillNo,
+                                    ["ChargesId"] = VChargesId
+                                };
+
+                                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                            }
+
                         }
 
                     }

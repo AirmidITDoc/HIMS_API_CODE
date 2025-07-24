@@ -45,11 +45,6 @@ namespace HIMS.Data.DTO.IPPatient
         public long HoursSinceAdmission { get; set; }
         public string? GenderName { get; set; }
         public string? TariffName { get; set; }
-
-
-
-
-
-
+        public string? ConvertedIntoAdm { get; set; }
     }
 }
