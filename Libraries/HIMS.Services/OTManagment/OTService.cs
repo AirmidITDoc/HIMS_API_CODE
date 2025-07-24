@@ -3,9 +3,11 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,5 +50,20 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task CancelAsync(TOtReservation objTOtReservation, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime","IsCancelled", "IsCancelledBy" };
+            var CAdvanceEntity = objTOtReservation.ToDictionary();
+            foreach (var rProperty in rDetailEntity)
+            {
+                CAdvanceEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
+        }
+
+
     }
 }

@@ -11,6 +11,9 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.Data.Models;
 using HIMS.API.Models.IPPatient;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using HIMS.API.Models.OTManagement;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -62,6 +65,22 @@ namespace HIMS.API.Controllers.IPPatient
                 await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+       
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(OTReservationCancel obj)
+        {
+            TOtReservation model = new();
+            if (obj.OtreservationId != 0)
+            {
+                model.OtreservationId = obj.OtreservationId;
+                await _OTService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
 

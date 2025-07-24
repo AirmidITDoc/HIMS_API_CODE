@@ -100,6 +100,7 @@ namespace HIMS.API.Models.IPPatient
         public string? PolicyNo { get; set; }
         public decimal? AprovAmount { get; set; }
         public DateTime? CompDod { get; set; }
+        public long? ConvertId { get; set; }
         public bool? IsOpToIpconv { get; set; }
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }

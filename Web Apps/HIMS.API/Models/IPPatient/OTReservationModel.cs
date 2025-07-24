@@ -40,8 +40,13 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.IsCancelledDateTime).NotNull().NotEmpty().WithMessage("IsCancelledDateTime is required");
 
 
-
+        }
+        public class OTReservationCancel
+        {
+            public long OtreservationId {  get; set; }
+         
 
         }
+
     }
 }

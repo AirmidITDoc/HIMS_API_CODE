@@ -27,6 +27,8 @@ namespace HIMS.Data.Models
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
         public string? Comment { get; set; }
+        public int? ClassId { get; set; }
+        public int? TariffId { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
@@ -34,7 +36,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? Classid { get; set; }
-        public int? Tariffid { get; set; }
     }
 }

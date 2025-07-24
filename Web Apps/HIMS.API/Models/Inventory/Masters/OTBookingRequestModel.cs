@@ -32,5 +32,11 @@ namespace HIMS.API.Models.Inventory.Masters
 
             }
         }
+        public class OTBookingRequestCancel
+        {
+            public long OtbookingId { get; set; }
+           
+
+        }
     }
 }

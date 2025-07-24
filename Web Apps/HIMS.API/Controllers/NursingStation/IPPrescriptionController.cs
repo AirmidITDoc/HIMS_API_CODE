@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System.Security;
 using System.Text.Json;
 
@@ -36,14 +37,22 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ILabRequestService _ILabRequestService;
         private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly HIMSDbContext _context;
 
-        public IPPrescriptionController(INotificationService notificationService, IPriscriptionReturnService repository1, ILabRequestService repository2, IHubContext<NotificationHub> repository3)
+        public IPPrescriptionController(INotificationService notificationService, IPriscriptionReturnService repository1, ILabRequestService repository2, IHubContext<NotificationHub> repository3, HIMSDbContext HIMSDbContext)
         {
             _INotificationService = notificationService;
             _IPriscriptionReturnService = repository1;
             _ILabRequestService = repository2;
             _hubContext = repository3;
+            _context = HIMSDbContext;
         }
+
+        ////private readonly HIMSDbContext _context;
+        ////public VisitDetailsService(HIMSDbContext HIMSDbContext)
+        ////{
+        ////    _context = HIMSDbContext;
+        ////}
 
         [HttpPost("PrescriptionPatientList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -137,10 +146,21 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ReqTime = Convert.ToDateTime(obj.ReqTime);
                 model.IsAddedBy = CurrentUserId;
                 await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-                // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
-                NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = "This is notification body", NotiTitle = "This is title", UserId = 1 };
-                await _INotificationService.Save(objNotification);
-                await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id }), objNotification.UserId);
+
+                // Get all UserIds for StoreId = 2
+                var userIds = await _context.LoginManagers
+                    .Where(x => x.StoreId == 2 && x.IsActive == true)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+                foreach (var userId in userIds)
+                {
+                    // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
+                    NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = "This is notification body", NotiTitle = "This is title", UserId = userId };
+                    await _INotificationService.Save(objNotification);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id }), objNotification.UserId);
+
+                }
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
