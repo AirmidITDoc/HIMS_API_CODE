@@ -200,7 +200,7 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<PackageDetailsListDto>(model, "m_Retrieve_PackageDetails");
         }
-        public virtual async Task InsertAsync(AddCharge objAddCharge, int UserId, string Username)
+        public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -247,6 +247,28 @@ namespace HIMS.Services.Common
                     _context.TRadiologyReportHeaders.Add(objRadio);
                     await _context.SaveChangesAsync();
                 }
+                if (objAddCharge.IsPackage == 1)
+                {
+                    foreach (var item in objAddCharges)
+                    {
+                        DatabaseHelper odal = new();
+                        string[] AEntity = { "ClassId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ",
+                                                   "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
+                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag"};
+                        var Packagescharge = item.ToDictionary();
+
+                        foreach (var rProperty in AEntity)
+                        {
+                            Packagescharge.Remove(rProperty);
+                        }
+                        Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
+                       odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure,  Packagescharge);
+                    
+                       
+                    }
+
+                }
+
 
                 scope.Complete();
             }

@@ -26,7 +26,7 @@ namespace HIMS.Services.Common
         Task<IPagedList<IPPackageDetailsListDto>> IPPackageDetailsListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageDetailsListDto>> Addpackagelist(GridRequestModel objGrid);
 
-        Task InsertAsync(AddCharge objAddCharge,  int UserId, string Username);
+        Task InsertAsync(AddCharge objAddCharge,List<AddCharge> objAddCharges, int UserId, string Username);
         Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
         Task IPbillAsyncSp(Bill ObjBill, List <BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
         Task IPbillCreditAsyncSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
