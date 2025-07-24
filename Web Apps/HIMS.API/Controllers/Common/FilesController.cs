@@ -142,7 +142,7 @@ namespace HIMS.API.Controllers.Common
             }
 
             var data = await _FileUtility.GetBase64FromFolder(((PageNames)result.RefType).ToDescription(), result.DocSavedName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", data);
         }
     }
 }
