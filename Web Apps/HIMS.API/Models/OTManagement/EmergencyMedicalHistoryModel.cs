@@ -28,8 +28,6 @@ namespace HIMS.API.Models.OTManagement
             RuleFor(x => x.Height).NotNull().NotEmpty().WithMessage("Height  is required");
             RuleFor(x => x.Pweight).NotNull().NotEmpty().WithMessage("Pweight  is required");
             RuleFor(x => x.Bmi).NotNull().NotEmpty().WithMessage("Bmi  is required");
-            RuleFor(x => x.Bsl).NotNull().NotEmpty().WithMessage("Bsl  is required");
-            RuleFor(x => x.SpO2).NotNull().NotEmpty().WithMessage("SpO2  is required");
 
         }
     }

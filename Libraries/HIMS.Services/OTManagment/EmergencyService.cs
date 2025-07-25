@@ -61,6 +61,21 @@ namespace HIMS.Services.OTManagment
             }
             odal.ExecuteNonQuery("PS_Cancel_T_EmergencyAdm_1", CommandType.StoredProcedure, Entity);
         }
+        public virtual async Task Update(AddCharge ObjAddCharge, int UserId, string UserName,long EmgId,long NewAdmissionId)
+        {
+            DatabaseHelper odal = new();
+            string[] UEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "PackageMainChargeId", "ClassId", "RefundAmount", 
+                "CPrice","ChPrice", "CQty", "CTotalAmount", "IsComServ", "IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk","BillNoNavigation","Price" };
+            var Entity = ObjAddCharge.ToDictionary();
+            foreach (var rProperty in UEntity)
+            {
+                Entity.Remove(rProperty);
+
+            }
+            Entity["EmgId"] = EmgId;
+            Entity["NewAdmissionId"] = NewAdmissionId;
+            odal.ExecuteNonQuery("pd_UpdateAddChargesFromEmergency", CommandType.StoredProcedure, Entity);
+        }
     }
 }
 

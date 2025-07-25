@@ -86,6 +86,8 @@ namespace HIMS.Services.IPPatient
                 visitentity.Remove(rProperty);
             }
             string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
+            objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+
 
 
             var tokenObj = new

@@ -111,4 +111,11 @@ namespace HIMS.API.Models.OTManagement
         public int? Tariffid { get; set; }
 
     }
+
+    public class UpdateAddChargesFromEmergency
+    {
+        public long EmgId {  get; set; } 
+        public long NewAdmissionId {  get; set; }
+
+    }
 }

@@ -226,6 +226,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MItemMaster> MItemMasters { get; set; } = null!;
         public virtual DbSet<MItemTypeMaster> MItemTypeMasters { get; set; } = null!;
         public virtual DbSet<MItemWiseSupplierRate> MItemWiseSupplierRates { get; set; } = null!;
+        public virtual DbSet<MLoginAccessConfig> MLoginAccessConfigs { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateIpageWise> MLvwRetrievePathologyResultUpdateIpageWises { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateOpageWise> MLvwRetrievePathologyResultUpdateOpageWises { get; set; } = null!;
         public virtual DbSet<MLvwRtrvPathologyResultIpwithAge> MLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
@@ -287,6 +288,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MSubGroupMaster> MSubGroupMasters { get; set; } = null!;
         public virtual DbSet<MSubTpacompanyMaster> MSubTpacompanyMasters { get; set; } = null!;
         public virtual DbSet<MSupplierMaster> MSupplierMasters { get; set; } = null!;
+        public virtual DbSet<MSystemConfig> MSystemConfigs { get; set; } = null!;
         public virtual DbSet<MTalukaMaster> MTalukaMasters { get; set; } = null!;
         public virtual DbSet<MTaxNatureMaster> MTaxNatureMasters { get; set; } = null!;
         public virtual DbSet<MTemplateMaster> MTemplateMasters { get; set; } = null!;
@@ -424,6 +426,9 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
+        public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
+        public virtual DbSet<TLoginStoreDetail> TLoginStoreDetails { get; set; } = null!;
+        public virtual DbSet<TLoginUnitDetail> TLoginUnitDetails { get; set; } = null!;
         public virtual DbSet<TMailOutGoing1> TMailOutGoings1 { get; set; } = null!;
         public virtual DbSet<TMailOutgoing> TMailOutgoings { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; } = null!;
@@ -6941,6 +6946,15 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SupplierRate).HasColumnType("money");
             });
 
+            modelBuilder.Entity<MLoginAccessConfig>(entity =>
+            {
+                entity.HasKey(e => e.LoginConfigId);
+
+                entity.ToTable("M_LoginAccessConfig");
+
+                entity.Property(e => e.AccessValueId).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<MLvwRetrievePathologyResultUpdateIpageWise>(entity =>
             {
                 entity.HasNoKey();
@@ -8300,6 +8314,17 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SupplierName).HasMaxLength(100);
 
                 entity.Property(e => e.SupplierTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MSystemConfig>(entity =>
+            {
+                entity.HasKey(e => e.SystemConfigId);
+
+                entity.ToTable("M_SystemConfig");
+
+                entity.Property(e => e.SystemInputValue).HasMaxLength(50);
+
+                entity.Property(e => e.SystemName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MTalukaMaster>(entity =>
@@ -12221,6 +12246,56 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionType).HasMaxLength(50);
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TLoginAccessDetail>(entity =>
+            {
+                entity.HasKey(e => e.LoginAccessId);
+
+                entity.ToTable("T_LoginAccessDetails");
+
+                entity.Property(e => e.AccessInputValue).HasMaxLength(10);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Login)
+                    .WithMany(p => p.TLoginAccessDetails)
+                    .HasForeignKey(d => d.LoginId)
+                    .HasConstraintName("FK_T_LoginAccessDetails_LoginManager");
+            });
+
+            modelBuilder.Entity<TLoginStoreDetail>(entity =>
+            {
+                entity.HasKey(e => e.LoginStoreDetId);
+
+                entity.ToTable("T_LoginStoreDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Login)
+                    .WithMany(p => p.TLoginStoreDetails)
+                    .HasForeignKey(d => d.LoginId)
+                    .HasConstraintName("FK_T_LoginStoreDetails_LoginManager");
+            });
+
+            modelBuilder.Entity<TLoginUnitDetail>(entity =>
+            {
+                entity.HasKey(e => e.LoginUnitDetId);
+
+                entity.ToTable("T_LoginUnitDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Login)
+                    .WithMany(p => p.TLoginUnitDetails)
+                    .HasForeignKey(d => d.LoginId)
+                    .HasConstraintName("FK_T_LoginUnitDetails_LoginManager");
             });
 
             modelBuilder.Entity<TMailOutGoing1>(entity =>

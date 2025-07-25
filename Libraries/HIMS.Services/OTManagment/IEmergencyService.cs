@@ -15,9 +15,7 @@ namespace HIMS.Services.OTManagment
         Task InsertAsyncSP(TEmergencyAdm objTEmergencyAdm, int UserId, string Username);
         Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
         Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
-
-
-
+        Task Update(AddCharge ObjAddCharge, int UserId, string UserName, long EmgId, long NewAdmissionId);
 
     }
 }

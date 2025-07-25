@@ -35,7 +35,6 @@ namespace HIMS.API.Controllers.OPPatient
             _repository = repository1;
             _repository1 = repository2;
 
-
         }
 
         [HttpPost("Emergencylist")]
@@ -45,6 +44,14 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsyn(objGrid);
             return Ok(Emergencylist.ToGridResponse(objGrid, "Emergencylist "));
         }
+        //List API
+        [HttpPost("EmergencyMedicalHistoryList")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListH(GridRequestModel objGrid)
+        {
+            IPagedList<TEmergencyMedicalHistory> EmergencyMedicalHistoryList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(EmergencyMedicalHistoryList.ToGridResponse(objGrid, "EmergencyMedicalHistoryList "));
+        }
 
         [HttpGet("{id?}")]
         //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
@@ -53,7 +60,7 @@ namespace HIMS.API.Controllers.OPPatient
             var data = await _repository.GetById(x => x.EmgId == id);
             return data.ToSingleResponse<TEmergencyAdm, GetEmergencyModel>("TEmergencyAdm");
         }
-
+       
 
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
@@ -140,8 +147,21 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
+        [HttpPut("UpdateAddChargesFromEmergency")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> POST(UpdateAddChargesFromEmergency obj)
+        {
+            AddCharge model = obj.MapTo<AddCharge>();
+            if (obj.EmgId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ChargesDate = DateTime.Now;
 
-
+                await _EmergencyService.Update(model, CurrentUserId, CurrentUserName,obj.EmgId,obj.NewAdmissionId);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
 
     }
 }

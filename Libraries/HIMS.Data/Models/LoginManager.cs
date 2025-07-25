@@ -5,6 +5,13 @@ namespace HIMS.Data.Models
 {
     public partial class LoginManager
     {
+        public LoginManager()
+        {
+            TLoginAccessDetails = new HashSet<TLoginAccessDetail>();
+            TLoginStoreDetails = new HashSet<TLoginStoreDetail>();
+            TLoginUnitDetails = new HashSet<TLoginUnitDetail>();
+        }
+
         public long UserId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -45,5 +52,9 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<TLoginAccessDetail> TLoginAccessDetails { get; set; }
+        public virtual ICollection<TLoginStoreDetail> TLoginStoreDetails { get; set; }
+        public virtual ICollection<TLoginUnitDetail> TLoginUnitDetails { get; set; }
     }
 }
