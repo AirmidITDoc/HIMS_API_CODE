@@ -11,7 +11,7 @@ namespace HIMS.Data.DTO.IPPatient
 
         public long? ChargesId { get; set; }
         public string? PacakgeServiceName { get; set; }
-        public long? ServiceId { get; set; }
+        public long ServiceId { get; set; }
         public string? ServiceName { get; set; }
         public long? PackageServiceId { get; set; }
         public double? Price { get; set; }

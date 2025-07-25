@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<PathRadRequestListDto> RequestList = await _IPBillService.PathRadRequestListAsync(objGrid);
             return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
         }
-        [HttpPost("PackageDetailsList")]
+        [HttpPost("IpPackageDetailsList")]
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> IPPackageDetailsListAsync(GridRequestModel objGrid)
         {
@@ -117,11 +117,13 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
+            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
+
             if (obj.ChargesId == 0)
             {
 
                 model.AddedBy = CurrentUserId;
-                await _IPBillService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IPBillService.InsertAsync(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
