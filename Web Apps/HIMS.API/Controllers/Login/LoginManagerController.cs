@@ -36,15 +36,32 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("Insert")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
             if (obj.UserId == 0)
             {
+                foreach (var q in model.TLoginAccessDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var v in model.TLoginUnitDetails)
+                {
+                    v.CreatedBy = CurrentUserId;
+                    v.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var p in model.TLoginStoreDetails)
+                {
+                    p.CreatedBy = CurrentUserId;
+                    p.CreatedDate = DateTime.Now;
+                }
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-                //model.IsActive = true;
+                model.IsActive = true;
                 await _ILoginService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -52,22 +69,61 @@ namespace HIMS.API.Controllers.Login
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User added successfully.");
         }
 
+       
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
-            LoginManager model = obj.MapTo<LoginManager>();
-            //model.IsActive = true;
-            if (obj.UserId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
+            if (obj.UserId <= 0)
             {
-                model.AddedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
+
+            LoginManager model = obj.MapTo<LoginManager>();
+            model.IsActive = true;
+
+            foreach (var q in model.TLoginAccessDetails)
+            {
+                if (q.LoginId == 0)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+                }
+                q.ModifiedBy = CurrentUserId;
+                q.ModifiedDate = DateTime.Now;
+                q.LoginId = 0;
+            }
+
+            foreach (var v in model.TLoginUnitDetails)
+            {
+                if (v.LoginId == 0)
+                {
+                    v.CreatedBy = CurrentUserId;
+                    v.CreatedDate = DateTime.Now;
+                }
+                v.ModifiedBy = CurrentUserId;
+                v.ModifiedDate = DateTime.Now;
+                v.LoginId = 0;
+            }
+
+            foreach (var p in model.TLoginStoreDetails)
+            {
+                if (p.LoginId == 0)
+                {
+                    p.CreatedBy = CurrentUserId;
+                    p.CreatedDate = DateTime.Now;
+                }
+                p.ModifiedBy = CurrentUserId;
+                p.ModifiedDate = DateTime.Now;
+                p.LoginId = 0;
+            }
+
+            model.ModifiedBy = CurrentUserId;
+            await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User updated successfully.");
         }
+
 
         [HttpPost("LoginCanceled")]
         [Permission(PageCode = "Login", Permission = PagePermission.Delete)]

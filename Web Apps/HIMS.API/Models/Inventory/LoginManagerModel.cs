@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -40,6 +42,10 @@ namespace HIMS.API.Models.Inventory
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public bool? IsActive { get; set; }
+        public List<LoginAccessDetailModel> TLoginAccessDetails { get; set; }
+        public List<LoginUnitDetailModel> TLoginUnitDetails { get; set; }
+        public List<LoginStoreDetailModel> TLoginStoreDetails { get; set; }
+
     }
     public class LoginManagerModelValidator : AbstractValidator<LoginManagerModel>
     {
@@ -61,6 +67,31 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.LoginStatus).NotNull().NotEmpty().WithMessage("LoginStatus Type is required");
            
         }
+    }
+    public  class LoginAccessDetailModel
+    {
+        public long LoginAccessId { get; set; }
+        public long? LoginId { get; set; }
+        public long? AccessValueId { get; set; }
+        public bool? AccessValue { get; set; }
+        public string? AccessInputValue { get; set; }
+       
+
+    }
+    public  class LoginUnitDetailModel
+    {
+        public long LoginUnitDetId { get; set; }
+        public long? LoginId { get; set; }
+        public long? UnitId { get; set; }
+      
+    }
+    public  class LoginStoreDetailModel
+    {
+        public long LoginStoreDetId { get; set; }
+        public long? LoginId { get; set; }
+        public long? StoreId { get; set; }
+      
+
     }
     public class loginCancel
     {

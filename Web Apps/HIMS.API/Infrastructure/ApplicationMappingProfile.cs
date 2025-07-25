@@ -225,6 +225,10 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLoginAccessDetail, LoginAccessDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLoginUnitDetail, LoginUnitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLoginStoreDetail, LoginStoreDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<LoginManager, ChangePassword>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MSubTpacompanyMaster, SubTpaCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

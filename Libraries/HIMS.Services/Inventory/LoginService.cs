@@ -39,11 +39,30 @@ namespace HIMS.Services.Inventory
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // Delete details table realted records
+
+                var lst = await _context.TLoginAccessDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.TLoginAccessDetails.RemoveRange(lst);
+                }
+
+                // Delete details table realted records
+                var lsts = await _context.TLoginUnitDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.TLoginUnitDetails.RemoveRange(lsts);
+                }
+                // Delete details table realted records
+                var lstd = await _context.TLoginStoreDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.TLoginStoreDetails.RemoveRange(lstd);
+                }
                 // Update header & detail table records
                 _context.LoginManagers.Update(objLogin);
                 _context.Entry(objLogin).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-
                 scope.Complete();
             }
         }
