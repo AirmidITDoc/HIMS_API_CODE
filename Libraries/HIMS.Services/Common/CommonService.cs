@@ -100,21 +100,9 @@ namespace HIMS.Services.Common
                 case "CompanyWiseSubTPAList": sp_Name = "ps_SubTPACompanyList_CompanyWise"; break;
                 case "CompanyWiseServiceList": sp_Name = "ps_Rtrv_ServiceList_CompanyTariffWise"; break;
 
-                ////
-                //case "Departmentdropdown": sp_Name = "ps_Departmentdropdown"; break;
-                //case "DoctorSurgion": sp_Name = "ps_DoctorSurgionMasterDropdown"; break;
-                //case "SurgeryMaster": sp_Name = "ps_SurgeryMasterDropdown"; break;
-                //case "SurgeryType": sp_Name = "ps_SurgeryTypeDropdown"; break;
-                //case "SiteDescription": sp_Name = "ps_SiteDescriptionDropDown"; break;
-                //case "SurgeryCategory": sp_Name = "ps_SurgeryCategoryDropDown"; break;
-
-
-
-
-
-
-
-
+                // Sysytem Config and Login Access
+                case "LoginAccessConfigList": sp_Name = "ps_M_LoginAccessConfigList"; break;
+                case "SystemConfigList": sp_Name = "ps_M_SystemConfigList"; break;
 
                 default: break;
             }
