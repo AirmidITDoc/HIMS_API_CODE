@@ -17,9 +17,9 @@ namespace HIMS.API.Controllers.Masters.OTMaster
     [ApiVersion("1")]
     public class SiteDescriptionMasterController : BaseController
     {
-        private readonly IGenericService<MSiteDescriptionMaster> _repository;
+        private readonly IGenericService<MOtSiteDescriptionMaster> _repository;
 
-        public SiteDescriptionMasterController(IGenericService<MSiteDescriptionMaster> repository)
+        public SiteDescriptionMasterController(IGenericService<MOtSiteDescriptionMaster> repository)
         {
             _repository = repository;
         }
@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MSiteDescriptionMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<MOtSiteDescriptionMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MOttableMasterList.ToGridResponse(objGrid, "SiteDescriptionMaster List"));
         }
 
@@ -41,14 +41,14 @@ namespace HIMS.API.Controllers.Masters.OTMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.SiteDescId == id);
-            return data.ToSingleResponse<MSiteDescriptionMaster, SiteDescriptionModel>("MSiteDescriptionMaster");
+            return data.ToSingleResponse<MOtSiteDescriptionMaster, SiteDescriptionModel>("MSiteDescriptionMaster");
         }
         //Insert API
         [HttpPost]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(SiteDescriptionModel obj)
         {
-            MSiteDescriptionMaster model = obj.MapTo<MSiteDescriptionMaster>();
+            MOtSiteDescriptionMaster model = obj.MapTo<MOtSiteDescriptionMaster>();
             model.IsActive = true;
             if (obj.SiteDescId == 0)
             {
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SiteDescriptionModel obj)
         {
-            MSiteDescriptionMaster model = obj.MapTo<MSiteDescriptionMaster>();
+            MOtSiteDescriptionMaster model = obj.MapTo<MOtSiteDescriptionMaster>();
             model.IsActive = true;
             if (obj.SiteDescId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MSiteDescriptionMaster? model = await _repository.GetById(x => x.SiteDescId == Id);
+            MOtSiteDescriptionMaster? model = await _repository.GetById(x => x.SiteDescId == Id);
             if ((model?.SiteDescId ?? 0) > 0)
             {
                 model.IsActive = false;

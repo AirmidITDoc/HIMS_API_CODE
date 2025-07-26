@@ -141,8 +141,8 @@ namespace HIMS.API.Infrastructure
           
             CreateMap<MOttableMaster, OtTableMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOttypeMaster, OtTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MSurgeryCategoryMaster, SurgeryCategoryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MSurgeryMaster, SurgeryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtSurgeryCategoryMaster, SurgeryCategoryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtSurgeryMaster, SurgeryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TConsentInformation, ConsentInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TConsentInformation, UpdateConsentInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -284,7 +284,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPhadvRefundDetail, PHAdvRefundDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPhadvanceDetail, PHAdvanceDetailBalAmountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PaymentPharmacy, PharmacyPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MSiteDescriptionMaster, SiteDescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtSiteDescriptionMaster, SiteDescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MConsentMaster, ConsentMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             

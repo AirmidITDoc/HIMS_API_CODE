@@ -17,20 +17,18 @@ namespace HIMS.API.Controllers.Masters.SurgeryCategoryMasterController
     [ApiVersion("1")]
     public class SurgeryCategoryMasterController : BaseController
     {
-        private readonly IGenericService<MSurgeryCategoryMaster> _repository;
-        public SurgeryCategoryMasterController(IGenericService<MSurgeryCategoryMaster> repository)
+        private readonly IGenericService<MOtSurgeryCategoryMaster> _repository;
+        public SurgeryCategoryMasterController(IGenericService<MOtSurgeryCategoryMaster> repository)
         {
             _repository = repository;
         }
-
-
 
         [HttpPost]
         [Route("[action]")]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MSurgeryCategoryMaster> MSurgeryCategoryMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<MOtSurgeryCategoryMaster> MSurgeryCategoryMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSurgeryCategoryMasterList.ToGridResponse(objGrid, "SurgeryCategory Master List"));
         }
 
@@ -43,25 +41,24 @@ namespace HIMS.API.Controllers.Masters.SurgeryCategoryMasterController
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.SurgeryCategoryId == id);
-            return data.ToSingleResponse<MSurgeryCategoryMaster, SurgeryCategoryMasterModel>("MSurgeryCategoryMaster");
+            return data.ToSingleResponse<MOtSurgeryCategoryMaster, SurgeryCategoryMasterModel>("MOtSurgeryCategoryMaster");
         }
         //Insert API
         [HttpPost]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(SurgeryCategoryMasterModel obj)
         {
-            MSurgeryCategoryMaster model = obj.MapTo<MSurgeryCategoryMaster>();
+            MOtSurgeryCategoryMaster model = obj.MapTo<MOtSurgeryCategoryMaster>();
             model.IsActive = true;
             if (obj.SurgeryCategoryId == 0)
             {
-                model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SurgeryCategory Master  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
 
         //Edit API
@@ -69,18 +66,17 @@ namespace HIMS.API.Controllers.Masters.SurgeryCategoryMasterController
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SurgeryCategoryMasterModel obj)
         {
-            MSurgeryCategoryMaster model = obj.MapTo<MSurgeryCategoryMaster>();
+            MOtSurgeryCategoryMaster model = obj.MapTo<MOtSurgeryCategoryMaster>();
             model.IsActive = true;
             if (obj.SurgeryCategoryId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.UpdatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SurgeryCategory Master updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
 
@@ -89,14 +85,14 @@ namespace HIMS.API.Controllers.Masters.SurgeryCategoryMasterController
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MSurgeryCategoryMaster? model = await _repository.GetById(x => x.SurgeryCategoryId == Id);
+            MOtSurgeryCategoryMaster? model = await _repository.GetById(x => x.SurgeryCategoryId == Id);
             if ((model?.SurgeryCategoryId ?? 0) > 0)
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SurgeryCategory Master deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

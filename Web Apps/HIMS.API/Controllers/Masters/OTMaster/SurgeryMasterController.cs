@@ -17,8 +17,8 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
     [ApiVersion("1")]
     public class SurgeryMasterController : BaseController
     {
-        private readonly IGenericService<MSurgeryMaster> _repository;
-        public SurgeryMasterController(IGenericService<MSurgeryMaster> repository)
+        private readonly IGenericService<MOtSurgeryMaster> _repository;
+        public SurgeryMasterController(IGenericService<MOtSurgeryMaster> repository)
         {
             _repository = repository;
         }
@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<MOtSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSurgeryMasterList.ToGridResponse(objGrid, "SurgeryMaster List"));
         }
 
@@ -41,21 +41,19 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.SurgeryId == id);
-            return data.ToSingleResponse<MSurgeryMaster, SurgeryMasterModel>("SurgeryMaster");
+            return data.ToSingleResponse<MOtSurgeryMaster, SurgeryMasterModel>("SurgeryMaster");
         }
         //Insert API
         [HttpPost]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(SurgeryMasterModel obj)
         {
-            MSurgeryMaster model = obj.MapTo<MSurgeryMaster>();
+            MOtSurgeryMaster model = obj.MapTo<MOtSurgeryMaster>();
             model.IsActive = true;
             if (obj.SurgeryId == 0)
             {
-                model.AddedBy = CurrentUserId;
-                model.AddedDateTime = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -68,16 +66,16 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(SurgeryMasterModel obj)
         {
-            MSurgeryMaster model = obj.MapTo<MSurgeryMaster>();
+            MOtSurgeryMaster model = obj.MapTo<MOtSurgeryMaster>();
             model.IsActive = true;
             if (obj.SurgeryId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.UpdatedBy = CurrentUserId;
-                model.UpdatedDateTime = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
+
                 model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -89,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MSurgeryMaster? model = await _repository.GetById(x => x.SurgeryId == Id);
+            MOtSurgeryMaster? model = await _repository.GetById(x => x.SurgeryId == Id);
             if ((model?.SurgeryId ?? 0) > 0)
             {
                 model.IsActive = false;
