@@ -37,6 +37,10 @@ namespace HIMS.Data.DTO.OPPatient
         public bool? IsRadOutSource { get; set; }
         public bool? IsDiscount { get; set; }
         public bool? IsProcedure { get; set; }
+        public long? PackageTotalDays { get; set; }
+        public long? PackageIcudays { get; set; }
+        public decimal? PackageMedicineAmount { get; set; }
+        public decimal? PackageConsumableAmount { get; set; }
 
     }
 

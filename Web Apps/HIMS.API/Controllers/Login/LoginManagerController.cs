@@ -35,8 +35,31 @@ namespace HIMS.API.Controllers.Login
             IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
+        [HttpPost("loginAccessDetailsList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> Listl(GridRequestModel objGrid)
+        {
+            IPagedList<LoginConfigUserWiseListDto> LoginConfigUserWiseList = await _ILoginService.GetListAsyncL(objGrid);
+            return Ok(LoginConfigUserWiseList.ToGridResponse(objGrid, "loginAccessDetailsList "));
+        }
+
+        [HttpPost("LoginStoreUserWiseList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListC(GridRequestModel objGrid)
+        {
+            IPagedList<LoginStoreUserWiseListDto> LoginStoreUserWiseList = await _ILoginService.GetListAsyncLC(objGrid);
+            return Ok(LoginStoreUserWiseList.ToGridResponse(objGrid, "LoginConfigUserWiseList "));
+        }
+
+        [HttpPost("LoginAccessConfigList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListA(GridRequestModel objGrid)
+        {
+            IPagedList<LoginAccessConfigListDto> LoginAccessConfigList = await _ILoginService.GetListAsyncLA(objGrid);
+            return Ok(LoginAccessConfigList.ToGridResponse(objGrid, "LoginConfigUserWiseList "));
+        }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -71,7 +94,7 @@ namespace HIMS.API.Controllers.Login
 
        
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             if (obj.UserId <= 0)

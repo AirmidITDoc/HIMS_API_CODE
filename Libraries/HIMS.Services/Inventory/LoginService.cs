@@ -24,6 +24,21 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<LoginManagerListDto>(model, "ps_Rtrv_UserList");
         }
+        public virtual async Task<IPagedList<LoginConfigUserWiseListDto>> GetListAsyncL(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginConfigUserWiseListDto>(model, "ps_M_LoginConfigListUserWise");
+        }
+        public virtual async Task<IPagedList<LoginStoreUserWiseListDto>> GetListAsyncLC(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginStoreUserWiseListDto>(model, "ps_M_LoginStoreUserWise");
+        }
+        public virtual async Task<IPagedList<LoginAccessConfigListDto>> GetListAsyncLA(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginAccessConfigListDto>(model, "ps_M_LoginAccessConfigList");
+        }
+
+
+
 
         public virtual async Task InsertAsync(LoginManager objLogin, int UserId, string Username)
         {

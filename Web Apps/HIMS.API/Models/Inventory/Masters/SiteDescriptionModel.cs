@@ -7,8 +7,10 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public long SiteDescId { get; set; }
         public string? SiteDescriptionName { get; set; }
-        
         public long? SurgeryCategoryId { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
 
     }
     public class SiteDescriptionModelValidator : AbstractValidator<SiteDescriptionModel>
