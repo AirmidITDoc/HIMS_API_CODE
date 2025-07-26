@@ -36,6 +36,11 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<LoginAccessConfigListDto>(model, "ps_M_LoginAccessConfigList");
         }
+        public virtual async Task<IPagedList<LoginUnitUserWiseListDto>> GetListAsyncLU(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginUnitUserWiseListDto>(model, "ps_M_LoginUnitUserWise");
+        }
+
 
 
 

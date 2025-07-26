@@ -21,8 +21,10 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<LoginConfigUserWiseListDto>> GetListAsyncL(GridRequestModel objGrid);
         Task<IPagedList<LoginStoreUserWiseListDto>> GetListAsyncLC(GridRequestModel objGrid);
         Task<IPagedList<LoginAccessConfigListDto>> GetListAsyncLA(GridRequestModel objGrid);
+        Task<IPagedList<LoginUnitUserWiseListDto>> GetListAsyncLU(GridRequestModel objGrid);
 
 
-        
+
+
     }
 }

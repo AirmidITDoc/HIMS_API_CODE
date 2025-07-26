@@ -35,5 +35,12 @@ namespace HIMS.Data.DTO.Administration
 
 
     }
+    public class LoginUnitUserWiseListDto
+    {
+        public long? LoginId { get; set; }
+        public long? UnitId { get; set; }
 
+
+
+    }
 }

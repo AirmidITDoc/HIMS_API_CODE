@@ -58,6 +58,15 @@ namespace HIMS.API.Controllers.Login
             IPagedList<LoginAccessConfigListDto> LoginAccessConfigList = await _ILoginService.GetListAsyncLA(objGrid);
             return Ok(LoginAccessConfigList.ToGridResponse(objGrid, "LoginConfigUserWiseList "));
         }
+
+        [HttpPost("LoginUnitUserWiseList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListU(GridRequestModel objGrid)
+        {
+            IPagedList<LoginUnitUserWiseListDto> LoginUnitUserWiseList = await _ILoginService.GetListAsyncLU(objGrid);
+            return Ok(LoginUnitUserWiseList.ToGridResponse(objGrid, "LoginUnitUserWiseList "));
+        }
+
         [HttpPost("Insert")]
         [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
