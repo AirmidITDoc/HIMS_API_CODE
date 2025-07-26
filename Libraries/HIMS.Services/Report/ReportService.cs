@@ -500,6 +500,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: EmergencyPrint ::
+                case "EmergencyPrint":
+                    {
+
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "Emergencyprint.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("ps_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "EmergencyPrint", "EmergencyPrint" + vDate, Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
+
                 #region :: OPBillWithPackagePrint ::
                 case "OPBillWithPackagePrint":
                     {
@@ -3309,6 +3328,38 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+
+
+
+                        return html;
+
+                    }
+                    break;
+                case "EmergencyPrint":
+                    {
+
+                        int i = 0;
+
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{RegId}}", dt.GetColValue("RegId"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{CityName}}", dt.GetColValue("CityName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+
+
+                        html = html.Replace("{{EmgDate}}", dt.GetColValue("EmgDate"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
 
 
