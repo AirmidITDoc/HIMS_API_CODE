@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionReturnInsert")]
-   //     [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
