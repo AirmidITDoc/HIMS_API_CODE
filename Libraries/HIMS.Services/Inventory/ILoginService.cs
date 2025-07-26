@@ -18,7 +18,11 @@ namespace HIMS.Services.Inventory
         Task CancelAsync(LoginManager objLogin, int UserId, string Username);
         Task updatepassAsync(LoginManager objLogin, int UserId, string Username);
         Task<IPagedList<LoginManagerListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<LoginConfigUserWiseListDto>> GetListAsyncL(GridRequestModel objGrid);
+        Task<IPagedList<LoginStoreUserWiseListDto>> GetListAsyncLC(GridRequestModel objGrid);
+        Task<IPagedList<LoginAccessConfigListDto>> GetListAsyncLA(GridRequestModel objGrid);
 
 
+        
     }
 }
