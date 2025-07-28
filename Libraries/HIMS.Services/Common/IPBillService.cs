@@ -718,5 +718,27 @@ namespace HIMS.Services.Common
 
         }
 
+
+
+        public virtual async Task InsertSP(AddCharge ObjaddCharge, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+                "IsHospMrk","BillNoNavigation","BillNo",
+            "ChargesId","ChargesDate","OpdIpdType","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy",
+            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","TariffId"};
+            var entity = ObjaddCharge.ToDictionary();
+
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
+
+           odal.ExecuteNonQuery("ps_m_AddBedService_Charges", CommandType.StoredProcedure,  entity);
+
+        }
+
     }
 }
