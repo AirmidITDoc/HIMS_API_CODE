@@ -49,6 +49,8 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 //model.IsActive = true;
                 await _OTBookingRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -68,6 +70,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
+                model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
