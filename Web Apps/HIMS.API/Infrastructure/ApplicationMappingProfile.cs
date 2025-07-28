@@ -21,6 +21,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
+using static HIMS.API.Models.Inventory.Masters.ConfigurationModelValidator;
 using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
 using static HIMS.API.Models.Inventory.Masters.ReportConfigModelModelValidator;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
@@ -286,10 +287,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<PaymentPharmacy, PharmacyPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtSiteDescriptionMaster, SiteDescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MConsentMaster, ConsentMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MSystemConfig, SystemConfigUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            
 
-             //Inventory 
+
+            //Inventory 
             CreateMap<TIndentHeader, IndentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentDetail, IndentDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentHeader, IndentVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

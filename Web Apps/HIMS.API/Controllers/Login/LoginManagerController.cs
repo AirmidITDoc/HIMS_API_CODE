@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginStoreUserWiseList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListC(GridRequestModel objGrid)
         {
             IPagedList<LoginStoreUserWiseListDto> LoginStoreUserWiseList = await _ILoginService.GetListAsyncLC(objGrid);
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginUnitUserWiseList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListU(GridRequestModel objGrid)
         {
             IPagedList<LoginUnitUserWiseListDto> LoginUnitUserWiseList = await _ILoginService.GetListAsyncLU(objGrid);

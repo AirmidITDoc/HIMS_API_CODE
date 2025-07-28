@@ -82,5 +82,13 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.Otcharges).NotNull().NotEmpty().WithMessage("Otcharges Type is required");
 
         }
+        public class   SystemConfigUpdate
+        {
+            public long SystemConfigId { get; set; }
+            public long? SystemCategoryId { get; set; }
+            public string? SystemName { get; set; }
+            public long? IsInputField { get; set; }
+            public string? SystemInputValue { get; set; }
+        }
     }
 }

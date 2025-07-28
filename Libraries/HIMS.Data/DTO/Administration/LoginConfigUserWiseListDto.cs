@@ -21,9 +21,11 @@ namespace HIMS.Data.DTO.Administration
     {
         public long? LoginId { get; set; }
         public long? StoreId { get; set; }
+        public string? StoreName { get; set; }
 
 
     }
+    
     public class LoginAccessConfigListDto
     {
         public long? LoginConfigId { get; set; }
@@ -39,8 +41,7 @@ namespace HIMS.Data.DTO.Administration
     {
         public long? LoginId { get; set; }
         public long? UnitId { get; set; }
-
-
+        public string?HospitalName {  get; set; }
 
     }
 }

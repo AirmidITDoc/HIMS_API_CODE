@@ -9,6 +9,8 @@ using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.API.Models.Inventory.Masters;
+using static HIMS.API.Models.Inventory.Masters.ConfigurationModelValidator;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -18,9 +20,12 @@ namespace HIMS.API.Controllers.Administration
     public class ConfigurationController : BaseController
     {
         private readonly IGenericService<ConfigSetting> _repository;
-        public ConfigurationController(IGenericService<ConfigSetting> repository)
+        private readonly IGenericService<MSystemConfig> _repository1;
+
+        public ConfigurationController(IGenericService<ConfigSetting> repository, IGenericService<MSystemConfig> repository1)
         {
             _repository = repository;
+            _repository1 = repository1;
         }
         //List API
         [HttpPost]
@@ -94,5 +99,27 @@ namespace HIMS.API.Controllers.Administration
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+      
+        [HttpPut("SystemConfig")]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(List<SystemConfigUpdate> items)
+        {
+            if (items == null || !items.Any())
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+                foreach (var obj in items)
+                {
+                  if (obj.SystemConfigId == 0);
+   
+                   MSystemConfig model = obj.MapTo<MSystemConfig>();
+
+                  await _repository1.Update(model, CurrentUserId, CurrentUserName, Array.Empty<string>());
+                }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
+        }
+
+      
+
     }
 }
