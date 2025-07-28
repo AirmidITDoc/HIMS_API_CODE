@@ -347,6 +347,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMrpAdjustment, MRPAdjustmentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<AddCharge, classWiseRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

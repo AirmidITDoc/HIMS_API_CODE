@@ -340,5 +340,29 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
+
+
+
+        [HttpPost("AddBedServiceCharges")]
+      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(classWiseRateModel obj)
+        {
+            AddCharge Model = obj.MapTo<AddCharge>();
+
+
+            if (obj.OpdIpdId != 0)
+            {
+
+                Model.AddedBy = CurrentUserId;
+                await _IPBillService.InsertSP(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
+
+
+
+
     }
 }

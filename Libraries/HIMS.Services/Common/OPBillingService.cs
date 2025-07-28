@@ -153,7 +153,7 @@ namespace HIMS.Services.Common
                             foreach (var item in ObjaddCharge)
                             {
                                 string[] AEntity = {"IsDoctorShareGenerated","ChargesTime","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName",
-                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","IsInterimBillFlag","BillNoNavigation"};
+                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","IsInterimBillFlag","BillNoNavigation","TariffId"};
                                 var Packagescharge = item.ToDictionary();
 
                                 foreach (var rProperty in AEntity)

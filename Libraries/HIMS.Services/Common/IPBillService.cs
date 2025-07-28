@@ -254,7 +254,7 @@ namespace HIMS.Services.Common
                         DatabaseHelper odal = new();
                         string[] AEntity = { "ClassId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ",
                                                    "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
-                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag"};
+                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","TariffId"};
                         var Packagescharge = item.ToDictionary();
 
                         foreach (var rProperty in AEntity)
@@ -715,6 +715,28 @@ namespace HIMS.Services.Common
                 UEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, UEntity);
+
+        }
+
+
+
+        public virtual async Task InsertSP(AddCharge ObjaddCharge, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+                "IsHospMrk","BillNoNavigation","BillNo",
+            "ChargesId","ChargesDate","OpdIpdType","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy",
+            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","TariffId"};
+            var entity = ObjaddCharge.ToDictionary();
+
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
+
+           odal.ExecuteNonQuery("ps_m_AddBedService_Charges", CommandType.StoredProcedure,  entity);
 
         }
 
