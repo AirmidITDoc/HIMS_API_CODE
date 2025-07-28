@@ -96,6 +96,7 @@ namespace HIMS.API.Models.OPPatient
         public long? PackageId { get; set; }
         public string? ChargesTime { get; set; }
         public long? ClassId { get; set; }
+        public long? TariffId { get; set; }
         public long? BillNo { get; set; }
 
     }

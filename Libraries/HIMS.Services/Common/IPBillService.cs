@@ -254,7 +254,7 @@ namespace HIMS.Services.Common
                         DatabaseHelper odal = new();
                         string[] AEntity = { "ClassId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ",
                                                    "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
-                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag"};
+                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","TariffId"};
                         var Packagescharge = item.ToDictionary();
 
                         foreach (var rProperty in AEntity)

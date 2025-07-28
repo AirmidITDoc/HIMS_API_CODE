@@ -35,6 +35,7 @@ namespace HIMS.Data.Models
         public DateTime? ChargesTime { get; set; }
         public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
+        public long? TariffId { get; set; }
         public decimal? RefundAmount { get; set; }
         public decimal? CPrice { get; set; }
         public float? CQty { get; set; }

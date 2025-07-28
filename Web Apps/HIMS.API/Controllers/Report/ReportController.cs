@@ -242,6 +242,8 @@ namespace HIMS.API.Controllers.Report
                 case "CertificateInformationReport":
                 case "Certificate":
                 case "EmergencyPrint":
+                case "EmergencyPrescription":
+
 
 
 

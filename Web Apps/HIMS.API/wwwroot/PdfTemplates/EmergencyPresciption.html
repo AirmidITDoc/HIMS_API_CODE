@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    </style>
+</head>
+
+
+<body>
+    <div class="main-content-wrapper" style="height:1430px">
+        <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                            </tr>
+                            <tr style="font-size: 22px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>EmergencyPrescription</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+
+                            <tr>
+
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Prescription No : </span>
+
+                                    <span>{{PrecriptionId}}</span>
+                                </td>-->
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">EmgId: </span>
+                                    <span>{{EmgId}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">UHID : </span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;"> Date | Time : </span>
+                                    <span>{{EmgTime}}</span>
+                                </td>
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight:bold;"> Date | Time : </span>
+                                    <span>{{PDate}}</span>
+                                </td>-->
+
+                            </tr>
+
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name : </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Address : </span>
+                                    <span>{{Address}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age | Sex: </span>
+                                    <span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Doctor Name : </span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Department :</span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ref Dr Name : </span>
+                                    <span>{{ReferDrName}}</span>
+                                </td>-->
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <hr />
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+                            <thead style="font-size: 14px;">
+                                <tr style="border-bottom: 1px solid #d4c3c3;">
+                                    <td style="text-align: left; padding-top: 10px; padding-bottom: 10px; font-size: 22px; padding-left: 2px; " colspan="5"><span style="font-weight: bold; margin-left: 4px; display:{{chkHeightflag}}">Height : </span>{{Height}} <span style="margin-left: 4px; display:{{chkHeightflag}}">|</span> <span style="font-weight: bold; margin-left: 10px;display:{{chkWeightflag}}">Weight : </span> {{Weight}} <span style="margin-left: 5px;display:{{chkWeightflag}}">|</span> <span style="font-weight:bold;margin-left:10px;display:{{chkBMIflag}}">BMI : </span>{{BMI}} <span style="margin-left:5px;display:{{chkBMIflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBSLflag}}">BSL : </span>{{BSL}}  <span style="margin-left: 5px; display:{{chkBSLflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkSpO2flag}}">SPO2 : </span> {{SpO2}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBMIflag}}">BP : </span> {{BP}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPulseflag}}">Pulse : </span> {{Pulse}} <span style="margin-left: 5px; display:{{chkPulseflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkTempflag}}">Temp : </span> {{Temp}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 24px;">
+                                        <span style="font-weight:bold;">Complaints : </span>
+                                        <span>{{ChiefComplaint}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 24px;">
+                                        <span style="font-weight:bold;">Dignosis : </span>
+                                        <span>{{Diagnosis}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 24px;">
+                                        <span style="font-weight:bold;">Examination : </span>
+                                        <span>{{Examination}}</span>
+                                    </td>
+                                </tr>
+                                <!--<tr>
+                                    <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 24px;">
+                                        <span style="padding-left: 2px;border-bottom: 1px solid #eee; padding: 20px; font-weight: bold; font-size: 38px; font-style: italic;font-family: Bell MT; ">Rx </span>-->
+                                        <!--<span>{{Examination}}</span>-->
+                                    <!--</td>
+
+                                </tr>-->
+
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <!--<tbody>
+                                    <td style="padding: 6px;">
+                                    <tr bgcolor="#D3D3D3">
+                                        <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 26px;">
+                                            Medicine
+                                        </td>
+                                        <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 26px;">
+                                            Dosage
+                                        </td>
+                                        <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 26px;">Instruction</td>
+                                        <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 26px;">Qty</td>
+
+                                    </tr>
+                                    {{Items}}
+                                    </tbody>-->
+                                </table>
+                                <!--<tr style="margin-bottom: 40px;">
+                                    <td style="padding: 6px; font-size: 24px; margin-bottom: 150px;">
+                                        <span style="font-weight: bold;">Advice Test List: </span>
+                                        <span>{{RequestList}}</span>
+                                    </td>
+                                </tr>
+
+                                <br>
+                                <br>
+
+                                <tr style="margin-bottom: 40px;">
+                                    <td style="padding: 6px; font-size: 24px; margin-bottom: 150px; ">
+                                        <span style="font-weight: bold;">Refer To: </span>
+                                        <span>{{SecondRefDoctorName}}</span>
+                                    </td>
+                                </tr>-->
+
+                                <tr style="margin-bottom: 40px;">
+                                    <td style="padding: 6px; font-size: 24px; margin-bottom: 150px; ">
+                                        <span style="font-weight: bold;">Advice:</span>
+                                        <span>{{Advice}}</span>
+                                    </td>
+                                </tr>
+
+                                <br>
+                                <br>
+
+                                <!--<tr style="margin-bottom: 20px;">
+                                    <td style="padding: 6px; font-size: 24px; margin-bottom: 40px;">
+                                        <span style="font-weight: bold;">Follow-up Date:</span>
+                                        <span>{{FollowupDate}}</span>
+                                    </td>
+                                </tr>-->
+
+                                <tr>
+                                <tr>
+                                    <table style="width: 100%;text-align: left;">
+                                        <td>
+                                            <footer style="margin-left: 75%; font-size: 19px;">
+                                                <span style="margin-left:75%">
+                                                    <img src="{{Signature}}" width="100" style="display:{{chkSignature}}">
+
+                                                    <!--<span>
+                                                        <img src="{{BaseUrl}}/PdfTemplates/Hospital_logo.png" alt="logo" width="180">
+                                                    </span>-->
+                                                    <!--{{Signature}}-->
+                                                </span>
+                                                <div style="font-weight:bold;">{{PathResultDr1}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkEdu}}">{{Education}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkRegNo}}">{{MahRegNo}}</div>
+                                            </footer>
+                                        </td>
+                                    </table>
+                                </tr>
+                </tr>
+
+        </div>
+        <table style="width: 100%;text-align: left;">
+
+            <!--<tr>
+                <span style="margin-left:70%">
+                    <img src="{{Signature}}" width="100" style="display:{{chkSignature}}">
+                </span>
+                <footer style="margin-left: 70%; font-size: 19px;">
+                    <div style="font-weight:bold;">{{PathResultDr1}}</div>
+                    <div style="font-weight:bold;" style="display:{{chkEdu}}">{{Education}}</div>
+                    <div style="font-weight:bold;" style="display:{{chkRegNo}}">{{MahRegNo}}</div>
+                </footer>
+            </tr>-->
+            <footer>
+            <tr style="border-top: 1px solid #000;"><td></td></tr>
+            <tr><td style="border-top: 1px solid #000;" colspan="4">Do not take any medicines without consulting the doctor....</td></tr>
+
+            </footer>
+
+        </table>
+</body>
+
+
+</html>
+
+
+<!--<html>
+
+
+</html>-->
