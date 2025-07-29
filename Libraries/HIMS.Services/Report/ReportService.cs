@@ -549,6 +549,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: ConsentInformation ::
+                case "ConsentInformation":
+                    {
+
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ConsentInformation.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
+                        var html = GetHTMLView("m_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ConsentInformation", "ConsentInformation" + vDate, Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
+
                 #region :: OPBillWithPackagePrint ::
                 case "OPBillWithPackagePrint":
                     {
@@ -5266,6 +5285,59 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+
+                case "ConsentInformation":
+                    {
+
+                        int i = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                      //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
+
+
+                        }
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{ConsentId}}", dt.GetColValue("ConsentId"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{ConsentName}}", dt.GetColValue("ConsentName"));
+
+
+                        //html = html.Replace("{{RequestId}}", Bills.GetColValue("RequestId"));
+                        //html = html.Replace("{{OPDNo}}", Bills.GetColValue("IPDNo"));
+                        //html = html.Replace("{{ReqDate}}", Bills.GetColValue("ReqDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ConsentTime}}", dt.GetColValue("ConsentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{ConsentText}}", dt.GetColValue("ConsentText"));
+                        //html = html.Replace("{{BedName}}", Bills.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        //html = html.Replace("{{PatientType}}", Bills.GetColValue("PatientType"));
+                        html = html.Replace("{{OP_IP_Type}}", dt.GetColValue("OP_IP_Type"));
+                        //html = html.Replace("{{RefDocName}}", Bills.GetColValue("RefDocName"));
+                        //html = html.Replace("{{CompanyName}}", Bills.GetColValue("CompanyName"));
+
+
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+
+
+
+                        return html;
+                    }
+                    break;
 
 
                 case "AppointmentReceipt":
