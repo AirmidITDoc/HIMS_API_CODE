@@ -25,6 +25,8 @@ namespace HIMS.Services.Common
         Task<IPagedList<PathRadRequestListDto>> PathRadRequestListAsync(GridRequestModel objGrid);
         Task<IPagedList<IPPackageDetailsListDto>> IPPackageDetailsListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageDetailsListDto>> Addpackagelist(GridRequestModel objGrid);
+        Task<IPagedList<PackagedetListDto>> Retrivepackagedetaillist(GridRequestModel objGrid);
+
 
         Task InsertAsync(AddCharge objAddCharge,List<AddCharge> objAddCharges, int UserId, string Username);
         Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
@@ -40,9 +42,8 @@ namespace HIMS.Services.Common
         Task InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
         Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName);
         Task InsertSP(AddCharge objAddCharge, int UserId, string Username);
-
-
-
+        Task InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
+        Task InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
     }
 }
 

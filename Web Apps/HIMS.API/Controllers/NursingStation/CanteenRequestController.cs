@@ -65,7 +65,10 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Time = Convert.ToDateTime(obj.Time);
-
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedBy = CurrentUserId;
                 await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

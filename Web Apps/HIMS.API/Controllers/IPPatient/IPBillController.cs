@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
@@ -108,6 +109,14 @@ namespace HIMS.API.Controllers.IPPatient
         {
             IPagedList<PackageDetailsListDto> IPPackageDetailsList = await _IPBillService.Addpackagelist(objGrid);
             return Ok(IPPackageDetailsList.ToGridResponse(objGrid, "IPPackageDetails List"));
+        }
+
+        [HttpPost("Retrivepackagedetaillist")]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        public async Task<IActionResult> Retrivepackagedetaillist(GridRequestModel objGrid)
+        {
+            IPagedList<PackagedetListDto> PackageDetailsList = await _IPBillService.Retrivepackagedetaillist(objGrid);
+            return Ok(PackageDetailsList.ToGridResponse(objGrid, "PackageDetails List"));
         }
 
 
@@ -350,7 +359,7 @@ namespace HIMS.API.Controllers.IPPatient
             AddCharge Model = obj.MapTo<AddCharge>();
 
 
-            if (obj.OpdIpdId != 0)
+            if (obj.OpdIpdId == 0)
             {
 
                 Model.AddedBy = CurrentUserId;
@@ -362,7 +371,47 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
+        [HttpPost("ClasswiseRatechange")]
+        //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertC(ClassRateModel obj)
+        {
+            if (obj.ClassId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+         
+            var model = new AddCharge
+            {
+                ClassId = obj.ClassId,
+                OpdIpdId = obj.OpdIpdId,
+                TariffId = obj.TariffId
 
+
+            };
+            await _IPBillService.InsertSPC(model, CurrentUserId, CurrentUserName, obj.NewClassId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
+
+
+        [HttpPost("TariffwiseClassRatechange")]
+        //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertT(TariffwiseClassRatechangeModel obj)
+        {
+            if (obj.ClassId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            var model = new AddCharge
+            {
+                ClassId = obj.ClassId,
+                OpdIpdId = obj.OpdIpdId,
+                TariffId = obj.TariffId
+
+
+            };
+            await _IPBillService.InsertSPT(model, CurrentUserId, CurrentUserName, obj.NewClassId,obj.NewTariffId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
 
     }
 }

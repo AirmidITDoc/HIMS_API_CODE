@@ -142,7 +142,7 @@ namespace HIMS.API.Controllers.Common
             }
 
             var data = await _FileUtility.GetBase64FromFolder(((PageNames)result.RefType).ToDescription(), result.DocSavedName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { data, type = result.DocName.EndsWith("_File") ? "file" : "signature" });
         }
     }
 }
