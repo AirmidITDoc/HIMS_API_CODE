@@ -33,6 +33,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? SurgeonId { get; set; }
         public long? SurgeryId { get; set; }
         public long? OpIpId { get; set; }
+        public long SurgeryTypeId { get; set; }
         public bool? IsCancelled { get; set; }
 
     }

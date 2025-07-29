@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
-                //model.IsActive = true;
+                model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else

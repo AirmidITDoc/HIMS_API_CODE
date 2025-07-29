@@ -10447,7 +10447,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
