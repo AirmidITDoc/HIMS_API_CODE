@@ -243,6 +243,8 @@ namespace HIMS.API.Controllers.Report
                 case "Certificate":
                 case "EmergencyPrint":
                 case "EmergencyPrescription":
+                case "ConsentInformation":
+
 
 
 

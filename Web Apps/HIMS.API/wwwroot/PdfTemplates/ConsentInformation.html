@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>UHID :</b></span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>IPD NO:</b></span>
+                                    <span>{{IPDNo}}</span>
+
+                                </td>
+                              
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>OPD | Time:</b></span>
+                                    <span>{{ConsentTime}}</span>
+                                </td>
+
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Patient Name:</b></span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Department:</b></span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Age | Sex:</b> </span>
+                                    <span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Doctor Name:</b></span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Department:</b></span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>-->
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Ward|Bed NO :</b></span>
+                                    <span>{{WardName}}|{{BedNo}}</span>
+                                </td>-->
+
+                            </tr>
+                            <!--<tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Ref.Doctor Name :</b></span>
+                                    <span>{{RefDoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Patient Type:</b></span>
+                                    <span>{{PatientType}}</span>
+
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold;"><b>Company Name:</b></span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
+
+                            </tr>-->
+                        </table>
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px;text-align:center "><b> {{ConsentName}}</b></td>
+                            </tr>
+                        </table>
+                </tr>
+
+
+            </table>
+            </td>
+            </tr>
+
+
+
+
+            <tbody style="font-size: 14px;">
+                {{Items}}
+
+
+            </tbody>
+            </thead>
+            </table>
+            </td>
+            </tr>
+
+
+            <!--<tr style="padding: 6px; text-align: right;">
+            <td>
+            <span>Prepared By</span>
+            </td>
+            </tr>-->
+            </table>
+            </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
