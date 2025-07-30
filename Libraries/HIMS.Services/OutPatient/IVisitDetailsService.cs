@@ -32,5 +32,6 @@ namespace HIMS.Services.OutPatient
         Task UpdateAsyncv(VisitDetail ObjVisitDetail, int UserId, string Username);
 
 
+
     }
 }

@@ -238,11 +238,19 @@ namespace HIMS.Services.Masters
         {
             return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.IsConsultant.Value && y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
         }
+     
         public async Task<List<DoctorMaster>> GetDoctorsByDocType(int DocTypeId)
         {
             return await _context.DoctorMasters.Where(x => x.IsConsultant == true && x.DoctorTypeId == DocTypeId).ToListAsync();
         }
+        //public async Task<List<MConsentMaster>> GetDoctorsByConsentType(int DeptId)
+        //{
+        //    return await _context.MConsentMasters.Where(x => x.DepartmentId == DeptId).ToListAsync();
 
+        //}
+
+
+       
 
         public async Task<List<DoctorMaster>> GetDoctorWithDepartment()
         {

@@ -10,6 +10,8 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -56,7 +58,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("Insert")]
 
-        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {
@@ -75,7 +77,7 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.ReqId);
         }
-
+      
         [HttpGet("GetItemListforCanteen")]
         public async Task<ApiResponse> GetCanteenItemList(string ItemName)
         {
