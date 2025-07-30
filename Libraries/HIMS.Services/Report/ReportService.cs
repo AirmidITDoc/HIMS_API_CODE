@@ -3367,6 +3367,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{City}}", dt.GetColValue("City"));
+                        html = html.Replace("{{CityName}}", dt.GetColValue("CityName"));
                         html = html.Replace("{{PinNo}}", dt.GetColValue("PinNo"));
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
