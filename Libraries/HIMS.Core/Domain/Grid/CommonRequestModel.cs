@@ -28,8 +28,8 @@ namespace HIMS.Core.Domain.Grid
     {
         public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
         public string? Mode { get; set; }
-        [JsonIgnore]
-        public string BaseUrl { get; set; } = string.Empty;
+        //[JsonIgnore]
+        //public string BaseUrl { get; set; } = string.Empty;
         [JsonIgnore]
         public string StorageBaseUrl { get; set; } = string.Empty;
         public string RepoertName { get; set; } = string.Empty;

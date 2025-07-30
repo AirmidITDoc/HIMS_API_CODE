@@ -411,7 +411,7 @@ namespace HIMS.API.Controllers.Report
         {
             //if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
             //    return Unauthorized("You don't have permission to access this report.");
-            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
+            //model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetNewReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));

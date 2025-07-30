@@ -33,7 +33,7 @@ namespace HIMS.Services.Utilities
         //}
 
 
-        public string GetHeader(string filePath, string basePath, long HospitalId = 0)
+        public string GetHeader(string filePath, long HospitalId = 0)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
             HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
@@ -45,8 +45,8 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
-            htmlHeader = htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
-            return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
+            return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
+            //return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
             //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
 
         }
@@ -85,7 +85,7 @@ namespace HIMS.Services.Utilities
         //    return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
         //}
 
-        public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath , string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+        public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
             //var options = new ConvertOptions
             //{
