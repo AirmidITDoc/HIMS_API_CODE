@@ -5,12 +5,14 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using LinqToDB.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Globalization;
 using System.Text;
+using System.Threading.Tasks;
 using WkHtmlToPdfDotNet;
 
 
@@ -30,7 +32,7 @@ namespace HIMS.Services.Report
             _pdfUtility = pdfUtility;
             //_FileUtility = fileUtility;
         }
-      
+
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
         {
@@ -478,7 +480,7 @@ namespace HIMS.Services.Report
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CertificateInformation", "CertificateInformation" + vDate, Orientation.Portrait);
                         break;
-                                
+
                     }
                 #endregion
 
@@ -1449,9 +1451,9 @@ namespace HIMS.Services.Report
                     }
 
                 #endregion
-              
 
-                    
+
+
 
 
                 //Pathology
@@ -1792,7 +1794,7 @@ namespace HIMS.Services.Report
             string[] headerList = model.headerList;
             string[] colList = model.colList;
             string[] totalList = model.totalFieldList;
-         //   string[] columnAlignments = model.columnAlignments;
+            //   string[] columnAlignments = model.columnAlignments;
             // string[] columnWidths = model.columnWidths;
             //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
@@ -1809,7 +1811,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
 
-           var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1820,7 +1822,7 @@ namespace HIMS.Services.Report
 
         }
 
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "",string[] columnWidths =null, string[] columnAlignments= null)
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -1885,8 +1887,8 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiTotalReportFormat.html":
                     {
-                        
-                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList,columnWidths));
+
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
                         items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
                         if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
                                                                                      //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
@@ -2176,7 +2178,7 @@ namespace HIMS.Services.Report
                 foreach (var group in groups)
                 {
                     table.Append("<tr style='border:1px solid black; color:black; background-color:#e6ffe6; font-weight:bold;'>");
-                     col = 1;  colspan = 1;
+                    col = 1; colspan = 1;
                     foreach (var colName in totalColList)
                     {
                         if (colName == "space")
@@ -3281,7 +3283,7 @@ namespace HIMS.Services.Report
 
         //}
 
-        private static string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -4674,7 +4676,7 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-             
+
                 case "CertificateInformationReport":
                     {
 
@@ -4690,14 +4692,14 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                        //    items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            //    items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["CertificateText"].ConvertToString()).Append("</td></tr>");
                         }
 
 
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{CertificateId}}", dt.GetColValue("CertificateId"));
-                     
+
                         html = html.Replace("{{PatientName}}", "<b>" + dt.GetColValue("PatientName") + "</b>");
                         html = html.Replace("{{AgeYear}}", "<b>" + dt.GetColValue("AgeYear") + "</b>");
                         html = html.Replace("{{DoctorName}}", "<b>" + dt.GetColValue("DoctorName") + "</b>");
@@ -5296,7 +5298,7 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                      //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
 
 
@@ -8004,10 +8006,12 @@ namespace HIMS.Services.Report
                         int i = 0, j = 0, k = 0, testlength = 0, m;
                         String Label = "", Suggchk = "", Suggestion = "";
                         string previousLabel = "", previoussubLabel = "";
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
 
-                        //var signature = _FileUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
 
-                        //html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
                         //html = html.Replace("{{ImgHeader}}", htmlHeader);
 
                         foreach (DataRow dr in dt.Rows)
@@ -9070,7 +9074,7 @@ namespace HIMS.Services.Report
             }
             return words;
         }
-      
+
 
         //public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         //{

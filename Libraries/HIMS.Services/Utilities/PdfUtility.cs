@@ -156,6 +156,23 @@ namespace HIMS.Services.Utilities
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }
+       
+        public string GetBase64FromFolder(string Folder, string filename)
+        {
+            var DestinationPath = "";
+            //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = _configuration["StorageBaseUrl"];
+
+            string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
+            string fullFilePath = Path.Combine(FilePath, filename);
+
+            if (!File.Exists(fullFilePath))
+                return "";
+
+            byte[] imageArray = File.ReadAllBytes(fullFilePath);
+            return "data:image/png;base64," + Convert.ToBase64String(imageArray);
+        }
 
 
 
