@@ -6,50 +6,50 @@ using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
-using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+
 
 namespace HIMS.Services.Nursing
 {
     public partial class NursingConsentService : INursingConsentService
     {
         private readonly Data.Models.HIMSDbContext _context;
-
-
         public NursingConsentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-
-
-        //public async Task<List<MConsentMaster>> GetConsentByDepartment(int DeptId)
-        //{
-        //    return await _context.MConsentMasters.Include(x => x.MDepartmentMasters).Where(y => y.IsActive.Value && y.MDepartmentMasters.Any(y => y.DepartmentId == DeptId)).ToListAsync();
-        //}
-
         public virtual async Task<IPagedList<ConsentDeptListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ConsentDeptListDto>(model, "m_rtrv_ConsentMasterList");
         }
 
 
-        //public virtual async Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TConsentInformations.Add(ObjTConsentInformation);
-        //        await _Context.SaveChangesAsync();
+        public virtual async Task<List<MConsentMaster>> GetConsent(int DeptId)
+        {
+            var qry = from s in _context.MConsentMasters
+              .Where(x => (x.DepartmentId == DeptId))
+                      select new MConsentMaster()
+                      {
+                          ConsentId = s.ConsentId,
+                          ConsentName = s.ConsentName,
+                          ConsentDesc = s.ConsentDesc,
 
-        //        scope.Complete();
-        //    }
-        //}
+                      };
+            return await qry.Take(50).ToListAsync();
+
+
+
+        }
+
+
 
         public virtual async Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string UserName)
         {

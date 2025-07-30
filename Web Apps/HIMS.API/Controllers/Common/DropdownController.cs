@@ -94,6 +94,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOtSiteDescriptionMaster> _MOtSiteDescriptionMaster;
         private readonly IGenericService<MOtSurgeryCategoryMaster> _MOtSurgeryCategoryMaster;
         private readonly IGenericService<MOtSurgeryMaster> _MOtSurgeryMaster;
+        private readonly IGenericService<LocationMaster> _LocationMaster;
+
 
 
 
@@ -132,7 +134,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MCampMaster> iMCampMaster,
                               IGenericService<MOtSiteDescriptionMaster> iMOtSiteDescriptionMaster,
                               IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster,
-                              IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster
+                              IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster,
+                              IGenericService<LocationMaster> iLocationMaster
+
 
 
 
@@ -213,6 +217,8 @@ namespace HIMS.API.Controllers.Common
             _MOtSiteDescriptionMaster = iMOtSiteDescriptionMaster;
             _MOtSurgeryCategoryMaster = iMOtSurgeryCategoryMaster;
             _MOtSurgeryMaster = iMOtSurgeryMaster;
+            _LocationMaster = iLocationMaster;
+
 
 
 
@@ -340,6 +346,8 @@ namespace HIMS.API.Controllers.Common
                 "SiteDescription" => (await _MOtSiteDescriptionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSiteDescriptionMaster.SiteDescId), nameof(MOtSiteDescriptionMaster.SiteDescriptionName)),
                 "SurgeryCategory" => (await _MOtSurgeryCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryCategoryMaster.SurgeryCategoryId), nameof(MOtSurgeryCategoryMaster.SurgeryCategoryName)),
                 "SurgeryMaster" => (await _MOtSurgeryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryMaster.SurgeryId), nameof(MOtSurgeryMaster.SurgeryName)),
+                "Location" => (await _LocationMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(LocationMaster.LocationId), nameof(LocationMaster.LocationName)),
+
 
 
 

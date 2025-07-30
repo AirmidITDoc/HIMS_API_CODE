@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 using static LinqToDB.Sql;
@@ -40,16 +41,42 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "m_Rtrv_CanteenRequestListFromWard");
         }
+        //public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TCanteenRequestHeaders.Add(objCanteen);
+        //        await _context.SaveChangesAsync();
+
+
+        //        scope.Complete();
+        //    }
+        //}
         public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TCanteenRequestHeaders.Add(objCanteen);
-                await _context.SaveChangesAsync();
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
 
-                scope.Complete();
+            // Generate ReqNo before adding to DB
+            var last = await _context.TCanteenRequestHeaders
+                .OrderByDescending(x => x.ReqId)
+                .FirstOrDefaultAsync();
+
+            int lastNo = 0;
+            if (last?.ReqNo != null)
+            {
+                var match = Regex.Match(last.ReqNo, @"\d+");
+                if (match.Success) lastNo = int.Parse(match.Value);
             }
+            objCanteen.ReqNo = (lastNo + 1).ToString();
+
+            _context.TCanteenRequestHeaders.Add(objCanteen);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
+
 
         public virtual async Task<List<CanteenListDto>> GetItemList(string ItemName)
         {

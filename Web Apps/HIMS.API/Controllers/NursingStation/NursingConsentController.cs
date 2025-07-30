@@ -35,56 +35,43 @@ namespace HIMS.API.Controllers.NursingStation
             _NursingConsentService = repository;
 
         }
+        [HttpGet("GetMConsentMasterList")]
+        public async Task<ApiResponse> GetMConsentMaster(int DeptId)
+        {
+            var resultList = await _NursingConsentService.GetConsent(DeptId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"ConsentMasterList.", resultList.Select(x => new
+            {
+                x.ConsentId,
+                x.ConsentName,
+                x.ConsentDesc,
 
+            }));
+        }
 
-        //[HttpGet("DeptConsentList")]
-        //public async Task<ApiResponse> DeptConsentList(int DeptId)
-        //{
-        //    var resultList = await _NursingConsentService.GetConsentByDepartment(DeptId);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.ConsentId, text = x.ConsentName }));
-        //}
-        [HttpGet("DeptConsentList")]
-        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+         [HttpGet("DeptConsentList")]
+        //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConsentDeptListDto> SupplierList = await _NursingConsentService.GetListAsync(objGrid);
-            return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
+            return Ok(SupplierList.ToGridResponse(objGrid, "DeptConsentList "));
         }
-        //[HttpPost("InsertEDMX")]
-        ////    [Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertEDMX(ConsentInformationModel obj)
-        //{
-        //    TConsentInformation model = obj.MapTo<TConsentInformation>();
-        //    if (obj.ConsentId == 0)
-        //    {
-        //        model.CreatedDatetime = DateTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        //model.AddedBy = CurrentUserId;
-        //        //model.IsActive = true;
-        //        await _NursingConsentService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Supplier Name  added successfully.");
-        //}
+      
 
         [HttpPost("InsertConsent")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse>insert(ConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
-            //    List<AddCharge> Models = obj.AddCharge.MapTo<List<AddCharge>>();
 
             if (obj.ConsentId == 0)
             {
                 Model.CreatedDatetime = DateTime.Now;
                 Model.CreatedBy = CurrentUserId;
-                ///    Model.AddedBy = CurrentUserId;
                 await _NursingConsentService.InsertAsync(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Added successfully.",Model);
         }
 
 
@@ -93,18 +80,16 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> Update(UpdateConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
-            //    List<AddCharge> Models = obj.AddCharge.MapTo<List<AddCharge>>();
 
             if (obj.ConsentId != 0)
             {
                 Model.ModifiedDateTime = DateTime.Now;
                 Model.ModifiedBy = CurrentUserId;
-                ///    Model.AddedBy = CurrentUserId;
                 await _NursingConsentService.UpdateAsync(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", Model);
         }
 
         [HttpPost("ConsentpatientInfoList")]

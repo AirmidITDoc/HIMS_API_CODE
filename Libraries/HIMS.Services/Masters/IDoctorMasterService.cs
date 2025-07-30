@@ -25,6 +25,7 @@ namespace HIMS.Services.Masters
         Task<IPagedList<DoctorMaster>> GetAllPagedAsync(GridRequestModel objGrid);
         Task<IPagedList<LvwDoctorMasterList>> GetListAsync1(GridRequestModel model);
         Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId);
+
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel objGrid);
         Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);

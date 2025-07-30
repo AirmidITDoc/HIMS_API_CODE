@@ -279,6 +279,7 @@ namespace HIMS.Services.OutPatient
 
         }
 
+     
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var qry = from s in _context.ServiceMasters
@@ -305,7 +306,7 @@ namespace HIMS.Services.OutPatient
                       };
             return await qry.Take(50).ToListAsync();
         }
-
+       
         public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -13,14 +13,12 @@ namespace HIMS.Services.Nursing
     public partial interface INursingConsentService
     {
 
-     //   Task<List<MConsentMaster>> GetConsentByDepartment(int DeptId);
         Task<IPagedList<ConsentDeptListDto>> GetListAsync(GridRequestModel objGrid);
-
-        //    Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
         Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
-
         Task UpdateAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
         Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel objGrid);
+        Task<List<MConsentMaster>> GetConsent(int DeptId);
+
 
 
 
