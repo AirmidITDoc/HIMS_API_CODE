@@ -45,9 +45,7 @@ namespace HIMS.Data.DTO.OPPatient
         public long? ReligionId { get; set; }
         public long? AreaId { get; set; }
         public string? AadharCardNo { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
-        public int? CreatedBy { get; set; }
+      
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
@@ -72,6 +70,9 @@ namespace HIMS.Data.DTO.OPPatient
         public string? MedTourismResidentialAddress { get; set; }
         public string? MedTourismOfficeWorkAddress { get; set; }
         public string? Photo { get; set; }
+        public long AddedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
 
 
