@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationList")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RegistrationListDto> RegistrationList = await _IRegistrationService.GetListAsync(objGrid);
