@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.IPPatient
             _OTBookingRequestService = repository;
         }
         [HttpPost("OtbookingRequestList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OTBookingRequestListDto> OTBookinglist = await _OTBookingRequestService.GetListAsync(objGrid);
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(OTBookingRequestModel obj)
         {
             TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTRequest", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTBookingRequestModel obj)
         {
             TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(OTBookingRequestCancel obj)
         {
             TOtbookingRequest model = new();
