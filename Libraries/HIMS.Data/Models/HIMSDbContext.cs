@@ -15276,6 +15276,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DoctorEmrstatus).HasColumnName("DoctorEMRStatus");
+
                 entity.Property(e => e.FirstFollowupVisit).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.FollowupDate)

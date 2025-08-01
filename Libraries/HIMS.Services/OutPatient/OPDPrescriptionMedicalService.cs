@@ -96,7 +96,7 @@ namespace HIMS.Services.OutPatient
                 odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
 
                 string[] VDetailEntity = { "RegId","VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","Opdno","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate", "ClassId", "DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "Height","Pweight","Bmi","Bsl","SpO2", "Temp", "Pulse", "Bp",
-                "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","CheckingStatus","DoctorEMRStatus","CampId","CrossConsultantDrId"};
                 var VEntity = ObjVisitDetail.ToDictionary();
                 foreach (var rProperty in VDetailEntity)
                 {

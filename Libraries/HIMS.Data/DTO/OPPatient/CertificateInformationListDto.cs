@@ -14,6 +14,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? CertificateTime { get; set; }
         public string? CertificateName { get; set; }
         public string? CertificateText { get; set; }
+        public string? DoctorName { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
       

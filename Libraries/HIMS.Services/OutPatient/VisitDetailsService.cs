@@ -109,7 +109,7 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "CheckingStatus", "DoctorEMRStatus" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -142,7 +142,7 @@ namespace HIMS.Services.OutPatient
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
             //string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp","CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "CheckingStatus", "DoctorEMRStatus" };
 
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
@@ -343,7 +343,7 @@ namespace HIMS.Services.OutPatient
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray","CheckInTime","CheckOutTime","ConStartTime", 
-                                                "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+                                                "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","CheckingStatus","DoctorEMRStatus"};
             var entity = objCrossConsultation.ToDictionary();
             foreach (var rProperty in rEntity)
             {

@@ -31,7 +31,7 @@ namespace HIMS.Services.OPPatient
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
             "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp","CheckInTime","CheckOutTime","ConStartTime",
-              "ConEndTime","CampId","CrossConsultantDrId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+              "ConEndTime","CampId","CrossConsultantDrId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","CheckingStatus","DoctorEMRStatus" };
             var entity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -48,7 +48,7 @@ namespace HIMS.Services.OPPatient
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
             "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp",
-            "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CampId","CrossConsultantDrId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","ConsultantDocId","DepartmentId"};
+            "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CampId","CrossConsultantDrId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","ConsultantDocId","DepartmentId","CheckingStatus","DoctorEMRStatus"};
             var entity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rEntity)
             {
