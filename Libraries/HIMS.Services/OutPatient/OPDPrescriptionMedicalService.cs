@@ -28,6 +28,11 @@ namespace HIMS.Services.OutPatient
         public virtual async Task<IPagedList<OPRequestListDto>> TOprequestList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OPRequestListDto>(model, "ps_Rtrv_OPRequestList");
+
+        }
+        public virtual async Task<IPagedList<OPRequestListFromEMRDto>> GetListAsyncE(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPRequestListFromEMRDto>(model, "ps_Rtrv_OPRequestListFromEMR");
         }
         public virtual async Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel model)
         {
