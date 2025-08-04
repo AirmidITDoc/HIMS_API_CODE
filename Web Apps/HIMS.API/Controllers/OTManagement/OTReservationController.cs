@@ -14,9 +14,14 @@ using HIMS.API.Models.IPPatient;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using HIMS.API.Models.OTManagement;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers.IPPatient
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
+
     public class OTReservationController : BaseController
     {
 
