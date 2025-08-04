@@ -93,5 +93,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? MobileNo { get; set; }
+
+        public DateTime? DateofBirth { get; set; }
     }
 }

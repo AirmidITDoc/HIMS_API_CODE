@@ -158,6 +158,8 @@ namespace HIMS.Services.IPPatient
                           RoomName = rm.RoomName,
                           BedName = b.BedName,
                           Age = r.Age,
+                          AgeMonth = r.AgeMonth,
+                          AgeDay = r.AgeDay,
                           GenderName = g.GenderName
 
                       };

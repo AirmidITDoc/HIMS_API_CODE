@@ -121,6 +121,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? RoomName { get; set; }
         public string? BedName { get; set; }
         public string? Age { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
         public string? GenderName { get; set; }
         public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
     }

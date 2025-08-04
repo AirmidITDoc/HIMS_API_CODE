@@ -48,8 +48,8 @@ namespace HIMS.Services.OPPatient
                     MobileNo = x.MobileNo,
                     AgeYear = x.AgeYear,
                     AgeMonth = x.AgeMonth,
-                    AgeDay = x.AgeDay
-
+                    AgeDay = x.AgeDay,
+                    DateofBirth = x.DateofBirth
                 })
                .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
                .ThenBy(x => x.FirstName).ToListAsync();
