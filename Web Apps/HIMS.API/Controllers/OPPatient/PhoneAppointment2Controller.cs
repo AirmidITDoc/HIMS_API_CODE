@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -147,7 +149,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IPhoneAppointment2Service.SearchPhoneApp(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, PhAppId= x.AppId }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, PhAppId= x.AppId, DoctorId= x.DoctorId, DepartmentId= x.DepartmentId }));
         }
         [HttpGet("get-appoinments")]
         [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
