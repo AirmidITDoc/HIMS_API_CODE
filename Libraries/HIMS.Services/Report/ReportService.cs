@@ -1914,8 +1914,8 @@ namespace HIMS.Services.Report
 
             html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
 
-            html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
-            html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+            html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+            html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
             return html;
 
         }
