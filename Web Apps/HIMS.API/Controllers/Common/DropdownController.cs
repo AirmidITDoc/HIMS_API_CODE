@@ -95,6 +95,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOtSurgeryCategoryMaster> _MOtSurgeryCategoryMaster;
         private readonly IGenericService<MOtSurgeryMaster> _MOtSurgeryMaster;
         private readonly IGenericService<LocationMaster> _LocationMaster;
+        private readonly IGenericService<MOttableMaster> _MOttableMaster;
+
 
 
 
@@ -135,7 +137,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOtSiteDescriptionMaster> iMOtSiteDescriptionMaster,
                               IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster,
                               IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster,
-                              IGenericService<LocationMaster> iLocationMaster
+                              IGenericService<LocationMaster> iLocationMaster,
+                              IGenericService<MOttableMaster> iMOttableMaster
+
 
 
 
@@ -218,6 +222,7 @@ namespace HIMS.API.Controllers.Common
             _MOtSurgeryCategoryMaster = iMOtSurgeryCategoryMaster;
             _MOtSurgeryMaster = iMOtSurgeryMaster;
             _LocationMaster = iLocationMaster;
+            _MOttableMaster = iMOttableMaster;
 
 
 
@@ -347,6 +352,8 @@ namespace HIMS.API.Controllers.Common
                 "SurgeryCategory" => (await _MOtSurgeryCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryCategoryMaster.SurgeryCategoryId), nameof(MOtSurgeryCategoryMaster.SurgeryCategoryName)),
                 "SurgeryMaster" => (await _MOtSurgeryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSurgeryMaster.SurgeryId), nameof(MOtSurgeryMaster.SurgeryName)),
                 "Location" => (await _LocationMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(LocationMaster.LocationId), nameof(LocationMaster.LocationName)),
+                "OttableMaster" => (await _LocationMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOttableMaster.OttableId), nameof(MOttableMaster.OttableName)),
+
 
 
 
