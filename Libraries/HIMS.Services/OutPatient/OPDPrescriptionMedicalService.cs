@@ -120,6 +120,7 @@ namespace HIMS.Services.OutPatient
                 {
                     PrescriptionEntity.Remove(rProperty);
                 }
+                PrescriptionEntity["CreatedBy"] = UserId;
                 odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
 
             }
