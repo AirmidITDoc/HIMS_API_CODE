@@ -31,5 +31,11 @@ namespace HIMS.API.Models.Common
         Doctor = 1,
         [Description("Doctors\\Signature")]
         Doctor_Signature = 2,
+        [Description("Patient\\Photo")]
+        Patient_Photo = 3,
+        [Description("Patient\\Signature")]
+        Patient_Signature = 4,
+        [Description("Patient\\Files")]
+        Patient_Files = 5,
     }
 }
