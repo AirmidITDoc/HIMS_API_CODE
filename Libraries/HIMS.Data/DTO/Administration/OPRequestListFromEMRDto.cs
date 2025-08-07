@@ -15,6 +15,11 @@ namespace HIMS.Data.DTO.Administration
         public string ServiceName { get; set; }
         public long CreatedBy { get; set; }
         public string UserName { get; set; }
+        public decimal ClassRate { get; set; }
+        public long? IsPathology { get; set; }
+        public long? IsRadiology { get; set; }
+        public long? IsPackage { get; set; }
+        public string ClassName { get; set; }
 
 
     }

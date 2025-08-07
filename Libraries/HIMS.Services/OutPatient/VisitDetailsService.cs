@@ -375,6 +375,7 @@ namespace HIMS.Services.OutPatient
             //  Update only the required fields
             existing.ConEndTime = ObjVisitDetail.ConEndTime;
             existing.CheckOutTime = ObjVisitDetail.CheckOutTime;
+            existing.IsMark = true;
             await _context.SaveChangesAsync();
             scope.Complete();
         }

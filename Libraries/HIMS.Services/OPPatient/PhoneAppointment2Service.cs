@@ -42,22 +42,6 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task<List<PhoneAutoCompleteDto>> SearchPhoneApp(string str)
         {
-            //return await this._context.TPhoneAppointments
-            //    .Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)
-            //    || x.RegNo.ToLower().Contains(str)
-            //    || x.MobileNo.ToLower().Contains(str))
-            //    .Where(x => x.PhAppDate == DateTime.Today) // Filter by today's date
-            //    .Take(25)
-            //    .Select(x => new PhoneAutoCompleteDto()
-            //    {
-            //        FirstName = x.FirstName,
-            //        Id = x.PhoneAppId,
-            //        LastName = x.LastName,
-            //        Mobile = x.MobileNo,
-            //        RegNo = string.IsNullOrEmpty(x.RegNo) ? "0" : x.RegNo
-            //    }).OrderBy(x => x.FirstName).ToListAsync();
-
-
             var qry = from d in this._context.TPhoneAppointments
                       join v in this._context.VisitDetails on d.PhoneAppId equals v.PhoneAppId into visit
                       from v in visit.DefaultIfEmpty()
@@ -73,7 +57,9 @@ namespace HIMS.Services.OPPatient
                           Id = d.PhoneAppId,
                           LastName = d.LastName,
                           Mobile = d.MobileNo,
-                          RegNo = string.IsNullOrEmpty(d.RegNo) ? "0" : d.RegNo
+                          RegNo = string.IsNullOrEmpty(d.RegNo) ? "0" : d.RegNo,
+                          DepartmentId = d.DepartmentId,
+                          DoctorId = d.DoctorId
                       };
             return await qry.Take(25).ToListAsync();
 
