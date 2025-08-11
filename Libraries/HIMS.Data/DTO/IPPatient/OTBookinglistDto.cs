@@ -36,7 +36,20 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
         public string? SurgeryName { get; set; }
+        public long? AdmissionID { get; set; }
         public string? OTTableName { get; set; }
+        public string? PatientName { get; set; }
+        public string? RegNo { get; set; }
+        public long? DoctorId { get; set; }
+        public string? SurgeonName { get; set; }
+        public string? SurgeonName1 { get; set; }
+        public string? AnathesDrName { get; set; }
+        public string? AnathesDrName1 { get; set; }
+        public long? InstructionId { get; set; }
+
+
+
+
 
 
 
