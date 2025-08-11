@@ -217,7 +217,7 @@ namespace HIMS.API.Controllers.Report
             {
                 #region"OP Reports"
                 case "RegistrationForm":
-                case "StickerPrint":
+                case "OPStickerPrint":
                 case "RegistrationReport":
                 case "AppointmentListReport":
                 case "DoctorWiseVisitReport":
@@ -331,6 +331,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "IpCasepaperReport":
                 //case "IpCasepaperReport1":
+                case "IPStickerPrint":
 
                 case "IptemplateCasepaperReport":
                 case "AdmissionList":
