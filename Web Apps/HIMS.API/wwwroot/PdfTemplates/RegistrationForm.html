@@ -36,31 +36,36 @@
                                         <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
                                             <tr>
                                                 <td style="padding: 2px;">
+                                                    <span style="font-weight: bold;">Patient Details :-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">UHID :</span>
                                                     <span>{{RegId}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">City :</span>
-                                                    <span>{{City}}</span>
+                                                    <span style="font-weight: bold;">City :</span>
+                                                    <span>{{CityName}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Reg Date :</span>
+                                                    <span style="font-weight: bold;">Reg Date :</span>
                                                     <span> {{RegDate}}</span>
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Patient Name :</span>
+                                                    <span style="font-weight: bold; ">Patient Name :</span>
                                                     <span>{{PatientName}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Address :</span>
+                                                    <span style="font-weight: bold;  ">Address :</span>
                                                     <span>{{Address}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Age / Gender : </span>
-                                                    <span>{{AgeYear}} Y| {{AgeMonth}} M|{{AgeDay}} D/ {{GenderName}}</span>
+                                                    <span style="font-weight: bold;  ">Age / Gender : </span>
+                                                    <span>{{AgeYear}} Y| {{AgeMonth}} M|{{AgeDay}} D| {{GenderName}}</span>
                                                 </td>
                                             </tr>
 
@@ -74,10 +79,111 @@
                                                     <span>{{PhoneNo}}</span>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div style="border-bottom: 1px solid #d4c3c3; margin-top: 4px;"></div>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
                                 </tr>
+                                <tr class="bill-info-row">
+                                    <td style="padding: 6px;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Emergency Details :-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkEmgContactPersonNameflag}}">
+                                                        Emergency Contact Person Name:
+                                                    </span>
+                                                    <span>{{EmgContactPersonName}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkEmgRelationshipIdflag}}">Relationship :</span>
+                                                    <span>{{EmgRelationshipId}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkEmgMobileNoflag}}">Mobile No :</span>
+                                                    <span> {{EmgMobileNo}}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkEngAddressflag}}">Address :</span>
+                                                    <span>{{EngAddress}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkEmgAadharCardNoflag}}">AadharCardNo:</span>
+                                                    <span>{{EmgAadharCardNo}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div style="border-bottom: 1px solid #d4c3c3; margin-top: 4px;"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="bill-info-row">
+                                    <td style="padding: 6px;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Medical Tourism Details :-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkMedTourismPassportNoflag}}">
+                                                        Passport Number
+                                                        :
+                                                    </span>
+                                                    <span>{{MedTourismPassportNo}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkMedTourismNationalityIDflag}}">
+                                                        Nationality ID Number
+                                                        :
+                                                    </span>
+                                                    <span>{{MedTourismNationalityID}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkMedTourismResidentialAddressflag}}">
+                                                        Residential Address :
+                                                    </span>
+                                                    <span> {{MedTourismResidentialAddress}}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkMedTourismCitizenshipflag}}">
+                                                    Citizenship :</span>
+                                                    <span>{{MedTourismCitizenship}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight: bold; display:{{chkMedTourismOfficeWorkAddressflag}}">
+                                                        Office/Work Address :
+                                                    </span>
+                                                    <span>{{MedTourismOfficeWorkAddress}}</span>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
                             </table>
+                                    <!--</td>
+                                </tr>
+                            </table>-->
 
                             <!-- QR Code inserted here -->
                             <div style="text-align: right; margin-top: 20px; margin-right: 20px;">
@@ -110,10 +216,9 @@
         </tr>
     </table>
 
-
     <table style="width: 100%; line-height: inherit; text-align: left; margin-top: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #101828;">
         <tr>
-            <footer style="margin-left: 70%; font-size: 19px;">
+            <footer style="margin-left: 70%; font-size: 20px;">
             <td style="padding: 6px; text-align: right;">
                 <b>Print Date : {{CurrentDate}}</b>
             </td>
@@ -126,8 +231,8 @@
         const qrData = "UHID: {{RegId}}, Name: {{PatientName}}, Mobile: {{MobileNo}}";
         new QRCode(document.getElementById("qrcode"), {
             text: qrData,
-            width: 100,
-            height: 100
+            width: 80,
+            height: 80
         });
     </script>
 </body>

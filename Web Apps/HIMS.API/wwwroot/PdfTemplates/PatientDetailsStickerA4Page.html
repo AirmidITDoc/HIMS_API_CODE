@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Labels A4</title>
+    <style>
+        /*@page {
+              size: A4;
+            size: 21cm 29.7cm;*/ /* or use: size: 21cm 29.7cm; */
+            /*margin: 5cm 0.3cm 4cm 0.3cm;*/ /* top, right, bottom, left */
+        /*}
+
+        body {
+            font-family: sans-serif;
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
+        }
+
+        table.label-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        td.label-cell {
+            width: 33%;
+            height: 3.3cm;
+            vertical-align: top;
+            padding: 0.5cm;
+            padding-left: 0.5cm;
+            box-sizing: border-box;
+        }
+
+        .label p {
+            margin: 3px 0;
+            font-weight: bold;
+        }
+
+        .label span {
+            font-weight: normal;
+        }*/
+        @page {
+            size: A4;
+            margin: 0.5cm; /* small margins to fit more content */
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 10pt; /* slightly smaller text */
+            margin: 0;
+            padding: 0;
+        }
+
+        table.label-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        td.label-cell {
+            width: 33%;
+            height: 3cm; /* fixed smaller height */
+            vertical-align: top;
+            padding: 0.3cm; /* reduced padding */
+            box-sizing: border-box;
+        }
+
+        .label p {
+            margin: 1px 0; /* tighter spacing */
+            font-weight: bold;
+        }
+
+        .label span {
+            font-weight: normal;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <table class="label-table">
+        <tbody>
+
+            <!-- Row 1 -->
+            <tr>
+                <td class="label-cell" style="padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-left: 1.2cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr>
+                <td class="label-cell" style="padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-left: 1.2cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr>
+                <td class="label-cell" style="padding-left: 0.4cm; padding-top: 0.6cm; ">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-left: 1.2cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Row 4 -->
+            <tr>
+                <td class="label-cell" style=" padding-top: 0.7cm; padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.6cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-left: 1.2cm; padding-top: 0.6cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Row 5 -->
+            <tr>
+                <td class="label-cell" style=" padding-top: 0.7cm; padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.6cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.6cm;padding-left:1.2cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Row 6 -->
+            <tr>
+                <td class="label-cell" style=" padding-top: 0.7cm; padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.7cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.7cm; padding-left: 1.2cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Row 7-->
+            <tr>
+                <td class="label-cell" style=" padding-top: 0.7cm; padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.7cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-top: 0.7cm; padding-left: 1.2cm; ">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Row 8 ----->
+            <tr>
+                <td class="label-cell" style=" padding-top: 0.8cm; padding-left: 0.4cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style=" padding-top: 0.8cm;">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+                <td class="label-cell" style="padding-top: 0.8cm; padding-left: 1.2cm; ">
+                    <div class="label">
+                        <p>UHID <span>{{RegNo}}</span></p>
+                        <p>Pt Name <span>{{PatientName}}</span></p>
+                        <p>IP/No <span>{{IPDNo}}</span></p>
+                        <p>Age/Gender <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</span></p>
+                        <p>DOA <span>{{DOA}}</span></p>
+                        <p>Dr Name <span>{{AdmittedDoctorName}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <!-- Repeat more <tr> for additional rows -->
+        </tbody>
+    </table>
+
+</body>
+</html>
+
