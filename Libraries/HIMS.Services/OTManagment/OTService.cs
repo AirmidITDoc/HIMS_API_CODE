@@ -24,7 +24,7 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<OTBookinglistDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "m_Rtrv_OTBookinglist");
+            return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "A_Rtrv_OTBookinglist");
         }
        
         public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
