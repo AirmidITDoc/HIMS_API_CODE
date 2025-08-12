@@ -3419,7 +3419,7 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-                case "StickerPrint":
+                case "IPStickerPrint":
                     {
 
 
