@@ -43,6 +43,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long DoctorTypeId { get; set; }
 
 
+
     }
 
     public class OTBookingRequestEmergencyListDto
