@@ -31,5 +31,6 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
+        public long? DepartmentId { get; set; }
     }
 }
