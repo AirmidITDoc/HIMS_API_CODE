@@ -18,8 +18,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long? OpIpId { get; set; }
         public bool? OpIpType { get; set; }
         public DateTime? Opdate { get; set; }
-        //public DateTime? OpstartTime { get; set; }
-        //public DateTime? OpendTime { get; set; }
+        public DateTime? OpstartTime { get; set; }
+        public DateTime? OpendTime { get; set; }
         public long? OTTypeID { get; set; }
 
         
@@ -29,7 +29,6 @@ namespace HIMS.Data.DTO.IPPatient
         //public long? SurgeonId1 { get; set; }
         public long? SurgeryId { get; set; }
         //public long? AnesthTypeId { get; set; }
-        //public string? Instruction { get; set; }
         //public long? OttypeId { get; set; }
         //public bool? UnBooking { get; set; }
         public int? CreatedBy { get; set; }
@@ -51,6 +50,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AnestheticsDr { get; set; }
         public string AnestheticsDr1 { get; set; }
         public long? InstructionId { get; set; }
+        public string? Instruction { get; set; }
+
 
 
 
