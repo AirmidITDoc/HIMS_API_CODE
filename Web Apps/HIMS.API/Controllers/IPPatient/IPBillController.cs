@@ -359,7 +359,7 @@ namespace HIMS.API.Controllers.IPPatient
             AddCharge Model = obj.MapTo<AddCharge>();
 
 
-            if (obj.OpdIpdId == 0)
+            if (obj.OpdIpdId != 0)
             {
 
                 Model.AddedBy = CurrentUserId;
