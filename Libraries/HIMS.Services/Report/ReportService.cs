@@ -5526,6 +5526,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         //html = html.Replace("{{PatientType}}", Bills.GetColValue("PatientType"));
                         html = html.Replace("{{OP_IP_Type}}", dt.GetColValue("OP_IP_Type"));
+                        html = html.Replace("{{OPIPID}}", dt.GetColValue("OPIPID"));
+
                         //html = html.Replace("{{RefDocName}}", Bills.GetColValue("RefDocName"));
                         //html = html.Replace("{{CompanyName}}", Bills.GetColValue("CompanyName"));
 
