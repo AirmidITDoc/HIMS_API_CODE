@@ -41,6 +41,8 @@ namespace HIMS.Data.DTO.Administration
         public long RefundCount { get; set; }
         public string CashCounterName { get; set; }
         public long BillNo { get; set; }
+        public long CompanyId { get; set; }
+
 
     }
 }
