@@ -20,5 +20,6 @@ namespace HIMS.Services.IPPatient
         Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword);
         Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword);
 
+
     }
 }
