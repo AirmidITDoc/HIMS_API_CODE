@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Add API
         [HttpPost("NursingNoteInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingNoteModel obj)
         {
             TNurNote model = obj.MapTo<TNurNote>();
@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingNoteUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNurNote model = obj.MapTo<TNurNote>();
@@ -182,7 +182,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNoteInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -199,7 +199,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("DoctorNoteUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
