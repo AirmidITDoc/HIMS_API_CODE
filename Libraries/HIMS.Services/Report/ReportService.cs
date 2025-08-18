@@ -1617,14 +1617,6 @@ namespace HIMS.Services.Report
                 case "NurMaterialConsumption":
                     {
 
-                        //model.RepoertName = "Nursing Material Consumption Report ";
-                        //string[] headerList = Array.Empty<string>();
-                        //string[] colList = Array.Empty<string>();
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MaterialConsumptionReport.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("rptPrintMaterialConsumption", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurMaterialConsumption", "NurMaterialConsumption", Orientation.Landscape);
-                        //break;
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MaterialConsumptionReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -1645,12 +1637,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Nursing Lab Request Report ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("rptLabRequestList", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurLabRequest", "NurLabRequest", Orientation.Landscape);
-                        //break;
-
+                      
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
@@ -8705,13 +8692,13 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: center;padding: 3px;height:10px;text-align:center;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["PerUnitMRPRate"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["MRPTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["PerUnitLandedRate"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["LandedTotalAmount"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: center;padding: 3px;height:10px;text-align:center;font-size:20px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle;font-size:20px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: center;font-size:20px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;font-size:20px;\">").Append(dr["PerUnitMRPRate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["MRPTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["PerUnitLandedRate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["LandedTotalAmount"].ConvertToString()).Append("</td></tr>");
 
 
 
@@ -8752,8 +8739,8 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:20px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:20px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td></tr>");
 
                         }
 
