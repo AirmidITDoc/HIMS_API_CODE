@@ -18,7 +18,7 @@ namespace HIMS.Services.Notification
             else
                 return await _context.NotificationMasters.Where(x => x.UserId == UserId).OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
-        public virtual async Task ReadNotification(int Id)
+        public virtual async Task ReadNotification(long Id)
         {
             NotificationMaster obj = await _context.NotificationMasters.FindAsync(Id);
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

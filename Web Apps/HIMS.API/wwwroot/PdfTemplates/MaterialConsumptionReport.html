@@ -18,7 +18,7 @@
                 <tr class="title-date-row">
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 16px">
+                            <tr style="font-size: 22px">
                                 <td style="border-bottom: 1px solid #000; padding: 6px; ">
                                     <b>
                                         MATERIAL CONSUMPTION REPORT
@@ -36,43 +36,53 @@
                 </tr>
                 <tr class="bill-info-row">
                     <td>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Patient Name:</span>
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;">Reg No:</span>
+                                    <span style="font-weight: bold;">UHID:</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                             </tr>
                             <!--<tr>
-                    <td style="padding: 2px;">
-                        <span>ConsumptionTime:</span>
-                        <span>{{ConsumptionTime}}</span>
-                    </td>
+        <td style="padding: 2px;">
+            <span>ConsumptionTime:</span>
+            <span>{{ConsumptionTime}}</span>
+        </td>
 
-                </tr>-->
+    </tr>-->
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;">StoreName:</span>
+                                    <span style="font-weight: bold;">From StoreName:</span>
                                     <span>{{StoreName}}</span>
                                 </td>
+
+
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;">Patient Type:</span>
-                                    <span>{{PatientType}}</span>
+                                    <span style="font-weight: bold;">ConsumptionTime:</span>
+                                    <span>{{ConsumptionTime}}</span>
                                 </td>
+
                             </tr>
+
+                            <!--<td style="padding: 2px;">
+        <span style="font-weight: bold;">Patient Type:</span>
+        <span>{{PatientType}}</span>
+    </td>-->
+</tr>
 
                         </table>
                     </td>
                 </tr>
+            <hr />
                 <tr class="bill-table-row">
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
 
-                            <tr>
+                            <tr style="font-size:22px;font-weight:bold;">
                                 <td style="border: 1px solid #000; text-align: center; padding: 6px;">Sr.No</td>
                                 <td style="border: 1px solid #000; text-align: center; padding: 6px;">
                                     Item Name
@@ -87,30 +97,30 @@
                             </tr>
                             <!--cornflowerblue-->
                             {{Items}}
-                            <tr style="border: 1px solid black;">
+                        <tr style="border: 1px solid black;font-size:22px;font-weight:bold;">
 
-                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                </td>
-                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                </td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                            </td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                            </td>
 
-                                <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                </td>
-                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
-                                    Total
-                                </td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                            </td>
+                            <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                Total
+                            </td>
 
-                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
-                                    {{T_TotalMrpAmount}}
-                                </td>
-                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
-                                </td>
-                                <td style="border: 1px solid #000; text-align: center; padding: 6px;">
-                                    {{T_TotalLandAmount}}
-                                </td>
+                            <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                {{T_TotalMrpAmount}}
+                            </td>
+                            <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                            </td>
+                            <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                {{T_TotalLandAmount}}
+                            </td>
 
 
-                            </tr>
+                        </tr>
 
 
                         </table>

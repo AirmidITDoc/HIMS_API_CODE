@@ -35,6 +35,14 @@ namespace HIMS.API.Controllers.Notification
             var Count = await _repository.UnreadCount(CurrentUserId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Notification List", new { Count, List });
         }
-        
+        [HttpPost]
+        [Route("read")]
+        [Permission]
+        public async Task<ApiResponse> ReadNotification([FromBody]long Id)
+        {
+            await _repository.ReadNotification(Id);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Notification List");
+        }
+
     }
 }

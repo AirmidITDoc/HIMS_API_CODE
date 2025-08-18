@@ -442,14 +442,6 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescription" + vDate, Orientation.Portrait);
 
 
-
-
-
-
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-
-
                         break;
                     }
                 #endregion
@@ -469,13 +461,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
-
-
-
-
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-
 
                         break;
                     }
@@ -660,10 +645,22 @@ namespace HIMS.Services.Report
                 case "DoctorNotesReceipt":
                     {
 
-                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        //string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorNoteReceipt.html");
+                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
+                        //break;
+
+
+                        string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorNoteReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -673,10 +670,15 @@ namespace HIMS.Services.Report
                 case "NursingNotesReceipt":
                     {
 
-                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                      
+                        string[] colList = { };
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NursingNoteReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rpt_T_NursingNotesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -1600,14 +1602,6 @@ namespace HIMS.Services.Report
                 case "NurMaterialConsumption":
                     {
 
-                        //model.RepoertName = "Nursing Material Consumption Report ";
-                        //string[] headerList = Array.Empty<string>();
-                        //string[] colList = Array.Empty<string>();
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MaterialConsumptionReport.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("rptPrintMaterialConsumption", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurMaterialConsumption", "NurMaterialConsumption", Orientation.Landscape);
-                        //break;
                         string[] colList = { };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MaterialConsumptionReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
@@ -1628,12 +1622,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Nursing Lab Request Report ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("rptLabRequestList", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurLabRequest", "NurLabRequest", Orientation.Landscape);
-                        //break;
-
+                      
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
@@ -4645,10 +4634,7 @@ namespace HIMS.Services.Report
                             //    i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
                             items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
-                          //  items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:20px;\"><td style=\"vertical-align: top;padding: 6px;;height: 20px;text-align:left;font-size:20px;padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">")
-                    .Append(dr["DrugName"].ConvertToString())
-                    .Append("</td>");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
@@ -4662,8 +4648,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
 
 
-                            //    j++;
-                            //}
+                            
 
 
                         }
@@ -4772,11 +4757,13 @@ namespace HIMS.Services.Report
                             //{
 
                             //    i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:20px;\"><td style=\"vertical-align: top;padding: 6px;;height: 20px;text-align:left;font-size:20px;padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
-
+                            items.Append("</tr>");
                             if (dr["ItemGenericName"].ConvertToString() != null)
                             {
                                 items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
@@ -5593,8 +5580,8 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:22px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:22px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
 
                         }
                         html = html.Replace("{{Items}}", items.ToString());
@@ -5602,7 +5589,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                        html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{TDate}}", dt.GetColValue("TTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
@@ -5614,12 +5602,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         return html;
-
-
-                        //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
                     }
 
@@ -5639,8 +5623,8 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["NursingNotes"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:20px;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:22px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:22px;\">").Append(dr["NursingNotes"].ConvertToString()).Append("</td></tr>");
 
                             html = html.Replace("{{Items}}", items.ToString());
                             html = html.Replace("{{AdmId}}", dt.GetColValue("AdmId"));
@@ -5665,12 +5649,7 @@ namespace HIMS.Services.Report
                             return html;
 
 
-                            //string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                            //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-
                         }
-
-
 
 
                     }
@@ -8696,13 +8675,13 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: center;padding: 3px;height:10px;text-align:center;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;\">").Append(dr["PerUnitMRPRate"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["MRPTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["PerUnitLandedRate"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["LandedTotalAmount"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: center;padding: 3px;height:10px;text-align:center;font-size:20px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle;font-size:20px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:3px;height:10px;vertical-align:middle;text-align: center;font-size:20px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;text-align:center;vertical-align:middle;padding:3px;height:10px;font-size:20px;\">").Append(dr["PerUnitMRPRate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["MRPTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["PerUnitLandedRate"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;font-size:20px;\">").Append(dr["LandedTotalAmount"].ConvertToString()).Append("</td></tr>");
 
 
 
@@ -8743,8 +8722,8 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:20px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:20px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td></tr>");
 
                         }
 
