@@ -19,7 +19,7 @@ namespace HIMS.Services.IPPatient
         Task UpdateAdmissionAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword);
         Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword);
-
+        Task<PatientAdmittedListSearchDto> PatientByAdmissionId(long AdmissionId);
 
     }
 }
