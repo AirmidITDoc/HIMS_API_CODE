@@ -28,7 +28,7 @@
                         <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Reg No. : </span>
+                                    <span style="font-weight:bold;">UHID. : </span>
                                     <span>{{RegNo}} </span>
                                 </td>
                                 <td style="padding: 2px;">
@@ -49,30 +49,32 @@
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">AdmittedDocName : </span>
-                                    <span>{{AdmittedDocName}}</span>
+                                    <span style="font-weight:bold;">Age|Gender :</span>
+                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
                                 </td>
+                               
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Req Date: </span>
                                     <span>{{ReqDate}}</span>
                                 </td>
-                              
+
 
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">AdmittedDocName : </span>
+                                    <span>{{AdmittedDocName}}</span>
+                                </td>
+                                <!--<td style="padding: 2px;">
                                     <span style="font-weight:bold;">TariffWard : </span>
                                     <span>{{RoomName}}</span>
-                                </td>
+                                </td>-->
 
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ward/Bed : </span>
                                     <span>{{RoomName}} / {{BedName}}</span>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Age|Gender :</span>
-                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
-                                </td>
+
                             </tr>
                            
                         </table>
@@ -83,7 +85,7 @@
                 <tr class="bill-table-row">
                     <td>
                         <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
-                            <thead style="font-size: 18px;">
+                            <thead style="font-size: 22px;font-weight:bold;">
                                 <tr style="font-weight:bold;">
                                     <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width:20%">Sr.No</td>
                                     <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
