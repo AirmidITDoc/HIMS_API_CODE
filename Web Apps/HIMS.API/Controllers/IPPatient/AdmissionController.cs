@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -116,6 +117,21 @@ namespace HIMS.API.Controllers.IPPatient
         {
             var data = await _IAdmissionService.PatientDischargeListSearch(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Admission data", data);
+        }
+
+        [HttpPut("Companyinformation/{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(CompanyinformationModel obj)
+        {
+            Admission model = obj.MapTo<Admission>();
+            if (obj.AdmissionId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                await _IAdmissionService.UpdateAsyncInfo(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
 }

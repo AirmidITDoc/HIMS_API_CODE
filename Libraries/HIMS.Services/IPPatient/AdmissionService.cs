@@ -212,5 +212,21 @@ namespace HIMS.Services.IPPatient
                       };
             return await qry.Take(25).ToListAsync();
         }
+        public virtual async Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] IEntity = { "RegId","AdmissionDate" ,"AdmissionTime","PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId","WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
+            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUpdateDate",
+            "IsUpdatedBy","SubTpaComId","CompDod","IsPharClearance","Ipnumber","CompBillNo","CompBillDate","CompDisDate","CompDiscount","CBillNo","HChargeAmt","HAdvAmt","HBillId","HBillDate",
+            "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsCovidUserId","AprovAmount"};
+            var centity = OBJAdmission.ToDictionary();
+            foreach (var rProperty in IEntity)
+            {
+                centity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_update_CompanyInfo", CommandType.StoredProcedure, centity);
+        }
     }
 }

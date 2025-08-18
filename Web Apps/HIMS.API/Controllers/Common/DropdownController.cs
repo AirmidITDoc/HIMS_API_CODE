@@ -291,6 +291,7 @@ namespace HIMS.API.Controllers.Common
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
                 "TermofPayment" => (await _IMTermofpaymentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MTermsOfPaymentMaster.Id), nameof(MTermsOfPaymentMaster.TermsOfPayment)),
                 "Store" => (await _IMStoreService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),
+                "PharmacyStore" => (await _IMStoreService.GetAll(x => x.IsPharStore.Value)).ToList().ToDropDown(nameof(MStoreMaster.StoreId), nameof(MStoreMaster.StoreName)),
 
                 "PaymentMode" => (await _IMModeofpaymentService.GetAll(x => x.IsActive)).ToList().ToDropDown(nameof(MModeOfPayment.Id), nameof(MModeOfPayment.ModeOfPayment)),
 

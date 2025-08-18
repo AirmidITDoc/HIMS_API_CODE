@@ -119,7 +119,7 @@ namespace HIMS.Services.Administration
             "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
             "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate",
             "IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt",
-            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
+            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var Rentity = ObjAdmission.ToDictionary();
             foreach (var rProperty in AEntity)
             {
@@ -187,7 +187,7 @@ namespace HIMS.Services.Administration
                 scope.Complete();
             }
         }
-        public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username,DateTime FromDate,DateTime ToDate)
+        public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper odal = new();
             string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
@@ -204,8 +204,9 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
 
         }
-       
 
+     
     }
 }
+
 

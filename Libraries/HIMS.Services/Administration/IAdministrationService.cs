@@ -35,5 +35,6 @@ namespace HIMS.Services.Administration
         Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
 
 
+
     }
 }

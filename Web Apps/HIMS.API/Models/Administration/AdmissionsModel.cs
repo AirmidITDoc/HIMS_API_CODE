@@ -17,7 +17,7 @@ namespace HIMS.API.Models.Administration
         public AdmissionModellValidator()
         {
                RuleFor(x => x.AdmissionDate).NotNull().NotEmpty().WithMessage("AdmissionDate id is required");
-            //  RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+               RuleFor(x => x.AdmissionTime).NotNull().NotEmpty().WithMessage("AdmissionTime  is required");
         }
     }
 }
