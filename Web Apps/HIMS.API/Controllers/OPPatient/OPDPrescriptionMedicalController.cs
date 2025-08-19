@@ -207,11 +207,7 @@ namespace HIMS.API.Controllers.OPPatient
                 foreach (var userId in userIds)
                 {
                     // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
-                    await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"ipd/add-billing?Mode=Bill&Id={model1.VisitId}", userId);
-                    //await _notificationUtility.SendNotificationAsync("Lab and Radi Request For Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"ipd/add-billing?Mode=Bill&Id={model.OpIpId}", userId);
-                    //NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = $"Patient: {objPatient.FirstName} {objPatient.LastName}| {objPatient.RegNo}", NotiTitle = "Lab and Radi Request For Billing", UserId = userId, RedirectUrl = $"ipd/add-billing?Mode=Bill&Id={obj.OpIpId}" };
-                    //await _INotificationService.Save(objNotification);
-                    //await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id, objNotification.RedirectUrl }), objNotification.UserId);
+                    await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model1.VisitId}", userId);
                 }
 
             }
