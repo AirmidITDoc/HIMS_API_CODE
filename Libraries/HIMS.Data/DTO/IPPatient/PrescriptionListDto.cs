@@ -41,9 +41,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string? LastName { get; set; }
         public string? Ipdno { get; set; }
         public string? PatientType { get; set; }
+        public string? ConDoctorName { get; set; }
 
 
 
 
+        
     }
 }
