@@ -34,15 +34,47 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
 
+        //[HttpPost("InsertPrescription")]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
+        //{
+        //    TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
+        //    if (obj.MedicalRecoredId == 0)
+        //    {
+        //        model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
+        //        model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
+
+        //        await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
+        //}
+      
         [HttpPost("InsertPrescription")]
-        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
+
             if (obj.MedicalRecoredId == 0)
             {
                 model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
+
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+
+                foreach (var q in model.TIpPrescriptions)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = DateTime.Now;
+
+                }
 
                 await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -50,6 +82,9 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
         }
+    
+
+
 
 
         [HttpPost("PrescriptionReturnInsert")]

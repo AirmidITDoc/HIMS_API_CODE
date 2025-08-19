@@ -33,15 +33,30 @@ namespace HIMS.API.Controllers.IPPatient
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
             if (obj.MedicalRecoredId == 0)
             {
+                model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
-                //model.IsAddBy = CurrentUserId;
-                //model.IsActive = true;
+
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+
+                foreach (var q in model.TIpPrescriptions)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = DateTime.Now;
+
+                }
                 await _MedicalRecordService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
+       
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TIPmedicalRecordModel obj)
@@ -52,12 +67,31 @@ namespace HIMS.API.Controllers.IPPatient
             else
             {
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                foreach (var q in model.TIpPrescriptions)
+                {
+                    if (q.IppreId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = DateTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = DateTime.Now;
+                    q.IppreId = 0;
+                }
                 await _MedicalRecordService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
-       
+
+
+
+
+
     }
 }
 

@@ -9,9 +9,9 @@ namespace HIMS.API.Models.IPPatient
         public long MedicalRecoredId { get; set; }
         public long? AdmissionId { get; set; }
         public DateTime? RoundVisitDate { get; set; }
-        public DateTime? RoundVisitTime { get; set; }
+        public string? RoundVisitTime { get; set; }
         public bool? InHouseFlag { get; set; }
-        public List<IpPrescriptionModel> TIpPrescription { get; set; }
+        public List<IpPrescriptionModel> TIpPrescriptions { get; set; }
 
     }
     public class TIPmedicalRecordModelValidator : AbstractValidator<TIPmedicalRecordModel>
@@ -31,7 +31,7 @@ namespace HIMS.API.Models.IPPatient
         public long? OpIpId { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Pdate { get; set; }
-        public DateTime? Ptime { get; set; }
+        public string? Ptime { get; set; }
         public long? ClassId { get; set; }
         public long? GenericId { get; set; }
         public long? DrugId { get; set; }
