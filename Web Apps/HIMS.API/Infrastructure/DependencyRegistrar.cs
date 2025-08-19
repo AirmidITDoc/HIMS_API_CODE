@@ -44,6 +44,8 @@ namespace HIMS.API.Infrastructure
             //services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
             services.AddScoped<IFileUtility, FileUtility>();
             services.AddScoped<IMPathParaRangeWithAgeMasterService, MPathParaRangeWithAgeMasterService>();
+            services.AddScoped<IClinicalCareService, ClinicalCareService>();
+
             services.AddScoped<IOTBookingRequestService, OTBookingRequestService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<IMParameterDescriptiveMasterService, MParameterDescriptiveMasterService>();
