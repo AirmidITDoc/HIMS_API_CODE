@@ -16,6 +16,8 @@ namespace HIMS.Services
         Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username);
         Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username);
         Task CancelAsync(TOtReservation objTOtReservation, int UserId, string Username);
+        Task<TOtReservation?> GetByIdAsync(int id);
+        //Task UpdateAsync(TOtReservation entity, int userId, string userName);
 
 
     }

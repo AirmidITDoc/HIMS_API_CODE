@@ -14,6 +14,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
@@ -27,6 +28,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Security;
 using System.Text.Json;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -166,6 +168,23 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RequestId);
         }
+
+        [HttpPost("LabRequestCancel")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(LabRequestCancel obj)
+        {
+            THlabRequest model = new();
+            if (obj.RequestId != 0)
+            {
+                model.RequestId = obj.RequestId;
+                await _ILabRequestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+
 
     }
 }

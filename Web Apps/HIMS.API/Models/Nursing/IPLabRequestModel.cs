@@ -55,4 +55,10 @@ namespace HIMS.API.Models.Nursing
 
         }
     }
+    public class LabRequestCancel
+    {
+        public long RequestId { get; set; }
+
+
+    }
 }

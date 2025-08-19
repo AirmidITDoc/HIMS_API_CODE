@@ -22,6 +22,10 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+        public async Task<TOtReservation?> GetByIdAsync(int id)
+        {
+            return await _context.TOtReservations.FirstOrDefaultAsync(x => x.OtreservationId == id);
+        }
         public virtual async Task<IPagedList<OTBookinglistDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "ps_Rtrv_OTBookinglist");

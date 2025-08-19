@@ -24,6 +24,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string IPDNo { get; set; }
         public string DoctorName { get; set; }
         public string CompanyName { get; set; }
+        public string PatientType { get; set; }
+
 
 
     }

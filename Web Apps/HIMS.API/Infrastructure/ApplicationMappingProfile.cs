@@ -209,6 +209,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmisionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, CompanyinformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THlabRequest, LabRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             CreateMap<InitiateDischarge, InitiateDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

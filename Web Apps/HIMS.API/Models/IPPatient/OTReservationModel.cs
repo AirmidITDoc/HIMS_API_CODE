@@ -27,6 +27,8 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
+        public long? DepartmentId { get; set; }
+
     }
     public class OtbookingModelValidator : AbstractValidator<OTReservationModel>
     {

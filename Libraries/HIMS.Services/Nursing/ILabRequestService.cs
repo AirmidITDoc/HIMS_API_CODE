@@ -15,6 +15,8 @@ namespace HIMS.Services.Nursing
         Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username);
         Task<IPagedList<LabRequestListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabRequestDetailsListDto>> SPGetListAsync(GridRequestModel objGrid);
+        Task CancelAsync(THlabRequest objTHlabRequest, int UserId, string Username);
+
 
 
 

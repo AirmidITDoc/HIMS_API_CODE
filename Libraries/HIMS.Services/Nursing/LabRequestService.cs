@@ -3,6 +3,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,27 @@ namespace HIMS.Services.Nursing
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.THlabRequests.Add(objTHlabRequest);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task CancelAsync(THlabRequest objTHlabRequest, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                THlabRequest ObjLab = await _context.THlabRequests.FindAsync(objTHlabRequest.RequestId);
+                if (ObjLab == null)
+                    throw new Exception("Lab request not found.");
+                // Cancel fields
+                ObjLab.IsCancelled = true;               
+                ObjLab.IsCancelledBy = CurrentUserId;
+                ObjLab.IsCancelledDate = DateTime.Now.Date;
+                ObjLab.IsCancelledTime = DateTime.Now;
+
+                _context.THlabRequests.Update(ObjLab);
+                _context.Entry(ObjLab).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

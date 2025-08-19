@@ -85,7 +85,6 @@ namespace HIMS.API.Controllers.NursingStation
 
                 await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
 
-                //get patient details
                 var objPatient = await _admissionService.PatientByAdmissionId(model.AdmissionId.Value);
 
                 // Get all UserIds for StoreId = 2
