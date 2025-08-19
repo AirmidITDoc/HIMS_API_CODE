@@ -8,11 +8,13 @@ using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.IPPatient;
 using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
 using HIMS.Services.OPPatient;
@@ -33,26 +35,21 @@ namespace HIMS.API.Controllers.NursingStation
     [ApiVersion("1")]
     public class IPPrescriptionController : BaseController
     {
-        private readonly INotificationService _INotificationService;
+        private readonly INotificationUtility _notificationUtility;
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ILabRequestService _ILabRequestService;
-        private readonly IHubContext<NotificationHub> _hubContext;
         private readonly HIMSDbContext _context;
+        private readonly IAdmissionService _admissionService;
 
-        public IPPrescriptionController(INotificationService notificationService, IPriscriptionReturnService repository1, ILabRequestService repository2, IHubContext<NotificationHub> repository3, HIMSDbContext HIMSDbContext)
+        public IPPrescriptionController(INotificationUtility notificationUtility, IPriscriptionReturnService repository1, ILabRequestService repository2, HIMSDbContext HIMSDbContext, IAdmissionService admissionService)
         {
-            _INotificationService = notificationService;
+            _notificationUtility = notificationUtility;
             _IPriscriptionReturnService = repository1;
             _ILabRequestService = repository2;
-            _hubContext = repository3;
             _context = HIMSDbContext;
+            _admissionService = admissionService;
         }
 
-        ////private readonly HIMSDbContext _context;
-        ////public VisitDetailsService(HIMSDbContext HIMSDbContext)
-        ////{
-        ////    _context = HIMSDbContext;
-        ////}
 
         [HttpPost("PrescriptionPatientList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
@@ -146,6 +143,9 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ReqTime = Convert.ToDateTime(obj.ReqTime);
                 model.IsAddedBy = CurrentUserId;
                 await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                
+                //get patient details
+                var objPatient = await _admissionService.PatientByAdmissionId(model.OpIpId.Value);
 
                 // Get all UserIds for StoreId = 2
                 var userIds = await _context.LoginManagers
@@ -156,10 +156,10 @@ namespace HIMS.API.Controllers.NursingStation
                 foreach (var userId in userIds)
                 {
                     // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
-                    NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = "This is notification Lab and Radi Request For Billing", NotiTitle = "Lab and Radi Request For Billing", UserId = userId, RedirectUrl = $"ipd/add-billing?Mode=Bill&Id={obj.OpIpId}" };
-                    await _INotificationService.Save(objNotification);
-                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id,objNotification.RedirectUrl }), objNotification.UserId);
-
+                    await _notificationUtility.SendNotificationAsync("IP | Request For Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"ipd/add-billing?Mode=Bill&Id={model.OpIpId}", userId);
+                    //NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = $"Patient: {objPatient.FirstName} {objPatient.LastName}| {objPatient.RegNo}", NotiTitle = "Lab and Radi Request For Billing", UserId = userId, RedirectUrl = $"ipd/add-billing?Mode=Bill&Id={obj.OpIpId}" };
+                    //await _INotificationService.Save(objNotification);
+                    //await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id, objNotification.RedirectUrl }), objNotification.UserId);
                 }
             }
             else

@@ -7,6 +7,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -15,6 +16,7 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
+using HIMS.Services.IPPatient;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +37,12 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IGenericService<MOpcasepaperDignosisMaster> _Dignos;
         private readonly IGenericService<MExaminationMaster> _Examination;
         private readonly IGenericService<MComplaintMaster> _MComplaintMaster;
-
-        public OPDPrescriptionMedicalController(IOPDPrescriptionMedicalService repository, IPrescriptionOPTemplateService repository1, IGenericService<ServiceMaster> ServiceMasterrepository, IGenericService<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasterrepository, IGenericService<MExaminationMaster> MExaminationMasterrepository
-            , IGenericService<MComplaintMaster> MComplaintMasterrepository)
+        private readonly HIMSDbContext _context;
+        private readonly INotificationUtility _notificationUtility;
+        private readonly IVisitDetailsService _visitDetailsService;
+        public OPDPrescriptionMedicalController(IOPDPrescriptionMedicalService repository, IPrescriptionOPTemplateService repository1, IGenericService<ServiceMaster> ServiceMasterrepository, 
+            IGenericService<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasterrepository, IGenericService<MExaminationMaster> MExaminationMasterrepository
+            , IGenericService<MComplaintMaster> MComplaintMasterrepository, HIMSDbContext HIMSDbContext, INotificationUtility notificationUtility, IVisitDetailsService visitDetailsService)
         {
             _OPDPrescriptionService = repository;
             _PrescriptionOPTemplateService = repository1;
@@ -45,6 +50,9 @@ namespace HIMS.API.Controllers.OPPatient
             _Dignos = MOpcasepaperDignosisMasterrepository;
             _Examination = MExaminationMasterrepository;
             _MComplaintMaster = MComplaintMasterrepository;
+            _context = HIMSDbContext;
+            _notificationUtility = notificationUtility;
+            _visitDetailsService = visitDetailsService;
         }
         [HttpPost("GetVisitList")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
@@ -180,9 +188,28 @@ namespace HIMS.API.Controllers.OPPatient
             List<TOprequestList> objTOPRequest = obj.TOPRequestList.MapTo<List<TOprequestList>>();
             List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosis = obj.MOPCasepaperDignosisMaster.MapTo<List<MOpcasepaperDignosisMaster>>();
 
+            var VisitId = model1.VisitId;
+
             if (model.Count > 0)
             {
                 await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+
+
+                //get patient details
+                var objPatient = await _visitDetailsService.PatientByVisitId(VisitId);
+
+                // Get all UserIds for StoreId = 2
+                var userIds = await _context.LoginManagers
+                    .Where(x => x.StoreId == 2 && x.IsActive == true)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+                foreach (var userId in userIds)
+                {
+                    // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
+                    await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model1.VisitId}", userId);
+                }
+
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

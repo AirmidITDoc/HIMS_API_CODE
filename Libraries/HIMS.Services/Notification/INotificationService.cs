@@ -12,7 +12,7 @@ namespace HIMS.Services.Notification
     {
         Task<List<NotificationMaster>> GetNotificationByUser(int UserId, int PageCount);
         Task<int> UnreadCount(int UserId);
-        Task ReadNotification(int Id);
+        Task ReadNotification(long Id);
         Task ReadAllNotification(int UserId);
         Task<NotificationMaster> Save(NotificationMaster entity);
         Task<List<NotificationMaster>> Save(List<NotificationMaster> entity);

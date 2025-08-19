@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
         [HttpPut("UpdateDifferTariff")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(DifferTraiffModel obj)
         {
             if (obj.OldTariffId == 0 || obj.NewTariffId == 0)

@@ -165,6 +165,52 @@ namespace HIMS.Services.IPPatient
                       };
             return await qry.Take(25).ToListAsync();
         }
+        public virtual async Task<PatientAdmittedListSearchDto> PatientByAdmissionId(long AdmissionId)
+        {
+            var qry = from r in _context.Registrations
+                      join a in _context.Admissions on r.RegId equals a.RegId
+                      join t in _context.TariffMasters on a.TariffId equals t.TariffId
+                      join rm in _context.RoomMasters on a.WardId equals rm.RoomId
+                      join b in _context.Bedmasters on a.BedId equals b.BedId
+                      join g in _context.DbGenderMasters on r.GenderId equals g.GenderId
+                      join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
+                      join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
+                      from c in comp.DefaultIfEmpty()
+                      where a.IsDischarged == 0 && a.AdmissionId==AdmissionId
+                      select new PatientAdmittedListSearchDto()
+                      {
+                          FirstName = r.FirstName,
+                          MiddleName = r.MiddleName,
+                          LastName = r.LastName,
+                          RegNo = r.RegNo,
+                          AdmissionID = a.AdmissionId,
+                          RegID = r.RegId,
+                          AdmissionDate = a.AdmissionDate,
+                          AdmissionTime = a.AdmissionTime,
+                          PatientTypeID = a.PatientTypeId,
+                          HospitalID = a.HospitalId,
+                          DocNameID = a.DocNameId,
+                          RefDocNameID = a.RefDocNameId,
+                          WardId = a.WardId,
+                          BedId = a.BedId,
+                          IsDischarged = a.IsDischarged,
+                          MobileNo = a.MobileNo,
+                          IPDNo = a.Ipdno,
+                          CompanyName = c.CompanyName,
+                          TariffName = t.TariffName,
+                          TariffId = a.TariffId,
+                          ClassId = a.ClassId,
+                          DoctorName = "Dr. " + d.FirstName + " " + d.LastName,
+                          RoomName = rm.RoomName,
+                          BedName = b.BedName,
+                          Age = r.Age,
+                          AgeMonth = r.AgeMonth,
+                          AgeDay = r.AgeDay,
+                          GenderName = g.GenderName
+
+                      };
+            return await qry.FirstOrDefaultAsync();
+        }
 
         public virtual async Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword)
         {
@@ -211,6 +257,23 @@ namespace HIMS.Services.IPPatient
 
                       };
             return await qry.Take(25).ToListAsync();
+        }
+
+        public virtual async Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] IEntity = { "RegId","AdmissionDate" ,"AdmissionTime","PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId","WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
+            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUpdateDate",
+            "IsUpdatedBy","SubTpaComId","CompDod","IsPharClearance","Ipnumber","CompBillNo","CompBillDate","CompDisDate","CompDiscount","CBillNo","HChargeAmt","HAdvAmt","HBillId","HBillDate",
+            "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsCovidUserId","AprovAmount"};
+            var centity = OBJAdmission.ToDictionary();
+            foreach (var rProperty in IEntity)
+            {
+                centity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_update_CompanyInfo", CommandType.StoredProcedure, centity);
         }
     }
 }

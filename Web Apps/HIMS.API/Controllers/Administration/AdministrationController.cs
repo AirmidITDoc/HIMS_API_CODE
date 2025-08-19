@@ -284,6 +284,9 @@ namespace HIMS.API.Controllers.Administration
             await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
-     
+
+      
+
+      
     }
 }

@@ -14,8 +14,7 @@ namespace HIMS.API.Models.Administration
     {
         public AdmissionsModelValidator()
         {
-         //   RuleFor(x => x.IsCancelledBy).NotNull().NotEmpty().WithMessage("IsCancelledBy id is required");
-            //  RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+           RuleFor(x => x.AdmissionID).NotNull().NotEmpty().WithMessage("AdmissionID id is required");
         }
     }
 }

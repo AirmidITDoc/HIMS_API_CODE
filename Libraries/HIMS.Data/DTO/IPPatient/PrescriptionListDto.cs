@@ -12,14 +12,13 @@ namespace HIMS.Data.DTO.IPPatient
         public string PatientName { get; set; }
         public string Vst_Adm_Date { get; set; }
         public string Date { get; set; }
-        public long OP_IP_ID { get; set; }
-        public byte OPD_IPD_Type { get; set; }
+        public long OPIPID { get; set; }
+        public byte OPDIPDType { get; set; }
         public string StoreName { get; set; }
         public long IPMedID { get; set; }
         public string CompanyName { get; set; }
         public long CompanyId { get; set; }
         public long IppreId { get; set; }
-       
         public DateTime? Pdate { get; set; }
         public DateTime? Ptime { get; set; }
         public long? ClassId { get; set; }
@@ -37,6 +36,14 @@ namespace HIMS.Data.DTO.IPPatient
         public string? WardName { get; set; }
         public string? ClassName { get; set; }
         public string? GenericName { get; set; }
+        public string? FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public string? Ipdno { get; set; }
+        public string? PatientType { get; set; }
+        public string? DoctorName { get; set; }
+        public string? BedName { get; set; }
+
 
     }
 }
