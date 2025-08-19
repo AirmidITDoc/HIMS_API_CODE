@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IPriscriptionReturnService _IPriscriptionReturnService;
         private readonly ILabRequestService _ILabRequestService;
         private readonly HIMSDbContext _context;
-        private readonly IAdmissionService admissionService;
+        private readonly IAdmissionService _admissionService;
 
         public IPPrescriptionController(INotificationUtility notificationUtility, IPriscriptionReturnService repository1, ILabRequestService repository2, HIMSDbContext HIMSDbContext, IAdmissionService admissionService)
         {
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.NursingStation
             _IPriscriptionReturnService = repository1;
             _ILabRequestService = repository2;
             _context = HIMSDbContext;
-            this.admissionService = admissionService;
+            _admissionService = admissionService;
         }
 
 
@@ -143,8 +143,9 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ReqTime = Convert.ToDateTime(obj.ReqTime);
                 model.IsAddedBy = CurrentUserId;
                 await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                
                 //get patient details
-                var objPatient = await admissionService.PatientByAdmissionId(model.OpIpId.Value);
+                var objPatient = await _admissionService.PatientByAdmissionId(model.OpIpId.Value);
 
                 // Get all UserIds for StoreId = 2
                 var userIds = await _context.LoginManagers
@@ -155,7 +156,7 @@ namespace HIMS.API.Controllers.NursingStation
                 foreach (var userId in userIds)
                 {
                     // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
-                    await _notificationUtility.SendNotificationAsync("Lab and Radi Request For Billing", $"Patient: {objPatient.FirstName} {objPatient.LastName}| {objPatient.RegNo}", $"ipd/add-billing?Mode=Bill&Id={model.OpIpId}", userId);
+                    await _notificationUtility.SendNotificationAsync("IP | Request For Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"ipd/add-billing?Mode=Bill&Id={model.OpIpId}", userId);
                     //NotificationMaster objNotification = new() { CreatedDate = DateTime.Now, IsActive = true, IsDeleted = false, IsRead = false, NotiBody = $"Patient: {objPatient.FirstName} {objPatient.LastName}| {objPatient.RegNo}", NotiTitle = "Lab and Radi Request For Billing", UserId = userId, RedirectUrl = $"ipd/add-billing?Mode=Bill&Id={obj.OpIpId}" };
                     //await _INotificationService.Save(objNotification);
                     //await _hubContext.Clients.All.SendAsync("ReceiveMessage", JsonSerializer.Serialize(new { objNotification.CreatedDate, objNotification.NotiBody, objNotification.NotiTitle, objNotification.Id, objNotification.RedirectUrl }), objNotification.UserId);

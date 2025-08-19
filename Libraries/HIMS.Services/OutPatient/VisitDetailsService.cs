@@ -278,7 +278,48 @@ namespace HIMS.Services.OutPatient
 
         }
 
-     
+        public virtual async Task<VisitDetailsListSearchDto> PatientByVisitId(long VisitId)
+        {
+            var qry = from registration in _context.Registrations
+                      join visitDetails in _context.VisitDetails on registration.RegId equals visitDetails.RegId
+                      join tariffMaster in _context.TariffMasters on visitDetails.TariffId equals tariffMaster.TariffId
+                      join departmentMaster in _context.MDepartmentMasters on visitDetails.DepartmentId equals departmentMaster.DepartmentId
+                      join doctorMaster in _context.DoctorMasters on visitDetails.ConsultantDocId equals doctorMaster.DoctorId
+                      join refDoctorMaster in _context.DoctorMasters on visitDetails.RefDocId equals refDoctorMaster.DoctorId into refDoctorGroup
+                      from refDoctor in refDoctorGroup.DefaultIfEmpty()
+                      join companyMaster in _context.CompanyMasters on visitDetails.CompanyId equals companyMaster.CompanyId into companyGroup
+                      from company in companyGroup.DefaultIfEmpty()
+                      where visitDetails.VisitDate == DateTime.Today
+                         && visitDetails.VisitId == VisitId
+                      orderby registration.FirstName
+
+                      select new VisitDetailsListSearchDto
+                      {
+                          FirstName = registration.FirstName,
+                          MiddleName = registration.MiddleName,
+                          LastName = registration.LastName,
+                          RegNo = registration.RegNo,
+                          MobileNo = registration.MobileNo,
+                          VisitId = visitDetails.VisitId,
+                          RegId = visitDetails.RegId,
+                          hospitalId = visitDetails.UnitId,
+                          PatientTypeId = visitDetails.PatientTypeId,
+                          ConsultantDocId = visitDetails.ConsultantDocId,
+                          RefDocId = visitDetails.RefDocId,
+                          OPDNo = visitDetails.Opdno,
+                          TariffId = visitDetails.TariffId,
+                          ClassId = visitDetails.ClassId,
+                          TariffName = tariffMaster.TariffName,
+                          CompanyId = visitDetails.CompanyId,
+                          CompanyName = company != null ? company.CompanyName : string.Empty,
+                          DepartmentName = departmentMaster.DepartmentName,
+                          RefDoctorName = refDoctor != null ? "Dr. " + refDoctor.FirstName + " " + refDoctor.LastName : string.Empty,
+                          DoctorName = "Dr. " + doctorMaster.FirstName + " " + doctorMaster.LastName
+                      };
+            return await qry.FirstOrDefaultAsync();
+
+        }
+
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var qry = from s in _context.ServiceMasters
