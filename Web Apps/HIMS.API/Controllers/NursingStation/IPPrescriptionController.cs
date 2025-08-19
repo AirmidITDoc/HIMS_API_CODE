@@ -50,11 +50,6 @@ namespace HIMS.API.Controllers.NursingStation
             _admissionService = admissionService;
         }
 
-        ////private readonly HIMSDbContext _context;
-        ////public VisitDetailsService(HIMSDbContext HIMSDbContext)
-        ////{
-        ////    _context = HIMSDbContext;
-        ////}
 
         [HttpPost("PrescriptionPatientList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
