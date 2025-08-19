@@ -87,38 +87,6 @@ namespace HIMS.Services.Utilities
 
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
-            //var options = new ConvertOptions
-            //{
-            //    EnableForms = true,
-            //    PageOrientation = PageOrientation
-            //};
-
-            //_generatePdf.SetConvertOptions(options);
-            //var pdf = _generatePdf.GetPDF(html);
-
-            //------------
-            //var converter = new BasicConverter(new PdfTools());
-            //var converter = new SynchronizedConverter(new PdfTools());
-            //converter.PhaseChanged += (sender, e) =>
-            //{
-            //    Console.WriteLine("Phase changed {0} - {1}", e.CurrentPhase, e.Description);
-            //};
-            //converter.ProgressChanged += (sender, e) =>
-            //{
-            //    Console.WriteLine("Progress changed {0}", e.Description);
-            //};
-            //converter.Finished += (sender, e) =>
-            //{
-            //    Console.WriteLine("Conversion {0} ", e.Success ? "successful" : "unsucessful");
-            //};
-            //converter.Warning += (sender, e) =>
-            //{
-            //    Console.WriteLine("[WARN] {0}", e.Message);
-            //};
-            //converter.Error += (sender, e) =>
-            //{
-            //    Console.WriteLine("[ERROR] {0}", e.Message);
-            //};
 
             var doc = new HtmlToPdfDocument()
             {
@@ -156,7 +124,60 @@ namespace HIMS.Services.Utilities
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }
-       
+
+        public Tuple<byte[], string> GeneratePdfFromHtmlBarCode(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+        {
+
+            var doc = new HtmlToPdfDocument()
+            {
+                GlobalSettings = {
+                    ColorMode = ColorMode.Color,
+                    Orientation = PageOrientation,//Orientation.Portrait,
+                    //PaperSize = PaperSize,//PaperKind.A4,
+                    //Margins = new MarginSettings() { Top = 10, Bottom=10, Left=10, Right=10 },
+                    //Scale = 0.9f,  // Reduce size to 90% of the original content size
+                    
+                    //PageSize need to define 
+                    //Width : 103 mm
+                    //height : 25 mm
+                    PaperSize = new PechkinPaperSize("103mm", "25mm"),
+                      Margins = new MarginSettings()
+                        {
+                            Top = 0,
+                            Bottom = 0,
+                            Left = 0,
+                            Right = 0
+                        }
+
+                },
+                Objects = {
+                    new ObjectSettings() {
+                        PagesCount = true,
+                        HtmlContent = html,
+                        WebSettings = { DefaultEncoding = "utf-8" }
+                       // FooterSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                    }
+                }
+            };
+            byte[] bytes = converter.Convert(doc);
+            //var pdfStream = new System.IO.MemoryStream();
+            //pdfStream.Write(pdf, 0, pdf.Length);
+            //pdfStream.Position = 0;
+            //Byte[] bytes = pdfStream.ToArray();
+            string DestinationPath = string.Empty; //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            if (File.Exists(NewFileName))
+                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+            System.IO.File.WriteAllBytes(NewFileName, bytes);
+            return new Tuple<byte[], string>(bytes, NewFileName);
+        }
+
         public string GetBase64FromFolder(string Folder, string filename)
         {
             var DestinationPath = "";

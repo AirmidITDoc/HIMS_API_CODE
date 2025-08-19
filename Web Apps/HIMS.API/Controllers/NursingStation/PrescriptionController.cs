@@ -7,12 +7,14 @@ using HIMS.API.Hubs;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
+using HIMS.Services.IPPatient;
 using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
 //using HIMS.Services.NursingStation;
@@ -27,10 +29,15 @@ namespace HIMS.API.Controllers.NursingStation
     public class PrescriptionController : BaseController
     {
         private readonly IPrescriptionService _IPrescriptionService;
-        public PrescriptionController(IPrescriptionService IPrescriptionService)
+        private readonly INotificationUtility _notificationUtility;
+        private readonly IAdmissionService _admissionService;
+        private readonly HIMSDbContext _context;
+        public PrescriptionController(IPrescriptionService IPrescriptionService, INotificationUtility notificationUtility, IAdmissionService admissionService, HIMSDbContext HIMSDbContext)
         {
             _IPrescriptionService = IPrescriptionService;
-
+            _notificationUtility = notificationUtility;
+            _admissionService = admissionService;
+            _context = HIMSDbContext;
         }
 
 
@@ -77,6 +84,22 @@ namespace HIMS.API.Controllers.NursingStation
                 }
 
                 await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
+
+                //get patient details
+                var objPatient = await _admissionService.PatientByAdmissionId(model.AdmissionId.Value);
+
+                // Get all UserIds for StoreId = 2
+                var userIds = await _context.LoginManagers
+                    .Where(x => x.StoreId == 2 && x.IsActive == true)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+                foreach (var userId in userIds)
+                {
+                    // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
+                    await _notificationUtility.SendNotificationAsync("IP | Prescription Request for Pharmacy", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model.AdmissionId}", userId);
+                }
+
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
