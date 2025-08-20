@@ -6,6 +6,7 @@ using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -285,8 +286,48 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
-      
 
-      
+        [HttpPost("AutoServiceListInsert")]
+        // [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(MAutoServiceModel obj)
+        {
+            List<MAutoServiceList> model = obj.AutoService.MapTo<List<MAutoServiceList>>();
+            if (model.Count > 0)
+            {
+                model.ForEach(item =>
+                {
+                    item.CreatedBy = CurrentUserId;
+                    item.CreatedDate = DateTime.Now;
+                });
+
+                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
+
+
+        [HttpPut("AutoServiceListUpdate{id:int}")]
+     //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(AutoServiceModel obj)
+        {
+            MAutoServiceList model = obj.MapTo<MAutoServiceList>();
+            if (obj.SysId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
+        }
+
     }
 }

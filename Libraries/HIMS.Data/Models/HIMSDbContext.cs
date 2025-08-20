@@ -178,6 +178,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MAreaMaster> MAreaMasters { get; set; } = null!;
         public virtual DbSet<MAssignItemToStore> MAssignItemToStores { get; set; } = null!;
         public virtual DbSet<MAssignSupplierToStore> MAssignSupplierToStores { get; set; } = null!;
+        public virtual DbSet<MAutoServiceList> MAutoServiceLists { get; set; } = null!;
         public virtual DbSet<MBankMaster> MBankMasters { get; set; } = null!;
         public virtual DbSet<MCampMaster> MCampMasters { get; set; } = null!;
         public virtual DbSet<MCanItemMaster> MCanItemMasters { get; set; } = null!;
@@ -326,6 +327,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
+        public virtual DbSet<ReportDemo> ReportDemos { get; set; } = null!;
         public virtual DbSet<RoleMaster> RoleMasters { get; set; } = null!;
         public virtual DbSet<RoleTemplateDetail> RoleTemplateDetails { get; set; } = null!;
         public virtual DbSet<RoleTemplateMaster> RoleTemplateMasters { get; set; } = null!;
@@ -6185,6 +6187,17 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_M_AssignSupplierToStore_M_SupplierMaster");
             });
 
+            modelBuilder.Entity<MAutoServiceList>(entity =>
+            {
+                entity.HasKey(e => e.SysId);
+
+                entity.ToTable("M_AutoServiceList");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MBankMaster>(entity =>
             {
                 entity.HasKey(e => e.BankId);
@@ -9335,6 +9348,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Smsstring)
                     .HasMaxLength(651)
                     .HasColumnName("SMSString");
+            });
+
+            modelBuilder.Entity<ReportDemo>(entity =>
+            {
+                entity.HasKey(e => e.ReportId);
+
+                entity.ToTable("ReportDemo");
+
+                entity.Property(e => e.ReportId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ReportSpname).HasColumnName("ReportSPName");
+
+                entity.Property(e => e.SummaryLabel).HasColumnName("summaryLabel");
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<RoleMaster>(entity =>

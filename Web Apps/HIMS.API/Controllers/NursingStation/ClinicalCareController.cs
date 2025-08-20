@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
@@ -27,11 +28,25 @@ namespace HIMS.API.Controllers.NursingStation
     {
         private readonly IClinicalCareService _ClinicalCareService;
 
-        private readonly IGenericService<TConsentInformation> _repository;
-      
-        public ClinicalCareController(IClinicalCareService repository,  IGenericService<TConsentInformation> repository4)
+        private readonly IGenericService<TNursingVital> _repository;
+        private readonly IGenericService<TNursingSugarLevel> _repository2;
+        private readonly IGenericService<TNursingOrygenVentilator> _repository3;
+        private readonly IGenericService<TNursingPainAssessment> _repository4;
+
+
+
+        
+
+        public ClinicalCareController(IClinicalCareService repository,  IGenericService<TNursingVital> repository1, IGenericService<TNursingSugarLevel> repository2, IGenericService<TNursingOrygenVentilator> repository3, IGenericService<TNursingPainAssessment> repository4)
         {
-            _repository = repository4;
+            _repository = repository1;
+            _repository2 = repository2;
+            _repository3 = repository3;
+            _repository4 = repository4;
+
+
+
+
             _ClinicalCareService = repository;
 
         }
@@ -91,6 +106,135 @@ namespace HIMS.API.Controllers.NursingStation
         {
             IPagedList<NursingOxygenVentilatorListDto> NursingOxygenVentilatorList = await _ClinicalCareService.NursingOxygenVentilatorList(objGrid);
             return Ok(NursingOxygenVentilatorList.ToGridResponse(objGrid, "NursingOxygenVentilatorList"));
+        }
+
+
+        [HttpPost("NursingVitalInsert")]
+    //    [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Posts(NursingVitalsModel obj)
+        {
+            TNursingVital model = obj.MapTo<TNursingVital>();
+            if (obj.VitalId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _ClinicalCareService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.");
+        }
+
+        [HttpPut("NursingVitalUpdate/{id:int}")]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)
+        public async Task<ApiResponse> Edit(NursingVitalsModel obj)
+        {
+            TNursingVital model = obj.MapTo<TNursingVital>();
+            if (obj.VitalId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("TNursingSugarLevelInsert")]
+     //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(NursingSugarLevelModel obj)
+        {
+            TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
+            if (obj.Id == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _repository2.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        //Edit API
+        [HttpPut("NursingSugarLevelUpdate/{id:int}")]
+     //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(NursingSugarLevelModel obj)
+        {
+            TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
+            if (obj.Id == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("NursingOrygenVentilatorInsert")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Posts(NursingOrygenVentilatorModel obj)
+        {
+            TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
+            if (obj.Id == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _repository3.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        //Edit API
+        [HttpPut("NursingOrygenVentilatorUpdate/{id:int}")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edits(NursingOrygenVentilatorModel obj)
+        {
+            TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
+            if (obj.Id == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository3.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("NursingPainAssessmentInsert")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(NursingPainAssessmentModel obj)
+        {
+            TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
+            if (obj.PainAssessmentId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _repository4.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        //Edit API
+        [HttpPut("NursingPainAssessmentUpdate/{id:int}")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(NursingPainAssessmentModel obj)
+        {
+            TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
+            if (obj.PainAssessmentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository4.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
 }
