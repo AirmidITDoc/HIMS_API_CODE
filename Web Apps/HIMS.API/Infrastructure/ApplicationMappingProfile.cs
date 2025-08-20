@@ -39,6 +39,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<MReportConfig, MReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //      CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
                   CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MAutoServiceList, MAutoServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MAutoServiceList, AutoServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingVital, NursingVitalsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingSugarLevel, NursingSugarLevelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingOrygenVentilator, NursingOrygenVentilatorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingPainAssessment, NursingPainAssessmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+
+
 
 
             CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -209,7 +220,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Admission, AdmisionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, CompanyinformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<THlabRequest, LabRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+        //    CreateMap<THlabRequest, LabRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

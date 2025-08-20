@@ -7490,12 +7490,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm"));
 
                         //As per snajay sir req changes  by Ashu 27 May 2025
-                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName").ConvertToString());
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName").ConvertToString());
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName").ConvertToString());
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName").ConvertToString());
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo").ConvertToString());
-                        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
+                        html = html.Replace("{{PaymentDate}}", dt.GetColValue("PaymentDate").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode").ConvertToString());
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ConvertToString());

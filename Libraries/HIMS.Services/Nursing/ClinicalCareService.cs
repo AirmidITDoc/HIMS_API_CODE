@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Nursing;
@@ -50,6 +51,18 @@ namespace HIMS.Services.Nursing
         public virtual async Task<IPagedList<NursingOxygenVentilatorListDto>> NursingOxygenVentilatorList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<NursingOxygenVentilatorListDto>(model, "m_Rtrv_NursingOxygenVentilator");
+        }
+
+
+        public virtual async Task InsertAsync(TNursingVital ObjTNursingVital, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TNursingVitals.Add(ObjTNursingVital);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Nursing
 {
@@ -18,6 +19,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<NursingSugarlevelListDto>> NursingSugarlevelList(GridRequestModel objGrid);
         Task<IPagedList<NursingVitalsListDto>> NursingVitalsList(GridRequestModel objGrid);
         Task<IPagedList<NursingOxygenVentilatorListDto>> NursingOxygenVentilatorList(GridRequestModel objGrid);
+        Task InsertAsync(TNursingVital ObjTNursingVital, int UserId, string Username);
+
 
 
 
