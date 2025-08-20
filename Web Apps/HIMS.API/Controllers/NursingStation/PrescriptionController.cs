@@ -32,6 +32,10 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly INotificationUtility _notificationUtility;
         private readonly IAdmissionService _admissionService;
         private readonly HIMSDbContext _context;
+        private readonly IGenericService<TIpPrescription> _repository;
+        private readonly IGenericService<TIpprescriptionReturnH> _repository1;
+
+        
         public PrescriptionController(IPrescriptionService IPrescriptionService, INotificationUtility notificationUtility, IAdmissionService admissionService, HIMSDbContext HIMSDbContext)
         {
             _IPrescriptionService = IPrescriptionService;
@@ -125,5 +129,39 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.PresReId,model.PresNo});
         }
 
+     
+        [HttpPost("PrescriptionCancel")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)
+        {
+            TIpPrescription model = new();
+            if (obj.IppreId != 0)
+            {
+                model.IppreId = obj.IppreId;
+                await _IPrescriptionService.PrescCancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+     
+        [HttpPost("PrescriptionReturnCancel")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> PrescreturnCancel(PrescriptionReturnCancel obj)
+        {
+            TIpprescriptionReturnH model = new();
+            if (obj.PresReId != 0)
+            {
+                model.PresReId = obj.PresReId;
+                await _IPrescriptionService.PrescreturnCancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
     }
+
+
 }

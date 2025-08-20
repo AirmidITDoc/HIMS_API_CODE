@@ -22,6 +22,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string WardName { get; set; }
         public string BedName { get; set; }
 
+        public string IPDNo { get; set; }
+        public string PatientType { get; set; }
+
 
 
     }

@@ -51,4 +51,11 @@ namespace HIMS.API.Models.Nursing
 
         }
     }
+
+    public class PrescriptionCancel
+    {
+        public long IppreId { get; set; }
+
+
+    }
 }

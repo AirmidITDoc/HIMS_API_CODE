@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
 

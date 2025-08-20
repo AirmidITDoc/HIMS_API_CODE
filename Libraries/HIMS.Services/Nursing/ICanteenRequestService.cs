@@ -25,6 +25,7 @@ namespace HIMS.Services.Nursing
 
         Task<List<CanteenListDto>> GetItemListForCanteen(string ItemName);
 
+        //Task CancelAsync(TCanteenRequestHeader objTCanteenRequestHeader, int CurrentUserId, string CurrentUserName);
 
 
     }

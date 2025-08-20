@@ -124,6 +124,12 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? GenderName { get; set; }
+
+        public string? PatientType { get; set; }
+        public string? DepartmentName { get; set; }
+
+        public string? RefDoctorName { get; set; }
+        
         public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
     }
 }
