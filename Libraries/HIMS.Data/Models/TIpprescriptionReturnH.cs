@@ -23,4 +23,12 @@ namespace HIMS.Data.Models
 
         public virtual ICollection<TIpprescriptionReturnD> TIpprescriptionReturnDs { get; set; }
     }
+
+
+    public class PrescriptionReturnCancel
+    {
+        public long PresReId { get; set; }
+
+
+    }
 }

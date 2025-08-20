@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -23,6 +24,8 @@ namespace HIMS.API.Controllers.NursingStation
     {
 
         private readonly ICanteenRequestService _ICanteenRequestService;
+        private readonly IGenericService<TCanteenRequestHeader> _repository1;
+
         public CanteenRequestController(ICanteenRequestService repository)
         {
             _ICanteenRequestService = repository;
@@ -42,14 +45,14 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(TDoctorPatientHandoverList.ToGridResponse(objGrid, "TDoctorPatientHandover App List"));
         }
         [HttpPost("CanteenRequestList")]
-        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestListDto> CanteenRequestList = await _ICanteenRequestService.CanteenRequestsList(objGrid);
             return Ok(CanteenRequestList.ToGridResponse(objGrid, "CanteenRequest App List"));
         }
         [HttpPost("CanteenRequestHeaderList")]
-        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> HeaderList(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestHeaderListDto> CanteenRequestHeaderList = await _ICanteenRequestService.CanteenRequestHeaderList(objGrid);
@@ -86,4 +89,6 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
     }
+
+
 }
