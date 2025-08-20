@@ -8910,6 +8910,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString());
+                        html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString());
 
                         html = html.Replace("{{PreparedBy}}", dt.GetColValue("PreparedBy"));
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
