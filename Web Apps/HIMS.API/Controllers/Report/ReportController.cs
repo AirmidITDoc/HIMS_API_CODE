@@ -394,8 +394,9 @@ namespace HIMS.API.Controllers.Report
                 case "OpeningBalance":
                 case "WorkOrder":
 
-
-
+                //Pharmacy
+                case "SalesBill":
+                case "SalesReturnBill":
 
                 #endregion
 
