@@ -204,7 +204,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+       [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -301,7 +301,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model1);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
@@ -319,7 +319,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.",model1);
         }
         //shilpa 27/05/2025//
 
@@ -340,7 +340,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model);
         }
 
 
