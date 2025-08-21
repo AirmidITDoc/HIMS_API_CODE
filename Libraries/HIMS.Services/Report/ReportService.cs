@@ -671,7 +671,7 @@ namespace HIMS.Services.Report
                 case "NursingNotesReceipt":
                     {
 
-                      
+
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NursingNoteReceipt.html");
@@ -1623,7 +1623,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Nursing Lab Request Report ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                      
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
@@ -1641,7 +1641,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "CanteenRequest print";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                     
+
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CanteenRequest.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
@@ -1883,7 +1883,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
 
-            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
+            var html = GetHTMLViewer(model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1893,10 +1893,9 @@ namespace HIMS.Services.Report
             return byteFile;
 
         }
-
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
+        public DataTable GetReportDataBySp(ReportNewRequestModel model)
         {
-            Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            Dictionary<string, string> fields = Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];
@@ -1911,7 +1910,12 @@ namespace HIMS.Services.Report
                 para[sp_Para] = param;
                 sp_Para++;
             }
-            var dt = odal.FetchDataTableBySP(sp_Name, para, true);
+            return odal.FetchDataTableBySP(model.SPName, para, true);
+        }
+
+        private string GetHTMLViewer(ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
+        {
+            var dt = GetReportDataBySp(model);
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1991,7 +1995,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-
+  
         // Create  by Ashutosh 24 Jun 2025
         public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers, string[] columnWidths = null)
         {
@@ -2125,7 +2129,7 @@ namespace HIMS.Services.Report
                 table.Append("</tr>");
             }
         }
-       
+
 
         ///  chnages by 4 july
         //public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
@@ -2191,7 +2195,7 @@ namespace HIMS.Services.Report
             }
             table.Append("</tr>");
         }
-       
+
 
         public static string CreateSummary(DataTable dt, string[] totalColList, string[] summaries)
         {
@@ -4681,7 +4685,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
 
 
-                            
+
 
 
                         }
