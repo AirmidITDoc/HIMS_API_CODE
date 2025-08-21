@@ -1,31 +1,38 @@
 ﻿using Asp.Versioning;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
+using HIMS.API.Utility;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
 using HIMS.Services.Masters;
 using HIMS.Services.OPPatient;
+using HIMS.Services.Pharmacy;
 using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using LinqToDB.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Security;
+using System.Text;
 using WkHtmlToPdfDotNet;
-using HIMS.API.Utility;
-using HIMS.Services.Pharmacy;
-using HIMS.Data.DTO.Administration;
-using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -54,7 +61,7 @@ namespace HIMS.API.Controllers.Report
             _FileUtility = fileUtility;
         }
 
-       
+
 
         [HttpPost("ReportList")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
@@ -65,7 +72,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewList")]
-     //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportListDto(GridRequestModel objGrid)
         {
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
@@ -197,7 +204,7 @@ namespace HIMS.API.Controllers.Report
         }
 
 
-     
+
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)
@@ -420,6 +427,13 @@ namespace HIMS.API.Controllers.Report
             string byteFile = _reportService.GetNewReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
+        [HttpPost("NewExportExcelReport")]
+        public IActionResult NewExcelReport(ReportNewRequestModel model)
+        {
+            DataTable dt = _reportService.GetReportDataBySp(model);
+            return Ok(ReportExcelHelper.GetExcel(model, dt));
+        }
+
 
         [HttpGet("view-AdmissionTemplate")]
         public IActionResult viewAdmissionTemplate(int AdmissionId)

@@ -4,6 +4,7 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Http;
+using System.Data;
 
 namespace HIMS.Services.Report
 {
@@ -27,7 +28,7 @@ namespace HIMS.Services.Report
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
         Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
-
+        DataTable GetReportDataBySp(ReportNewRequestModel model);
 
 
 
