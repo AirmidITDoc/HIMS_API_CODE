@@ -11,7 +11,7 @@ namespace HIMS.API.Extensions
         private static void AddHeader(IXLWorksheet workSheet, List<string> columns)
         {
             int colIndex = 1;
-            foreach (var column in columns)
+            foreach (var column in columns.Where(x => x.Replace(".", "").ToLower() != "srno"))
             {
                 workSheet.Cell(1, colIndex++).Value = column;
             }
@@ -26,12 +26,12 @@ namespace HIMS.API.Extensions
         {
             int colIndex = 1;
             // for Sr No
-            workSheet.Cell(rowIndex, colIndex).Value = rowIndex - 1;
+            //workSheet.Cell(rowIndex, colIndex).Value = rowIndex - 1;
 
-            foreach (var column in columns)
+            foreach (var column in columns.Where(x => x.Replace(".", "").ToLower() != "srno"))
             {
-                colIndex++;
                 workSheet.Cell(rowIndex, colIndex).Value = item[column].ToString();
+                colIndex++;
             }
         }
         public static Stream SaveToStream(XLWorkbook excel)
@@ -75,7 +75,7 @@ namespace HIMS.API.Extensions
         public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportNewRequestModel model)
         {
             StringBuilder table = new();
-            string[] groupBy = model.groupByLabel.Split('.');
+            string[] groupBy = model.groupByLabel.Split('.').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             int RowNo = 2;
             if (groupBy.Length > 0)
             {
@@ -186,7 +186,7 @@ namespace HIMS.API.Extensions
             int colspan = 1;
             int col = 1;
             // for Sr No
-            workSheet.Cell(RowNo, colIndex).Value = "";
+            //workSheet.Cell(RowNo, colIndex).Value = "";
 
             foreach (var hr in footer)
             {
