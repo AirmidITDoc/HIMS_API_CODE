@@ -1887,7 +1887,7 @@ namespace HIMS.Services.Report
             string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
 
-            var html = GetHTMLViewer(model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
+            var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1897,9 +1897,10 @@ namespace HIMS.Services.Report
             return byteFile;
 
         }
-        public DataTable GetReportDataBySp(ReportNewRequestModel model)
+
+        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
-            Dictionary<string, string> fields = Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];
@@ -1914,12 +1915,7 @@ namespace HIMS.Services.Report
                 para[sp_Para] = param;
                 sp_Para++;
             }
-            return odal.FetchDataTableBySP(model.SPName, para, true);
-        }
-
-        private string GetHTMLViewer(ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
-        {
-            var dt = GetReportDataBySp(model);
+            var dt = odal.FetchDataTableBySP(sp_Name, para, true);
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
@@ -1999,7 +1995,7 @@ namespace HIMS.Services.Report
             return html;
 
         }
-  
+
         // Create  by Ashutosh 24 Jun 2025
         public static string GetCommonHtmlTableHeader(DataTable dt, string[] headers, string[] columnWidths = null)
         {
@@ -9254,8 +9250,8 @@ namespace HIMS.Services.Report
 
                 case "SalesBill":
                     {
-                       
-                      
+
+
                         int i = 0;
 
 
@@ -9466,6 +9462,11 @@ namespace HIMS.Services.Report
                 }
             }
             return words;
+        }
+
+        public DataTable GetReportDataBySp(ReportNewRequestModel model)
+        {
+            throw new NotImplementedException();
         }
 
 
