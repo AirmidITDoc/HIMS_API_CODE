@@ -28,10 +28,14 @@ namespace HIMS.API.Controllers.Administration
 
         private readonly IAdministrationService _IAdministrationService;
         private readonly IGenericService<MReportTemplateConfig> _repository;
-        public AdministrationController(IAdministrationService repository, IGenericService<MReportTemplateConfig> repository1)
+        private readonly IGenericService<MAutoServiceList> _repository1;
+
+        public AdministrationController(IAdministrationService repository, IGenericService<MReportTemplateConfig> repository1, IGenericService<MAutoServiceList> repository2)
         {
             _IAdministrationService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+
         }
 
         [HttpPost("RoleMasterList")]
@@ -286,48 +290,57 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
-
         [HttpPost("AutoServiceListInsert")]
-        // [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(MAutoServiceModel obj)
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(List<AutoServiceModel> objList)
         {
-            List<MAutoServiceList> model = obj.AutoService.MapTo<List<MAutoServiceList>>();
-            if (model.Count > 0)
-            {
-                model.ForEach(item =>
-                {
-                    item.CreatedBy = CurrentUserId;
-                    item.CreatedDate = DateTime.Now;
-                });
-
-                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-            {
+            if (objList == null || !objList.Any())
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            foreach (var obj in objList)
+            {
+                MAutoServiceList model = obj.MapTo<MAutoServiceList>();
+
+                if (obj.SysId == 0)
+                {
+                    model.CreatedBy = CurrentUserId;
+                    model.CreatedDate = DateTime.Now;
+                    model.ModifiedBy = CurrentUserId;
+                    model.ModifiedDate = DateTime.Now;
+
+                    await _repository1.Add(model, CurrentUserId, CurrentUserName);
+                }
+                else
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
+                }
             }
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
 
-
-
-
-        [HttpPut("AutoServiceListUpdate{id:int}")]
-     //   [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(AutoServiceModel obj)
+        [HttpPut("AutoServiceListUpdate")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(List<AutoServiceModel> objList)
         {
-            MAutoServiceList model = obj.MapTo<MAutoServiceList>();
-            if (obj.SysId == 0)
+            if (objList == null || !objList.Any())
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
+
+            foreach (var obj in objList)
             {
+                if (obj.SysId == 0)
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
+
+                MAutoServiceList model = obj.MapTo<MAutoServiceList>();
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
+                await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
+
 
     }
 }
