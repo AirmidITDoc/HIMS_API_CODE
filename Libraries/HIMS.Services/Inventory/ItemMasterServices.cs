@@ -290,7 +290,7 @@ namespace HIMS.Services.Inventory
                 {
                     StoreId= g.Key.StoreId,
                     ItemId=g.Key.ItemId,
-                    ItemName=g.Key.ItemName,
+                    ItemName=g.Key.ItemName + " | Bal Qty : " + g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)) + " | Price : " + g.Max(x => x.stock.UnitMrp),
                     BalanceQty = g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)),
                     LandedRate = g.Max(x => x.stock.LandedRate),
                     UnitMRP = g.Max(x => x.stock.UnitMrp),

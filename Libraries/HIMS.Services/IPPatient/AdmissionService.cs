@@ -128,9 +128,10 @@ namespace HIMS.Services.IPPatient
                       join b in _context.Bedmasters on a.BedId equals b.BedId
                       join g in _context.DbGenderMasters on r.GenderId equals g.GenderId
                       join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
-                      join doc in _context.DoctorMasters on a.RefDocNameId equals doc.DoctorId
+                      join doc in _context.DoctorMasters on a.RefDocNameId equals doc.DoctorId into refDoc
+                      from doc in refDoc.DefaultIfEmpty() // LEFT JOIN
                       join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
-                      from c in comp.DefaultIfEmpty()
+                      from c in comp.DefaultIfEmpty() // LEFT JOIN
                       where a.IsDischarged == 0 &&
                       ((r.FirstName + " " + r.LastName).Contains(Keyword) || (r.MobileNo ?? "").Contains(Keyword) || (r.RegNo ?? "").Contains(Keyword))
                       orderby r.FirstName

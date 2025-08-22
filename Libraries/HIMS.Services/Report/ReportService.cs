@@ -1837,6 +1837,24 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+
+                #region :: PharmacySalesStatementReport ::
+                case "PharmacySalesStatementReport":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesStatementReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_RptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacySalesStatementReport", "PharmacySalesStatementReport" + vDate, Orientation.Landscape);
+                        break;
+                    }
+                #endregion
+
                 default:
 
 
