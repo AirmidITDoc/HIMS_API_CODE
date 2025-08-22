@@ -145,10 +145,10 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
-     
+
         [HttpPost("PrescriptionReturnCancel")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> PrescreturnCancel(PrescriptionReturnCancel obj)
+        public async Task<ApiResponse> PrescreturnCancel(PrescreturnCancelAsync obj)
         {
             TIpprescriptionReturnH model = new();
             if (obj.PresReId != 0)

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box"
+             style="margin: auto;font-size: 13px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table cellpadding="5" cellspacing="5" style="width: 100%;line-height: inherit;text-align: left;">
+
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 16px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <b>
+                                        IP Sales Bill
+
+                                    </b>
+                                </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <b>
+
+                                        Print Date : {{CurrentDate}}
+                                    </b>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse; ">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold">UHID:</span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold">IPD No.:</span>
+                                    <span>{{IP_OP_Number}}</span>
+                                </td>
+
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold">Patient Name:</span>
+                                    <span> {{PatientName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight: bold">Doctor Name.:</span>
+                                    <span>{{DoctorName}} </span>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <table class="table" style="width:100%;border-collapse:collapse">
+                    <tbody>
+
+                        <tr style="font-size:18px;background-color: white;">
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                SR.NO
+                            </td>
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Date
+                            </td>
+                            <!--<td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Sales No
+                            </td>-->
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Item Name
+                            </td>
+
+
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Batch No
+                            </td>
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Exp Date
+                            </td>
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Price
+                            </td>
+
+
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Qty
+                            </td>
+
+                            <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                Total Amount
+                            </td>
+
+
+                        </tr>
+                        <!--<tr class="bill-table-row">
+                        <td>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead style="font-size: 14px;">
+                                    <tr>
+                                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                            Date
+                                        </td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                            Sales No
+                                        </td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                            Item Name
+                                        </td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Batch No</td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Exp Date</td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Price</td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Qty </td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                            Total Amount
+                                        </td>
+                                    </tr>
+
+
+
+                                <tbody style="font-size: 14px;">-->
+                        {{Items}}
+
+                        <!--<tr style="margin-top: 12px;">
+                            <td colspan="6"
+                                style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+
+                                Amount in words :
+                            </td>
+                        </tr>-->
+                        <tr style="margin-top: 12px;">
+                            <td colspan="8">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px;">
+                                            Sales Type Amount
+                                        </td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">
+                                            {{T_TotalAmount}}
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </thead>
+                </table>
+                </td>
+                </tr>
+
+                </tbody>
+            </table>
+            </td>
+            <td>
+
+                </tbody>
+                </table>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
