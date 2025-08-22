@@ -9676,17 +9676,25 @@ namespace HIMS.Services.Report
             }
             return words;
         }
-
         public DataTable GetReportDataBySp(ReportNewRequestModel model)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> fields = Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            DatabaseHelper odal = new();
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = ((property.Key == "FromDate" || property.Key == "ToDate") ? DateTime.ParseExact(property.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture) : property.Value.ToString())
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            return odal.FetchDataTableBySP(model.SPName, para, true);
         }
-
-
-        //public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
 
