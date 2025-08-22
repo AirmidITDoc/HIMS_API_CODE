@@ -7,7 +7,7 @@
             <tr class="title-date-row">
                 <td>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-size: 18px">
+                        <tr style="font-size: 20px">
                             <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                 <b>
                                     GOODS RECEIPT NOTE RETURN
@@ -36,34 +36,15 @@
                             <span style="font-weight: bold;">Invoice No. : </span>
                             <span>{{InvoiceNo}}</span>
                         </td>
-                        <td style="padding: 2px; width: 40%;">
-                            <span style="font-weight: bold;">Mobile No : </span>
-                            <span>{{Mobile}}</span>
-                        </td>
                        
-
-                    </tr>
-                    <tr>
                         <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">GRN Date : </span>
-                            <span>{{GRNDate}}</span>
-                        </td>
-                        <td style="padding: 2px; width: 30%;">
-                            <span style="font-weight: bold;">Invoice Date : </span>
-                            <span>{{InvDate}}</span>
-                        </td>
-
-                        <td style="padding: 2px; width: 40%;">
-                            <span style="font-weight: bold;">Gate Entry No : </span>
-                            <span>{{GateEntryNo}}</span>
+                            <span>{{GRNReturnDate}}</span>
                         </td>
 
                     </tr>
                     <tr>
-                        <td style="padding: 2px; width: 30%;">
-                            <span style="font-weight: bold;">Store Name : </span>
-                            <span>{{PrintStoreName}}</span>
-                        </td>
+
                         <td style="padding: 2px; width: 30%;">
                             <span style="font-weight: bold;">Supplier Name : </span>
                             <span>{{SupplierName}}</span>
@@ -74,6 +55,27 @@
                             <span style="font-weight: bold;">Address : </span>
                             <span> {{Address}}</span>
                         </td>
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Mobile No : </span>
+                            <span>{{Mobile}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Store Name : </span>
+                            <span>{{PrintStoreName}}</span>
+                        </td>
+                        <!--<td style="padding: 2px; width: 30%;">
+                            <span style="font-weight: bold;">Supplier Name : </span>
+                            <span>{{SupplierName}}</span>
+                        </td>
+
+
+                        <td style="padding: 2px; width: 40%;">
+                            <span style="font-weight: bold;">Address : </span>
+                            <span> {{Address}}</span>
+                        </td>-->
                     </tr>
                    
                 </table>
@@ -185,7 +187,7 @@
                         </td>
                         <!-- <div></div> -->
                         <td colspan="2" style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-weight: bold;">
-                            ₹ {{NetPayble}}
+                            ₹ {{NetAmount}}
                         </td>
                     </tr>
 

@@ -612,7 +612,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReturn.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReturnReport", "GRNReturnReport" + vDate, Orientation.Portrait);
@@ -1847,6 +1847,21 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacySalesStatementReport", "PharmacySalesStatementReport" + vDate, Orientation.Landscape);
+                        break;
+                    }
+                #endregion
+                #region :: IPSalesBillReport ::
+                case "IPSalesBillReport":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPSalesBillReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPSalesBillReport", "IPSalesBillReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -5391,6 +5406,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
 
                         html = html.Replace("{{GRNDate}}", dt.GetColValue("GRNDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{GRNReturnDate}}", dt.GetColValue("GRNReturnDate").ConvertToDateString("dd/MM/yyyy"));
+
                         html = html.Replace("{{GRNTime}}", dt.GetColValue("GRNReturnTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{PurchaseTime}}", dt.GetColValue("PurchaseTime").ConvertToDateString("dd/MM/yyyy"));
 
@@ -9620,6 +9637,122 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{creditreturnamt}}", dt.GetColValue("creditreturnamt").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{AdvRefundAmt}}", dt.GetColValue("AdvRefundAmt").ConvertToDouble().To2DecimalPlace());
+                        return html;
+                    }
+                    break;
+
+
+
+                case "IPSalesBillReport":
+                    {
+                        string html1 = File.ReadAllText(htmlFilePath);
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0, j = 0;
+
+                        double T_CountLocal = 0, T_TotalAmount = 0, TotalAmt = 0, PatientName = 0, AdmittedDoctorName = 0, AdmissionDate = 0, BillNo = 0, CompBillDate = 0, IPDNo = 0, RoomName = 0;
+
+                        string previousLabel = "";
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            i++; j++;
+
+
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["SalesType"].ConvertToString();
+                                items.Append("<tr style=\"font-size:20px;border: 1px;color:black;\"><td colspan=\"8\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                            }
+                            if (previousLabel != "" && previousLabel != dr["SalesType"].ConvertToString())
+                            {
+                                j = 1;
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white'><td colspan='7' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Bill Total Amount</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+                                   .Append(TotalAmt.To2DecimalPlace()).Append("</td></tr>");
+
+                                TotalAmt = 0;
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"8\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(dr["SalesType"].ConvertToString()).Append("</td></tr>");
+
+                            }
+                            TotalAmt += dr["TotalAmount"].ConvertToDouble();
+                            T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
+                            TotalAmt = TotalAmt;
+                            T_CountLocal = T_CountLocal + 1;
+                            previousLabel = dr["SalesType"].ConvertToString();
+
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:center;\">").Append(dr["Date"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:left;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:center;\">").Append(dr["BatchNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align center;\">").Append(dr["BatchExpDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:right;\">").Append(dr["UnitMRP"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:center;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;text-align:right;\">").Append(dr["TotalAmount"].ConvertToDouble()).Append("</td></tr>");
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+
+                                items.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='7' style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Bill Total Amount</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:center;vertical-align:middle\">")
+
+                                     .Append(TotalAmt.To2DecimalPlace()).Append("</td></tr>");
+
+
+                            }
+                        }
+
+
+                        //BillNo += dr["BillNo"].ConvertToDouble();
+                        //CompBillDate += dr["CompBillDate"].ConvertToDouble();
+                        //IPDNo += dr["IPDNo"].ConvertToDouble();
+                        //RoomName += dr["RoomName"].ConvertToDouble();
+
+                        foreach (DataRow dr1 in dt.Rows)
+                        {
+
+
+
+                            i++; j++;
+
+                            if (dr1["SalesType"].ConvertToString() == "Sales")
+                            {
+
+                                T_TotalAmount += dr1["TotalAmount"].ConvertToDouble();
+
+
+                            }
+                            if (dr1["SalesType"].ConvertToString() == "Sales Return")
+                            {
+
+                                T_TotalAmount += dr1["TotalAmount"].ConvertToDouble();
+
+
+                            }
+
+
+
+                        }
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        //html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{IP_OP_Number}}", dt.GetColValue("IP_OP_Number").ToString());
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{CompBillDate}}", dt.GetColValue("CompBillDate").ConvertToDateString("dd/MM/yyyy"));
+
+
+
+                        html = html.Replace("{{T_TotalAmount}}", T_TotalAmount.To2DecimalPlace());
                         return html;
                     }
                     break;

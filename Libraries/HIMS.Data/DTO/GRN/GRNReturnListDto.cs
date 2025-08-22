@@ -37,12 +37,9 @@ namespace HIMS.Data.DTO.GRN
 
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
-        //public bool? GrnType { get; set; }
-        //public bool? IsGrnTypeFlag { get; set; }
         public long? StkId { get; set; }
-
-        //public float? Cf { get; set; }
-        //public float? Mrp { get; set; }
         public float? TotalQty { get; set; }
+        public decimal? NetAmount { get; set; }
+
     }
 }

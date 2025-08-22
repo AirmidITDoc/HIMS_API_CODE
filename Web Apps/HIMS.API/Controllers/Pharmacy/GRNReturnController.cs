@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+    //    [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);
@@ -52,6 +52,13 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(List1.ToGridResponse(objGrid, "Grn List By name for GRN Return"));
         }
 
+        [HttpPost("ItemListBYSupplierName")]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> ItemListBysupplierNameAsync(GridRequestModel objGrid)
+        {
+            IPagedList<ItemListBysupplierNameDto> List1 = await _gRNReturnService.ItemListBysupplierNameAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "ItemListBYSupplierName"));
+        }
 
 
         [HttpPost("Insert")]
@@ -71,7 +78,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.GrnreturnId);
         }
 
         [HttpPost("Verify")]

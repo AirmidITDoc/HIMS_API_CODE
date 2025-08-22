@@ -404,6 +404,8 @@ namespace HIMS.API.Controllers.Report
                 case "IPPharmaAdvanceReport":
                 case "IPPharmaAdvanceReturnReport":
                 case "PharmacySalesStatementReport":
+                case "IPSalesBillReport":
+
 
 
                 #endregion
