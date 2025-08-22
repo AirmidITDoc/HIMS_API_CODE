@@ -99,6 +99,9 @@ namespace HIMS.Data.DTO.Inventory
         public string DrugTypeName { get; set; }
         public string ManufactureName { get; set; }
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+        public string ConversionFactor { get; set; }
+        public long? ExpDays { get; set; }
+        public long? DaysFlag { get; set; }
     }
 
     public class ItemListForSalesPageDTO

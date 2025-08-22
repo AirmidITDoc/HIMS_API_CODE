@@ -402,6 +402,12 @@ namespace HIMS.API.Controllers.Report
                 case "WorkOrder":
 
                 //Pharmacy
+                case "IPPharmaAdvanceReport":
+                case "IPPharmaAdvanceReturnReport":
+                case "PharmacySalesStatementReport":
+                case "IPSalesBillReport":
+
+
                 case "SalesBill":
                 case "SalesReturnBill":
 
