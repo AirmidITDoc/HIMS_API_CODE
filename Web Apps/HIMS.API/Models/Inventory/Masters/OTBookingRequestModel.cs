@@ -22,9 +22,9 @@ namespace HIMS.API.Models.Inventory.Masters
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
-        public class OTBokkingRequestModelValidator : AbstractValidator<OTBookingRequestModel>
+        public class OTBookingRequestModelValidator : AbstractValidator<OTBookingRequestModel>
         {
-            public OTBokkingRequestModelValidator()
+            public OTBookingRequestModelValidator()
             {
                 RuleFor(x => x.OtbookingDate).NotNull().NotEmpty().WithMessage("OtbookingDate is required");
                 RuleFor(x => x.OtbookingTime).NotNull().NotEmpty().WithMessage("OtbookingTime is required");
@@ -36,7 +36,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public class OTBookingRequestCancel
         {
             public long OtbookingId { get; set; }
-           
+            public string? Reason { get; set; }
 
         }
     }

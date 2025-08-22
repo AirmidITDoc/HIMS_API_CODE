@@ -13309,6 +13309,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OtrequestTime)
                     .HasColumnType("datetime")
                     .HasColumnName("OTRequestTime");
+
+                entity.Property(e => e.Reason).HasMaxLength(100);
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>

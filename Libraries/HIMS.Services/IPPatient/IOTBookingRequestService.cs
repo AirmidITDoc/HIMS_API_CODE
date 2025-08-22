@@ -17,7 +17,7 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<OTBookingRequestListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<OTBookingRequestEmergencyListDto>> GetListAsynco(GridRequestModel objGrid);
 
-        Task CancelAsync(TOtbookingRequest OBJTOtbookingRequest, int UserId, string Username);
+        Task CancelAsync(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username);
 
     }
 }
