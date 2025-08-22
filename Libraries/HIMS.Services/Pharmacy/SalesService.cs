@@ -114,6 +114,7 @@ namespace HIMS.Services.Users
             }
             string SalesId = odal.ExecuteNonQuery("m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", entity);
             ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
+            ObjPayment.BillNo = Convert.ToInt32(SalesId);
 
             // Add details table records
             foreach (var item in ObjSalesHeader.TSalesDetails)
