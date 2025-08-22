@@ -509,7 +509,7 @@ namespace HIMS.Services.Users
         }
         public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "m_Rtrv_SalesDraftBillList");
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "ps_m_Rtrv_SalesDraftBillList]");
         }
         public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
         {
