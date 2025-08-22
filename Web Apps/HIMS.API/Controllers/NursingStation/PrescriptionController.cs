@@ -146,20 +146,20 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
      
-        [HttpPost("PrescriptionReturnCancel")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> PrescreturnCancel(PrescreturnCancelAsync obj)
-        {
-            TIpprescriptionReturnH model = new();
-            if (obj.PresReId != 0)
-            {
-                model.PresReId = obj.PresReId;
-                await _IPrescriptionService.PrescreturnCancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
-        }
+        //[HttpPost("PrescriptionReturnCancel")]
+        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //public async Task<ApiResponse> PrescreturnCancel(PrescreturnCancelAsync obj)
+        //{
+        //    TIpprescriptionReturnH model = new();
+        //    if (obj.PresReId != 0)
+        //    {
+        //        model.PresReId = obj.PresReId;
+        //        await _IPrescriptionService.PrescreturnCancelAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        //}
 
     }
 
