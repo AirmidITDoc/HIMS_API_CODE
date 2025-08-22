@@ -28,9 +28,13 @@ namespace HIMS.API.Controllers.IPPatient
     public class OTBookingController : BaseController
     {
         private readonly IOTBookingRequestService _OTBookingRequestService;
-        public OTBookingController(IOTBookingRequestService repository)
+        private readonly IGenericService<TOtbookingRequest> _repository;
+
+        public OTBookingController(IOTBookingRequestService repository, IGenericService<TOtbookingRequest> repository1)
         {
             _OTBookingRequestService = repository;
+            _repository = repository1;
+
         }
         [HttpPost("OtbookingRequestList")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
@@ -47,7 +51,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
         }
 
-        [HttpPost("InsertEDMX")]
+        [HttpPost("Insert")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(OTBookingRequestModel obj)
         {
@@ -60,7 +64,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.ModifiedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
-                await _OTBookingRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -79,7 +83,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -89,7 +93,8 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(OTBookingRequestCancel obj)
         {
-            TOtbookingRequest model = new();
+            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
+
             if (obj.OtbookingId != 0)
             {
                 model.OtbookingId = obj.OtbookingId;
