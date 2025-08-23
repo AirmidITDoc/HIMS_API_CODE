@@ -9,6 +9,8 @@ namespace HIMS.Data.DTO.IPPatient
     public class PrescriptionListDto
     {
         public string RegNo { get; set; }
+
+        
         public string PatientName { get; set; }
         public string Vst_Adm_Date { get; set; }
         public string Date { get; set; }

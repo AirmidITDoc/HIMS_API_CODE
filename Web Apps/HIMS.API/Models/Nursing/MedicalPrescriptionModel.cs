@@ -58,4 +58,9 @@ namespace HIMS.API.Models.Nursing
 
 
     }
+
+    public class PrescreturnCancelAsync
+    {
+        public long PresReId { get; set; }
+    }
 }
