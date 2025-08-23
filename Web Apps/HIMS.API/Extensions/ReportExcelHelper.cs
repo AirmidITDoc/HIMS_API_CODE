@@ -41,7 +41,7 @@ namespace HIMS.API.Extensions
             memoryStream.Position = 0;
             return memoryStream;
         }
-        public static Stream GetExcel(ReportNewRequestModel model, DataTable dt)
+        public static Stream GetExcel(ReportConfigDto model, DataTable dt)
         {
             using var excel = new XLWorkbook();
             var workSheet = excel.Worksheets.Add("sheetName");
@@ -72,7 +72,7 @@ namespace HIMS.API.Extensions
             }
             return SaveToStream(excel);
         }
-        public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportNewRequestModel model)
+        public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportConfigDto model)
         {
             StringBuilder table = new();
             string[] groupBy = model.groupByLabel.Split('.').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();

@@ -23,8 +23,12 @@ namespace HIMS.Core.Domain.Grid
         [JsonIgnore]
         public string RepoertName { get; set; } = string.Empty;
     }
-
-    public class ReportNewRequestModel
+    public class NewReportRequestDto
+    {
+        public long ReportId { get; set; }
+        public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
+    }
+    public class ReportConfigDto
     {
         public List<SearchGrid> SearchFields { get; set; } = new List<SearchGrid>();
         public string? Mode { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
@@ -75,6 +76,7 @@ namespace HIMS.API.Controllers.Report
         //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportListDto(GridRequestModel objGrid)
         {
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "Id", FieldValue = "0" });
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             return Ok(MReportConfigList.ToGridResponse(objGrid, "MReportConfig  List"));
         }
@@ -424,18 +426,68 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewViewReport")]
-        public IActionResult NewViewReport(ReportNewRequestModel model)
+        public async Task<IActionResult> NewViewReport(NewReportRequestDto request)
         {
             //if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
             //    return Unauthorized("You don't have permission to access this report.");
             //model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
+            ReportConfigDto model = new();
+            GridRequestModel objGrid = new() { Filters = new List<SearchGrid>() };
+            objGrid.Filters.Add(new SearchGrid() { FieldName="Id",FieldValue=request.ReportId.ToString() });
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue ="0" });
+            objGrid.First = 0;
+            objGrid.Rows = 0;
+            IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
+            if (MReportConfigList.Count > 0)
+            {
+                model.colList = MReportConfigList[0].ReportColumn.Split(',');
+                model.SearchFields = request.SearchFields;
+                model.Mode = MReportConfigList[0].ReportMode;
+                model.RepoertName = MReportConfigList[0].ReportName;
+                model.headerList = MReportConfigList[0].ReportHeader.Split(',');
+                model.totalFieldList = MReportConfigList[0].ReportTotalField.Split(',');
+                model.groupByLabel = MReportConfigList[0].ReportGroupByLabel;
+                model.summaryLabel = MReportConfigList[0].SummaryLabel;
+                model.columnWidths = MReportConfigList[0].ReportColumnWidth.Split(',');
+                model.htmlFilePath = MReportConfigList[0].ReportBodyFile;
+                model.htmlHeaderFilePath = MReportConfigList[0].ReportHeaderFile;
+                model.SPName = MReportConfigList[0].ReportSpname;
+                model.FolderName = MReportConfigList[0].ReportFolderName;
+                model.FileName = MReportConfigList[0].ReportFileName;
+                model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
+            }
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             string byteFile = _reportService.GetNewReportSetByProc(model);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("NewExportExcelReport")]
-        public IActionResult NewExcelReport(ReportNewRequestModel model)
+        public async Task<IActionResult> NewExcelReport(NewReportRequestDto request)
         {
+            ReportConfigDto model = new();
+            GridRequestModel objGrid = new() { Filters = new List<SearchGrid>() };
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "Id", FieldValue = request.ReportId.ToString() });
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue = "0" });
+            objGrid.First = 0;
+            objGrid.Rows = 0;
+            IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
+            if (MReportConfigList.Count > 0)
+            {
+                model.colList = MReportConfigList[0].ReportColumn.Split(',');
+                model.SearchFields = request.SearchFields;
+                model.Mode = MReportConfigList[0].ReportMode;
+                model.RepoertName = MReportConfigList[0].ReportName;
+                model.headerList = MReportConfigList[0].ReportHeader.Split(',');
+                model.totalFieldList = MReportConfigList[0].ReportTotalField.Split(',');
+                model.groupByLabel = MReportConfigList[0].ReportGroupByLabel;
+                model.summaryLabel = MReportConfigList[0].SummaryLabel;
+                model.columnWidths = MReportConfigList[0].ReportColumnWidth.Split(',');
+                model.htmlFilePath = MReportConfigList[0].ReportBodyFile;
+                model.htmlHeaderFilePath = MReportConfigList[0].ReportHeaderFile;
+                model.SPName = MReportConfigList[0].ReportSpname;
+                model.FolderName = MReportConfigList[0].ReportFolderName;
+                model.FileName = MReportConfigList[0].ReportFileName;
+                model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
+            }
             DataTable dt = _reportService.GetReportDataBySp(model);
             return Ok(ReportExcelHelper.GetExcel(model, dt));
         }
