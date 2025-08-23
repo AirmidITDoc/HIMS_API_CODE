@@ -14,6 +14,7 @@ namespace HIMS.API.Models.Inventory
         public bool? Isverify { get; set; }
         public bool? Isclosed{ get; set; }
         public string? Comments { get; set; }
+        public bool? Priority { get; set; }
         public List<IndentDetailModel> TIndentDetails { get; set; }
     }
     public class IndentModelValidator : AbstractValidator<IndentModel>
