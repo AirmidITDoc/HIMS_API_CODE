@@ -2141,27 +2141,32 @@ namespace HIMS.Services.Report
             }
             return table.ToString();
         }
+
         public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
         {
             foreach (var row in group2Data)
             {
                 table.Append("<tr style='text-align: center; border: 1px solid #d4c3c3;'>");
+
                 if (headers.Contains("Sr.No"))
                 {
-                    table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px;'>");
+                    table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px;'>");
                     table.Append(RowNo);
                     table.Append("</th>");
                     RowNo++;
                 }
+
                 foreach (var hr in columnDataNames)
                 {
-                    table.Append("<td style='border: 1px solid #d4c3c3; font-size:15px; word-break: break-word; white-space: normal; padding: 4px;'>");
+                    table.Append("<td style='border: 1px solid #d4c3c3; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px; word-break: break-word; white-space: normal; padding: 4px;'>");
                     table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
                     table.Append("</td>");
                 }
+
                 table.Append("</tr>");
             }
         }
+
 
 
         ///  chnages by 4 july
@@ -2200,9 +2205,6 @@ namespace HIMS.Services.Report
         //        table.Append("</tr>");
         //    }
         //}
-
-
-
 
 
         public static void CreateFooterGroupBy(IEnumerable<DataRow> groupData, StringBuilder table, string[] footer, string groupName, bool isTotal = false)
@@ -5401,6 +5403,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark").ConvertToString());
                         html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{NetPayble}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
+
 
                         html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
@@ -5439,6 +5443,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
                         string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
 
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
 
