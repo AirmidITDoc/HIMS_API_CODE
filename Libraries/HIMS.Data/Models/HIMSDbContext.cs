@@ -13310,7 +13310,7 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("OTRequestTime");
 
-                entity.Property(e => e.Reason).HasMaxLength(100);
+                entity.Property(e => e.Reason).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>
