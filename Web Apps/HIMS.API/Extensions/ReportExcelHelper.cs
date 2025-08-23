@@ -41,7 +41,7 @@ namespace HIMS.API.Extensions
             memoryStream.Position = 0;
             return memoryStream;
         }
-        public static Stream GetExcel(ReportNewRequestModel model, DataTable dt)
+        public static Stream GetExcel(ReportConfigDto model, DataTable dt)
         {
             using var excel = new XLWorkbook();
             var workSheet = excel.Worksheets.Add("sheetName");
@@ -72,7 +72,7 @@ namespace HIMS.API.Extensions
             }
             return SaveToStream(excel);
         }
-        public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportNewRequestModel model)
+        public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportConfigDto model)
         {
             StringBuilder table = new();
             string[] groupBy = model.groupByLabel.Split('.').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
@@ -160,8 +160,10 @@ namespace HIMS.API.Extensions
                         }
                     }
                     if (model.groupByLabel.Split(',').Where(x => x != "").ToArray().Any(x => !string.IsNullOrWhiteSpace(x)))
+                    {
                         CreateFooterGroupBy(workSheet, group1Data, RowNo, model.totalFieldList, group1);
-                    RowNo++;
+                        RowNo++;
+                    }
                 }
                 if (model.groupByLabel.Split(',').Where(x => x != "").ToArray().Any(x => !string.IsNullOrWhiteSpace(x)))
                 {
@@ -182,13 +184,12 @@ namespace HIMS.API.Extensions
         {
             if (!footer.Any(x => !string.IsNullOrWhiteSpace(x)))
                 return;
-            int colIndex = 1;
-            int colspan = 1;
+            int colspan = 0;
             int col = 1;
             // for Sr No
             //workSheet.Cell(RowNo, colIndex).Value = "";
 
-            foreach (var hr in footer)
+            foreach (var hr in footer.Skip(1))
             {
                 string total = "";
                 if (hr.ToLower() == "space")
@@ -199,13 +200,14 @@ namespace HIMS.API.Extensions
                     total = groupData.Sum(row => row.IsNull(hr) ? 0 : Convert.ToDecimal(row[hr])).ToString();
                 if (!string.IsNullOrWhiteSpace(total) || footer.Length == col)
                 {
-                    workSheet.Cell(RowNo, colIndex).Value = total;
-                    workSheet.Range(RowNo, col, RowNo, col + colspan).Merge();
-                    colspan = 1;
-                    col = colIndex;
+                    workSheet.Cell(RowNo, col).Value = total;
+                    if (colspan > 0)
+                        workSheet.Range(RowNo, col, RowNo, col + colspan).Merge();
+                    col += colspan+1;
+                    colspan = 0;
                 }
-                colIndex++;
             }
+            workSheet.Row(RowNo).Style.Font.Bold = true;
         }
     }
 }

@@ -1895,7 +1895,7 @@ namespace HIMS.Services.Report
             font += "\nbody {font-family: " + fonts + " sans-serif;}";
             return html.Replace("{{LoadFont}}", font);
         }
-        public string GetNewReportSetByProc(ReportNewRequestModel model)
+        public string GetNewReportSetByProc(ReportConfigDto model)
         {
 
             string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -1931,7 +1931,7 @@ namespace HIMS.Services.Report
 
         }
 
-        private static string GetHTMLViewer(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
+        private static string GetHTMLViewer(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -2429,7 +2429,7 @@ namespace HIMS.Services.Report
             }
             return table.ToString();
         }
-        private static string GetHTMLViewerGroupBy(string sp_Name, ReportNewRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
+        private static string GetHTMLViewerGroupBy(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -9676,17 +9676,25 @@ namespace HIMS.Services.Report
             }
             return words;
         }
-
-        public DataTable GetReportDataBySp(ReportNewRequestModel model)
+        public DataTable GetReportDataBySp(ReportConfigDto model)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> fields = Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            DatabaseHelper odal = new();
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = ((property.Key == "FromDate" || property.Key == "ToDate") ? DateTime.ParseExact(property.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture) : property.Value.ToString())
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            return odal.FetchDataTableBySP(model.SPName, para, true);
         }
-
-
-        //public string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
 

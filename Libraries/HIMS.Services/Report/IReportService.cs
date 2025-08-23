@@ -11,7 +11,7 @@ namespace HIMS.Services.Report
     public partial interface IReportService
     {
         string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
-        string GetNewReportSetByProc(ReportNewRequestModel model);
+        string GetNewReportSetByProc(ReportConfigDto model);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
         Task<List<CashCounter>> SearchCashCounter(string str);
@@ -28,7 +28,7 @@ namespace HIMS.Services.Report
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
         Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
-        DataTable GetReportDataBySp(ReportNewRequestModel model);
+        DataTable GetReportDataBySp(ReportConfigDto model);
 
 
 
