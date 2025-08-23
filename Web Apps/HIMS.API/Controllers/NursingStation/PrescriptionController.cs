@@ -35,33 +35,19 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IGenericService<TIpPrescription> _repository;
         private readonly IGenericService<TIpprescriptionReturnH> _repository1;
 
-        
-        public PrescriptionController(IPrescriptionService IPrescriptionService, INotificationUtility notificationUtility, IAdmissionService admissionService, HIMSDbContext HIMSDbContext)
+
+
+        public PrescriptionController(IPrescriptionService IPrescriptionService, INotificationUtility notificationUtility, IAdmissionService admissionService, HIMSDbContext HIMSDbContext, IGenericService<TIpprescriptionReturnH> repository1)
         {
             _IPrescriptionService = IPrescriptionService;
             _notificationUtility = notificationUtility;
             _admissionService = admissionService;
             _context = HIMSDbContext;
+            _repository1 = repository1;
+
         }
 
 
-        //[HttpPost("InsertPrescription")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
-        //{
-        //    TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
-        //    if (obj.MedicalRecoredId == 0)
-        //    {
-        //        model.RoundVisitDate = Convert.ToDateTime(obj.RoundVisitDate);
-        //        model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
-
-        //        await _IPrescriptionService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
-        //}
-      
         [HttpPost("InsertPrescription")]
         //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
@@ -108,13 +94,25 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
         }
-    
-
+        [HttpPost("PrescriptionCancel")]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)
+        {
+            TIpPrescription model = new();
+            if (obj.IppreId != 0)
+            {
+                model.IppreId = obj.IppreId;
+                await _IPrescriptionService.PrescCancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
 
 
 
         [HttpPost("PrescriptionReturnInsert")]
-        //[Permission(PageCode = "PrescriptionReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
@@ -130,38 +128,21 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
      
-        [HttpPost("PrescriptionCancel")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)
+       [HttpPost("PrescriptionReturnCancel")]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
         {
-            TIpPrescription model = new();
-            if (obj.IppreId != 0)
+            TIpprescriptionReturnH model = await _repository1.GetById(x => x.PresReId == Id);
+            if ((model?.PresReId ?? 0) > 0)
             {
-                model.IppreId = obj.IppreId;
-                await _IPrescriptionService.PrescCancelAsync(model, CurrentUserId, CurrentUserName);
+                model.IsActive = false;
+
+                await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+
         }
-
-
-        [HttpPost("PrescriptionReturnCancel")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> PrescreturnCancel(PrescreturnCancelAsync obj)
-        {
-            TIpprescriptionReturnH model = new();
-            if (obj.PresReId != 0)
-            {
-                model.PresReId = obj.PresReId;
-                await _IPrescriptionService.PrescreturnCancelAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
-        }
-
     }
-
-
 }

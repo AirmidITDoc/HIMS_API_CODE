@@ -18,7 +18,7 @@ namespace HIMS.Data.Models
         public long? OpIpId { get; set; }
         public byte? OpIpType { get; set; }
         public long? Addedby { get; set; }
-        public long? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public bool? Isclosed { get; set; }
 
         public virtual ICollection<TIpprescriptionReturnD> TIpprescriptionReturnDs { get; set; }
