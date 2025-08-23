@@ -30,17 +30,61 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "ps_Rtrv_OTBookinglist");
         }
-       
-        public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TOtReservations.Add(OBJTOtbooking);
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
+        //public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TOtReservations.Add(OBJTOtbooking);
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, TOtbookingRequest objTOtbookingRequests, int UserId, string Username)
+        {
+             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+             _context.TOtReservations.Add(OBJTOtbooking);
+            await _context.SaveChangesAsync();   
+
+            var existing = await _context.TOtbookingRequests .FirstOrDefaultAsync(x => x.OtbookingId == objTOtbookingRequests.OtrequestId);
+
+            if (existing != null) 
+            {
+                existing.OtrequestId = objTOtbookingRequests.OtrequestId;
+
+                _context.Entry(existing).Property(x => x.OtrequestId).IsModified = true;
+                await _context.SaveChangesAsync();
             }
+
+            scope.Complete();
         }
+
+
+
+        //public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+
+        //    _context.TOtReservations.Add(OBJTOtbooking);
+        //    await _context.SaveChangesAsync();
+        //    var existing = await _context.TOtbookingRequests.FirstOrDefaultAsync(x => x.OtbookingId == OBJTOtbooking.OtreservationId);
+
+        //    //  Update only the required fields
+        //    existing.OtrequestId = OBJTOtbooking.OtrequestId;
+        //    await _context.SaveChangesAsync();
+        //    scope.Complete();
+        //}
+
+
+
+
+
+
+
 
         public virtual async Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {

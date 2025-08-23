@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Inventory.Masters;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -28,6 +30,11 @@ namespace HIMS.API.Models.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
         public long? DepartmentId { get; set; }
+        public List<TOtbookingRequestUpdate> TOtbookingRequests { get; set; }
+
+        //public List<TOtbookingRequestUpdate> tOtbookingRequests { get; set; } = new List<TOtbookingRequestUpdate>();
+
+
 
     }
     public class OtbookingModelValidator : AbstractValidator<OTReservationModel>
@@ -49,6 +56,16 @@ namespace HIMS.API.Models.IPPatient
          
 
         }
+        public class TOtbookingRequestUpdate
+        {
+            public long OtbookingId { get; set; }
+            public long? OtrequestId { get; set; }
+
+
+        }
+      
 
     }
+
 }
+

@@ -49,11 +49,15 @@ namespace HIMS.Data.DTO.IPPatient
         public long? AnesthTypeId { get; set; }
         public long? AnestheticsDrID { get; set; }
         public long? AnestheticsDrID1 { get; set; }
-
-        
-
-
-
+        public string? DoctorName { get; set; }
+        public string? MobileNo { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public string? CompanyName { get; set; }
+        public string? IPDNo { get; set; }
+        public string? UnBooking { get; set; }
+        public string? TariffName { get; set; }
 
 
     }

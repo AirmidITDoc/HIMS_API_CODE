@@ -37,8 +37,8 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OTBookinglistDto> OTBookinglist = await _OTService.GetListAsync(objGrid);
             return Ok(OTBookinglist.ToGridResponse(objGrid, "OTBookinglist "));
         }
-        
-        [HttpPost("InsertEDMX")]
+
+        [HttpPost("Insert")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(OTReservationModel obj)
         {
@@ -52,14 +52,22 @@ namespace HIMS.API.Controllers.IPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
+                TOtbookingRequest requestModel = new TOtbookingRequest
+                {
+                    //OtrequestId = obj.OtrequestId,
 
-                //model.IsActive = true;
-                await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                };
+                await _OTService.InsertAsync(model, requestModel, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+
+
+        
+
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTReservationModel obj)

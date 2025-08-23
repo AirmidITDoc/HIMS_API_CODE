@@ -43,14 +43,12 @@ namespace HIMS.Services.Nursing
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header table records
-                TIpPrescription ObjLab = await _context.TIpPrescriptions.FindAsync(objmedicalRecord.IppreId);
-                if (ObjLab == null)
+                TIpPrescription ObPres = await _context.TIpPrescriptions.FindAsync(objmedicalRecord.IppreId);
+                if (ObPres == null)
                     throw new Exception("Prescription not found.");
-                // Cancel fields
-                ObjLab.IsClosed = true;
-              
-                _context.TIpPrescriptions.Update(ObjLab);
-                _context.Entry(ObjLab).State = EntityState.Modified;
+                ObPres.IsCancelled = true;
+                _context.TIpPrescriptions.Update(ObPres);
+                _context.Entry(ObPres).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
