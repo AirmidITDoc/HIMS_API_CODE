@@ -29,6 +29,10 @@ namespace HIMS.Data.Models
         public string? Comment { get; set; }
         public int? ClassId { get; set; }
         public int? TariffId { get; set; }
+        public long? RefDoctorId { get; set; }
+        public long? AttendingDoctorId { get; set; }
+        public bool? IsMlc { get; set; }
+        public long? IsConverted { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
