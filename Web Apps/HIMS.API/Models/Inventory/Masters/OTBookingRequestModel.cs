@@ -38,6 +38,8 @@ namespace HIMS.API.Models.Inventory.Masters
         {
             public long OtbookingId { get; set; }
             public string? Reason { get; set; }
+            public long IsCancelledBy { get; set; }
+
 
         }
     }
