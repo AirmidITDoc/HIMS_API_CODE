@@ -26,6 +26,8 @@ namespace HIMS.Data.DTO.Inventory
         public string? Comments { get; set; }
         public bool? IsInchargeVerify { get; set; }
 
+        public bool? Priority { get; set; }
+
     }
     public class IndentDetailListDto
     {

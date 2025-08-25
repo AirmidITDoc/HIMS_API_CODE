@@ -27,5 +27,7 @@ namespace HIMS.Data.DTO.Inventory
         public string? IDate { get; set; }
         public long? IndentId { get; set; }
         public bool? IsAccepted { get; set; }
+
+        public String? UserName { get; set; }
     }
 }
