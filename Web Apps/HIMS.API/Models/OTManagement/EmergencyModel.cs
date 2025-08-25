@@ -5,7 +5,6 @@ namespace HIMS.API.Models.OTManagement
 {
     public class EmergencyModel
     {
-        public long EmgId { get; set; }
         public long? RegId { get; set; }
         public DateTime? EmgDate { get; set; }
         public string? EmgTime { get; set; }
@@ -28,6 +27,13 @@ namespace HIMS.API.Models.OTManagement
         public string? Comment { get; set; }
         public int? Classid { get; set; }
         public int? Tariffid { get; set; }
+        public long? RefDoctorId { get; set; }
+        public long? AttendingDoctorId { get; set; }
+        public bool? IsMlc { get; set; }
+        public int? CreatedBy { get; set; }
+        public long EmgId { get; set; }
+
+
 
     }
     public class EmergencyModeValidator : AbstractValidator<EmergencyModel>
@@ -66,6 +72,13 @@ namespace HIMS.API.Models.OTManagement
         public string? Comment { get; set; }
         public int? Classid { get; set; }
         public int? Tariffid { get; set; }
+        public long? RefDoctorId { get; set; }
+        public bool? AttendingDoctorId { get; set; }
+        public bool? IsMlc { get; set; }
+        public int? ModifiedBy { get; set; }
+
+
+
 
 
 
@@ -74,6 +87,8 @@ namespace HIMS.API.Models.OTManagement
     {
 
         public long EmgId { get; set; }
+        public long? IsCancelledBy { get; set; }
+
 
     }
     public class GetEmergencyModel

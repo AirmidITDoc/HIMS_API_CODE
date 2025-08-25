@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Emergency
         }
 
         [HttpPost("Emergencylist")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsyn(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Emergency
         }
         //List API
         [HttpPost("EmergencyMedicalHistoryList")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<IActionResult> ListH(GridRequestModel objGrid)
         {
             IPagedList<TEmergencyMedicalHistory> EmergencyMedicalHistoryList = await _repository1.GetAllPagedAsync(objGrid);
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Emergency
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.EmgId == id);
@@ -63,13 +63,13 @@ namespace HIMS.API.Controllers.Emergency
 
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(EmergencyModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
             {
-                //model.EmgDate = Convert.ToDateTime(obj.EmgDate);
+                model.EmgDate = Convert.ToDateTime(obj.EmgDate);
                 //model.EmgTime = Convert.ToDateTime(obj.EmgTime);
                 //model.EmgTime = DateTime.Now;
 
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Emergency
 
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
@@ -99,10 +99,11 @@ namespace HIMS.API.Controllers.Emergency
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.EmgId);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(EmergencyCancel obj)
         {
-            TEmergencyAdm model = new();
+            TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
+
             if (obj.EmgId != 0)
             {
                 model.EmgId = obj.EmgId;
@@ -114,7 +115,7 @@ namespace HIMS.API.Controllers.Emergency
         }
         //Add API
         [HttpPost("EmergencyMedical")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(EmergencyMedicalHistoryModel obj)
         {
             TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
@@ -131,7 +132,7 @@ namespace HIMS.API.Controllers.Emergency
         }
         //Edit API
         [HttpPut("EmergencyMedical/{id:int}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyMedicalHistoryModel obj)
         {
             TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
@@ -148,7 +149,7 @@ namespace HIMS.API.Controllers.Emergency
         }
 
         [HttpPut("UpdateAddChargesFromEmergency")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> POST(UpdateAddChargesFromEmergency obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
