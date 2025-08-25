@@ -401,10 +401,11 @@ namespace HIMS.API.Controllers.Report
                 case "IPPharmaAdvanceReturnReport":
                 case "PharmacySalesStatementReport":
                 case "IPSalesBillReport":
-
-
                 case "SalesBill":
                 case "SalesReturnBill":
+                //OT
+                case "OTRequest":
+
 
                 #endregion
 
