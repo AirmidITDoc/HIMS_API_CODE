@@ -14,6 +14,7 @@ using HIMS.Data;
 using HIMS.Services.Common;
 using HIMS.Services.Masters;
 using HIMS.Services.OPPatient;
+using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -128,7 +129,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -153,7 +154,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
             Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
@@ -235,7 +236,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully.");
         }
         [HttpPost("CrossConsultationInsert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -309,6 +310,22 @@ namespace HIMS.API.Controllers.OPPatient
                 await _visitDetailsService.UpdateAsyncv(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("RequestForOPTOIP")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(RequestForOPTOIP obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+
+            if (obj.VisitId != 0)
+            {
+                model.VisitId = obj.VisitId;
+                await _visitDetailsService.RequestForOPTOIP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
 
     }

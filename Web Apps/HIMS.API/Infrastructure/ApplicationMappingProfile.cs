@@ -168,6 +168,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpPrescription, IpPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<VisitDetail, VisitFollowupDateUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<VisitDetail, RequestForOPTOIP>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<PaymentPharmacy, paymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

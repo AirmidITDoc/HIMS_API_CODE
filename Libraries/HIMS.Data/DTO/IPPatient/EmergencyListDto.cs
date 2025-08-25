@@ -46,5 +46,16 @@ namespace HIMS.Data.DTO.IPPatient
         public string? GenderName { get; set; }
         public string? TariffName { get; set; }
         public string? ConvertedIntoAdm { get; set; }
+        public string? AddedBy { get; set; }
+        public long? RefDoctorId { get; set; }
+        public long? AttendingDoctorId { get; set; }
+        public bool? IsMlc { get; set; }
+        public long? IsConverted { get; set; }
+        public string? AttendingDoctorName { get; set; }
+        public string? RefDoctorName { get; set; }
+
+        
+
+
     }
 }

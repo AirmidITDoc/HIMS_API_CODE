@@ -7,6 +7,7 @@ using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Text.RegularExpressions;
 using System.Transactions;
 
 namespace HIMS.Services.OutPatient
@@ -109,7 +110,7 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "IsConvertRequestForIP" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "IsConvertRequestForIp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -141,7 +142,7 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIP" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","IsConvertRequestForIp"};
 
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
@@ -382,8 +383,7 @@ namespace HIMS.Services.OutPatient
         public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray","CheckInTime","CheckOutTime","ConStartTime", 
-                                                "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray","CheckInTime","CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "IsConvertRequestForIp" };
             var entity = objCrossConsultation.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -420,8 +420,46 @@ namespace HIMS.Services.OutPatient
             await _context.SaveChangesAsync();
             scope.Complete();
         }
+        public virtual async Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] BEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "RegId",
+            "VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","CrossConsulFlag","PhoneAppId","CampId","CrossConsultantDrId"};
+            var TEntity = ObjVisitDetail.ToDictionary();
+            foreach (var rProperty in BEntity)
+            {
+                TEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
