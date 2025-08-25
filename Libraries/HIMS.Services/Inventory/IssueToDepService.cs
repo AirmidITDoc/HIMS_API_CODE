@@ -30,9 +30,9 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<IssuetodeptListDto>(model, "m_Rtrv_IssueToDep_list_by_Name");
         }
 
-        public virtual async Task<IPagedList<TIssueToDepartmentDetail>> GetIssueItemListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<IssueToDepartmentDetailListDto>> GetIssueItemListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<TIssueToDepartmentDetail>(model, "m_rtrv_IssueItemList");
+            return await DatabaseHelper.GetGridDataBySp<IssueToDepartmentDetailListDto>(model, "m_rtrv_IssueItemList");
         }
 
         public virtual async Task<IPagedList<IndentByIDListDto>> GetIndentById(GridRequestModel model)
