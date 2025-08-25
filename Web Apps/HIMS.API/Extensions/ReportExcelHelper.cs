@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Vml;
 using HIMS.Core.Domain.Grid;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -179,6 +181,8 @@ namespace HIMS.API.Extensions
                     RowNo++;
                 }
             }
+            if (model.Mode == "DailyCollectionSummary")
+                CreateSummaryIncome(workSheet, dt, RowNo, model.headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), model.totalFieldList);
         }
         public static void CreateFooterGroupBy(IXLWorksheet workSheet, IEnumerable<DataRow> groupData, int RowNo, string[] footer, string groupName, bool isTotal = false)
         {
@@ -203,11 +207,136 @@ namespace HIMS.API.Extensions
                     workSheet.Cell(RowNo, col).Value = total;
                     if (colspan > 0)
                         workSheet.Range(RowNo, col, RowNo, col + colspan).Merge();
-                    col += colspan+1;
+                    col += colspan + 1;
                     colspan = 0;
                 }
             }
             workSheet.Row(RowNo).Style.Font.Bold = true;
         }
+
+        public static void CreateSummaryIncome(IXLWorksheet workSheet, DataTable dt, int RowNo, string[] headers, string[] groupCol, string[] totalColList)
+        {
+            // Define expected groups
+            string[] groupNames = { "Income", "Expense" };
+
+            // Dictionary to store totals for each group
+            Dictionary<string, Dictionary<string, decimal>> groupTotals = new();
+            workSheet.Cell(RowNo, 1).Value = "Summary";
+            workSheet.Range(RowNo, 1, RowNo, headers.Length + 1).Merge();
+            workSheet.Row(RowNo).Style.Font.FontSize = 20;
+            int col = 1; int colspan = 1;
+            foreach (var group in groupNames)
+            {
+                RowNo++;
+                groupTotals[group] = new Dictionary<string, decimal>();
+
+                // Get distinct subgroups for this main group
+                var subGroups = dt.AsEnumerable()
+                                  .Where(row => row[groupCol[0]].ToString() == group)
+                                  .Select(row => row[groupCol[1]].ToString())
+                                  .Distinct();
+
+
+                // Group Total row
+                col = 1; colspan = 1;
+                foreach (var colName in totalColList)
+                {
+                    if (colName == "space")
+                    {
+                        if (totalColList.Length == col)
+                        {
+                            workSheet.Cell(RowNo, 1).Value = "Summary";
+                            workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                        }
+                        else
+                            colspan++;
+                    }
+                    else if (colName == "lableTotal")
+                    {
+                        workSheet.Cell(RowNo, 1).Value = $"Total {group}";
+                        workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                        colspan = 1;
+                    }
+                    else
+                    {
+                        decimal total = dt.Select($"{groupCol[0]} = '{group}'")
+                                          .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]));
+                        groupTotals[group][colName] = total;
+
+                        workSheet.Cell(RowNo, col - 1).Value = total;
+                    }
+                    col++;
+                }
+                workSheet.Row(RowNo).Style.Font.Bold = true;
+
+                // Start new table for each group
+                foreach (var subGroup in subGroups)
+                {
+                    RowNo++;
+                    col = 1; colspan = 1;
+                    foreach (var colName in totalColList)
+                    {
+                        if (colName == "space")
+                        {
+                            if (totalColList.Length == col)
+                            {
+                                workSheet.Cell(RowNo, 1).Value = "";
+                                workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                            }
+                            else
+                                colspan++;
+                        }
+                        else if (colName == "lableTotal")
+                        {
+                            workSheet.Cell(RowNo, col).Value = $"{subGroup} Sub Total";
+                            workSheet.Range(RowNo, col, RowNo, colspan - col).Merge();
+                            colspan = 1;
+                        }
+                        else
+                        {
+                            decimal subTotal = dt.Select($"{groupCol[0]} = '{group}' AND {groupCol[1]} = '{subGroup}'")
+                                                 .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]));
+                            workSheet.Cell(RowNo, col - 1).Value = subTotal;
+                        }
+                        col++;
+                    }
+                }
+            }
+
+            // Grand Total row (Income - Expense)
+            col = 1; colspan = 1;
+            RowNo++;
+            foreach (var colName in totalColList)
+            {
+                if (colName == "space")
+                {
+                    if (totalColList.Length == col)
+                    {
+                        workSheet.Cell(RowNo, 1).Value = "";
+                        workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                    }
+                    else
+                        colspan++;
+                }
+                else if (colName == "lableTotal")
+                {
+                    workSheet.Cell(RowNo, 1).Value = "Grand Total";
+                    workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                    colspan = 1;
+                }
+                else
+                {
+                    decimal income = groupTotals.ContainsKey("Income") && groupTotals["Income"].ContainsKey(colName)
+                        ? groupTotals["Income"][colName] : 0;
+                    decimal expense = groupTotals.ContainsKey("Expense") && groupTotals["Expense"].ContainsKey(colName)
+                        ? groupTotals["Expense"][colName] : 0;
+                    decimal net = income - expense;
+                    workSheet.Cell(RowNo, col - 1).Value = net;
+                }
+                col++;
+            }
+            workSheet.Row(RowNo).Style.Font.Bold = true;
+        }
+
     }
 }
