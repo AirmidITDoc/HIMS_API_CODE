@@ -272,7 +272,6 @@ namespace HIMS.API.Controllers.Report
                 //}
                 #endregion
 
-
                 #region"OPBilling Reports"
 
                 case "BillReportSummary":
@@ -309,9 +308,6 @@ namespace HIMS.API.Controllers.Report
                 //}
                 #endregion
 
-
-
-
                 #region"OP MIS Reports"
 
                 case "DayWiseOpdCountDetails":
@@ -334,9 +330,6 @@ namespace HIMS.API.Controllers.Report
                 //    break;
                 //}
                 #endregion
-
-
-
 
                 #region"IP Reports"
 

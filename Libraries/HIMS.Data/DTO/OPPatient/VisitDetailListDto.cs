@@ -66,6 +66,7 @@ namespace HIMS.Data.DTO.OPPatient
         public DateTime? ConEndTime { get; set; }
         public long CampId { get; set; }
         public string CampName { get; set; }
+        public bool? IsConvertRequestForIp { get; set; }
 
     }
     public class VisitDetailsListSearchDto
