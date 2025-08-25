@@ -52,7 +52,7 @@ namespace HIMS.Services.IPPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] BEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "OtrequestDate", "OtrequestTime", "OtrequestId", "SurgeryCategoryId", "DepartmentId", "CategoryId", "SiteDescId", "SurgeryId", "SurgeonId", "SurgeryTypeId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime" };
+            string[] BEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "OtrequestDate", "OtrequestTime", "OtrequestId", "SurgeryCategoryId", "DepartmentId", "CategoryId", "SiteDescId", "SurgeryId", "SurgeonId", "SurgeryTypeId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled","IsCancelledDateTime" };
             var TEntity = OBJOtbookingRequest.ToDictionary();
             foreach (var rProperty in BEntity)
             {
