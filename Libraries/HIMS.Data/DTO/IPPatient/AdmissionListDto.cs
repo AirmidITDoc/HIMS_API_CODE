@@ -75,7 +75,6 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? PathApreAmt { get; set; }
         public decimal? PharApreAmt { get; set; }
         public decimal? RadiApreAmt { get; set; }
-        public byte? AdmissionType { get; set; }
         public string? EmgContactPersonName { get; set; }
         public long? EmgRelationshipId { get; set; }
         public string? EmgMobileNo { get; set; }
@@ -92,6 +91,8 @@ namespace HIMS.Data.DTO.IPPatient
         public DateTime? MedTourismDateOfEntry { get; set; }
         public string? MedTourismResidentialAddress { get; set; }
         public string? MedTourismOfficeWorkAddress { get; set; }
+        public byte? AdmissionType { get; set; }
+
     }
 
     public class PatientAdmittedListSearchDto

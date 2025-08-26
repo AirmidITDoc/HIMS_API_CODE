@@ -19,6 +19,10 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_Admtd_Ptnt_Dtls");
         }
+        public virtual async Task<IPagedList<RequestForIPListDto>> GetAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RequestForIPListDto>(model, "ps_OPList_RequestForIP");
+        }
         public virtual async Task<IPagedList<AdmissionListDto>> GetAdmissionDischargeListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_AdmtdWithDischargeDate_Ptnt_Dtls");
