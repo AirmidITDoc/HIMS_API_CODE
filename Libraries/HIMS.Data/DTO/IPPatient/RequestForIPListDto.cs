@@ -17,6 +17,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string DoctorName { get; set; }
         public bool? IsConvertRequestForIp { get; set; }
         public long VisitId { get; set; }
+        public long RegID { get; set; }
+
+        
 
 
 
