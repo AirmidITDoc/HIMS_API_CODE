@@ -46,6 +46,7 @@ namespace HIMS.Data.Models
         public DateTime? ConEndTime { get; set; }
         public long? CampId { get; set; }
         public long? CrossConsultantDrId { get; set; }
+        public bool? IsConvertRequestForIp { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

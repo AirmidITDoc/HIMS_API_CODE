@@ -33,7 +33,7 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
-        public DateTime? ChargesTime { get; set; }
+        public string ChargesTime { get; set; }
         public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
         public long? TariffId { get; set; }

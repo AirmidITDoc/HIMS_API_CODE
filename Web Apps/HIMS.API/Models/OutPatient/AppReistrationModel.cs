@@ -185,6 +185,13 @@ namespace HIMS.API.Models.OutPatient
         public string? ConEndTime { get; set; }
         public string? CheckOutTime { get; set; }
     }
+    public class RequestForOPTOIP
+    {
+        public long VisitId { get; set; }
+        public bool? IsConvertRequestForIp { get; set; }
+
+
+    }
 }
 
 

@@ -21,6 +21,8 @@ namespace HIMS.Services.IPPatient
         Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword);
         Task<PatientAdmittedListSearchDto> PatientByAdmissionId(long AdmissionId);
         Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username);
+        Task<IPagedList<RequestForIPListDto>> GetAsync(GridRequestModel objGrid);
+
 
 
     }

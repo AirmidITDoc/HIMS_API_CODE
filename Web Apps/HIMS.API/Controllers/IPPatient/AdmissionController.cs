@@ -39,6 +39,14 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
 
+        [HttpPost("RequestForIPList")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        public async Task<IActionResult> RList(GridRequestModel objGrid)
+        {
+            IPagedList<RequestForIPListDto> RequestForIPList = await _IAdmissionService.GetAsync(objGrid);
+            return Ok(RequestForIPList.ToGridResponse(objGrid, "RequestForIP List"));
+        }
+
         [HttpPost("AdmissionDischargeList")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> AdmDiscList(GridRequestModel objGrid)
@@ -48,7 +56,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -57,7 +65,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
@@ -75,7 +83,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionRegInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
@@ -103,7 +111,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated successfully.", objAdmission.AdmissionId);
         }
         [HttpGet("search-patient")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);

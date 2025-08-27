@@ -17,7 +17,7 @@ using HIMS.Services.IPPatient;
 using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OPPatient
+namespace HIMS.API.Controllers.Emergency
 {
 
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("Emergencylist")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<EmergencyListDto> Emergencylist = await _EmergencyService.GetListAsyn(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //List API
         [HttpPost("EmergencyMedicalHistoryList")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<IActionResult> ListH(GridRequestModel objGrid)
         {
             IPagedList<TEmergencyMedicalHistory> EmergencyMedicalHistoryList = await _repository1.GetAllPagedAsync(objGrid);
@@ -54,22 +54,22 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.EmgId == id);
             return data.ToSingleResponse<TEmergencyAdm, GetEmergencyModel>("TEmergencyAdm");
         }
-       
+
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(EmergencyModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
             {
-                //model.EmgDate = Convert.ToDateTime(obj.EmgDate);
+                model.EmgDate = Convert.ToDateTime(obj.EmgDate);
                 //model.EmgTime = Convert.ToDateTime(obj.EmgTime);
                 //model.EmgTime = DateTime.Now;
 
@@ -78,12 +78,12 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.EmgId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.EmgId);
         }
 
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
@@ -96,13 +96,14 @@ namespace HIMS.API.Controllers.OPPatient
 
                 await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.",model.EmgId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.EmgId);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(EmergencyCancel obj)
         {
-            TEmergencyAdm model = new();
+            TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
+
             if (obj.EmgId != 0)
             {
                 model.EmgId = obj.EmgId;
@@ -114,7 +115,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //Add API
         [HttpPost("EmergencyMedical")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(EmergencyMedicalHistoryModel obj)
         {
             TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
@@ -127,11 +128,11 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.",model.EmgId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.EmgId);
         }
         //Edit API
         [HttpPut("EmergencyMedical/{id:int}")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmergencyMedicalHistoryModel obj)
         {
             TEmergencyMedicalHistory model = obj.MapTo<TEmergencyMedicalHistory>();
@@ -144,11 +145,11 @@ namespace HIMS.API.Controllers.OPPatient
                 model.ModifiedOn = DateTime.Now;
                 await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedOn" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.",model.EmgId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model.EmgId);
         }
 
         [HttpPut("UpdateAddChargesFromEmergency")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> POST(UpdateAddChargesFromEmergency obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -158,7 +159,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.ChargesDate = DateTime.Now;
 
-                await _EmergencyService.Update(model, CurrentUserId, CurrentUserName,obj.EmgId,obj.NewAdmissionId);
+                await _EmergencyService.Update(model, CurrentUserId, CurrentUserName, obj.EmgId, obj.NewAdmissionId);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> BatchUpdate(BatchAdjustmentModel obj)
         {
             TBatchAdjustment model = obj.MapTo<TBatchAdjustment>();
-            if (obj.BatchAdjId == 0)
+            if (obj.StkId != 0)
             {
 
                 model.AddedBy = CurrentUserId;
