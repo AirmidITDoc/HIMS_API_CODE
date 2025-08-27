@@ -405,6 +405,8 @@ namespace HIMS.API.Controllers.Report
                 case "SalesReturnBill":
                 //OT
                 case "OTRequest":
+                case "OTReservationReport":
+
 
 
                 #endregion

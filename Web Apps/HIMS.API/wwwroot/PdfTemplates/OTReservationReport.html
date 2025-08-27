@@ -31,7 +31,7 @@
                                             <tr style="font-size: 26px;font-weight:bold;">
                                                 <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;" colspan="2">
                                                     <b>
-                                                        OT Booking Request Report
+                                                        OT Reservation Report
                                                     </b>
                                                 </td>
 
@@ -55,6 +55,7 @@
                                                     <span style="font-weight:bold;">Patient Name :</span>
                                                     <span>{{PatientName}}</span>
                                                 </td>
+
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">DOA | Time :</span>
                                                     <span>{{AdmissionTime}}</span>
@@ -63,15 +64,15 @@
 
                                             <tr>
 
+
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">IPD No :</span>
-                                                    <span>{{OP_IP_Id}}</span>
+                                                    <span style="font-weight:bold;">OPDIPD No :</span>
+                                                    <span>{{OPDIPDNO}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Age|Gender:</span>
                                                     <span> {{AgeYear}}Y|{{AgeMonth}}M|{{AgeDay}}D|{{GenderName}}</span>
                                                 </td>
-
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Patient Type :</span>
                                                     <span>{{PatientType}}</span>
@@ -111,59 +112,70 @@
                                                     <span>{{Surgeryname}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">SurgeryType:</span>
-                                                    <span> {{SurgeryType}}</span>
+                                                    <span style="font-weight:bold;">AnesthetishType :</span>
+                                                    <span>{{AnaesthesiaType}}</span>
                                                 </td>
 
                                             </tr>
-
-
                                             <tr>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">SurgeonName :</span>
-                                                    <span>{{SurgeonName}}</span>
+                                                    <span style="font-weight:bold;">SurgeonName1 :</span>
+                                                    <span>{{SurgeonName1}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">OT Request Time: </span>
-                                                    <span>{{OTRequestTime}}</span>
+                                                    <span style="font-weight:bold;">SurgeonName2:</span>
+                                                    <span> {{SurgeonName1}}</span>
                                                 </td>
 
                                             </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Anesthetist  Name1 :</span>
+                                                    <span>{{AnathesDrName1}}</span>
+                                                </td>
 
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Anesthetist  Name2 :</span>
+                                                    <span>{{AnathesDrName2}}</span>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <!--<td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">AnesthetishType :</span>
+                                                    <span>{{AnaesthesiaType}}</span>
+                                                </td>-->
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">OT Table :</span>
+                                                    <span>{{OTTableName}} </span>
+                                                </td>
+                                            </tr>
 
                                             <!--<tr>
 
 
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Procedure:</span>
-                                                    <span>{{ProcedureName}} </span>
-                                                </td>
+        <td style="padding: 2px;">
+            <span style="font-weight:bold;">Procedure:</span>
+            <span>{{ProcedureName}} </span>
+        </td>
+        <td style="padding: 2px;">
+            <span style="font-weight:bold;">Tran Time: </span>
+            <span>{{TranTime}}</span>
+        </td>
+    </tr>
 
-                                            </tr>-->
+    <tr>
 
 
+
+        <td style="padding: 2px;">
+            <span style="font-weight:bold;">LocationName: </span>
+            <span>{{LocationName}}</span>
+        </td>
+    </tr>-->
                                             <tr>
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">SiteDescriptionName :</span>
-                                                    <span>{{SiteDescriptionName}} </span>
-                                                </td>
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">SurgeryCategoryName: </span>
-                                                    <span>{{SurgeryCategoryName}}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
 
-
-                                                <!--<td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">OT Table :</span>
-                                                    <span>{{OTTableName}} </span>
-                                                </td>-->
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">OTDepartment: </span>
-                                                    <span>{{OTdepartment}}</span>
-                                                </td>
-                                            </tr>
 
                                         </table>
                                     </td>
@@ -171,15 +183,41 @@
                             </table>
                             <hr />
 
+                            <tr style="margin-top: 12px;">
+                                <td colspan="6">
+                                    <div>
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
 
-                            <br />
+                                            <!--<tr style="display:{{chkSurgeryTypeflag}}">
+
+                                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">Surgery Type:</td>
+                                            </tr>
+                                            <tr style="display:{{chkSurgeryTypeflag}}">
+                                                <td style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px;white-space:pre;" colspan="2">{{SurgeryType}}</td>
+                                            </tr>-->
+
+                                            <tr style="display:{{chkInstructionflag}}">
+                                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">Instruction :</td>
+                                            </tr>
+                                            <tr style="display:{{chkInstructionflag}}">
+                                                <td style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px; white-space: pre;" colspan="6">{{Instruction}}</td>
+                                            </tr>
 
 
+
+
+                                        </table>
+                                    </div>
                         </div>
+
+                        <br />
+
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 </body>
 
@@ -188,14 +226,14 @@
 
 <html>
 <body>
-    <table style="width: 100%; border-collapse: collapse;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+    <table style="width: 100%; border-collapse: collapse;">
 
         <!--<tr><td><span colspan="3" style="font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee; padding: 6px;">Note: Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
         <tr><td><span colspan="3" style="font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee; padding: 6px;">Emeregency Contact Number :</span></td></tr>
         <br />-->
 
         <tr>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 24px;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;">
                 <tr></tr>
 
                 <tr style="border-bottom: 1px solid #d4c3c3;">
@@ -207,7 +245,7 @@
                     <td style="padding: 2px;">
                         <span style="font-weight: bold; text-align: right; float: right;">OT Doctor</span>
                         <br />
-
+                        <!-- <span style="text-align: right; float: right;">{{DischargeDoctor2}}</span>-->
                     </td>
 
                     <td style="padding: 2px;">
@@ -216,6 +254,8 @@
                         <span style="font-weight: bold;  text-align: right; float: right; ">Doctor Signature</span>
                         <br />
 
+
+                        <!-- <span style="text-align: right; float: right;">{{DoctorName}}</span>-->
                     </td>
 
                 </tr>
