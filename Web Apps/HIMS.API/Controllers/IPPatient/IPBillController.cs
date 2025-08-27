@@ -132,6 +132,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
 
                 model.AddedBy = CurrentUserId;
+                model.ChargesTime = Convert.ToDateTime(obj.ChargesTime);
                 await _IPBillService.InsertAsync(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else

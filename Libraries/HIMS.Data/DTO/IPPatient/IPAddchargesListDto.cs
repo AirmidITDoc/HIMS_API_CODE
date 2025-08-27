@@ -50,6 +50,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long? ClassId { get; set; }
         public string? IsPathTestCompleted { get; set; }
         public string? IsRadTestCompleted { get; set; }
+        public bool? CreditedtoDoctor { get; set; }
+        public string? OPIPID { get; set; }
 
 
     }
