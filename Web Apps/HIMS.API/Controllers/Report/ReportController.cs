@@ -402,6 +402,7 @@ namespace HIMS.API.Controllers.Report
                 case "Issutodeptsummarywise":
                 case "OpeningBalance":
                 case "WorkOrder":
+                case "MaterialReceivedByDept":
 
                 //Pharmacy
                 case "IPPharmaAdvanceReport":

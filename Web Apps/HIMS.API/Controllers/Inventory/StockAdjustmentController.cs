@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Inventory
         //Shilpa//22/05/2025 updated
 
         [HttpPost("MrpAdjustmentUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
