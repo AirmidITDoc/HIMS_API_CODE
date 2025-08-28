@@ -77,7 +77,7 @@ namespace HIMS.API.Extensions
         public static void GetMultiTableExcel(IXLWorksheet workSheet, DataTable dt, ReportConfigDto model)
         {
             StringBuilder table = new();
-            string[] groupBy = model.groupByLabel.Split('.').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            string[] groupBy = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             int RowNo = 2;
             if (groupBy.Length > 0)
             {
@@ -282,6 +282,7 @@ namespace HIMS.API.Extensions
                             {
                                 workSheet.Cell(RowNo, 1).Value = "";
                                 workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                                colspan = 1;
                             }
                             else
                                 colspan++;
@@ -289,7 +290,7 @@ namespace HIMS.API.Extensions
                         else if (colName == "lableTotal")
                         {
                             workSheet.Cell(RowNo, col).Value = $"{subGroup} Sub Total";
-                            workSheet.Range(RowNo, col, RowNo, colspan - col).Merge();
+                            workSheet.Range(RowNo, 1, RowNo, colspan -1).Merge();
                             colspan = 1;
                         }
                         else
