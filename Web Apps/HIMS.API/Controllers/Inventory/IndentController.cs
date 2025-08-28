@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IndentList")]
-        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IndentDetailsList")]
-        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> IndentDetailsList = await _IIndentService.GetIndentItemListAsync(objGrid);
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();

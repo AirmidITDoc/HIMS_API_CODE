@@ -82,6 +82,15 @@ namespace HIMS.Services.Inventory
                }
         }
 
+        public virtual async Task<IPagedList<MateralreceivedbyDeptLstDto>> GetMaterialrecivedbydeptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MateralreceivedbyDeptLstDto>(model, "m_Rtrv_ReceiveIssueToDep_list_by_Name");
+        }
+
+        public virtual async Task<IPagedList<MaterialrecvedbydepttemdetailslistDto>> GetRecceivedItemListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MaterialrecvedbydepttemdetailslistDto>(model, "m_rtrv_AcceptIssueItemDetList");
+        }
     }
 
 }

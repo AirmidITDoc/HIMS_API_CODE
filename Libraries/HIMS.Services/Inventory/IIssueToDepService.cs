@@ -24,5 +24,11 @@ namespace HIMS.Services.Inventory
 
         Task InsertAsyncSP(TIssueToDepartmentHeader objIssueToDepartment, List<TCurrentStock> OBjTCurrentStock, int UserId, string Username);
 
-     }
+
+        Task<IPagedList<MateralreceivedbyDeptLstDto>> GetMaterialrecivedbydeptList(GridRequestModel objGrid);
+
+        Task<IPagedList<MaterialrecvedbydepttemdetailslistDto>> GetRecceivedItemListAsync(GridRequestModel objGrid);
+
+
+    }
 } 

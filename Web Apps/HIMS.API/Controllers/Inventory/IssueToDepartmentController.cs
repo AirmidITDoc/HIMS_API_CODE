@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
          [HttpPost("InsertSP")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertSP(IssueTODepModel obj)
         {
@@ -79,5 +79,23 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.IssueId);
         }
+
+        [HttpPost("MaterialRecvedByDeptList")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
+        {
+            IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Recceived To dept  List"));
+        }
+
+
+        [HttpPost("MaterialreceiveddetailList")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
+        {
+            IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Received By dept detail List"));
+        }
+
     }
 }
