@@ -165,7 +165,7 @@ namespace HIMS.Services.Inventory
         {
             DatabaseHelper odal = new();
 
-            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "Service", "TariffId" };
+            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "TariffId", "DiscountAmount","DiscountPercentage" };
             var sEntity = ObjServiceDetail.ToDictionary();
 
             foreach (var rProperty in detailEntity)
@@ -176,7 +176,7 @@ namespace HIMS.Services.Inventory
             // Add parameters manually
             sEntity["OldTariffId"] = OldTariffId;
             sEntity["NewTariffId"] = NewTariffId;
-            odal.ExecuteNonQuery("m_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
+            odal.ExecuteNonQuery("ps_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
 
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName)

@@ -39,6 +39,14 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(AppList.ToGridResponse(objGrid, "Indent List"));
         }
 
+        [HttpPost("IndentListbyVerified")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<IndentListbyIdDto> AppList = await _IIndentService.GetListAsyncs(objGrid);
+            return Ok(AppList.ToGridResponse(objGrid, "Indent List"));
+        }
+
         [HttpPost("IndentDetailsList")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)

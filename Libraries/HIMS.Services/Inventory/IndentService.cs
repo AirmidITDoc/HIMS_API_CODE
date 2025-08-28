@@ -150,6 +150,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IndentListDto>(model, "ps_Rtrv_IndentList_by_ID");
         }
+        public virtual async Task<IPagedList<IndentListbyIdDto>> GetListAsyncs(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndentListbyIdDto>(model, "ps_Rtrv_IndentList_by_ID");
+        }
 
         public virtual async Task<IPagedList<IndentItemListDto>> GetOldIndentAsync(GridRequestModel model)
         {
