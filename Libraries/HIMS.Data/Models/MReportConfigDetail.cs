@@ -16,6 +16,7 @@ namespace HIMS.Data.Models
         public string? ReportGroupByLabel { get; set; }
         public int? ReportGroupBySequenceNo { get; set; }
         public string? SummaryLabel { get; set; }
+        public int? SummarySequenceNo { get; set; }
         public long? SequenceNo { get; set; }
         public string? ProcedureName { get; set; }
 

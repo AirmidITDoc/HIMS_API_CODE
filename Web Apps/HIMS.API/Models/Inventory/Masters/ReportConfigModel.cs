@@ -25,6 +25,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? ReportPageSize { get; set; }
         public string? ReportColumnWidths { get; set; }
         public string? ReportFilter { get; set; }
+        public string? ReportSummary { get; set; }
         public bool? IsActive { get; set; }
         public long? MenuId { get; set; }
         public List<ReportConfigDetailsModel> MReportConfigDetails { get; set; }
@@ -54,10 +55,11 @@ namespace HIMS.API.Models.Inventory.Masters
             public string? ReportColumnAligment { get; set; }
             public string? ReportTotalField { get; set; }
             public string? ReportGroupByLabel { get; set; }
+            public int? ReportGroupBySequenceNo { get; set; }
             public string? SummaryLabel { get; set; }
+            public int? SummarySequenceNo { get; set; }
             public long? SequenceNo { get; set; }
             public string? ProcedureName { get; set; }
-
         }
 
     }
