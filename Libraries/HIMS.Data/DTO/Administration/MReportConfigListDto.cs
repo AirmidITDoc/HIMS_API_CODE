@@ -32,5 +32,8 @@ namespace HIMS.Data.DTO.Administration
         public string ReportFilter { get; set; }
         public bool IsActive { get; set; }
         public long? MenuId { get; set; }
+        public string ReportSummary { get; set; }
+
+        
     }
 }
