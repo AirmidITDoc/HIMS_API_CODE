@@ -14,6 +14,7 @@ namespace HIMS.Data.Models
         public string? ReportColumnAligment { get; set; }
         public string? ReportTotalField { get; set; }
         public string? ReportGroupByLabel { get; set; }
+        public int? ReportGroupBySequenceNo { get; set; }
         public string? SummaryLabel { get; set; }
         public long? SequenceNo { get; set; }
         public string? ProcedureName { get; set; }

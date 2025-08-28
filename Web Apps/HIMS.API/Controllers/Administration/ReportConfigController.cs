@@ -117,6 +117,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
         [HttpPut("ReportConfig/{id:int}")]
         [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportConfigModel obj)

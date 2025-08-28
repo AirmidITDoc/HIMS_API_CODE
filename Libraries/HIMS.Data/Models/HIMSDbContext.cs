@@ -27,7 +27,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<AllOutStandingPatientWiseLedger> AllOutStandingPatientWiseLedgers { get; set; } = null!;
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public virtual DbSet<Bedmaster> Bedmasters { get; set; } = null!;
-        public virtual DbSet<Bedmasterddd> Bedmasterddds { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;
         public virtual DbSet<BillDetail> BillDetails { get; set; } = null!;
         public virtual DbSet<CasePaper> CasePapers { get; set; } = null!;
@@ -946,17 +945,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<Bedmasterddd>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Bedmasterddd");
-
-                entity.Property(e => e.BedId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.BedName).HasMaxLength(100);
-            });
-
             modelBuilder.Entity<Bill>(entity =>
             {
                 entity.HasKey(e => e.BillNo);
@@ -1019,7 +1007,7 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .HasColumnName("PBillNo");
 
-                entity.Property(e => e.PrintBillNo).HasMaxLength(20);
+                entity.Property(e => e.PrintBillNo).HasMaxLength(50);
 
                 entity.Property(e => e.SpeTaxAmt)
                     .HasColumnType("money")
@@ -9673,11 +9661,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
                 entity.Property(e => e.DiscountAmount).HasColumnType("money");
-
-                entity.HasOne(d => d.Service)
-                    .WithMany(p => p.ServiceDetails)
-                    .HasForeignKey(d => d.ServiceId)
-                    .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
 
             modelBuilder.Entity<ServiceMaster>(entity =>

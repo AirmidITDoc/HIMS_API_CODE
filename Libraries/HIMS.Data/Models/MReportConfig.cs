@@ -30,12 +30,13 @@ namespace HIMS.Data.Models
         public string? ReportPageSize { get; set; }
         public string? ReportColumnWidths { get; set; }
         public string? ReportFilter { get; set; }
+        public string? ReportSummary { get; set; }
+        public long? MenuId { get; set; }
         public bool? IsActive { get; set; }
         public long? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public long? UpdateBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
-        public long? MenuId { get; set; }
 
         public virtual ICollection<MReportConfigDetail> MReportConfigDetails { get; set; }
     }
