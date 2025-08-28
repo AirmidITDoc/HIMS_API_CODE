@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-           [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
+           //[Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfig> MReportConfigList = await _repository1.GetAllPagedAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("NewList")]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> MReportConfigList(GridRequestModel objGrid)
         {
             IPagedList<MReportConfigListDto> MReportConfigList = await _ReportConfigService.MReportConfigList(objGrid);
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Add API
         [HttpPost]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(MReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpDelete]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReportConfig model = await _repository1.GetById(x => x.ReportId == Id);
@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.Administration
    
 
         [HttpPost("ReportConfigsave")]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
@@ -119,7 +119,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("ReportConfig/{id:int}")]
-        [Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportConfigModel obj)
         {
             MReportConfig model = obj.MapTo<MReportConfig>();
