@@ -60,7 +60,24 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(AppVisitList.ToGridResponse(objGrid, "Issue To dept Indent Item List"));
         }
 
-         [HttpPost("InsertSP")]
+        [HttpPost("MaterialRecvedByDeptList")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
+        {
+            IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Recceived To dept  List"));
+        }
+
+
+        [HttpPost("MaterialreceiveddetailList")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
+        {
+            IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Received By dept detail List"));
+        }
+
+        [HttpPost("InsertSP")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertSP(IssueTODepModel obj)
@@ -79,23 +96,45 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.IssueId);
         }
-
-        [HttpPost("MaterialRecvedByDeptList")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
-        public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(IssueToDIndentModel obj)
         {
-            IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
-            return Ok(AppVisitList.ToGridResponse(objGrid, "Recceived To dept  List"));
+            TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
+            if (obj.IssueId == 0)
+            {
+                model.IssueDate = Convert.ToDateTime(obj.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.IssueTime);
+                model.Addedby = CurrentUserId;
+                await _IIssueToDepService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "IssueToDept Indent added successfully.");
         }
 
 
-        [HttpPost("MaterialreceiveddetailList")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
-        public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
+        [HttpPost("UpdateIndentStatusAganist")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateIndentStatusModel obj)
         {
-            IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
-            return Ok(AppVisitList.ToGridResponse(objGrid, "Received By dept detail List"));
+            TIssueToDepartmentHeader model = obj.UpdateIndent.MapTo<TIssueToDepartmentHeader>();
+            List<TCurrentStock> model1 = obj.TCurStockModel.MapTo<List<TCurrentStock>>();
+            TIndentHeader model2 = obj.IndentHeader.MapTo<TIndentHeader>();
+            List<TIndentDetail> model3 = obj.TIndentDetails.MapTo<List<TIndentDetail>>();
+
+            if (obj.UpdateIndent.IssueId == 0)
+            {
+                model.IssueDate = Convert.ToDateTime(obj.UpdateIndent.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.UpdateIndent.IssueTime);
+                model.Addedby = CurrentUserId;
+                await _IIssueToDepService.UpdateSP(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
         }
+
 
     }
 }
