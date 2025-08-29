@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.Nursing
 {
-    public interface IPPathologyListDto
+    public class IPPathologyListDto
     {
 
         public string RegNo { get; set; }
@@ -22,10 +22,10 @@ namespace HIMS.Data.DTO.Nursing
         public long? ServiceId { get; set; }
         public string DOA { get; set; }
         public string? DOT { get; set; }
-        public long? IsCompleted { get; set; }
-        public long? IsPrinted { get; set; }
-        public string? OPD_IPD_ID { get; set; }
-        public string? OPD_IPD_Type { get; set; }
+        public bool? IsCompleted { get; set; }
+        public bool? IsPrinted { get; set; }
+        public string? OPDIPDID { get; set; }
+        public string? OPDIPDType { get; set; }
         public string? PatientType { get; set; }
         public string? PBillNo { get; set; }
         public string? AgeYear { get; set; }
