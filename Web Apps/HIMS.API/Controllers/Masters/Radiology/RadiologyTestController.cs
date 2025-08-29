@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         }
 
         [HttpPost("RadiologyList")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
