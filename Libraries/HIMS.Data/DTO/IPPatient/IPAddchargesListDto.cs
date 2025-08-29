@@ -52,6 +52,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? IsRadTestCompleted { get; set; }
         public bool? CreditedtoDoctor { get; set; }
         public string? OPIPID { get; set; }
+        public string? ServiceCode { get; set; }
+        public bool? Inclu_Exclusion { get; set; }
 
 
     }

@@ -44,6 +44,7 @@ namespace HIMS.Data.DTO.Administration
         public int? isDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public string? password { get; set; }
+        public string WebRoleName { get; set; } 
 
     }
 }

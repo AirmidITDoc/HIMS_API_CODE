@@ -45,6 +45,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TNursingSugarLevel, NursingSugarLevelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingOrygenVentilator, NursingOrygenVentilatorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingPainAssessment, NursingPainAssessmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingWeight, TNursingWeightModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

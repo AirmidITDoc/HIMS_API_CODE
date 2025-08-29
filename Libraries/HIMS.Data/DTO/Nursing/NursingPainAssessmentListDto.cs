@@ -14,8 +14,7 @@ namespace HIMS.Data.DTO.Nursing
         public long? AdmissionId { get; set; }
         public int? PainAssessementValue { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public int? CreatedBy { get; set; }
-        public int? ModifiedBy { get; set; }
+        public string CreatedBy { get; set; }
+
     }
 }
