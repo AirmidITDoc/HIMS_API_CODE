@@ -20,8 +20,6 @@ namespace HIMS.Data.DTO.Nursing
         public int? IntakeMode { get; set; }
         public string? ReportedToRmo { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
         public string? CreatedBy { get; set; }
-        public string ModifiedBy { get; set; }
     }
 }

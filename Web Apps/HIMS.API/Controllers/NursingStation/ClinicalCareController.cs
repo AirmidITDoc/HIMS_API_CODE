@@ -32,17 +32,19 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IGenericService<TNursingSugarLevel> _repository2;
         private readonly IGenericService<TNursingOrygenVentilator> _repository3;
         private readonly IGenericService<TNursingPainAssessment> _repository4;
+        private readonly IGenericService<TNursingWeight> _repository5;
 
 
 
-        
-
-        public ClinicalCareController(IClinicalCareService repository,  IGenericService<TNursingVital> repository1, IGenericService<TNursingSugarLevel> repository2, IGenericService<TNursingOrygenVentilator> repository3, IGenericService<TNursingPainAssessment> repository4)
+        public ClinicalCareController(IClinicalCareService repository,  IGenericService<TNursingVital> repository1, IGenericService<TNursingSugarLevel> repository2, IGenericService<TNursingOrygenVentilator> repository3,
+            IGenericService<TNursingPainAssessment> repository4, IGenericService<TNursingWeight> repository5)
         {
             _repository = repository1;
             _repository2 = repository2;
             _repository3 = repository3;
             _repository4 = repository4;
+            _repository5 = repository5;
+
 
 
 
@@ -233,6 +235,40 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository4.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
+
+        [HttpPost("NursingWeightInsert")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Posts(TNursingWeightModel obj)
+        {
+            TNursingWeight model = obj.MapTo<TNursingWeight>();
+            if (obj.PatWeightId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _repository5.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        //Edit API
+        [HttpPut("NursingWeightUpdate/{id:int}")]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edits(TNursingWeightModel obj)
+        {
+            TNursingWeight model = obj.MapTo<TNursingWeight>();
+            if (obj.PatWeightId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository5.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
