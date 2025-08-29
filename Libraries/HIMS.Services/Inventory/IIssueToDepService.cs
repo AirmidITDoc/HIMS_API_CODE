@@ -29,6 +29,9 @@ namespace HIMS.Services.Inventory
 
         Task<IPagedList<MaterialrecvedbydepttemdetailslistDto>> GetRecceivedItemListAsync(GridRequestModel objGrid);
 
+        Task InsertAsync(TIssueToDepartmentHeader objIssueToDeptIndent, int UserId, string Username);
+        Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username);
+
 
     }
 } 
