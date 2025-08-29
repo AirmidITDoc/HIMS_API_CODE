@@ -23,5 +23,8 @@ namespace HIMS.Data.DTO.Inventory
         public string? DIndentTime { get; set; }
         public long? IsInchargeVerifyId { get; set; }
         public bool? Priority { get; set; }
+
+        public string? ToStoreName { get; set; }
+        public string? FromStoreName { get; set; }
     }
 }
