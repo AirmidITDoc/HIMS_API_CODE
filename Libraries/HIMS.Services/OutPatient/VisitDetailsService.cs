@@ -321,11 +321,43 @@ namespace HIMS.Services.OutPatient
 
         }
 
+        //public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        //{
+        //    var qry = from s in _context.ServiceMasters
+        //              join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+        //              where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+        //              select new ServiceMasterDTO()
+        //              {
+        //                  ServiceId = s.ServiceId,
+        //                  GroupId = s.GroupId,
+        //                  ServiceShortDesc = s.ServiceShortDesc,
+        //                  ServiceName = s.ServiceName,
+        //                  ClassRate = d.ClassRate ?? 0,
+        //                  TariffId = d.TariffId ?? 0,
+        //                  ClassId = d.ClassId ?? 0,
+        //                  IsEditable = s.IsEditable,
+        //                  CreditedtoDoctor = s.CreditedtoDoctor,
+        //                  IsPathology = s.IsPathology,
+        //                  IsRadiology = s.IsRadiology,
+        //                  IsActive = s.IsActive,
+        //                  PrintOrder = s.PrintOrder,
+        //                  IsPackage = s.IsPackage,
+        //                  DoctorId = s.DoctorId,
+        //                  IsDocEditable = s.IsDocEditable
+        //              };
+        //    return await qry.Take(50).ToListAsync();
+        //}
+
+
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var qry = from s in _context.ServiceMasters
                       join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+                      join x in _context.ServiceWiseCompanyCodes on s.ServiceId equals x.ServiceId
+
                       where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+                                           
+                      
                       select new ServiceMasterDTO()
                       {
                           ServiceId = s.ServiceId,
@@ -343,11 +375,14 @@ namespace HIMS.Services.OutPatient
                           PrintOrder = s.PrintOrder,
                           IsPackage = s.IsPackage,
                           DoctorId = s.DoctorId,
-                          IsDocEditable = s.IsDocEditable
+                          IsDocEditable = s.IsDocEditable,
+                          CompanyCode = x.CompanyCode ?? "",
+                          CompanyServicePrint = x.CompanyServicePrint ?? ""
+
                       };
             return await qry.Take(50).ToListAsync();
         }
-       
+
         public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
