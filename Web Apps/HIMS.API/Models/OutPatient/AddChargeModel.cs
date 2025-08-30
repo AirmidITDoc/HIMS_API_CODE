@@ -10,6 +10,7 @@ namespace HIMS.API.Models.OutPatient
         public DateTime? ChargesDate { get; set; }
         public byte? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
+        public long? UnitId { get; set; }
         public long? ServiceId { get; set; }
         public double? Price { get; set; }
         public double? Qty { get; set; }
@@ -51,7 +52,8 @@ namespace HIMS.API.Models.OutPatient
         public long? SalesId { get; set; }
         public long? BillNo { get; set; }
         public string? ServiceCode { get; set; }
-        public bool? IncluExclusion { get; set; }
+        public string? CompanyServiceName { get; set; }
+        public bool? IsInclusionExclusion { get; set; }
         public int? IsHospMrk { get; set; }
         public List<Packcagechargemodel?> Packcagecharges { get; set; }
 
