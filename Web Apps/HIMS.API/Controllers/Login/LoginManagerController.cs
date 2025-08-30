@@ -175,7 +175,7 @@ namespace HIMS.API.Controllers.Login
         }
        
         [HttpPost("updatepassword")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
@@ -187,7 +187,9 @@ namespace HIMS.API.Controllers.Login
             {
                 UserId = obj.UserId,
                 UserName = obj.UserName,       
-                Password = obj.Password,         
+                Password = obj.Password,
+                LastPasswordChangedDate = obj.LastPasswordChangedDate,
+                LastLoginDate = obj.LastLoginDate,
                 ModifiedBy = CurrentUserId,
                 ModifiedDate = DateTime.Now
             };

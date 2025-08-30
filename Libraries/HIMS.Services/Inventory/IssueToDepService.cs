@@ -44,6 +44,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "retrieve_IndentItemList");
         }
+        public virtual async Task<IPagedList<AcceptIssueItemDetListDto>> AcceptIssueItemDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AcceptIssueItemDetListDto>(model, "m_rtrv_AcceptIssueItemDetList");
+        }
 
 
         //Changes Done By Ashutosh 20 May 2025  

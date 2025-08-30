@@ -3203,7 +3203,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IsRefDocEditOpt).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
+
                 entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.LastPasswordChangedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.LoginStatus).HasDefaultValueSql("((0))");
 

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using FluentValidation;
 using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Models.Inventory
@@ -84,8 +85,18 @@ namespace HIMS.API.Models.Inventory
         public IndentHeaderModel IndentHeader { get; set; }
         public List<IndentDetailsModel> TIndentDetails { get; set; }
 
+    }
+    public class UpdateMaterialAcceptance
+    {
+        public long IssueId { get; set; }
+        public long? AcceptedBy { get; set; }
+        public bool? IsAccepted { get; set; }
 
 
 
     }
+
+
+
 }
+
