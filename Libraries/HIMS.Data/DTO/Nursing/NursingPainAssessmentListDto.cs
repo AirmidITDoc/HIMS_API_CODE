@@ -13,6 +13,8 @@ namespace HIMS.Data.DTO.Nursing
         public DateTime? PainAssessmentTime { get; set; }
         public long? AdmissionId { get; set; }
         public int? PainAssessementValue { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
 

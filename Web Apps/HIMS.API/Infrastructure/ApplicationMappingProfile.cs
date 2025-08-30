@@ -49,13 +49,13 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TNursingVital, NursingVitalsDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingSugarLevel, NursingSugarDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingPainAssessment, TNursingPainAssessmentDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingWeight, TNursingWeightDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TNursingOrygenVentilator, TNursingOrygenVentilatorDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
-
-            
-
-
+            CreateMap<AdvanceDetail, AdvancesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

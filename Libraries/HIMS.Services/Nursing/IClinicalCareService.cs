@@ -25,7 +25,16 @@ namespace HIMS.Services.Nursing
         Task CancelAsync(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username);
 
 
+        Task CancelAsync1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username);
 
+        Task CancelAsync(TNursingWeight objTNursingWeight, int UserId, string Username);
+        Task CancelAsync(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username);
+
+
+
+
+
+        
 
 
 

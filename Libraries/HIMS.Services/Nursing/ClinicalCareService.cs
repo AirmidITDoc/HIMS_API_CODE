@@ -100,5 +100,50 @@ namespace HIMS.Services.Nursing
 
             odal.ExecuteNonQuery("PS_Delete_T_NursingSugarLevel", CommandType.StoredProcedure, eEntity);
         }
+
+
+        public virtual async Task CancelAsync1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = {  "PainAssessementValue", "PainAssessmentTime", "PainAssessmentDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
+            var TEntity = objTNursingPainAssessment.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                TEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Delete_T_NursingPainAssessment", CommandType.StoredProcedure, TEntity);
+        }
+
+
+
+        public virtual async Task CancelAsync(TNursingWeight objTNursingWeight, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = {  "PatWeightValue", "PatWeightTime", "PatWeightDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
+            var HEntity = objTNursingWeight.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                HEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Delete_T_NursingWeight", CommandType.StoredProcedure, HEntity);
+        }
+
+        public virtual async Task CancelAsync(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "EntryDate", "EntryTime", "Mode", "TidolV", "SetRange", "Ipap", "MinuteV", "RateTotal", "Epap", "Peep", "Pc", "Mvpercentage", "PrSup", "Fio2", "Ie", "SaturationWithO2", "FlowTrigger", "OxygenRate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
+            var KEntity = objTNursingOrygenVentilator.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                KEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Delete_T_NursingOrygenVentilator", CommandType.StoredProcedure, KEntity);
+        }
     }
 }

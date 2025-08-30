@@ -28,6 +28,8 @@ namespace HIMS.Data.DTO.Nursing
         public string? OxygenRate { get; set; }
         public string? SaturationWithO2 { get; set; }
         public string? FlowTrigger { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public string? CreatedBy { get; set; }
         public string? ModifiedBy { get; set; }
     }

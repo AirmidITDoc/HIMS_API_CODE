@@ -22,6 +22,8 @@ namespace HIMS.Data.DTO.Inventory
         public string? Comments { get; set; }
 
         public double? Bal { get; set; }
+
+        public double? BalanceQty { get; set; }
         public long? FromStoreId { get; set; }
 
         public long? ToStoreId { get; set; }

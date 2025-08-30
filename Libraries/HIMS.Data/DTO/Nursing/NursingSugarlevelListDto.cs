@@ -19,6 +19,8 @@ namespace HIMS.Data.DTO.Nursing
         public string? Bodies { get; set; }
         public int? IntakeMode { get; set; }
         public string? ReportedToRmo { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
     }

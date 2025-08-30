@@ -15,6 +15,8 @@ namespace HIMS.Data.DTO.Nursing
         public DateTime? PatWeightTime { get; set; }
         public long? AdmissionId { get; set; }
         public int? PatWeightValue { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
     

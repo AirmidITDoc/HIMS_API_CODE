@@ -261,7 +261,8 @@ namespace HIMS.Services.Common
                         DatabaseHelper odal = new();
                         string[] AEntity = { "ClassId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ",
                                                    "IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
-                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","TariffId"};
+                                                               "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","TariffId","UnitId","ServiceCode","CompanyServiceName","IsInclusionExclusion","DoctorName","CreatedBy",
+                            "CreatedDate","ModifiedBy","ModifiedDate"};
                         var Packagescharge = item.ToDictionary();
 
                         foreach (var rProperty in AEntity)
@@ -288,7 +289,7 @@ namespace HIMS.Services.Common
             string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId"};
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId","DoctorName","CompanyServiceName","ServiceCode","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = ObjaddCharge.ToDictionary();
             foreach (var rProperty in AEntity)
             {
@@ -385,7 +386,8 @@ namespace HIMS.Services.Common
             string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation"};
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","UnitId","TariffId","DoctorName","ServiceCode","CompanyServiceName",
+                "IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","BillNoNavigation"};
 
             var AddEntity = ObjAddCharge.ToDictionary();
             foreach (var rProperty in AEntity)
@@ -398,7 +400,7 @@ namespace HIMS.Services.Common
                              "TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur",
                 "IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt",
                 "PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate",
-                "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt", "AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
+                "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt", "AdminPer","AdminAmt","SubTpacomp","IsCtoH","ConvertId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsInitinatedDischarge"};
             var entity2 = ObjAddmission.ToDictionary();
             foreach (var rProperty in rEntity2)
             {
@@ -424,7 +426,7 @@ namespace HIMS.Services.Common
             {
                 BEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
+                odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BEntity);
 
 
             foreach (var item in ObjadvanceDetailList)
@@ -482,7 +484,7 @@ namespace HIMS.Services.Common
             string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","IncluExclusion","BillNoNavigation"};
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","UnitId","DoctorName","CompanyServiceName","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsInclusionExclusion","BillNoNavigation"};
 
             var AddEntity = ObjAddCharge.ToDictionary();
             foreach (var rProperty in AEntity)
@@ -548,7 +550,7 @@ namespace HIMS.Services.Common
             string[] AEntity = {  "BillNo","ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","IncluExclusion","BillNoNavigation"};
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","IsInclusionExclusion","UnitId","DoctorName","CompanyServiceName","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","BillNoNavigation"};
 
             var yentity = ObjAddCharge.ToDictionary();
             foreach (var rProperty in AEntity)
@@ -621,7 +623,7 @@ namespace HIMS.Services.Common
 
             DatabaseHelper odal = new();
             string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","UnitId","TariffId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",
                 "IsHospMrk","BillNoNavigation","BillNo"};
             var entity = ObjaddCharge.ToDictionary();
 
@@ -638,7 +640,7 @@ namespace HIMS.Services.Common
                 item.ChargesId = Convert.ToInt32(AChargesId);
                 string[] Entity = { "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
-                "IsHospMrk","BillNoNavigation","ClassId","BillNo"};
+                "IsHospMrk","BillNoNavigation","ClassId","BillNo","TariffId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
                var Aentity = item.ToDictionary();
 
                 foreach (var rProperty in Entity)
@@ -657,7 +659,7 @@ namespace HIMS.Services.Common
             string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId","IsCancelledBy",
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId"};
+                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId","DoctorName","ServiceCode","CompanyServiceName","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -678,7 +680,7 @@ namespace HIMS.Services.Common
             string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
          "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
          "IsSelfOrCompanyService", "PackageId", "ChargesTime", "IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-         "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy"};
+         "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy","UnitId","TariffId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -700,7 +702,7 @@ namespace HIMS.Services.Common
             DatabaseHelper odal = new();
             string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
-                "IsHospMrk","BillNoNavigation","BillNo","TariffId"};
+                "IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -735,7 +737,7 @@ namespace HIMS.Services.Common
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
                 "IsHospMrk","BillNoNavigation","BillNo",
             "ChargesId","ChargesDate","OpdIpdType","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy",
-            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","TariffId"};
+            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","TariffId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -757,7 +759,7 @@ namespace HIMS.Services.Common
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
                 "IsHospMrk","BillNoNavigation","BillNo",
             "ChargesId","ChargesDate","OpdIpdType","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy",
-            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId"};
+            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -778,7 +780,7 @@ namespace HIMS.Services.Common
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
                 "IsHospMrk","BillNoNavigation","BillNo",
             "ChargesId","ChargesDate","OpdIpdType","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy",
-            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId"};
+            "IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
