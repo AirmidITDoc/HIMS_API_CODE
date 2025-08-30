@@ -116,9 +116,7 @@ namespace HIMS.Services.Inventory
             {
                 user.UserName = objLogin.UserName;     
                 user.Password = objLogin.Password;
-                user.LastPasswordChangedDate = objLogin.LastPasswordChangedDate;
-                user.LastLoginDate = objLogin.LastLoginDate;
-
+              
                 user.ModifiedBy = objLogin.ModifiedBy;
                 user.ModifiedDate = objLogin.ModifiedDate;
 
