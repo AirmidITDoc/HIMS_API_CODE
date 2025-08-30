@@ -143,6 +143,22 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
+        [HttpDelete("Cancel")]
+
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Delete(NursingVitalsDeleteModel obj)
+        {
+            TNursingVital model = obj.MapTo<TNursingVital>();
+            if (obj.VitalId != 0)
+            {
+                
+                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Deleted successfully.");
+        }
+
         [HttpPost("TNursingSugarLevelInsert")]
      //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(NursingSugarLevelModel obj)
@@ -173,6 +189,24 @@ namespace HIMS.API.Controllers.NursingStation
                 await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
+
+        [HttpDelete("Delete")]
+
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Deletes(NursingSugarDeleteModel obj)
+        {
+            TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
+            if (obj.Id != 0)
+            {
+
+                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Deleted successfully.");
         }
 
         [HttpPost("NursingOrygenVentilatorInsert")]
