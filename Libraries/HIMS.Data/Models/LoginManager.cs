@@ -52,6 +52,8 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public DateTime? LastPasswordChangedDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
 
         public virtual ICollection<TLoginAccessDetail> TLoginAccessDetails { get; set; }
         public virtual ICollection<TLoginStoreDetail> TLoginStoreDetails { get; set; }
