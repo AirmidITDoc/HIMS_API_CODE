@@ -143,7 +143,7 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpDelete("Cancel")]
+        [HttpDelete("TNursingVitalCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(NursingVitalsDeleteModel obj)
@@ -193,7 +193,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
 
-        [HttpDelete("Delete")]
+        [HttpDelete("TNursingSugarLevelCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Deletes(NursingSugarDeleteModel obj)
@@ -241,6 +241,24 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
+
+        [HttpDelete("TNursingOrygenVentilatorCancel")]
+
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Cancel(TNursingOrygenVentilatorDeleteModel obj)
+        {
+            TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
+            if (obj.Id != 0)
+            {
+
+                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Deleted successfully.");
+        }
+
+
         [HttpPost("NursingPainAssessmentInsert")]
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(NursingPainAssessmentModel obj)
@@ -273,6 +291,21 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
+        [HttpDelete("TNursingPainAssessmentCancel")]
+
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Cancel(TNursingPainAssessmentDeleteModel obj)
+        {
+            TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
+            if (obj.PainAssessmentId != 0)
+            {
+
+                await _ClinicalCareService.CancelAsync1(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Deleted successfully.");
+        }
 
 
         [HttpPost("NursingWeightInsert")]
@@ -306,6 +339,25 @@ namespace HIMS.API.Controllers.NursingStation
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+
+
+        [HttpDelete("TNursingWeightCancel")]
+
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Cancel(TNursingWeightDeleteModel obj)
+        {
+            TNursingWeight model = obj.MapTo<TNursingWeight>();
+            if (obj.PatWeightId != 0)
+            {
+
+                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Deleted successfully.");
+        }
+
     }
 }
 

@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -188,8 +188,8 @@ namespace HIMS.API.Controllers.Login
                 UserId = obj.UserId,
                 UserName = obj.UserName,       
                 Password = obj.Password,
-                LastPasswordChangedDate = obj.LastPasswordChangedDate,
-                LastLoginDate = obj.LastLoginDate,
+                //LastPasswordChangedDate = obj.LastPasswordChangedDate,
+                //LastLoginDate = obj.LastLoginDate,
                 ModifiedBy = CurrentUserId,
                 ModifiedDate = DateTime.Now
             };

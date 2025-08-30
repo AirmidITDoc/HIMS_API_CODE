@@ -25,6 +25,8 @@ namespace HIMS.Data.Models
         public string? OxygenRate { get; set; }
         public string? SaturationWithO2 { get; set; }
         public string? FlowTrigger { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
