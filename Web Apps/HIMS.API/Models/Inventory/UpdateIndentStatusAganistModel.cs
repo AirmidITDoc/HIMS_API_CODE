@@ -91,12 +91,25 @@ namespace HIMS.API.Models.Inventory
         public long IssueId { get; set; }
         public long? AcceptedBy { get; set; }
         public bool? IsAccepted { get; set; }
-
-
-
+    }
+    public class AcceptMaterialIssueDet
+    {
+        public long IssueId { get; set; }
+        public long IssueDepId { get; set; }
+        public string? Status { get; set; }
+    }
+    public class materialAcceptStockUpdate
+    {
+        public long IssueId { get; set; }
     }
 
 
+    public class UpdateMaterialAcceptanceModel
+    {
+        public UpdateMaterialAcceptance materialAcceptIssueHeader { get; set; }
+        public List<AcceptMaterialIssueDet> materialAcceptIssueDetails { get; set; }
+        public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }
 
+    }
 }
 

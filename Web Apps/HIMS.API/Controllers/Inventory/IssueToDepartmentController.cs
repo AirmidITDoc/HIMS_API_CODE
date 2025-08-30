@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<IActionResult> AcceptIssueItemDetList(GridRequestModel objGrid)
         {
             IPagedList<AcceptIssueItemDetListDto> AppVisitList = await _IIssueToDepService.AcceptIssueItemDetList(objGrid);
-            return Ok(AppVisitList.ToGridResponse(objGrid, "Received By dept detail List"));
+            return Ok(AppVisitList.ToGridResponse(objGrid, "AcceptIssueItemDetList"));
         }
 
         [HttpPost("InsertSP")]
@@ -143,26 +143,25 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
         }
 
-        //[HttpPost("UpdateMaterialAcceptance")]
-        ////[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Edit(UpdateIndentStatusModel obj)
-        //{
-        //    TIssueToDepartmentHeader model = obj.UpdateIndent.MapTo<TIssueToDepartmentHeader>();
-        //    //List<TCurrentStock> model1 = obj.TCurStockModel.MapTo<List<TCurrentStock>>();
-        //    //TIndentHeader model2 = obj.IndentHeader.MapTo<TIndentHeader>();
-        //    //List<TIndentDetail> model3 = obj.TIndentDetails.MapTo<List<TIndentDetail>>();
+        [HttpPut("UpdateMaterialAcceptance")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
+        {
+            TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
+            List<TIssueToDepartmentDetail> model1 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            TCurrentStock model3 = obj.materialAcceptStockUpdate.MapTo<TCurrentStock>();
 
-        //    if (obj.UpdateIndent.IssueId == 0)
-        //    {
-        //        model.IssueDate = Convert.ToDateTime(obj.UpdateIndent.IssueDate);
-        //        model.IssueTime = Convert.ToDateTime(obj.UpdateIndent.IssueTime);
-        //        model.Addedby = CurrentUserId;
-        //        await _IIssueToDepService.UpdateSP(model, model1, model2, model3, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
-        //}
+            if (obj.materialAcceptIssueHeader.IssueId != 0)
+            {
+               
+                model.Addedby = CurrentUserId;
+
+                await _IIssueToDepService.Update(model, model1, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateMaterialAcceptance  successfully.");
+        }
 
 
     }
