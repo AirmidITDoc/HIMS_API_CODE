@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,11 @@ using System.Transactions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Nursing;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using LinqToDB;
+using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.Nursing
 {
@@ -63,6 +68,37 @@ namespace HIMS.Services.Nursing
 
                 scope.Complete();
             }
+        }
+
+
+        public virtual async Task CancelAsync(TNursingVital objTNursingVital, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] BEntity = {  "VitalDate", "VitalTime", "AdmissionId", "Temperature", "Pulse", "Respiration", "BloodPresure", "Cvp", "Peep", "ArterialBloodPressure", "PapressureReading",
+            "Brady","Apnea","AbdominalGrith","Desaturation","SaturationWithO2","SaturationWithoutO2","Po2","Fio2","Pfration","SuctionType","CreatedBy","CreatedDate","ModifiedDate","ModifiedBy"};
+            var TEntity = objTNursingVital.ToDictionary();
+            foreach (var rProperty in BEntity)
+            {
+                TEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Delete_T_NursingVitals", CommandType.StoredProcedure, TEntity);
+        }
+
+
+        public virtual async Task CancelAsync(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rEntity = { "EntryDate", "EntryTime", "Bsl", "UrineSugar", "Ettpressure", "UrineKetone", "Bodies", "IntakeMode", "AdmissionId", "ReportedToRmo", "CreatedBy","CreatedDate","ModifiedDate","ModifiedBy"};
+            var eEntity = objTNursingSugarLevel.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                eEntity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_Delete_T_NursingSugarLevel", CommandType.StoredProcedure, eEntity);
         }
     }
 }

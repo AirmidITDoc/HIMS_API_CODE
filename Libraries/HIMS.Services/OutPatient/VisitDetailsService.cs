@@ -345,42 +345,46 @@ namespace HIMS.Services.OutPatient
         //                  DoctorId = s.DoctorId,
         //                  IsDocEditable = s.IsDocEditable
         //              };
+        //    var sql = qry.Take(50).ToQueryString();
+        //    Console.WriteLine(sql);
         //    return await qry.Take(50).ToListAsync();
         //}
 
 
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
-            var qry = from s in _context.ServiceMasters
-                      join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
-                      join x in _context.ServiceWiseCompanyCodes on s.ServiceId equals x.ServiceId
-
-                      where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
-                                           
-                      
-                      select new ServiceMasterDTO()
-                      {
-                          ServiceId = s.ServiceId,
-                          GroupId = s.GroupId,
-                          ServiceShortDesc = s.ServiceShortDesc,
-                          ServiceName = s.ServiceName,
-                          ClassRate = d.ClassRate ?? 0,
-                          TariffId = d.TariffId ?? 0,
-                          ClassId = d.ClassId ?? 0,
-                          IsEditable = s.IsEditable,
-                          CreditedtoDoctor = s.CreditedtoDoctor,
-                          IsPathology = s.IsPathology,
-                          IsRadiology = s.IsRadiology,
-                          IsActive = s.IsActive,
-                          PrintOrder = s.PrintOrder,
-                          IsPackage = s.IsPackage,
-                          DoctorId = s.DoctorId,
-                          IsDocEditable = s.IsDocEditable,
-                          CompanyCode = x.CompanyCode ?? "",
-                          CompanyServicePrint = x.CompanyServicePrint ?? ""
-
-                      };
+            var qry = (from s in _context.ServiceMasters
+                       join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+                       //on s.ServiceId equals d.ServiceId
+                       join x in _context.ServiceWiseCompanyCodes on s.ServiceId equals x.ServiceId
+                       where (s.IsActive == true)
+                             && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+                       select new ServiceMasterDTO()
+                       {
+                           ServiceId = s.ServiceId,
+                           GroupId = s.GroupId,
+                           ServiceShortDesc = s.ServiceShortDesc,
+                           ServiceName = s.ServiceName,
+                           ClassRate = d.ClassRate ?? 0,
+                           TariffId = d.TariffId ?? 0,
+                           ClassId = d.ClassId ?? 0,
+                           IsEditable = s.IsEditable,
+                           CreditedtoDoctor = s.CreditedtoDoctor,
+                           IsPathology = s.IsPathology,
+                           IsRadiology = s.IsRadiology,
+                           IsActive = s.IsActive,
+                           PrintOrder = s.PrintOrder,
+                           IsPackage = s.IsPackage,
+                           DoctorId = s.DoctorId,
+                           IsDocEditable = s.IsDocEditable,
+                           CompanyCode = x.CompanyCode ?? "",
+                           CompanyServicePrint = x.CompanyServicePrint ?? "",
+                           IsInclusionOrExclusion = x.IsInclusionOrExclusion
+                       });
+            var sql = qry.Take(50).ToQueryString();
+            Console.WriteLine(sql);
             return await qry.Take(50).ToListAsync();
+
         }
 
         public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)

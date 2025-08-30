@@ -216,7 +216,10 @@ namespace HIMS.API.Controllers.OPPatient
                 x.PrintOrder,
                 x.IsPackage,
                 x.DoctorId,
-                x.IsDocEditable
+                x.IsDocEditable,
+                x.CompanyCode,
+                x.CompanyServicePrint,
+                x.IsInclusionOrExclusion
             }));
         }
        

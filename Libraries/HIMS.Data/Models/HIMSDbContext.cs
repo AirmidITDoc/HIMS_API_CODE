@@ -537,7 +537,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -576,9 +576,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ChargesTime).HasColumnType("datetime");
 
+                entity.Property(e => e.CompanyServiceName).HasMaxLength(255);
+
                 entity.Property(e => e.ConcessionAmount).HasColumnType("money");
 
-                entity.Property(e => e.IncluExclusion).HasColumnName("Inclu_Exclusion");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(500);
 
                 entity.Property(e => e.IsBillableCharity).HasColumnName("IsBillable_Charity");
 
@@ -587,6 +591,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsDoctorShareGenerated).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsInterimBillFlag).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
 
@@ -598,9 +604,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
-                entity.Property(e => e.ServiceCode).HasMaxLength(100);
+                entity.Property(e => e.ServiceCode).HasMaxLength(50);
 
-                entity.Property(e => e.ServiceName).HasMaxLength(500);
+                entity.Property(e => e.ServiceName).HasMaxLength(255);
 
                 entity.HasOne(d => d.BillNoNavigation)
                     .WithMany(p => p.AddCharges)
@@ -13007,6 +13013,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PainAssessmentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PainAssessmentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Reason).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TNursingPatientHandover>(entity =>
@@ -13076,6 +13084,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Reason).HasMaxLength(50);
+
                 entity.Property(e => e.ReportedToRmo)
                     .HasMaxLength(10)
                     .HasColumnName("ReportedToRMO");
@@ -13131,6 +13141,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Pulse).HasMaxLength(10);
 
+                entity.Property(e => e.Reason).HasMaxLength(50);
+
                 entity.Property(e => e.Respiration).HasMaxLength(10);
 
                 entity.Property(e => e.SaturationWithO2).HasMaxLength(10);
@@ -13157,6 +13169,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PatWeightDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PatWeightTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Reason).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TOpeningTransaction>(entity =>

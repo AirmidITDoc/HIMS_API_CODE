@@ -122,7 +122,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AddChargeInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();

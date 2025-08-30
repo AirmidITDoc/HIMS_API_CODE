@@ -24,7 +24,7 @@ namespace HIMS.Data.DTO.Nursing
         public string? DOT { get; set; }
         public bool? IsCompleted { get; set; }
         public bool? IsPrinted { get; set; }
-        public string? OPDIPDID { get; set; }
+        public string? OPD_IPD_ID { get; set; }
         public string? OPDIPDType { get; set; }
         public string? PatientType { get; set; }
         public string? PBillNo { get; set; }

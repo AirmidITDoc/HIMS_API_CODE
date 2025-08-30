@@ -10,14 +10,12 @@ namespace HIMS.Data.DTO.IPPatient
     {
         public long? ChargesId { get; set; }
         public long OPD_IPD_Id { get; set; }
-
         public long? ServiceId { get; set; }
         public string? ServiceName { get; set; }
         public double? Price { get; set; }
         public double? Qty { get; set; }
         public double? TotalAmt { get; set; }
         public double? ConcessionPercentage { get; set; }
-
         public decimal? ConcessionAmount { get; set; }
         public decimal? NetAmount { get; set; }
         public long? DoctorId { get; set; }
@@ -53,8 +51,8 @@ namespace HIMS.Data.DTO.IPPatient
         public bool? CreditedtoDoctor { get; set; }
         public string? OPIPID { get; set; }
         public string? ServiceCode { get; set; }
-        public bool? Inclu_Exclusion { get; set; }
-
+        public bool? IsInclusionExclusion { get; set; }
+        public long UnitId { get; set; }
 
     }
 
