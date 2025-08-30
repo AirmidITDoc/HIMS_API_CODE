@@ -55,13 +55,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-
-
-
-
-
-
-
+            CreateMap<AdvanceDetail, AdvancesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

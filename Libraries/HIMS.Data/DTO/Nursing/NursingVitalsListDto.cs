@@ -30,6 +30,8 @@ namespace HIMS.Data.DTO.Nursing
         public string? Fio2 { get; set; }
         public string? Pfration { get; set; }
         public int? SuctionType { get; set; }
+        public bool? IsActive { get; set; }
+        public string? Reason { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
     }

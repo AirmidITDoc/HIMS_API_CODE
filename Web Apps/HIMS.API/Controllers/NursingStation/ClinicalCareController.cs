@@ -143,7 +143,7 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpDelete("TNursingVitalCancel")]
+        [HttpPost("TNursingVitalCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(NursingVitalsDeleteModel obj)
@@ -193,7 +193,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
 
-        [HttpDelete("TNursingSugarLevelCancel")]
+        [HttpPost("TNursingSugarLevelCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Deletes(NursingSugarDeleteModel obj)
@@ -242,7 +242,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
 
-        [HttpDelete("TNursingOrygenVentilatorCancel")]
+        [HttpPost("TNursingOrygenVentilatorCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Cancel(TNursingOrygenVentilatorDeleteModel obj)
@@ -291,7 +291,7 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpDelete("TNursingPainAssessmentCancel")]
+        [HttpPost("TNursingPainAssessmentCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Cancel(TNursingPainAssessmentDeleteModel obj)
@@ -342,7 +342,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
 
-        [HttpDelete("TNursingWeightCancel")]
+        [HttpPost("TNursingWeightCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Cancel(TNursingWeightDeleteModel obj)
