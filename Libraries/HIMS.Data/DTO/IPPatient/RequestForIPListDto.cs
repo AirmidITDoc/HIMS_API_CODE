@@ -8,6 +8,7 @@ namespace HIMS.Data.DTO.IPPatient
 {
     public  class RequestForIPListDto
     {
+        public string RegNo { get; set; }
         public string PatientName {  get; set; }
         public string AgeYear { get; set; } 
         public string GenderName { get; set; }
@@ -18,10 +19,12 @@ namespace HIMS.Data.DTO.IPPatient
         public bool? IsConvertRequestForIp { get; set; }
         public long VisitId { get; set; }
         public long RegID { get; set; }
-
-        
-
-
+        public string ConvertId { get; set; }
+        public long AdmissionType { get; set; }
+        public string RefDoctorName { get; set; }
+        public string CompanyName { get; set; }
+        public string PatientType { get; set; } 
+ 
 
     }
 }

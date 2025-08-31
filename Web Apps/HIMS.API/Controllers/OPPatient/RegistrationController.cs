@@ -68,9 +68,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-
                 model.CreatedBy = CurrentUserId;
-
                 await _IRegistrationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
