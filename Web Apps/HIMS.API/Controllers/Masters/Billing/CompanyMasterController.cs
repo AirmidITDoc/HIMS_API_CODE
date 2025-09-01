@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.Masters.Billing
   
       
         [HttpPut("updatecompanywiseservicerate")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
         {
             if (objs == null || objs.Count == 0)
