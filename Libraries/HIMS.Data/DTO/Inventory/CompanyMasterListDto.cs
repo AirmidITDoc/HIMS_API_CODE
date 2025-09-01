@@ -70,8 +70,13 @@ namespace HIMS.Data.DTO.Inventory
         public string? ServiceCode { get; set; }
         public string? ServicePrintName { get; set; }
         public string? TariffName { get; set; }
+        public string? CompanyCode { get; set; }
+        public string? CompanyServicePrint { get; set; }
+        public bool? IsInclusionOrExclusion { get; set; }
+
+
 
 
     }
-    
+
 }
