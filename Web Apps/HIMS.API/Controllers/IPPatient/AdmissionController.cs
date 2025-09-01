@@ -39,12 +39,12 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
 
-        [HttpPost("RequestForIPList")]
+        [HttpPost("OPRequestListForIPAdmission")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> RList(GridRequestModel objGrid)
         {
-            IPagedList<RequestForIPListDto> RequestForIPList = await _IAdmissionService.GetAsync(objGrid);
-            return Ok(RequestForIPList.ToGridResponse(objGrid, "RequestForIP List"));
+            IPagedList<RequestForIPListDto> OPRequestListForIPAdmission = await _IAdmissionService.GetAsync(objGrid);
+            return Ok(OPRequestListForIPAdmission.ToGridResponse(objGrid, "RequestForIP List"));
         }
 
         [HttpPost("AdmissionDischargeList")]

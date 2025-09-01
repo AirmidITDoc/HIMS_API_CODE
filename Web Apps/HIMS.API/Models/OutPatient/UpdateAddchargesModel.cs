@@ -14,9 +14,7 @@ namespace HIMS.API.Models.OutPatient
         public decimal? ConcessionAmount { get; set; }
         public decimal? NetAmount { get; set; }
         public long? DoctorId { get; set; }
-        public long? IsInclusionExclusion { get; set; }
-
-
-
+        public bool? IsInclusionExclusion { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 }
