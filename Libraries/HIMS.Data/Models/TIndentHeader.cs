@@ -25,6 +25,11 @@ namespace HIMS.Data.Models
         public DateTime? IsInchargeVerifyDate { get; set; }
         public string? Comments { get; set; }
         public bool? Priority { get; set; }
+        public long? UnitId { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TIndentDetail> TIndentDetails { get; set; }
     }

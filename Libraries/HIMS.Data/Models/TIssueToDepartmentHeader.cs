@@ -29,6 +29,11 @@ namespace HIMS.Data.Models
         public bool? IsAccepted { get; set; }
         public long? AcceptedBy { get; set; }
         public DateTime? AcceptedDatetime { get; set; }
+        public long? UnitId { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; }
     }

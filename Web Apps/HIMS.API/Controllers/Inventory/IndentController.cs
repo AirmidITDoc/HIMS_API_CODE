@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(IndentDetailsList.ToGridResponse(objGrid, "Indent Item Detail List"));
         }
         [HttpPost("Insert")]
-        [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
@@ -63,7 +63,12 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.IndentDate = Convert.ToDateTime(obj.IndentDate);
                 model.IndentTime = Convert.ToDateTime(obj.IndentTime);
+                model.ModifiedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
                 model.Addedby = CurrentUserId;
+                model.ModifiedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+              
                 await _IIndentService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -76,12 +81,17 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> Edit(IndentModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();
+
             if (obj.IndentId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
                 model.IndentDate = Convert.ToDateTime(obj.IndentDate);
                 model.IndentTime = Convert.ToDateTime(obj.IndentTime);
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+
+
                 await _IIndentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.IndentId);
