@@ -56,7 +56,7 @@ namespace HIMS.Services.Inventory
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
+            string[] rEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objIssueToDepartment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -124,13 +124,13 @@ namespace HIMS.Services.Inventory
         {
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] UEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails" };
+            string[] UEntity = { "IssueNo", "Receivedby", "Updatedby", "IsAccepted", "AcceptedBy", "AcceptedDatetime", "TIssueToDepartmentDetails", "UnitId", "CreatedBy","CreatedDate", "ModifiedDate"};
             var Sntity = ObjTIssueToDepartmentHeader.ToDictionary();
             foreach (var rProperty in UEntity)
             {
                 Sntity.Remove(rProperty);
             }
-            string IssueId = odal.ExecuteNonQuery("m_Insert_IssueToDepartmentHeader_1_New", CommandType.StoredProcedure, "IssueId", Sntity);
+            string IssueId = odal.ExecuteNonQuery("ps_Insert_IssueToDepartmentHeader_1_New", CommandType.StoredProcedure, "IssueId", Sntity);
             ObjTIssueToDepartmentHeader.IssueId = Convert.ToInt32(IssueId);
 
             // Add details table records

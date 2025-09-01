@@ -5,7 +5,6 @@ namespace HIMS.API.Models.Inventory
 {
     public class IssueToDepartmentModel
     {
-        public long IssueId { get; set; }
         public DateTime? IssueDate { get; set; }
         public string? IssueTime { get; set; }
         public long? FromStoreId { get; set; }
@@ -18,12 +17,10 @@ namespace HIMS.API.Models.Inventory
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
-
+        public long? UnitId { get; set; }
+        public long? CreatedBy { get; set; }
+        public long IssueId { get; set; }
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
-      
-
-
-
     }
     public class IssueToDepartmentModelValidator : AbstractValidator<IssueToDepartmentModel>
     {

@@ -18,6 +18,7 @@ namespace HIMS.API.Models.Inventory
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? IndentId { get; set; }
+        public long? ModifiedBy { get; set; }
         public long IssueId { get; set; }
         public List<IssueToDepartmentDetailsUpdateModel> TIssueToDepartmentDetails { get; set; }
 

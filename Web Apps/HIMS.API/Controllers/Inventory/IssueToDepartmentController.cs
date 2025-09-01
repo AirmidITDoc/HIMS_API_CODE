@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("MaterialRecvedByDeptList")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
         {
             IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("MaterialreceiveddetailList")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
         {
             IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("AcceptIssueItemDetList")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> AcceptIssueItemDetList(GridRequestModel objGrid)
         {
             IPagedList<AcceptIssueItemDetListDto> AppVisitList = await _IIssueToDepService.AcceptIssueItemDetList(objGrid);
@@ -86,18 +86,21 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertSP(IssueTODepModel obj)
         {
             TIssueToDepartmentHeader model = obj.issue.MapTo<TIssueToDepartmentHeader>();
-           List<TCurrentStock> model1 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+            List<TCurrentStock> model1 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
 
             if (obj.issue.IssueId == 0)
             {
                 model.IssueDate = Convert.ToDateTime(obj.issue.IssueDate);
                 model.IssueTime = Convert.ToDateTime(obj.issue.IssueTime);
                 model.Addedby = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.Addedby = CurrentUserId;
+               
                 await _IIssueToDepService.InsertAsyncSP(model, model1, CurrentUserId, CurrentUserName);
             }
             else
@@ -123,7 +126,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("UpdateIndentStatusAganist")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateIndentStatusModel obj)
         {
             TIssueToDepartmentHeader model = obj.UpdateIndent.MapTo<TIssueToDepartmentHeader>();
