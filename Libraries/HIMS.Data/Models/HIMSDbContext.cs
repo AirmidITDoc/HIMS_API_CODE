@@ -1017,7 +1017,7 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .HasColumnName("PBillNo");
 
-                entity.Property(e => e.PrintBillNo).HasMaxLength(50);
+                entity.Property(e => e.PrintBillNo).HasMaxLength(100);
 
                 entity.Property(e => e.SpeTaxAmt)
                     .HasColumnType("money")
@@ -12032,6 +12032,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Comments).HasMaxLength(500);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IndentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IndentNo).HasMaxLength(50);
@@ -12043,6 +12045,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsInchargeVerifyDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsInchargeVerifyId).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TIpPrescription>(entity =>
@@ -12207,13 +12213,19 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AcceptedDatetime).HasColumnType("datetime");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IssueDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IssueTime).HasColumnType("datetime");
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Receivedby).HasMaxLength(200);
 
                 entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TItemMovementReport>(entity =>
