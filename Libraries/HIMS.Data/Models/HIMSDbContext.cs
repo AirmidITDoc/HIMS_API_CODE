@@ -995,15 +995,29 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CompDiscAmt).HasColumnType("money");
 
+                entity.Property(e => e.CompanyAmt).HasColumnType("money");
+
+                entity.Property(e => e.CompanyName).HasMaxLength(50);
+
                 entity.Property(e => e.CompanyRefNo).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DiscComments).HasMaxLength(200);
+
+                entity.Property(e => e.DoctorName).HasMaxLength(50);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
 
                 entity.Property(e => e.IsBillCheck).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsBillShrHold).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetPayableAmt).HasColumnType("money");
 
@@ -1012,6 +1026,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
 
                 entity.Property(e => e.PaidAmt).HasColumnType("money");
+
+                entity.Property(e => e.PatientAmt).HasColumnType("money");
+
+                entity.Property(e => e.PatientName).HasMaxLength(50);
 
                 entity.Property(e => e.PbillNo)
                     .HasMaxLength(50)

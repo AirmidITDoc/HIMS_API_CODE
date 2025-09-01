@@ -14,8 +14,22 @@ namespace HIMS.Data.Models
         public long BillNo { get; set; }
         public DateTime? BillDate { get; set; }
         public DateTime? BillTime { get; set; }
+        public long? RegNo { get; set; }
         public long? OpdIpdId { get; set; }
         public byte? OpdIpdType { get; set; }
+        public string? PatientName { get; set; }
+        public string? Ipdno { get; set; }
+        public long? AgeYear { get; set; }
+        public long? AgeMonth { get; set; }
+        public long? AgeDays { get; set; }
+        public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public bool? PatientType { get; set; }
+        public string? CompanyName { get; set; }
+        public decimal? CompanyAmt { get; set; }
+        public decimal? PatientAmt { get; set; }
         public long? UnitId { get; set; }
         public long? TariffId { get; set; }
         public decimal? TotalAmt { get; set; }
@@ -50,6 +64,10 @@ namespace HIMS.Data.Models
         public decimal? CompDiscAmt { get; set; }
         public long? IsCancelled { get; set; }
         public long? AddedBy { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }

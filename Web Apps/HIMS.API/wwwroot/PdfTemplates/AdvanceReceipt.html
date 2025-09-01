@@ -4,222 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Advance Payment Receipt</title>
 </head>
 
-<body>
-    <div>
-        <div class="main-content-wrapper">
-            <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-                <table style="width: 100%;line-height: inherit;text-align: left;">
-                    {{NewHeader}}
-                    <tr class="title-date-row">
-                        <td style="padding: 6px;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr style="font-size: 24px">
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>  ADVANCE PAYMENT RECEIPT</b></td>
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="bill-info-row">
-                        <td style="padding: 6px;">
-                            <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+<body style="margin:0;padding:0; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; color:#101828; font-size:22px; line-height:24px;">
+
+    <div class="main-content-wrapper" style="font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+        <div class="invoice-box" style="font-size:22px; line-height:24px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; color:#101828;">
+            <table style="width:100%; border-collapse:collapse; line-height:inherit; text-align:left; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding:6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                        <table style="width:100%; border-collapse:collapse; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                            <tr style="font-size:24px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                                <td style="border-bottom:1px solid #d4c3c3; padding:2px; padding-bottom:16px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;"><b>ADVANCE PAYMENT RECEIPT</b></td>
+                                <td style="border-bottom:1px solid #d4c3c3; padding:2px; padding-bottom:16px; text-align:right; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Patient Info -->
+                <tr class="bill-info-row">
+                    <td style="padding:6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                        <table style="width:100%; border-collapse:collapse; font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                            <tr>
+                                <td style="padding:2px; font-family:inherit;"><b>Advance No :</b> {{AdvanceNo}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>IPD No :</b> {{IPDNo}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Date | Time:</b> {{PaymentTime}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px; font-family:inherit;"><b>UHID No:</b> {{RegNo}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Age | Gender:</b> {{Age}}Y | {{AgeMonth}} M | {{AgeDay}}D | {{GenderName}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>DOA | Time:</b> {{AdmissionTime}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px; font-family:inherit;"><b>Patient Name:</b> {{PatientName}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Patient Type :</b> {{PatientType}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Company Name :</b> {{CompanyName}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px; font-family:inherit;"><b>Doctor Name:</b> {{DoctorName}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Department: </b> {{DepartmentName}}</td>
+                                <td style="padding:2px; font-family:inherit;"><b>Ref.Doctor Name:</b> {{RefDocName}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Payment Details -->
+                <tr class="payment-info-row">
+                    <td style="padding:6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                        <table style="width:100%; border-collapse:collapse; font-size:22px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                            <tr>
+                                <td style="border:1px solid #d4c3c3; text-align:left; padding:6px; font-weight:bold; font-family:inherit;">Advance Amount :</td>
+                                <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{AdvanceAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3; text-align:left; padding:6px; font-weight:bold; font-family:inherit;">Reason</td>
+                                <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{reason}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3; text-align:left; padding:6px; font-weight:bold; font-family:inherit;">Total Amount in words :</td>
+                                <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{finalamt}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Payment Information -->
+                <tr>
+                    <th style="text-align:left; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;" colspan="5">
+                        <h4 style="margin:20px 0; font-size:20px; font-family:inherit;">Payment Information</h4>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                        <table style="text-align:center; border-collapse:collapse; width:100%; font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                            <thead>
                                 <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Advance No :</span>
-                                        <span>{{AdvanceNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">IPD No :</span>
-                                        <span>{{IPDNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Date | Time:</span>
-                                        <span>{{PaymentTime}}</span>
-                                    </td>
+                                    <th style="border:1px solid #d4c3c3; text-align:center; padding:6px; font-weight:bold; font-family:inherit;">Cash Amount</th>
+                                    <th style="border:1px solid #d4c3c3; text-align:center; padding:6px; font-weight:bold; font-family:inherit;">Card Amount</th>
+                                    <th style="border:1px solid #d4c3c3; text-align:center; padding:6px; font-weight:bold; font-family:inherit;">Cheque Amount</th>
+                                    <th style="border:1px solid #d4c3c3; text-align:center; padding:6px; font-weight:bold; font-family:inherit;">UPI Amount</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">UHID No:</span>
-                                        <span>{{RegNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Age | Gender:</span>
-                                        <span> {{Age}}Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">DOA | Time:</span>
-                                        <span>{{AdmissionTime}}</span>
-                                    </td>
+                                    <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{CashPayAmount}}</td>
+                                    <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{CardPayAmount}}</td>
+                                    <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{ChequePayAmount}}</td>
+                                    <td style="border:1px solid #d4c3c3; text-align:right; padding:6px; font-family:inherit;">{{PayTMPayAmount}}</td>
                                 </tr>
-
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Patient Name:</span>
-                                        <span>{{PatientName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Patient Type :</span>
-                                        <span>{{PatientType}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;"> Company Name :</span>
-                                        <span>{{CompanyName}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Doctor Name:</span>
-                                        <span>{{DoctorName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Department: </span>
-                                        <span>{{DepartmentName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight:bold;">Ref.Doctor Name:</span>
-                                        <span>{{RefDocName}}</span>
-                                    </td>
-                                </tr>
-
-
-                            </table>
-                        </td>
-                    </tr>
-
-
-                    <tr class="payment-info-row">
-                        <td style="padding: 6px;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                    <td>
-                                        <table style="text-align:center; border-collapse: collapse; width: 100%;font-size:22px;">
-
-
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-weight:bold;">
-                                                    Advance Amount :
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{AdvanceAmount}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Reason
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{reason}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Total Amount in words :
-                                                </td>
-                                                <div>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{finalamt}}
-                                                </td>
-            </div>
-            </tr>
-
-
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
             </table>
-            </td>
-            </tr>
 
+            <!-- Footer -->
+            <table style="width:100%; border-collapse:collapse; margin-top:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+                <tr>
+                    <td style="padding:6px; font-size:18px; font-family:inherit;">This is Computer generated invoice hence doesn’t require signature</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px; text-align:right; font-family:inherit;">{{Addedby}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px; text-align:right; font-family:inherit;">Authorized By</td>
+                </tr>
             </table>
-            </td>
-            </tr>
-
-            <tr>
-            <tr>
-                <th style=" text-align: left;" colspan="5">
-                    <h4 style="margin: 20px 0px; font-size: 20px;">
-                        Payment Information
-                    </h4>
-                </th>
-            </tr>
-
-            <td colspan="2">
-                <table style="text-align: center; border-collapse: collapse; width: 100%;">
-                    <thead style="font-size: 20px;">
-
-                        <tr>
-                            <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-weight:bold;">
-                                Cash Amount
-                            </th>
-                            <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold;">
-                                Card amount
-                            </th>
-                            <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold;">
-                                Cheque Amount
-                            </th>
-
-                            <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-weight: bold;">
-                                Online amount
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 20px;">
-                        <tr>
-                            <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                {{CashPayAmount}}
-                            </td>
-
-                            <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                {{CardPayAmount}}
-                            </td>
-                            <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                {{ChequePayAmount}}
-                            </td>
-
-
-                            <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                {{PayTMPayAmount}}
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-                </table>
-            </td>
-
-
-            </tr>
-
         </div>
     </div>
 
-
-
-
-    <tr>
-        <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
-
-            <tr style="margin-top: 18px;">
-            <tr>
-                <td style="padding: 6px;font-size: 18px;">This is Computer generated invoice hence doesn’t require signature</td>
-            </tr>
-            <tr></tr>
-            <tr style="padding: 6px; text-align: right;margin-right:10px;">
-                <td>
-
-                    <span>{{Addedby}}</span>
-                </td>
-            </tr>
-            <tr style="padding: 6px; text-align: right;">
-                <td>
-                    <span>Authorized By</span>
-                </td>
-            </tr>
-        </table>
-    </tr>
-    </table>
-    </div>
-    </div>
 </body>
 </html>
