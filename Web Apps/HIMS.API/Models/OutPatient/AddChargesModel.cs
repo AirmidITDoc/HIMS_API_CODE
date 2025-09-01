@@ -31,6 +31,8 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPackage { get; set; }
        public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
         public string? ChargesTime { get; set; }
         public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
@@ -47,7 +49,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class AddChargeModell
     {
-     //   public long ChargesId { get; set; }
+     
         public DateTime? ChargesDate { get; set; }
         public byte? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
@@ -72,10 +74,12 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
         public long? PackageMainChargeId { get; set; }
         public string? ChargesTime { get; set; }
       
-    //    public long? ClassId { get; set; }
+   
     }
 
     public class AddChargeModellValidator : AbstractValidator<AddChargeModell>

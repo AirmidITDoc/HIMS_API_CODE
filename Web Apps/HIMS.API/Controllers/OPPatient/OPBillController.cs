@@ -83,6 +83,10 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge,  CurrentUserId, CurrentUserName);
             }
             else
@@ -101,6 +105,10 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _IOPCreditBillService.InsertAsyncSP(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
