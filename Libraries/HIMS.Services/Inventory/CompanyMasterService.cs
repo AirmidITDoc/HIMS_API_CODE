@@ -22,6 +22,14 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<CompanyMasterListDto>(model, "PS_Rtrv_CompanyMasterList");
         }
+        public virtual async Task<IPagedList<ServiceTariffWiseListDto>> SGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ServiceTariffWiseListDto>(model, "ps_Rtrv_ServiceList_TariffWise");
+        }
+        public virtual async Task<IPagedList<ServiceCompanyTariffWiseListDto>> CGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ServiceCompanyTariffWiseListDto>(model, "ps_Rtrv_ServiceList_CompanyTariffWise");
+        }
 
         public virtual async Task InsertAsyncsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {

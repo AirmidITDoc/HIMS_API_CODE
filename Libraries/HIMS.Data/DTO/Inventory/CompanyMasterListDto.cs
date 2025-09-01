@@ -43,4 +43,35 @@ namespace HIMS.Data.DTO.Inventory
         public string? TypeName { get; set; }
 
     }
+    public class ServiceTariffWiseListDto
+    {
+        public long ServiceId { get; set; }
+        public long? GroupId { get; set; }
+        public string? GroupName { get; set; }
+        public string? ServiceName { get; set; }
+        public string? TariffName { get; set; }
+        public long? ClassId { get; set; }
+        public string? ClassName { get; set; }
+        public decimal? ClassRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        public double? DiscountPercentage { get; set; }
+
+     
+    }
+    public class ServiceCompanyTariffWiseListDto
+    {
+        public long ServiceId { get; set; }
+        public long? GroupId { get; set; }
+        public string? GroupName { get; set; }
+        public long? SubGroupId { get; set; }
+        public string? SubGroupName { get; set; }
+        public string? ServiceShortDesc { get; set; }
+        public string? ServiceName { get; set; }
+        public string? ServiceCode { get; set; }
+        public string? ServicePrintName { get; set; }
+        public string? TariffName { get; set; }
+
+
+    }
+    
 }

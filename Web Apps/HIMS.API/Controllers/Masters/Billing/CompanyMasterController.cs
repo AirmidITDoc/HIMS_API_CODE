@@ -38,8 +38,6 @@ namespace HIMS.API.Controllers.Masters.Billing
             _repository1 = repository2;
             _temprepository = repository3;
 
-
-
         }
 
         [HttpPost("CompanyMasterList")]
@@ -49,6 +47,24 @@ namespace HIMS.API.Controllers.Masters.Billing
             IPagedList<CompanyMasterListDto> CompanyMasterList = await _CompanyMasterService.GetListAsync(objGrid);
             return Ok(CompanyMasterList.ToGridResponse(objGrid, "CompanyMasterList"));
         }
+
+        [HttpPost("ServiceTariffWiseList")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> SGetList(GridRequestModel objGrid)
+        {
+            IPagedList<ServiceTariffWiseListDto> ServiceTariffWiseList = await _CompanyMasterService.SGetListAsync(objGrid);
+            return Ok(ServiceTariffWiseList.ToGridResponse(objGrid, "ServiceTariffWiseList"));
+        }
+
+        [HttpPost("ServiceCompanyTariffWiseList")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> CGetList(GridRequestModel objGrid)
+        {
+            IPagedList<ServiceCompanyTariffWiseListDto> ServiceCompanyTariffWiseList = await _CompanyMasterService.CGetListAsync(objGrid);
+            return Ok(ServiceCompanyTariffWiseList.ToGridResponse(objGrid, "ServiceCompanyTariffWiseList"));
+        }
+
+
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
