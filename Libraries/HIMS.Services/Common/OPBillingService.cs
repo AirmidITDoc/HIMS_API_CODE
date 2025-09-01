@@ -76,7 +76,8 @@ namespace HIMS.Services.Common
             try
             {
                 DatabaseHelper odal = new();
-                string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
+                string[] rEntity = { "IsCancelled", "PbillNo",  "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails",
+                    "Payments","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
                 var entity = objBill.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -152,8 +153,9 @@ namespace HIMS.Services.Common
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = {"IsDoctorShareGenerated","ChargesTime","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName",
-                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","IsInterimBillFlag","BillNoNavigation","TariffId"};
+                                string[] AEntity = {"IsDoctorShareGenerated","CPrice","CQty","CTotalAmount",
+                                                          "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","IsInterimBillFlag","BillNoNavigation",
+                                                              "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
                                 var Packagescharge = item.ToDictionary();
 
                                 foreach (var rProperty in AEntity)

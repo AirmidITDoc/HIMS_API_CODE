@@ -9,6 +9,20 @@ namespace HIMS.API.Models.OPPatient
     {
         public int BillNo { get; set; }
         public int? OPDIPDID { get; set; }
+        public long? RegNo { get; set; }
+        public string? PatientName { get; set; }
+        public string? Ipdno { get; set; }
+        public long? AgeYear { get; set; }
+        public long? AgeMonth { get; set; }
+        public long? AgeDays { get; set; }
+        public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public bool? PatientType { get; set; }
+        public string? CompanyName { get; set; }
+        public decimal? CompanyAmt { get; set; }
+        public decimal? PatientAmt { get; set; }
         public float? TotalAmt { get; set; }
         public float? ConcessionAmt { get; set; }
         public float? NetPayableAmt { get; set; }
@@ -18,6 +32,7 @@ namespace HIMS.API.Models.OPPatient
         public int? OPDIPDType { get; set; }
         public int? AddedBy { get; set; }
         public float? TotalAdvanceAmount { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
         public string? BillTime { get; set; }
         public int? ConcessionReasonId { get; set; }
         public bool? IsSettled { get; set; }
@@ -75,15 +90,20 @@ namespace HIMS.API.Models.OPPatient
         public long? ServiceId { get; set; }
         public float? Price { get; set; }
         public float? Qty { get; set; }
+        public long? UnitId { get; set; }
         public float? TotalAmt { get; set; }
         public float? ConcessionPercentage { get; set; }
         public float? ConcessionAmount { get; set; }
         public float? NetAmount { get; set; }
         public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
         public float? DocPercentage { get; set; }
         public float? DocAmt { get; set; }
         public float? HospitalAmt { get; set; }
+        public decimal? RefundAmount { get; set; }
         public bool? IsGenerated { get; set; }
+        public bool? IsComServ { get; set; }
+        public bool? IsPrintCompSer { get; set; }
         public int? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
@@ -91,6 +111,13 @@ namespace HIMS.API.Models.OPPatient
         public bool? IsPathology { get; set; }
         public bool? IsRadiology { get; set; }
         public bool? IsPackage { get; set; }
+        public int? WardId { get; set; }
+        public int? BedId { get; set; }
+        public string? ServiceCode { get; set; }
+        public string? ServiceName { get; set; }
+        public string? CompanyServiceName { get; set; }
+        public bool? IsInclusionExclusion { get; set; }
+        public int? IsHospMrk { get; set; }
         public int? PackageMainChargeID { get; set; }
         public bool? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
@@ -132,6 +159,7 @@ namespace HIMS.API.Models.OPPatient
         public string? Remark { get; set; }
         public int? AddBy { get; set; }
         public bool IsCancelled { get; set; }
+        public long? SalesId { get; set; }
         public int? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
         public long? NeftpayAmount { get; set; }
@@ -162,14 +190,20 @@ namespace HIMS.API.Models.OPPatient
         public long? ServiceId { get; set; }
         public float? Price { get; set; }
         public float? Qty { get; set; }
+        public long? UnitId { get; set; }
         public float? TotalAmt { get; set; }
         public float? ConcessionPercentage { get; set; }
         public float? ConcessionAmount { get; set; }
         public float? NetAmount { get; set; }
         public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
         public float? DocPercentage { get; set; }
         public float? DocAmt { get; set; }
         public float? HospitalAmt { get; set; }
+        public decimal? RefundAmount { get; set; }
+        public bool? IsComServ { get; set; }
+        public bool? IsPrintCompSer { get; set; }
+        public long? SalesId { get; set; }
         public bool? IsGenerated { get; set; }
         public int? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
@@ -178,9 +212,19 @@ namespace HIMS.API.Models.OPPatient
         public bool? IsPathology { get; set; }
         public bool? IsRadiology { get; set; }
         public bool? IsPackage { get; set; }
+        public int? WardId { get; set; }
+        public int? BedId { get; set; }
+        public string? ServiceCode { get; set; }
+        public string? ServiceName { get; set; }
+        public string? CompanyServiceName { get; set; }
+        public bool? IsInclusionExclusion { get; set; }
+        public int? IsHospMrk { get; set; }
         public int? PackageMainChargeID { get; set; }
         public bool? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
+        public string? ChargesTime { get; set; }
+        public long? ClassId { get; set; }
+        public long? TariffId { get; set; }
         public long? BillNo { get; set; }
 
     }
