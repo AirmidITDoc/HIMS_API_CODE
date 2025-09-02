@@ -45,6 +45,10 @@ namespace HIMS.Data.Models
         public decimal? HandlingCharges { get; set; }
         public decimal? FreightCharges { get; set; }
         public bool? IsCancelled { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TPurchaseDetail> TPurchaseDetails { get; set; }
     }
