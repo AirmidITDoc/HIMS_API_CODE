@@ -49,6 +49,7 @@ namespace HIMS.API.Models.OPPatient
         public int? CompDiscAmt { get; set; }
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
+        public long? CreatedBy { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
         public List<Packcagechargesmodel?> Packcagecharges { get; set; }
@@ -125,6 +126,7 @@ namespace HIMS.API.Models.OPPatient
         public long? ClassId { get; set; }
         public long? TariffId { get; set; }
         public long? BillNo { get; set; }
+        public long? CreatedBy { get; set; }
 
     }
     public class ChargesModelValidator : AbstractValidator<ChargesModel>
@@ -226,6 +228,7 @@ namespace HIMS.API.Models.OPPatient
         public long? ClassId { get; set; }
         public long? TariffId { get; set; }
         public long? BillNo { get; set; }
+        public long? CreatedBy { get; set; }
 
     }
     public class PackcagechargesmodelValidator : AbstractValidator<Packcagechargesmodel>

@@ -61,6 +61,7 @@ namespace HIMS.API.Models.OutPatient
         public string? DiscComments { get; set; }
         public decimal? CompDiscAmt { get; set; }
         public long? CashCounterId { get; set; }
+        public long? CreatedBy { get; set; }
     }
     public class IPBilllingModelValidator : AbstractValidator<IPBilllingModel>
     {
