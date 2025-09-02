@@ -24,14 +24,6 @@ namespace HIMS.Data.Models
         public long? AgeDays { get; set; }
         public long? DoctorId { get; set; }
         public string? DoctorName { get; set; }
-        public long? WardId { get; set; }
-        public long? BedId { get; set; }
-        public bool? PatientType { get; set; }
-        public string? CompanyName { get; set; }
-        public decimal? CompanyAmt { get; set; }
-        public decimal? PatientAmt { get; set; }
-        public long? UnitId { get; set; }
-        public long? TariffId { get; set; }
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
@@ -39,6 +31,14 @@ namespace HIMS.Data.Models
         public decimal? BalanceAmt { get; set; }
         public decimal? TotalAdvanceAmount { get; set; }
         public decimal? AdvanceUsedAmount { get; set; }
+        public bool? PatientType { get; set; }
+        public string? CompanyName { get; set; }
+        public decimal? CompanyAmt { get; set; }
+        public decimal? PatientAmt { get; set; }
+        public long? TariffId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public long? UnitId { get; set; }
         public long? CashCounterId { get; set; }
         public long? ConcessionReasonId { get; set; }
         public string? BillPrefix { get; set; }

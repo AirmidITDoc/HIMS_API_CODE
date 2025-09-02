@@ -178,7 +178,24 @@ namespace HIMS.Services.Inventory
             sEntity["NewTariffId"] = NewTariffId;
             odal.ExecuteNonQuery("ps_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
+        public virtual async Task InsertAsyncS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode,  int UserId, string UserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
+            DatabaseHelper odal = new();
+
+            string[] SEntity = { "ServiceDetCompId", "ServiceId", "CompanyCode", "CompanyServicePrint", "IsInclusionOrExclusion", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var Entity = ObjServiceWiseCompanyCode.ToDictionary();
+
+            foreach (var rProperty in SEntity)
+            {
+                Entity.Remove(rProperty);
+            }
+
+             odal.ExecuteNonQuery("ps_insert_ServiceWiseCompanyCode", CommandType.StoredProcedure, Entity);
+             scope.Complete();
+
+        }
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName)
         {
             var qry = from s in _context.ServiceMasters
