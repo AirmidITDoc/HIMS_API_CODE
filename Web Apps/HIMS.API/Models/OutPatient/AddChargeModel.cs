@@ -34,6 +34,8 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPackage { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
         public string ChargesTime { get; set; }
         public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
@@ -55,6 +57,7 @@ namespace HIMS.API.Models.OutPatient
         public string? CompanyServiceName { get; set; }
         public bool? IsInclusionExclusion { get; set; }
         public int? IsHospMrk { get; set; }
+        public long? CreatedBy { get; set; }
         public List<Packcagechargemodel?> Packcagecharges { get; set; }
 
     }
@@ -93,10 +96,15 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
         public long? IsPackage { get; set; }
+        public string? ServiceCode { get; set; }
+        public bool? IsInclusionExclusion { get; set; }
         public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
         public long? PackageMainChargeId { get; set; }
-        public DateTime? ChargesTime { get; set; }
+        public long? CreatedBy { get; set; }
+        public string? ChargesTime { get; set; }
 
     }
     public class PackcagechargemodelValidator : AbstractValidator<Packcagechargemodel>

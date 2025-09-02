@@ -53,7 +53,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? ServiceCode { get; set; }
         public bool? IsInclusionExclusion { get; set; }
         public long UnitId { get; set; }
-
+        public int? WardId { get; set; }
+        public int? BedId { get; set; }
     }
 
 }

@@ -147,7 +147,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("UpdateMaterialAcceptance")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();

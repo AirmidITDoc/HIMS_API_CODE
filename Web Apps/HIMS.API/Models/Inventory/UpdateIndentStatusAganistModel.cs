@@ -66,8 +66,9 @@ namespace HIMS.API.Models.Inventory
     public class IndentHeaderModel
     {
         public long IndentId { get; set; }
-        public bool? IsClosed { get; set; }
-       
+        public bool? Isclosed { get; set; }
+
+
     }
     public class IndentDetailsModel
     {

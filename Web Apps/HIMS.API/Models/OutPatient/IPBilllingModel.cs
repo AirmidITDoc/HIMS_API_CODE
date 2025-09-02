@@ -22,6 +22,20 @@ namespace HIMS.API.Models.OutPatient
     {
         public long? BillNo { get; set; }
         public long? OPDIPDID { get; set; }
+        public long? RegNo { get; set; }
+        public string? PatientName { get; set; }
+        public string? Ipdno { get; set; }
+        public long? AgeYear { get; set; }
+        public long? AgeMonth { get; set; }
+        public long? AgeDays { get; set; }
+        public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public bool? PatientType { get; set; }
+        public string? CompanyName { get; set; }
+        public decimal? CompanyAmt { get; set; }
+        public decimal? PatientAmt { get; set; }
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
@@ -47,7 +61,7 @@ namespace HIMS.API.Models.OutPatient
         public string? DiscComments { get; set; }
         public decimal? CompDiscAmt { get; set; }
         public long? CashCounterId { get; set; }
-
+        public long? CreatedBy { get; set; }
     }
     public class IPBilllingModelValidator : AbstractValidator<IPBilllingModel>
     {

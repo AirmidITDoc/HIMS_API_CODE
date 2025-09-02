@@ -56,6 +56,8 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<AdvanceDetail, AdvancesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Bill, BillDiscountAfterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -342,6 +344,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, TCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentHeader, IndentHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentDetail, IndentDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyCodeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -542,7 +546,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<Payment, OPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bill, OpBillCancellationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, Packcagechargesmodel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-        //    CreateMap<AddCharge, Packcagechargesmodel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+         //   CreateMap<AddCharge, Packcagechargesmodel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

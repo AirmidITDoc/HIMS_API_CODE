@@ -14080,6 +14080,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PurchaseId).HasColumnName("PurchaseID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DiscAmount).HasColumnType("decimal(15, 4)");
 
                 entity.Property(e => e.FreightCharges).HasColumnType("money");
@@ -14093,6 +14095,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsInchVerified).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Prefix).HasMaxLength(20);
 

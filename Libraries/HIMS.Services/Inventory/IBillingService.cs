@@ -29,5 +29,7 @@ namespace HIMS.Services.Inventory
         Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data);
         Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount);
         Task<IPagedList<PackageDetListDto>> GetListAsyncD(GridRequestModel objGrid);
+        Task  InsertAsyncS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string Username);
+
     }
 }

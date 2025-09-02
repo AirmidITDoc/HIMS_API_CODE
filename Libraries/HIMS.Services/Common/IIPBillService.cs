@@ -44,6 +44,9 @@ namespace HIMS.Services.Common
         Task InsertSP(AddCharge objAddCharge, int UserId, string Username);
         Task InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
         Task InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
+
+        Task IPbillAsyncSp(Bill ObjBill,  int UserId, string Username);
+
     }
 }
 
