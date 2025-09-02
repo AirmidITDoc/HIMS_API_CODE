@@ -210,17 +210,10 @@ namespace HIMS.Services.Inventory
                     Tentity.Remove(rProperty);
 
                 }
-
                 odal.ExecuteNonQuery("m_update_AcceptMaterialStock_1", CommandType.StoredProcedure, Tentity);
 
-                scope.Complete();
-
-
-
-
+                 scope.Complete();
             }
-
-
         }
     }
 }
