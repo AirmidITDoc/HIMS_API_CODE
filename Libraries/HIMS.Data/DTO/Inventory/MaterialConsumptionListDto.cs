@@ -17,7 +17,7 @@ namespace HIMS.Data.DTO.Inventory
         public string StoreName { get; set; }
         public decimal LandedTotalAmount { get; set; }
         public string Remark { get; set; }
-        public long AddedBy { get; set; }
+        public string AddedBy { get; set; }
         public long AdmId { get; set; }
 
 
