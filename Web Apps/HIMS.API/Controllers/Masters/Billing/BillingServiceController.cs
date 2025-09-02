@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
         [HttpPut("UpdateDifferTariff")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(DifferTraiffModel obj)
         {
             if (obj.OldTariffId == 0 || obj.NewTariffId == 0)
@@ -127,6 +127,22 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
+        [HttpPost("ServiceWiseCompanyCode")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(ServiceWiseCompanyCodeModel obj)
+        {
+            ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
+            if (obj.TariffId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _BillingService.InsertAsyncS(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
 
         [HttpGet("GetServiceListwithTraiff")]
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, string ServiceName)
