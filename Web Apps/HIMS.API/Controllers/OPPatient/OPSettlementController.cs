@@ -35,6 +35,10 @@ namespace HIMS.API.Controllers.OPPatient
                 model.PaymentTime = Convert.ToDateTime(obj.OPCreditPayment.PaymentTime);
 
                 model.AddBy = CurrentUserId;
+                BillUpdateModel.CreatedBy = CurrentUserId;
+                BillUpdateModel.CreatedDate = DateTime.Now;
+                BillUpdateModel.ModifiedBy = CurrentUserId;
+                BillUpdateModel.ModifiedDate = DateTime.Now;
                 await _OPSettlementService.InsertAsyncSP(model, BillUpdateModel, CurrentUserId, CurrentUserName);
 
             }
