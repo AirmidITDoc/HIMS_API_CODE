@@ -257,7 +257,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPAddchargesdelete")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+       [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPAddchargesdelete(AddChargeDModel obj)
         {
             AddCharge Model = obj.DeleteCharges.MapTo<AddCharge>();
@@ -293,7 +293,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("UpdateAddcharges/{id:int}")]
-       //[Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(UpdateAddchargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -311,7 +311,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertLabRequest")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+       [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertLabRequest(LabRequestsModel obj)
         {
             if (obj.ClassID == 0)
@@ -358,7 +358,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AddBedServiceCharges")]
-      //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(classWiseRateModel obj)
         {
             AddCharge Model = obj.MapTo<AddCharge>();
@@ -377,7 +377,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("ClasswiseRatechange")]
-        //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertC(ClassRateModel obj)
         {
             if (obj.ClassId == 0)
@@ -399,7 +399,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("TariffwiseClassRatechange")]
-        //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertT(TariffwiseClassRatechangeModel obj)
         {
             if (obj.ClassId == 0)
