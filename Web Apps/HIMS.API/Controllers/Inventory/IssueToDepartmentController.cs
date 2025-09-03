@@ -146,8 +146,8 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
         }
 
-        [HttpPut("UpdateMaterialAcceptance")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [HttpPost("UpdateMaterialAcceptance")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
