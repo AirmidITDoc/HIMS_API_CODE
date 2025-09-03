@@ -20,13 +20,18 @@ namespace HIMS.Data.DTO.Inventory
         public long? Isdeleted { get; set; }
         public bool? Isverify { get; set; }
         public bool? Isclosed { get; set; }
+
+        public string? Priority { get; set; }
+        
         public string? DIndentDate { get; set; }
         public string? DIndentTime { get; set; }
 
         public string? Comments { get; set; }
         public bool? IsInchargeVerify { get; set; }
 
-        public bool? Priority { get; set; }
+        public string? VerifyIncharge { get; set; }
+        public string? IsInchargeVerifyId { get; set; }
+        public string? IsInchargeVerifyDate { get; set; }
 
     }
     public class IndentDetailListDto

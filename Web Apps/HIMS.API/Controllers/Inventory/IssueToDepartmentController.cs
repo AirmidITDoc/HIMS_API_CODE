@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("MaterialreceiveddetailList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
         {
             IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
@@ -147,7 +147,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("UpdateMaterialAcceptance")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
@@ -156,7 +156,7 @@ namespace HIMS.API.Controllers.Inventory
 
             if (obj.materialAcceptIssueHeader.IssueId != 0)
             {
-               
+                
                 model.Addedby = CurrentUserId;
 
                 await _IIssueToDepService.Update(model, model1, model3, CurrentUserId, CurrentUserName);
