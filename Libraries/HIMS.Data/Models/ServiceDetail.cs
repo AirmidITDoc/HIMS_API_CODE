@@ -12,5 +12,7 @@ namespace HIMS.Data.Models
         public decimal? ClassRate { get; set; }
         public decimal? DiscountAmount { get; set; }
         public double? DiscountPercentage { get; set; }
+
+        public virtual ServiceMaster? Service { get; set; }
     }
 }
