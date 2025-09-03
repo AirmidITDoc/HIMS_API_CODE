@@ -35,6 +35,8 @@ namespace HIMS.Data.DTO.GRN
         public long? StoreId { get; set; }
         public long? StkId { get; set; }
         public long ReturnQty { get; set; }
+        public float? ReceiveQty { get; set; }
+
 
 
     }
