@@ -9689,6 +9689,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
                 entity.Property(e => e.DiscountAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.ServiceDetails)
+                    .HasForeignKey(d => d.ServiceId)
+                    .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
 
             modelBuilder.Entity<ServiceMaster>(entity =>
