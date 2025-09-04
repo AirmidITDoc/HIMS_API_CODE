@@ -31,7 +31,8 @@ namespace HIMS.API.Extensions
             {
                 string UserToken = GetTokenValue(user, "UserToken");
                 string UserId = GetTokenValue(user, "Id");
-                if (IUserMasterRepository.CheckTokenIsValidAsync(UserId.ToInt(), UserToken) && user.Identity.IsAuthenticated)
+                string LoginType = GetTokenValue(user, "LoginType");
+                if (IUserMasterRepository.CheckTokenIsValidAsync(UserId.ToInt(), UserToken, LoginType) && user.Identity.IsAuthenticated)
                 {
                     isAuthorised = true;
                     if (DateTime.Compare(CommonExtensions.FromUnixTime(long.Parse((user.Identity as ClaimsIdentity).Claims.FirstOrDefault(c => c.Type == "exp").Value)), DateTime.UtcNow) < 0)

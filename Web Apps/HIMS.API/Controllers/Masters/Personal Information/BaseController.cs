@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using HIMS.API.Extensions;
 using HIMS.Core.Infrastructure;
+using HIMS.Api.Models.Login;
 
 namespace HIMS.Api.Controllers
 {
@@ -55,6 +56,27 @@ namespace HIMS.Api.Controllers
                 }
             }
         }
-
+        public LoginType CurrentLoginType
+        {
+            get
+            {
+                if (CurrentUser != null && CurrentUser.HasClaim(c => c.Type == "LoginType"))
+                {
+                    var decryptedValue = EncryptionUtility.DecryptText(CurrentUser.Claims.FirstOrDefault(c => c.Type == "LoginType").Value, SecurityKeys.EnDeKey);
+                    if (int.TryParse(decryptedValue, out int loginTypeInt))
+                    {
+                        return (LoginType)loginTypeInt;
+                    }
+                    else
+                    {
+                        return LoginType.Web;
+                    }
+                }
+                else
+                {
+                    return LoginType.Web;
+                }
+            }
+        }
     }
 }

@@ -30,10 +30,10 @@ namespace HIMS.Services.Users
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-        public virtual bool CheckTokenIsValidAsync(int UserId, string UserToken)
+        public virtual bool CheckTokenIsValidAsync(int UserId, string UserToken, string LoginType)
         {
             var query = from u in _context.LoginManagers
-                        where u.UserToken.ToLower() == UserToken.ToLower() && u.UserId == UserId
+                        where (LoginType == "Mobile" ? u.MobileToken.ToLower() : u.UserToken.ToLower()) == UserToken.ToLower() && u.UserId == UserId
                         select u;
 
             return query.Any();

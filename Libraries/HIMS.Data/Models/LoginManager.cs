@@ -44,6 +44,7 @@ namespace HIMS.Data.Models
         public int? PharOpopt { get; set; }
         public int? PharIpopt { get; set; }
         public string? UserToken { get; set; }
+        public string? MobileToken { get; set; }
         public long? UnitId { get; set; }
         public long? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }

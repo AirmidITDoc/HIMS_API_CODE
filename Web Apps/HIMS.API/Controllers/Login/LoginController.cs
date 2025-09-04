@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Login
                         }
                         else
                         {
-                            return await AfterLogin(user);
+                            return await AfterLogin(user, model.LoginType);
                         }
                     }
                     else
@@ -110,15 +110,18 @@ namespace HIMS.API.Controllers.Login
                 }
                 else
                 {
-                    return await AfterLogin(user);
+                    return await AfterLogin(user, model.LoginType);
                 }
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Token is expired.");
         }
         [NonAction]
-        private async Task<ApiResponse> AfterLogin(LoginManager user)
+        private async Task<ApiResponse> AfterLogin(LoginManager user, LoginType loginType)
         {
-            user.UserToken = Guid.NewGuid().ToString();
+            if (loginType == LoginType.Mobile)
+                user.MobileToken = Guid.NewGuid().ToString();
+            else
+                user.UserToken = Guid.NewGuid().ToString();
             await _userService.UpdateAsync(user, 0, "");
             (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
@@ -127,7 +130,7 @@ namespace HIMS.API.Controllers.Login
                 user.UserToken,
                 user.WebRoleId,
                 Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
-                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
+                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
                 User = user // This includes all fields of the user object
