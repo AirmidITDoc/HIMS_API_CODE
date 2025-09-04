@@ -12063,6 +12063,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IndentTime).HasColumnType("datetime");
 
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.IsInchargeVerify).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsInchargeVerifyDate).HasColumnType("datetime");

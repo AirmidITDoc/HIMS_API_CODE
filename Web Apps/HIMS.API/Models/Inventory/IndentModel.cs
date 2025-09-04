@@ -38,6 +38,8 @@ namespace HIMS.API.Models.Inventory
         public bool? Isclosed { get; set; }
         public long? IndQty { get; set; }
         public long? IssQty { get; set; }
+        public double? VerifiedQty { get; set; }
+
 
     }
     public class IndentDetailModelValidator : AbstractValidator<IndentDetailModel>

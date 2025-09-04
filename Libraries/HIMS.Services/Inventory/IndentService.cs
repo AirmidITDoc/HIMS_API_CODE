@@ -138,6 +138,9 @@ namespace HIMS.Services.Inventory
                 // Update header table records
                 TIndentHeader objind = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
                 objind.Isdeleted = objIndent.Isdeleted;
+                objind.IsCancelledBy=objIndent.IsCancelledBy;
+                objind.IsCancelledDateTime = objIndent.IsCancelledDateTime;
+
                 _context.TIndentHeaders.Update(objind);
                 _context.Entry(objind).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
