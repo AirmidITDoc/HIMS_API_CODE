@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.Grnid);
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.",model.Grnid);
         }
 
         [HttpPost("InsertPO")]
@@ -151,6 +151,23 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
+        }
+
+
+        [HttpPost("GrnInvoiceNocheck")]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(grnInvoicenocheckModel obj)
+        {
+            TGrnheader model = obj.MapTo<TGrnheader>();
+            if (obj.SupplierId != 0)
+            {
+                
+                //model.IsVerifiedDatetime = DateTime.Now.Date;
+                await _IGRNService.AsyncSp(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
     }
 }
