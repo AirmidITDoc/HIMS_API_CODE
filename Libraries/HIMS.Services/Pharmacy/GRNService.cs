@@ -268,7 +268,7 @@ namespace HIMS.Services.Pharmacy
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("[m_Update_GRN_Verify_Status_1]", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("m_Update_GRN_Verify_Status_1", CommandType.StoredProcedure, entity);
 
 
         }
@@ -293,5 +293,27 @@ namespace HIMS.Services.Pharmacy
         //        scope.Complete();
         //    }
         //}
+
+
+
+        public virtual async Task AsyncSp(TGrnheader objGRN, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "Grnid","GrnNumber","IsVerified", "Grndate", "Grntime","DeliveryNo","GateEntryNo","CashCreditType",
+               "Grntype", "TotalAmount", "TotalDiscAmount", "TotalVatamount",  "NetAmount","InvDate",
+                "Remark","ReceivedBy","IsClosed","IsPaymentProcess","PaymentPrcDate","ProcessDes","DebitNote","CreditNote","OtherCharge",
+                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","TotIgstamt",
+                "TranProcessId","TranProcessMode","BillDiscAmt","PaymentDate","EwayBillNo","EwayBillDate","TGrndetails","TSupPayDets"};
+            var entity = objGRN.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_m_grnInvoiceno_check", CommandType.StoredProcedure, entity);
+
+
+        }
+
     }
 }

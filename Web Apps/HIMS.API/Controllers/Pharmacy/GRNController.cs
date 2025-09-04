@@ -152,5 +152,22 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
+
+
+        [HttpPost("GrnInvoiceNocheck")]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(grnInvoicenocheckModel obj)
+        {
+            TGrnheader model = obj.MapTo<TGrnheader>();
+            if (obj.SupplierId != 0)
+            {
+                
+                //model.IsVerifiedDatetime = DateTime.Now.Date;
+                await _IGRNService.AsyncSp(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
     }
 }
