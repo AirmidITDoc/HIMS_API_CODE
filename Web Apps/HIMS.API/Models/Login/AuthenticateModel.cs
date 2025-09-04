@@ -29,7 +29,8 @@ namespace HIMS.Api.Models.Login
     }
     public class RefreshAuthenticateModel
     {
-        public string UserToken { get; set; }
+        public string RefreshToken { get; set; }
+        public string UserId { get; set; }
     }
     public class ForgotPasswordModel
     {

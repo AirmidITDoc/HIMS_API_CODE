@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -133,6 +134,8 @@ namespace HIMS.API.Controllers.Login
                 Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
+                RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
+                DeviceId = loginType == LoginType.Mobile ? EncryptionUtility.EncryptText(user.UserId.ToString(), SecurityKeys.EnDeKey) : null,
                 User = user // This includes all fields of the user object
             });
         }
@@ -208,5 +211,22 @@ namespace HIMS.API.Controllers.Login
             }
             return Ok(new { message = "Logged out successfully." });
         }
+
+        [HttpPost("RefreshToken")]
+        public async Task<ApiResponse> RefreshToken([FromBody] RefreshAuthenticateModel model)
+        {
+            int UserId = EncryptionUtility.DecryptText(model.UserId.ToString(), SecurityKeys.EnDeKey).ToInt();
+            if (UserId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token");
+            }
+            LoginManager user = await _userService.GetById(UserId);
+            if (user != null && user.MobileToken == model.RefreshToken)
+            {
+                return await AfterLogin(user, LoginType.Mobile);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token,Login failed.");
+        }
+
     }
 }
