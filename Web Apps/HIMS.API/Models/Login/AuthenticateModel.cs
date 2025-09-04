@@ -2,13 +2,19 @@ using FluentValidation;
 
 namespace HIMS.Api.Models.Login
 {
-    #pragma warning disable
+#pragma warning disable
     public class AuthenticateModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
         public string CaptchaCode { get; set; }
         public string CaptchaToken { get; set; }
+        public LoginType LoginType { get; set; } = LoginType.Web;
+    }
+    public enum LoginType
+    {
+        Web = 1,
+        Mobile = 2
     }
     public class AuthenticateWith2FAModel
     {
@@ -19,10 +25,12 @@ namespace HIMS.Api.Models.Login
     public class ADAuthenticateModel
     {
         public string Token { get; set; }
+        public LoginType LoginType { get; set; } = LoginType.Web;
     }
     public class RefreshAuthenticateModel
     {
-        public string UserToken { get; set; }
+        public string RefreshToken { get; set; }
+        public string UserId { get; set; }
     }
     public class ForgotPasswordModel
     {

@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -31,6 +32,21 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<GRNDetailsListDto>(model, "Retrieve_GrnItemList");
         }
+
+        public virtual async Task<IPagedList<DirectPOListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DirectPOListDto>(model, "Rtrv_DirectPOList_by_Name");
+        }
+
+        public virtual async Task<IPagedList<InvoiceNoChecListDto>> InvoiceNoChecList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<InvoiceNoChecListDto>(model, "ps_m_grnInvoiceno_check");
+        }
+        public virtual async Task<IPagedList<PoDetailListDto>> GetListAsync1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PoDetailListDto>(model, "m_Rtrv_ItemList_by_Supplier_Name");
+        }
+
         public virtual async Task<TGrnheader> GetById(int Id)
         {
             return await this._context.TGrnheaders.Include(x => x.TGrndetails).FirstOrDefaultAsync(x => x.Grnid == Id);
@@ -310,10 +326,83 @@ namespace HIMS.Services.Pharmacy
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_m_grnInvoiceno_check", CommandType.StoredProcedure, entity);
+              odal.ExecuteNonQuery("ps_m_grnInvoiceno_check", CommandType.StoredProcedure, entity);
 
 
         }
+
+        //public virtual async Task InsertSp(TGrnheader objGRN, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+
+        //    string[] AEntity = { "UpdatedBy", "Prefix", "IsCancelled", "IsPaymentProcess", "PaymentPrcDate", "ProcessDes", "PaymentDate", "PaidAmount", "GrnNumber", "TGrndetails", "BalAmount" };
+        //    var yentity = objGRN.ToDictionary();
+        //    foreach (var rProperty in AEntity) 
+
+        //    {
+        //        yentity.Remove(rProperty);
+        //    }
+        //var Grnid =  odal.ExecuteNonQuery("m_insert_GRNHeader_PurNo_1_New", CommandType.StoredProcedure, "Grnid", yentity);
+
+        ////    string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+        ////    var entity = ObjBill.ToDictionary();
+        ////    foreach (var rProperty in rEntity)
+        ////    {
+        ////        entity.Remove(rProperty);
+        ////    }
+        ////    string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+        ////    ObjBill.BillNo = Convert.ToInt32(vBillNo);
+        ////    //    ObjBillDetails.BillNo = Convert.ToInt32(vBillNo);
+        ////    Objpayment.BillNo = Convert.ToInt32(vBillNo);
+
+        ////    foreach (var item in ObjBillDetails)
+        ////    {
+        ////        item.BillNo = Convert.ToInt32(vBillNo);
+        ////        string[] BillEntity = { "BillDetailId", "BillNoNavigation" };
+        ////        var Bentity = item.ToDictionary();
+        ////        foreach (var rProperty in BillEntity)
+        ////        {
+        ////            Bentity.Remove(rProperty);
+        ////        }
+        ////        odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+        ////    }
+        ////    string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+        ////    var entity1 = Objpayment.ToDictionary();
+        ////    foreach (var rProperty in pEntity)
+        ////    {
+        ////        entity1.Remove(rProperty);
+        ////    }
+        ////    odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, entity1);
+        ////}
+        ////public virtual async Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
+        ////{
+
+        ////    DatabaseHelper odal = new();
+        ////    string[] rEntity = { "IsCancelled", "PbillNo", "CashCounterId", "AdvanceUsedAmount" };
+        ////    var entity = ObjTDrbill.ToDictionary();
+        ////    foreach (var rProperty in rEntity)
+        ////    {
+        ////        entity.Remove(rProperty);
+        ////    }
+        ////    string vDRBNo = odal.ExecuteNonQuery("ps_insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
+        ////    ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
+
+
+        ////    foreach (var item in ObjTDrbillDetList)
+        ////    {
+        ////        item.Drno = Convert.ToInt32(vDRBNo);
+        ////        string[] TEntity = { "DrbillDetId", };
+        ////        var Dentity = item.ToDictionary();
+        ////        foreach (var rProperty in TEntity)
+        ////        {
+        ////            Dentity.Remove(rProperty);
+        ////        }
+        ////        odal.ExecuteNonQuery("ps_insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
+        ////    }
+
+        //}
+
 
     }
 }

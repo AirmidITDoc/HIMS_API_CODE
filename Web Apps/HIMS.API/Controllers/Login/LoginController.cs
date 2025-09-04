@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -80,7 +81,7 @@ namespace HIMS.API.Controllers.Login
                         }
                         else
                         {
-                            return await AfterLogin(user);
+                            return await AfterLogin(user, model.LoginType);
                         }
                     }
                     else
@@ -110,15 +111,18 @@ namespace HIMS.API.Controllers.Login
                 }
                 else
                 {
-                    return await AfterLogin(user);
+                    return await AfterLogin(user, model.LoginType);
                 }
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Token is expired.");
         }
         [NonAction]
-        private async Task<ApiResponse> AfterLogin(LoginManager user)
+        private async Task<ApiResponse> AfterLogin(LoginManager user, LoginType loginType)
         {
-            user.UserToken = Guid.NewGuid().ToString();
+            if (loginType == LoginType.Mobile)
+                user.MobileToken = Guid.NewGuid().ToString();
+            else
+                user.UserToken = Guid.NewGuid().ToString();
             await _userService.UpdateAsync(user, 0, "");
             (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
@@ -127,9 +131,11 @@ namespace HIMS.API.Controllers.Login
                 user.UserToken,
                 user.WebRoleId,
                 Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
-                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString),
+                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
+                RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
+                DeviceId = loginType == LoginType.Mobile ? EncryptionUtility.EncryptText(user.UserId.ToString(), SecurityKeys.EnDeKey) : null,
                 User = user // This includes all fields of the user object
             });
         }
@@ -205,5 +211,22 @@ namespace HIMS.API.Controllers.Login
             }
             return Ok(new { message = "Logged out successfully." });
         }
+
+        [HttpPost("RefreshToken")]
+        public async Task<ApiResponse> RefreshToken([FromBody] RefreshAuthenticateModel model)
+        {
+            int UserId = EncryptionUtility.DecryptText(model.UserId.ToString(), SecurityKeys.EnDeKey).ToInt();
+            if (UserId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token");
+            }
+            LoginManager user = await _userService.GetById(UserId);
+            if (user != null && user.MobileToken == model.RefreshToken)
+            {
+                return await AfterLogin(user, LoginType.Mobile);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token,Login failed.");
+        }
+
     }
 }
