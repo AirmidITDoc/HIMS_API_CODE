@@ -22,13 +22,12 @@ namespace HIMS.Services.Pharmacy
         }
         public virtual async Task<IPagedList<OpeningBalListDto>> GetOpeningBalanceList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OpeningBalListDto>(model, "m_Rtrv_OpeningItemList");
+            return await DatabaseHelper.GetGridDataBySp<OpeningBalListDto>(model, "ps_Rtrv_OpeningItemList");
         }
         public virtual async Task<IPagedList<OpeningBalanaceItemDetailListDto>> GetOPningBalItemDetailList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OpeningBalanaceItemDetailListDto>(model, "m_Rtrv_OpeningItemDet");
+            return await DatabaseHelper.GetGridDataBySp<OpeningBalanaceItemDetailListDto>(model, "ps_Rtrv_OpeningItemDet");
         }
-
 
 
         public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransaction> ObjTOpeningTransaction, int UserId, string UserName)
