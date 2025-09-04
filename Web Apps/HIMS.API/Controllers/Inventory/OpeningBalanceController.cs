@@ -40,15 +40,15 @@ namespace HIMS.API.Controllers.Inventory
 
         // changes done by Subhash -- Date : 19 May 2025
         [HttpPost("OpeningBalanceSave")]
-        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
             TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
-            List<TOpeningTransaction> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransaction>>();
-            if (obj.OpeningBal.OpeningHId == 0)
+            List<TOpeningTransactionDetail> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransactionDetail>>();
+
+            if (obj.OpeningBal.OpeningHid == 0)
             {
-                Model.AddedBy = CurrentUserId;
-                Model.UpdatedBy = CurrentUserId;
+                Model.CreatedBy = CurrentUserId;
                 await _IOpeningBalanceService.OpeningBalAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else

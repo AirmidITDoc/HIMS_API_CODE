@@ -30,31 +30,31 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-        public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransaction> ObjTOpeningTransaction, int UserId, string UserName)
+        public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
 
-            string[] AEntity = { "OpeningDocNo", "UpdatedBy",  "OpeningHid", "OPeningHId" };
+            string[] AEntity = { "OpeningDocNo", "CreatedDate", "ModifiedDate", "ModifiedBy" };
 
             var yentity = ObjTOpeningTransactionHeader.ToDictionary();
             foreach (var rProperty in AEntity)
             {
                 yentity.Remove(rProperty);
             }
-            string BOpeningHId = odal.ExecuteNonQuery("Insert_OpeningTransaction_header_1", CommandType.StoredProcedure, "OpeningHId",yentity);
+            string BOpeningHId = odal.ExecuteNonQuery("ps_Insert_OpeningTransaction_header_1", CommandType.StoredProcedure, "OpeningHid", yentity);
             ObjTOpeningTransactionHeader.OpeningHid = Convert.ToInt32(BOpeningHId);
-            
+
             foreach (var item in ObjTOpeningTransaction)
             {
-                item.OpeningDocNo = ObjTOpeningTransactionHeader.OpeningHid;
+                item.OpeningId = ObjTOpeningTransactionHeader.OpeningHid;
                 string[] rEntity = { "OpeningId" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("Insert_OpeningTransaction_1", CommandType.StoredProcedure, entity);
+                odal.ExecuteNonQuery("ps_Insert_OpeningTransaction_1", CommandType.StoredProcedure, entity);
             }
             var OpeningIdObj = new
             {
@@ -62,5 +62,6 @@ namespace HIMS.Services.Pharmacy
             };
             odal.ExecuteNonQuery("Insert_Update_OpeningTran_ItemStock_1", CommandType.StoredProcedure, OpeningIdObj.ToDictionary());
         }
+
     }
 }

@@ -455,7 +455,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TNursingSugarLevel> TNursingSugarLevels { get; set; } = null!;
         public virtual DbSet<TNursingVital> TNursingVitals { get; set; } = null!;
         public virtual DbSet<TNursingWeight> TNursingWeights { get; set; } = null!;
-        public virtual DbSet<TOpeningTransaction> TOpeningTransactions { get; set; } = null!;
+        public virtual DbSet<TOpeningTransactionDetail> TOpeningTransactionDetails { get; set; } = null!;
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
@@ -13208,27 +13208,34 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Reason).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<TOpeningTransaction>(entity =>
+            modelBuilder.Entity<TOpeningTransactionDetail>(entity =>
             {
-                entity.HasKey(e => e.OpeningId);
+                entity.HasKey(e => e.OpeningId)
+                    .HasName("PK_T_OpeningTransaction");
 
-                entity.ToTable("T_OpeningTransaction");
+                entity.ToTable("T_OpeningTransactionDetails");
 
                 entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
 
                 entity.Property(e => e.BatchNo).HasMaxLength(50);
 
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.Gstper).HasColumnName("GSTPer");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
                 entity.Property(e => e.OpeningDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpeningTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PerUnitLandedRate).HasColumnType("money");
 
                 entity.Property(e => e.PerUnitMrp).HasColumnType("money");
 
                 entity.Property(e => e.PerUnitPurRate).HasColumnType("money");
 
-                entity.Property(e => e.StoreId)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
             });
 
             modelBuilder.Entity<TOpeningTransactionHeader>(entity =>
@@ -13236,9 +13243,13 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.OpeningHid)
                     .HasName("PK_T_OpeningTransaction_1");
 
-                entity.ToTable("T_OpeningTransaction_Header");
+                entity.ToTable("T_OpeningTransactionHeader");
 
                 entity.Property(e => e.OpeningHid).HasColumnName("OpeningHId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpeningDate).HasColumnType("datetime");
 

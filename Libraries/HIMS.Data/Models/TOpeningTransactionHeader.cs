@@ -10,7 +10,9 @@ namespace HIMS.Data.Models
         public string? StoreId { get; set; }
         public DateTime? OpeningDate { get; set; }
         public DateTime? OpeningTime { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }

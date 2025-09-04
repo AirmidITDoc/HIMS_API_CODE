@@ -1,28 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.Purchase
+namespace HIMS.Data.Models
 {
-    public class OpeningBalHeaderModel
+    public partial class TOpeningTransactionDetail
     {
-        public long StoreId { get; set; }
-        public DateTime OpeningDate { get; set; }
-        public string OpeningTime { get; set; }
-        public long CreatedBy { get; set; }
-        public long OpeningHid { get; set; }
-
-
-    }
-
-
-    public class OpeningTransactionDetails
-    {
+        public long OpeningId { get; set; }
         public long? StoreId { get; set; }
         public DateTime? OpeningDate { get; set; }
-        public string? OpeningTime { get; set; }
+        public DateTime? OpeningTime { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -36,12 +22,5 @@ namespace HIMS.Data.DTO.Purchase
         public float? BalQty { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
-    }
-
-    public class OpeningBalanceModel
-    {
-        public OpeningBalHeaderModel OpeningBal { get; set; }
-        public List<OpeningTransactionDetails> OpeningTransaction { get; set; }
-
     }
 }
