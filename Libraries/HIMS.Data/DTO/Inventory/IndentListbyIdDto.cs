@@ -16,7 +16,7 @@ namespace HIMS.Data.DTO.Inventory
         public long? ToStoreId { get; set; }
         public string? Addedby { get; set; }
         public string? Comments { get; set; }
-        public long? Isdeleted { get; set; }
+        public bool? Isdeleted { get; set; }
         public bool? Isverify { get; set; }
         public bool? Isclosed { get; set; }
         public string? DIndentDate { get; set; }
