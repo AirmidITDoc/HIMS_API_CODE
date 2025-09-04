@@ -123,7 +123,7 @@ namespace HIMS.Services.Inventory
         //shilpa created 23/05/2025
         public virtual async Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             // //Add header table records
             DatabaseHelper odal = new();
@@ -172,7 +172,6 @@ namespace HIMS.Services.Inventory
                 }
 
                 odal.ExecuteNonQuery("PS_Update_Indent_Status_AganistIss", CommandType.StoredProcedure, STentity);
-                scope.Complete();
 
             }
         }
