@@ -8,17 +8,17 @@ namespace HIMS.Data.DTO.Purchase
 {
     public class OpeningBalanaceItemDetailListDto
     {
-        public long OpeningHId { get; set; }
-
-        public String? ItemName { get; set; }
-
-        public String? BatchNo { get; set; }
-        public String? BatchExpDate { get; set; }
+        public string? ItemName { get; set; }
+        public string? BatchNo { get; set; }
+        public string? BatchExpDate { get; set; }
         public decimal? PerUnitPurRate { get; set; }
+        public decimal PerUnitLandedRate { get; set; }
         public decimal? PerUnitMrp { get; set; }
-        public double? VatPer { get; set; }
-
-        public float? Qty { get; set; }
+        public float  CGSTPer { get; set; }
+        public float  SGSTPer { get; set; }
+        public float IGSTPer { get; set; }
+        public double Gstper { get; set; }
+        public float BalQty { get; set; }
 
 
     }

@@ -114,7 +114,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         
-        [HttpDelete("Cancel")]
+        [HttpPost("Cancel")]
         [Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(IndentCancel obj)
         {

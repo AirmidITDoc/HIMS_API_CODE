@@ -2,6 +2,7 @@ using AutoMapper;
 using ClosedXML.Excel;
 using CsvHelper;
 using HIMS.Api.Models.Common;
+using HIMS.Api.Models.Login;
 using HIMS.API.Models.Common;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -294,7 +295,7 @@ namespace HIMS.API.Extensions
             return dynamicDt;
         }
 
-        public static string GenerateToken(LoginManager user, string Secret, int Minutes, string permissions)
+        public static string GenerateToken(LoginManager user, string Secret, int Minutes, string permissions, LoginType loginType)
         {
             JwtSecurityTokenHandler tokenHandler = new();
             byte[] key = Encoding.ASCII.GetBytes(Secret);
@@ -303,11 +304,12 @@ namespace HIMS.API.Extensions
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                    new("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
-                   new("UserToken",EncryptionUtility.EncryptText(user.UserToken,SecurityKeys.EnDeKey)),
+                   new("UserToken",EncryptionUtility.EncryptText(loginType==LoginType.Mobile?user.MobileToken: user.UserToken,SecurityKeys.EnDeKey)),
                    new("Permissions",EncryptionUtility.EncryptText(permissions,SecurityKeys.EnDeKey)),
                    new("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
                    new("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
-                   new("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey))
+                   new("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey)),
+                   new("LoginType",EncryptionUtility.EncryptText(loginType.ToString(),SecurityKeys.EnDeKey))
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Minutes <= 0 ? 30 : Minutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
