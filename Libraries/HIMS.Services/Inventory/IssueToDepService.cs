@@ -172,9 +172,10 @@ namespace HIMS.Services.Inventory
                 }
 
                 odal.ExecuteNonQuery("PS_Update_Indent_Status_AganistIss", CommandType.StoredProcedure, STentity);
-                scope.Complete();
 
             }
+            scope.Complete();
+
         }
         public virtual async Task Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {

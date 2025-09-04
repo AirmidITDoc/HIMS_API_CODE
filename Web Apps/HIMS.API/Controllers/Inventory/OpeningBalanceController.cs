@@ -9,7 +9,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.Pharmacy
+namespace HIMS.API.Controllers.Inventory
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<OpeningBalListDto> List1 = await _IOpeningBalanceService.GetOpeningBalanceList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Opening Balance List"));
         }
-        
+
 
         [HttpPost("OpeningBalnceItemDetailList")]
         [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
@@ -43,13 +43,13 @@ namespace HIMS.API.Controllers.Pharmacy
         [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
-           TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
-           List<TOpeningTransaction> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransaction>>();
+            TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
+            List<TOpeningTransaction> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransaction>>();
             if (obj.OpeningBal.OpeningHId == 0)
             {
                 Model.AddedBy = CurrentUserId;
                 Model.UpdatedBy = CurrentUserId;
-                await _IOpeningBalanceService.OpeningBalAsyncSp( Model, Models,CurrentUserId, CurrentUserName);
+                await _IOpeningBalanceService.OpeningBalAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

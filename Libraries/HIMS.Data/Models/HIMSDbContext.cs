@@ -9689,6 +9689,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
                 entity.Property(e => e.DiscountAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.ServiceDetails)
+                    .HasForeignKey(d => d.ServiceId)
+                    .HasConstraintName("FK_ServiceDetail_ServiceMaster");
             });
 
             modelBuilder.Entity<ServiceMaster>(entity =>
@@ -12058,6 +12063,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IndentTime).HasColumnType("datetime");
 
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.IsInchargeVerify).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsInchargeVerifyDate).HasColumnType("datetime");
@@ -14080,6 +14087,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PurchaseId).HasColumnName("PurchaseID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DiscAmount).HasColumnType("decimal(15, 4)");
 
                 entity.Property(e => e.FreightCharges).HasColumnType("money");
@@ -14093,6 +14102,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsInchVerified).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Prefix).HasMaxLength(20);
 

@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-    //    [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);

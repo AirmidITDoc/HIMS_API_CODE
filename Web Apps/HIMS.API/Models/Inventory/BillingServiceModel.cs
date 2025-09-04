@@ -58,12 +58,14 @@ namespace HIMS.API.Models.Inventory
         }
         public class ServiceDetailModel
         {
-            public long ServiceDetailId { get; set; }
-            public long? ServiceId { get; set; }
-            public long? TariffId { get; set; }
-            public long? ClassId { get; set; }
-            public decimal? ClassRate { get; set; }
-        }
+        public long ServiceDetailId { get; set; }
+        public long? ServiceId { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
+        public decimal? ClassRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        public double? DiscountPercentage { get; set; }
+    }
         public class ServiceDetailModelValidator : AbstractValidator<ServiceDetailModel>
         {
             public ServiceDetailModelValidator()

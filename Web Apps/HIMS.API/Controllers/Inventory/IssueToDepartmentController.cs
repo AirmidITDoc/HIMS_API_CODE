@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("MaterialreceiveddetailList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
         {
             IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
@@ -146,7 +146,8 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
         }
 
-        [HttpPut("UpdateMaterialAcceptance")]
+      
+        [HttpPost("UpdateMaterialAcceptance")]
         [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
         {
@@ -156,7 +157,7 @@ namespace HIMS.API.Controllers.Inventory
 
             if (obj.materialAcceptIssueHeader.IssueId != 0)
             {
-               
+                
                 model.Addedby = CurrentUserId;
 
                 await _IIssueToDepService.Update(model, model1, model3, CurrentUserId, CurrentUserName);

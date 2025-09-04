@@ -14,6 +14,7 @@ namespace HIMS.Data.DTO.Inventory
         public DateTime? BatchExpDate { get; set; }
         public double? IssueQty { get; set; }
         public long? IssueId { get; set; }
+                
         public decimal? PerUnitLandedRate { get; set; }
         public double? VatPercentage { get; set; }
         public decimal? LandedTotalAmount { get; set; }

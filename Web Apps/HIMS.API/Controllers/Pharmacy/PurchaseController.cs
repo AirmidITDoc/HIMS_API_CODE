@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseService = repository;
         }
         [HttpPost("PurchaseOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseItemList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
@@ -67,7 +67,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -78,11 +78,14 @@ namespace HIMS.API.Controllers.Pharmacy
                 //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
                 model.PurchaseTime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
-                model.UpdatedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PurchaseId);
         }
 
@@ -98,6 +101,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 model.PurchaseTime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.PurchaseId);
