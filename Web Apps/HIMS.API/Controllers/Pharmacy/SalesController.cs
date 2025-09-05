@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -363,7 +364,21 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+        [HttpPost("PhBillDiscountAfter")]
+        //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP1(PhBillDiscountAfterModel obj)
+        {
 
+            TSalesHeader Model = obj.MapTo<TSalesHeader>();
+            if (obj.SalesId != 0)
+            {
+
+                await _ISalesService.InsertSP1(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated  successfully.");
+        }
     }
 
 }

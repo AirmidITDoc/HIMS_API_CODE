@@ -574,6 +574,25 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("m_update_T_PHAdvanceHeader_1", CommandType.StoredProcedure, Nentity);
 
         }
+
+        public virtual async Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "UpdatedBy", "IsCancelled", "TSalesDetails",
+            "AddedBy","BedId","ConcessionAuthorizationId","CreditReason","CreditReasonId","Date","DiscperH","DoctorName","ExtAddress","ExternalPatientName","ExtMobileNo","IsBillCheck",
+                "IsFree","IsPrescription","IsPrint","IsPurBill","NetPayableAmt","IsSellted","OpIpId","OpIpType","PaidAmount","RoundOff","SalesHeadName","SalesTypeId","StoreId","Time","TotalAmount",
+                "UnitId","VatAmount","WardId"};
+            var entity = ObjTSalesHeader.ToDictionary();
+
+            foreach (var rProperty in AEntity)
+            {
+                entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("m_Update_PhBillDiscountAfter", CommandType.StoredProcedure, entity);
+
+        }
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
