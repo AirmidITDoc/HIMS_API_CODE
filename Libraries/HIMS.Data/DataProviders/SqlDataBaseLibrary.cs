@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Reflection;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using LinqToDB.Data;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Reflection;
 
 namespace HIMS.Data.DataProviders
 {
@@ -18,6 +19,54 @@ namespace HIMS.Data.DataProviders
         public SqlBulkCopy? bulkCopy;
         public bool HasError { get; set; } = false;
 
+        // Added by vimal on 05/09/2025 => add transactions for multiple operations between ADO.net & entity framework.
+        #region :: Traction Operations ::
+        private DbConnection _connection;
+        private DbTransaction _transaction;
+
+        public void SetConnection(DbConnection connection)
+        {
+            _connection = connection;
+        }
+
+        public void SetTransaction(DbTransaction transaction)
+        {
+            _transaction = transaction;
+        }
+       
+        public string ExecuteNonQueryNew(string storedProcName, CommandType cmdType, string outputParamName, Dictionary<string, object> parameters)
+        {
+            using var cmd = _connection.CreateCommand();
+            cmd.CommandText = storedProcName;
+            cmd.CommandType = cmdType;
+            cmd.Transaction = _transaction; //ensure same transaction
+
+            var outputParam = cmd.CreateParameter();
+            if (parameters != null)
+            {
+                // Handle output param (if any)
+                if (!string.IsNullOrWhiteSpace(outputParamName))
+                {
+                    outputParam.ParameterName = "@" + outputParamName;
+                    outputParam.Direction = ParameterDirection.Output;
+                    outputParam.DbType = DbType.Int32;
+                    cmd.Parameters.Add(outputParam);
+                    parameters.Remove(outputParamName);
+                }
+                foreach (var kvp in parameters.Where(x => x.Value != null))
+                {
+                    var param = cmd.CreateParameter();
+                    param.ParameterName = "@" + kvp.Key;
+                    param.Value = kvp.Value ?? DBNull.Value;
+                    cmd.Parameters.Add(param);
+                }
+            }
+            cmd.ExecuteNonQuery();
+            return outputParam.Value?.ToString();
+
+        }
+
+        #endregion
         public DatabaseHelper()
         {
             objConnection = new SqlConnection(ConnectionStrings.MainDbConnectionString);
