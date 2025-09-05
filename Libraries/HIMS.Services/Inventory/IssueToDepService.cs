@@ -181,7 +181,7 @@ namespace HIMS.Services.Inventory
         {
             // //Add header table records
             {
-                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+                //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 DatabaseHelper odal = new();
                 string[] SEntity = { "IssueNo", "IssueDate", "IssueTime", "FromStoreId", "ToStoreId", "TotalAmount", "TotalVatAmount", "NetAmount", "Remark", "Receivedby", "Addedby", "Updatedby", "IsVerified", "IsClosed", "IndentId", "AcceptedDatetime", "TIssueToDepartmentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var Sntity = ObjTIssueToDepartmentHeader.ToDictionary();
@@ -213,7 +213,6 @@ namespace HIMS.Services.Inventory
                 }
                 odal.ExecuteNonQuery("m_update_AcceptMaterialStock_1", CommandType.StoredProcedure, Tentity);
 
-                 scope.Complete();
             }
         }
     }
