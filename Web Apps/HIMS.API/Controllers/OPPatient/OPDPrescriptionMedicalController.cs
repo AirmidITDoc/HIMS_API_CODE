@@ -128,13 +128,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(List.ToGridResponse(objGrid, "OP Rtrv Dignosis  List"));
         }
 
-        //[HttpGet("GetDescriptionType")]
-        //public async Task<ApiResponse> GetDescriptionType(int Id, string DescriptionType)
-        //{
-        //    //var resultList = await _OPDPrescriptionService.GetOPrtrvDignosisList(DescriptionType);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList");
-        //}
-
+      
         [HttpGet("GetDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
@@ -180,7 +174,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PrescriptionInsertSP")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
             List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();

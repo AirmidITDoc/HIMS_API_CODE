@@ -46,6 +46,8 @@ namespace HIMS.Data.DTO.Administration
         public long? DoseOption3 { get; set; }
         public long? DoseNameOption3 { get; set; }
         public long? DaysOption3 { get; set; }
+        public string? Allergy { get; set; }
+        public string? BloodGroup { get; set; }
     }
 }
 		

@@ -43,6 +43,8 @@ namespace HIMS.API.Models.OutPatient
         public long? PatientReferDocId { get; set; }
         public string? Advice { get; set; }
         public long? IsAddBy { get; set; }
+        public string? Allergy { get; set; }
+        public string? BloodGroup { get; set; }
 
 
     }
