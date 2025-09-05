@@ -43,7 +43,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? Email { get; set; }
         public string? Mobile { get; set; }
         public string? EditSupplier { get; set; }
-        public string? GRNDetID { get; set; }
+
 
 
     }

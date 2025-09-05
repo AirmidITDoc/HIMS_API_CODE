@@ -49,6 +49,6 @@ namespace HIMS.Services.Users
 
         Task InsertAsync(List<Payment> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
 
-
+        Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
     }
 }
