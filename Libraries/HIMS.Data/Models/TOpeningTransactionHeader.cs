@@ -7,12 +7,12 @@ namespace HIMS.Data.Models
     {
         public long OpeningHid { get; set; }
         public string? OpeningDocNo { get; set; }
-        public string? StoreId { get; set; }
+        public long? StoreId { get; set; }
         public DateTime? OpeningDate { get; set; }
         public DateTime? OpeningTime { get; set; }
-        public int? CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 }

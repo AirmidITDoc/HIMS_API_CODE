@@ -38,7 +38,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MCampMaster, CampMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfig, MReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //      CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-                  CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAutoServiceList, MAutoServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MAutoServiceList, AutoServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingVital, NursingVitalsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -53,11 +53,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TNursingWeight, TNursingWeightDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingOrygenVentilator, TNursingOrygenVentilatorDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-
             CreateMap<AdvanceDetail, AdvancesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bill, BillDiscountAfterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-        //    CreateMap<TGrnheader, grnInvoicenocheckModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TGrnheader, grnInvoicenocheckModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TGrnheader, GRNDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, PhBillDiscountAfterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -65,7 +63,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-
+            
 
             CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

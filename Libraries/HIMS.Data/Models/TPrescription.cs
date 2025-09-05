@@ -29,6 +29,8 @@ namespace HIMS.Data.Models
         public string? ChiefComplaint { get; set; }
         public string? Diagnosis { get; set; }
         public string? Examination { get; set; }
+        public string? Allergy { get; set; }
+        public string? BloodGroup { get; set; }
         public string? Height { get; set; }
         public string? Pweight { get; set; }
         public string? Bmi { get; set; }

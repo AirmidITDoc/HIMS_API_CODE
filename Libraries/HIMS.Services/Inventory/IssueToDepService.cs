@@ -89,7 +89,7 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task<IPagedList<MateralreceivedbyDeptLstDto>> GetMaterialrecivedbydeptList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MateralreceivedbyDeptLstDto>(model, "m_Rtrv_ReceiveIssueToDep_list_by_Name");
+            return await DatabaseHelper.GetGridDataBySp<MateralreceivedbyDeptLstDto>(model, "ps_Rtrv_ReceiveIssueToDep_list_by_Name");
         }
 
         public virtual async Task<IPagedList<MaterialrecvedbydepttemdetailslistDto>> GetRecceivedItemListAsync(GridRequestModel model)
@@ -181,7 +181,7 @@ namespace HIMS.Services.Inventory
         {
             // //Add header table records
             {
-                using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+                //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 DatabaseHelper odal = new();
                 string[] SEntity = { "IssueNo", "IssueDate", "IssueTime", "FromStoreId", "ToStoreId", "TotalAmount", "TotalVatAmount", "NetAmount", "Remark", "Receivedby", "Addedby", "Updatedby", "IsVerified", "IsClosed", "IndentId", "AcceptedDatetime", "TIssueToDepartmentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var Sntity = ObjTIssueToDepartmentHeader.ToDictionary();
@@ -213,7 +213,6 @@ namespace HIMS.Services.Inventory
                 }
                 odal.ExecuteNonQuery("m_update_AcceptMaterialStock_1", CommandType.StoredProcedure, Tentity);
 
-                 scope.Complete();
             }
         }
     }

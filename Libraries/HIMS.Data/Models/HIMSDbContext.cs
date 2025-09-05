@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -473,7 +473,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPaymentCanteen> TPaymentCanteens { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
         public virtual DbSet<TPhRefund> TPhRefunds { get; set; } = null!;
-        public virtual DbSet<TPhRefundBkp22Feb2022> TPhRefundBkp22Feb2022s { get; set; } = null!;
         public virtual DbSet<TPhSm> TPhSms { get; set; } = null!;
         public virtual DbSet<TPhadvRefundDetail> TPhadvRefundDetails { get; set; } = null!;
         public virtual DbSet<TPhadvanceDetail> TPhadvanceDetails { get; set; } = null!;
@@ -13258,10 +13257,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpeningDocNo).HasMaxLength(50);
 
                 entity.Property(e => e.OpeningTime).HasColumnType("datetime");
-
-                entity.Property(e => e.StoreId)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
             });
 
             modelBuilder.Entity<TOpinvAdviceList>(entity =>
@@ -13740,31 +13735,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Remark).HasMaxLength(200);
             });
 
-            modelBuilder.Entity<TPhRefundBkp22Feb2022>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_PhRefund_bkp22Feb2022");
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
-
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
-
-                entity.Property(e => e.RefundAmount).HasColumnType("money");
-
-                entity.Property(e => e.RefundDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RefundId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.RefundNo).HasMaxLength(20);
-
-                entity.Property(e => e.RefundTime).HasColumnType("datetime");
-
-                entity.Property(e => e.Remark).HasMaxLength(200);
-            });
-
             modelBuilder.Entity<TPhSm>(entity =>
             {
                 entity.HasKey(e => e.PhSmId);
@@ -13987,6 +13957,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_Prescription");
 
                 entity.Property(e => e.Advice).HasMaxLength(500);
+
+                entity.Property(e => e.Allergy).HasMaxLength(50);
+
+                entity.Property(e => e.BloodGroup).HasMaxLength(50);
 
                 entity.Property(e => e.Bmi)
                     .HasMaxLength(20)

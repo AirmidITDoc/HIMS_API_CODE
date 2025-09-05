@@ -6,6 +6,7 @@ namespace HIMS.Data.Models
     public partial class TOpeningTransactionDetail
     {
         public long OpeningId { get; set; }
+        public long? OpeningHeaderId { get; set; }
         public long? StoreId { get; set; }
         public DateTime? OpeningDate { get; set; }
         public DateTime? OpeningTime { get; set; }
