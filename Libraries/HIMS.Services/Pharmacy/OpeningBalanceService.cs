@@ -45,9 +45,12 @@ namespace HIMS.Services.Pharmacy
             string BOpeningHId = odal.ExecuteNonQuery("ps_Insert_OpeningTransaction_header_1", CommandType.StoredProcedure, "OpeningHid", yentity);
             ObjTOpeningTransactionHeader.OpeningHid = Convert.ToInt32(BOpeningHId);
 
+
             foreach (var item in ObjTOpeningTransaction)
             {
                 item.OpeningId = ObjTOpeningTransactionHeader.OpeningHid;
+                item.OpeningHeaderId = Convert.ToInt32(BOpeningHId);
+
                 string[] rEntity = { "OpeningId" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)

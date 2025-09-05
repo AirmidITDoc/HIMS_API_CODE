@@ -20,6 +20,7 @@ namespace HIMS.Data.DTO.Purchase
 
     public class OpeningTransactionDetails
     {
+        public long? OpeningHeaderId { get; set; }
         public long? StoreId { get; set; }
         public DateTime? OpeningDate { get; set; }
         public string? OpeningTime { get; set; }
