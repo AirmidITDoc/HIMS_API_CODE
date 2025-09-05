@@ -21,6 +21,7 @@ namespace HIMS.API.Controllers.Inventory
         {
             _IOpeningBalanceService = repository;
         }
+
         [HttpPost("OpeningBalanceList")]
         //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
