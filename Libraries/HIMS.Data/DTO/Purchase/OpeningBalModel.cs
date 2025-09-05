@@ -11,7 +11,7 @@ namespace HIMS.Data.DTO.Purchase
         public long StoreId { get; set; }
         public DateTime OpeningDate { get; set; }
         public string OpeningTime { get; set; }
-        public long CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
         public long OpeningHid { get; set; }
 
 

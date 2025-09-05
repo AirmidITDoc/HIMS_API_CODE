@@ -22,7 +22,7 @@ namespace HIMS.API.Controllers.Inventory
             _IOpeningBalanceService = repository;
         }
         [HttpPost("OpeningBalanceList")]
-        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalListDto> List1 = await _IOpeningBalanceService.GetOpeningBalanceList(objGrid);
@@ -49,6 +49,7 @@ namespace HIMS.API.Controllers.Inventory
             if (obj.OpeningBal.OpeningHid == 0)
             {
                 Model.CreatedBy = CurrentUserId;
+                Model.OpeningDate= Convert.ToDateTime(Model.OpeningDate);
                 await _IOpeningBalanceService.OpeningBalAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else

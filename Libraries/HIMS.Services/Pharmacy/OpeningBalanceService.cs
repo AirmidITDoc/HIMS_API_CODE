@@ -60,7 +60,7 @@ namespace HIMS.Services.Pharmacy
             {
                 OPeningHId = Convert.ToInt32(BOpeningHId)
             };
-            odal.ExecuteNonQuery("Insert_Update_OpeningTran_ItemStock_1", CommandType.StoredProcedure, OpeningIdObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Insert_Update_OpeningTran_ItemStock_1", CommandType.StoredProcedure, OpeningIdObj.ToDictionary());
         }
 
     }
