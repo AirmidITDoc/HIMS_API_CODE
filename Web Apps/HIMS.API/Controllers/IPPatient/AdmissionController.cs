@@ -65,20 +65,20 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP(NewAdmission obj)
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        public ApiResponse InsertSP(AdmissionRegistered obj)
         {
-            Registration model = obj.AdmissionReg.MapTo<Registration>();
-            Admission objAdmission = obj.Admission.MapTo<Admission>();
-            if (obj.AdmissionReg.RegId == 0)
+            //Registration model = obj.AdmissionReg.MapTo<Registration>();
+            Admission model = obj.Admission.MapTo<Admission>();
+            if (model.RegId != 0)
             {
-                model.RegTime = Convert.ToDateTime(obj.AdmissionReg.RegTime);
+                model.AdmissionTime = Convert.ToDateTime(model.AdmissionTime);
                 model.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objAdmission.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AdmissionId);
         }
 
 
@@ -110,6 +110,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated successfully.", objAdmission.AdmissionId);
         }
+
         [HttpGet("search-patient")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)

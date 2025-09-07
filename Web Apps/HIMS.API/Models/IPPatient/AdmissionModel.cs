@@ -122,6 +122,11 @@ namespace HIMS.API.Models.IPPatient
         public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel Admission { get; set; }
     }
+    public class AdmissionRegistered
+    {
+        //public AdmissionRegModel AdmissionReg { get; set; }
+        public ADMISSIONModel Admission { get; set; }
+    }
     public class BedMaster
     {
         public long BedId { get; set; }
