@@ -154,7 +154,7 @@ namespace HIMS.Services.Inventory
                 }
                 odal.ExecuteNonQuery("m_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Centity);
             }
-            string[] Entity = { "IndentNo", "IndentDate", "IndentTime", "FromStoreId", "ToStoreId", "Addedby", "Isdeleted", "Isverify", "IsInchargeVerify", "IsInchargeVerifyId", "IsInchargeVerifyDate", "Comments", "Priority", "TIndentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] Entity = { "IndentNo", "IndentDate", "IndentTime", "FromStoreId", "ToStoreId", "Addedby", "Isdeleted", "Isverify", "IsInchargeVerify", "IsInchargeVerifyId", "IsInchargeVerifyDate", "Comments", "Priority", "TIndentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","IsCancelledBy","IsCancelledDateTime" };
             var Tentity = ObjTIndentHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -164,7 +164,7 @@ namespace HIMS.Services.Inventory
 
             foreach (var item in ObjTIndentDetail)
             {
-                string[] SEntity = { "ItemId", "Qty", "IssQty", "Indent" };
+                string[] SEntity = { "ItemId", "Qty", "IssQty", "Indent", "VerifiedQty" };
                 var STentity = item.ToDictionary();
                 foreach (var rProperty in SEntity)
                 {
