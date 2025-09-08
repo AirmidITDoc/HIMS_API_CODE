@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -29,20 +30,20 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        public virtual void InsertAsyncSP(Registration objRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        public virtual void InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in rEntity)
-            {
-                entity.Remove(rProperty);
-            }
-            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt64(RegId);
-            objAdmission.RegId = Convert.ToInt64(RegId);
+            ////string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            ////var entity = objRegistration.ToDictionary();
+            ////foreach (var rProperty in rEntity)
+            ////{
+            ////    entity.Remove(rProperty);
+            ////}
+            ////string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            ////objRegistration.RegId = Convert.ToInt64(RegId);
+            ////objAdmission.RegId = Convert.ToInt64(RegId);
 
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
             "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
