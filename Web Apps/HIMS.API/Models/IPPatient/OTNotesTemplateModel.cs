@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
+using HIMS.API.Models.Masters;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.IPPatient
 {
-    public partial class MOtnotesTemplateMaster
+    public class OTNotesTemplateModel
     {
         public long OtnoteTempId { get; set; }
         public string? OttemplateName { get; set; }
         public DateTime? Otdate { get; set; }
-        public DateTime? Ottime { get; set; }
+        public string? Ottime { get; set; }
         public string? SurgeryName { get; set; }
         public long? SurgeonId { get; set; }
         public long? SurgeonId1 { get; set; }
@@ -28,8 +28,8 @@ namespace HIMS.Data.Models
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public string? SurgeryType { get; set; }
-        public DateTime? FromTime { get; set; }
-        public DateTime? ToTime { get; set; }
+        public string? FromTime { get; set; }
+        public string? ToTime { get; set; }
         public long? OtreservationId { get; set; }
         public string? BloodLoss { get; set; }
         public long? SurgeryId { get; set; }
@@ -41,9 +41,16 @@ namespace HIMS.Data.Models
         public string? ComplicationMode { get; set; }
         public long? ServiceId { get; set; }
         public long? ProcedureId { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+    }
+    public class OTNotesTemplateModelValidator : AbstractValidator<OTNotesTemplateModel>
+    {
+        public OTNotesTemplateModelValidator()
+        {
+            RuleFor(x => x.Otdate).NotNull().NotEmpty().WithMessage("Otdate  is required");
+            RuleFor(x => x.Ottime).NotNull().NotEmpty().WithMessage("Ottime  is required");
+            RuleFor(x => x.FromTime).NotNull().NotEmpty().WithMessage("FromTime  is required");
+            RuleFor(x => x.ToTime).NotNull().NotEmpty().WithMessage("ToTime  is required");
+           
+        }
     }
 }

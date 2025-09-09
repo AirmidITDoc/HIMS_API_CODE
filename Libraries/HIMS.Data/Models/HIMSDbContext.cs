@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -516,7 +516,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TempPkCurrStkSales1> TempPkCurrStkSales1s { get; set; } = null!;
         public virtual DbSet<TempStrId> TempStrIds { get; set; } = null!;
         public virtual DbSet<TempSulpId> TempSulpIds { get; set; } = null!;
-        public virtual DbSet<TemplateMasterbak> TemplateMasterbaks { get; set; } = null!;
         public virtual DbSet<TemppkCurrstkNegativeBalQty> TemppkCurrstkNegativeBalQties { get; set; } = null!;
         public virtual DbSet<TgHtlTmp> TgHtlTmps { get; set; } = null!;
         public virtual DbSet<Tpr> Tprs { get; set; } = null!;
@@ -536,7 +535,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6298,8 +6297,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.TemplateDesc).IsUnicode(false);
             });
 
             modelBuilder.Entity<MCityMaster>(entity =>
@@ -7541,6 +7538,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ComplicationMode).HasMaxLength(10);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DetSpecimenForLab).HasColumnType("text");
 
                 entity.Property(e => e.ExtraProPerformed).HasColumnType("text");
@@ -7550,6 +7549,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Histopathology).HasMaxLength(2000);
 
                 entity.Property(e => e.Incision).HasMaxLength(1000);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OperativeDiagnosis).HasColumnType("text");
 
@@ -10561,8 +10562,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CertificateDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CertificateName).HasMaxLength(500);
-
                 entity.Property(e => e.CertificateText).HasColumnType("text");
 
                 entity.Property(e => e.CertificateTime).HasColumnType("datetime");
@@ -11262,8 +11261,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.AdmId).HasColumnName("AdmID");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DoctorsNotes).HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -12714,8 +12711,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDatetime).HasColumnType("datetime");
-
-                entity.Property(e => e.NursingNotes).HasMaxLength(2000);
 
                 entity.Property(e => e.Tdate)
                     .HasColumnType("datetime")
@@ -15016,19 +15011,6 @@ namespace HIMS.Data.Models
                 entity.HasNoKey();
 
                 entity.ToTable("Temp_SulpId");
-            });
-
-            modelBuilder.Entity<TemplateMasterbak>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("TemplateMasterbak");
-
-                entity.Property(e => e.TemplateDesc).HasColumnType("text");
-
-                entity.Property(e => e.TemplateId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.TemplateName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<TemppkCurrstkNegativeBalQty>(entity =>
