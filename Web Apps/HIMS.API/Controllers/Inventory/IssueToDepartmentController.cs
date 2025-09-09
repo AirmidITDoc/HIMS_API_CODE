@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.IssueId);
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IssueToDIndentModel obj)
         {
             TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
@@ -148,7 +148,7 @@ namespace HIMS.API.Controllers.Inventory
 
       
         [HttpPost("UpdateMaterialAcceptance")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
