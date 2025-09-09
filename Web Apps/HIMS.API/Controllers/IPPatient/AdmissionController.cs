@@ -65,16 +65,35 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP(NewAdmission obj)
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        public ApiResponse InsertSP(AdmissionRegistered obj)
         {
-            Registration model = obj.AdmissionReg.MapTo<Registration>();
-            Admission objAdmission = obj.Admission.MapTo<Admission>();
-            if (obj.AdmissionReg.RegId == 0)
+            //Registration model = obj.AdmissionReg.MapTo<Registration>();
+            Admission model = obj.Admission.MapTo<Admission>();
+            if (model.RegId != 0)
             {
-                model.RegTime = Convert.ToDateTime(obj.AdmissionReg.RegTime);
+                model.AdmissionTime = Convert.ToDateTime(model.AdmissionTime);
                 model.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AdmissionId);
+        }
+
+        //UPDATE SHILPA 09-08-2025//
+         [HttpPost("AdmissionRegInsertSP")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        public ApiResponse Insert(NewAdmission obj)
+        {
+            Admission objAdmission = obj.Admission.MapTo<Admission>();
+            Bedmaster model = obj.BedMaster.MapTo<Bedmaster>();
+
+            if (objAdmission.AdmissionId == 0)
+            {
+                objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
+                objAdmission.AddedBy = CurrentUserId;
+                _IAdmissionService.InsertRegAsyncSP(objAdmission, model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -82,17 +101,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        [HttpPost("AdmissionRegInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(NewAdmission obj)
-        {
-            Registration model = obj.AdmissionReg.MapTo<Registration>();
-
-            Admission objAdmission = obj.Admission.MapTo<Admission>();
-            await _IAdmissionService.InsertRegAsyncSP(model ,objAdmission, CurrentUserId, CurrentUserName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objAdmission.AdmissionId);
-        }
         
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateSP(NewAdmission obj)
@@ -110,6 +120,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated successfully.", objAdmission.AdmissionId);
         }
+
         [HttpGet("search-patient")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)

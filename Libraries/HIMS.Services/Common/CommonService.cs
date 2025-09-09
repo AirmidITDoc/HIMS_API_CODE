@@ -68,8 +68,10 @@ namespace HIMS.Services.Common
                 case "GRN": sp_Name = "m_Rtrv_GRNList_by_Name"; break;
                 case "OPVisit": sp_Name = "m_Rtrv_VisitDetailsList_1_Pagi"; break;
 
-
                 case "OPDEMR": sp_Name = "m_rtrv_CertificateMasterCombo"; break;
+
+                // Check IP admission
+                case "CheckPatientAdmitted": sp_Name = "ps_CheckPatientAdmitted"; break;
 
                 // Check for Dashboard API
                 case "DailyDashboardSummary": sp_Name = "rptOP_DepartmentChart_Range"; break;

@@ -235,8 +235,7 @@ namespace HIMS.Services.Users
                 ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
                 // 5️⃣ Update Prescription
-                string[] TEntity = { "IppreId","IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark",
-         "IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty" ,"Ipmed"};
+                string[] TEntity = { "IppreId","IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark","IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty" ,"Ipmed"};
                 var Nentity = ObjPrescription.ToDictionary();
                 foreach (var rProperty in TEntity)
                     Nentity.Remove(rProperty);
@@ -244,10 +243,8 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQueryNew("m_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
 
                 // 6️⃣ Update Draft Header
-                string[] DEntity = { "Date","Time", "SalesNo", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount",
-         "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId",
-         "IsSellted", "IsPrint", "UnitId", "AddedBy", "UpdatedBy" ,"ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId",
-         "IsCancelled","IsPrescription","WardId","BedId","ExtMobileNo","ExtAddress"};
+                string[] DEntity = { "Date","Time", "SalesNo", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId",
+                                      "IsSellted", "IsPrint", "UnitId", "AddedBy", "UpdatedBy" ,"ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsCancelled","IsPrescription","WardId","BedId","ExtMobileNo","ExtAddress"};
                 var Hentity = ObjDraftHeader.ToDictionary();
                 foreach (var rProperty in DEntity)
                     Hentity.Remove(rProperty);
