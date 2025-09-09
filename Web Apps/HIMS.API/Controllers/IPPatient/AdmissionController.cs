@@ -81,18 +81,28 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AdmissionId);
         }
 
-
-        [HttpPost("AdmissionRegInsertSP")]
+        //UPDATE SHILPA 09-08-2025//
+         [HttpPost("AdmissionRegInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(NewAdmission obj)
+        public ApiResponse Insert(NewAdmission obj)
         {
-            Registration model = obj.AdmissionReg.MapTo<Registration>();
-
             Admission objAdmission = obj.Admission.MapTo<Admission>();
-            await _IAdmissionService.InsertRegAsyncSP(model ,objAdmission, CurrentUserId, CurrentUserName);
+            Bedmaster model = obj.BedMaster.MapTo<Bedmaster>();
+
+            if (objAdmission.AdmissionId == 0)
+            {
+                objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
+                objAdmission.AddedBy = CurrentUserId;
+                _IAdmissionService.InsertRegAsyncSP(objAdmission, model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objAdmission.AdmissionId);
         }
+
+
         
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateSP(NewAdmission obj)

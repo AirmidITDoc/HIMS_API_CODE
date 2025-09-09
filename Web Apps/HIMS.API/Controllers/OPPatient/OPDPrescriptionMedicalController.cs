@@ -201,7 +201,9 @@ namespace HIMS.API.Controllers.OPPatient
                 foreach (var userId in userIds)
                 {
                     // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
-                    await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model1.VisitId}", userId);
+                    //await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model1.VisitId}", userId);
+                    //shilpa modified 09-09-2025
+                    await _notificationUtility.SendNotificationAsync("OP | EMR Request for Billing", $"{objPatient?.RegNo ?? "N/A"} {objPatient?.FirstName ?? ""} {objPatient?.LastName ?? ""}", $"opd/appointment?Mode=Bill&Id={model1.VisitId}", userId);
                 }
 
             }
