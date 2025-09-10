@@ -1093,7 +1093,6 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillGroupWise" + vDate, Orientation.Portrait);
                         break;
 
@@ -1239,13 +1238,13 @@ namespace HIMS.Services.Report
 
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPAdvancesummary.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPAdvanceStatement.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptIPAdvanceSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceStatement", "IpAdvanceStatement" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceStatement", "IpAdvanceStatement" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -7779,6 +7778,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo").ConvertToString());
                         html = html.Replace("{{PayTMDate}}", dt.GetColValue("PayTMDate").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
 
                         html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -7804,23 +7805,35 @@ namespace HIMS.Services.Report
 
                         int i = 0;
 
-                        double T_AdvanceAmount = 0, T_UsedAmount = 0, T_BalanceAmount = 0, T_RefundAmount = 0;
+                        double T_AdvanceAmount = 0, T_UsedAmount = 0, T_BalanceAmount = 0, T_RefundAmount = 0, T_CashPayAmount = 0, T_ChequePayAmount = 0, T_CardPayAmount = 0, T_OnlineAmount = 0;
 
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
 
                             items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:center;\">").Append(dr["PaymentDate"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:center;\">").Append(dr["AdvanceNo"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["AdvanceAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["UsedAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["BalanceAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
-                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["RefundAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["RefundAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["CashPayAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["ChequePayAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["CardPayAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;text-align:right;\">").Append(dr["OnlineAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+         
+
 
                             T_AdvanceAmount += dr["AdvanceAmount"].ConvertToDouble();
                             T_UsedAmount += dr["UsedAmount"].ConvertToDouble();
                             T_BalanceAmount += dr["BalanceAmount"].ConvertToDouble();
                             T_RefundAmount += dr["RefundAmount"].ConvertToDouble();
+                            T_CashPayAmount += dr["CashPayAmount"].ConvertToDouble();
+                            T_ChequePayAmount += dr["ChequePayAmount"].ConvertToDouble();
+                            T_CardPayAmount += dr["CardPayAmount"].ConvertToDouble();
+                            T_OnlineAmount += dr["OnlineAmount"].ConvertToDouble();
+
 
 
                         }
@@ -7831,6 +7844,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{T_UsedAmount}}", T_UsedAmount.ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{T_BalanceAmount}}", T_BalanceAmount.ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{T_RefundAmount}}", T_RefundAmount.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_CashPayAmount}}", T_CashPayAmount.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_CardPayAmount}}", T_CardPayAmount.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_ChequePayAmount}}", T_ChequePayAmount.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_OnlineAmount}}", T_OnlineAmount.ConvertToDouble().To2DecimalPlace());
+
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ConvertToString());
@@ -7856,6 +7874,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType").ConvertToString());
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo").ConvertToString());
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
 
                     }

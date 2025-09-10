@@ -380,6 +380,7 @@ namespace HIMS.API.Controllers.Report
 
 
                 case "RadiologyTemplateReport":
+              //Advance Page Printouts
                 case "IpAdvanceReceipt":
                 case "IpAdvanceStatement":
 

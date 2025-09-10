@@ -48,6 +48,7 @@ namespace HIMS.API.Models.Inventory
         public decimal? UnitPurRate { get; set; }
         public decimal? PurTotalAmount { get; set; }
         public long? StkId { get; set; }
+        public string? Status { get; set; }
     }
     public class IssueToDepartmentDetailModelValidator : AbstractValidator<IssueToDepartmentDetailModel>
     {
