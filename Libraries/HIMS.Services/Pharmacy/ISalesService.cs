@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Master;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -50,5 +51,7 @@ namespace HIMS.Services.Users
         Task InsertAsync(List<Payment> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
 
         Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+        Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
+        Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
     }
 }

@@ -2,6 +2,7 @@
 using HIMS.Core.Domain.Logging;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Master;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -666,6 +667,44 @@ namespace HIMS.Services.Users
         public virtual async Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<salespatientwiseListDto>(model, "ps_rptget_CreditAmount");
+        }
+
+        public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
+        {
+
+            return await this._context.TSalesHeaders
+                .Where(x =>
+                    (x.ExternalPatientName).ToLower().StartsWith(str) || // Optional: if you want full name search
+                    x.ExtMobileNo.ToLower().StartsWith(str)                    // Match first name starting with str
+                )
+                .Take(25)
+                .Select(x => new SalesPatientAutoCompleteDto
+                {
+                    ExternalPatientName = x.ExternalPatientName,
+                    ExtMobileNo = x.ExtMobileNo,
+                    DoctorName = x.DoctorName,
+                })
+               .Distinct()  // ✅ remove duplicates
+               .OrderByDescending(x => x.ExtMobileNo == str ? 3 : x.ExtMobileNo == str ? 2 : (x.ExternalPatientName) == str ? 1 : 0)
+               .ThenBy(x => x.ExternalPatientName).ToListAsync();
+
+        }
+        public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str)
+        {
+
+            return await this._context.TSalesHeaders
+                .Where(x =>
+                    (x.DoctorName).ToLower().StartsWith(str) // Optional: if you want full name search
+                )
+                .Take(25)
+                .Select(x => new SalesPatientAutoCompleteDto
+                {
+                    DoctorName = x.DoctorName,
+                })
+               .Distinct()  // ✅ remove duplicates
+               .OrderByDescending(x => x.DoctorName == str ? 3 : x.DoctorName == str ? 2 : (x.DoctorName) == str ? 1 : 0)
+               .ThenBy(x => x.DoctorName).ToListAsync();
+
         }
     }
 }

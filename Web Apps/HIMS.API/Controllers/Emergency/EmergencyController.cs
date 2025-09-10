@@ -158,10 +158,27 @@ namespace HIMS.API.Controllers.Emergency
             else
             {
                 model.ChargesDate = DateTime.Now;
-
                 await _EmergencyService.Update(model, CurrentUserId, CurrentUserName, obj.EmgId, obj.NewAdmissionId);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpGet("auto-complete")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        {
+            var data = await _EmergencyService.SearchRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Emergency Patient Data.", data.Select(x => new {
+                Text = x.FirstName + " " + x.LastName + " | " + x.SeqNo + " | " + x.Mobile,
+                Value = x.EmgId,
+                RegNo = x.SeqNo,
+                RegId = x.RegId,
+                MobileNo = x.MobileNo,
+                AgeYear = x.AgeYear,
+                AgeMonth = x.AgeMonth,
+                AgeDay = x.AgeDay,
+                PatientName = x.FirstName + " " + x.LastName
+            }));
         }
 
     }
