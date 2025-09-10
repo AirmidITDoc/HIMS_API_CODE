@@ -177,7 +177,7 @@ namespace HIMS.API.Controllers.Emergency
                 AgeYear = x.AgeYear,
                 AgeMonth = x.AgeMonth,
                 AgeDay = x.AgeDay,
-                PatientName = x.FirstName + " " + x.LastName
+                PatientName = x.FirstName + " "+ x.MiddleName + " " + x.LastName
             }));
         }
 
