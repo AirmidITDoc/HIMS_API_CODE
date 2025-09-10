@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.IPPatient
 {
-    public  class EmergencyListDto
+    public class EmergencyListDto
     {
         public long EmgId { get; set; }
         public long RegId { get; set; }
@@ -53,8 +53,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsConverted { get; set; }
         public string? AttendingDoctorName { get; set; }
         public string? RefDoctorName { get; set; }
-    }
         public string? RegNo { get; set; }
+    }
 
     public class EmergencyAutoCompleteDto
     {
