@@ -379,6 +379,34 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated  successfully.");
         }
+
+
+        [HttpGet("External-auto-complete")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        {
+            var data = await _ISalesService.SearchRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Patient Data.", data.Select(x => new {
+                Text = x.ExternalPatientName +" | " + x.ExtMobileNo + " | " + x.DoctorName,
+                Value = x.ExtMobileNo,
+                ExtMobileNo = x.ExtMobileNo,
+                DoctorName = x.DoctorName,
+                PatientName = x.ExternalPatientName
+            }));
+        }
+
+
+        [HttpGet("ExternalDoctor-auto-complete")]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetExtDocAutoComplete(string Keyword)
+        {
+            var data = await _ISalesService.SearchExtDoctor(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Doctor Data.", data.Select(x => new {
+                Text = x.DoctorName,
+                Value = x.DoctorName,
+                DoctorName = x.DoctorName,
+            }));
+        }
     }
 
 }

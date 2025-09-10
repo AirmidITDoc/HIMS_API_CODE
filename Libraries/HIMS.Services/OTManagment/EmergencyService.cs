@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -10,6 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.OTManagment
 {
@@ -75,6 +77,35 @@ namespace HIMS.Services.OTManagment
             Entity["EmgId"] = EmgId;
             Entity["NewAdmissionId"] = NewAdmissionId;
             odal.ExecuteNonQuery("pd_UpdateAddChargesFromEmergency", CommandType.StoredProcedure, Entity);
+        }
+        public virtual async Task<List<EmergencyAutoCompleteDto>> SearchRegistration(string str)
+        {
+
+            return await this._context.TEmergencyAdms
+                .Where(x =>
+                    (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+                    x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
+                    x.SeqNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
+                )
+                .Take(25)
+                .Select(x => new EmergencyAutoCompleteDto
+                {
+                    FirstName = x.FirstName,
+                    EmgId = x.EmgId,
+                    RegId = x.RegId,
+                    LastName = x.LastName,
+                    Mobile = x.MobileNo,
+                    SeqNo = x.SeqNo,
+                    MobileNo = x.MobileNo,
+                    AgeYear = x.AgeYear,
+                    AgeMonth = x.AgeMonth,
+                    AgeDay = x.AgeDay,
+                    DateofBirth = x.DateofBirth
+                })
+               .OrderByDescending(x => x.SeqNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
+               .ThenBy(x => x.FirstName).ToListAsync();
+
         }
     }
 }

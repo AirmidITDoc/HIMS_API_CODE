@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace HIMS.Services.OTManagment
         Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
         Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
         Task Update(AddCharge ObjAddCharge, int UserId, string UserName, long EmgId, long NewAdmissionId);
+        Task<List<EmergencyAutoCompleteDto>> SearchRegistration(string str);
 
     }
 }

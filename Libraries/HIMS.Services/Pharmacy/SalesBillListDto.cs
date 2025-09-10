@@ -32,4 +32,11 @@ namespace HIMS.Services.Pharmacy
         public string IPNO { get; set; }
         public bool IsPrint { get; set; }
     }
+
+    public class SalesPatientAutoCompleteDto
+    {
+        public string? ExternalPatientName { get; set; }
+        public string? ExtMobileNo { get; set; }
+        public string? DoctorName { get; set; }
+    }
 }
