@@ -88,6 +88,7 @@ namespace HIMS.API.Models.OTManagement
 
         public long EmgId { get; set; }
         public long? IsCancelledBy { get; set; }
+        public string? Reason { get; set; }
 
 
     }

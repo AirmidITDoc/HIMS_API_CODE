@@ -30,7 +30,7 @@ namespace HIMS.Services.OTManagment
         {
 
             DatabaseHelper odal = new();
-            string[] Entity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConverted" };
+            string[] Entity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConverted", "Reason" };
             var entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -43,7 +43,7 @@ namespace HIMS.Services.OTManagment
         public virtual async Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
-            string[] UEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedDate", "IsConverted" };
+            string[] UEntity = { "SeqNo", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedBy", "CreatedDate", "ModifiedDate", "IsConverted", "Reason" };
             var Entity = objTEmergencyAdm.ToDictionary();
             foreach (var rProperty in UEntity)
             {

@@ -54,6 +54,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AttendingDoctorName { get; set; }
         public string? RefDoctorName { get; set; }
         public string? RegNo { get; set; }
+        public string? Reason { get; set; }
+
     }
 
     public class EmergencyAutoCompleteDto
