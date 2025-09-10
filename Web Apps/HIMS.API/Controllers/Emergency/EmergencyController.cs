@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.Emergency
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.EmgId);
         }
         [HttpPost("Cancel")]
-        [Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(EmergencyCancel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
@@ -177,7 +177,7 @@ namespace HIMS.API.Controllers.Emergency
                 AgeYear = x.AgeYear,
                 AgeMonth = x.AgeMonth,
                 AgeDay = x.AgeDay,
-                PatientName = x.FirstName + " " + x.LastName
+                PatientName = x.FirstName + " "+ x.MiddleName + " " + x.LastName
             }));
         }
 

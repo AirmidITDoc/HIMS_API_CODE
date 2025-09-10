@@ -130,7 +130,7 @@ namespace HIMS.API.Controllers.OPPatient
                 AgeYear = x.AgeYear ,
                 AgeMonth = x.AgeMonth ,
                 AgeDay = x.AgeDay ,
-                PatientName = x.FirstName + " " + x.LastName
+                PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
         }
         // Create  by Ashutosh 12 Jun 2025

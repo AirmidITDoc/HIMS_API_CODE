@@ -11362,6 +11362,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Reason).HasMaxLength(50);
+
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
             });
 

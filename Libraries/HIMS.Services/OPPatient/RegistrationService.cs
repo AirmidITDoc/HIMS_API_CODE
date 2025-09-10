@@ -43,6 +43,7 @@ namespace HIMS.Services.OPPatient
                     FirstName = x.FirstName,
                     Id = x.RegId,
                     LastName = x.LastName,
+                    MiddleName = x.MiddleName,
                     Mobile = x.MobileNo,
                     RegNo = x.RegNo,
                     MobileNo = x.MobileNo,
