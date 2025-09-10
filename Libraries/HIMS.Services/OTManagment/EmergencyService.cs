@@ -95,6 +95,7 @@ namespace HIMS.Services.OTManagment
                     EmgId = x.EmgId,
                     RegId = x.RegId,
                     LastName = x.LastName,
+                    MiddleName = x.MiddleName,
                     Mobile = x.MobileNo,
                     SeqNo = x.SeqNo,
                     MobileNo = x.MobileNo,
