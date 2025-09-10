@@ -1041,7 +1041,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IpInterimBill" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpInterimBill", "IpInterimBill" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -3722,7 +3722,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
 
 
-                        html = html.Replace("{{EmgDate}}", dt.GetColValue("EmgDate"));
+                        html = html.Replace("{{EmgDate}}", dt.GetColValue("EmgDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{EmgTime}}", dt.GetColValue("EmgTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
 
 
