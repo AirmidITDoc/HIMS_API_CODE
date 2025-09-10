@@ -9,6 +9,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core.Domain.Grid;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -22,6 +23,15 @@ namespace HIMS.API.Controllers.OTManagement
         public OTNotesTemplateController(IGenericService<MOtnotesTemplateMaster> repository)
         {
             _repository = repository;
+        }
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MOtnotesTemplateMaster> MOtnotesTemplateList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MOtnotesTemplateList.ToGridResponse(objGrid, "MOtnotesTemplateList "));
         }
         //Add API
         [HttpPost]
