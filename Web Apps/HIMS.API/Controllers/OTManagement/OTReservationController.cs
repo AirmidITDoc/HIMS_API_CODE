@@ -63,10 +63,29 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+        //[HttpPost("Insert")]
+        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> OTReservation(OTReservationModel obj)
+        //{
+        //    TOtReservation model = obj.MapTo<TOtReservation>();
+        //    if (obj.OtreservationId == 0)
+
+        //    {
+        //        model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
+        //        model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
+        //        model.CreatedDate = DateTime.Now;
+        //        model.CreatedBy = CurrentUserId;
+        //        await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
 
 
 
-        
+
+
 
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
