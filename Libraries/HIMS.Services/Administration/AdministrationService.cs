@@ -151,7 +151,7 @@ namespace HIMS.Services.Administration
         {
             DatabaseHelper odal = new();
             string[] AEntity = {  "OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","OpdIpdType","PbillNo","TotalAdvanceAmount","AddedBy","ConcessionReasonId","IsSettled", "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer",
-            "SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","AddCharges","IsCancelled","AdvanceUsedAmount","CashCounterId","CompDiscAmt","BillDetails","BillPrefix","BillMonth","BillYear","PrintBillNo"};
+            "SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","AddCharges","IsCancelled","AdvanceUsedAmount","CashCounterId","CompDiscAmt","BillDetails","BillPrefix","BillMonth","BillYear","PrintBillNo","RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","PatientType","CompanyName","CompanyAmt","PatientAmt","WardId","BedId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var Rentity = ObjBill.ToDictionary();
             foreach (var rProperty in AEntity)
             {
