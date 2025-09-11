@@ -58,6 +58,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string? IPDNo { get; set; }
         public string? UnBooking { get; set; }
         public string? TariffName { get; set; }
+        public string? UserName { get; set; }
+
+        
 
 
     }

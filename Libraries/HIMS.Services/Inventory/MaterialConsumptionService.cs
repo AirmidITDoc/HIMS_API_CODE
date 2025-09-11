@@ -58,20 +58,39 @@ namespace HIMS.Services.Inventory
 
         //}
 
-        public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
+        public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            DatabaseHelper odal = new();
+            string[] rEntity = { "TMaterialConsumptionDetails" };
+            var entity = ObjTMaterialConsumptionHeader.ToDictionary();
+            foreach (var rProperty in rEntity)
             {
-                _context.TMaterialConsumptionHeaders.Add(ObjTMaterialConsumptionHeader);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                entity.Remove(rProperty);
             }
-        }
+            string vMaterialConsumptionId = odal.ExecuteNonQuery("ps_insert_MaterialConsumption_1", CommandType.StoredProcedure, "MaterialConsumptionId", entity);
+            ObjTMaterialConsumptionHeader.MaterialConsumptionId = Convert.ToInt32(vMaterialConsumptionId);
+            // Add details table records
+            foreach (var objissue in ObjTMaterialConsumptionHeader.TMaterialConsumptionDetails)
+            {
+                objissue.MaterialConsumptionId = ObjTMaterialConsumptionHeader.MaterialConsumptionId;
+            }
+            _context.TMaterialConsumptionDetails.AddRange(ObjTMaterialConsumptionHeader.TMaterialConsumptionDetails);
+            await _context.SaveChangesAsync(UserId, Username);
 
-       
+            string[] CEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+            var Centity = ObjTCurrentStock.ToDictionary();
+            foreach (var rProperty in CEntity)
+            {
+                Centity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Upd_T_Curstk_MatC_1", CommandType.StoredProcedure, Centity);
+
+        }
     }
-}
+
+    }
+
+
 
         //    public virtual async Task UpdateAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, int UserId, string Username)
         //    {

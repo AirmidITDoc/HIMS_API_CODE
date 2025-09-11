@@ -6,7 +6,6 @@ namespace HIMS.API.Models.Inventory
 {
     public class MaterialConsumptionHeaderModel
     {
-        public long MaterialConsumptionId { get; set; }
         public string? ConsumptionNo { get; set; }
         public DateTime? ConsumptionDate { get; set; }
         public string? ConsumptionTime { get; set; }
@@ -16,8 +15,10 @@ namespace HIMS.API.Models.Inventory
         public decimal? MRPTotalAmount { get; set; }
         public string? Remark { get; set; }
         public long? AddedBy { get; set; }
-           public long? UpdatedBy { get; set; }
-          public long? AdmId { get; set; }
+        public long? UpdatedBy { get; set; }
+        public long? AdmId { get; set; }
+        public long MaterialConsumptionId { get; set; }
+
         public List<MaterialConsumptionDetailModel> TMaterialConsumptionDetails { get; set; }
 
     }
@@ -63,7 +64,21 @@ namespace HIMS.API.Models.Inventory
         }
     }
 
-   
+    public class CurrentStockUpdateModel
+    {
+        public long? ItemId { get; set; }
+        public float? IssueQty { get; set; }
+        public long? StoreId { get; set; }
+        public long? IstkId { get; set; }
 
 
+
+
+    }
+    public class MaterialConsumptionHeader
+    {
+       public  MaterialConsumptionHeaderModel MaterialConsumption {  get; set; }
+        public CurrentStockUpdateModel CurrentStockUpdate { get; set; }
+
+    }
 }

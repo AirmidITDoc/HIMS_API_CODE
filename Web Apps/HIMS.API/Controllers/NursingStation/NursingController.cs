@@ -98,6 +98,15 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(NursingMedicationList.ToGridResponse(objGrid, "NursingMedicationList"));
         }
 
+        //List API
+        [HttpPost]
+        [Route("NursingTemplateList")]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<MNursingTemplateMaster> MNursingTemplateList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(MNursingTemplateList.ToGridResponse(objGrid, "MNursingTemplate List"));
+        }
 
 
 

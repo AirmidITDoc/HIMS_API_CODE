@@ -54,6 +54,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
         public virtual DbSet<FileMaster> FileMasters { get; set; } = null!;
         public virtual DbSet<GeTIpPrescriptionItemDet> GeTIpPrescriptionItemDets { get; set; } = null!;
+        public virtual DbSet<GeTTPrescriptionItemDet> GeTTPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeniusBufferresult> GeniusBufferresults { get; set; } = null!;
         public virtual DbSet<GeniusControl> GeniusControls { get; set; } = null!;
         public virtual DbSet<GeniusControlparam> GeniusControlparams { get; set; } = null!;
@@ -1988,6 +1989,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ItemName).HasMaxLength(200);
 
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+            });
+
+            modelBuilder.Entity<GeTTPrescriptionItemDet>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("GeT_t_PrescriptionItemDet");
+
+                entity.Property(e => e.ItemId).HasColumnName("ItemID");
+
+                entity.Property(e => e.ItemName).HasMaxLength(200);
+
+                entity.Property(e => e.OpdIpdIp).HasColumnName("OPD_IPD_IP");
             });
 
             modelBuilder.Entity<GeniusBufferresult>(entity =>
