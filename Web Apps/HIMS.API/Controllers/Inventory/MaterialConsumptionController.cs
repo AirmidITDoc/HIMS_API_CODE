@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
@@ -39,21 +40,21 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("InsertEDMX")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeaderModel obj)
+        public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeader obj)
         {
-            TMaterialConsumptionHeader model = obj.MapTo<TMaterialConsumptionHeader>();
-        //    List<TMaterialConsumptionDetail> materialmodel = obj.MaterialConsumptionDetail.MapTo<List<TMaterialConsumptionDetail>>();
-            if (obj.MaterialConsumptionId == 0)
+            TMaterialConsumptionHeader model = obj.MaterialConsumption.MapTo<TMaterialConsumptionHeader>();
+            TCurrentStock ObjCurrentStock = obj.CurrentStockUpdate.MapTo<TCurrentStock>();
+            if (obj.MaterialConsumption.MaterialConsumptionId == 0)
             {
 
                 model.AddedBy = CurrentUserId;
-                await _IMaterialConsumption.InsertAsync(model,  CurrentUserId, CurrentUserName);
+                await _IMaterialConsumption.InsertAsync(model, ObjCurrentStock, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Material Consumption  added successfully.",model.MaterialConsumptionId);
         }
-
+        
         //[HttpPut("Edit/{id:int}")]
         ////  [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
         //public async Task<ApiResponse> Edit(MaterialConsumptionHeaderModel obj)
