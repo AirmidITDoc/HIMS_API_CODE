@@ -30,9 +30,9 @@ namespace HIMS.API.Models.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
         public long? DepartmentId { get; set; }
-        public List<TOtbookingRequestUpdate> TOtbookingRequests { get; set; }
+        public long? OtrequestId { get; set; }
 
-        //public List<TOtbookingRequestUpdate> tOtbookingRequests { get; set; } = new List<TOtbookingRequestUpdate>();
+
 
 
 
@@ -53,18 +53,9 @@ namespace HIMS.API.Models.IPPatient
         public class OTReservationCancel
         {
             public long OtreservationId {  get; set; }
-         
-
-        }
-        public class TOtbookingRequestUpdate
-        {
-            public long OtbookingId { get; set; }
-            public long? OtrequestId { get; set; }
-
 
         }
       
-
     }
 
 }

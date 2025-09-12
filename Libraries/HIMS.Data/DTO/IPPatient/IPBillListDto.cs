@@ -9,7 +9,7 @@ namespace HIMS.Data.DTO.IPPatient
     public class IPBillListDto
     {
         public long BillNo { get; set; }
-        public string OPD_IPD_ID { get; set; }
+        public string OPDIPDID { get; set; }
         public DateTime? BillDate { get; set; }
         public string? PbillNo { get; set; }
         public string? RegNo { get; set; }
@@ -36,7 +36,7 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? NetPayableAmt { get; set; }
         public string? AdvanceUsedAmount { get; set; }
         public long? IsCancelled { get; set; }
-        public long OPD_IPD_Type { get; set; }
+        public long OPDIPDType { get; set; }
         public long PaidAmt { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal CashPay { get; set; }

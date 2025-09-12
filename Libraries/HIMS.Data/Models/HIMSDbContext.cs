@@ -13324,9 +13324,13 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("OPStartTime");
 
+                entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
+
                 entity.Property(e => e.OttableId).HasColumnName("OTTableID");
 
                 entity.Property(e => e.OttypeId).HasColumnName("OTTypeID");
+
+                entity.Property(e => e.Reason).HasMaxLength(200);
 
                 entity.Property(e => e.ReservationDate).HasColumnType("datetime");
 
@@ -13362,8 +13366,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OtrequestDate)
                     .HasColumnType("datetime")
                     .HasColumnName("OTRequestDate");
-
-                entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
 
                 entity.Property(e => e.OtrequestTime)
                     .HasColumnType("datetime")

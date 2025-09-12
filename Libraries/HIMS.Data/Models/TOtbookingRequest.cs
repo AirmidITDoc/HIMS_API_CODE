@@ -12,7 +12,6 @@ namespace HIMS.Data.Models
         public byte? OpIpType { get; set; }
         public DateTime? OtrequestDate { get; set; }
         public DateTime? OtrequestTime { get; set; }
-        public long? OtrequestId { get; set; }
         public long? SurgeryCategoryId { get; set; }
         public long? DepartmentId { get; set; }
         public long? CategoryId { get; set; }

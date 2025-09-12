@@ -14,7 +14,7 @@ namespace HIMS.Services
     {
         Task<IPagedList<OTBookinglistDto>> GetListAsync(GridRequestModel objGrid);
         //Task InsertAsync(TOtReservation OBJTOtbooking,List<TOtbookingRequest> requests,  int UserId, string Username);
-        Task InsertAsync(TOtReservation OBJTOtbooking, TOtbookingRequest objTOtbookingRequest, int UserId, string Username);
+        Task InsertAsync(TOtReservation OBJTOtbooking,  int UserId, string Username);
 
         Task UpdateAsync(TOtReservation OBJTOtbooking,  int UserId, string Username);
         Task CancelAsync(TOtReservation objTOtReservation, int UserId, string Username);

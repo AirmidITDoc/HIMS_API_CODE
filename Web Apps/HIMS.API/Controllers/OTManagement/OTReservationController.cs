@@ -52,42 +52,15 @@ namespace HIMS.API.Controllers.IPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                TOtbookingRequest requestModel = new TOtbookingRequest
-                {
-                    //OtrequestId = obj.OtrequestId,
-
-                };
-                await _OTService.InsertAsync(model, requestModel, CurrentUserId, CurrentUserName);
+               
+                await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-        //[HttpPost("Insert")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> OTReservation(OTReservationModel obj)
-        //{
-        //    TOtReservation model = obj.MapTo<TOtReservation>();
-        //    if (obj.OtreservationId == 0)
-
-        //    {
-        //        model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
-        //        model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
-        //        model.CreatedDate = DateTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
-
-
-
-
-
-
-        [HttpPut("Edit/{id:int}")]
+     
+         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTReservationModel obj)
         {
@@ -109,31 +82,10 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        //[HttpPut("Edit/{id:int}")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
-
-        //public async Task<ApiResponse> Edit(OTReservationModel obj)
-        //{
-        //    if (obj.OtreservationId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-
-        //    var existing = await _OTService.GetByIdAsync((int)obj.OtreservationId);
-        //    if (existing == null)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "Record not found");
-
-        //    existing.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
-        //    existing.ModifiedBy = CurrentUserId;
-        //    existing.ModifiedDate = DateTime.Now;
-
-        //    await _OTService.UpdateAsync(existing, CurrentUserId, CurrentUserName);
-
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-
 
 
         [HttpPost("Cancel")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(OTReservationCancel obj)
         {
             TOtReservation model = new();
