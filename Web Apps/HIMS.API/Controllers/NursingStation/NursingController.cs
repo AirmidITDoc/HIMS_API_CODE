@@ -289,7 +289,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingTemplateInsert")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
