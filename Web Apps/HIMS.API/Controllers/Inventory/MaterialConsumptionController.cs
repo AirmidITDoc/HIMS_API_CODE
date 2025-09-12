@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeader obj)
         {
             TMaterialConsumptionHeader model = obj.MaterialConsumption.MapTo<TMaterialConsumptionHeader>();
-            TCurrentStock ObjCurrentStock = obj.CurrentStockUpdate.MapTo<TCurrentStock>();
+            List<TCurrentStock>ObjCurrentStock = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
             if (obj.MaterialConsumption.MaterialConsumptionId == 0)
             {
 

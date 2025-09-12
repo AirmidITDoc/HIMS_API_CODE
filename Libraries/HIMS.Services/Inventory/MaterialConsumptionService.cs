@@ -58,7 +58,7 @@ namespace HIMS.Services.Inventory
 
         //}
 
-        public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, TCurrentStock ObjTCurrentStock, int UserId, string Username)
+        public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, List<TCurrentStock> ObjTCurrentStock, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "TMaterialConsumptionDetails" };
@@ -76,19 +76,19 @@ namespace HIMS.Services.Inventory
             }
             _context.TMaterialConsumptionDetails.AddRange(ObjTMaterialConsumptionHeader.TMaterialConsumptionDetails);
             await _context.SaveChangesAsync(UserId, Username);
-
-            string[] CEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
-            var Centity = ObjTCurrentStock.ToDictionary();
-            foreach (var rProperty in CEntity)
+            foreach (var item in ObjTCurrentStock)
             {
-                Centity.Remove(rProperty);
+                string[] CEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+                var Centity = item.ToDictionary();
+                foreach (var rProperty in CEntity)
+                {
+                    Centity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Upd_T_Curstk_MatC_1", CommandType.StoredProcedure, Centity);
             }
-            odal.ExecuteNonQuery("ps_Upd_T_Curstk_MatC_1", CommandType.StoredProcedure, Centity);
-
         }
     }
-
-    }
+ }
 
 
 
