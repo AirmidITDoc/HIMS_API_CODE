@@ -46,12 +46,13 @@
 
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;" >Patient Name :</span>
-                                    <span>{{PatientName}}</span>
+                                    <span style="font-weight:bold;">IPD No :</span>
+                                    <span>{{IPDNo}}</span>
                                 </td>
+                               
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;" >Patient Type :</span>
-                                    <span>{{PatientType}}</span>
+                                    <span style="font-weight:bold;">Ward | Bed Name : </span>
+                                    <span>{{RoomName}}|{{BedName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">DOD | Time :</span>
@@ -59,7 +60,10 @@
                                 </td>
                             </tr>
                             <tr>
-
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name :</span>
+                                    <span>{{PatientName}}</span>
+                                </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Doctor Name :</span>
                                     <span>{{DoctorName}}</span>
@@ -68,25 +72,22 @@
                                     <span style="font-weight:bold;">Department :</span>
                                     <span>{{DepartmentName}} </span>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;" >Ward | Bed Name : </span>
-                                    <span>{{RoomName}}|{{BedName}}</span>
-                                </td>
+                               
                             </tr>
 
                             <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">IPD No :</span>
-                                    <span>{{IPDNo}}</span>
-                                </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ref.Doctor Name :</span>
                                     <span>{{RefDocName}}</span>
                                 </td>
 
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Company Name :</span>
-                                    <span>{{CompanyName}}</span>
+                                    <span style="font-weight:bold;">Patient Type :</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+
+                                <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                    <b>Company Name :</b> {{CompanyName}}
                                 </td>
                             </tr>
 
