@@ -78,7 +78,7 @@ namespace HIMS.API.Models.Inventory
     public class MaterialConsumptionHeader
     {
        public  MaterialConsumptionHeaderModel MaterialConsumption {  get; set; }
-        public CurrentStockUpdateModel CurrentStockUpdate { get; set; }
+        public List<CurrentStockUpdateModel> CurrentStockUpdate { get; set; }
 
     }
 }

@@ -6293,8 +6293,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_CertificateMaster");
 
-                entity.Property(e => e.CertificateDesc).HasColumnType("text");
-
                 entity.Property(e => e.CertificateName).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
