@@ -24,6 +24,8 @@ namespace HIMS.Data.DTO.Administration
         public decimal? PayTMAmount { get; set; }
         public string? PrintStoreName { get; set; }
         public long? SalesId { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? Time { get; set; }
 
     }
 }

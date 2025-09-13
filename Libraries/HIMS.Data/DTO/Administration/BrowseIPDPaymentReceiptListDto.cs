@@ -13,6 +13,8 @@ namespace HIMS.Data.DTO.Administration
 
         public long PaymentId { get; set; }
         public long BillNo { get; set; }
+
+        public DateTime BillDate { get; set; }
         public string RegNo { get; set; }
         public string PatientName { get; set; }
         public string PrefixName { get; set; }
