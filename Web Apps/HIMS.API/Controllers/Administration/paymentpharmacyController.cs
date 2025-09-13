@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-        [HttpPut("UpdatePharmSales")]
+        [HttpPut("UpdatePharmSalesDate")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(PharmSalesPaymentModel obj)
         {
@@ -111,7 +111,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully .");
         }
-        [HttpPost("paymentpharUpdateDate")]
+        [HttpPut("UpdatePharmSalesPaymentDate")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(paymentpharModel obj)
         {

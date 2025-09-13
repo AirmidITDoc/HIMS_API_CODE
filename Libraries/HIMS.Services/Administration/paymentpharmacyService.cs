@@ -73,7 +73,7 @@ namespace HIMS.Services.Administration
             {
                 UEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("Update_PharmSalesPaymentmodechange", CommandType.StoredProcedure, UEntity);
+            odal.ExecuteNonQuery("ps_Update_PharmSalesDate", CommandType.StoredProcedure, UEntity);
 
         }
         public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int UserId, string UserName)
