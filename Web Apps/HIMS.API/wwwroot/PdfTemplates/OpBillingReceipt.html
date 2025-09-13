@@ -68,9 +68,8 @@
                                             <span><b>Patient Type :</b> </span>
                                             <span>{{PatientType}}</span>
                                         </td>
-                                        <td style="padding: 2px;">
-                                            <span><b>Company Name :</b> </span>
-                                            <span>{{CompanyName}}</span>
+                                        <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                            <b>Company Name :</b> {{CompanyName}}
                                         </td>
                                     </tr>
 
@@ -120,38 +119,13 @@
                                         <td colspan="8">
                                             <table style="width: 100%; border-collapse: collapse;font-weight:bold">
                                                 <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"> CashPay Amount :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{CashPay}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">ChequePay Amount :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{ChequePay}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"> CardPay Amount :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{CardPay}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">NEFTPay Amount :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{NeftPay}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"> UPI Amount : </td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{PayTMPay}}</td>
-                                                </tr>
-                                                <tr>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"> Total Bill Amount : </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{TotalBillAmount}}</td>
                                                 </tr>
                                                 <tr style="display:{{chkdiscflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Disc Amount</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">Reason-({{DiscComments}})</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">Reason - ({{DiscComments}})</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{ConcessionAmt}}</td>
 
                                                 </tr>
@@ -163,7 +137,7 @@
                                                 </tr>
                                                 <tr style="display:{{chkpaidflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Paid Amount : </td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">{{PaymentMode}}</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{PaidAmount}}</td>
                                                 </tr>
                                                 <tr style="display:{{chkbalflag}}">
