@@ -227,25 +227,25 @@ namespace HIMS.API.Controllers.Report
                 #region"OP Reports"
                 case "RegistrationForm":
                 case "OPStickerPrint":
-                case "RegistrationReport":
-                case "AppointmentListReport":
-                case "DoctorWiseVisitReport":
-                case "RefDoctorWiseReport":
-                case "DepartmentWisecountSummury":
-                case "OPDoctorWiseVisitCountSummary":
-                case "OPAppoinmentListWithServiseAvailed":
-                case "CrossConsultationReport":
-                case "OPDoctorWiseNewOldPatientReport":
+                //case "RegistrationReport":
+                //case "AppointmentListReport":
+                //case "DoctorWiseVisitReport":
+                //case "RefDoctorWiseReport":
+                //case "DepartmentWisecountSummury":
+                //case "OPDoctorWiseVisitCountSummary":
+                //case "OPAppoinmentListWithServiseAvailed":
+                //case "CrossConsultationReport":
+                //case "OPDoctorWiseNewOldPatientReport":
                 case "OPRefundReceipt":
                 case "OPPaymentReceipt":
                 case "AppointmentReceipt":
                 case "OpBillReceipt":
                 case "OPBillWithPackagePrint":
-                case "GRNReport":
-                case "GRNReturnReport":
-                case "IndentwiseReport":
+                //case "GRNReport":
+                //case "GRNReturnReport":
+                //case "IndentwiseReport":
                 case "OPCasePaper":
-                case "OPDSpineCasePaper":
+                //case "OPDSpineCasePaper":
                 case "OPPrescription":
                 case "OPPrescriptionwithoutHeader":
                 case "CertificateInformationReport":
@@ -274,12 +274,12 @@ namespace HIMS.API.Controllers.Report
 
                 #region"OPBilling Reports"
 
-                case "BillReportSummary":
-                case "BillReportSummarySummary":
-                case "OPDBillBalanceReport":
-                case "OPDRefundOfBill":
-                case "OPDailyCollectionReport":
-                case "OPCollectionSummary":
+                //case "BillReportSummary":
+                //case "BillReportSummarySummary":
+                //case "OPDBillBalanceReport":
+                //case "OPDRefundOfBill":
+                //case "OPDailyCollectionReport":
+                //case "OPCollectionSummary":
 
                 //{
                 //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
@@ -312,18 +312,18 @@ namespace HIMS.API.Controllers.Report
 
                 #region"OP MIS Reports"
 
-                case "DayWiseOpdCountDetails":
-                case "DayWiseOpdCountSummry":
-                case "DepartmentWiseOPDCount":
-                case "DepartmentWiseOpdCountSummary":
-                case "DrWiseOPDCountDetail":
-                case "DoctorWiseOpdCountSummary":
-                case "DrWiseOPDCollectionDetails":
-                case "DoctorWiseOpdCollectionSummary":
-                case "DepartmentWiseOPDCollectionDetails":
-                case "DepartmentWiseOpdCollectionSummary":
-                case "DepartmentServiceGroupWiseCollectionDetails":
-                case "DepartmentServiceGroupWiseCollectionSummary":
+                //case "DayWiseOpdCountDetails":
+                //case "DayWiseOpdCountSummry":
+                //case "DepartmentWiseOPDCount":
+                //case "DepartmentWiseOpdCountSummary":
+                //case "DrWiseOPDCountDetail":
+                //case "DoctorWiseOpdCountSummary":
+                //case "DrWiseOPDCollectionDetails":
+                //case "DoctorWiseOpdCollectionSummary":
+                //case "DepartmentWiseOPDCollectionDetails":
+                //case "DepartmentWiseOpdCollectionSummary":
+                //case "DepartmentServiceGroupWiseCollectionDetails":
+                //case "DepartmentServiceGroupWiseCollectionSummary":
 
 
                 //{

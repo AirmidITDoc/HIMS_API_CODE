@@ -35,7 +35,7 @@
                 </tr>
                 <tr class="bill-info-row">
                     <td>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Bill No:</span>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Bill Date | Time:</span>
-                                    <span>{{BillDate}}</span>
+                                    <span>{{BillDateTime}}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -57,7 +57,7 @@
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Age | Gender:</span>
-                                    <span> {{Age}} Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
+                                    <span> {{Age}} Y| {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">DOA | Time:</span>
@@ -71,6 +71,18 @@
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
+                                    <span style="font-weight: bold;">Patient Type:</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+
+                                <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                    <b>Company Name :</b> {{CompanyName}}
+                                </td>
+
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Department :</span>
                                     <span>{{DepartmentName}} </span>
                                 </td>
@@ -79,21 +91,11 @@
                                     <span>{{DoctorName}}</span>
                                 </td>
 
-
-                            </tr>
-                            <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;">Ref.Doctor Name:</span>
                                     <span>{{RefDocName}}</span>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;">Patient Type:</span>
-                                    <span>{{PatientType}}</span>
-                                </td>
-
-                                <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
-                                    <b>Company Name :</b> {{CompanyName}}
-                                </td>
+                             
                             </tr>
 
 
@@ -104,8 +106,8 @@
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
 
-                            <tr style="font-weight:bold;font-size:20px;">
-                                <td style="border: 1px solid #000; text-align: center; padding: 6px; ">Sr.No</td>
+                            <tr style="font-weight: bold; font-size: 18px;">
+                                <td style="border: 1px solid #000; text-align: center; padding: 3px; ">Sr.No</td>
                                 <td style="border: 1px solid #000; text-align: left; padding: 6px;">
                                     Service Name
                                 </td>
@@ -125,7 +127,7 @@
 
                                 <tr style="margin-top: 12px;">
                                     <td colspan="6">
-                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px; font-weight: bold;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 18px; font-weight: bold;">
                                             <tr>
 
                                                 <td style="border-bottom:1px solid #eee; padding: 6px;">Total Bill Amount</td>
@@ -136,7 +138,7 @@
 
                                             <tr style="display:{{chkdiscflag}}">
                                                 <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount </td>
-                                                <td style="border-bottom:1px solid #eee; padding: 6px; text-align: center; margin-left:40px; ">{{DiscComments}} </td>
+                                                <td style="border-bottom:1px solid #eee; padding: 6px; text-align: center; margin-left:30px; ">{{ConcessionReason}} </td>
                                                 <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{ConcessionAmt}}</td>
 
                                             </tr>
@@ -159,11 +161,10 @@
 
                                                 <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BalanceAmt}}</td>
                                             </tr>
-                                            <tr style="margin-top: 12px; font-size: 20px; font-weight: bold;">
+                                            <tr style="margin-top: 12px; font-size: 18px; font-weight: bold;">
                                                 <td colspan="6"
                                                     style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px;">
-                                                    Total
-                                                    Amount in words :- {{finalamt}}
+                                                    Amount Payable (in words):- {{finalamt}}
                                                 </td>
                                             </tr>
 
@@ -242,9 +243,8 @@
                     <td style="padding: 6px;font-size: 15px;">This is Computer generated invoice hence doesn’t require signature</td>
                 </tr>
                 <tr style="padding: 6px; text-align: right;"></tr>
-                <tr style="padding: 6px; text-align: right; font-size: 24px;">
+                <tr style="padding: 6px; text-align: right; font-size: 20px;">
                     <td>
-
                         <span>Authorized Signature</span>
                     </td>
                 </tr>
