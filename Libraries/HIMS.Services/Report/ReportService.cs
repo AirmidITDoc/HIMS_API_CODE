@@ -3584,7 +3584,9 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{CountryName}}", dt.GetColValue("CountryName"));
 
+                        
                         // New
                         html = html.Replace("{{EmgContactPersonName}}", dt.GetColValue("EmgContactPersonName"));
                         html = html.Replace("{{EmgRelationshipId}}", dt.GetColValue("EmgRelationshipId"));
@@ -3610,6 +3612,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkMedTourismResidentialAddressflag}}", dt.GetColValue("MedTourismResidentialAddress").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkMedTourismOfficeWorkAddressflag}}", dt.GetColValue("MedTourismOfficeWorkAddress").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkMedTourismCitizenshipflag}}", dt.GetColValue("MedTourismCitizenship").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkCountryNameflag}}", dt.GetColValue("CountryName").ConvertToString() != "" ? "table-row" : "none");
+
 
 
 
@@ -3837,6 +3841,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode"));
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
                         double T_NetAmount = 0;
                         foreach (DataRow dr in dt.Rows)
