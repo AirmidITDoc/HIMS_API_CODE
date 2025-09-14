@@ -181,8 +181,6 @@ namespace HIMS.Services.Common
 
                     
                     }
-              
-                    
 
                     string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
                     Payment objPay = new();
