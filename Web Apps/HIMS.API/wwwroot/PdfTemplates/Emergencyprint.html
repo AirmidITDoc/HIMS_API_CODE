@@ -28,18 +28,22 @@
                                 <tr class="title-date-row">
                                     <td>
                                         <table style="width: 100%; border-collapse: collapse;">
-                                            <tr style="font-size: 26px;font-weight:bold;">
-                                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;" colspan="2">
+                                            <tr style="font-size: 20px">
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                                     <b>
                                                         Emergency  Form
                                                     </b>
                                                 </td>
-
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                                    <b>
+                                                        Print
+                                                        Date : {{CurrentDate}}
+                                                    </b>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
-
                                 <tr class="bill-info-row">
                                     <td style="padding: 6px;">
 
@@ -50,6 +54,10 @@
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">UHID:</span>
                                                     <span>{{RegId}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Mobile No :</span>
+                                                    <span>{{MobileNo}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Reg Date:</span>
@@ -68,6 +76,10 @@
                                                     <span style="font-weight:bold;">Doctor Name :</span>
                                                     <span>{{DoctorName}}</span>
                                                 </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Age | Gender :</span>
+                                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                                </td>
 
                                             </tr>
                                             <tr>
@@ -75,6 +87,7 @@
                                                     <span style="font-weight:bold;">City :</span>
                                                     <span>{{CityName}}</span>
                                                 </td>
+
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Address :</span>
                                                     <span>{{Address}}</span>
@@ -82,14 +95,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Age | Gender :</span>
-                                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
-                                                </td>
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Mobile No :</span>
-                                                    <span>{{MobileNo}}</span>
-                                                </td>
+                                              
+                                               
                                             </tr>
 
 
@@ -137,7 +144,7 @@
         </tr>
     </table>
 
-<table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
+<!--<table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
     <tr>
         <footer style="margin-left: 70%; font-size: 19px;">
 
@@ -149,7 +156,7 @@
         </td>
         </footer>
     </tr>
-</table>
+</table>-->
 
 </body>
 

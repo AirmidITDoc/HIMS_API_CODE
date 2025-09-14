@@ -77,14 +77,27 @@ namespace HIMS.Services.IPPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime","IsCancelled", "IsCancelledBy"  };
+            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime","IsCancelled","DepartmentId", "OtrequestId" };
             var CAdvanceEntity = objTOtReservation.ToDictionary();
             foreach (var rProperty in rDetailEntity)
             {
                 CAdvanceEntity.Remove(rProperty);
             }
+           odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
+        }
+        public virtual async Task InsertAsyncSP(TOtReservation ObjTOtReservation, int UserId, string UserName)
+        {
 
-            odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
+            DatabaseHelper odal = new();
+            string[] Entity = { "ReservationDate", "ReservationTime", "OpIpType", "OpstartTime", "OpendTime", "Duration", "OttableId", "DepartmentId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDate", "ModifiedDate", "ModifiedBy", "OtrequestId" };
+            var entity = ObjTOtReservation.ToDictionary();
+            foreach (var rProperty in Entity)
+            {
+                entity.Remove(rProperty);
+            }
+
+            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTBooking_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+            ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
 
 

@@ -81,6 +81,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MReportConfigDetail, ReportConfigDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtReservation, OTReservationCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtbookingRequest, OTBookingRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservation, OTBookingPostPoneModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

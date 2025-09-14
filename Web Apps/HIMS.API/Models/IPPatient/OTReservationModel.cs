@@ -53,9 +53,20 @@ namespace HIMS.API.Models.IPPatient
         public class OTReservationCancel
         {
             public long OtreservationId {  get; set; }
+            public string? Reason { get; set; }
+            public long? IsCancelledBy { get; set; }
 
         }
-      
+        public class OTBookingPostPoneModel
+        {
+            public long OldOTReservationId { get; set; }
+            public long? OpIpId { get; set; }
+            public DateTime? Opdate { get; set; }
+            public int? CreatedBy { get; set; }
+            public string? Reason { get; set; }
+            public long NewOTReservationId { get; set; }
+
+        }
     }
 
 }
