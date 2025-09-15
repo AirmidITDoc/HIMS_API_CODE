@@ -92,7 +92,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MedTourismResidentialAddress { get; set; }
         public string? MedTourismOfficeWorkAddress { get; set; }
         public byte? AdmissionType { get; set; }
+        public double? AdminPer { get; set; }
 
+        
     }
 
     public class PatientAdmittedListSearchDto
