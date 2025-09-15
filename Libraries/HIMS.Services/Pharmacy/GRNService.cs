@@ -277,13 +277,14 @@ namespace HIMS.Services.Pharmacy
             string[] rEntity = { "GrnNumber", "Grndate", "Grntime", "StoreId", "SupplierId","InvoiceNo","DeliveryNo","GateEntryNo","CashCreditType",
                "Grntype", "TotalAmount", "TotalDiscAmount", "TotalVatamount",  "NetAmount","InvDate",
                 "Remark","ReceivedBy","IsClosed","IsPaymentProcess","PaymentPrcDate","ProcessDes","DebitNote","CreditNote","OtherCharge",
-                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","TotIgstamt",
+                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsVerified","IsCancelled","IsClosed","Prefix","TotIgstamt",
                 "TranProcessId","TranProcessMode","BillDiscAmt","PaymentDate","EwayBillNo","EwayBillDate","TGrndetails","TSupPayDets"};
             var entity = objGRN.ToDictionary();
             foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
+            entity["VerifiedBy"] = UserId;
             odal.ExecuteNonQuery("m_Update_GRN_Verify_Status_1", CommandType.StoredProcedure, entity);
 
 
