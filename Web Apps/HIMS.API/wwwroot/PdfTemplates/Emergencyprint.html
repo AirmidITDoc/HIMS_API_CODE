@@ -60,7 +60,7 @@
                                                     <span>{{MobileNo}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Reg Date:</span>
+                                                    <span style="font-weight:bold;">Emg Date:</span>
                                                     <span> {{EmgTime}}</span>
                                                 </td>
 
@@ -71,11 +71,11 @@
                                                     <span style="font-weight:bold;">Patient Name :</span>
                                                     <span>{{PatientName}}</span>
                                                 </td>
-
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Doctor Name :</span>
-                                                    <span>{{DoctorName}}</span>
+                                                    <span style="font-weight:bold;">Address :</span>
+                                                    <span>{{Address}}</span>
                                                 </td>
+
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Age | Gender :</span>
                                                     <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
@@ -87,16 +87,37 @@
                                                     <span style="font-weight:bold;">City :</span>
                                                     <span>{{CityName}}</span>
                                                 </td>
-
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Address :</span>
-                                                    <span>{{Address}}</span>
+                                                    <span style="font-weight:bold;">Department :</span>
+                                                    <span>{{DepartmentName}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Doctor Name :</span>
+                                                    <span>{{DoctorName}}</span>
                                                 </td>
 
                                             </tr>
                                             <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Attending Doctor Name :</span>
+                                                    <span>{{AttendingDoctorName}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">RefDoctor Name :</span>
+                                                    <span>{{RefDoctorName}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Class :</span>
+                                                    <span>{{ClassName}}</span>
+                                                </td>
                                               
-                                               
+
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Tariff :</span>
+                                                    <span>{{TariffName}}</span>
+                                                </td>
                                             </tr>
 
 
@@ -126,16 +147,21 @@
 
 
 
-<table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 24px;">
+<table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial,">
     <tr></tr>
 
-    <tr style="border-bottom: 1px solid #d4c3c3;">
-        <td style="padding: 2px;">
-            <!--<span style="font-weight:bold;">Prepared By</span>
-            <br />
-            <span>{{AddedBy}}</span>-->
-        </td>
+    <tr style="padding: 6px; text-align: right;">
+        <td>
 
+            <span>{{UserName}}</span>
+        </td>
+    </tr>
+    <tr style="padding: 6px; text-align: right; border-bottom: 1px solid #d4c3c3; ">
+
+        <td>
+
+            <span><b>Added by</b></span>
+        </td>
     </tr>
 
 

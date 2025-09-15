@@ -3707,6 +3707,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{RegId}}", dt.GetColValue("RegId"));
+                        html = html.Replace("{{EmgId}}", dt.GetColValue("EmgId"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
@@ -3720,6 +3721,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{EmgDate}}", dt.GetColValue("EmgDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{EmgTime}}", dt.GetColValue("EmgTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName"));
+                        html = html.Replace("{{ClassName}}", dt.GetColValue("ClassName"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{AttendingDoctorName}}", dt.GetColValue("AttendingDoctorName"));
+                        html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+                        html = html.Replace("{{IsConverted}}", dt.GetColValue("IsConverted"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                    
 
                         return html;
 
