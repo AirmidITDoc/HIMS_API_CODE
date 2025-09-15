@@ -107,9 +107,8 @@ namespace HIMS.Services.Common
                 case "LoginAccessConfigList": sp_Name = "ps_M_LoginAccessConfigList"; break;
                 case "SystemConfigList": sp_Name = "ps_M_SystemConfigList"; break;
                 //GSTType  
-                case "gsttypeslist": sp_Name = "ps_m_gsttypes_list"; break;
                 case "grnInvoicenocheck": sp_Name = "ps_m_grnInvoiceno_check"; break;
-
+                case "CheckExistingBatchAvailable": sp_Name = "ps_CheckExistingBatchAvailable"; break;
 
                 default: break;
             }
