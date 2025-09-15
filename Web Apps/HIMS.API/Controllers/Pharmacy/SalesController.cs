@@ -224,7 +224,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesId);
         }
 
 
@@ -248,7 +248,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesId);
         }
 
         [HttpPost("SalesDraftBillSave")]
@@ -266,7 +266,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DsalesId);
         }
 
         [HttpPost("SalesDraftbillcancel")]
@@ -302,7 +302,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model1);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model1.AdvanceDetailId);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
@@ -320,7 +320,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.",model1);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.",model1.AdvanceDetailId);
         }
         //shilpa 27/05/2025//
 
@@ -341,7 +341,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.RefundId);
         }
 
 
