@@ -55,7 +55,6 @@ namespace HIMS.Services.Pharmacy
                 Direction = ParameterDirection.Output
             };
 
-
             string grnreturnNo = odal.ExecuteNonQuery("m_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "@GRNReturnId", para);
             objGRNReturn.GrnreturnNo = grnreturnNo;
 
@@ -115,47 +114,6 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        //public virtual async Task InsertAsync(TGrnreturnHeader objGRNReturn, List<TCurrentStock> objCStock, List<TGrndetail> objReturnQty, int UserId, string Username)
-
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update store table records
-        //        MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRNReturn.StoreId);
-        //        StoreInfo.GrnreturnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnreturnNo) + 1);
-        //        _context.MStoreMasters.Update(StoreInfo);
-        //        await _context.SaveChangesAsync();
-        //        // Add header & detail table records
-        //        objGRNReturn.GrnreturnNo = StoreInfo.GrnreturnNo;
-        //        _context.TGrnreturnHeaders.Add(objGRNReturn);
-        //        await _context.SaveChangesAsync();
-        //        // Update curren stock table records
-        //        List<TCurrentStock> objCStockList = new();
-        //        foreach (var objC in objCStock)
-        //        {
-        //            TCurrentStock objCInfo = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == objC.ItemId && x.StockId == objC.StockId && x.StoreId == objC.StoreId);
-        //            objC.GrnRetQty = Convert.ToInt32(objCInfo.GrnRetQty) + objCInfo.IssueQty;
-        //            objCStockList.Add(objC);
-        //        }
-        //        _context.TCurrentStocks.UpdateRange(objCStockList);
-        //        _context.Entry(objCStockList).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-        //        // Update grn details table records
-        //        List<TGrndetail> objGrnList = new();
-        //        foreach (var objGrn in objReturnQty)
-        //        {
-        //            TGrndetail objGRNInfo = await _context.TGrndetails.FirstOrDefaultAsync(x => x.GrndetId == objGrn.GrndetId);
-        //            objGRNInfo.ReturnQty = Convert.ToInt32(objGRNInfo.ReturnQty) + objGrn.ReturnQty;
-        //            objGrnList.Add(objGRNInfo);
-        //        }
-        //        _context.TGrndetails.UpdateRange(objGrnList);
-        //        _context.Entry(objGrnList).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-        //        scope.Complete();
-
-        //    }
-
-        //}
         public virtual async Task VerifyAsync(TGrnreturnHeader objGRN,  int UserId, string UserName)
         {
 
@@ -169,96 +127,7 @@ namespace HIMS.Services.Pharmacy
             }
             odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure,  entity);
         
-
         }
-
-
-        //public virtual async Task VerifyAsync(TGrnreturnHeader objGRNReturn, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-
-        //        //// Update header table records
-        //        TGrnreturnHeader objGRNH = await _context.TGrnreturnHeaders.FindAsync(objGRNReturn.GrnreturnId);
-        //        objGRNH.IsVerified = true;
-        //        _context.TGrnreturnHeaders.Update(objGRNH);
-        //        _context.Entry(objGRNH).State = EntityState.Modified;
-        //        // Get all return details for the specified GRN Return ID
-
-        //        var grnReturnDetails = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
-
-        //        foreach (var detail in grnReturnDetails)
-
-        //        {
-
-        //            var itemId = detail.ItemId;
-
-        //        //    var storeId = detail.StoreId;
-
-        //            var stockId = detail.StkId;
-
-        //            var returnQty = detail.ReturnQty;
-
-        //            // Find the matching current stock entry
-
-        //            var currentStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.ItemId == itemId && x.StockId == stockId);
-
-        //            if (currentStock != null)
-
-        //            {
-        //                currentStock.IssueQty += returnQty;
-
-        //                currentStock.BalanceQty -= returnQty;
-
-        //                currentStock.GrnRetQty -= returnQty;
-
-        //            }
-
-        //        }
-
-        //        // Save all changes at once after updating all entries
-
-        //        //   await _context.SaveChangesAsync();
-
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
-
-        //public virtual async Task VerifyAsync(TGrnreturnDetail objGRNReturn, int UserId, string Username)
-
-        //{
-
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Delete details table realted records
-        //        var lst = await _context.TGrnreturnDetails.Where(x => x.Grnid == objGRNReturn.GrnreturnId).ToListAsync();
-
-        //        // Update header & detail table records
-        //        _context.TGrnreturnDetails.Update(objGRNReturn);
-        //        _context.Entry(objGRNReturn).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        var currentStock = await _context.T_CurrentStock.FirstOrDefaultAsync(x => x.ItemId == itemId && x.StoreId == storeId && x.StockId == stockId);
-
-        //        if (currentStock != null)
-        //        {
-        //            currentStock.IssueQty += returnQty;
-        //            currentStock.BalanceQty -= returnQty;
-        //            currentStock.GrnRetQty -= returnQty;
-
-        //            await _context.SaveChangesAsync();
-        //        }
-
-
-        //        scope.Complete();
-        //    }
-        //}
-
-
-
-
 
         public virtual async Task<IPagedList<GrnListByNameListDto>> GetGRnListbynameAsync(GridRequestModel model)
         {

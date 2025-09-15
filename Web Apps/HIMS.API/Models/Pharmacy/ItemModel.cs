@@ -44,7 +44,7 @@ namespace HIMS.API.Models.Pharmacy
     public class GRNVerifyModel
     {
         public long? Grnid { get; set; }
-        public long IsVerified { get; set; }
+        public long VerifiedBy { get; set; }
     }
     public class GRNVerifyModelValidator : AbstractValidator<GRNVerifyModel>
     {
