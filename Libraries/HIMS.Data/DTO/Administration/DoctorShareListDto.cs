@@ -18,7 +18,7 @@ namespace HIMS.Data.DTO.Administration
         public string? PatientType { get; set; }
         public string? CompanyName { get; set; }
         public bool? IsBillShrHold { get; set; }
-        public byte? OpdIpdType { get; set; }
+        public int  opdipdtype  { get; set; }
 
     }
 }

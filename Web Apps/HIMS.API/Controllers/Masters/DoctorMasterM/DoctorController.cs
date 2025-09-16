@@ -134,6 +134,15 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
 
+        [HttpPost("DoctorshareBillList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareListDto> DoctorList = await _IDoctorMasterService.GetList(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
+        }
+
+
         //List API
         [HttpPost]
         [Route("[action]")]
