@@ -30,6 +30,7 @@ namespace HIMS.Data.Models
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public double? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? CompanyId { get; set; }
         public long? AdvanceId { get; set; }
         public long? RefundId { get; set; }

@@ -522,6 +522,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
                 #region :: EmergencyPrescription ::
                 case "EmergencyPrescription":
                     {
@@ -579,7 +580,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpBillWithPackagePrint.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptOP_BillWithPackage_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptOP_BillWithPackage_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPBillWithPackagePrint", "OPBillWithPackagePrint" + vDate, Orientation.Portrait);

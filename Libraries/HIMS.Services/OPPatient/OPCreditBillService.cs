@@ -20,7 +20,7 @@ namespace HIMS.Services.OPPatient
             {
                 // Bill Code
                 DatabaseHelper odal = new();
-                string[] rEntity = { "IsCancelled", "PbillNo",  "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails",
+                string[] rEntity = { "IsCancelled", "PbillNo",  "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo","RefundAmount", "AddCharges", "BillDetails",
                     "Payments","CreatedDate","ModifiedBy","ModifiedDate" };
                 var entity = objBill.ToDictionary();
                 foreach (var rProperty in rEntity)
@@ -109,7 +109,7 @@ namespace HIMS.Services.OPPatient
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                var VChargesId = odal.ExecuteNonQuery("m_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
 
                                 // //   Package Service add in Bill Details

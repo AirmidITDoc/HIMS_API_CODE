@@ -25,7 +25,7 @@ namespace HIMS.Services.OutPatient
             DatabaseHelper odal = new();
             // Insert In Payment 
             string[] rpayEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount",
-                                    "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount",};
+                                    "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var payentity = objpayment.ToDictionary();
             foreach (var rProperty in rpayEntity)
             {
@@ -33,8 +33,7 @@ namespace HIMS.Services.OutPatient
             }
             // Add the new parameter
             payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-
-            string PaymentId = odal.ExecuteNonQuery("ps_insert_Payment_OPIP_1", CommandType.StoredProcedure, "PaymentId", payentity);
+            string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
 
             //Udpate Bill Table 
