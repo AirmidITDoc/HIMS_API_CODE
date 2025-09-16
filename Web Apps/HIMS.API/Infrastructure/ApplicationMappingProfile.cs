@@ -248,6 +248,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<Discharge, DischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, BedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Admission, AdmissionModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             CreateMap<Discharge, DischargeUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
