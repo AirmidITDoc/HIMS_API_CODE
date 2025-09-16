@@ -44,6 +44,7 @@ namespace HIMS.API.Models.Pharmacy
         public string? TranProcessMode { get; set; }
         public decimal? BillDiscAmt { get; set; }
         public string? EwayBillNo { get; set; }
+        public DateTime? EwayBillDate { get; set; }
 
         public List<GRNDetailModel> TGrndetails { get; set; }
     }
