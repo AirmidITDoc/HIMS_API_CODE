@@ -1036,6 +1036,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PrintBillNo).HasMaxLength(100);
 
+                entity.Property(e => e.RefundAmount).HasColumnType("money");
+
                 entity.Property(e => e.SpeTaxAmt)
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0))");
@@ -9005,11 +9007,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ChequePayAmount).HasColumnType("money");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NeftbankMaster)
                     .HasMaxLength(50)
@@ -9268,7 +9274,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Remark).HasMaxLength(200);
+                entity.Property(e => e.Remark).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Registration>(entity =>

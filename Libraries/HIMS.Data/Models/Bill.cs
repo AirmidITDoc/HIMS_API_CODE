@@ -46,6 +46,7 @@ namespace HIMS.Data.Models
         public string? BillMonth { get; set; }
         public string? BillYear { get; set; }
         public string? PrintBillNo { get; set; }
+        public decimal? RefundAmount { get; set; }
         public bool? IsSettled { get; set; }
         public bool? IsPrinted { get; set; }
         public bool? IsFree { get; set; }
