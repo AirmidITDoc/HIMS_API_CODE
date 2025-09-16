@@ -27,5 +27,6 @@ namespace HIMS.Data.DTO.GRN
         public String? UserName { get; set; }
         public String? GrnType { get; set; }
         public bool? IsGrnTypeFlag { get; set; }
+        public decimal? TotalAmount { get; set; }
     }
 }

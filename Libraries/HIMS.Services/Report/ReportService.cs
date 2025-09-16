@@ -8818,7 +8818,7 @@ namespace HIMS.Services.Report
                 case "OpeningBalance":
                     {
                         int i = 0, j = 0;
-                        double T_count = 0, T_PerUnitPurRate = 0, T_PerUnitMrp = 0, T_BalQty = 0;
+                        double T_count = 0, T_PerUnitPurRate = 0, T_PerUnitMrp = 0, T_TotalQty = 0;
 
 
                         foreach (DataRow dr in dt.Rows)
@@ -8834,14 +8834,14 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"text-align: right;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["PerUnitPurRate"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"text-align: right;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["PerUnitMrp"].ConvertToDouble()).Append("</td>");
                          //   items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatPer"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["BalQty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: center;font-size: 19px; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["OpeningDocNo"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: left; font-size: 19px;border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["UserName"].ConvertToString()).Append("</td></tr>");
 
 
                             T_PerUnitPurRate += dr["PerUnitPurRate"].ConvertToDouble();
                             T_PerUnitMrp += dr["PerUnitMrp"].ConvertToDouble();
-                            T_BalQty += dr["BalQty"].ConvertToDouble();
+                            T_TotalQty += dr["TotalQty"].ConvertToDouble();
 
                         }
 
@@ -8853,7 +8853,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{T_PerUnitPurRate}}", T_PerUnitPurRate.ToString());
                         html = html.Replace("{{T_PerUnitMrp}}", T_PerUnitMrp.ToString());
-                        html = html.Replace("{{T_BalQty}}", T_BalQty.ToString());
+                        html = html.Replace("{{T_TotalQty}}", T_TotalQty.ToString());
                         html = html.Replace("{{Items}}", items.ToString());
                     }
                     break;
