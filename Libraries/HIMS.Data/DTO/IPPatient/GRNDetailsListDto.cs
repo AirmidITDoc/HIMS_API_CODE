@@ -29,6 +29,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? IsVerifiedDatetime { get; set; }
         public long? IsVerifiedUserId { get; set; }
         public decimal? VatAmount { get; set; }
+        public string? UOM { get; set; }
 
 
     }
