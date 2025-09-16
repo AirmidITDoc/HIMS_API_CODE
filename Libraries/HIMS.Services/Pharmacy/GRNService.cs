@@ -30,7 +30,7 @@ namespace HIMS.Services.Pharmacy
         }
         public virtual async Task<IPagedList<GRNDetailsListDto>> GRNDetailsList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<GRNDetailsListDto>(model, "Retrieve_GrnItemList");
+            return await DatabaseHelper.GetGridDataBySp<GRNDetailsListDto>(model, "ps_Rtrv_GrnItemList");
         }
 
         public virtual async Task<IPagedList<DirectPOListDto>> GetListAsync(GridRequestModel model)
