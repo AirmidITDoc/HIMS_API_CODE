@@ -195,6 +195,18 @@ namespace HIMS.API.Controllers.Pharmacy
         //}
 
 
+        [HttpGet("GetExisitingBatchList")]
+        public async Task<ApiResponse> GetExisitingBatchList(int StoreId, int ItemId, string BatchNo)
+        {
+            var resultList = await _IGRNService.GetExisitingBatchList(StoreId, ItemId, BatchNo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Exisiting Batch List.", resultList.Select(x => new
+            {
+                x.FormattedText,
+                x.BatchNo,
+                x.BatchExpDate,
+                x.UnitMRP
+            }));
+        }
 
         //[HttpPost("InsertGRNPurchase")]
         ////    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]

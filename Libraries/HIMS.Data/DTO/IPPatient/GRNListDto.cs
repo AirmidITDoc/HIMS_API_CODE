@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.IPPatient
 {
-    public  class GRNListDto
+    public class GRNListDto
     {
         public long SupplierId { get; set; }
         public long Grnid { get; set; }
@@ -46,7 +46,13 @@ namespace HIMS.Data.DTO.IPPatient
         public string? EwayBillNo { get; set; }
         public string? EwayBillDate { get; set; }
 
+    }
 
-
+    public class BatchListDTO
+    {
+        public string? FormattedText { get; set; }
+        public string? BatchNo { get; set; }
+        public DateTime? BatchExpDate { get; set; }
+        public decimal? UnitMRP { get; set; }
     }
 }

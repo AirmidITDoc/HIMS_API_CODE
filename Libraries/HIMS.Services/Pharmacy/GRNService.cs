@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -289,6 +290,61 @@ namespace HIMS.Services.Pharmacy
 
 
         }
+
+        public virtual async Task<List<BatchListDTO>> GetExisitingBatchList(int StoreId, int ItemId, string BatchNo)
+        {
+            var qry = (from cs in _context.TCurrentStocks
+                       where (BatchNo == "" || cs.BatchNo.Contains(BatchNo))
+                             && cs.ItemId == ItemId
+                             && cs.StoreId == StoreId
+                       select new BatchListDTO()
+                       {
+                           BatchNo = cs.BatchNo,
+                           BatchExpDate = cs.BatchExpDate,
+                           UnitMRP = cs.UnitMrp
+                       });
+
+            var sql = qry.ToQueryString();
+            Console.WriteLine(sql);
+            return await qry.ToListAsync();
+
+        }
+
+        //public virtual async Task<List<ServiceMasterDTO>> GetExisitingBatchList(int TariffId, int ClassId, string ServiceName)
+        //{
+        //    var qry = (from s in _context.ServiceMasters
+        //               join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
+        //               //on s.ServiceId equals d.ServiceId
+        //               join x in _context.ServiceWiseCompanyCodes on s.ServiceId equals x.ServiceId
+        //               where (s.IsActive == true)
+        //                     && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
+        //               select new ServiceMasterDTO()
+        //               {
+        //                   ServiceId = s.ServiceId,
+        //                   GroupId = s.GroupId,
+        //                   ServiceShortDesc = s.ServiceShortDesc,
+        //                   ServiceName = s.ServiceName,
+        //                   ClassRate = d.ClassRate ?? 0,
+        //                   TariffId = d.TariffId ?? 0,
+        //                   ClassId = d.ClassId ?? 0,
+        //                   IsEditable = s.IsEditable,
+        //                   CreditedtoDoctor = s.CreditedtoDoctor,
+        //                   IsPathology = s.IsPathology,
+        //                   IsRadiology = s.IsRadiology,
+        //                   IsActive = s.IsActive,
+        //                   PrintOrder = s.PrintOrder,
+        //                   IsPackage = s.IsPackage,
+        //                   DoctorId = s.DoctorId,
+        //                   IsDocEditable = s.IsDocEditable,
+        //                   CompanyCode = x.CompanyCode ?? "",
+        //                   CompanyServicePrint = x.CompanyServicePrint ?? "",
+        //                   IsInclusionOrExclusion = x.IsInclusionOrExclusion
+        //               });
+        //    var sql = qry.Take(50).ToQueryString();
+        //    Console.WriteLine(sql);
+        //    return await qry.Take(50).ToListAsync();
+
+        //}
 
         //public virtual async Task VerifyAsync(TGrndetail objGRN, int UserId, string Username)
         //{
