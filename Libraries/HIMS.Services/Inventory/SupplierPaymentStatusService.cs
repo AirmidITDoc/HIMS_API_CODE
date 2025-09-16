@@ -32,6 +32,11 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<SupplierPaymentStatusListDto>(model, "Rtrv_GRNList_ForAccount_payment");
         }
 
+        public virtual async Task<IPagedList<GetSupplierPaymentListDto>> GetSupplierPaymentList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GetSupplierPaymentListDto>(model, "ps_Rtrv_GrnSupPayList");
+        }
+
 
         public virtual async Task InsertAsyncSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string UserName)
         {

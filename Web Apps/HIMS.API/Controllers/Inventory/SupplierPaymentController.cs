@@ -52,6 +52,15 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(List1.ToGridResponse(objGrid, "GetSupplierPaymentStatusList"));
         }
 
+        [HttpPost("GetSupplierPaymentList")]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetSupplierPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<GetSupplierPaymentListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "GetSupplierPaymentList"));
+        }
+
+
 
         [HttpPost("Insert")]
      // [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
