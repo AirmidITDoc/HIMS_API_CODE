@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -79,6 +80,25 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.GrnreturnId);
+        }
+
+
+
+
+        [HttpPut("UpdateAddcharges/{id:int}")]
+      //  [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
+        {
+            TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
+            if (obj.GrnReturn.GrnreturnId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+            
+                await _gRNReturnService.UpdateAsyncsp(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("Verify")]

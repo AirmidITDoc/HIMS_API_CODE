@@ -114,7 +114,7 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        public virtual async Task VerifyAsync(TGrnreturnHeader objGRN,  int UserId, string UserName)
+        public virtual async Task VerifyAsync(TGrnreturnHeader objGRN, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -125,7 +125,20 @@ namespace HIMS.Services.Pharmacy
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure,  entity);
+            odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
+
+        }
+        public virtual async Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn,  int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "GrnreturnDate","GrnreturnTime","Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo" };
+            var entity = objGRNReturn.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
         
         }
 
