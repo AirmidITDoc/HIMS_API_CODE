@@ -141,7 +141,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharAdvanceList")]
-     //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PharAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PharAdvanceListDto> PrescriptionDetList = await _ISalesService.PharAdvanceList(objGrid);
@@ -196,7 +196,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesPatientWiseCreditAmountList")]
-     //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salespatientwiseList(GridRequestModel objGrid)
         {
             IPagedList<salespatientwiseListDto> salespatientwiseList = await _ISalesService.salespatientwiseList(objGrid);
@@ -205,7 +205,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
-       [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -213,8 +213,19 @@ namespace HIMS.API.Controllers.Pharmacy
             Payment modelPayment = obj.Payment.MapTo<Payment>();
             TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
             TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
-
-
+            string stockmsg = "";
+            foreach (var item in model.TSalesDetails)
+            {
+                var stock = await _ISalesService.GetStock(item.StkId.Value);
+                if (stock < item.Qty)
+                {
+                    stockmsg += item.BatchNo + " has only " + stock + " available stock. \n";
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(stockmsg))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, stockmsg);
+            }
             if (obj.Sales.SalesId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.Sales.Date);
@@ -224,7 +235,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesId);
         }
 
 
@@ -283,7 +294,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancelled successfully.");
         }
 
-        
+
         //shilpa 26/05/2025//
 
         [HttpPost("PharmacyAdvanceInsert")]
@@ -302,7 +313,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model1.AdvanceDetailId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model1.AdvanceDetailId);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
@@ -320,7 +331,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.",model1.AdvanceDetailId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.", model1.AdvanceDetailId);
         }
         //shilpa 27/05/2025//
 
@@ -337,11 +348,11 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PharmacyRefund.RefundId == 0)
             {
                 model.AddBy = CurrentUserId;
-                await _ISalesService.InsertAsyncR(model, model1, model3, model4 , model5 ,CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertAsyncR(model, model1, model3, model4, model5, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
         }
 
 
@@ -349,16 +360,16 @@ namespace HIMS.API.Controllers.Pharmacy
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
         {
-            List<Payment> model = obj.Payment.MapTo<List<Payment>> ();
-           List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
-           List<AdvanceDetail> model2 = obj.AdvanceDetail.MapTo<List<AdvanceDetail>>();
+            List<Payment> model = obj.Payment.MapTo<List<Payment>>();
+            List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
+            List<AdvanceDetail> model2 = obj.AdvanceDetail.MapTo<List<AdvanceDetail>>();
             AdvanceHeader model3 = obj.AdvanceHeader.MapTo<AdvanceHeader>();
 
 
             if (model.Count > 0)
             {
 
-                await _ISalesService.InsertAsync(model, model1, model2, model3,CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertAsync(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -386,8 +397,9 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _ISalesService.SearchRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Patient Data.", data.Select(x => new {
-                Text = x.ExternalPatientName +" | " + x.ExtMobileNo + " | " + x.DoctorName,
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Patient Data.", data.Select(x => new
+            {
+                Text = x.ExternalPatientName + " | " + x.ExtMobileNo + " | " + x.DoctorName,
                 Value = x.ExtMobileNo,
                 ExtMobileNo = x.ExtMobileNo,
                 DoctorName = x.DoctorName,
@@ -401,7 +413,8 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<ApiResponse> GetExtDocAutoComplete(string Keyword)
         {
             var data = await _ISalesService.SearchExtDoctor(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Doctor Data.", data.Select(x => new {
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Sales External Doctor Data.", data.Select(x => new
+            {
                 Text = x.DoctorName,
                 Value = x.DoctorName,
                 DoctorName = x.DoctorName,

@@ -21,7 +21,8 @@ namespace HIMS.API.Models.OPPatient
         public long IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long RefundId { get; set; }
-       
+        public long UnitId { get; set; }
+
 
     }
     public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>
@@ -110,6 +111,8 @@ namespace HIMS.API.Models.OPPatient
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public decimal? Tdsamount { get; set; }
+        public decimal? WFAmount{ get; set; }
+        public long? UnitId { get; set; }
     }
     public class PaymentModellValidator : AbstractValidator<PaymentModell>
     {

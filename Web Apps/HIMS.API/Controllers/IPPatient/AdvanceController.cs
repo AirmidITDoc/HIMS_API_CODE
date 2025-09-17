@@ -80,6 +80,7 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<RefundOfAdvanceListDto> RefundAdvanceList = await _IAdvanceService.GetRefundOfAdvanceListAsync(objGrid);
             return Ok(RefundAdvanceList.ToGridResponse(objGrid, "Refund Of Advance List"));
         }
+
         [HttpPost("InsertSP")]
         [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelAdvance1 obj)

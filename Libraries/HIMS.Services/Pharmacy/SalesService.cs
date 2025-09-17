@@ -706,5 +706,11 @@ namespace HIMS.Services.Users
                .ThenBy(x => x.DoctorName).ToListAsync();
 
         }
+
+        public virtual async Task<float> GetStock(long StockId)
+        {
+            TCurrentStock objStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.StockId == StockId);
+            return (objStock?.BalanceQty ?? 0) - (objStock?.GrnRetQty ?? 0);
+        }
     }
 }
