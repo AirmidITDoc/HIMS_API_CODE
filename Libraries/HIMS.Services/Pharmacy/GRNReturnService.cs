@@ -152,17 +152,13 @@ namespace HIMS.Services.Pharmacy
                 }
                 odal.ExecuteNonQuery("insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
             }
-            //string[] SEntity = { "GrnreturnDate", "GrnreturnTime", "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo" };
-            //var Sentity = objGRNReturn.ToDictionary();
-            //foreach (var rProperty in SEntity)
-            //{
-            //    Sentity.Remove(rProperty);
-            //}
-            //odal.ExecuteNonQuery("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, Sentity);
+            var tokenObj = new
+            {
+                GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
+            };
+            odal.ExecuteNonQuery("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, tokenObj.ToDictionary());
             foreach (var item in ObjTCurrentStock)
             {
-
-
                 string[] GGEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
                 var gentity = item.ToDictionary();
                 foreach (var rProperty in GGEntity)
@@ -173,8 +169,6 @@ namespace HIMS.Services.Pharmacy
             }
             foreach (var item in ObjTGrndetails)
             {
-
-
                 string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn" };
                 var gentity = item.ToDictionary();
                 foreach (var rProperty in GGEntity)
