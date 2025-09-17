@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.IPPatient
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "MlcInfo", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMlcinformation> MlcinformationList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "MlcInfo", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MlcInfo", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MlcInformationModel obj)
         {
             TMlcinformation model = obj.MapTo<TMlcinformation>();
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "MlcInfo", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MlcInformationModel obj)
         {
             TMlcinformation model = obj.MapTo<TMlcinformation>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MlcInfo", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TMlcinformation model = await _repository.GetById(x => x.Mlcid == Id);

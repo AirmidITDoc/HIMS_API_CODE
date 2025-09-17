@@ -318,7 +318,7 @@ namespace HIMS.Services.Common
                                               "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled",
                                              "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
                                               "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear"
-                ,"RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName",
+                ,"RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","RefundAmount",
                 "WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","PrintBillNo","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","AddCharges","BillDetails"};
 
             var BillEntity = ObjBill.ToDictionary();
@@ -360,7 +360,7 @@ namespace HIMS.Services.Common
 
             DatabaseHelper odal = new();
             string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",
-                "CreatedDate","ModifiedBy","ModifiedDate","BillPrefix", "BillMonth", "BillYear",  "PrintBillNo", "AddCharges", "BillDetails" };
+                "CreatedDate","ModifiedBy","ModifiedDate","BillPrefix", "BillMonth", "BillYear",  "PrintBillNo", "AddCharges", "RefundAmount","BillDetails" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -423,7 +423,7 @@ namespace HIMS.Services.Common
                                              "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
                                               "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix",
                                         "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",
-                                     "BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+                                     "BillMonth","BillYear","PrintBillNo","AddCharges","RefundAmount","BillDetails"};
 
             var BEntity = ObjBills.ToDictionary();
             foreach (var rProperty in rDetailEntity)
@@ -461,7 +461,7 @@ namespace HIMS.Services.Common
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -515,7 +515,7 @@ namespace HIMS.Services.Common
                                               "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled",
                                              "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
                                               "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",
-                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","RefundAmount","BillDetails"};
 
             var BEntity = ObjBills.ToDictionary();
             foreach (var rProperty in rDetailEntity)
@@ -566,7 +566,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails" };
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -588,7 +588,7 @@ namespace HIMS.Services.Common
                 }
                 odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
-            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity1 = Objpayment.ToDictionary();
             foreach (var rProperty in pEntity)
             {
@@ -811,7 +811,7 @@ namespace HIMS.Services.Common
                                               "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","IsSettled",
                                              "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
                                               "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",
-                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails"};
+                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","RefundAmount","BillDetails"};
 
             var AddEntity = ObjBill.ToDictionary();
             foreach (var rProperty in AEntity)

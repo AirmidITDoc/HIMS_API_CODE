@@ -20,7 +20,9 @@ namespace HIMS.Data.Models
         public float? Sgstper { get; set; }
         public float? Igstper { get; set; }
         public double? Gstper { get; set; }
-        public float? BalQty { get; set; }
+        public float? Packing { get; set; }
+        public float? StripQty { get; set; }
+        public float? TotalQty { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
     }

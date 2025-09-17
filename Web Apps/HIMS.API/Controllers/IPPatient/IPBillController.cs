@@ -122,7 +122,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AddChargeInsert")]
-  //      [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -222,7 +222,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-    //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -287,7 +287,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPAddcharges")]
-    //    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPAddcharges(AddChargModel obj)
         {
             AddCharge Model = obj.AdddCharges.MapTo<AddCharge>();

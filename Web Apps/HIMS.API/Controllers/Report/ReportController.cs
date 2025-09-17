@@ -241,7 +241,7 @@ namespace HIMS.API.Controllers.Report
                 case "AppointmentReceipt":
                 case "OpBillReceipt":
                 case "OPBillWithPackagePrint":
-                //case "GRNReport":
+                case "GRNReport":
                 //case "GRNReturnReport":
                 //case "IndentwiseReport":
                 case "OPCasePaper":
@@ -410,6 +410,8 @@ namespace HIMS.API.Controllers.Report
                 //OT
                 case "OTRequest":
                 case "OTReservationReport":
+                case "SupplierPaymentReciept":
+
 
 
 

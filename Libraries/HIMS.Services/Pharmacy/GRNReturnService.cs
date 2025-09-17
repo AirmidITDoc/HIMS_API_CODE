@@ -131,7 +131,7 @@ namespace HIMS.Services.Pharmacy
 
         public virtual async Task<IPagedList<GrnListByNameListDto>> GetGRnListbynameAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<GrnListByNameListDto>(model, "Rtrv_GRNReturnList_by_Name");
+            return await DatabaseHelper.GetGridDataBySp<GrnListByNameListDto>(model, "ps_Rtrv_GRNReturnList_by_Name");
         }
 
         public virtual async Task<IPagedList<GRNReturnListDto>> GetGRNReturnList(GridRequestModel model)

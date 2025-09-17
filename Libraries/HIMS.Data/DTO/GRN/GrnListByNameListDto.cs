@@ -21,10 +21,12 @@ namespace HIMS.Data.DTO.GRN
         public decimal? TotalVatAmount { get; set; }
         public decimal? NetAmount { get; set; }
         public String? Remark { get; set; }
-
         public bool? IsVerified { get; set; }
         public bool? IsClosed { get; set; }
         public long? AddedBy { get; set; }
         public String? UserName { get; set; }
+        public String? GrnType { get; set; }
+        public bool? IsGrnTypeFlag { get; set; }
+        public decimal? TotalAmount { get; set; }
     }
 }

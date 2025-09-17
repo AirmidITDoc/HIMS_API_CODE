@@ -7,6 +7,7 @@ namespace HIMS.API.Models.IPPatient
     {
         public long Mlcid { get; set; }
         public long? AdmissionId { get; set; }
+        public bool IsEmgOrAdm { get; set; }
         public string? Mlcno { get; set; }
         public DateTime? ReportingDate { get; set; }
         public string? ReportingTime { get; set; }

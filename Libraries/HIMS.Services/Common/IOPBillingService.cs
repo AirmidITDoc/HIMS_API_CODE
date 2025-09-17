@@ -8,7 +8,7 @@ namespace HIMS.Services.Common
     public partial interface IOPBillingService
     {
         Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
-        Task InsertAsyncSP1(Bill objBill,int CurrentUserId, string CurrentUserName);
+        //Task InsertAsyncSP1(Bill objBill,int CurrentUserId, string CurrentUserName);
         Task InsertCreditBillAsyncSP(Bill objBill, int currentUserId, string currentUserName);
 
         Task<IPagedList<CertificateInformationListDto>> GetListAsync(GridRequestModel objGrid);

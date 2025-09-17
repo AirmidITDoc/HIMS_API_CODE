@@ -53,5 +53,6 @@ namespace HIMS.Services.Users
         Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
+        Task<float> GetStock(long StockId);
     }
 }

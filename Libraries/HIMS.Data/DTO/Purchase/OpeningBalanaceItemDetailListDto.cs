@@ -18,7 +18,7 @@ namespace HIMS.Data.DTO.Purchase
         public float  SGSTPer { get; set; }
         public float IGSTPer { get; set; }
         public double Gstper { get; set; }
-        public float BalQty { get; set; }
+        public float TotalQty { get; set; }
 
 
     }

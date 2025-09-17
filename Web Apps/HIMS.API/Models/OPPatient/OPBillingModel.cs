@@ -141,6 +141,7 @@ namespace HIMS.API.Models.OPPatient
     public class OPPaymentModel
     {
         public int PaymentId { get; set; }
+        public long? UnitId { get; set; }
         public int? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public string? PaymentDate { get; set; }
@@ -172,6 +173,7 @@ namespace HIMS.API.Models.OPPatient
         public string? PayTmtranNo { get; set; }
         public string? PayTmdate { get; set; }
         public long? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
     }
 
     public class OPPaymentModelValidator : AbstractValidator<OPPaymentModel>

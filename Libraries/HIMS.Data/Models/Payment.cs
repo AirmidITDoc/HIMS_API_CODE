@@ -6,6 +6,7 @@ namespace HIMS.Data.Models
     public partial class Payment
     {
         public long PaymentId { get; set; }
+        public long? UnitId { get; set; }
         public long? BillNo { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
@@ -29,6 +30,7 @@ namespace HIMS.Data.Models
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public double? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? CompanyId { get; set; }
         public long? AdvanceId { get; set; }
         public long? RefundId { get; set; }
@@ -46,5 +48,9 @@ namespace HIMS.Data.Models
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? AddBy { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

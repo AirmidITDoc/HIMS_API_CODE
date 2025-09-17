@@ -14,7 +14,6 @@ namespace HIMS.Data.DTO.Purchase
         public long? CreatedBy { get; set; }
         public long OpeningHid { get; set; }
 
-
     }
 
 
@@ -34,7 +33,9 @@ namespace HIMS.Data.DTO.Purchase
         public float? Sgstper { get; set; }
         public float? Igstper { get; set; }
         public double? Gstper { get; set; }
-        public float? BalQty { get; set; }
+        public float? TotalQty { get; set; }
+        public float? Packing { get; set; }
+        public float? StripQty { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
     }
