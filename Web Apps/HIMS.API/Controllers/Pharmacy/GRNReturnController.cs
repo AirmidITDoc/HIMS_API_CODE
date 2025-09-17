@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);
@@ -85,18 +85,24 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
 
-        [HttpPut("UpdateAddcharges/{id:int}")]
-      //  [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
+        [HttpPut("UpdateGRNReturn")]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
+            List<TGrnreturnDetail> model1 = obj.GRNReturnDetails.MapTo<List<TGrnreturnDetail>>();
+            List<TCurrentStock> model2= obj.CurrentStock.MapTo<List<TCurrentStock>>();
+            List<TGrndetail> model3 = obj.GrnreturnUpdate.MapTo<List<TGrndetail>>();
             if (obj.GrnReturn.GrnreturnId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
             else
             {
+                model.AddedBy = CurrentUserId;
+                model.GrnreturnDate = DateTime.Now;
 
-            
-                await _gRNReturnService.UpdateAsyncsp(model, CurrentUserId, CurrentUserName);
+
+                await _gRNReturnService.UpdateAsyncsp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

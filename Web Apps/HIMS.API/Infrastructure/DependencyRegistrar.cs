@@ -69,6 +69,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IReportConfigService, ReportConfigService>();
             services.AddScoped<IOTService, OTService>();
             services.AddScoped<IEmergencyService, EmergencyService>();
+            services.AddScoped<ITexpenseservice, Texpenseservice>();
+
 
 
 

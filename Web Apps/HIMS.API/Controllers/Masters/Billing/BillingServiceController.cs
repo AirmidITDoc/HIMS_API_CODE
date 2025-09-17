@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
