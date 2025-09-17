@@ -59,11 +59,15 @@ namespace HIMS.API.Infrastructure
             CreateMap<TGrnheader, GRNDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, PhBillDiscountAfterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
 
-            
+
+
+
+
 
             CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
