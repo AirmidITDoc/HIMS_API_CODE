@@ -347,7 +347,7 @@ namespace HIMS.API.Controllers.Common
 
                 "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
 
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
                 //OT MANAGMENT DROPDOWN//

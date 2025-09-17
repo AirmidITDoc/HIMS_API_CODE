@@ -297,11 +297,18 @@ namespace HIMS.Services.Pharmacy
                        where (BatchNo == "" || cs.BatchNo.Contains(BatchNo))
                              && cs.ItemId == ItemId
                              && cs.StoreId == StoreId
+                             && cs.BalanceQty > 0
                        select new BatchListDTO()
                        {
                            BatchNo = cs.BatchNo,
                            BatchExpDate = cs.BatchExpDate,
-                           UnitMRP = cs.UnitMrp
+                           UnitMRP = cs.UnitMrp,
+                           UnitPurRate=cs.PurUnitRateWf,
+                           UnitLandedRate=cs.LandedRate,
+                           GST=cs.VatPercentage,
+                           FormattedText = cs.BatchNo + " "
+                               + cs.BatchExpDate + " "
+                               + cs.PurUnitRateWf
                        });
 
             var sql = qry.ToQueryString();
