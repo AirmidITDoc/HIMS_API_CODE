@@ -21,7 +21,8 @@ namespace HIMS.API.Models.OPPatient
         public long IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long RefundId { get; set; }
-       
+        public long UnitId { get; set; }
+
 
     }
     public class OPRefundOfBillModelValidator : AbstractValidator<OPRefundOfBillModel>

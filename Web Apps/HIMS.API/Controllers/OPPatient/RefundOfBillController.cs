@@ -114,7 +114,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPRefundOfBILLInsert")]
-        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
