@@ -60,7 +60,7 @@ namespace HIMS.Services.IPPatient
             objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
 
 
-            string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var PAdvanceEntity = objPayment.ToDictionary();
             foreach (var rProperty in PayEntity)
             {
@@ -93,7 +93,7 @@ namespace HIMS.Services.IPPatient
             objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
 
 
-            string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            string[] PayEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var PAdvanceEntity = objPayment.ToDictionary();
             foreach (var rProperty in PayEntity)
             {
@@ -167,7 +167,7 @@ namespace HIMS.Services.IPPatient
                 }
                 odal.ExecuteNonQuery("ps_update_AdvanceDetailBalAmount_1", CommandType.StoredProcedure, AdDetailEntity);
             }
-            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity1 = ObjPayment.ToDictionary();
             foreach (var rProperty in pEntity)
             {
