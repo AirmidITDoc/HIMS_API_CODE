@@ -242,6 +242,7 @@ namespace HIMS.Services.Inventory
                             ItemName = grouped.Key.ItemName,
                              //grouped.Key.UnitofMeasurementName,
                              UMOId = grouped.Key.UnitofMeasurementId,
+                             UMOName = grouped.Key.UnitofMeasurementName,
                              ConverFactor = grouped.Key.ConversionFactor,
                              //grouped.Key.TaxPer,
                              //grouped.Key.IsBatchRequired,
