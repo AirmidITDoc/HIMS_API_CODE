@@ -85,17 +85,19 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
 
-         [HttpPut("Edit/{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
+
             if (obj.ItemId == 0)
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsUpdatedBy = DateTime.Now;
@@ -104,6 +106,8 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "ItemMaster", Permission = PagePermission.Delete)]
