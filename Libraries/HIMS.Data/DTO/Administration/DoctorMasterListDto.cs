@@ -41,7 +41,8 @@ namespace HIMS.Data.DTO.Administration
         public string? PANCARDNO { get; set; }
         public string? AadharCardNo { get; set; }
         public string? Signature { get; set; }
+        public long? AgeYear { get; set; }
+        public string? RefDocHospitalName { get; set; }
 
-      
     }
 }

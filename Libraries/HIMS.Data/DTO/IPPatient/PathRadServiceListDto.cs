@@ -15,7 +15,9 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsRadiology { get; set; }
         public bool? IsActive { get; set; }
         public long? TariffId { get; set; }
-     
+
+        public bool? CreditedtoDoctor { get; set; }
+
 
     }
 }
