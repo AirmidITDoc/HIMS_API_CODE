@@ -183,7 +183,7 @@ namespace HIMS.Services.Users
         //}
 
         // Added by vimal on 05/09/2025
-        public virtual async Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, Payment ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
         {
             // Open transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -226,12 +226,11 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQueryNew("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
 
                 // 4️⃣ Insert Payment
-                string[] PEntity = { "Tdsamount", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+                string[] PEntity = { "StrId", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var Sentity = ObjPayment.ToDictionary();
                 foreach (var rProperty in PEntity)
                     Sentity.Remove(rProperty);
 
-                Sentity["OPDIPDType"] = 3;
                 string PaymentId = odal.ExecuteNonQueryNew("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
                 ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
