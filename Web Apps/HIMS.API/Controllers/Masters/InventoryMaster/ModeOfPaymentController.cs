@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "ModeOfPayment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ModeOfPayment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MModeOfPayment> ModeOfPaymentList = await _repository.GetAllPagedAsync(objGrid);

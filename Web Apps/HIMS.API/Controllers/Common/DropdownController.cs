@@ -286,6 +286,10 @@ namespace HIMS.API.Controllers.Common
                 "CompanyType" => (await _IMcompanytypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CompanyTypeMaster.CompanyTypeId), nameof(CompanyTypeMaster.TypeName)),
                 "RelationShip" => (await _IMRelationshipService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
                 "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+
+                "PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                "RadiologyService" => (await _IMServiceService.GetAll(x => x.IsRadiology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+
                 "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
                 "DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
@@ -347,7 +351,7 @@ namespace HIMS.API.Controllers.Common
 
                 "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
 
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
                 //OT MANAGMENT DROPDOWN//

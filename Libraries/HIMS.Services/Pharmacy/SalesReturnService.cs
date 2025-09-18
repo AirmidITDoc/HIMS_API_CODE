@@ -54,7 +54,7 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual async Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, Payment ObjPayment, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, int UserId, string Username)
         {
 
             // //Add header table records
@@ -125,13 +125,12 @@ namespace HIMS.Services.Pharmacy
             };
             odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
-            string[] PEntity = { "Tdsamount", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
+            string[] PEntity = { "StrId","ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Sentity = ObjPayment.ToDictionary();
             foreach (var rProperty in PEntity)
             {
                 Sentity.Remove(rProperty);
             }
-            Sentity["OPDIPDType"] = 1;
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 

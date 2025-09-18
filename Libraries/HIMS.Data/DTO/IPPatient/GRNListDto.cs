@@ -54,5 +54,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
         public decimal? UnitMRP { get; set; }
+        public decimal? UnitPurRate { get; set; }
+        public decimal? UnitLandedRate { get; set; }
+        public decimal? GST { get; set; }
     }
 }

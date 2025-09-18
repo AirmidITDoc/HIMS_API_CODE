@@ -205,12 +205,12 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
             List<TCurrentStock> CurrentStock = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
-            Payment modelPayment = obj.Payment.MapTo<Payment>();
+            PaymentPharmacy modelPayment = obj.Payment.MapTo<PaymentPharmacy>();
             TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
             TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
             string stockmsg = "";
