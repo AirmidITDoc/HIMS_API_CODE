@@ -3925,6 +3925,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode").ConvertToString());
                         html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
@@ -3946,48 +3947,9 @@ namespace HIMS.Services.Report
 
 
 
-                        //StringBuilder items = new StringBuilder("");
-                        //int i = 0, j = 0;
-                        //string previousLabel = "";
+                    
                         double T_NetAmount = 0;
-                        //foreach (DataRow dr in Bills.Rows)
-                        //{
-                        //    i++;j++;
-                        //    if (i == 1)
-                        //    {
-                        //        String Label;
-                        //        Label = dr["ServiceName"].ConvertToString();
-                        //        items.Append("<tr style=\"font-size:20px;border: 1px;color:black;\"><td colspan=\"8\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
-                        //    }
-
-                        //foreach (DataRow dr in Bills.Rows)
-                        //{
-                        //    i++;
-
-                        //    // Start a new row
-                        //    items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:15;\">");
-
-                        //    // For the first row: Service Name in bold, with serial number
-                        //    if (i == 1)
-                        //    {
-                        //        items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                        //        items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                        //    }
-                        //    else
-                        //    {
-                        //        // For the subsequent rows: Skip serial number, indent Service Name slightly
-                        //        items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">&nbsp;</td>"); // Empty cell for serial number
-                        //        items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding-left: 20px; font-size: 12px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                        //    }
-
-                        //    // Continue with the rest of the data (ChargesDoctorName, Price, Qty, NetAmount)
-                        //    items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td></tr>");
-                        //    //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
-                        //    //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                        //    //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
-
-                        //    T_NetAmount += dr["NetAmount"].ConvertToDouble();
-                        //}
+                       
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
@@ -4013,6 +3975,8 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
@@ -4037,6 +4001,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
                         html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
                         html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments").ConvertToString());
+                        html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode").ConvertToString());
+
 
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -4405,21 +4371,7 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            //if (i == 1 || Label != previousLabel)
-                            //{
-                            //    j = 1;
-                            //    Label = dr["DrugName"].ConvertToString();
-                            //    Label1 = dr["GenericName"].ConvertToString();
-                            //    Label2 = dr["OldClassName"].ConvertToString();
-
-                            //    items.Append("<tr style=\"font-size:22px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"2\" style=\";padding:6px;height:10px;text-align:left;font-weight:bold;vertical-align:middle;padding-left:60px;\">").Append(Label2).Append("-----").Append(Label).Append("</td><td  style=\"padding:6px;height:10px;text-align:left;vertical-align:middle\">").Append(Label1).Append("</td></tr>");
-                            //}
-                            //previousLabel = dr["DrugName"].ConvertToString();
-
-                            //if (Label == previousLabel)
-                            //{
-
-                            //    i++;
+                           
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
                             items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
                             items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
@@ -4436,8 +4388,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
 
 
-                            //    j++;
-                            //}
+                         
 
 
                         }

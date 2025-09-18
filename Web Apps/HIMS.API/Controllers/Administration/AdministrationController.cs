@@ -133,52 +133,52 @@ namespace HIMS.API.Controllers.Administration
 
 
 
-        [HttpPost("TExpenseInsert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Posts(TExpenseModel obj)
-        {
-            TExpense model = obj.MapTo<TExpense>();
-            if (obj.ExpId == 0)
-            {
+        //[HttpPost("TExpenseInsert")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Posts(TExpenseModel obj)
+        //{
+        //    TExpense model = obj.MapTo<TExpense>();
+        //    if (obj.ExpId == 0)
+        //    {
 
-                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.");
-        }
+        //        await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.");
+        //}
 
-        [HttpPut("TExpenseUpdate{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edits(TExpenseModel obj)
-        {
-            TExpense model = obj.MapTo<TExpense>();
-            if (obj.ExpId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
+        //[HttpPut("TExpenseUpdate{id:int}")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edits(TExpenseModel obj)
+        //{
+        //    TExpense model = obj.MapTo<TExpense>();
+        //    if (obj.ExpId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
 
-                await _IAdministrationService.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
-        }
+        //        await _IAdministrationService.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
+        //}
 
-        [HttpDelete("TExpenseCancel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
-        {
-            TExpense Model = obj.MapTo<TExpense>();
+        //[HttpDelete("TExpenseCancel")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
+        //{
+        //    TExpense Model = obj.MapTo<TExpense>();
 
-            if (obj.ExpId != 0)
-            {
+        //    if (obj.ExpId != 0)
+        //    {
 
-              //   Model.IsAddedby = CurrentUserId;
-                await _IAdministrationService.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record delete successfully.");
-        }
+        //      //   Model.IsAddedby = CurrentUserId;
+        //        await _IAdministrationService.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record delete successfully.");
+        //}
         [HttpPost("IP_DISCHARGE_CANCELLATION")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
