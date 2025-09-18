@@ -24,6 +24,8 @@ namespace HIMS.API.Models.Pharmacy
         public string? GrnType { get; set; }
         public bool IsGrnTypeFlag { get; set; }
         public long GrnreturnId { get; set; }
+        //public List<GRNReturnDetailsModel> TGrnreturnDetails { get; set; }
+
 
 
 
@@ -78,9 +80,9 @@ namespace HIMS.API.Models.Pharmacy
     public class GRNReturnUpdatereqDto
     {
         public GRNUpdatedModel GrnReturn { get; set; }
-        public List<GRNReturnDetailsModel> GRNReturnDetails { get; set; }
-        public List<CurStockModels> CurrentStock{ get; set; }
-        public List<UpdateGrnReturnQty> GrnreturnUpdate { get; set; }
+        public List<GRNReturnDetailsModel> tGrnreturnDetails { get; set; }
+        public List<CurStockModels> GrnReturnCurrentStock { get; set; }
+        public List<UpdateGrnReturnQty> GrnReturnReturnQt { get; set; }
 
         //public List<GRNReturnReturnQty> GrnReturnReturnQt { get; set; }
     }

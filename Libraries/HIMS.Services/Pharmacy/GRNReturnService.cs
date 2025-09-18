@@ -128,7 +128,7 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
 
         }
-        public virtual async Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail>objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
+        public virtual async Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -139,6 +139,7 @@ namespace HIMS.Services.Pharmacy
                 entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
+
 
             string[] GEntity = { "GrnreturnDetailId", "Grnid", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "VatPercentage", "VatAmount", "TaxAmount", "OtherTaxAmount", "OctroiPer", "OctroiAmt", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnreturn" };
             foreach (var item in objTGrnreturnDetail)
