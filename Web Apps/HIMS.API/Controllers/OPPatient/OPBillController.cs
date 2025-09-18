@@ -76,11 +76,12 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Bill model = obj.MapTo<Bill>();
             Payment objPayment = obj.Payments.MapTo<Payment>();
-        List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo <List<AddCharge>>();
+            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo <List<AddCharge>>();
 
 
             if (obj.BillNo == 0)
             {
+                model.BillDate = Convert.ToDateTime(obj.BillDate);
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
@@ -103,6 +104,7 @@ namespace HIMS.API.Controllers.OPPatient
 
             if (obj.BillNo == 0)
             {
+                model.BillDate = Convert.ToDateTime(obj.BillDate);
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
