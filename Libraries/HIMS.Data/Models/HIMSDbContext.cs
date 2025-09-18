@@ -9088,11 +9088,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ChequePayAmount).HasColumnType("money");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NeftbankMaster)
                     .HasMaxLength(100)
@@ -9109,6 +9113,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.NeftpayAmount)
                     .HasColumnType("money")
                     .HasColumnName("NEFTPayAmount");
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
 
                 entity.Property(e => e.PayTmamount)
                     .HasColumnType("money")
@@ -9130,7 +9136,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
 
+                entity.Property(e => e.Tdsamount)
+                    .HasColumnType("money")
+                    .HasColumnName("TDSAmount");
+
                 entity.Property(e => e.TranMode).HasMaxLength(30);
+
+                entity.Property(e => e.Wfamount)
+                    .HasColumnType("money")
+                    .HasColumnName("WFAmount");
             });
 
             modelBuilder.Entity<PermissionMaster>(entity =>

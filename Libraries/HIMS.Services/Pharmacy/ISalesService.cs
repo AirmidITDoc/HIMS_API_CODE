@@ -23,9 +23,7 @@ namespace HIMS.Services.Users
         Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel objGrid);
         Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel objGrid);
-
         Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel objGrid);
-
         Task<IPagedList<Pharbillsettlementlist>> PharIPBillSettlement(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel objGrid);
         Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel objGrid);
@@ -36,20 +34,14 @@ namespace HIMS.Services.Users
         Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel objGrid);
         Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel objGrid);
-
-
-
-        Task InsertAsyncSP(TSalesHeader ObjSalesHeader,List<TCurrentStock> ObjTCurrentStock, Payment ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
+        Task InsertAsyncSP(TSalesHeader ObjSalesHeader,List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username);
         Task UpdateAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username);
         Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username);
         Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock,TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertAsyncSPD( TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
         Task DeleteAsync(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
-
-
         Task InsertAsync(List<Payment> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
-
         Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);

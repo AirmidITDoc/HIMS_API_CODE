@@ -87,21 +87,20 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
-           List <TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
+            List <TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
-            Payment model4 = obj.Payment.MapTo<Payment>();
-
+            PaymentPharmacy model4 = obj.Payment.MapTo<PaymentPharmacy>();
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                await _ISalesReturnService.InsertAsyncSP(model, model1, model2, model3,  model4, CurrentUserId, CurrentUserName);
+                await _ISalesReturnService.InsertAsyncSP(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

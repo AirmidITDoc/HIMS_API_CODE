@@ -70,7 +70,7 @@ namespace HIMS.API.Models.Pharmacy
             RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty is required");
         }
     }
-    public class PaymentpharModel
+    public class PaymentpharModelSS
     {
         public long? PaymentId { get; set; }
         public long? BillNo { get; set; }
@@ -102,10 +102,13 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
+        public decimal? tdsAmount { get; set; }
+        public decimal? WfAmount { get; set; }
+        public long? UnitId { get; set; }
     }
-    public class PaymentpharModelValidator : AbstractValidator<PaymentpharModel>
+    public class PaymentpharModelSSValidator : AbstractValidator<PaymentpharModelSS>
     {
-        public PaymentpharModelValidator()
+        public PaymentpharModelSSValidator()
         {
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
             RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
@@ -144,7 +147,7 @@ namespace HIMS.API.Models.Pharmacy
     {
         public SalessModel Sales { get; set; }
         public List<CurrentStocksModel> TCurrentStock { get; set; }
-        public PaymentpharModel? Payment { get; set; }
+        public PaymentpharModelSS Payment { get; set; }
         public IPPrescriptionsModel Prescription { get; set; }
         public SalesDraftHeaderModel SalesDraft { get; set; }
 

@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("GRNReturnList")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeGrnReturnListAsync(GridRequestModel objGrid)
         {
             IPagedList<GRNReturnListDto> List1 = await _gRNReturnService.GetGRNReturnList(objGrid);
@@ -90,9 +90,9 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
-            List<TGrnreturnDetail> model1 = obj.GRNReturnDetails.MapTo<List<TGrnreturnDetail>>();
-            List<TCurrentStock> model2= obj.CurrentStock.MapTo<List<TCurrentStock>>();
-            List<TGrndetail> model3 = obj.GrnreturnUpdate.MapTo<List<TGrndetail>>();
+            List<TGrnreturnDetail> model1 = obj.tGrnreturnDetails.MapTo<List<TGrnreturnDetail>>();
+            List<TCurrentStock> model2= obj.GrnReturnCurrentStock.MapTo<List<TCurrentStock>>();
+            List<TGrndetail> model3 = obj.GrnReturnReturnQt.MapTo<List<TGrndetail>>();
             if (obj.GrnReturn.GrnreturnId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 

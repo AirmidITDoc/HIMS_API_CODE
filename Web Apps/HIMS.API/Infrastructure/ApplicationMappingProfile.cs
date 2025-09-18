@@ -210,9 +210,10 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<VisitDetail, RequestForOPTOIP>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, SaleReqModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            CreateMap<PaymentPharmacy, paymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, PaymentpharModelSS>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TSalesReturnHeader, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesReturnDetail, SalesReturnDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -220,7 +221,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDetail, SalesDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SalesHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             
@@ -231,7 +232,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesHeader, SalessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDetail, SalesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurrentStocksModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<Payment, PaymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<PaymentPharmacy, PaymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescription, IPPrescriptionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDraftHeader, SalesDraftHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceDetail, updatecompanywiseservicerate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
