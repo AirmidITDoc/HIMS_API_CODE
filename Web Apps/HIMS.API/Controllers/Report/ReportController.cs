@@ -401,11 +401,16 @@ namespace HIMS.API.Controllers.Report
                 case "MaterialReceivedByDept":
 
                 //Pharmacy
-                case "IPPharmaAdvanceReport":
-                case "IPPharmaAdvanceReturnReport":
-                case "PharmacySalesStatementReport":
-                case "IPSalesBillReport":
-                case "SalesBill":
+                case "PharmacyPatientStatement":
+                case "PharmacySalesDetails":
+                case "PharamcySalesReturn":
+                case "PharamcyAdvanceReceipt":
+                case "PharamcyAdvanceReturnReceipt":
+
+
+
+
+              
                 case "SalesReturnBill":
                 //OT
                 case "OTRequest":
