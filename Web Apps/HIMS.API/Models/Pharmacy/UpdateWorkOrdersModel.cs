@@ -7,7 +7,7 @@ namespace HIMS.API.Models.Pharmacy
 {
     public class UpdateWorkOrdersModel
     {
-        public long? WOId { get; set; }
+        public long Woid { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierID { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -31,7 +31,7 @@ namespace HIMS.API.Models.Pharmacy
 
     public class WorkOrderDetailModel
     {
-        public long WOId { get; set; }
+        public long Woid { get; set; }
         public string? ItemName { get; set; }
         public double? Qty { get; set; }
         public double? Rate { get; set; }
@@ -58,8 +58,8 @@ namespace HIMS.API.Models.Pharmacy
     public class UpdateWorkOrderModel
     {
 
-        public UpdateWorkOrdersModel? UpdateWorkOrders { get; set; }
-        public List<WorkOrderDetailModel>? WorkOrderDetail { get; set; }
+        public UpdateWorkOrdersModel? WorkOrders { get; set; }
+        public List<WorkOrderDetailModel>? WorkOrderDetails { get; set; }
         //public List<BillingDetailsModel>? BillingDetails { get; set; }
         //public paymentsModel? payments { get; set; }
         //public paymentModel? payment { get; set; }

@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Pharmacy
 {
     public class WorkOrdersModel
     {
-        public long WOId { get; set; }
+        public long Woid { get; set; }
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
         public long? StoreId { get; set; }
