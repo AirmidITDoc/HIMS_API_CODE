@@ -27,6 +27,7 @@ using HIMS.API.Utility;
 using HIMS.Services.Transaction;
 using HIMS.Services.Notification;
 using HIMS.Services.OTManagment;
+using HIMS.Services.Radiology;
 
 namespace HIMS.API.Infrastructure
 {
@@ -70,6 +71,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOTService, OTService>();
             services.AddScoped<IEmergencyService, EmergencyService>();
             services.AddScoped<ITexpenseservice, Texpenseservice>();
+            services.AddScoped<IRadilogyService, RadiologyService>();
+
 
 
 
