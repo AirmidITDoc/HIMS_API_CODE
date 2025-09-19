@@ -8,6 +8,8 @@ namespace HIMS.Data.Models
         public long AdvanceDetailId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
+        public long? UnitId { get; set; }
+        public long? StoreId { get; set; }
         public long? AdvanceId { get; set; }
         public string? AdvanceNo { get; set; }
         public long? RefId { get; set; }
@@ -19,11 +21,14 @@ namespace HIMS.Data.Models
         public decimal? BalanceAmount { get; set; }
         public decimal? RefundAmount { get; set; }
         public long? ReasonOfAdvanceId { get; set; }
+        public string? Reason { get; set; }
         public long? AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledby { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public string? Reason { get; set; }
-        public long? StoreId { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
