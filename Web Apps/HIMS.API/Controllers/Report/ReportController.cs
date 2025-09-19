@@ -403,6 +403,7 @@ namespace HIMS.API.Controllers.Report
                 //Pharmacy
                 case "PharmacyPatientStatement":
                 case "PharmacySalesDetails":
+                case "PharamcySalesBill":
                 case "PharamcySalesReturn":
                 case "PharamcyAdvanceReceipt":
                 case "PharamcyAdvanceReturnReceipt":
