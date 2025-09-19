@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -76,6 +76,8 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
                 model.IsCreatedBy = DateTime.Now;
                 await _ItemMasterServices.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -86,7 +88,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -96,8 +98,6 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.CreatedDate = DateTime.Now;
-                //model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsUpdatedBy = DateTime.Now;
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-
+     
 
         //Delete API
         [HttpDelete]
