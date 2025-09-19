@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -13824,9 +13824,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BalanceAmount).HasColumnType("money");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
 
@@ -13849,9 +13853,13 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_PHAdvanceHeader");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
 

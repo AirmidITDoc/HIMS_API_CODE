@@ -396,7 +396,7 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "StoreId" };
+            string[] rEntity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -408,7 +408,7 @@ namespace HIMS.Services.Users
 
 
 
-            string[] DEntity = { "AdvanceNo" };
+            string[] DEntity = { "AdvanceNo","CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Dentity = ObjTPhadvanceDetail.ToDictionary();
             foreach (var rProperty in DEntity)
             {
@@ -419,7 +419,7 @@ namespace HIMS.Services.Users
             ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
 
 
-            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
+            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var Entity = ObjPaymentPharmacy.ToDictionary();
             foreach (var rProperty in PEntity)
             {
@@ -435,7 +435,7 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId" };
+            string[] Entity = { "Date", "RefId", "OpdIpdType", "UnitId","OpdIpdId", "AdvanceUsedAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Uentity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -443,7 +443,7 @@ namespace HIMS.Services.Users
             }
             odal.ExecuteNonQuery("m_Update_T_PHAdvanceHeader", CommandType.StoredProcedure, Uentity);
 
-            string[] DEntity = { "AdvanceNo" };
+            string[] DEntity = { "AdvanceNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Dentity = ObjTPhadvanceDetail.ToDictionary();
             foreach (var rProperty in DEntity)
             {
@@ -455,7 +455,7 @@ namespace HIMS.Services.Users
 
 
 
-            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
+            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var PPEntity = ObjPaymentPharmacy.ToDictionary();
             foreach (var rProperty in PEntity)
             {
@@ -511,7 +511,7 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
             }
 
-            string[] PHEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode" };
+            string[] PHEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Phentity = ObjPaymentPharmacy.ToDictionary();
             foreach (var rProperty in PHEntity)
             {
