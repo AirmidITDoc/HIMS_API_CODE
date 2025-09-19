@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesReturnId);
         }
 
 
@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesReturnId);
         }
 
     }
