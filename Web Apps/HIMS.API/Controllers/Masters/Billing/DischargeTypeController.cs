@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             DischargeTypeMaster model = await _repository.GetById(x => x.DischargeTypeId == Id);
             if ((model?.DischargeTypeId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
