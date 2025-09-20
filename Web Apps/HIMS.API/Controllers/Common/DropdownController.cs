@@ -216,7 +216,7 @@ namespace HIMS.API.Controllers.Common
             _MOtSurgeryMaster = iMOtSurgeryMaster;
             _LocationMaster = iLocationMaster;
             _MOttableMaster = iMOttableMaster;
-            _IMPathTestMaster = IMPathTestMaster;
+            //_IMPathTestMaster = IMPathTestMaster;
 
 
 
