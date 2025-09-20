@@ -22,13 +22,14 @@ namespace HIMS.Data.DTO.Administration
         public long UpdatedBy { get; set; }
         public bool IsPrintDisSummary { get; set; }
         public string MethodName { get; set; }
-       
-       
-      
 
- 
+        public string UserName { get; set; }
 
-   
-       
+
+
+
+
+
+
     }
 }

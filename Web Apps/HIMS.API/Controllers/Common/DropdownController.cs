@@ -99,12 +99,6 @@ namespace HIMS.API.Controllers.Common
 
 
 
-
-
-
-
-
-
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -139,9 +133,6 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster,
                               IGenericService<LocationMaster> iLocationMaster,
                               IGenericService<MOttableMaster> iMOttableMaster
-
-
-
 
 
 
@@ -290,7 +281,7 @@ namespace HIMS.API.Controllers.Common
                 //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
                 "RadiologyService" => (await _IMServiceService.GetAll(x => x.IsRadiology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-                 //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => !_context.PathTestMaster.Any(p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => (p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
 
 
