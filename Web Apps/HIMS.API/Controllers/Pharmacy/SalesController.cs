@@ -31,30 +31,30 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _ISalesService = repository;
         }
-        [HttpPost]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-        public async Task<ApiResponse> Post(SalesReqDto obj)
-        {
-            TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
-            Payment objPayment = obj.Payment.MapTo<Payment>();
-            if (obj.Sales.SalesId == 0)
-            {
-                model.Date = DateTime.Now.Date;
-                model.Time = DateTime.Now;
-                model.AddedBy = CurrentUserId;
-                model.UpdatedBy = 0;
-                foreach (var objItem in model.TSalesDetails)
-                {
-                    objItem.Sgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
-                    objItem.Cgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
-                }
-                await _ISalesService.InsertAsync(model, objPayment, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        }
+        //[HttpPost]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        //public async Task<ApiResponse> Post(SalesReqDto obj)
+        //{
+        //    TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
+        //    PaymentPharmacy objPayment = obj.Payment.MapTo<PaymentPharmacy>();
+        //    if (obj.Sales.SalesId == 0)
+        //    {
+        //        model.Date = DateTime.Now.Date;
+        //        model.Time = DateTime.Now;
+        //        model.AddedBy = CurrentUserId;
+        //        model.UpdatedBy = 0;
+        //        foreach (var objItem in model.TSalesDetails)
+        //        {
+        //            objItem.Sgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
+        //            objItem.Cgstamt = (objItem.TotalAmount.Value - objItem.DiscAmount.Value) * 100 / ((decimal)(objItem.VatPer.Value + 100)) * (decimal)objItem.Cgstper / 100;
+        //        }
+        //        await _ISalesService.InsertAsync(model, objPayment, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
 
 
         [HttpPost("SalesSummaryList")]
@@ -357,10 +357,10 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PaymentSettlement")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
         {
-            List<Payment> model = obj.Payment.MapTo<List<Payment>>();
+            List<PaymentPharmacy> model = obj.Payment.MapTo<List<PaymentPharmacy>>();
             List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
             List<AdvanceDetail> model2 = obj.AdvanceDetail.MapTo<List<AdvanceDetail>>();
             AdvanceHeader model3 = obj.AdvanceHeader.MapTo<AdvanceHeader>();

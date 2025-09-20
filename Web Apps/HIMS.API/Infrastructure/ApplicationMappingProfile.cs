@@ -508,7 +508,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MDoctorSignPageDetail, DoctorSignPageDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            CreateMap<Payment, PharaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<PaymentPharmacy, PharaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SaleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AdvanceDetail, AdvanceDetailModel3>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
              CreateMap<AdvanceHeader, TPHAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

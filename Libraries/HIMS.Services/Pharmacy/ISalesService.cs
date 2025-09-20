@@ -13,12 +13,10 @@ namespace HIMS.Services.Users
 {
     public partial interface ISalesService
     {
-        Task InsertAsync(TSalesHeader user, Payment objPayment, int UserId, string Username);
+        //Task InsertAsync(TSalesHeader user, PaymentPharmacy objPayment, int UserId, string Username);
         Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel objGrid);
         Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel objGrid);
-       
         Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel objGrid);
-
         Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel objGrid);
         Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel objGrid);
         Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel objGrid);
@@ -41,7 +39,7 @@ namespace HIMS.Services.Users
         Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock,TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertAsyncSPD( TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
         Task DeleteAsync(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
-        Task InsertAsync(List<Payment> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
+        Task InsertAsync(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
         Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
