@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             CashCounter model = await _repository.GetById(x => x.CashCounterId == Id);
             if ((model?.CashCounterId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

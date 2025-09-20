@@ -53,6 +53,10 @@ namespace HIMS.Data.DTO.Inventory
         public string DrugTypeName { get; set; }
         public long ItemCompnayId { get; set; }
 
+         public string ManufName { get; set; }
+        public string UserName { get; set; }
+
+
     }
 
 

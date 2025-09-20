@@ -79,13 +79,13 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "ItemTypeMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "ItemTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MItemTypeMaster model = await _repository.GetById(x => x.ItemTypeId == Id);
             if ((model?.ItemTypeId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

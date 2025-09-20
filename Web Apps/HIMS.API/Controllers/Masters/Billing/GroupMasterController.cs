@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             GroupMaster model = await _repository.GetById(x => x.GroupId == Id);
             if ((model?.GroupId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

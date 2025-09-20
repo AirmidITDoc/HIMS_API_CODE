@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             MItemManufactureMaster model = await _repository.GetById(x => x.ItemManufactureId == Id);
             if ((model?.ItemManufactureId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

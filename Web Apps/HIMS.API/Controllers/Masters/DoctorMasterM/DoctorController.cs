@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
