@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
@@ -222,7 +222,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         //}
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
@@ -284,7 +284,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorModel obj)
 
         {
@@ -375,7 +375,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpDelete]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             DoctorMaster model = await _IDoctorMasterService.GetById(Id);

@@ -4,8 +4,6 @@ namespace HIMS.API.Models.Pharmacy
 {
     public class GRNReturnModel
     {
-        public long GrnreturnId { get; set; }
-        public string? GrnreturnNo { get; set; }
         public long? Grnid { get; set; }
         public DateTime? GrnreturnDate { get; set; }
         public string GrnreturnTime { get; set; }
@@ -21,11 +19,14 @@ namespace HIMS.API.Models.Pharmacy
         public bool? CashCredit { get; set; }
         public string? Remark { get; set; }
         public bool? IsVerified { get; set; }
-        public bool? IsClosed { get; set; }
+        public long? AddedBy { get; set; }
         public bool IsCancelled { get; set; }
+        public bool? IsClosed { get; set; }
         public string? GrnType { get; set; }
         public bool IsGrnTypeFlag { get; set; }
-        public List<GRNReturnDetailModel> TGrnreturnDetails { get; set; }
+        public long GrnreturnId { get; set; }
+
+        //public List<GRNReturnDetailModel> TGrnreturnDetails { get; set; }
     }
     public class GRNReturnModelValidator : AbstractValidator<GRNReturnModel>
     {
@@ -33,13 +34,16 @@ namespace HIMS.API.Models.Pharmacy
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("Store is required");
             RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("Supplier is required");
-            //RuleFor(x => x.InvoiceNo).NotNull().NotEmpty().WithMessage("Invoice No is required");
+            RuleFor(x => x.GrnreturnDate).NotNull().NotEmpty().WithMessage("GrnreturnDate  is required");
+            RuleFor(x => x.GrnreturnTime).NotNull().NotEmpty().WithMessage("GrnreturnTime  is required");
+
         }
     }
 
     public class GRNReturnReqDto
     {
         public GRNReturnModel GrnReturn { get; set; }
+        public List<GRNReturnDetailModel> tGrnreturnDetails { get; set; }
         public List<GRNReturnCurrentStock> GrnReturnCurrentStock { get; set; }
         public List<GRNReturnReturnQty> GrnReturnReturnQt { get; set; }
     }

@@ -6,6 +6,8 @@ namespace HIMS.API.Models.Pharmacy
     public class GRNUpdatedModel
     {
         public long? Grnid { get; set; }
+        public DateTime? GrnreturnDate { get; set; }
+        public string GrnreturnTime { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public decimal? TotalAmount { get; set; }

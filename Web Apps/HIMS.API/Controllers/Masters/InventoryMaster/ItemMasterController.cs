@@ -119,7 +119,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                model.IsActive = model.IsActive == true ? false : true;
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else

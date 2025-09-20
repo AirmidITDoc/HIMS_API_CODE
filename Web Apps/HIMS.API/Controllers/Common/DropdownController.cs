@@ -132,7 +132,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOtSurgeryCategoryMaster> iMOtSurgeryCategoryMaster,
                               IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster,
                               IGenericService<LocationMaster> iLocationMaster,
-                              IGenericService<MOttableMaster> iMOttableMaster
+                              IGenericService<MOttableMaster> iMOttableMaster,
+                              IGenericService<MPathTestMaster> IMPathTestMaster
+
 
 
 
@@ -214,7 +216,7 @@ namespace HIMS.API.Controllers.Common
             _MOtSurgeryMaster = iMOtSurgeryMaster;
             _LocationMaster = iLocationMaster;
             _MOttableMaster = iMOttableMaster;
-
+            //_IMPathTestMaster = IMPathTestMaster;
 
 
 
@@ -278,10 +280,10 @@ namespace HIMS.API.Controllers.Common
                 "RelationShip" => (await _IMRelationshipService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
                 "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-                //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                "PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
                 "RadiologyService" => (await _IMServiceService.GetAll(x => x.IsRadiology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-                //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => (p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                 //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => !_context.PathTestMaster.Any(p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
 
 
