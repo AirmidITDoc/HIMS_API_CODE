@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Pharmacy
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
            List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
 
-            if (obj.WorkOrders.WOId == 0)
+            if (obj.WorkOrders.Woid == 0)
             {
 
                 await _IWorkOrderService.WorkOrderAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
@@ -61,13 +61,13 @@ namespace HIMS.API.Controllers.Pharmacy
        
 
         [HttpPut("WorkOrderUpdate")]
-        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
-            TWorkOrderHeader Model = obj.UpdateWorkOrders.MapTo<TWorkOrderHeader>();
-           List<TWorkOrderDetail> Models = obj.WorkOrderDetail.MapTo<List<TWorkOrderDetail>>();
+            TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
+           List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
 
-            if (obj.UpdateWorkOrders.WOId != 0)
+            if (obj.WorkOrders.Woid != 0)
             {
 
                 await _IWorkOrderService.UpdateAsyncSp(Model, Models, CurrentUserId, CurrentUserName);

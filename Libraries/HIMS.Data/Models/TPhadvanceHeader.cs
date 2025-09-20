@@ -7,6 +7,8 @@ namespace HIMS.Data.Models
     {
         public long AdvanceId { get; set; }
         public DateTime? Date { get; set; }
+        public long? UnitId { get; set; }
+        public long? StoreId { get; set; }
         public long? RefId { get; set; }
         public byte? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
@@ -17,6 +19,9 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? StoreId { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

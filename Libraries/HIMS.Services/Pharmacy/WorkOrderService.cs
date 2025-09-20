@@ -29,6 +29,10 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<WorkOrderListDto>(model, "Rtrv_WorkOrderList_by_Name");
         }
+        public virtual async Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<WorkorderIteListDto>(model, "Rtrv_ItemDetailsForWorkOrderUpdate");
+        }
         public virtual async Task WorkOrderAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
@@ -90,10 +94,7 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        public virtual async Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<WorkorderIteListDto>(model, "Rtrv_ItemDetailsForWorkOrderUpdate");
-        }
+       
     }
 }
 

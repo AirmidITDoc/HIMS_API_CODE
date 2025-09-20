@@ -14,7 +14,7 @@ namespace HIMS.Services.Inventory
 {
     public partial interface IRadiologyTestService
     {
-        Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
+        //Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<RadiologyPatientListDto>> GetListAsyn(GridRequestModel objGrid);
         Task<IPagedList<RadTemplateMasterListDto>> TemplateListAsyn(GridRequestModel objGrid);
 
@@ -22,7 +22,7 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
         Task CancelAsync(MRadiologyTestMaster objRadio, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username);
-        Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
+        //Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
 
         Task<List<MRadiologyTestMaster>> GetAllRadiologyTest();
         //Task<MRadiologyTestMaster> GetByIdRadiologyTest(long Id);

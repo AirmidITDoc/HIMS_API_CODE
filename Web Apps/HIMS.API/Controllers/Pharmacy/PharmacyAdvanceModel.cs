@@ -6,6 +6,8 @@ namespace HIMS.API.Controllers.Pharmacy
 {
     public class PharmacyAdvanceModel
     {
+        public long? StoreId { get; set; }
+        public long? UnitId { get; set; }
         public long AdvanceId { get; set; }
         public DateTime? Date { get; set; }
         public long? RefId { get; set; }
@@ -36,6 +38,7 @@ namespace HIMS.API.Controllers.Pharmacy
     {
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
+        public long? UnitId{ get; set; }
         public long? AdvanceId { get; set; }
         public long? RefId { get; set; }
         public long? TransactionId { get; set; }
@@ -58,6 +61,7 @@ namespace HIMS.API.Controllers.Pharmacy
     public class PaymentPharmacyModel
     {
         public long? BillNo { get; set; }
+        public long? UnitId{ get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
@@ -74,6 +78,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public long? AdvanceId { get; set; }
         public long? RefundId { get; set; }
         public long? TransactionType { get; set; }
+        public long? OPDIPDType { get; set; }
         public string? Remark { get; set; }
         public long? AddBy { get; set; }
         public bool? IsCancelled { get; set; }
@@ -86,7 +91,9 @@ namespace HIMS.API.Controllers.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-       
+        public decimal? TdsAmount { get; set; }
+        public decimal? WfAmount { get; set; }
+
 
     }
     public class PharmacyHeaderUpdateModel

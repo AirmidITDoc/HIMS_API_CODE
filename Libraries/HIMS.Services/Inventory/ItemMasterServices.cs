@@ -87,28 +87,89 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-      
+
+        //public virtual async Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Delete details table realted records
+        //        var lst = await _context.MAssignItemToStores.Where(x => x.ItemId == objItemMaster.ItemId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.MAssignItemToStores.RemoveRange(lst);
+        //        }
+        //        await _context.SaveChangesAsync();
+        //        // Update header & detail table records
+        //        _context.MItemMasters.Update(objItemMaster);
+        //        _context.Entry(objItemMaster).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+
+        //}
         public virtual async Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Delete details table realted records
-                var lst = await _context.MAssignItemToStores.Where(x => x.ItemId == objItemMaster.ItemId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.MAssignItemToStores.RemoveRange(lst);
-                }
-                await _context.SaveChangesAsync();
-                // Update header & detail table records
-                _context.MItemMasters.Update(objItemMaster);
-                _context.Entry(objItemMaster).State = EntityState.Modified;
+             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+              // Delete related store assignments
+            var lst = await _context.MAssignItemToStores .Where(x => x.ItemId == objItemMaster.ItemId) .ToListAsync();
+             if (lst.Count > 0)
+                _context.MAssignItemToStores.RemoveRange(lst);
+
                 await _context.SaveChangesAsync();
 
-                scope.Complete();
-            }
+            var existing = await _context.MItemMasters .FirstOrDefaultAsync(x => x.ItemId == objItemMaster.ItemId);
+
+            // Manually copy only the fields you want to update (do NOT touch CreatedBy/CreatedDate)
+            existing.ItemShortName = objItemMaster.ItemShortName;
+            existing.ItemName = objItemMaster.ItemName;
+            existing.ItemTypeId = objItemMaster.ItemTypeId;
+            existing.ItemCategaryId = objItemMaster.ItemCategaryId;
+            existing.ItemGenericNameId = objItemMaster.ItemGenericNameId;
+            existing.ItemClassId = objItemMaster.ItemClassId;
+            existing.PurchaseUomid = objItemMaster.PurchaseUomid;
+            existing.ItemClassId = objItemMaster.ItemClassId;
+            existing.StockUomid = objItemMaster.StockUomid;
+            existing.ConversionFactor = objItemMaster.ConversionFactor;
+            existing.CurrencyId = objItemMaster.CurrencyId;
+            existing.TaxPer = objItemMaster.TaxPer;
+            existing.IsActive = objItemMaster.IsActive;
+            existing.IsBatchRequired = objItemMaster.IsBatchRequired;
+            existing.MinQty = objItemMaster.MinQty;
+            existing.MaxQty = objItemMaster.MaxQty;
+            existing.ReOrder = objItemMaster.ReOrder;
+            existing.Hsncode = objItemMaster.Hsncode;
+            existing.Cgst = objItemMaster.Cgst;
+            existing.Sgst = objItemMaster.Sgst;
+            existing.Igst = objItemMaster.Igst;
+            existing.ManufId = objItemMaster.ManufId;
+            existing.IsNarcotic = objItemMaster.IsNarcotic;
+            existing.IsH1drug = objItemMaster.IsH1drug;
+            existing.IsScheduleH = objItemMaster.IsScheduleH;
+            existing.IsHighRisk = objItemMaster.IsHighRisk;
+            existing.IsScheduleX = objItemMaster.IsScheduleX;
+            existing.IsLasa = objItemMaster.IsLasa;
+            existing.DrugType = objItemMaster.DrugType;
+            existing.DrugTypeName = objItemMaster.DrugTypeName;
+            existing.ProdLocation = objItemMaster.ProdLocation;
+            existing.ItemCompnayId = objItemMaster.ItemCompnayId;
+            existing.ItemTime = objItemMaster.ItemTime;
+            existing.Addedby = objItemMaster.Addedby;
+            existing.UpDatedBy = objItemMaster.UpDatedBy;
+            existing.DoseDay = objItemMaster.DoseDay;
+            existing.Instruction = objItemMaster.Instruction;
+
+            // Update audit fields
+            existing.ModifiedBy = UserId;
+            existing.ModifiedDate = DateTime.Now;
+            existing.IsUpdatedBy = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
 
-     
+
 
         public virtual async Task CancelAsync(MItemMaster objItemMaster, int CurrentUserId, string CurrentUserName)
         {
