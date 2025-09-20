@@ -128,6 +128,56 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
 
         }
+        public virtual async Task InsertAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = {  "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo" };
+            var entity = objGRNReturn.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            var VGrnreturnId = odal.ExecuteNonQuery("ps_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "GrnreturnId", entity);
+            objGRNReturn.GrnreturnId = Convert.ToInt32(VGrnreturnId);
+
+            foreach (var item in objTGrnreturnDetail)
+            {
+                item.GrnreturnId = Convert.ToInt32(VGrnreturnId);
+
+                string[] Entity = { "GrnreturnDetailId", "Grnreturn" };
+                var rentity = item.ToDictionary();
+                foreach (var rProperty in Entity)
+                {
+                    rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
+            }
+
+            foreach (var item in ObjTCurrentStock)
+            {
+                string[] GGEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+                var gentity = item.ToDictionary();
+                foreach (var rProperty in GGEntity)
+                {
+                    gentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, gentity);
+            }
+            foreach (var item in ObjTGrndetails)
+            {
+                string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn" };
+                var gentity = item.ToDictionary();
+                foreach (var rProperty in GGEntity)
+                {
+                    gentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, gentity);
+            }
+
+
+        }
+
         public virtual async Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
         {
 
@@ -138,7 +188,7 @@ namespace HIMS.Services.Pharmacy
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
+            odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
 
 
             string[] GEntity = { "GrnreturnDetailId", "Grnid", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "VatPercentage", "VatAmount", "TaxAmount", "OtherTaxAmount", "OctroiPer", "OctroiAmt", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnreturn" };

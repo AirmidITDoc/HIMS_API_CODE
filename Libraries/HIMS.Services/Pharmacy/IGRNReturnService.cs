@@ -13,6 +13,8 @@ namespace HIMS.Services.Pharmacy
     public partial interface IGRNReturnService
     {
         Task InsertAsync(TGrnreturnHeader objGRNReturn, List<TCurrentStock> objCStock, List<TGrndetail> objReturnQty, int UserId, string Username);
+        Task InsertAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string Username);
+
         Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string Username);
         Task VerifyAsync(TGrnreturnHeader objGRN, int UserId, string Username);
 

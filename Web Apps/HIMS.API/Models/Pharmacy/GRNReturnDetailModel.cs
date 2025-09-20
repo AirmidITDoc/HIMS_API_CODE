@@ -2,9 +2,7 @@
 {
     public class GRNReturnDetailModel
     {
-        public long GrnreturnDetailId { get; set; }
         public long? GrnreturnId { get; set; }
-        public long? Grnid { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime BatchExpiryDate { get; set; }
@@ -26,6 +24,8 @@
         public long? StkId { get; set; }
         public float? Cf { get; set; }
         public float? TotalQty { get; set; }
+        public long? Grnid { get; set; }
+
 
     }
 }

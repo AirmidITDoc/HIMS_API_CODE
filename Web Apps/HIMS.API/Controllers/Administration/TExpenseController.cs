@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TExpenseInsert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpDelete("TExpenseCancel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
         {
             TExpense Model = obj.MapTo<TExpense>();
