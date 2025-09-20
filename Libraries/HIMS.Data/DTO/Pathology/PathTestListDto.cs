@@ -22,6 +22,8 @@ namespace HIMS.Data.DTO.Pathology
         public long ServiceID { get; set; }
         public string? IsTemplateTest { get; set; }
         public string? ServiceName { get; set; }
+
+        public string? UserName { get; set; }
         public bool IsActive { get; set; }
 
     }

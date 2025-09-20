@@ -47,5 +47,7 @@ namespace HIMS.Data.DTO.Inventory
         public string? Ifsccode { get; set; }
         public long? VenderTypeId { get; set; }
         public decimal? OpeningBalance { get; set; }
+
+        public string? UserName { get; set; }
     }
 }
