@@ -189,7 +189,10 @@ namespace HIMS.API.Controllers.Pharmacy
                 x.UnitMRP,
                 x.UnitPurRate,
                 x.UnitLandedRate,
-                x.GST
+                x.GST,
+                x.CGSTPer,
+                x.SGSTPer,
+                x.IGSTPer
             }));
         }
 
