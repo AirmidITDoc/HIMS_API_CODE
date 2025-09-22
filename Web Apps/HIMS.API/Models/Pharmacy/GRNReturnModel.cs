@@ -25,6 +25,7 @@ namespace HIMS.API.Models.Pharmacy
         public string? GrnType { get; set; }
         public bool IsGrnTypeFlag { get; set; }
         public long GrnreturnId { get; set; }
+        public long UnitId { get; set; }
 
         //public List<GRNReturnDetailModel> TGrnreturnDetails { get; set; }
     }

@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -327,7 +327,11 @@ namespace HIMS.Data.Models
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
+        public virtual DbSet<ReportBatchLog> ReportBatchLogs { get; set; } = null!;
+        public virtual DbSet<ReportConfig> ReportConfigs { get; set; } = null!;
+        public virtual DbSet<ReportDatum> ReportData { get; set; } = null!;
         public virtual DbSet<ReportDemo> ReportDemos { get; set; } = null!;
+        public virtual DbSet<ReportExecutionLog> ReportExecutionLogs { get; set; } = null!;
         public virtual DbSet<RoleMaster> RoleMasters { get; set; } = null!;
         public virtual DbSet<RoleTemplateDetail> RoleTemplateDetails { get; set; } = null!;
         public virtual DbSet<RoleTemplateMaster> RoleTemplateMasters { get; set; } = null!;
@@ -2797,11 +2801,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IpdAdvanceCounterId).HasColumnName("IPD_Advance_CounterId");
 
+                entity.Property(e => e.IpdAdvanceReceiptCounterId).HasColumnName("IPD_Advance_Receipt_CounterId");
+
                 entity.Property(e => e.IpdBillingCounterId).HasColumnName("IPD_Billing_CounterId");
 
                 entity.Property(e => e.IpdReceiptCounterId).HasColumnName("IPD_Receipt_CounterId");
 
                 entity.Property(e => e.IpdRefundOfAdvanceCounterId).HasColumnName("IPD_Refund_of_Advance_CounterId");
+
+                entity.Property(e => e.IpdRefundOfAdvanceReceiptCounterId).HasColumnName("IPD_Refund_of_Advance_Receipt_CounterId");
 
                 entity.Property(e => e.IpdRefundOfBillCounterId).HasColumnName("IPD_Refund_of_Bill_CounterId");
 
@@ -9404,6 +9412,98 @@ namespace HIMS.Data.Models
                     .HasColumnName("SMSString");
             });
 
+            modelBuilder.Entity<ReportBatchLog>(entity =>
+            {
+                entity.HasKey(e => e.BatchId)
+                    .HasName("PK__ReportBa__5D55CE58D0FFE440");
+
+                entity.ToTable("ReportBatchLog");
+
+                entity.Property(e => e.BatchId).ValueGeneratedNever();
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ExecutedBy)
+                    .HasMaxLength(128)
+                    .HasDefaultValueSql("(suser_sname())");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<ReportConfig>(entity =>
+            {
+                entity.HasKey(e => e.ReportId)
+                    .HasName("PK__ReportCo__D5BD480551430DDE");
+
+                entity.ToTable("ReportConfig");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ReportName).HasMaxLength(100);
+
+                entity.Property(e => e.ReportType).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<ReportDatum>(entity =>
+            {
+                entity.HasKey(e => e.ReportDataId)
+                    .HasName("PK__ReportDa__8F548817C2C64344");
+
+                entity.Property(e => e.Category).HasMaxLength(100);
+
+                entity.Property(e => e.Dbyamount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("DBYAmount")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.LoadDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Lysd)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("LYSD")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Lytd)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("LYTD")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Mtd)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("MTD")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Pmt)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("PMT")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportDate).HasColumnType("date");
+
+                entity.Property(e => e.ReportName).HasMaxLength(100);
+
+                entity.Property(e => e.TodayAmount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.YesterdayAmount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Ytd)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("YTD")
+                    .HasDefaultValueSql("((0))");
+            });
+
             modelBuilder.Entity<ReportDemo>(entity =>
             {
                 entity.HasKey(e => e.ReportId);
@@ -9419,6 +9519,36 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SummaryLabel).HasColumnName("summaryLabel");
 
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<ReportExecutionLog>(entity =>
+            {
+                entity.HasKey(e => e.LogId)
+                    .HasName("PK__ReportEx__5E5486483F23FF55");
+
+                entity.ToTable("ReportExecutionLog");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ExecutedBy)
+                    .HasMaxLength(128)
+                    .HasDefaultValueSql("(suser_sname())");
+
+                entity.Property(e => e.ReportName).HasMaxLength(100);
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(20);
+
+                entity.HasOne(d => d.Batch)
+                    .WithMany(p => p.ReportExecutionLogs)
+                    .HasForeignKey(d => d.BatchId)
+                    .HasConstraintName("FK_ReportExecutionLog_Batch");
+
+                entity.HasOne(d => d.Report)
+                    .WithMany(p => p.ReportExecutionLogs)
+                    .HasForeignKey(d => d.ReportId)
+                    .HasConstraintName("FK_ReportExecutionLog_Config");
             });
 
             modelBuilder.Entity<RoleMaster>(entity =>
@@ -11848,9 +11978,21 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BatchNo).HasMaxLength(15);
 
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("decimal(18, 4)");
+
                 entity.Property(e => e.Grnid).HasColumnName("GRNId");
 
                 entity.Property(e => e.GrnreturnId).HasColumnName("GRNReturnId");
+
+                entity.Property(e => e.Gstamount)
+                    .HasColumnType("decimal(18, 4)")
+                    .HasColumnName("GSTAmount");
+
+                entity.Property(e => e.Gstpercentage).HasColumnName("GSTPercentage");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
 
                 entity.Property(e => e.LandedRate).HasColumnType("decimal(18, 4)");
 
@@ -11864,19 +12006,13 @@ namespace HIMS.Data.Models
                     .HasColumnType("decimal(18, 4)")
                     .HasColumnName("MRPTotalAmount");
 
-                entity.Property(e => e.OctroiAmt).HasColumnType("decimal(18, 4)");
-
-                entity.Property(e => e.OtherTaxAmount).HasColumnType("decimal(18, 4)");
-
                 entity.Property(e => e.PurchaseTotalAmount).HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.Remarks).HasMaxLength(50);
 
-                entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 4)");
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
 
                 entity.Property(e => e.UnitPurchaseRate).HasColumnType("decimal(18, 4)");
-
-                entity.Property(e => e.VatAmount).HasColumnType("decimal(18, 4)");
 
                 entity.HasOne(d => d.Grnreturn)
                     .WithMany(p => p.TGrnreturnDetails)
@@ -11893,6 +12029,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.GrnreturnId).HasColumnName("GRNReturnId");
 
                 entity.Property(e => e.CashCredit).HasColumnName("Cash_Credit");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.GrnReturnAmount).HasColumnType("decimal(18, 4)");
 
@@ -11911,6 +12049,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.GrnreturnTime)
                     .HasColumnType("datetime")
                     .HasColumnName("GRNReturnTime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetAmount).HasColumnType("decimal(18, 4)");
 
