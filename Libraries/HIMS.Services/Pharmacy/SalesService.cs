@@ -479,7 +479,7 @@ namespace HIMS.Services.Users
             ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
             ObjPaymentPharmacy.RefundId = Convert.ToInt32(VRefundId);
 
-            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId" };
+            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "UnitId", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var Aentity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in AEntity)
             {
@@ -502,7 +502,7 @@ namespace HIMS.Services.Users
             foreach (var item in ObjTPhadvanceDetail)
             {
 
-                string[] PEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "StoreId" };
+                string[] PEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "StoreId", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var Pentity = item.ToDictionary();
                 foreach (var rProperty in PEntity)
                 {
