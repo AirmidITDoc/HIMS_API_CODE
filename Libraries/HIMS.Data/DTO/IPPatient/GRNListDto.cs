@@ -57,5 +57,9 @@ namespace HIMS.Data.DTO.IPPatient
         public decimal? UnitPurRate { get; set; }
         public decimal? UnitLandedRate { get; set; }
         public decimal? GST { get; set; }
+        public float? CGSTPer { get; set; }
+        public float? SGSTPer { get; set; }
+        public float? IGSTPer { get; set; }
+
     }
 }

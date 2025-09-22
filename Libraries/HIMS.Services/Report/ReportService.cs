@@ -7031,12 +7031,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
 
-                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{OnlinePayAmount}}", dt.GetColValue("OnlinePayAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{OnlinePayAmount}}", dt.GetColValue("OnlinePayAmount").ConvertToDouble().ToString("F2"));
 
 
                     }
@@ -7060,7 +7060,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
 
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
@@ -7074,17 +7074,17 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
-                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo").ConvertToString());
-                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName").ConvertToString());
                         html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo").ConvertToString());
                         html = html.Replace("{{BankName}}", dt.GetColValue("BankName").ConvertToString());
-                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("PatientType").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("PatientType").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo").ConvertToString());
                         html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster").ConvertToString());
-                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo").ConvertToString());
                         html = html.Replace("{{PayTMDate}}", dt.GetColValue("PayTMDate").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
@@ -7149,14 +7149,14 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{Items}}", items.ToString());
-                        html = html.Replace("{{T_AdvanceAmount}}", T_AdvanceAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_UsedAmount}}", T_UsedAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_BalanceAmount}}", T_BalanceAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_RefundAmount}}", T_RefundAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_CashPayAmount}}", T_CashPayAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_CardPayAmount}}", T_CardPayAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_ChequePayAmount}}", T_ChequePayAmount.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_OnlineAmount}}", T_OnlineAmount.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_AdvanceAmount}}", T_AdvanceAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_UsedAmount}}", T_UsedAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_BalanceAmount}}", T_BalanceAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_RefundAmount}}", T_RefundAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_CashPayAmount}}", T_CashPayAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_CardPayAmount}}", T_CardPayAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_ChequePayAmount}}", T_ChequePayAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_OnlineAmount}}", T_OnlineAmount.ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ConvertToDouble().To2DecimalPlace());
@@ -7203,11 +7203,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AdmissinDate}}", dt.GetColValue("AdmissinDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                   
 
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
@@ -7220,15 +7221,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
-                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount"));
-                        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount"));
+                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("F2"));
 
-                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount"));
-                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
-                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount"));
-                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount"));
-                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount"));
-                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount"));
+                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
 
 
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -7261,8 +7262,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Age}}", dt.GetColValue("Age"));
                         html = html.Replace("{{AdmissinDate}}", dt.GetColValue("AdmissinDate"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
@@ -7479,7 +7480,7 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{chkSurgeryProcDoneflag}}", dt.GetColValue("SurgeryProcDone").ConvertToString() != "" ? "table-row" : "none");
-                        //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
+                        
 
 
 
@@ -8925,11 +8926,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Items}}", items.ToString());
                         //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
-                        html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
-                        html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
-                        html = html.Replace("{{TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace());
-                        html = html.Replace("{{TotalNETAmount}}", T_TotalNETAmount.To2DecimalPlace());
-                        html = html.Replace("{{T_TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace());
+
+                        html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace().ConvertToDouble().ToString("F2")); 
+                        html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace().ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace().ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalNETAmount}}", T_TotalNETAmount.To2DecimalPlace().ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_TotalDiscAmount}}", T_TotalDiscAmount.To2DecimalPlace().ConvertToDouble().ToString("F2"));
 
 
                         html = html.Replace("{{AddedbyName}}", dt.GetColValue("AddedbyName"));
@@ -9166,6 +9168,8 @@ namespace HIMS.Services.Report
 
                 case "PharmacyPatientStatement":
                     {
+                        var dynamicVariable = new Dictionary<string, double>();
+
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                        
@@ -9364,29 +9368,34 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Items}}", items.ToString());
 
 
-                        html = html.Replace("{{salesreturncashTotal}}", salesreturncashTotal.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesonline}}", salesonline.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salescashTotal}}", salescashTotal.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesnet}}", salesnet.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesdisc}}", salesdisc.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesrefund}}", salesrefund.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesTotal}}", salesTotal.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesbal}}", salesbal.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().To2DecimalPlace());
+                       
 
 
-                        html = html.Replace("{{T_Totalamt}}", T_Totalamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Discamt}}", T_Discamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Netamt}}", T_Netamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_paidamt}}", T_paidamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Creditreturnamt}}", T_Creditreturnamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Cashreturnamt}}", T_Cashreturnamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Advamt}}", T_Advamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Advrefundamt}}", T_Advrefundamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Advusedamt}}", T_Advusedamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_AdvBalamt}}", T_AdvBalamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Cashpayamt}}", T_Cashpayamt.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_Onlinepayamt}}", T_Onlinepayamt.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{salesreturncashTotal}}", salesreturncashTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesonline}}", salesonline.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salescashTotal}}", salescashTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesnet}}", salesnet.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesdisc}}", salesdisc.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesrefund}}", salesrefund.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesTotal}}", salesTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesbal}}", salesbal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
+                       
+
+
+                        html = html.Replace("{{T_Totalamt}}", T_Totalamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Discamt}}", T_Discamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Netamt}}", T_Netamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_paidamt}}", T_paidamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Creditreturnamt}}", T_Creditreturnamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Cashreturnamt}}", T_Cashreturnamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advamt}}", T_Advamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advrefundamt}}", T_Advrefundamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advusedamt}}", T_Advusedamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_AdvBalamt}}", T_AdvBalamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Cashpayamt}}", T_Cashpayamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Onlinepayamt}}", T_Onlinepayamt.ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{G_BalTotalamt}}", G_BalTotalamt.To2DecimalPlace());
 
@@ -9435,15 +9444,19 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
+                     
 
-                        html = html.Replace("{{AdvUsedAmt}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{BalAdvAmount}}", dt.GetColValue("BalAdvAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{AdvAmount}}", dt.GetColValue("AdvAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{creditreturnamt}}", dt.GetColValue("creditreturnamt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{AdvRefundAmt}}", dt.GetColValue("AdvRefundAmt").ConvertToDouble().To2DecimalPlace());
+
+                        html = html.Replace("{{AdvUsedAmt}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalAdvAmount}}", dt.GetColValue("BalAdvAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvAmount}}", dt.GetColValue("AdvAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{creditreturnamt}}", dt.GetColValue("creditreturnamt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvRefundAmt}}", dt.GetColValue("AdvRefundAmt").ConvertToDouble().ToString("F2"));
+
+
                         return html;
                     }
                     break;
@@ -9451,7 +9464,8 @@ namespace HIMS.Services.Report
                 case "PharmacySalesDetails":
                     {
 
-                   //     html = html.Replace("{{NewHeader}}", htmlHeader);
+                      
+
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         StringBuilder item = new StringBuilder("");
                         int i = 0, j = 0;
@@ -9579,6 +9593,9 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{T_NetAmount}}", T_NetAmount.ToString("0.00"));
                         //html = html.Replace("{{T_Amount}}", T_Amount.ToString("0.00"));
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+           
+
+
 
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
@@ -9594,7 +9611,7 @@ namespace HIMS.Services.Report
 
 
                         int i = 0;
-
+                        var dynamicVariable = new Dictionary<string, double>();
 
                         double TotalGST = 0, T_HTotalAmount = 0, T_TotalBalancepay = 0;
 
@@ -9637,11 +9654,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
 
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
-                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount"));
-
-                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
-                        html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff"));
-                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("GrossAmount"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{HTotalAmount}}", dt.GetColValue("T_HTotalAmount").ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));
@@ -9668,6 +9685,7 @@ namespace HIMS.Services.Report
 
                         int i = 0;
 
+                        var dynamicVariable = new Dictionary<string, double>();
 
                         double TotalGST = 0, T_HTotalAmount = 0, T_TotalBalancepay = 0;
 
@@ -9710,15 +9728,20 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
 
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
-                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount"));
 
-                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
-                        html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff"));
-                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("GrossAmount"));
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{HTotalAmount}}", dt.GetColValue("HTotalAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GrossAmount}}", dt.GetColValue("GrossAmount").ConvertToDouble().ToString("F2"));
+
+
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));
                         html = html.Replace("{{DL_NO}}", dt.GetColValue("DL_NO"));
+
 
                         html = html.Replace("{{SalesNo}}", dt.GetColValue("SalesNo"));
                         // html = html.Replace("{{Date}}", Bills.GetColValue("Date"));
@@ -9759,7 +9782,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
 
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
@@ -9773,19 +9796,20 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
+                        
 
 
-                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo").ConvertToString());
-                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName").ConvertToString());
                         html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo").ConvertToString());
                         html = html.Replace("{{BankName}}", dt.GetColValue("BankName").ConvertToString());
-                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("PatientType").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("PatientType").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo").ConvertToString());
                         html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster").ConvertToString());
-                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo").ConvertToString());
                         html = html.Replace("{{PayTMDate}}", dt.GetColValue("PayTMDate").ConvertToDouble().To2DecimalPlace());
 
@@ -9834,8 +9858,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AdmissinDate}}", dt.GetColValue("AdmissinDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace().ToString());
-                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
@@ -9851,15 +9875,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
-                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount"));
-                        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount"));
+                        html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("F2"));
 
-                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount"));
-                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
-                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount"));
-                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount"));
-                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount"));
-                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount"));
+
+                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
@@ -9874,6 +9899,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
                         return html;
                     }
+                    break;
+
 
 
                 case "SupplierPaymentReciept":

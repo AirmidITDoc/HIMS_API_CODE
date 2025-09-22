@@ -132,7 +132,7 @@ namespace HIMS.Services.Pharmacy
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = {  "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo" };
+            string[] rEntity = {  "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
             var entity = objGRNReturn.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -182,7 +182,7 @@ namespace HIMS.Services.Pharmacy
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "GrnreturnDate","GrnreturnTime","Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo" };
+            string[] rEntity = { "GrnreturnDate","GrnreturnTime","Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objGRNReturn.ToDictionary();
             foreach (var rProperty in rEntity)    
             {
@@ -201,7 +201,7 @@ namespace HIMS.Services.Pharmacy
                 {
                     rentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
+                odal.ExecuteNonQuery("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
             }
             var tokenObj = new
             {

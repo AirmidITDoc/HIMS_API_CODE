@@ -14,7 +14,7 @@
                 <td style="padding: 6px;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr style="font-size: 18px">
-                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>WORKORDER</b> </td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>WORK ORDER</b> </td>
                             <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                         </tr>
                     </table>
@@ -24,31 +24,31 @@
                 <table style="font-size: 14px;">
                     <tr>
                         <td style="padding: 2px;">
-                            <span>Supplier Name : </span>
+                            <span style="font-weight:bold";>Supplier Name : </span>
                             <span>{{SupplierName}}</span>
                         </td>
                         <td style="padding: 2px;">
-                            <span>Order No : </span>
+                            <span style="font-weight:bold"; >Order No : </span>
                             <span>{{WOId}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 2px;">
-                            <span>Address : </span>
+                            <span style="font-weight:bold"; >Address : </span>
                             <span>{{Address}}</span>
                         </td>
                         <td style="padding: 2px;">
-                            <span>Order Date : </span>
+                            <span style="font-weight:bold"; >Order Date : </span>
                             <span>{{Date}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 2px;">
-                            <span>Phone No : </span>
+                            <span style="font-weight:bold"; >Phone No : </span>
                             <span>{{Phone}}</span>
                         </td>
                         <td style="padding: 2px;">
-                            <span>Mobile No : </span>
+                            <span style="font-weight:bold"; >Mobile No : </span>
                             <span>{{Mobile}}</span>
                         </td>
                     </tr>
@@ -59,7 +59,7 @@
                 <td style="padding: 6px;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <thead style="font-size: 15px; text-align: center;">
-                            <tr>
+                            <tr style="font-weight: bold">
                                 <td style="border: 1px solid #d4c3c3; padding: 6px;">Sr.No</td>
                                 <td style="border: 1px solid #d4c3c3; padding: 6px;">ItemName</td>
                                 <td style="border: 1px solid #d4c3c3; padding: 6px;">Qty</td>
@@ -105,7 +105,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                <td colspan="4" style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
                                     Total Amount in words :-
                                     <span style=" text-align: center; padding: 6px;">{{finalamt}}</span>
                                 </td>
@@ -135,13 +135,13 @@
                         <tbody style="font-size: 14px;">
                             <tr>
                                 <td style="padding: 6px; text-align: left;">
-                                    {{AddedbyName}}  <br> Added By
+                                    {{AddedbyName}}  <br> <span style="font-weight:bold">Added By</span> 
                                 </td>
                                 <td style="padding: 6px; text-align: center;">
-                                    {{AddedbyName}}  <br> Checked By
+                                    {{AddedbyName}}  <br>  <span style="font-weight:bold">Checked By</span> 
                                 </td>
                                 <td style="padding: 6px; text-align: right;">
-                                    {{AddedbyName}} <br> Authorized Signature
+                                    {{AddedbyName}} <br>  <span style="font-weight:bold">Authorized Signature</span> 
                                 </td>
                             </tr>
                         </tbody>

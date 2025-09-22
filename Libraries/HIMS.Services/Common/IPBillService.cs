@@ -594,7 +594,7 @@ namespace HIMS.Services.Common
             {
                 entity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, entity1);
+            odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
         }
         public virtual async Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
         {

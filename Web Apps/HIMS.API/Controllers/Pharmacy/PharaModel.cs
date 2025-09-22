@@ -7,6 +7,7 @@ namespace HIMS.API.Models.Pharmacy
     public class PharaModel
     {
             public long? PaymentId { get; set; }
+            public long? UnitId { get; set; }
             public long? BillNo { get; set; }
             public DateTime? PaymentDate { get; set; }
             public string? PaymentTime { get; set; }
@@ -36,7 +37,9 @@ namespace HIMS.API.Models.Pharmacy
             public decimal? PayTmamount { get; set; }
             public string? PayTmtranNo { get; set; }
             public DateTime? PayTmdate { get; set; }
-        }
+            public decimal? TdsAmount { get; set; }
+            public decimal? WfAmount { get; set; }
+    }
         public class PharaModelValidator : AbstractValidator<PharaModel>
         {
             public PharaModelValidator()

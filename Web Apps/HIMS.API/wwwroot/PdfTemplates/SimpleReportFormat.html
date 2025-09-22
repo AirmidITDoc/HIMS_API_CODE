@@ -18,7 +18,7 @@
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>Admission List</b> </td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px;"> <b>{{RepoertName}}</b> </td>
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 14px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                             </tr>
                         </table>
@@ -29,8 +29,11 @@
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 2px;">
-                                    <i style="font-size: 16px;"> From Date : {{FromDate}} -- To Date : {{ToDate}}</i>
+                                    <span style="font-size: 16px; font-weight: bold;">
+                                        From Date : {{FromDate}} -- To Date : {{ToDate}}
+                                    </span>
                                 </td>
+
                             </tr>
                         </table>
                     </td>
