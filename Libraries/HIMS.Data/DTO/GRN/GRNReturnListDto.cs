@@ -31,11 +31,13 @@ namespace HIMS.Data.DTO.GRN
         public long? StkId { get; set; }
         public float? TotalQty { get; set; }
         public decimal? NetAmount { get; set; }
-        public float? DiscPercenetage { get; set; }
+        public float? DiscPercentage { get; set; }
         public decimal? DiscAmount { get; set; }
         public float? Cgstper { get; set; }
         public float? Sgstper { get; set; }
         public float? Igstper { get; set; }
+        public float? BalanceQty { get; set; }
+        public float? GrnRetQty { get; set; }
 
     }
 }
