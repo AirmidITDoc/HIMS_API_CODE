@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using HIMS.Data;
 using HIMS.Services.Administration;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -24,7 +26,13 @@ namespace HIMS.API.Controllers.Administration
             _Texpenseservice = repository;
 
         }
-
+        [HttpPost("DailyExpenceList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
+        {
+            IPagedList<DailyExpenceListtDto> DailyExpenceList = await _Texpenseservice.DailyExpencesList(objGrid);
+            return Ok(DailyExpenceList.ToGridResponse(objGrid, "DailyExpenceList"));
+        }
 
         [HttpPost("TExpenseInsert")]
         //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
