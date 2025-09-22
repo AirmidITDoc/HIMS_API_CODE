@@ -55,20 +55,58 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username)
+        public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            //{
+
+            //    _context.Entry(objService).State = EntityState.Modified;
+            //    if ((ignoreColumns?.Length ?? 0) > 0)
+            //    {
+            //        foreach (var column in ignoreColumns)
+            //        {
+            //            _context.Entry(objService).Property(column).IsModified = false;
+            //        }
+            //    }
+
+            //    // Delete details table realted records
+            //    var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
+            //    if (lst.Count > 0)
+            //    {
+            //        _context.ServiceDetails.RemoveRange(lst);
+            //    }
+            //    await _context.SaveChangesAsync();
+            //    // Update header & detail table records
+            //    _context.ServiceMasters.Update(objService);
+            //    _context.Entry(objService).State = EntityState.Modified;
+            //    await _context.SaveChangesAsync();
+            //    scope.Complete();
+            //}
+
+
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Delete details table realted records
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(objService);
+                _context.Entry(objService).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objService).Property(column).IsModified = false;
+                    }
+                }
+
+                // 3. Delete details related to the service
                 var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
                 if (lst.Count > 0)
                 {
                     _context.ServiceDetails.RemoveRange(lst);
                 }
-                await _context.SaveChangesAsync();
-                // Update header & detail table records
-                _context.ServiceMasters.Update(objService);
-                _context.Entry(objService).State = EntityState.Modified;
+
+                // 4. Save changes once
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }

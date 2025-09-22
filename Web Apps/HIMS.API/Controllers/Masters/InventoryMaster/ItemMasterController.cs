@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.ModifiedBy = CurrentUserId;
                 model.IsUpdatedBy = DateTime.Now;
                 model.ItemTime = Convert.ToDateTime(obj.ItemTime);
-                await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

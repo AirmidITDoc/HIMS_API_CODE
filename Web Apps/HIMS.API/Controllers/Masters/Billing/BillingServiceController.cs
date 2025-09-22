@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
