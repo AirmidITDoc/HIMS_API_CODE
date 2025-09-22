@@ -119,7 +119,7 @@ namespace HIMS.Services.Pharmacy
 
             DatabaseHelper odal = new();
             string[] rEntity = { "GrnreturnNo", "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit",
-                "Remark","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","GrnType","IsGrnTypeFlag","TGrnreturnDetails" };
+                "Remark","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","GrnType","IsGrnTypeFlag","TGrnreturnDetails", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","UnitId" };
             var entity = objGRN.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -182,7 +182,7 @@ namespace HIMS.Services.Pharmacy
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "GrnreturnDate","GrnreturnTime","Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] rEntity = { "Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objGRNReturn.ToDictionary();
             foreach (var rProperty in rEntity)    
             {

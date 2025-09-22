@@ -78,11 +78,11 @@ namespace HIMS.Data.DTO.Inventory
         public string? ConverFactor{ get; set; }
         public long? StoreId { get; set; }
         public long? UMOId { get; set; }
-
         public string UMOName { get; set; }
         public string? ItemCompanyName {  get; set; }
         //public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty; } }
+        public double? TaxPer { get; set; }
     }
     public class ItemListForBatchPopDTO
     {

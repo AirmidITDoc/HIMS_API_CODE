@@ -314,7 +314,8 @@ namespace HIMS.Services.Inventory
                              SGSTPer = grouped.Key.Sgst ?? 0,
                              IGSTPer = grouped.Key.Igst ?? 0,
                              HSNcode = grouped.Key.Hsncode,
-                             ItemCompanyName = grouped.Key.CompanyName ?? string.Empty
+                             ItemCompanyName = grouped.Key.CompanyName ?? string.Empty,
+                             TaxPer = grouped.Key.TaxPer
                          });
             return await qry.Take(50).ToListAsync();
         }
