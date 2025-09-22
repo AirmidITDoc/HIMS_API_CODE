@@ -42,11 +42,12 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("WorkOrderSave")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderAsyncSp(WorksOrderModel obj)
         {
+            
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
-           List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
+            List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
 
             if (obj.WorkOrders.Woid == 0)
             {
@@ -58,10 +59,10 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.", Model.Woid);
         }
 
-       
+
 
         [HttpPut("WorkOrderUpdate")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();

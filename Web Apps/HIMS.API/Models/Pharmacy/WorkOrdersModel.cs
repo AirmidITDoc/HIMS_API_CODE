@@ -36,7 +36,7 @@ namespace HIMS.API.Models.Pharmacy
     }
     public class WorkOrderDetailsModel
     {
-        public long WOId { get; set; }
+        public long Woid { get; set; }
         public string? ItemName { get; set; }
         public double? Qty { get; set; }
         public double? Rate { get; set; }
