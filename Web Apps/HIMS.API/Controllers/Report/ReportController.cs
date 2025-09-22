@@ -205,6 +205,14 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemMaster Data.", data.Select(x => new { Text = x.ItemName, Value = x.ItemId }));
         }
 
+        [HttpGet("MModeOfPaymentList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMModeofpaymentListAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMModeOfPayment(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMModeOfPayment Data.", data.Select(x => new { Text = x.ModeOfPayment, Value = x.Id }));
+        }
+
 
 
         [HttpGet("{mode?}")]
