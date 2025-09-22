@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,11 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "m_Rtrv_T_Expenses");
+        }
+
 
         public virtual async Task InsertAsync(TExpense ObjTExpense, int UserId, string Username)
         {

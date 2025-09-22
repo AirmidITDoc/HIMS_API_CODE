@@ -147,7 +147,7 @@ namespace HIMS.Services.OPPatient
             {
                 PayEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
+            odal.ExecuteNonQuery("ps_insert_Payment_Refund_1", CommandType.StoredProcedure, PayEntity);
         }
 
 

@@ -14,6 +14,7 @@ namespace HIMS.Data.Models
         public DateTime? GrnreturnDate { get; set; }
         public DateTime? GrnreturnTime { get; set; }
         public string? GrnreturnNo { get; set; }
+        public long? UnitId { get; set; }
         public long? Grnid { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
@@ -34,6 +35,10 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TGrnreturnDetail> TGrnreturnDetails { get; set; }
     }

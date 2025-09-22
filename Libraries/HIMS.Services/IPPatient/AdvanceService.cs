@@ -66,7 +66,7 @@ namespace HIMS.Services.IPPatient
             {
                 PAdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, PAdvanceEntity);
 
 
         }
@@ -99,7 +99,7 @@ namespace HIMS.Services.IPPatient
             {
                 PAdvanceEntity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, PAdvanceEntity);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, PAdvanceEntity);
 
         }
         public virtual async Task CancelAsync(AdvanceHeader ObjAdvanceHeader, long AdvanceDetailId)

@@ -306,6 +306,9 @@ namespace HIMS.Services.Pharmacy
                            UnitPurRate=cs.PurUnitRateWf,
                            UnitLandedRate=cs.LandedRate,
                            GST=cs.VatPercentage,
+                           CGSTPer = cs.Cgstper,
+                           SGSTPer = cs.Sgstper,
+                           IGSTPer = cs.Igstper,
                            FormattedText = cs.BatchNo + " "
                                + cs.BatchExpDate + " "
                                + cs.PurUnitRateWf

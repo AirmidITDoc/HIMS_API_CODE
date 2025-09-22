@@ -1038,7 +1038,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
                 #region :: IpInterimBill ::
-                case "IPInterimBill":
+                case "IPDInterimBill":
                     {
 
 

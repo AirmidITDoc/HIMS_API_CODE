@@ -23,11 +23,13 @@ namespace HIMS.Data.Models
         public long? OpdAdvanceCounterId { get; set; }
         public long? OpdRefundAdvanceCounterId { get; set; }
         public long? IpdAdvanceCounterId { get; set; }
+        public long? IpdAdvanceReceiptCounterId { get; set; }
         public long? IpdBillingCounterId { get; set; }
         public long? IpdReceiptCounterId { get; set; }
         public long? IpdRefundOfBillCounterId { get; set; }
         public long? IpdRefundOfBillReceiptCounterId { get; set; }
         public long? IpdRefundOfAdvanceCounterId { get; set; }
+        public long? IpdRefundOfAdvanceReceiptCounterId { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
