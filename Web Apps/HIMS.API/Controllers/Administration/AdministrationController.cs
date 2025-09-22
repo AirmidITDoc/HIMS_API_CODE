@@ -46,13 +46,13 @@ namespace HIMS.API.Controllers.Administration
             return Ok(RoleMasterList.ToGridResponse(objGrid, "RoleMaster App List"));
         }
 
-        [HttpPost("DailyExpenceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
-        {
-            IPagedList<DailyExpenceListtDto> DailyExpenceList = await _IAdministrationService.DailyExpencesList(objGrid);
-            return Ok(DailyExpenceList.ToGridResponse(objGrid, "DailyExpenceList"));
-        }
+        //[HttpPost("DailyExpenceList")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DailyExpenceListtDto> DailyExpenceList = await _IAdministrationService.DailyExpencesList(objGrid);
+        //    return Ok(DailyExpenceList.ToGridResponse(objGrid, "DailyExpenceList"));
+        //}
 
         [HttpPost("PaymentModeList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]

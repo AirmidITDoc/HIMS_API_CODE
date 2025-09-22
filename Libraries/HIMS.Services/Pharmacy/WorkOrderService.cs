@@ -44,14 +44,14 @@ namespace HIMS.Services.Pharmacy
             {
                 yentity.Remove(rProperty);
             }
-            string AWOId = odal.ExecuteNonQuery("insert_T_WorkOrderHeader_1", CommandType.StoredProcedure, "WOId", yentity);
-            //ObjTWorkOrderHeader.Woid = Convert.ToInt32(AWOId);
+            string AWOId = odal.ExecuteNonQuery("insert_T_WorkOrderHeader_1", CommandType.StoredProcedure, "Woid", yentity);
+            ObjTWorkOrderHeader.Woid = Convert.ToInt32(AWOId);
 
             foreach (var item in ObjTWorkOrderDetail)
             {
                 item.Woid = Convert.ToInt32(AWOId);
 
-                string[] rEntity = { "WodetId", "PendQty" };
+                string[] rEntity = { "WodetId", "PendQty"};
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
