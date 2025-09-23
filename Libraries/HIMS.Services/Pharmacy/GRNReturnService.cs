@@ -189,8 +189,17 @@ namespace HIMS.Services.Pharmacy
                 entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
+            foreach (var item in objTGrnreturnDetail)
+            {
 
+                var tokensObj = new
+                {
+                    GrnreturnId = Convert.ToInt32(item.GrnreturnId)
 
+                };
+
+                odal.ExecuteNonQuery("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            }
             string[] GEntity = { "GrnreturnDetailId", "Grnid", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "VatPercentage", "VatAmount", "TaxAmount", "OtherTaxAmount", "OctroiPer", "OctroiAmt", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnreturn" };
             foreach (var item in objTGrnreturnDetail)
             {
@@ -202,6 +211,7 @@ namespace HIMS.Services.Pharmacy
                     rentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
+
             }
             var tokenObj = new
             {

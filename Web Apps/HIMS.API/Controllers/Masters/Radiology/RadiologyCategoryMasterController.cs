@@ -78,19 +78,21 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
         }
 
-        //Delete API
+       
+        //Delete API 
         [HttpDelete]
-        [Permission(PageCode = "Radiology", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Radiology", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MRadiologyCategoryMaster model = await _repository.GetById(x => x.CategoryId == Id);
             if ((model?.CategoryId ?? 0) > 0)
             {
                 model.IsActive = model.IsActive == true ? false : true;
+
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
