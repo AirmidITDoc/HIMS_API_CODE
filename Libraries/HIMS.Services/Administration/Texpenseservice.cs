@@ -23,7 +23,7 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "m_Rtrv_T_Expenses");
+            return await DatabaseHelper.GetGridDataBySp<DailyExpenceListtDto>(model, "ps_Rtrv_T_Expenses");
         }
 
 
