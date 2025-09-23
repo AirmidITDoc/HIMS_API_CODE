@@ -7,7 +7,7 @@ namespace HIMS.Data.Models
     {
         public long ExpHedId { get; set; }
         public string? HeadName { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsActive { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
     }
