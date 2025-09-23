@@ -21,6 +21,8 @@ namespace HIMS.Data.DTO.Administration
         public string? VoucharNo { get; set; }
         public string HeadName { get; set; }
         public long? ExpHeadId { get; set; }
+        public bool? IsCancelled { get; set; }
+
 
     }
 }

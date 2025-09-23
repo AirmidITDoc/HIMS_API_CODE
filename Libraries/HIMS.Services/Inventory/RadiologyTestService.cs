@@ -92,19 +92,30 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username)
+      
+        public virtual async Task UpdateAsync(MRadiologyTestMaster objRadio, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(objRadio);
+                _context.Entry(objRadio).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objRadio).Property(column).IsModified = false;
+                    }
+                }
                 // Delete details table realted records
                 var lst = await _context.MRadiologyTemplateDetails.Where(x => x.TestId == objRadio.TestId).ToListAsync();
                 if (lst.Count > 0)
                 {
                     _context.MRadiologyTemplateDetails.RemoveRange(lst);
                 }
-                // Update header & detail table records
-                _context.MRadiologyTestMasters.Update(objRadio);
-                _context.Entry(objRadio).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

@@ -89,20 +89,29 @@ namespace HIMS.Services.Inventory
             }
         }
 
-         public virtual async Task UpdateAsync(MSupplierMaster objSupplier, int UserId, string Username)
-         {
+        public virtual async Task UpdateAsync(MSupplierMaster objSupplier, int UserId, string Username, string[]? ignoreColumns = null)
+        {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(objSupplier);
+                _context.Entry(objSupplier).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objSupplier).Property(column).IsModified = false;
+                    }
+                }
                 // Delete details table realted records
                 var lst = await _context.MAssignSupplierToStores.Where(x => x.SupplierId == objSupplier.SupplierId).ToListAsync();
                 if (lst.Count > 0)
                 {
                     _context.MAssignSupplierToStores.RemoveRange(lst);
                 }
-                await _context.SaveChangesAsync();
-                // Update header & detail table records
-                _context.MSupplierMasters.Update(objSupplier);
-                _context.Entry(objSupplier).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();

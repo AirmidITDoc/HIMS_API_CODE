@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("DailyExpenceList")]
-        [Permission(PageCode = "managment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.View)]
         public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
         {
             IPagedList<DailyExpenceListtDto> DailyExpenceList = await _Texpenseservice.DailyExpencesList(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.",model.ExpId);
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]
@@ -61,10 +61,10 @@ namespace HIMS.API.Controllers.Administration
 
                 await _Texpenseservice.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.", model.ExpId);
         }
 
-        [HttpDelete("TExpenseCancel")]
+        [HttpPost("TExpenseCancel")]
         [Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
         {

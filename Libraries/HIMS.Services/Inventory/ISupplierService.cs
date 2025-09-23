@@ -15,7 +15,7 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<SupplierListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(MSupplierMaster objSupplier, int UserId, string Username);
         Task InsertAsync(MSupplierMaster objSupplier, int UserId, string Username);
-        Task UpdateAsync(MSupplierMaster objSupplier, int UserId, string Username);
+        Task UpdateAsync(MSupplierMaster objSupplier, int UserId, string Username, string[]? references);
         Task CancelAsync(MSupplierMaster objSupplier, int UserId, string Username);
         Task<MSupplierMaster> GetById(int Id);
 

@@ -116,7 +116,8 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 model.ModifiedDate = DateTime.Now;
                 model.Updatedby = CurrentUserId;
                 model.IsActive = true;
-                await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiolRecordogyTest updated successfully.");
         }
