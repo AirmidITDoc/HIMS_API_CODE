@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("DailyExpenceList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "managment", Permission = PagePermission.View)]
         public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
         {
             IPagedList<DailyExpenceListtDto> DailyExpenceList = await _Texpenseservice.DailyExpencesList(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TExpenseInsert")]
-        //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]
-        //[Permission(PageCode = "managment", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "managment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpDelete("TExpenseCancel")]
-        //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
         {
             TExpense Model = obj.MapTo<TExpense>();
