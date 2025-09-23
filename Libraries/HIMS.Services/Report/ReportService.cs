@@ -113,6 +113,8 @@ namespace HIMS.Services.Report
             return await this._context.MModeOfPayments.Where(x => (x.ModeOfPayment).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+     
+
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
@@ -4654,28 +4656,30 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
                         //html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
-                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotalNETAmount}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalNETAmount}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().ToString("F2"));
 
 
-                        html = html.Replace("{{TotCGSTAmt}}", dt.GetColValue("TotCGSTAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{GrandTotalAount}}", dt.GetColValue("TotalAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotalAmount}}", dt.GetColValue("TotalAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotCGSTAmt}}", dt.GetColValue("TotCGSTAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GrandTotalAount}}", dt.GetColValue("GrandTotalAount").ConvertToDouble().ToString("F2"));
+
+
+                        html = html.Replace("{{TotalAmount}}", dt.GetColValue("TotalAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{HandlingCharges}}", dt.GetColValue("HandlingCharges").ConvertToDouble().To2DecimalPlace());
 
                         html = html.Replace("{{TransportChanges}}", dt.GetColValue("TransportChanges").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotSGSTAmt}}", dt.GetColValue("TotSGSTAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotSGSTAmt}}", dt.GetColValue("TotSGSTAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{OtherCharge}}", dt.GetColValue("OtherCharge").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{CreditNote}}", dt.GetColValue("CreditNote").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName").ConvertToString());
                         html = html.Replace("{{DebitNote}}", dt.GetColValue("DebitNote").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark").ConvertToString());
-                        html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetPayble}}", dt.GetColValue("NetPayble").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{T_TotalCGST}}", T_TotalCGST.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_TotalSGST}}", T_TotalSGST.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{T_GrandTotalAount}}", T_GrandTotalAount.ConvertToDouble().To2DecimalPlace());
 
 
