@@ -336,7 +336,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //shilpa 27/05/2025//
 
         [HttpPost("PharmacyRefundInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PharRefundModel obj)
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
@@ -357,7 +357,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PaymentSettlement")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
         {
             List<PaymentPharmacy> model = obj.Payment.MapTo<List<PaymentPharmacy>>();
@@ -376,7 +376,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPost("PhBillDiscountAfter")]
-        //  [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP1(PhBillDiscountAfterModel obj)
         {
 
@@ -393,7 +393,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpGet("External-auto-complete")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _ISalesService.SearchRegistration(Keyword);
@@ -409,7 +409,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpGet("ExternalDoctor-auto-complete")]
-        //[Permission(PageCode = "Emergency", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetExtDocAutoComplete(string Keyword)
         {
             var data = await _ISalesService.SearchExtDoctor(Keyword);

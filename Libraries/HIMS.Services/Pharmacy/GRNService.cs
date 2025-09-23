@@ -8,6 +8,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Data;
 using System.Linq;
 using System.Transactions;
@@ -319,7 +320,22 @@ namespace HIMS.Services.Pharmacy
             return await qry.ToListAsync();
 
         }
+        //public virtual async Task<List<BatchListDTO>> GetGSTList(string GSTNo)
+        //{
+        //    //var gstTypesQuery = from cs in _context.MConstants
+        //    //                    where (string.IsNullOrEmpty(GSTNo) || cs.Value.Contains(GSTNo))
+        //    //                          && cs.ConstantType == "GST_TYPES"
+        //    //                    select new BatchListDTO
+        //    //                    {
+        //    //                        GST = decimal.TryParse(cs.Value, out var gst) ? gst : 0, // or handle fallback cs.Value,
+        //    //                    };
 
+        //    //var sql = gstTypesQuery.ToQueryString();
+        //    //Console.WriteLine(sql);
+
+        //    //var gstTypes = await gstTypesQuery.ToListAsync();
+        //    //return gstTypes;
+        //}
         //public virtual async Task<List<ServiceMasterDTO>> GetExisitingBatchList(int TariffId, int ClassId, string ServiceName)
         //{
         //    var qry = (from s in _context.ServiceMasters

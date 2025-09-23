@@ -90,6 +90,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public long? UnitId { get;set; }
         public decimal? TdsAmount {get; set; }
         public decimal? WfAmount { get; set; }
+        public long? OPDIPDType { get; set; }
     }
 
     public class PharRefundModel

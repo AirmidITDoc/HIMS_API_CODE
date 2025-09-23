@@ -23,6 +23,7 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<PoDetailListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<IPagedList<InvoiceNoChecListDto>> InvoiceNoChecList(GridRequestModel objGrid);
         Task<List<BatchListDTO>> GetExisitingBatchList(int StoreId, int ItemId, string BatchNo);
+        //Task<List<BatchListDTO>> GetGSTList(string GSTNo);
         Task<TGrnheader> GetById(int Id);
     
     }
