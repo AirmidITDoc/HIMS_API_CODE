@@ -189,17 +189,13 @@ namespace HIMS.Services.Pharmacy
                 entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
-            foreach (var item in objTGrnreturnDetail)
+         
+            var DeleteGrnReturnDetObj = new
             {
+                GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
+            };
+            odal.ExecuteNonQuery("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure, DeleteGrnReturnDetObj.ToDictionary());
 
-                var tokensObj = new
-                {
-                    GrnreturnId = Convert.ToInt32(item.GrnreturnId)
-
-                };
-
-                odal.ExecuteNonQuery("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            }
             string[] GEntity = { "GrnreturnDetailId", "Grnid", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "VatPercentage", "VatAmount", "TaxAmount", "OtherTaxAmount", "OctroiPer", "OctroiAmt", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnreturn" };
             foreach (var item in objTGrnreturnDetail)
             {
@@ -218,6 +214,7 @@ namespace HIMS.Services.Pharmacy
                 GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
             };
             odal.ExecuteNonQuery("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, tokenObj.ToDictionary());
+
             foreach (var item in ObjTCurrentStock)
             {
                 string[] GGEntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
@@ -228,6 +225,7 @@ namespace HIMS.Services.Pharmacy
                 }
                 odal.ExecuteNonQuery("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, gentity);
             }
+            
             foreach (var item in ObjTGrndetails)
             {
                 string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn" };
