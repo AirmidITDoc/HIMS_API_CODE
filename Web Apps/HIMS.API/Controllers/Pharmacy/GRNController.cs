@@ -196,6 +196,16 @@ namespace HIMS.API.Controllers.Pharmacy
             }));
         }
 
+        //[HttpGet("GetGSTList")]
+        //public async Task<ApiResponse> GetGSTList(string GSTNo)
+        //{
+        //    var resultList = await _IGRNService.GetGSTList(GSTNo);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get GST List.", resultList.Select(x => new
+        //    {
+        //        x.GST
+        //    }));
+        //}
+
         //[HttpPost("InsertGRNPurchase")]
         ////    [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         //public async Task<ApiResponse> InsertSp(GRNDModel obj)
