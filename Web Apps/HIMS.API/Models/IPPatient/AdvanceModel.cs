@@ -18,6 +18,7 @@ namespace HIMS.API.Models.IPPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long AdvanceId { get; set; }
+        public long UnitId { get; set; }
     }
     public class AdvanceModelValidator : AbstractValidator<AdvanceModel>
     {
@@ -48,6 +49,7 @@ namespace HIMS.API.Models.IPPatient
         public DateTime? IsCancelledDate { get; set; }
         public string? Reason { get; set; }
         public long AdvanceDetailId { get; set; }
+        public long UnitId { get; set; }
 
     }
     public class AdvanceDetailModelValidator : AbstractValidator<AdvanceDetailModel>
@@ -144,8 +146,9 @@ namespace HIMS.API.Models.IPPatient
             public DateTime IsCancelledDate { get; set; }
             public string? Reason { get; set; }
             public long AdvanceDetailId { get; set; }
+            public long UnitId { get; set; }
 
-        }
+    }
     public class UpdateAdvanceModel2Validator : AbstractValidator<AdvanceDetailModel2>
     {
         public UpdateAdvanceModel2Validator()
