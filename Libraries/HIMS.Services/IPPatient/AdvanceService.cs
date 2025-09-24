@@ -173,7 +173,7 @@ namespace HIMS.Services.IPPatient
             {
                 entity1.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_m_insert_Payment_1", CommandType.StoredProcedure, entity1);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, entity1);
         }
         public virtual async Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int UserId, string UserName)
         {
