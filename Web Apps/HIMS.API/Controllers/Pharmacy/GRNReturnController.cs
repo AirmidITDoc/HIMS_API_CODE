@@ -19,7 +19,6 @@ namespace HIMS.API.Controllers.Pharmacy
     [ApiVersion("1")]
     public class GRNReturnController : BaseController
     {
-        //private readonly IGRNReturnService _IGRNReturnService;
 
         private readonly IGRNReturnService _gRNReturnService;
         public GRNReturnController(IGRNReturnService repository)
@@ -82,7 +81,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.GrnreturnId);
         //}
         [HttpPost("Insert")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -103,7 +102,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("UpdateGRNReturn")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -115,9 +114,9 @@ namespace HIMS.API.Controllers.Pharmacy
 
             else
             {
-                model.AddedBy = CurrentUserId;
-                model.GrnreturnDate = DateTime.Now;
-
+                model.UpdatedBy = CurrentUserId;
+                model.GrnreturnDate = Convert.ToDateTime(obj.GrnReturn.GrnreturnDate);
+                model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
 
                 await _gRNReturnService.UpdateAsyncsp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
@@ -125,7 +124,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
