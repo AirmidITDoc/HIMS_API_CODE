@@ -416,11 +416,9 @@ namespace HIMS.API.Controllers.Report
                 case "PharamcyAdvanceReceipt":
                 case "PharamcyAdvanceReturnReceipt":
 
-
-
-
-              
                 case "SalesReturnBill":
+                case "ExpenseVoucharPrint":
+
                 //OT
                 case "OTRequest":
                 case "OTReservationReport":
