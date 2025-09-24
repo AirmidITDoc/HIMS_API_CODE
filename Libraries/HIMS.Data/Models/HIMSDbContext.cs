@@ -6775,9 +6775,13 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_ExpensesHeadMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.HeadName)
                     .HasMaxLength(100)
                     .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MGenericMaster>(entity =>

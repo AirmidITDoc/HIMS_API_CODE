@@ -16,11 +16,6 @@ namespace HIMS.Data.Models
         public string? Opdno { get; set; }
         public long? TariffId { get; set; }
         public long? CompanyId { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
-        public long? IsCancelledBy { get; set; }
-        public bool? IsCancelled { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
         public long? ClassId { get; set; }
         public long? DepartmentId { get; set; }
         public long? PatientOldNew { get; set; }
@@ -29,9 +24,11 @@ namespace HIMS.Data.Models
         public DateTime? FollowupDate { get; set; }
         public bool? IsMark { get; set; }
         public string? Comments { get; set; }
+        public long? PhoneAppId { get; set; }
+        public long? CrossConsultantDrId { get; set; }
+        public bool? IsConvertRequestForIp { get; set; }
         public bool? IsXray { get; set; }
         public byte? CrossConsulFlag { get; set; }
-        public long? PhoneAppId { get; set; }
         public string? Height { get; set; }
         public string? Pweight { get; set; }
         public string? Bmi { get; set; }
@@ -45,8 +42,11 @@ namespace HIMS.Data.Models
         public DateTime? ConStartTime { get; set; }
         public DateTime? ConEndTime { get; set; }
         public long? CampId { get; set; }
-        public long? CrossConsultantDrId { get; set; }
-        public bool? IsConvertRequestForIp { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

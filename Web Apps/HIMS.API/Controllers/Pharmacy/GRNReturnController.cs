@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.GrnreturnId);
         //}
         [HttpPost("Insert")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("UpdateGRNReturn")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -124,7 +124,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
