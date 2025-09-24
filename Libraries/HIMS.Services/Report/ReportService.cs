@@ -1964,6 +1964,23 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: ExpenseVoucharPrint ::
+                case "ExpenseVoucharPrint":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExpenseVoucharReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("rptExpVoucharPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ExpenseVoucharPrint", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: OTRequest ::
                 case "OTRequest":
                     {
@@ -4799,14 +4816,14 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["ReturnQty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["LandedTotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
 
-                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatPercentage"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
-                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["VatAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["DiscPercentage"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["DiscAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["TotalDiscAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
 
                             T_TotalAmount += dr["TotalAmount"].ConvertToDouble();
-                            T_TotalVatAmount += dr["VatAmount"].ConvertToDouble();
+                            T_TotalVatAmount += dr["DiscAmount"].ConvertToDouble();
                             T_TotalDiscAmount += dr["TotalDiscAmount"].ConvertToDouble();
                             T_TotalNETAmount += dr["NetAmount"].ConvertToDouble();
                             //T_TotalBalancepay += dr["BalanceAmount"].ConvertToDouble();
@@ -4823,7 +4840,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{TotalAmount}}", T_TotalAmount.To2DecimalPlace());
                         html = html.Replace("{{TotalVatAmount}}", T_TotalVatAmount.To2DecimalPlace());
-                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{TotalNETAmount}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
 
 
@@ -4833,15 +4850,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{HandlingCharges}}", dt.GetColValue("HandlingCharges").ConvertToDouble().To2DecimalPlace());
 
                         html = html.Replace("{{TransportChanges}}", dt.GetColValue("TransportChanges").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotSGSTAmt}}", dt.GetColValue("TotSGSTAmt").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotSGSTAmt}}", dt.GetColValue("TotSGSTAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalDiscAmount}}", dt.GetColValue("TotalDiscAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{OtherCharge}}", dt.GetColValue("OtherCharge").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{CreditNote}}", dt.GetColValue("CreditNote").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName").ConvertToString());
                         html = html.Replace("{{DebitNote}}", dt.GetColValue("DebitNote").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark").ConvertToString());
-                        html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{TotalVATAmount}}", dt.GetColValue("TotalVATAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetPayble}}", dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
 
@@ -9027,6 +9044,44 @@ namespace HIMS.Services.Report
 
                         return html;
 
+                    }
+                    break;
+
+
+                case "ExpenseVoucharPrint":
+                    {
+
+                        int length = 0;
+                        length = dt.Rows.Count;
+                   
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0;
+
+
+                        html = html.Replace("{{ExpID}}", dt.GetColValue("ExpID"));
+                        html = html.Replace("{{HeadName}}", dt.GetColValue("HeadName"));
+                  
+                        html = html.Replace("{{ExpType}}", dt.GetColValue("ExpType"));
+                        html = html.Replace("{{ExpAmount}}", dt.GetColValue("ExpAmount"));
+
+                        html = html.Replace("{{PersonName}}", dt.GetColValue("PersonName"));
+                        html = html.Replace("{{Narration}}", dt.GetColValue("Narration"));
+                        html = html.Replace("{{VoucharNo}}", dt.GetColValue("VoucharNo"));
+                        html = html.Replace("{{AddedName}}", dt.GetColValue("AddedName"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+
+                        html = html.Replace("{{ExpDate}}", dt.GetColValue("ExpTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
+
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+
+                        return html;
                     }
                     break;
 

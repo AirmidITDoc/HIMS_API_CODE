@@ -15,7 +15,6 @@ namespace HIMS.API.Models.Administration
         public TExpenseCancelModelValidator()
         {
             RuleFor(x => x.IsCancelledBy).NotNull().NotEmpty().WithMessage("IsCancelledBy id is required");
-          //  RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
         }
     }
 }
