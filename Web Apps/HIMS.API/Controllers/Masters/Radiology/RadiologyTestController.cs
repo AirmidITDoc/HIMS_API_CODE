@@ -40,13 +40,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return Ok(MRadiologyTestMasterList.ToGridResponse(objGrid, "MRadiologyTestMaster  List"));
         }
 
-        //[HttpPost("RadiologyList")]
-        ////[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> Lists(GridRequestModel objGrid)
-        //{
-        //    IPagedList<RadiologyListDto> RadiologyList = await _RadiologyTestService.GetListAsync(objGrid);
-        //    return Ok(RadiologyList.ToGridResponse(objGrid, "RadiologyList "));
-        //}
+       
         [HttpPost("RadiologyTestList")]
          [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RadiologyTestList(GridRequestModel objGrid)
@@ -70,24 +64,24 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return Ok(RadTemplateMasterList.ToGridResponse(objGrid, "RadiologyPatient List "));
         }
 
-        [HttpPost("Insert")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(RadiologyTestModel obj)
-        {
-            MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
-            if (obj.TestId == 0)
-            {
-                model.CreatedDate = DateTime.Now;
-                model.Addedby = CurrentUserId;
-                model.IsActive = true;
-                await _RadiologyTestService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        }
+        //[HttpPost("Insert")]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(RadiologyTestModel obj)
+        //{
+        //    MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
+        //    if (obj.TestId == 0)
+        //    {
+        //        model.CreatedDate = DateTime.Now;
+        //        model.Addedby = CurrentUserId;
+        //        model.IsActive = true;
+        //        await _RadiologyTestService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        //}
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -104,7 +98,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -119,7 +113,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiolRecordogyTest updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         //[HttpDelete("RadilogyCancel")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
@@ -139,20 +133,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         //}
 
 
-        //[HttpPut("RadiologyUpdate/{id:int}")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Update(TRadiologyReportModel obj)
-        //{
-        //    TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
-        //    if (obj.RadReportId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.RadDate = DateTime.Now;
-        //        await _RadiologyTestService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
+       
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]

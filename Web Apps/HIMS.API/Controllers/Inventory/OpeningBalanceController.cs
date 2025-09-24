@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("OpeningBalanceList")]
-        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalListDto> List1 = await _IOpeningBalanceService.GetOpeningBalanceList(objGrid);
