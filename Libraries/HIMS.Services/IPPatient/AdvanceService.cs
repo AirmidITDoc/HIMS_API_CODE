@@ -38,7 +38,7 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "AdvanceDetails" };
+            string[] rEntity = { "AdvanceDetails", "CreatedBy","CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objAdvanceHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -49,7 +49,7 @@ namespace HIMS.Services.IPPatient
             objAdvanceDetail.AdvanceId = Convert.ToInt32(vAdvanceId);
 
 
-            string[] rDetailEntity = { "AdvanceNo", "Advance" };
+            string[] rDetailEntity = { "AdvanceNo", "Advance", "CashCounterId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
 
             var AdvanceEntity = objAdvanceDetail.ToDictionary();
             foreach (var rProperty in rDetailEntity)
@@ -75,7 +75,7 @@ namespace HIMS.Services.IPPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rDetailEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "BalanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            string[] rDetailEntity = { "Date", "UnitId","RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "BalanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var AdvanceEntity = objAdvanceHeader.ToDictionary();
             foreach (var rProperty in rDetailEntity)
             {
@@ -83,7 +83,7 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("ps_Update_AdvHeader_1", CommandType.StoredProcedure, AdvanceEntity);
 
-            string[] DetailEntity = { "AdvanceNo", "Advance" };
+            string[] DetailEntity = { "AdvanceNo", "Advance","CashCounterId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var AAdvanceEntity = objAdvanceDetail.ToDictionary();
             foreach (var rProperty in DetailEntity)
             {
