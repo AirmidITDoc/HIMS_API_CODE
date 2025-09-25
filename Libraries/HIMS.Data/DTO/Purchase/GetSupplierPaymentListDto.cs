@@ -29,10 +29,10 @@ namespace HIMS.Data.DTO.Purchase
         public string? Mobile { get; set; }
         public string? Email { get; set; }
         public string? PartyReceiptNo { get; set; }
+        public long SupplierId { get; set; }
 
 
-
-
+        
 
     }
 }
