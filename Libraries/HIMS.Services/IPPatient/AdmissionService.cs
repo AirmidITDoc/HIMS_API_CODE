@@ -28,6 +28,21 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_AdmtdWithDischargeDate_Ptnt_Dtls");
         }
+        public virtual async Task<List<Bedmaster>> GetBedmaster(int RoomId)
+        {
+            var qry = from s in _context.Bedmasters
+              .Where(x => (x.RoomId == RoomId))
+                      select new Bedmaster()
+                      {
+                          BedId = s.BedId,
+                          BedName = s.BedName,
+
+                      };
+            return await qry.Take(50).ToListAsync();
+
+
+
+        }
 
 
         public virtual void InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)

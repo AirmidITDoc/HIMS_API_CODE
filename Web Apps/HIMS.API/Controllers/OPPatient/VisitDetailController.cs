@@ -87,12 +87,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-        [HttpGet("BedList")]
-        public async Task<ApiResponse> GetBedmaster(int RoomId)
-        {
-            var resultList = await _IDoctorMasterService.GetBedmaster(RoomId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedList.", resultList.Select(x => new { x.BedId, x.BedName, }));
-        }
+       
 
         //[HttpGet("BedList")]
         ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
@@ -108,14 +103,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DocTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-        //[HttpGet("ConsentMasterList")]
-        //public async Task<ApiResponse> ConsentMasterList(int DeptId)
-        //{
-        //    var resultList = await _IDoctorMasterService.GetDoctorsByConsentType(DeptId);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentMasterList .", resultList.Select(x => new { value = x.ConsentId, text = x.ConsentName + " " + x.ConsentDesc }));
-        //}
-       
-
+      
         [HttpPost("AppVisitInsert")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
