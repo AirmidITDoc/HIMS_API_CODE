@@ -32,6 +32,10 @@ namespace HIMS.Data.DTO.Administration
         public long Adm_Visit_docId { get; set; }
         public DateTime PathDate { get; set; }
         public string? MobileNo { get; set; }
+        public bool? IsRadOutSource { get; set; }
+        public bool? IsPathOutSource { get; set; }
+
+        
 
 
 

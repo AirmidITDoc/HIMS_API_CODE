@@ -37,6 +37,7 @@ namespace HIMS.Data.DTO.Pathology
         public long opdipdid { get; set; }
         public string PatientType { get; set; }
         public string AgeYear { get; set; }
+        public bool? IsRadOutSource { get; set; }
 
     }
 
