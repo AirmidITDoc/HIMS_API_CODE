@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -252,6 +252,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MOtnotesTemplateMaster> MOtnotesTemplateMasters { get; set; } = null!;
         public virtual DbSet<MOttableMaster> MOttableMasters { get; set; } = null!;
         public virtual DbSet<MOttypeMaster> MOttypeMasters { get; set; } = null!;
+        public virtual DbSet<MOutSourcelabMaster> MOutSourcelabMasters { get; set; } = null!;
         public virtual DbSet<MPackageDetail> MPackageDetails { get; set; } = null!;
         public virtual DbSet<MParameterDescriptiveMaster> MParameterDescriptiveMasters { get; set; } = null!;
         public virtual DbSet<MPastHistoryMaster> MPastHistoryMasters { get; set; } = null!;
@@ -540,7 +541,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -7658,6 +7659,24 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TypeName).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<MOutSourcelabMaster>(entity =>
+            {
+                entity.HasKey(e => e.OutSourceId)
+                    .HasName("PK__M_OutSou__D18764CB1BDEA6B8");
+
+                entity.ToTable("M_OutSourcelabMaster");
+
+                entity.Property(e => e.Address).HasMaxLength(100);
+
+                entity.Property(e => e.ContactPersonName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceLabName).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<MPackageDetail>(entity =>
             {
                 entity.HasKey(e => e.PackageId);
@@ -13642,6 +13661,14 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
 
+                entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.Opipnumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("OPIPNumber");
+
                 entity.Property(e => e.ParaBoldFlag).HasMaxLength(1);
 
                 entity.Property(e => e.ParameterName).HasMaxLength(150);
@@ -13657,6 +13684,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SampleId)
                     .HasMaxLength(20)
                     .HasColumnName("SampleID");
+
+                entity.Property(e => e.SampleNo).HasMaxLength(50);
 
                 entity.Property(e => e.SubTestName).HasMaxLength(150);
 
@@ -13717,6 +13746,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdmVisitDoctorId).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
@@ -13725,9 +13756,21 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceLabName).HasMaxLength(255);
+
+                entity.Property(e => e.OutSourceModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceReportCollectedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.PathDate).HasColumnType("datetime");
 
@@ -13746,8 +13789,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SampleCollectionTime).HasColumnType("datetime");
 
                 entity.Property(e => e.SampleNo).HasMaxLength(50);
-
-                entity.Property(e => e.SuggestionNotes).HasMaxLength(500);
             });
 
             modelBuilder.Entity<TPathologyReportTemplateDetail>(entity =>

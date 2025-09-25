@@ -21,6 +21,7 @@ namespace HIMS.Data.Models
         public decimal? RefundAmount { get; set; }
         public long? ReasonOfAdvanceId { get; set; }
         public string? Reason { get; set; }
+        public long? CashCounterId { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledby { get; set; }
         public DateTime? IsCancelledDate { get; set; }

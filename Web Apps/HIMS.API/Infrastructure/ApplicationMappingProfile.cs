@@ -62,14 +62,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MExpensesHeadMaster, ExpensesHeadModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-
-
-
-
-
-
-
+            CreateMap<MOutSourcelabMaster, OutSourcelabMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TCertificateInformation, TCertificateInformationParamModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCertificateMaster, CertificateMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
