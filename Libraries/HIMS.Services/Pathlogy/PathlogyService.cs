@@ -47,7 +47,7 @@ namespace HIMS.Services.Pathlogy
             foreach (var item in ObjPathologyReportDetail)
             {
                
-                string[] rEntity = { "PathReportDetId", "PathReport" };
+                string[] rEntity = { "PathReportDetId", "Opdipdid", "Opdipdtype" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -57,7 +57,7 @@ namespace HIMS.Services.Pathlogy
             }
             
                 string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
-                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime"};
+                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime","OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
                 var Hentity = ObjTPathologyReportHeader.ToDictionary();
                 foreach (var rProperty in Entity)
                 {

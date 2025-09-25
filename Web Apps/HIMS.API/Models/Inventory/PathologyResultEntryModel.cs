@@ -26,6 +26,13 @@ namespace HIMS.API.Models.Inventory
         public string? ParaBoldFlag { get; set; }
         public float? MinValue { get; set; }
         public float? MaxValue { get; set; }
+        public string? Opipnumber { get; set; }
+        public long? AgeY { get; set; }
+        public long? AgeM { get; set; }
+        public long? AgeD { get; set; }
+        public long? GenderId { get; set; }
+        public string? SampleNo { get; set; }
+        public string? SuggestionNotes { get; set; }
     }
     public class PathologyResultEntryModelValidator : AbstractValidator<PathologyResultEntryModel>
     {
