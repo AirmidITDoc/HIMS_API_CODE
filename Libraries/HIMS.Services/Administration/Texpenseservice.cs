@@ -55,7 +55,7 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby", "IsCancelled", "VoucharNo", "ExpHeadId" };
+            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby","IsUpdatedBy","IsCancelled", "VoucharNo", "ExpHeadId" };
             var entity = ObjTExpense.ToDictionary();
             foreach (var rProperty in AEntity)
             {

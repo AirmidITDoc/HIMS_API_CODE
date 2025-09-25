@@ -473,6 +473,9 @@ namespace HIMS.Services.OutPatient
 
             odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
         }
+      
+
+      
     }
 }
 

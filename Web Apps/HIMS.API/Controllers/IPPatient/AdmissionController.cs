@@ -63,6 +63,12 @@ namespace HIMS.API.Controllers.IPPatient
             var data = await _repository1.GetById(x => x.AdmissionId == id);
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
+        [HttpGet("BedList")]
+        public async Task<ApiResponse> GetBedmaster(int RoomId)
+        {
+            var resultList = await _IAdmissionService.GetBedmaster(RoomId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedList.", resultList.Select(x => new { x.BedId, x.BedName, }));
+        }
 
         [HttpPost("AdmissionInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]

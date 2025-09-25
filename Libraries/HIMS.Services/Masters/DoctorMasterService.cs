@@ -70,7 +70,19 @@ namespace HIMS.Services.Masters
 
             return data;
         }
-
+     
+        //public virtual async Task<List<BedmasterDto>> GetBedmaster(int RoomId)
+        //{
+        //    return await _context.Bedmasters
+        //                         .Where(x => x.RoomId == RoomId)
+        //                         .Select(s => new BedmasterDto
+        //                         {
+        //                             BedId = s.BedId,
+        //                             BedName = s.BedName
+        //                         })
+        //                         .Take(50)
+        //                         .ToListAsync();
+        //}
 
 
 

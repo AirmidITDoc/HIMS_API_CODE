@@ -60,6 +60,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesHeader, PhBillDiscountAfterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MExpensesHeadMaster, ExpensesHeadModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

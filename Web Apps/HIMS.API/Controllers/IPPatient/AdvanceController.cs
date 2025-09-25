@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
         [HttpPost("PatientRefundOfAdvancesList")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelAdvance1 obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objpayment.AdvanceId);
         }
         [HttpPut("Edit")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateAdvance obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -130,7 +130,7 @@ namespace HIMS.API.Controllers.IPPatient
       
 
         [HttpPost("IPRefundofAdvanceInsert")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> IPInsertAsyncSP(RefundsModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();

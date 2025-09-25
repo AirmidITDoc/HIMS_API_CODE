@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("DailyExpenceList")]
-        //[Permission(PageCode = "managment", Permission = PagePermission.View)]
+        [Permission(PageCode = "managment", Permission = PagePermission.View)]
         public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
         {
             IPagedList<DailyExpenceListtDto> DailyExpenceList = await _Texpenseservice.DailyExpencesList(objGrid);
@@ -72,8 +72,6 @@ namespace HIMS.API.Controllers.Administration
 
             if (obj.ExpId != 0)
             {
-
-                //   Model.IsAddedby = CurrentUserId;
                 await _Texpenseservice.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
             }
             else
