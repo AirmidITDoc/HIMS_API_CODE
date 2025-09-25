@@ -31,7 +31,7 @@ namespace HIMS.Services.IPPatient
         public virtual async Task<List<Bedmaster>> GetBedmaster(int RoomId)
         {
             var qry = from s in _context.Bedmasters
-              .Where(x => (x.RoomId == RoomId))
+              .Where(x => (x.RoomId == RoomId) && x.IsAvailible == false && x.IsActive == true)
                       select new Bedmaster()
                       {
                           BedId = s.BedId,
@@ -39,9 +39,6 @@ namespace HIMS.Services.IPPatient
 
                       };
             return await qry.Take(50).ToListAsync();
-
-
-
         }
 
 
