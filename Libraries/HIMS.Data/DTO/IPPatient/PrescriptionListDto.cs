@@ -43,7 +43,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? PatientType { get; set; }
         public string? DoctorName { get; set; }
         public string? BedName { get; set; }
-        public long? IsCancelled { get; set; }
+        public bool? IsCancelled { get; set; }
 
 
 

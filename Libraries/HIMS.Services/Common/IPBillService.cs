@@ -303,7 +303,7 @@ namespace HIMS.Services.Common
 
             DatabaseHelper odal = new();
             string[] rEntity = { "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount",
-                "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode"};
+                "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = objPayment.ToDictionary();
             foreach (var rProperty in rEntity)
             {

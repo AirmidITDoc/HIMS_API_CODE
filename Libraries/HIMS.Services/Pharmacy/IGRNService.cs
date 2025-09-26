@@ -16,6 +16,10 @@ namespace HIMS.Services.Pharmacy
         Task UpdateWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username);
         Task VerifyAsyncSp(TGrnheader objGRN, int UserId, string Username);
         Task AsyncSp(TGrnheader objGRN, int UserId, string Username);
+        Task UpdateAsyncsp(TGrnheader objGRN, int UserId, string Username);
+        Task UpdateAsyncSP(TCurrentStock ObjTCurrentStock, int UserId, string Username);
+
+
         Task<IPagedList<ItemDetailsForGRNUpdateListDto>> GRNUpdateList(GridRequestModel objGrid);
         Task<IPagedList<GRNListDto>> GRNHeaderList(GridRequestModel objGrid);
         Task<IPagedList<GRNDetailsListDto>> GRNDetailsList(GridRequestModel objGrid);
