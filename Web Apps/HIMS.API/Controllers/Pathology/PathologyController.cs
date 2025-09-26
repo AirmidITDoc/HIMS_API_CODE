@@ -6,6 +6,7 @@ using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pathology;
+using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -57,7 +58,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTestList")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
@@ -81,8 +82,26 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PathologyResultUpdate obj)
+        {
+            TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
+
+            if (obj.PathReportId == 0)
+
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IPathlogyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
         [HttpPost("PathPrintResultentryInsert")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathPrintResultentry obj)
         {
             List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
@@ -94,6 +113,8 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry  added successfully.");
         }
+       
+
 
 
         [HttpPost("PathologyTemplateSave")]
@@ -158,6 +179,23 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathResult entry rollback  successfully.");
+        }
+
+        [HttpPost("Verify")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(PathologyVerifyModel obj)
+        {
+            TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
+            if (obj.PathReportId != 0)
+            {
+                //model.IsVerified = true;
+                model.IsVerifyedDate = DateTime.Now.Date;
+
+                await _IPathlogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
     }
 }

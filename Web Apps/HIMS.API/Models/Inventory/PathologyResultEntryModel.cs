@@ -85,4 +85,26 @@ namespace HIMS.API.Models.Inventory
         public List<PathPrintResultentryModel> PathPrintResultEntry { get; set; }
 
     }
+    public class PathologyResultUpdate
+    {
+        public long PathReportId { get; set; }
+        public long? OutSourceId { get; set; }
+        public string? OutSourceLabName { get; set; }
+        public DateTime? OutSourceSampleSentDateTime { get; set; }
+        public long? OutSourceStatus { get; set; }
+        public DateTime? OutSourceReportCollectedDateTime { get; set; }
+        public long? OutSourceCreatedBy { get; set; }
+        public DateTime? OutSourceCreatedDateTime { get; set; }
+        public long? OutSourceModifiedby { get; set; }
+        public DateTime? OutSourceModifiedDateTime { get; set; }
+    }
+    public class PathologyVerifyModel
+    {
+        public long PathReportId { get; set; }
+        public long? IsVerifyid { get; set; }
+        public DateTime? IsVerifyedDate { get; set; }
+
+
+    }
+
 }

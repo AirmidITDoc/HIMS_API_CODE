@@ -4,12 +4,24 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 using System.Data;
+using System.Transactions;
+using HIMS.Data.Extensions;
+
 
 namespace HIMS.Services.Pathlogy
 {
     public class PathlogyService : IPathlogyService
     {
+        private readonly HIMSDbContext _context;
+
+        public PathlogyService(HIMSDbContext context)
+        {
+            _context = context;
+        }
+    
        
         public virtual async Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel model)
         {
@@ -139,5 +151,46 @@ namespace HIMS.Services.Pathlogy
             odal.ExecuteNonQuery("m_RollBack_TestForResult", CommandType.StoredProcedure, entity);
 
         }
+        public virtual async Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        {       using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            var existing = await _context.TPathologyReportHeaders.FirstOrDefaultAsync(x => x.PathReportId == ObjTPathologyReportHeader.PathReportId);
+
+
+            //  Update only the required fields
+            existing.OutSourceId = ObjTPathologyReportHeader.OutSourceId;
+            existing.OutSourceLabName = ObjTPathologyReportHeader.OutSourceLabName;
+            existing.OutSourceSampleSentDateTime = ObjTPathologyReportHeader.OutSourceSampleSentDateTime;
+            existing.OutSourceStatus = ObjTPathologyReportHeader.OutSourceStatus; 
+            existing.OutSourceReportCollectedDateTime = ObjTPathologyReportHeader.OutSourceReportCollectedDateTime;
+            existing.OutSourceCreatedBy = ObjTPathologyReportHeader.OutSourceCreatedBy;
+            existing.OutSourceCreatedDateTime = ObjTPathologyReportHeader.OutSourceCreatedDateTime;
+            existing.OutSourceModifiedby = ObjTPathologyReportHeader.OutSourceModifiedby;
+            existing.OutSourceId = ObjTPathologyReportHeader.OutSourceId;
+            existing.OutSourceModifiedDateTime = ObjTPathologyReportHeader.OutSourceModifiedDateTime;
+            existing.ModifiedBy = ObjTPathologyReportHeader.ModifiedBy;
+            existing.ModifiedDate = ObjTPathologyReportHeader.ModifiedDate;
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+
+        public virtual async Task VerifyAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TPathologyReportHeader objPur = await _context.TPathologyReportHeaders.FindAsync(ObjTPathologyReportHeader.PathReportId);
+                //objPur.IsVerified = ObjTPathologyReportHeader.IsVerified;
+                objPur.IsVerifyid = ObjTPathologyReportHeader.IsVerifyid;
+                objPur.IsVerifyedDate = ObjTPathologyReportHeader.IsVerifyedDate;
+                _context.TPathologyReportHeaders.Update(objPur);
+                _context.Entry(objPur).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }
