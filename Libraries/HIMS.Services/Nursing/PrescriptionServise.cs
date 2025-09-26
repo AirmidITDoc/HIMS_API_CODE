@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -27,16 +28,58 @@ namespace HIMS.Services.Nursing
                 scope.Complete();
             }
         }
+        //public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        var last = await _context.TIpprescriptionReturnHs.OrderByDescending(x => x.PresNo).FirstOrDefaultAsync();
+
+        //        int lastNo = 0;
+        //        if (last?.PresNo != null)
+        //        {
+        //            var match = Regex.Match(last.PresNo, @"\d+");
+        //            if (match.Success) lastNo = int.Parse(match.Value);
+        //        }
+        //        objIpprescriptionReturnH.PresNo = (lastNo + 1).ToString();
+
+        //        _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
-                await _context.SaveChangesAsync();
+            using var scope = new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
 
-                scope.Complete();
+
+            var allPresNos = await _context.TIpprescriptionReturnHs
+                .Select(x => x.PresNo)
+                .ToListAsync();
+
+            int lastNo = 0;
+
+            foreach (var presNo in allPresNos)
+            {
+                var match = Regex.Match(presNo ?? "", @"\d+");
+                if (match.Success)
+                {
+                    int number = int.Parse(match.Value);
+                    if (number > lastNo) lastNo = number;
+                }
             }
+
+            objIpprescriptionReturnH.PresNo = (lastNo + 1).ToString();
+
+            _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
+
 
         public virtual async Task PrescCancelAsync(TIpPrescription objmedicalRecord, int CurrentUserId, string CurrentUserName)
         {

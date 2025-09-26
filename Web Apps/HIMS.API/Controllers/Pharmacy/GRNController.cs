@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("InsertPO")]
-     //   [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -195,6 +195,41 @@ namespace HIMS.API.Controllers.Pharmacy
                 x.IGSTPer
             }));
         }
+
+
+        [HttpPut("UpdateGrnSupplierDetails")]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(UpdateGRNSupplierModel obj)
+        {
+            TGrnheader model = obj.MapTo<TGrnheader>();
+            if (obj.Grnid == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+        
+                await _IGRNService.UpdateAsyncsp(model,  CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
+        [HttpPut("UpdateCurrentStockBarcode")]
+        //  [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edits(UpdateCurrentStockModel obj)
+        {
+            TCurrentStock model = obj.MapTo<TCurrentStock>();
+            if (obj.StockId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                await _IGRNService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+
+
 
         //[HttpGet("GetGSTList")]
         //public async Task<ApiResponse> GetGSTList(string GSTNo)

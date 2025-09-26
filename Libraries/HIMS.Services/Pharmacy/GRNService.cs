@@ -320,6 +320,44 @@ namespace HIMS.Services.Pharmacy
             return await qry.ToListAsync();
 
         }
+
+        public virtual async Task UpdateAsyncsp(TGrnheader objGRN, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "GrnNumber",  "StoreId","DeliveryNo","GateEntryNo","CashCreditType",
+               "Grntype", "TotalAmount", "TotalDiscAmount", "TotalVatamount",  "NetAmount",
+                "Remark","ReceivedBy","IsClosed","IsPaymentProcess","PaymentPrcDate","ProcessDes","DebitNote","CreditNote","OtherCharge",
+                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsVerified","IsCancelled","IsClosed","Prefix","TotIgstamt",
+                "TranProcessId","TranProcessMode","BillDiscAmt","PaymentDate","EwayBillNo","EwayBillDate","TGrndetails","TSupPayDets"};
+            var entity = objGRN.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_UpdateGrnSupplierDatails", CommandType.StoredProcedure, entity);
+
+
+        }
+
+        public virtual async Task UpdateAsyncSP(TCurrentStock ObjTCurrentStock, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "OpeningBalance",  "ReceivedQty","IssueQty","BalanceQty","UnitMrp",
+               "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo",  "BatchExpDate",
+                "PurUnitRate","PurUnitRateWf","Cgstper","Sgstper","Igstper","IstkId","GrnRetQty","IssDeptQty"};
+            var entity = ObjTCurrentStock.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_UpdateCurrentStockBarcodeSeqNo", CommandType.StoredProcedure, entity);
+
+
+        }
+
+
         //public virtual async Task<List<BatchListDTO>> GetGSTList(string GSTNo)
         //{
         //    //var gstTypesQuery = from cs in _context.MConstants

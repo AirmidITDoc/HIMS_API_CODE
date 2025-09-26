@@ -15,7 +15,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? Date { get; set; }
         public string? PresTime { get; set; }
         public long OPIPId { get; set; }
-        public string? VstAdmDate { get; set; }
+        public string? Vst_Adm_Date { get; set; }
         public string? StoreName { get; set; }
         public byte OPIPType { get; set; }
         //public long? IpmedId { get; set; }
@@ -31,6 +31,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
+        public bool? Isclosed { get; set; }
 
 
 
