@@ -44,11 +44,13 @@ namespace HIMS.API.Controllers.Radiology
             else
             {
                 model.RadDate = DateTime.Now;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 await _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-
+        //shilpa 26-09-2025//
         [HttpPut("RadiologyOutsourceUpdate/{id:int}")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TRadiologyReportUpdate obj)

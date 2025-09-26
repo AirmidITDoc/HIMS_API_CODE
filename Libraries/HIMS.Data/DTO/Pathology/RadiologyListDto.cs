@@ -38,6 +38,18 @@ namespace HIMS.Data.DTO.Pathology
         public string PatientType { get; set; }
         public string AgeYear { get; set; }
         public bool? IsRadOutSource { get; set; }
+        public bool? IsVerifySign { get; set; }
+        public bool? IsVerified { get; set; }
+        public DateTime? IsVerifyedDate { get; set; }
+        public long? OutSourceId { get; set; }
+        public string? OutSourceLabName { get; set; }
+        public DateTime? OutSourceSampleSentDateTime { get; set; }
+        public long? OutSourceStatus { get; set; }
+        public DateTime? OutSourceReportCollectedDateTime { get; set; }
+        public long? OutSourceCreatedBy { get; set; }
+        public DateTime? OutSourceCreatedDateTime { get; set; }
+        public long? OutSourceModifiedby { get; set; }
+        public DateTime? OutSourceModifiedDateTime { get; set; }
 
     }
 

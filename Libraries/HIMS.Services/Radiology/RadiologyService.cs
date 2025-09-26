@@ -31,7 +31,7 @@ namespace HIMS.Services.Radiology
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType" };
+            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Dentity = ObjTRadiologyReportHeader.ToDictionary();
             foreach (var rProperty in REntity)
             {
