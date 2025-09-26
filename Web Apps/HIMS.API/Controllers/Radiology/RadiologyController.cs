@@ -48,5 +48,40 @@ namespace HIMS.API.Controllers.Radiology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpPut("RadiologyOutsourceUpdate/{id:int}")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(TRadiologyReportUpdate obj)
+        {
+            TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
+
+            if (obj.RadReportId == 0)
+
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _RadilogyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("Verify")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(RadiologyVerifyModel obj)
+        {
+            TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
+            if (obj.RadReportId != 0)
+            {
+                model.IsVerified = true;
+                model.IsVerifyedDate = DateTime.Now.Date;
+
+                await _RadilogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
+        }
     }
 }

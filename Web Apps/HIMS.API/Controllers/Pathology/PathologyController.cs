@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTestList")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryListDto> PathResultEntryList = await _IPathlogyService.PathResultEntry(objGrid);
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        [HttpPut("Edit/{id:int}")]
+        [HttpPut("pathologyOutsourceUpdate/{id:int}")]
         [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathologyResultUpdate obj)
         {

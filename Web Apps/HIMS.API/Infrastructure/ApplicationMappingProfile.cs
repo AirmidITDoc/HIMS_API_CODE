@@ -83,8 +83,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtReservation, OTBookingPostPoneModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyResultUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TRadiologyReportHeader, TRadiologyReportUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TRadiologyReportHeader, RadiologyVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
+
+            
 
 
 

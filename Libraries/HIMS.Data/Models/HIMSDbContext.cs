@@ -14373,11 +14373,27 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdmVisitDoctorId).HasColumnName("AdmVisitDoctorID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceLabName).HasMaxLength(255);
+
+                entity.Property(e => e.OutSourceModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceReportCollectedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RadDate).HasColumnType("datetime");
 
