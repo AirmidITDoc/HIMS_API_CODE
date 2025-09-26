@@ -41,11 +41,14 @@ namespace HIMS.API.Models.OutPatient
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public decimal? TDSAmount { get; set; }
+        public decimal? UnitId { get; set; }
+        public decimal? Wfamount { get; set; }
+
 
 
     }
 
-        public class PaymentsModelValidator : AbstractValidator<PaymentsModel>
+    public class PaymentsModelValidator : AbstractValidator<PaymentsModel>
         {
             public PaymentsModelValidator()
             {

@@ -9,8 +9,6 @@ namespace HIMS.Data.DTO.IPPatient
     public class PrescriptionListDto
     {
         public string RegNo { get; set; }
-
-        
         public string PatientName { get; set; }
         public string Vst_Adm_Date { get; set; }
         public string Date { get; set; }
@@ -45,6 +43,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? PatientType { get; set; }
         public string? DoctorName { get; set; }
         public string? BedName { get; set; }
+        public bool? IsCancelled { get; set; }
+
 
 
     }

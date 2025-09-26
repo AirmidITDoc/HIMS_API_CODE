@@ -60,8 +60,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("Insert")]
-
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
+       [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {

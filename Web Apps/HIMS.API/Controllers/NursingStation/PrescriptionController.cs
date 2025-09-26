@@ -130,19 +130,19 @@ namespace HIMS.API.Controllers.NursingStation
      
        [HttpPost("PrescriptionReturnCancel")]
         //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Delete(int Id)
+      
+        public async Task<ApiResponse> PrescReturnCancel(PrescreturnCancelAsync obj)
         {
-            TIpprescriptionReturnH model = await _repository1.GetById(x => x.PresReId == Id);
-            if ((model?.PresReId ?? 0) > 0)
+            TIpprescriptionReturnH model = new();
+            if (obj.PresReId != 0)
             {
-                model.IsActive = false;
-
-                await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+                model.PresReId = obj.PresReId;
+                await _IPrescriptionService.PrescreturnCancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
+
     }
 }
