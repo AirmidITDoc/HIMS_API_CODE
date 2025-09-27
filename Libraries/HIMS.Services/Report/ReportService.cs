@@ -4347,6 +4347,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Allergy}}", dt.GetColValue("Allergy"));
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
 
+                        html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
 
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
@@ -8041,6 +8042,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
                         html = html.Replace("{{chkSuggestionNote}}", dt.GetColValue("SuggestionNote").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+
 
 
                         return html;
