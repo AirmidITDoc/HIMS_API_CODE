@@ -110,7 +110,6 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 model.UpdatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);

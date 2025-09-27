@@ -21,10 +21,11 @@ namespace HIMS.Data.DTO.IPPatient
         public bool IsBillGenerated { get; set; }
         public string WardName { get; set; }
         public string BedName { get; set; }
-
         public string IPDNo { get; set; }
         public string PatientType { get; set; }
         public long? IsCancelled { get; set; }
+        public long ReqDetId { get; set; }
+
 
 
 
