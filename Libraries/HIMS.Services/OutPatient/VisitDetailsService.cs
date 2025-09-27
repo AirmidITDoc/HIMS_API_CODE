@@ -379,7 +379,8 @@ namespace HIMS.Services.OutPatient
                            IsDocEditable = s.IsDocEditable,
                            CompanyCode = x.CompanyCode ?? "",
                            CompanyServicePrint = x.CompanyServicePrint ?? "",
-                           IsInclusionOrExclusion = x.IsInclusionOrExclusion
+                           IsInclusionOrExclusion = x.IsInclusionOrExclusion,
+                           IsPathOutSource=s.IsPathOutSource
                        });
             var sql = qry.Take(50).ToQueryString();
             Console.WriteLine(sql);

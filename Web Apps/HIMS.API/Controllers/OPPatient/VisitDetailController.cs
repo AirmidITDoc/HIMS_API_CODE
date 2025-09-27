@@ -221,7 +221,8 @@ namespace HIMS.API.Controllers.OPPatient
                 x.IsDocEditable,
                 x.CompanyCode,
                 x.CompanyServicePrint,
-                x.IsInclusionOrExclusion
+                x.IsInclusionOrExclusion,
+                x.IsPathOutSource
             }));
         }
        
