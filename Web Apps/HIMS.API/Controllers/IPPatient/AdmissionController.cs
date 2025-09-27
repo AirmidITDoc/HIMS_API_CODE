@@ -74,7 +74,6 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(AdmissionRegistered obj)
         {
-            //Registration model = obj.AdmissionReg.MapTo<Registration>();
             Admission model = obj.Admission.MapTo<Admission>();
             if (model.RegId != 0)
             {
@@ -94,7 +93,6 @@ namespace HIMS.API.Controllers.IPPatient
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
             Admission objAdmission = obj.Admission.MapTo<Admission>();
-            //Bedmaster Bmodel = obj.BedMaster.MapTo<Bedmaster>();
 
             if (objAdmission.AdmissionId == 0)
             {

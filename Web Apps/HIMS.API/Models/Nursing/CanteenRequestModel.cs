@@ -48,6 +48,12 @@ namespace HIMS.API.Models.Nursing
 
         }
     }
+    public class CanteenRequestCancel
+    {
+        public long ReqDetId { get; set; }
+
+
+    }
 
 }
 

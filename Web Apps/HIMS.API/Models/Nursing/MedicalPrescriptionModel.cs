@@ -41,6 +41,8 @@ namespace HIMS.API.Models.Nursing
         public long? IsAddBy { get; set; }
         public long? StoreId { get; set; }
         public long? WardId { get; set; }
+        public bool? IsCancelled { get; set; }
+
     }
     public class PrescriptionModelModelValidator : AbstractValidator<PrescriptionModel>
     {

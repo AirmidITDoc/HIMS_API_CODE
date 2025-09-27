@@ -47,16 +47,6 @@ namespace HIMS.Services.IPPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            ////string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-            ////var entity = objRegistration.ToDictionary();
-            ////foreach (var rProperty in rEntity)
-            ////{
-            ////    entity.Remove(rProperty);
-            ////}
-            ////string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            ////objRegistration.RegId = Convert.ToInt64(RegId);
-            ////objAdmission.RegId = Convert.ToInt64(RegId);
-
             string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
             "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
             "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
@@ -71,7 +61,9 @@ namespace HIMS.Services.IPPatient
 
             var tokenObj = new
             {
-                BedId = Convert.ToInt32(objAdmission.BedId)
+                BedId = Convert.ToInt32(objAdmission.BedId),
+                RoomId = Convert.ToInt32(objAdmission.WardId)
+
 
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
@@ -101,13 +93,20 @@ namespace HIMS.Services.IPPatient
                  }
                  string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
                  objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
-                // string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate"};
-                //var Bedentity = ObjBedmaster.ToDictionary();
-                // foreach (var rProperty in BEntity)
-                // {
-                //   Bedentity.Remove(rProperty);
-                // }
-                // odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, Bedentity);
+            string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            var tokenObj = new
+            {
+                BedId = Convert.ToInt32(objAdmission.BedId),
+                RoomId = Convert.ToInt32(objAdmission.WardId)
+            };
+            odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+
+            //var Bedentity = ObjBedmaster.ToDictionary();
+            //foreach (var rProperty in BEntity)
+            //{
+            //    Bedentity.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, Bedentity);
         }
 
 

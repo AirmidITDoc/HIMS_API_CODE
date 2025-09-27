@@ -79,7 +79,23 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.ReqId);
         }
-      
+
+        [HttpPost("CanteenRequestCancel")]
+        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> PrescCancel(CanteenRequestCancel obj)
+        {
+            TCanteenRequestDetail model = new();
+            if (obj.ReqDetId != 0)
+            {
+                model.ReqDetId = obj.ReqDetId;
+                await _ICanteenRequestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+
         [HttpGet("GetItemListforCanteen")]
         public async Task<ApiResponse> GetCanteenItemList(string ItemName)
         {

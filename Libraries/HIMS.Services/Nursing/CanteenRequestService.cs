@@ -1,11 +1,11 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,7 @@ using System.Transactions;
 using static LinqToDB.Sql;
 using static LinqToDB.SqlQuery.SqlPredicate;
 
+
 namespace HIMS.Services.Nursing
 {
     public class CanteenRequestService : ICanteenRequestService
@@ -25,6 +26,7 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
+      
         public virtual async Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorNoteListDto>(model, "Rtrv_DoctorsNotesList");
@@ -109,6 +111,23 @@ namespace HIMS.Services.Nursing
                        });
             return await qry.Take(50).ToListAsync();
         }
+        public virtual async Task CancelAsync(TCanteenRequestDetail ObjTCanteenRequestDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TCanteenRequestDetail ObPres = await _context.TCanteenRequestDetails.FindAsync(ObjTCanteenRequestDetail.ReqDetId);
+                if (ObPres == null)
+                    throw new Exception("Prescription not found.");
+                ObPres.IsCancelled = true;
+                _context.TCanteenRequestDetails.Update(ObPres);
+                _context.Entry(ObPres).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }
 

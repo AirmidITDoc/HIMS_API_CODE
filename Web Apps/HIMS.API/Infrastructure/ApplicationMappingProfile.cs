@@ -89,10 +89,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPathologyReportHeader, PathologyVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TRadiologyReportHeader, TRadiologyReportUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TRadiologyReportHeader, RadiologyVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCanteenRequestDetail, CanteenRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
             
+
+
 
 
 
