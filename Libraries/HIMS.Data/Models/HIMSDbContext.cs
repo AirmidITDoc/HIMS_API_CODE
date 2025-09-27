@@ -13172,8 +13172,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.NursingNotes).HasMaxLength(2000);
-
                 entity.Property(e => e.Tdate)
                     .HasColumnType("datetime")
                     .HasColumnName("TDate");
