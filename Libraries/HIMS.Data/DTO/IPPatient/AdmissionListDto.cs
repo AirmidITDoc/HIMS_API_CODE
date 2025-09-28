@@ -92,8 +92,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MedTourismOfficeWorkAddress { get; set; }
         public byte? AdmissionType { get; set; }
         public double? AdminPer { get; set; }
-        public double? AdvanceAmount { get; set; }
-        public double? ChargesAmount { get; set; }
+        public string? AdvanceAmount { get; set; }
+        public string? ChargesAmount { get; set; }
 
     }
 
