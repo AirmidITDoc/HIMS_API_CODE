@@ -6,6 +6,7 @@ using HIMS.Services.Utilities;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Transactions;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.Common
 {
@@ -436,7 +437,8 @@ namespace HIMS.Services.Common
             foreach (var item in ObjadvanceDetailList)
             {
 
-                string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+                string[] ADetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby",
+                    "IsCancelledDate", "Reason", "Advance","UnitId","CashCounterId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
                 var AdvanceDetailEntity = item.ToDictionary();
                 foreach (var rProperty in ADetailEntity)
                 {
@@ -446,7 +448,7 @@ namespace HIMS.Services.Common
 
             }
 
-            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails","UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
             foreach (var rProperty in AHeaderEntity)
             {

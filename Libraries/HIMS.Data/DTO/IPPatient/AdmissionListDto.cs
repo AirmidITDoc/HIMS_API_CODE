@@ -55,7 +55,6 @@ namespace HIMS.Data.DTO.IPPatient
         public string? PhoneNo { get; set; }
         public string? MobileNo { get; set; }
         public string? PinNo { get; set; }
-        public string? Expr1 { get; set; }
         public string? RelativeName { get; set; }
         public string? RelatvieMobileNo { get; set; }
         public long? DepartmentId { get; set; }
@@ -93,8 +92,9 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MedTourismOfficeWorkAddress { get; set; }
         public byte? AdmissionType { get; set; }
         public double? AdminPer { get; set; }
+        public string? AdvanceAmount { get; set; }
+        public string? ChargesAmount { get; set; }
 
-        
     }
 
     public class PatientAdmittedListSearchDto

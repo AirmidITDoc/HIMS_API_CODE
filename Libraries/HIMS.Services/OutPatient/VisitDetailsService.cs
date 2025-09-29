@@ -465,7 +465,8 @@ namespace HIMS.Services.OutPatient
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
             string[] BEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "RegId",
-            "VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","CrossConsulFlag","PhoneAppId","CampId","CrossConsultantDrId"};
+                "VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","DepartmentId","PatientOldNew",
+                "FirstFollowupVisit","AppPurposeId","FollowupDate","CrossConsulFlag","PhoneAppId","CampId","CrossConsultantDrId"};
             var TEntity = ObjVisitDetail.ToDictionary();
             foreach (var rProperty in BEntity)
             {

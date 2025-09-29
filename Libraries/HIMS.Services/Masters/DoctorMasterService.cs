@@ -22,15 +22,15 @@ namespace HIMS.Services.Masters
         }
         public virtual async Task<IPagedList<DoctorMasterListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctorMasterListDto>(model, "m_Rtrv_DoctorMasterList_Pagi");
+            return await DatabaseHelper.GetGridDataBySp<DoctorMasterListDto>(model, "ps_Rtrv_DoctorMasterList_Pagi");
         }
         public virtual async Task<IPagedList<DoctorChargesDetailListDto>> ListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctorChargesDetailListDto>(model, "m_DoctorChargesDetailList");
+            return await DatabaseHelper.GetGridDataBySp<DoctorChargesDetailListDto>(model, "ps_DoctorChargesDetailList");
         }
         public virtual async Task<IPagedList<DoctorSignpageListDto>> ListAsyncs(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctorSignpageListDto>(model, "m_rtrv_Signpagelist");
+            return await DatabaseHelper.GetGridDataBySp<DoctorSignpageListDto>(model, "ps_rtrv_Signpagelist");
         }
         public virtual async Task<IPagedList<DoctorQualificationDetailsListDto>> ListAsyncQ(GridRequestModel model)
         {
