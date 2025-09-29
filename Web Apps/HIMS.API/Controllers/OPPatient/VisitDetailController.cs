@@ -259,7 +259,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPut("ConsultantDoctorUpdate/{id:int}")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdateAsync(ConsRefDoctorModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
