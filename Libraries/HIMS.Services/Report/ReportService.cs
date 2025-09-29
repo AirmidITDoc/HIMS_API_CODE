@@ -1329,7 +1329,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "DischargeSummaryWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummarywithoutHeaderReport", "IpDischargeSummarywithoutHeaderReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1539,11 +1539,6 @@ namespace HIMS.Services.Report
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReport", "PathologyReport" + vDate, Orientation.Portrait);
 
 
-
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-
-
                         break;
                     }
                 #endregion
@@ -1557,9 +1552,6 @@ namespace HIMS.Services.Report
                         string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTestReportHospitalheader.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //string html = File.ReadAllText(htmlFilePath);
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
-                        //string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "Imgfooter.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1573,12 +1565,16 @@ namespace HIMS.Services.Report
                 case "PathologyReportTemplate":
                     {
 
+                     
                         model.RepoertName = "PathologyReportTemplate";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplate.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplate", "PathologyReportTemplate" + vDate, Orientation.Portrait);
 
                         break;
@@ -2940,6 +2936,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
+                        
+                         html = html.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
                         html = html.Replace("{{History}}", dt.GetColValue("History"));
                         html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
                         html = html.Replace("{{ClinicalFinding}}", dt.GetColValue("ClinicalFinding"));
@@ -2987,7 +2987,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
@@ -3047,6 +3047,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                         html = html.Replace("{{History}}", dt.GetColValue("History"));
                         html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
@@ -3095,7 +3096,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
@@ -8056,15 +8057,17 @@ namespace HIMS.Services.Report
                         String Label = "", Suggchk = "", Suggestion = "";
                         string previousLabel = "", previoussubLabel = "";
 
-                        //html = html.Replace("{{ImgHeader}}", HeaderName);
-                        //html = html.Replace("{{Imgfooter}}", HeaderName1);
-                        //var signature = _FileUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
 
-                        //html = html.Replace("{{Signature}}", signature);
-                        //html = html.Replace("{{ImgHeader}}", htmlHeader);
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
 
                         foreach (DataRow dr in dt.Rows)
                         {
+                                                     
 
                             i++;
 
@@ -8230,6 +8233,12 @@ namespace HIMS.Services.Report
 
                         int i = 0;
                         Boolean chkresonflag = false;
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
