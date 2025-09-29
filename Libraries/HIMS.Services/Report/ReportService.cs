@@ -722,7 +722,9 @@ namespace HIMS.Services.Report
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorPatientHandoverReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_T_Doctor_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorPatientHandoverReceipt", "DoctorPatientHandoverReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -5118,8 +5120,8 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:22px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:22px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:18px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:18px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
 
                         }
                         html = html.Replace("{{Items}}", items.ToString());
@@ -5275,6 +5277,7 @@ namespace HIMS.Services.Report
                         int i = 0, j = 0;
                         double Dcount = 0;
                         string previousLabel = "";
+                        string htmlHeader = "";
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
                         foreach (DataRow dr in dt.Rows)
@@ -5296,6 +5299,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{TDate}}", dt.GetColValue("TDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));

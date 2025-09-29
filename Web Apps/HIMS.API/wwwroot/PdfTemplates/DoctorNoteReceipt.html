@@ -9,17 +9,23 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
 
                 {{NewHeader}}
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>Doctor Notes</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 18px">
 
 
                             <tr>
@@ -68,7 +74,7 @@
                                     <span>{{DepartmentName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Ward|Bed NO :</b></span>
+                                    <span style="font-weight: bold;"><b>Ward|Bed :</b></span>
                                     <span>{{WardName}}|{{BedNo}}</span>
                                 </td>
 
@@ -94,7 +100,7 @@
 
                         </table>
 
-                        <hr />
+                        <!--<hr />
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -105,18 +111,18 @@
                         </table>
 
                     </td>
-                </tr>
-              
+                </tr>-->
+
                 <!-- </table>-->
 
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead style="font-size: 14px;">
                         <tr style="font-weight:bold;">
-                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 30%; font-size: 22px;">
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 30%; font-size: 18px;">
                                 Round Visit Date/Time
                             </td>
 
-                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 22px;">
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 18px;">
                                 Description
 
                             </td>
@@ -131,12 +137,12 @@
                     </thead>
                 </table>
                 <!--       </td>
-                    </tr>
+        </tr>
 
 
-                </table-->
+    </table-->
 
-        </div>
+</div>
     </div>
 </body>
 </html>
