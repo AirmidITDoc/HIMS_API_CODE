@@ -102,9 +102,8 @@ namespace HIMS.API.Models.Inventory
     {
         public long PathReportId { get; set; }
         public long? IsVerifyid { get; set; }
+        public bool? IsVerifySign { get; set; }
         public DateTime? IsVerifyedDate { get; set; }
-
-
     }
 
 }
