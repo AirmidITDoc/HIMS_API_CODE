@@ -181,7 +181,7 @@ namespace HIMS.Services.Pathlogy
             {
                 // Update header table records
                 TPathologyReportHeader objPur = await _context.TPathologyReportHeaders.FindAsync(ObjTPathologyReportHeader.PathReportId);
-                //objPur.IsVerified = ObjTPathologyReportHeader.IsVerified;
+                objPur.IsVerifySign = ObjTPathologyReportHeader.IsVerifySign;
                 objPur.IsVerifyid = ObjTPathologyReportHeader.IsVerifyid;
                 objPur.IsVerifyedDate = ObjTPathologyReportHeader.IsVerifyedDate;
                 _context.TPathologyReportHeaders.Update(objPur);

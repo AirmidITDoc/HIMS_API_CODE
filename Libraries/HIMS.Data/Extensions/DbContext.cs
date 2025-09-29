@@ -87,5 +87,28 @@ namespace HIMS.Data.Models
             await AuditLogs.AddAsync(objAdd);
         }
 
+        public async Task LogProcedureExecution(string procName, Dictionary<string, object> parameters, int userId, string username)
+        {
+            string inputJson = JsonConvert.SerializeObject(parameters);
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                string query = @"
+            INSERT INTO AuditLog 
+            (ActionId, ActionById, ActionByName, EntityName, Description, AdditionalInfo, LogTypeId, LogSourceId, CreatedOn)
+            VALUES (1, @UserId, @Username, @EntityName, @Description, @AdditionalInfo, 2, 1, GETDATE())";
+
+                await connection.ExecuteAsync(query, new
+                {
+                    UserId = userId,
+                    Username = username,
+                    EntityName = procName,
+                    Description = $"Executed procedure {procName}",
+                    AdditionalInfo = inputJson
+                });
+            }
+        }
+
+
     }
 }

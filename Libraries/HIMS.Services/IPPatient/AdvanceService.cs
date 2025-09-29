@@ -137,7 +137,8 @@ namespace HIMS.Services.IPPatient
             ObjPayment.RefundId = Convert.ToInt32(RefundId);
 
 
-            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails" };
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails",
+            "UnitId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var AdvanceHeaderEntity = ObjAdvanceHeader.ToDictionary();
             foreach (var rProperty in AHeaderEntity)
             {
@@ -159,7 +160,8 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in ObjAdvanceDetailList)
             {
-                string[] AdvanceDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance" };
+                string[] AdvanceDetailEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "Advance",
+                "UnitId","CashCounterId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
                 var AdDetailEntity = item.ToDictionary();
                 foreach (var rProperty in AdvanceDetailEntity)
                 {

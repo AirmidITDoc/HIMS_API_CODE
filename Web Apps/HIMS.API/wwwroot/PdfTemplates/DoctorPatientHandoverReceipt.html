@@ -9,21 +9,19 @@
 
 <body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+        <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
-
                 {{NewHeader}}
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 18px">
-
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>Doctor Patient Handover</b></td>
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -40,10 +38,8 @@
 
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;"><b>DOA | Time:</b></span>
-                                    <span>{{AdmissionTime}}</span>
+                                    <span>{{AdmissionDate}}</span>
                                 </td>
-
-
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
@@ -56,9 +52,8 @@
 
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>OPD|Time:</b></span>
-                                    <span>{{VisitDate}}</span>
-
+                                    <span style="font-weight: bold;"><b>Ward|Bed NO :</b></span>
+                                    <span>{{WardName}}|{{BedNo}}</span>
                                 </td>
 
                             </tr>
@@ -73,13 +68,13 @@
                                     <span style="font-weight: bold;"><b>Department:</b></span>
                                     <span>{{DepartmentName}}</span>
                                 </td>
-                                <td style="padding: 2px;">
+                                <!--<td style="padding: 2px;">
                                     <span style="font-weight: bold;"><b>Ward|Bed NO :</b></span>
                                     <span>{{WardName}}|{{BedNo}}</span>
-                                </td>
+                                </td>-->
 
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight: bold;"><b>Ref.Doctor Name :</b></span>
                                     <span>{{RefDoctorName}}</span>
@@ -95,7 +90,7 @@
                                     <span>{{CompanyName}}</span>
                                 </td>
 
-                            </tr>
+                            </tr>-->
 
 
 
@@ -103,7 +98,7 @@
                         </table>
 
 
-                <tr class="title-date-row">
+                <!--<tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
 
@@ -113,7 +108,7 @@
                         </table>
 
                     </td>
-                </tr>
+                </tr>-->
 
                 <!-- </table>-->
 
@@ -128,6 +123,21 @@
                                 Shift
 
                             </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                PatHand_I
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                PatHand_S
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                PatHand_B
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                PatHand_A
+                            </td>
+                            <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                PatHand_R
+                            </td>
 
 
                         </tr>
@@ -138,11 +148,8 @@
 
                     </thead>
                 </table>
-                <!--       </td>
-                    </tr>
-
-
-                </table-->
+            </table>
+     
 
         </div>
     </div>

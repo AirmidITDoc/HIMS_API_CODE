@@ -43,17 +43,7 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "m_Rtrv_CanteenRequestListFromWard");
         }
-        //public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TCanteenRequestHeaders.Add(objCanteen);
-        //        await _context.SaveChangesAsync();
-
-
-        //        scope.Complete();
-        //    }
-        //}
+      
         public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,

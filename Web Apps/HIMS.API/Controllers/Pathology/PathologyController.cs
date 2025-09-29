@@ -188,7 +188,7 @@ namespace HIMS.API.Controllers.Pathology
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
             if (obj.PathReportId != 0)
             {
-                //model.IsVerified = true;
+                model.IsVerifySign = true;
                 model.IsVerifyedDate = DateTime.Now.Date;
 
                 await _IPathlogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);

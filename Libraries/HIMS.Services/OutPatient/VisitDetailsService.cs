@@ -409,7 +409,7 @@ namespace HIMS.Services.OutPatient
                 //await _context.SaveChangesAsync();
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "CheckInTime", "CheckOutTime", "ConStartTime", "CampId", "CrossConsultantDrId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "ConEndTime" };
+                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "CheckInTime", "CheckOutTime", "ConStartTime", "CampId", "CrossConsultantDrId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "ConEndTime", "IsConvertRequestForIp" };
                 var entity = objPara.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -465,7 +465,8 @@ namespace HIMS.Services.OutPatient
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
             string[] BEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "RegId",
-            "VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","CrossConsulFlag","PhoneAppId","CampId","CrossConsultantDrId"};
+                "VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","DepartmentId","PatientOldNew",
+                "FirstFollowupVisit","AppPurposeId","FollowupDate","CrossConsulFlag","PhoneAppId","CampId","CrossConsultantDrId"};
             var TEntity = ObjVisitDetail.ToDictionary();
             foreach (var rProperty in BEntity)
             {
