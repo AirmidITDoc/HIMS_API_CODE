@@ -1009,15 +1009,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CompanyAmt).HasColumnType("money");
 
-                entity.Property(e => e.CompanyName).HasMaxLength(50);
+                entity.Property(e => e.CompanyName).HasMaxLength(500);
 
                 entity.Property(e => e.CompanyRefNo).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DiscComments).HasMaxLength(200);
+                entity.Property(e => e.DiscComments).HasMaxLength(500);
 
-                entity.Property(e => e.DoctorName).HasMaxLength(50);
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
 
                 entity.Property(e => e.Ipdno)
                     .HasMaxLength(50)
@@ -1041,7 +1041,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PatientAmt).HasColumnType("money");
 
-                entity.Property(e => e.PatientName).HasMaxLength(50);
+                entity.Property(e => e.PatientName).HasMaxLength(500);
 
                 entity.Property(e => e.PbillNo)
                     .HasMaxLength(50)
