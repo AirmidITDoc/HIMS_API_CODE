@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HIMS.Core;
+using HIMS.Core.Domain.Logging;
+using HIMS.Data.Extensions;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using HIMS.Data.Extensions;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Net;
-using HIMS.Core.Domain.Logging;
-using Newtonsoft.Json;
-using HIMS.Core;
+using static LinqToDB.Reflection.Methods.LinqToDB;
 
 namespace HIMS.Data.Models
 {
@@ -83,6 +85,26 @@ namespace HIMS.Data.Models
                 EntityId = entityEntry.Properties.Single(p => p.Metadata.IsPrimaryKey()).CurrentValue.ToInt(),
                 EntityName = entityEntry.Entity.GetType().Name,
                 Description = JsonConvert.SerializeObject(entityEntry.Properties.Select(p => new { p.Metadata.Name, p.CurrentValue }).ToDictionary(i => i.Name, i => i.CurrentValue))
+            };
+            await AuditLogs.AddAsync(objAdd);
+        }
+
+        public async Task LogProcedureExecution(string procName, int? EntityId, string EntityName, LogAction logAction, Dictionary<string, object> parameters, int userId, string username)
+        {
+
+            AuditLog objAdd = new()
+            {
+                CreatedOn = DateTime.Now,
+                ActionId = (int)logAction,
+                ActionById = userId,
+                ActionByName = username,
+                Id = 0,
+                LogSourceId = (int)LogSource.API,
+                LogTypeId = (int)LogType.Audit,
+                AdditionalInfo = "Audit",
+                EntityId = EntityId,
+                EntityName = EntityName,
+                Description = JsonConvert.SerializeObject(parameters)
             };
             await AuditLogs.AddAsync(objAdd);
         }

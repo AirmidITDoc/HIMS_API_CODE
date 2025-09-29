@@ -54,9 +54,8 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in objTPathologyReportHeader)
             {
-                string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",
-                                    "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",
-                                        "TPathologyReportTemplateDetails" };
+                string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",  "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType",
+                                     "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",  "TPathologyReportTemplateDetails", "OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
