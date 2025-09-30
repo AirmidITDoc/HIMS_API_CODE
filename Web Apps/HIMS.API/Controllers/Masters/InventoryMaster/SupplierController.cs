@@ -96,6 +96,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             {
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
                 model.UpdatedBy = CurrentUserId;
                 model.IsActive = true;
                 await _SupplierService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });

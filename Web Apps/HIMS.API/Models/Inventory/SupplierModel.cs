@@ -46,7 +46,6 @@ namespace HIMS.API.Models.Inventory
         public SupplierModelValidator()
         {
             RuleFor(x => x.SupplierName).NotNull().NotEmpty().WithMessage("SupplierName is required");
-            RuleFor(x => x.ContactPerson).NotNull().NotEmpty().WithMessage("ContactPerson  is required");
             RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage(" Address required");
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("StateId is required");
