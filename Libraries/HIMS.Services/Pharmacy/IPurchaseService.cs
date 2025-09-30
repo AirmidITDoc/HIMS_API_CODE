@@ -10,7 +10,7 @@ namespace HIMS.Services.Pharmacy
     {
         Task InsertAsync(TPurchaseHeader objPurchase, int UserId, string Username);
         Task InsertAsyncSP(TPurchaseHeader objPurchase, int UserId, string Username);
-        Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username);
+        Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username, string[]? references);
         Task VerifyAsync(TPurchaseHeader objPurchase, int UserId, string Username);
 
 
