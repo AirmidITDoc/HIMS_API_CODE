@@ -108,6 +108,7 @@ namespace HIMS.Data.DTO.Inventory
         public string ConversionFactor { get; set; }
         public long? ExpDays { get; set; }
         public long? DaysFlag { get; set; }
+        public string? ProdLocation { get; set; }
     }
 
     public class ItemListForSalesPageDTO

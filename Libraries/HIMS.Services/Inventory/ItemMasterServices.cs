@@ -388,6 +388,7 @@ namespace HIMS.Services.Inventory
                      StoreId = cs.StoreId,
                      ItemId = cs.ItemId,
                      ItemName = im.ItemName,
+                     ProdLocation = im.ProdLocation,
                      BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
                      LandedRate = cs.LandedRate,
                      UnitMRP = cs.UnitMrp,
