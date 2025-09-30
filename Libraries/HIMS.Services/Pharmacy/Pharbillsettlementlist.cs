@@ -9,7 +9,7 @@ namespace HIMS.Services.Pharmacy
     public  class Pharbillsettlementlist
     {
         public long SalesId { get; set; }
-        public long OP_IP_ID { get; set; }
+        public long OPIPID { get; set; }
         public string Date { get; set; }
         public String SalesNo { get; set; }
         public String RegNo { get; set; }
@@ -24,9 +24,9 @@ namespace HIMS.Services.Pharmacy
         public decimal PreDiscAmt { get; set; }
         public decimal PaidAmountPayment { get; set; }
         public long TransactionType { get; set; }
-        //public long RefundId { get; set; }
+        public decimal RefundAmt { get; set; }
 
-       
+
         public String PatientName { get; set; }
         public long StoreId { get; set; }
         public String PatientType { get; set; }
