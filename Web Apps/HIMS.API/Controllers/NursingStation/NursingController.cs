@@ -191,7 +191,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNoteInsert")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -208,7 +208,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("DoctorNoteUpdate/{id:int}")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -237,7 +237,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.",model.AdmId);
         }
 
         [HttpPut("DoctorPatientHandover/{id:int}")]
@@ -253,7 +253,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedDate = DateTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
         }
 
         [HttpPost("NursingPatientHandoverInsert")]
@@ -269,7 +269,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.AdmId);
         }
 
         [HttpPut("NursingPatientHandover/{id:int}")]
@@ -285,7 +285,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedDateTime = DateTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
         }
 
         [HttpPost("NursingTemplateInsert")]

@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HIMS.Core;
+using HIMS.Core.Domain.Logging;
+using HIMS.Data.Extensions;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using HIMS.Data.Extensions;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Net;
-using HIMS.Core.Domain.Logging;
-using Newtonsoft.Json;
-using HIMS.Core;
+using static LinqToDB.Reflection.Methods.LinqToDB;
 
 namespace HIMS.Data.Models
 {
@@ -87,28 +89,24 @@ namespace HIMS.Data.Models
             await AuditLogs.AddAsync(objAdd);
         }
 
-        public async Task LogProcedureExecution(string procName, Dictionary<string, object> parameters, int userId, string username)
+        public async Task LogProcedureExecution(string procName, int? EntityId, string EntityName, LogAction logAction, Dictionary<string, object> parameters, int userId, string username)
         {
-            string inputJson = JsonConvert.SerializeObject(parameters);
 
-            using (var connection = new SqlConnection(connectionString))
+            AuditLog objAdd = new()
             {
-                string query = @"
-            INSERT INTO AuditLog 
-            (ActionId, ActionById, ActionByName, EntityName, Description, AdditionalInfo, LogTypeId, LogSourceId, CreatedOn)
-            VALUES (1, @UserId, @Username, @EntityName, @Description, @AdditionalInfo, 2, 1, GETDATE())";
-
-                await connection.ExecuteAsync(query, new
-                {
-                    UserId = userId,
-                    Username = username,
-                    EntityName = procName,
-                    Description = $"Executed procedure {procName}",
-                    AdditionalInfo = inputJson
-                });
-            }
+                CreatedOn = DateTime.Now,
+                ActionId = (int)logAction,
+                ActionById = userId,
+                ActionByName = username,
+                Id = 0,
+                LogSourceId = (int)LogSource.API,
+                LogTypeId = (int)LogType.Audit,
+                AdditionalInfo = "Audit",
+                EntityId = EntityId,
+                EntityName = EntityName,
+                Description = JsonConvert.SerializeObject(parameters)
+            };
+            await AuditLogs.AddAsync(objAdd);
         }
-
-
     }
 }

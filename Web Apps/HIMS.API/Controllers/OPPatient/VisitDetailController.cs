@@ -58,6 +58,13 @@ namespace HIMS.API.Controllers.OPPatient
             var data = await _visitDetailsService.VisitDetailsListSearchDto(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
         }
+        [HttpGet("search-patient-1")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchPatientNew(string Keyword)
+        {
+            var data = _visitDetailsService.SearchPatient(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
+        }
 
         [HttpPost("OPRegistrationList")]
         public async Task<IActionResult> OPRegistrationList(GridRequestModel objGrid)
@@ -87,7 +94,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-       
+
 
         //[HttpGet("BedList")]
         ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
@@ -103,7 +110,7 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DocTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-      
+
         [HttpPost("AppVisitInsert")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
@@ -195,7 +202,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.", model);
         }
-        
+
         [HttpGet("GetServiceListwithTraiff")]
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
@@ -225,8 +232,8 @@ namespace HIMS.API.Controllers.OPPatient
                 x.IsPathOutSource
             }));
         }
-       
-         //Edit EditVital
+
+        //Edit EditVital
         [HttpPut("EditVital/{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)

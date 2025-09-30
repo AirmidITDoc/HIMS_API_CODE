@@ -32,7 +32,7 @@ namespace HIMS.Services.OutPatient
         Task UpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task UpdateAsyncv(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username);
-
+        List<VisitDetailsListSearchDto> SearchPatient(string Keyword);
 
 
 
