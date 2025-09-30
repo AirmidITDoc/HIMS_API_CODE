@@ -225,6 +225,13 @@ namespace HIMS.Services.OutPatient
             return lstMenu;
         }
 
+        public List<VisitDetailsListSearchDto> SearchPatient(string Keyword)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<VisitDetailsListSearchDto>("m_Rtrv_PatientVisitedListSearch", para);
+        }
 
         public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
         {
