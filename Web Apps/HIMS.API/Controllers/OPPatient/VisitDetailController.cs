@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
         }
         [HttpGet("search-patient-1")]
-       // [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse SearchPatientNew(string Keyword)
         {
             var data = _visitDetailsService.SearchPatient(Keyword);
