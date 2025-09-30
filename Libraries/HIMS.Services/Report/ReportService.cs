@@ -2992,7 +2992,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDoctorName}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
                         //border: 1px solid #d4c3c3;
 
@@ -3101,7 +3101,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDoctorName}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
                         //border: 1px solid #d4c3c3;
 
@@ -3210,7 +3210,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
-                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
@@ -3305,7 +3305,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
-                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
@@ -7446,7 +7446,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
                         //border: 1px solid #d4c3c3;
 
