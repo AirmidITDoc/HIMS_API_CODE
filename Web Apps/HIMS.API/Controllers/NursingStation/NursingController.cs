@@ -143,13 +143,14 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Add API
         [HttpPost("NursingNoteInsert")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(NursingNoteModel obj)
         {
             TNurNote model = obj.MapTo<TNurNote>();
             if (obj.DocNoteId == 0)
             {
                 model.CreatedBy = CurrentUserId;
+                model.IsAddedBy = CurrentUserId;
                 model.CreatedDatetime = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
@@ -159,7 +160,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingNoteUpdate/{id:int}")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNurNote model = obj.MapTo<TNurNote>();
