@@ -552,7 +552,8 @@ namespace HIMS.Services.Users
             foreach (var item in ObjAdvanceDetail)
             {
 
-                string[] Entity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", };
+                string[] Entity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason",
+                                       "UnitId","CashCounterId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
                 var Ientity = item.ToDictionary();
                 foreach (var rProperty in Entity)
                 {
@@ -561,7 +562,7 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetail_1", CommandType.StoredProcedure, Ientity);
             }
 
-            string[] TEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
+            string[] TEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "UnitId", "CashCounterId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Nentity = ObjAdvanceHeader.ToDictionary();
             foreach (var rProperty in TEntity)
             {

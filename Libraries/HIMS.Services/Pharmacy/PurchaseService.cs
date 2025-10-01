@@ -154,10 +154,21 @@ namespace HIMS.Services.Pharmacy
         //}
 
 
-        public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        public virtual async Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+
+                _context.Attach(objPurchase);
+                _context.Entry(objPurchase).State = EntityState.Modified;
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objPurchase).Property(column).IsModified = false;
+                    }
+                }
                 // Delete details table realted records
                 var lst = await _context.TPurchaseDetails.Where(x => x.PurchaseId == objPurchase.PurchaseId).ToListAsync();
                 _context.TPurchaseDetails.RemoveRange(lst);

@@ -9,7 +9,8 @@ namespace HIMS.Services.Pharmacy
     public class SalesBillListDto
     {
         public long SalesId { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
         public string SalesNo { get; set; }
         public string RegNo { get; set; }
         public string PatientName { get; set; }
@@ -19,6 +20,7 @@ namespace HIMS.Services.Pharmacy
         public decimal NetAmount { get; set; }
         public decimal BalanceAmount { get; set; }
         public decimal PaidAmount { get; set; }
+        public long OPIPID { get; set; }
         public decimal CashPayAmount { get; set; }
         public decimal ChequePayAmount { get; set; }
         public decimal CardPayAmount { get; set; }
