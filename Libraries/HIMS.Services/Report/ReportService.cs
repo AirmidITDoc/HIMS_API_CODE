@@ -35,6 +35,10 @@ namespace HIMS.Services.Report
             //_FileUtility = fileUtility;
         }
 
+        public virtual async Task<List<DoctorMaster>> SearchDoctor(string str)
+        {
+            return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
         {
