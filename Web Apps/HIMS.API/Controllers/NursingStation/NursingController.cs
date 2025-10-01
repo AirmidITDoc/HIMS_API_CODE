@@ -294,10 +294,15 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> Insert(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
+            model.IsActive = true;
+
             if (obj.NursingId == 0)
             {
                 model.CreatedBy = CurrentUserId;
+                model.AddedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository1.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -311,15 +316,36 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> Update(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
+            model.IsActive = true;
+
             if (obj.NursingId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.AddedBy = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        //Delete API
+        [HttpDelete("NursingTemplateCanel")]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(int Id)
+        {
+            MNursingTemplateMaster model = await _repository1.GetById(x => x.NursingId == Id);
+            if ((model?.NursingId ?? 0) > 0)
+            {
+                model.IsActive = model.IsActive == true ? false : true;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
         [HttpPost("DoctorNotesTemplateInsert")]

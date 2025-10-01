@@ -7444,6 +7444,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_NursingTemplateMaster");
 
+                entity.Property(e => e.Category).HasMaxLength(200);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");

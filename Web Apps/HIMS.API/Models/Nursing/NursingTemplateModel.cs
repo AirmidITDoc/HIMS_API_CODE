@@ -8,9 +8,7 @@ namespace HIMS.API.Models.Nursing
         public long NursingId { get; set; }
         public string? NursTempName { get; set; }
         public string? TemplateDesc { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
-
+        public string? Category { get; set; }
     }
     public class NursingTemplateModelValidator : AbstractValidator<NursingTemplateModel>
     {
