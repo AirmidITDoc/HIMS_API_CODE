@@ -9819,6 +9819,9 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
                         html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
