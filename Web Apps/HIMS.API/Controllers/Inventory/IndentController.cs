@@ -15,6 +15,7 @@ using HIMS.Services.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Services.Common;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -92,7 +93,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.ModifiedDate = DateTime.Now;
 
 
-                await _IIndentService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IIndentService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.IndentId);
         }

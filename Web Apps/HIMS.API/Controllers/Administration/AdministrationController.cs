@@ -81,14 +81,18 @@ namespace HIMS.API.Controllers.Administration
 
         //Add API
         [HttpPost("TemplateInsert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
+            model.IsActive = true;
+
             if (obj.TemplateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -102,7 +106,8 @@ namespace HIMS.API.Controllers.Administration
         public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
-            if (obj.TemplateId == 0)
+            model.IsActive = true;
+             if (obj.TemplateId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

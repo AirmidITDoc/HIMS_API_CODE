@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         //}
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record   added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(RadiologyTestModel obj)
         {
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
@@ -115,24 +115,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-        //[HttpDelete("RadilogyCancel")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Delete)]
-        //public async Task<ApiResponse> Cancel(PathTestDetDelete obj)
-        //{
-        //    MRadiologyTestMaster? model = await _repository.GetById(x => x.TestId == Id);
-        //    if ((model?.TestId ?? 0) > 0)
-        //    {
-        //        model.IsActive = false;
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
-        //        await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MRadiologyTest deleted successfully.");
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //}
-
-
+      
        
         //Delete API
         [HttpDelete]

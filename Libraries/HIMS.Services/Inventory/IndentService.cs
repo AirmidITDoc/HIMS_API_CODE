@@ -90,10 +90,20 @@ namespace HIMS.Services.Inventory
             }
         }
 
-        public virtual async Task UpdateAsync(TIndentHeader objIndent, int UserId, string Username)
+        public virtual async Task UpdateAsync(TIndentHeader objIndent, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                _context.Attach(objIndent);
+                _context.Entry(objIndent).State = EntityState.Modified;
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objIndent).Property(column).IsModified = false;
+                    }
+                }
                 // Delete details table realted records
                 var lst = await _context.TIndentDetails.Where(x => x.IndentId == objIndent.IndentId).ToListAsync();
                 _context.TIndentDetails.RemoveRange(lst);
