@@ -67,6 +67,8 @@ namespace HIMS.Services.Pharmacy
             }
             string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
             ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+            ObjPayment.RefundId = Convert.ToInt32(vSalesReturnId);
+
 
             foreach (var item in ObjTSalesReturnDetail)
             {
