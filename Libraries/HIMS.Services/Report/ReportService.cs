@@ -1601,8 +1601,6 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-
-
                 //Radiology
                 #region :: RadiologyTemplateReport ::
                 case "RadiologyTemplateReport":
@@ -8248,13 +8246,13 @@ namespace HIMS.Services.Report
 
                         int i = 0;
                         Boolean chkresonflag = false;
+
                         string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
 
                         var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -8310,6 +8308,12 @@ namespace HIMS.Services.Report
 
                         int i = 0;
                         Boolean chkresonflag = false;
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
