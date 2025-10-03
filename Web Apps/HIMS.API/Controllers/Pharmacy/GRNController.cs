@@ -197,8 +197,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        [HttpPut("UpdateGrnSupplierDetails")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [HttpPut("UpdateGrnSupplierDetails{id:int}")]
+    //    [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateGRNSupplierModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();

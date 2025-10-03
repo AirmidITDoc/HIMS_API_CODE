@@ -5102,11 +5102,32 @@ namespace HIMS.Services.Report
 
                             html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                             html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
-                            ;
+
+                            html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                            html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
+                            html = html.Replace("{{Height}}", dt.GetColValue("Height"));
+                            html = html.Replace("{{Weight}}", dt.GetColValue("PWeight"));
+                            html = html.Replace("{{Temp}}", dt.GetColValue("Temp"));
+                            html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                            html = html.Replace("{{BSL}}", dt.GetColValue("BSL"));
+                            html = html.Replace("{{BMI}}", dt.GetColValue("BMI"));
+                            html = html.Replace("{{SpO2}}", dt.GetColValue("SpO2"));
+
+
+
+                            html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkHeightflag}}", dt.GetColValue("Height").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkWeightflag}}", dt.GetColValue("PWeight").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkTempflag}}", dt.GetColValue("Temp").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+                            
 
                         }
 
-
+                        return html;
 
 
                     }
@@ -9535,6 +9556,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
@@ -9691,8 +9714,14 @@ namespace HIMS.Services.Report
                         // Replace the placeholders with actual totals and the generated items
                         //html = html.Replace("{{T_NetAmount}}", T_NetAmount.ToString("0.00"));
                         //html = html.Replace("{{T_Amount}}", T_Amount.ToString("0.00"));
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
-           
+
+
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
 
 
