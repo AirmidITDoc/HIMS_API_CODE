@@ -388,11 +388,11 @@ namespace HIMS.API.Controllers.Report
                 case "IpMLCCasePaperPrint":
 
                 //PATHOLOGY 
-                case "PathologyReport":
                 case "PathologyReportWithHeader":
-                case "PathologyReportTemplate":
+                case "PathologyReportWithOutHeader":
                 case "PathologyReportTemplateWithHeader":
-
+                case "PathologyReportTemplateWithOutHeader":
+            
 
                 case "RadiologyTemplateReport":
               //Advance Page Printouts

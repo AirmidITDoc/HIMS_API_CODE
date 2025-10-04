@@ -1527,8 +1527,8 @@ namespace HIMS.Services.Report
 
 
                 //Pathology
-                #region :: PathologyReport ::
-                case "PathologyReport":
+                #region :: PathologyReportWithHeader ::
+                case "PathologyReportWithHeader":
                     {
 
                         model.RepoertName = "PathologyReport ";
@@ -1542,14 +1542,14 @@ namespace HIMS.Services.Report
 
                         //html.Replace("{{Signature}}", signature);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReport", "PathologyReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
 
 
                         break;
                     }
                 #endregion
-                #region :: PathologyReportWithHeader ::
-                case "PathologyReportWithHeader":
+                #region :: PathologyReportWithOutHeader ::
+                case "PathologyReportWithOutHeader":
 
                     {
 
@@ -1561,14 +1561,14 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithOutHeader", "PathologyReportWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
                     }
                 #endregion
 
-                #region :: PathologyReportTemplate ::
-                case "PathologyReportTemplate":
+                #region :: PathologyReportTemplateWithOutHeader ::
+                case "PathologyReportTemplateWithOutHeader":
                     {
 
                      
@@ -1581,7 +1581,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplate", "PathologyReportTemplate" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithOutHeader", "PathologyReportTemplateWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
 
@@ -7907,7 +7907,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                case "PathologyReport":
+                case "PathologyReportWithHeader":
                     {
 
                         Boolean chkresonflag = false;
@@ -8085,7 +8085,7 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
-                case "PathologyReportWithHeader":
+                case "PathologyReportWithOutHeader":
                     {
 
                         Boolean chkresonflag = false;
@@ -8266,7 +8266,7 @@ namespace HIMS.Services.Report
 
 
 
-                case "PathologyReportTemplate":
+                case "PathologyReportTemplateWithOutHeader":
                     {
 
                         int i = 0;
@@ -8397,9 +8397,11 @@ namespace HIMS.Services.Report
                     {
 
 
-
+                        
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("OPDNo"));
+
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));

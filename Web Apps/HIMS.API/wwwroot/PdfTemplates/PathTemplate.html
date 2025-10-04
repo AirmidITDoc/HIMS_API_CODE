@@ -1,25 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-<head style="height: 135px;">
-    <table style="width: 100%;line-height: inherit;text-align: left;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin-top: 4cm;
+            margin-bottom: 6cm;
+        }
+    </style>
+</head>
+
+<body>
+    <table style="width: 100%; line-height: inherit; text-align: left;">
         <!--{{NewHeader}}-->
         <tr class="title-date-row">
             <td style="padding: 6px;">
-                <table style="width: 100%; border-collapse: collapse;">
+                <table style="width: 100%; border-collapse: collapse;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
                     <tr style="font-size: 18px">
 
-                        <td style="padding: 2px; padding-bottom:5px;text-align:left;padding-top:110px;font-size:22px;"><b>Laboratory Report</b></td>
-                        <td style="padding: 2px; padding-bottom:5px;text-align:right;padding-top:110px;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
+                        <td style="padding: 2px; padding-bottom:5px;text-align:left;font-size:22px;"><b>Laboratory Report</b></td>
+                        <td style="padding: 2px; padding-bottom:5px;text-align:right;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
 
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
-</head>
-
-<body>
     <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
@@ -125,12 +135,12 @@
         </div>
     </div>
 
-    <table style="width: 100%;line-height: inherit;text-align: left;padding-left:20px;">
+    <table style="width: 100%; line-height: inherit; text-align: left; padding-left: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
         <tr>
             <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">"END OF REPORT"</td>
         </tr>
     </table>
-    <table style="width: 100%;line-height: inherit;text-align: left;">
+    <table style="width: 100%; line-height: inherit; text-align: left;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
         <tr>
             <span style="margin-left:70%">
                 <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
