@@ -28,28 +28,22 @@
                     <!--<table style="width: 100%; border-collapse: collapse;font-size:20px;">-->
 
 
-                    <table class="table" style="width:100%;border-collapse:collapse">
+                    <table class="table" style="width: 100%; border-collapse: collapse;font-size: 20px">
                         <tbody>
 
                             <tr style="font-size: 20px; background-color: white; font-weight: 700;">
 
-                            <tr>
 
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">IPD No :</span>
-                                    <span>{{IPDNo}}</span>
-                                </td>
-
-                            </tr>
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">UHID No:</span>
                                     <span>{{RegNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Age | Gender:</span>
-                                    <span> {{Age}}Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
+                                    <span style="font-weight:bold;">IPD No :</span>
+                                    <span>{{IPDNo}}</span>
                                 </td>
+
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">DOA | Time:</span>
                                     <span>{{AdmissionTime}}</span>
@@ -62,13 +56,14 @@
                                     <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age | Gender:</span>
+                                    <span> {{AgeYear}}Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Patient Type :</span>
                                     <span>{{PatientType}}</span>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;"> Company Name :</span>
-                                    <span>{{CompanyName}}</span>
-                                </td>
+
                             </tr>
                             <tr>
 
@@ -81,13 +76,22 @@
                                     <span>{{DepartmentName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
+                                    <span style="font-weight:bold;"> Company Name :</span>
+                                    <span>{{CompanyName}}</span>
+                                </td>
+                               
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Ref.Doctor Name:</span>
                                     <span>{{RefDocName}}</span>
                                 </td>
+
                             </tr>
 
 
-                    </table>
+</table>
                 </td>
             </tr>
 
@@ -99,6 +103,7 @@
 
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Date</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Time</td>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Total Amt </td>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Disc Amt </td>
                         <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Net Amt </td>
@@ -266,7 +271,7 @@
                     </table>
                 </td>
             </tr>
-
+        </table>
 
             <tr>
                 <table style="width: 100%; border-collapse: collapse;margin-top:20px;">

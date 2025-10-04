@@ -12,6 +12,7 @@ namespace HIMS.Services.Report
     {
         string GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
         string GetNewReportSetByProc(ReportConfigDto model);
+        Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
         Task<List<CashCounter>> SearchCashCounter(string str);

@@ -95,6 +95,13 @@ namespace HIMS.API.Controllers.Report
             var data = await _IDoctorMasterService.SearchDoctor(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
         }
+        [HttpGet("RefDoctorList/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDoctorListAutoCompletes(string Keyword)
+        {
+            var data = await _reportService.SearchDoctor(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
+        }
         [HttpGet("ServiceList/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetServiceListAutoComplete(string Keyword)
