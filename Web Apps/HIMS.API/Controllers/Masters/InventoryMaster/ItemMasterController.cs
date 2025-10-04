@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Inventory
             _repository = repository1;
         }
         [HttpPost("ItemMasterList")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemMasterListDto> ItemMasterList = await _ItemMasterServices.GetItemMasterListAsync(objGrid);
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("InsertSP")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -116,10 +116,10 @@ namespace HIMS.API.Controllers.Inventory
             MItemMaster model = await _repository.GetById(x => x.ItemId == Id);
             if ((model?.ItemId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                model.IsActive = model.IsActive == true ? false : true;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else

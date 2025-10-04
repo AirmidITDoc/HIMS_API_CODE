@@ -31,7 +31,7 @@ namespace HIMS.Services.Radiology
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsVerifyId" };
             var Dentity = ObjTRadiologyReportHeader.ToDictionary();
             foreach (var rProperty in REntity)
             {
@@ -69,7 +69,9 @@ namespace HIMS.Services.Radiology
             {
                 // Update header table records
                 TRadiologyReportHeader objPur = await _context.TRadiologyReportHeaders.FindAsync(ObjTRadiologyReportHeader.RadReportId);
+                objPur.IsVerifyId = ObjTRadiologyReportHeader.IsVerifyId;
                 objPur.IsVerified = ObjTRadiologyReportHeader.IsVerified;
+                objPur.IsVerifySign = ObjTRadiologyReportHeader.IsVerifySign;
                 objPur.IsVerifyedDate = ObjTRadiologyReportHeader.IsVerifyedDate;
                 _context.TRadiologyReportHeaders.Update(objPur);
                 _context.Entry(objPur).State = EntityState.Modified;

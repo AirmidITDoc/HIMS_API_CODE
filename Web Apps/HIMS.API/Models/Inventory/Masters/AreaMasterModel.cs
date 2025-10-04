@@ -13,8 +13,8 @@ namespace HIMS.API.Models.Masters
     {
         public AreaMasterModelValidator()
         {
-            RuleFor(x => x.AreaName).NotNull().NotEmpty().WithMessage("Area is required");
-            RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("Area is required");
+            RuleFor(x => x.AreaName).NotNull().NotEmpty().WithMessage("AreaName is required");
+            RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
 
         }
     }

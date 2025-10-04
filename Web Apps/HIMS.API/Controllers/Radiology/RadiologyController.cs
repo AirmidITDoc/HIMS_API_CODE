@@ -77,6 +77,7 @@ namespace HIMS.API.Controllers.Radiology
             if (obj.RadReportId != 0)
             {
                 model.IsVerified = true;
+                model.IsVerifySign = true;
                 model.IsVerifyedDate = DateTime.Now.Date;
 
                 await _RadilogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);
