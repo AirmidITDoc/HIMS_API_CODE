@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPost("HospitalMasterList")]
-        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
                IPagedList<HospitalMasterListDto> HospitalMasterList = await _IHospitalMasterService.GetListAsyncH(objGrid);
@@ -60,6 +60,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -68,7 +70,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(HospitalMasterModel obj)
         {
             HospitalMaster model = obj.MapTo<HospitalMaster>();
@@ -83,15 +85,16 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
+      
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             HospitalMaster model = await _repository.GetById(x => x.HospitalId == Id);
             if ((model?.HospitalId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

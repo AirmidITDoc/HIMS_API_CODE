@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             RoomMaster model = await _repository.GetById(x => x.RoomId == Id);
             if ((model?.RoomId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

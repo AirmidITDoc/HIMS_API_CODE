@@ -81,7 +81,8 @@ namespace HIMS.API.Models.Inventory
     public class RadiologyVerifyModel
     {
         public long RadReportId { get; set; }
-        public bool? IsVerified { get; set; }
+        public long? IsVerifyId { get; set; }
+        public bool? IsVerifySign { get; set; }
         public DateTime? IsVerifyedDate { get; set; }
 
 

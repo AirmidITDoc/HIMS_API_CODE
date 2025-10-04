@@ -28,14 +28,14 @@ namespace HIMS.API.Controllers.Masters.Billing
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "CampMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CampMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCampMaster> CampMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(CampMasterList.ToGridResponse(objGrid, "Camp List"));
         }
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "CampMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CampMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return data.ToSingleResponse<MCampMaster,CampMasterModel>("CampMaster");
         }
         [HttpPost]
-        //[Permission(PageCode = "CampMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CampMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CampMasterModel obj)
         {
             MCampMaster model = obj.MapTo<MCampMaster>();
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "CampMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CampMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CampMasterModel obj)
         {
             MCampMaster model = obj.MapTo<MCampMaster>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "CampMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CampMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCampMaster model = await _repository.GetById(x => x.CampId == Id);
