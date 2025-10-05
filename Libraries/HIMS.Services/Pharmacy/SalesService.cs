@@ -633,7 +633,7 @@ namespace HIMS.Services.Users
         }
         public virtual async Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "Rtrv_BrowseIPPharAdvanceReceipt");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "ps_Rtrv_BrowseIPPharAdvanceReceipt");
         }
         public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
         {
