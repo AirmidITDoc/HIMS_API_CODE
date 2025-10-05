@@ -28,6 +28,9 @@ namespace HIMS.Services.Pharmacy
         public decimal NEFTPayAmount { get; set; }
         public decimal? PayTmamount { get; set; }
         public long? TransactionType { get; set; }
+        public decimal? OnlineAmount { get; set; }
+        public decimal? TDSAmount { get; set; }
+        public decimal? WFAmount { get; set; }
 
 
 
