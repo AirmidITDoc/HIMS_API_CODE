@@ -127,7 +127,7 @@ namespace HIMS.Services.Pathlogy
             odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
 
             string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
-                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime"};
+                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime","OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"}; 
             var Hentity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {

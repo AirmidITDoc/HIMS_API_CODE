@@ -187,23 +187,23 @@ namespace HIMS.Services.Administration
                 scope.Complete();
             }
         }
-        public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
-        {
-            DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
-            "IsDoctorShareGenerated","IsInterimBillFlag","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk","BillNoNavigation"};
-            var Rentity = ObjAddCharges.ToDictionary();
-            foreach (var rProperty in AEntity)
-            {
-                Rentity.Remove(rProperty);
-            }
-            Rentity["FromDate"] = FromDate;
-            Rentity["ToDate"] = ToDate;
+        //public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
+        //{
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
+        //    "IsDoctorShareGenerated","IsInterimBillFlag","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk","BillNoNavigation"};
+        //    var Rentity = ObjAddCharges.ToDictionary();
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        Rentity.Remove(rProperty);
+        //    }
+        //    Rentity["FromDate"] = FromDate;
+        //    Rentity["ToDate"] = ToDate;
 
-            odal.ExecuteNonQuery("OP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
-            odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+        //    odal.ExecuteNonQuery("OP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+        //    odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
 
-        }
+        //}
 
 
         public virtual async Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int UserId, string UserName)

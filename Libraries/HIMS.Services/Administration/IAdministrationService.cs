@@ -32,7 +32,7 @@ namespace HIMS.Services.Administration
 
         Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
         Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
-        Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
+        //Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
         Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
        
 
