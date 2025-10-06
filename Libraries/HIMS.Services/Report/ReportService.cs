@@ -2546,6 +2546,7 @@ namespace HIMS.Services.Report
             // Grand Total row (Income - Expense)
             table.Append("<tr style='border:1px solid black; color:black; background-color:#ccffff; font-weight:bold;'>");
             col = 1; colspan = 1;
+            decimal grandTotalSum = 0; // ✅ To accumulate the final sum
             foreach (var colName in totalColList)
             {
                 if (colName == "space")
@@ -2568,10 +2569,19 @@ namespace HIMS.Services.Report
                         ? groupTotals["Expense"][colName] : 0;
                     decimal net = income - expense;
 
+                    // ✅ Add to grand total sum
+                    grandTotalSum += net;
+
                     table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{net:N2}</td>");
                 }
                 col++;
             }
+
+            // ✅ Add new line (new row) showing overall Grand Total
+            table.Append("<tr style='border:2px solid black; background-color:#99ffff; font-weight:bold;'>");
+            table.Append("<td colspan='").Append(totalColList.Length - 2)
+                 .Append("' style='text-align:right; padding:6px;'>Overall Grand Total :</td>");
+            table.Append($"<td colspan='3' style='text-align:right; padding:6px;'>{grandTotalSum:N2}</td>");
 
             table.Append("</tr>");
 

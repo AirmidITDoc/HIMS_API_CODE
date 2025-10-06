@@ -414,7 +414,7 @@ namespace HIMS.Services.Users
             {
                 Dentity.Remove(rProperty);
             }
-            string VAdvanceDetailID = odal.ExecuteNonQuery("PS_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
+            string VAdvanceDetailID = odal.ExecuteNonQuery("ps_m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
             ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
             ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
 
@@ -441,7 +441,7 @@ namespace HIMS.Services.Users
             {
                 Uentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Update_T_PHAdvanceHeader", CommandType.StoredProcedure, Uentity);
+            odal.ExecuteNonQuery("ps_m_Update_T_PHAdvanceHeader", CommandType.StoredProcedure, Uentity);
 
             string[] DEntity = { "AdvanceNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Dentity = ObjTPhadvanceDetail.ToDictionary();
@@ -449,7 +449,7 @@ namespace HIMS.Services.Users
             {
                 Dentity.Remove(rProperty);
             }
-            string VAdvanceDetailID = odal.ExecuteNonQuery("m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
+            string VAdvanceDetailID = odal.ExecuteNonQuery("ps_m_insert_TPHAdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", Dentity);
             ObjTPhadvanceDetail.AdvanceDetailId = Convert.ToInt32(VAdvanceDetailID);
             ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
 
@@ -633,11 +633,11 @@ namespace HIMS.Services.Users
         }
         public virtual async Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "Rtrv_BrowseIPPharAdvanceReceipt");
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "ps_Rtrv_BrowseIPPharAdvanceReceipt");
         }
         public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "m_Rtrv_Phar_AdvanceList");
+            return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "ps_Rtrv_Phar_AdvanceList");
         }
         public virtual async Task<IPagedList<PhAdvRefundReceiptListDto>> PhAdvRefundReceiptList(GridRequestModel model)
         {

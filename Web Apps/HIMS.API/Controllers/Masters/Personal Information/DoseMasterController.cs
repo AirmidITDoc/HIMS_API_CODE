@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers
             MDoseMaster model = await _repository.GetById(x => x.DoseId == Id);
             if ((model?.DoseId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

@@ -29,7 +29,6 @@ namespace HIMS.Services.Pharmacy
         public decimal RefundAmount { get; set; }
         public long AddedBy { get; set; }
         public bool IsCancelled { get; set; }
-
         public string Reason { get; set; }
         public long PaymentId { get; set; }
         public string ReceiptNo { get; set; }
@@ -46,8 +45,9 @@ namespace HIMS.Services.Pharmacy
         public DateTime CardDate { get; set; }
         public long TransactionType { get; set; }
         public string UserName { get; set; }
-
-
+        public decimal OnlineAmount { get; set; }
+        public decimal TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
 
 
 
