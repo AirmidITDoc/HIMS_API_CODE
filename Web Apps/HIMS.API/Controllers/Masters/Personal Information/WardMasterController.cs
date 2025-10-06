@@ -8,6 +8,8 @@ using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Services.Inventory;
+using HIMS.Data.DTO.Inventory;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -18,13 +20,18 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     public class WardMasterController : BaseController
 
     {
+        private readonly IWardMasterService _IWardMasterService;
+
         private readonly IGenericService<RoomMaster> _repository;
-        public WardMasterController(IGenericService<RoomMaster> repository)
+
+        public WardMasterController(IWardMasterService repository ,IGenericService<RoomMaster> repository1)
         {
-            _repository = repository;
+            _IWardMasterService = repository;
+            _repository = repository1;
+
         }
 
-         //List API
+        //List API
         [HttpPost]
         [Route("[action]")]
         [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
@@ -32,6 +39,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             IPagedList<RoomMaster> RoomMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(RoomMasterList.ToGridResponse(objGrid, "Room List"));
+        }
+
+        [HttpPost("WardMasterList")]
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<WardMasterListDto> WardMasterList = await _IWardMasterService.GetListAsyncH(objGrid);
+            return Ok(WardMasterList.ToGridResponse(objGrid, "WardMaster List"));
         }
 
         //List API Get By Id
