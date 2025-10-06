@@ -89,7 +89,7 @@ namespace HIMS.Data.Models
             await AuditLogs.AddAsync(objAdd);
         }
 
-        public async Task LogProcedureExecution(string procName, int? EntityId, string EntityName, LogAction logAction, Dictionary<string, object> parameters, int userId, string username)
+        public async Task LogProcedureExecution(Dictionary<string, object> parameters, string EntityName, int? EntityId, LogAction logAction, int userId, string username)
         {
 
             AuditLog objAdd = new()
@@ -107,6 +107,7 @@ namespace HIMS.Data.Models
                 Description = JsonConvert.SerializeObject(parameters)
             };
             await AuditLogs.AddAsync(objAdd);
+            await base.SaveChangesAsync();
         }
     }
 }

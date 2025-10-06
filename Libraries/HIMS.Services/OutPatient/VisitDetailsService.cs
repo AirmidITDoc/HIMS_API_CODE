@@ -109,8 +109,9 @@ namespace HIMS.Services.OutPatient
             string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
             objVisitDetail.RegId = Convert.ToInt32(RegId);
+            await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray","Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "IsConvertRequestForIp" };
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIp" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
             {
@@ -118,13 +119,13 @@ namespace HIMS.Services.OutPatient
             }
             string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {
                 VisitId = Convert.ToInt32(VisitId)
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -142,7 +143,7 @@ namespace HIMS.Services.OutPatient
             objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
             objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
 
-            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","IsConvertRequestForIp"};
+            string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIp" };
 
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in rVisitEntity)
@@ -387,7 +388,7 @@ namespace HIMS.Services.OutPatient
                            CompanyCode = x.CompanyCode ?? "",
                            CompanyServicePrint = x.CompanyServicePrint ?? "",
                            IsInclusionOrExclusion = x.IsInclusionOrExclusion,
-                           IsPathOutSource=s.IsPathOutSource
+                           IsPathOutSource = s.IsPathOutSource
                        });
             var sql = qry.Take(50).ToQueryString();
             Console.WriteLine(sql);
@@ -430,7 +431,7 @@ namespace HIMS.Services.OutPatient
         public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray","CheckInTime","CheckOutTime","ConStartTime", "ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate", "IsConvertRequestForIp" };
+            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIp" };
             var entity = objCrossConsultation.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -482,9 +483,9 @@ namespace HIMS.Services.OutPatient
 
             odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
         }
-      
 
-      
+
+
     }
 }
 
