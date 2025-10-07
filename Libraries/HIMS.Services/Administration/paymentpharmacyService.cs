@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -76,18 +77,34 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("ps_Update_PharmSalesDate", CommandType.StoredProcedure, UEntity);
 
         }
-        public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int UserId, string UserName)
+        //public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int UserId, string UserName)
+        //{
+        //    //throw new NotImplementedException();
+        //    DatabaseHelper odal = new();
+        //    string[] DetailEntity = { "BillNo", "ReceiptNo", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId",
+        //        "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate","CashCounterId","IsSelfOrcompany","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","StrId","TranMode","CompanyId"};
+        //    var UEntity = ObjPaymentPharmacy.ToDictionary();
+        //    foreach (var rProperty in DetailEntity)
+        //    {
+        //        UEntity.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, UEntity);
+
+        //}
+        public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] DetailEntity = { "BillNo", "ReceiptNo", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId",
-                "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate","CashCounterId","IsSelfOrcompany","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","StrId","TranMode","CompanyId"};
-            var UEntity = ObjPaymentPharmacy.ToDictionary();
-            foreach (var rProperty in DetailEntity)
+            string[] AEntity = { "PaymentDate", "PaymentTime", "PaymentId" };
+            var Rentity = ObjPaymentPharmacy.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                UEntity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, UEntity);
+
+            odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(PaymentPharmacy), ObjPaymentPharmacy.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }
 

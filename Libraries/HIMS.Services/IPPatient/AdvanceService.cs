@@ -106,7 +106,7 @@ namespace HIMS.Services.IPPatient
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rDetailEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "BalanceAmount","IsCancelled" ,"IsCancelledBy", "IsCancelledDate" };
+            string[] rDetailEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceUsedAmount", "BalanceAmount", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var CAdvanceEntity = ObjAdvanceHeader.ToDictionary();
             foreach (var rProperty in rDetailEntity)
             {
@@ -116,8 +116,24 @@ namespace HIMS.Services.IPPatient
 
             odal.ExecuteNonQuery("m_UpdateAdvanceCancel", CommandType.StoredProcedure, CAdvanceEntity);
         }
-    
-       
+
+
+        //public virtual async Task CancelAsync(AdvanceHeader ObjAdvanceHeader, long AdvanceDetailId ,int CurrentUserId, string CurrentUserName)
+        //{
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = { "AdvanceId", "AdvanceDetailId", "AddedBy", "AdvanceAmount" };
+        //    var Rentity = ObjAdvanceHeader.ToDictionary();
+
+        //    foreach (var rProperty in Rentity.Keys.ToList())
+        //    {
+        //        if (!AEntity.Contains(rProperty))
+        //            Rentity.Remove(rProperty);
+        //    }
+
+        //    odal.ExecuteNonQuery("m_UpdateAdvanceCancel", CommandType.StoredProcedure, Rentity);
+        //    await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjAdvanceHeader.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+        //}
 
 
 
