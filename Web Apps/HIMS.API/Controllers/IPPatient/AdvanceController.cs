@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
       
         [HttpPost("Cancel")]
-        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateCancel obj)
         {
             if (obj.AdvanceId == 0)
@@ -188,7 +188,8 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 AdvanceAmount = obj.AdvanceAmount,
                 AdvanceId = obj.AdvanceId,
-                AddedBy = obj.AddedBy
+                AddedBy = obj.AddedBy,
+
 
             };
             await _IAdvanceService.CancelAsync(model, obj.AdvanceDetailId);
@@ -196,6 +197,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancel  successfully.");
 
         }
+     
 
     }
 }
