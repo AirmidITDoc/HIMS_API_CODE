@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPost("HospitalMasterList")]
-        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
                IPagedList<HospitalMasterListDto> HospitalMasterList = await _IHospitalMasterService.GetListAsyncH(objGrid);
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(HospitalMasterModel obj)
         {
             HospitalMaster model = obj.MapTo<HospitalMaster>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
       
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "HospitalMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "HospitalMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             HospitalMaster model = await _repository.GetById(x => x.HospitalId == Id);

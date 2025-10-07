@@ -110,6 +110,8 @@ namespace HIMS.Services.Common
                 case "grnInvoicenocheck": sp_Name = "ps_m_grnInvoiceno_check"; break;
                 case "CheckExistingBatchAvailable": sp_Name = "ps_CheckExistingBatchAvailable"; break;
                 case "ExpHeadMaster": sp_Name = "Retrieve_M_ExpHeadMasterForCombo"; break;
+                case "TemplateDescCategory": sp_Name = "ps_TemplateDescCategoryList"; break;
+
 
 
                 default: break;

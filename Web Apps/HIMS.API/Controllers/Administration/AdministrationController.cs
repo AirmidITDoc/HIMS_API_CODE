@@ -276,24 +276,24 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
-        [HttpPost("DoctorShareProcess")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
-        {
-            if (obj.FromDate == new DateTime(1900/01/01))
+        //[HttpPost("DoctorShareProcess")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
+        //{
+        //    if (obj.FromDate == new DateTime(1900/01/01))
 
-            {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            }
-             //👇 Manually assign fields from LabRequestsModel to AddCharge
-            var model = new AddCharge
-            {
-                //FromDate = obj.FromDate,
-            };
+        //    {
+        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    }
+        //     //👇 Manually assign fields from LabRequestsModel to AddCharge
+        //    var model = new AddCharge
+        //    {
+        //        //FromDate = obj.FromDate,
+        //    };
 
-            await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
-        }
+        //    await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        //}
 
         [HttpPost("AutoServiceListInsert")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Add)]

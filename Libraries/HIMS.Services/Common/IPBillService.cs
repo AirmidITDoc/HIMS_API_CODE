@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System.Data;
@@ -721,17 +722,33 @@ namespace HIMS.Services.Common
             string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
         }
-        public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)
+        //public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)
+        //{
+        //    //throw new NotImplementedException();
+        //    DatabaseHelper odal = new();
+        //    string[] DetailEntity = { "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CashCounterId", "IsRefundFlag", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy", "TRefundDetails" };
+        //    var UEntity = OBJRefund.ToDictionary();
+        //    foreach (var rProperty in DetailEntity)
+        //    {
+        //        UEntity.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, UEntity);
+
+        //}
+        public virtual async Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] DetailEntity = { "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CashCounterId", "IsRefundFlag", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "AddedBy", "TRefundDetails" };
-            var UEntity = OBJRefund.ToDictionary();
-            foreach (var rProperty in DetailEntity)
+            string[] AEntity = { "RefundDate", "RefundTime", "RefundId" };
+            var Rentity = OBJRefund.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                UEntity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, UEntity);
+
+            odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Refund), OBJRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }
 

@@ -212,6 +212,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, CurrentStockUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMaterialConsumptionHeader, MaterialConsumptionHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            
 
 
 
@@ -222,6 +223,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<VisitDetail, RequestForOPTOIP>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PaymentPharmacy, SaleReqModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<PaymentPharmacy, paymentpharModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<PaymentPharmacy, PaymentpharModelSS>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

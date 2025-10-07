@@ -9,7 +9,7 @@ namespace HIMS.Services.OPPatient
 {
    public partial interface IBillCancellationService
     {
-        Task UpdateAsyncOp(Bill objOpBillCancellation, int UserId, string Username);
-        Task UpdateAsyncIp(Bill objIPBillCancellation, int UserId, string Username);
+        Task UpdateAsyncOp(Bill objOpBillCancellation,  int CurrentUserId, string CurrentUserName);
+        Task UpdateAsyncIp(Bill objIPBillCancellation,  int CurrentUserId, string CurrentUserName);
     }
 }
