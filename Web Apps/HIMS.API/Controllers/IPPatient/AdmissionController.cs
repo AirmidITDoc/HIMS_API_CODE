@@ -3,12 +3,12 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         //UPDATE SHILPA 09-08-2025//
-         [HttpPost("AdmissionRegInsertSP")]
+        [HttpPost("AdmissionRegInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse Insert(NewAdmission obj)
         {
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
                 objAdmission.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertRegAsyncSP(model ,objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertRegAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
-        
+
 
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
@@ -144,7 +144,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("Companyinformation/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(CompanyinformationModel obj)
         {
             Admission model = obj.MapTo<Admission>();
@@ -157,5 +157,22 @@ namespace HIMS.API.Controllers.IPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(AdmissionCancel obj)
+        {
+            Admission model = obj.MapTo<Admission>();
+
+            if (obj.AdmissionId != 0)
+            {
+                model.AdmissionId = obj.AdmissionId;
+                model.IsCancelled = CurrentUserId;
+                await _IAdmissionService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
     }
 }
