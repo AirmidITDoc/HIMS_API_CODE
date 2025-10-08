@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
       
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(UpdateCancel obj)
         {
             if (obj.AdvanceId == 0)
