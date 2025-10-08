@@ -71,5 +71,23 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        //Delete API
+        [HttpDelete]
+        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            MReportTemplateConfig? model = await _repository.GetById(x => x.TemplateId == Id);
+            if ((model?.TemplateId ?? 0) > 0)
+            {
+                model.IsActive = model.IsActive == true ? false : true;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
     }
 }
