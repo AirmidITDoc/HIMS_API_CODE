@@ -8,7 +8,7 @@ using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.OPPatient
+namespace HIMS.API.Controllers.Administration
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -49,4 +49,4 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
- }
+}

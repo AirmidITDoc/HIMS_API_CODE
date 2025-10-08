@@ -31,6 +31,7 @@ namespace HIMS.Data.Models
         public string? ReportColumnWidths { get; set; }
         public string? ReportFilter { get; set; }
         public string? ReportSummary { get; set; }
+        public long? Orderby { get; set; }
         public long? MenuId { get; set; }
         public bool? IsActive { get; set; }
         public long? CreatedBy { get; set; }

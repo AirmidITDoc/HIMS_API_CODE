@@ -46,7 +46,7 @@ namespace HIMS.Services.OPPatient
             }
 
             odal.ExecuteNonQuery("ps_OP_BILL_CANCELLATION", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, nameof(Bill), objOpBillCancellation.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(entity, nameof(Bill), objOpBillCancellation.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
         }
 
         //public virtual async Task UpdateAsyncIp(Bill objIPBillCancellation, int UserId, string Username)
@@ -76,7 +76,7 @@ namespace HIMS.Services.OPPatient
             }
 
             odal.ExecuteNonQuery("ps_IP_BILL_CANCELLATION", CommandType.StoredProcedure, bentity);
-            await _context.LogProcedureExecution(bentity, nameof(Bill), objIPBillCancellation.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(bentity, nameof(Bill), objIPBillCancellation.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
 

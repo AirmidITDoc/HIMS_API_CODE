@@ -193,22 +193,27 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, entity1);
         }
-        public virtual async Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int UserId, string UserName)
+       
+        public virtual async Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] DetailEntity = { "TransactionId", "AdvanceId", "AdvanceNo", "RefId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "BalanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason" };
-            var UEntity = OBJAdvanceDetail.ToDictionary();
-            foreach (var rProperty in DetailEntity)
+            string[] AEntity = { "Date", "Time", "AdvanceDetailId" };
+            var Rentity = OBJAdvanceDetail.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                UEntity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("Ps_Update_advancedetail", CommandType.StoredProcedure, UEntity);
+
+            odal.ExecuteNonQuery("Ps_Update_advancedetail", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Refund), OBJAdvanceDetail.AdvanceDetailId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
 
+
     }
-       
+
 }
 
 

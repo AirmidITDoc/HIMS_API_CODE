@@ -30,10 +30,9 @@ namespace HIMS.Data.DTO.Administration
         public int? AdvanceUsedAmount { get; set; }
         public decimal? NEFTPayAmount { get; set; }
         public decimal? PayTMAmount { get; set; }
+        public long? AdvanceId { get; set; }
 
-
-
-
+        public long? TransactionType { get; set; }
 
 
 
