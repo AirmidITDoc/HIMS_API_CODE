@@ -748,7 +748,7 @@ namespace HIMS.Services.Common
             }
 
             odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(Refund), OBJRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Rentity, nameof(Refund), OBJRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
 
