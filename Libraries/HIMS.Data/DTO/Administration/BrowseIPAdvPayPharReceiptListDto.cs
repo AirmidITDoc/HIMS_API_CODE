@@ -31,6 +31,8 @@ namespace HIMS.Data.DTO.Administration
         public byte OP_IP_Type { get; set; }
         public decimal NEFTPayAmount { get; set; }
         public decimal PayTMAmount { get; set; }
+        public long? AdvanceId { get; set; }
+
 
     }
 }
