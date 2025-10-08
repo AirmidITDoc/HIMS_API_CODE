@@ -142,35 +142,6 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-        [HttpPost("InsertDoctorPerMaster")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(MDoctorPerMasterModel obj)
-        {
-            MDoctorPerMaster model = obj.MapTo<MDoctorPerMaster>();
-            if (obj.DoctorShareId == 0)
-            {
-             
-                await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        }
-        [HttpPut("UpdateDoctorPerMaster Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(MDoctorPerMasterModel obj)
-        {
-            MDoctorPerMaster model = obj.MapTo<MDoctorPerMaster>();
-            if (obj.DoctorShareId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                
-                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
-        }
-
         [HttpPost("AutoServiceListInsert")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(List<AutoServiceModel> objList)
