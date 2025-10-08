@@ -8134,17 +8134,13 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_ReportTemplateConfig");
 
-                entity.Property(e => e.CategoryName).HasMaxLength(255);
+                entity.Property(e => e.CategoryName).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.TemplateFooter).HasMaxLength(255);
-
-                entity.Property(e => e.TemplateHeader).HasMaxLength(2000);
-
-                entity.Property(e => e.TemplateName).HasMaxLength(100);
+                entity.Property(e => e.TemplateName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<MReportconfigBackup>(entity =>
