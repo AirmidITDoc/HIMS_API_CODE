@@ -28,13 +28,18 @@
                                 <tr class="title-date-row">
                                     <td>
                                         <table style="width: 100%; border-collapse: collapse;">
-                                            <tr style="font-size: 26px;font-weight:bold;">
-                                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;" colspan="2">
+                                            <tr style="font-size: 20px">
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                                     <b>
                                                         OT Booking Request Report
                                                     </b>
                                                 </td>
-
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                                    <b>
+                                                        Print
+                                                        Date : {{CurrentDate}}
+                                                    </b>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -64,8 +69,8 @@
                                             <tr>
 
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">IPD No :</span>
-                                                    <span>{{OP_IP_Id}}</span>
+                                                    <span style="font-weight:bold;">OPDIPD No :</span>
+                                                    <span>{{OPDIPDNO}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Age|Gender:</span>
@@ -225,7 +230,7 @@
         </tr>
     </table>
 
-    <table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
+    <!--<table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
         <tr>
             <footer style="margin-left: 70%; font-size: 19px;">
 
@@ -237,7 +242,7 @@
             </td>
             </footer>
         </tr>
-    </table>
+    </table>-->
 
 </body>
 
