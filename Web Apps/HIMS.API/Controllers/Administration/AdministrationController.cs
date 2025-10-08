@@ -46,14 +46,6 @@ namespace HIMS.API.Controllers.Administration
             return Ok(RoleMasterList.ToGridResponse(objGrid, "RoleMaster App List"));
         }
 
-        //[HttpPost("DailyExpenceList")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        //public async Task<IActionResult> DailyExpenceList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<DailyExpenceListtDto> DailyExpenceList = await _IAdministrationService.DailyExpencesList(objGrid);
-        //    return Ok(DailyExpenceList.ToGridResponse(objGrid, "DailyExpenceList"));
-        //}
-
         [HttpPost("PaymentModeList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -67,55 +59,6 @@ namespace HIMS.API.Controllers.Administration
         {
             IPagedList<BrowseIPAdvPayPharReceiptListDto> BrowseIPAdvPayPharReceiptList = await _IAdministrationService.BrowseIPAdvPayPharReceiptList(objGrid);
             return Ok(BrowseIPAdvPayPharReceiptList.ToGridResponse(objGrid, "BrowseIPAdvPayPharReceipt1 App List"));
-        }
-
-
-        [HttpPost("BrowseReportTemplateConfigList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> BrowseReportTemplateList(GridRequestModel objGrid)
-        {
-            IPagedList<ReportTemplateListDto> List = await _IAdministrationService.BrowseReportTemplateList(objGrid);
-            return Ok(List.ToGridResponse(objGrid, "ReportTemplate  Config List"));
-        }
-
-
-        //Add API
-        [HttpPost("TemplateInsert")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
-        {
-            MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
-            model.IsActive = true;
-
-            if (obj.TemplateId == 0)
-            {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        }
-
-        //Edit API
-        [HttpPut("TemplateUpdate{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
-        {
-            MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
-            model.IsActive = true;
-             if (obj.TemplateId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
         }
 
         //Delete API
@@ -136,54 +79,6 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
-
-
-        //[HttpPost("TExpenseInsert")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Posts(TExpenseModel obj)
-        //{
-        //    TExpense model = obj.MapTo<TExpense>();
-        //    if (obj.ExpId == 0)
-        //    {
-
-        //        await _IAdministrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.");
-        //}
-
-        //[HttpPut("TExpenseUpdate{id:int}")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edits(TExpenseModel obj)
-        //{
-        //    TExpense model = obj.MapTo<TExpense>();
-        //    if (obj.ExpId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-
-        //        await _IAdministrationService.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.");
-        //}
-
-        //[HttpDelete("TExpenseCancel")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
-        //{
-        //    TExpense Model = obj.MapTo<TExpense>();
-
-        //    if (obj.ExpId != 0)
-        //    {
-
-        //      //   Model.IsAddedby = CurrentUserId;
-        //        await _IAdministrationService.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record delete successfully.");
-        //}
         [HttpPost("IP_DISCHARGE_CANCELLATION")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
@@ -275,25 +170,6 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
-
-        //[HttpPost("DoctorShareProcess")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
-        //{
-        //    if (obj.FromDate == new DateTime(1900/01/01))
-
-        //    {
-        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    }
-        //     //👇 Manually assign fields from LabRequestsModel to AddCharge
-        //    var model = new AddCharge
-        //    {
-        //        //FromDate = obj.FromDate,
-        //    };
-
-        //    await _IAdministrationService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName,obj.FromDate ,obj.ToDate);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
-        //}
 
         [HttpPost("AutoServiceListInsert")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Add)]

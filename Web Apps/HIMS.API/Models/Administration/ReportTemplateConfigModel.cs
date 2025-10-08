@@ -8,14 +8,10 @@ namespace HIMS.API.Models.Administration
         public long TemplateId { get; set; }
         public string? TemplateName { get; set; }
         public string? TemplateDescription { get; set; }
-        public long? DepartmentId { get; set; }
+        public long? CategoryId { get; set; }
         public string? CategoryName { get; set; }
-        public string? TemplateHeader { get; set; }
-        public string? TemplateFooter { get; set; }
         public bool? IsTemplateWithHeader { get; set; }
         public bool? IsTemplateHeaderWithImage { get; set; }
-        public bool? IsTemplateWithFooter { get; set; }
-        public bool? IsTemplateFooterWithImage { get; set; }
 
     }
 
@@ -23,14 +19,9 @@ namespace HIMS.API.Models.Administration
     {
         public ReportTemplateConfigModelValidator()
         {
-            RuleFor(x => x.TemplateName).NotNull().NotEmpty().WithMessage("TemplateName is required");
-            RuleFor(x => x.TemplateDescription).NotNull().NotEmpty().WithMessage("TemplateDescription is required");
+            RuleFor(x => x.TemplateName).NotNull().NotEmpty().WithMessage("Template Name is required");
+            RuleFor(x => x.TemplateDescription).NotNull().NotEmpty().WithMessage("Template Description is required");
             RuleFor(x => x.CategoryName).NotNull().NotEmpty().WithMessage("CategoryName is required");
-            RuleFor(x => x.TemplateHeader).NotNull().NotEmpty().WithMessage("TemplateHeader is required");
-
-
-
-
         }
     }
 }
