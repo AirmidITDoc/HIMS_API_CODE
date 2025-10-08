@@ -4907,6 +4907,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{InvoiceNo}}", dt.GetColValue("InvoiceNo").ConvertToString());
                         html = html.Replace("{{StoreName}}", dt.GetColValue("StoreName"));
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+                        
 
                         html = html.Replace("{{Email}}", dt.GetColValue("Email").ConvertToString());
                         html = html.Replace("{{GateEntryNo}}", dt.GetColValue("GateEntryNo").ConvertToString());
@@ -4918,8 +4921,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
 
                         html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
-                        string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+
+                        string finalamt = conversion(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        //string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
                         string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
                         html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
 
@@ -9339,18 +9345,18 @@ namespace HIMS.Services.Report
                             {
                                 j = 1;
                                 items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;\"><td colspan='3' style=\"border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_TotalAmount.ConvertToDouble())).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_discAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                    .Append(Math.Round(G_NetPayableAmt.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_PaidAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                    .Append(Math.Round(G_balAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_RefundAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                    .Append(Math.Round(G_cashAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                    .Append(Math.Round(G_cardAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                    .Append(Math.Round(G_chequeAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_TotalAmount.ConvertToDouble()).ToString("F2")).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_discAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_NetPayableAmt.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_PaidAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_balAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_RefundAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_cashAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_cardAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_chequeAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
                                    //.AppendMath.Round(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_onlineAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                   .Append(Math.Round(G_AdvAmount.ConvertToDouble())).Append("</td></tr>");
+                                   .Append(Math.Round(G_onlineAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_AdvAmount.ConvertToDouble()).ToString("F2")).Append("</td></tr>");
 
                                 G_NetPayableAmt = 0; G_TotalAmount = 0; G_discAmount = 0; G_balAmount = 0; G_RefundAmount = 0; G_PaidAmount = 0; G_cashAmount = 0; G_chequeAmount = 0; G_neftAmount = 0; G_cardAmount = 0; G_onlineAmount = 0; G_AdvAmount = 0;
 
@@ -9430,18 +9436,18 @@ namespace HIMS.Services.Report
                                 //                    .Append("</td></tr>");
 
                                 items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;\"><td colspan='3' style=\"border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_TotalAmount.ConvertToDouble())).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_discAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                  .Append(Math.Round(G_NetPayableAmt.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_PaidAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                  .Append(Math.Round(G_balAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_RefundAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                  .Append(Math.Round(G_cashAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                  .Append(Math.Round(G_cardAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                  .Append(Math.Round(G_chequeAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_TotalAmount.ConvertToDouble()).ToString("F2")).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_discAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_NetPayableAmt.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_PaidAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_balAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_RefundAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_cashAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_cardAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_chequeAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
                                  //.AppendMath.Round(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_onlineAmount.ConvertToDouble())).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                 .Append(Math.Round(G_AdvAmount.ConvertToDouble())).Append("</td></tr>");
+                                 .Append(Math.Round(G_onlineAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_AdvAmount.ConvertToDouble()).ToString("F2")).Append("</td></tr>");
 
 
                             }
