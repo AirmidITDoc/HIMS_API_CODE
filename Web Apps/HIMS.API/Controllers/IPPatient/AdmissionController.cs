@@ -162,6 +162,8 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> Cancel(AdmissionCancel obj)
         {
             Admission model = obj.MapTo<Admission>();
+            //Admission model = new();
+
 
             if (obj.AdmissionId != 0)
             {
