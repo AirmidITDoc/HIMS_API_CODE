@@ -114,7 +114,7 @@ namespace HIMS.API.Infrastructure
 
 
 
-            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentModeService, PaymentModeService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IOPAddchargesService, OPAddchargesService>();
