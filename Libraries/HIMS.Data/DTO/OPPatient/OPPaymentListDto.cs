@@ -19,6 +19,8 @@ namespace HIMS.Data.DTO.OPPatient
         public string? HospitalName { get; set; }
         public DateTime? VisitDate { get; set; }
         public string? PBillNo { get; set; }
+        public string? BillDate { get; set; }
+
         public decimal BillAmount { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal PaidAmount { get; set; }
