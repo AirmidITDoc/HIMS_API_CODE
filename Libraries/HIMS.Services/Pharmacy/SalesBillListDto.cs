@@ -33,6 +33,8 @@ namespace HIMS.Services.Pharmacy
         public bool IsRefundFlag { get; set; }
         public string IPNO { get; set; }
         public bool IsPrint { get; set; }
+        public bool IsPurBill { get; set; }
+
     }
 
     public class SalesPatientAutoCompleteDto
