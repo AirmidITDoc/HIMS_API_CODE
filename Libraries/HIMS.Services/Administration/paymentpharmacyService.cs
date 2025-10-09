@@ -51,18 +51,45 @@ namespace HIMS.Services.Administration
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
+        //public virtual async Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header & detail table records
+        //        _context.PaymentPharmacies.Update(objPaymentPharmacy);
+        //        _context.Entry(objPaymentPharmacy).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.PaymentPharmacies.Update(objPaymentPharmacy);
-                _context.Entry(objPaymentPharmacy).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+            // Get existing entity from DB
+            var existingPayment = await _context.PaymentPharmacies.FindAsync(objPaymentPharmacy.PaymentId);
+            if (existingPayment == null)
+                throw new Exception("Payment record not found.");
+            
+            // Copy updated values (except null ones)
+            _context.Entry(existingPayment).CurrentValues.SetValues(objPaymentPharmacy);
 
-                scope.Complete();
+            if (objPaymentPharmacy.UnitId == null)
+                _context.Entry(existingPayment).Property(p => p.UnitId).IsModified = false;
+
+            // Handle ignore columns (if passed)
+            if (ignoreColumns?.Length > 0)
+            {
+                foreach (var column in ignoreColumns)
+                {
+                    _context.Entry(existingPayment).Property(column).IsModified = false;
+                }
             }
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
         }
+
         public virtual async Task UpdateAsync(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
         {
             //throw new NotImplementedException();

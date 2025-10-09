@@ -6,6 +6,8 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public long PaymentId { get; set; }
         public long? BillNo { get; set; }
+        public long? StrId { get; set; }
+        public byte? Opdipdtype { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
@@ -19,17 +21,6 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? CardBankName { get; set; }
         public DateTime? CardDate { get; set; }
         public decimal? AdvanceUsedAmount { get; set; }
-        public long? AdvanceId { get; set; }
-        public long? RefundId { get; set; }
-        public long? TransactionType { get; set; }
-        public string? Remark { get; set; }
-        public long? AddBy { get; set; }
-        public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
-        public long? CashCounterId { get; set; }
-        public byte? IsSelfOrcompany { get; set; }
-        public long? CompanyId { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -37,8 +28,20 @@ namespace HIMS.API.Models.Inventory.Masters
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public long? StrId { get; set; }
+        public decimal? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+        public long? CashCounterId { get; set; }
+        public long? CompanyId { get; set; }
+        public long? TransactionType { get; set; }
+        public string? Remark { get; set; }
+        public byte? IsSelfOrcompany { get; set; }
         public string? TranMode { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public long? AddBy { get; set; }
     }
     public class paymentpharmacyModelValidator : AbstractValidator<paymentpharmacyModel>
     

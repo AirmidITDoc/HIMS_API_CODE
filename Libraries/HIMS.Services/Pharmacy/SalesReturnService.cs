@@ -59,7 +59,7 @@ namespace HIMS.Services.Pharmacy
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy", "IsPurBill", "IsBillCheck", "TSalesReturnDetails" };
+            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy",  "IsBillCheck", "TSalesReturnDetails" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -143,7 +143,7 @@ namespace HIMS.Services.Pharmacy
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy", "IsPurBill", "IsBillCheck", "TSalesReturnDetails" };
+            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy",  "IsBillCheck", "TSalesReturnDetails" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
