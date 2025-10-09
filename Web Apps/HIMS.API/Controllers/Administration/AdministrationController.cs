@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IP_DISCHARGE_CANCELLATION")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
         {
             Admission Model = obj.MapTo<Admission>();
