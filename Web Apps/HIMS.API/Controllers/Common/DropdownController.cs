@@ -98,6 +98,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOttableMaster> _MOttableMaster;
         private readonly IGenericService<MExpensesHeadMaster> _MExpensesHeadMaster;
         private readonly IGenericService<MOutSourcelabMaster> _MOutSourcelabMaster;
+        private readonly IGenericService<MCreditReasonMaster> _MCreditReasonMaster;
+
 
 
 
@@ -139,7 +141,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOttableMaster> iMOttableMaster,
                               IGenericService<MPathTestMaster> IMPathTestMaster, 
                               IGenericService<MExpensesHeadMaster> IMExpensesHeadMaster,
-                              IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster
+                              IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster,
+                              IGenericService<MCreditReasonMaster> IMCreditReasonMaster
+
 
 
 
@@ -227,6 +231,8 @@ namespace HIMS.API.Controllers.Common
             //_IMPathTestMaster = IMPathTestMaster;
             _MExpensesHeadMaster = IMExpensesHeadMaster;
             _MOutSourcelabMaster = IMOutSourcelabMaster;
+            _MCreditReasonMaster = IMCreditReasonMaster;
+
 
 
 
@@ -373,6 +379,8 @@ namespace HIMS.API.Controllers.Common
                 "OttableMaster" => (await _MOttableMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOttableMaster.OttableId), nameof(MOttableMaster.OttableName)),
                 "ExpHeadMaster" => (await _MExpensesHeadMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "OutsourceLab" => (await _MOutSourcelabMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOutSourcelabMaster.OutSourceId), nameof(MOutSourcelabMaster.OutSourceLabName)),
+                "CreditReason" => (await _MCreditReasonMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCreditReasonMaster.CreditId), nameof(MCreditReasonMaster.CreditReason)),
+
 
 
 
