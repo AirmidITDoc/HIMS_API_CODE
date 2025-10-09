@@ -308,6 +308,8 @@ namespace HIMS.API.Controllers.Report
                 case "DoctorNotesReceipt":
                 case "NursingNotesReceipt":
                 case "DoctorPatientHandoverReceipt":
+                case "NursingPatientHandoverReceipt":
+
                 case "NurMaterialConsumption":
                 case "NurLabRequestTest":
                 case "CanteenRequestprint":
