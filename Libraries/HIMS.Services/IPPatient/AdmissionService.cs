@@ -6,6 +6,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.IPPatient
 {
@@ -294,5 +295,24 @@ namespace HIMS.Services.IPPatient
 
             odal.ExecuteNonQuery("ps_update_CompanyInfo", CommandType.StoredProcedure, centity);
         }
+
+        public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                Admission objAdm = await _context.Admissions.FindAsync(OBJAdmission.AdmissionId);
+                objAdm.IsCancelled = OBJAdmission.IsCancelled;
+                //objind.IsCancelledBy = OBJAdmission.IsCancelledBy;
+                //objind.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
+
+                _context.Admissions.Update(objAdm);
+                _context.Entry(objAdm).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }

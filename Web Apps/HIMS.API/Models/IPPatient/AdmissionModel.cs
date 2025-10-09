@@ -140,5 +140,10 @@ namespace HIMS.API.Models.IPPatient
         public long BedId { get; set; }
 
     }
+    public class AdmissionCancel
+    {
+        public long AdmissionId { get; set; }
+        public long? IsCancelled { get; set; }
+    }
 }
 

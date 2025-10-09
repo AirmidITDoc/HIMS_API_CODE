@@ -211,8 +211,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, materialAcceptStockUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurrentStockUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMaterialConsumptionHeader, MaterialConsumptionHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Admission, AdmissionCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            
+
+
 
 
 
