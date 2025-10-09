@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                {{NewHeader}}
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 20px; "><b>  Nursing Vitals Report</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 20px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span><b>UHID No :</b> </span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>IPD No:</b> </span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>DOA | Time :</b>  </span>
+                                    <span>{{AdmissionDate}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span><b>Patient Name :</b> </span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Mobile No :</b> </span>
+                                    <span>{{MobileNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age / Gender : </span>
+                                    <span> {{AgeYear}} Y| {{AgeMonth}} M|{{AgeDay}} D/ {{GenderName}}</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span><b>Doctor Name :</b> </span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+
+                                <td style="padding: 2px;">
+                                    <span><b>Department :</b></span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ward / Bed Name : </span>
+                                    <span>{{WardName}} / {{BedName}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="border-bottom: 1px solid #d4c3c3;"></td>
+                    </tr>
+                </table>
+             
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+                            <thead style="font-size: 14px;">
+                                <tr style="border-bottom: 1px solid #d4c3c3;">
+                                    <td style="text-align: left; padding-top: 10px; padding-bottom: 10px; font-size: 20px; padding-left: 2px; " colspan="5"><span style="font-weight: bold; margin-left: 4px; display:{{chkTemperatureflag}}">Temperature : </span>{{Temperature}} <span style="margin-left: 4px; display:{{chkTemperatureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px;display:{{chkPulseflag}}">Pulse : </span> {{Pulse}} <span style="margin-left: 5px;display:{{chkPulseflag}}">|</span> <span style="font-weight:bold;margin-left:10px;display:{{chkRespirationflag}}">Respiration : </span>{{Respiration}} <span style="margin-left:5px;display:{{chkRespirationflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBloodPresureflag}}">BloodPresure : </span>{{BloodPresure}}  <span style="margin-left: 5px; display:{{chkBloodPresureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkCVPflag}}">CVP : </span> {{CVP}} <span style="margin-left: 5px; display:{{chkCVPflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPeepflag}}">Peep : </span> {{Peep}} <span style="margin-left: 5px; display:{{chkPeepflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkArterialBloodPressureflag}}">ArterialBloodPressure : </span> {{ArterialBloodPressure}} <span style="margin-left: 5px; display:{{chkArterialBloodPressureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPAPressureReadingflag}}">PAPressureReading : </span> {{PAPressureReading}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkBradyflag}}">Brady : </span> {{Brady}} |<span style="font-weight: bold; margin-left: 10px; display:{{chkApneaflag}}">Apnea : </span> {{Apnea}} </td>
+                                </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+
+            </table>
+            <tr>
+                <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+                    <tr style="margin-top: 12px;">
+                    <tr>
+                        <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                    </tr>
+                    <tr style="padding: 6px; text-align: right;margin-top:20px;">
+                        <td>
+                            <span>{{UserName}}</span>
+                        </td>
+                    </tr>
+                    <tr style="padding: 6px; text-align: right;">
+                        <td>
+                            <span>Authorized Signature</span>
+                        </td>
+                    </tr>
+
+                </table>
+            </tr>
+        </div>
+    </div>
+</body>
+
+</html>
