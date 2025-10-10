@@ -3818,7 +3818,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{ChequeDate}}", dt.GetColValue("ChequeDate").ConvertToDateString("dd/MM/yyyy"));
                             html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
-
+                                 html = html.Replace("{{ChequeBankName}}", dt.GetColValue("BankName"));
                             html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{CardDate}}", dt.GetColValue("CardDate").ConvertToDateString("dd/MM/yyyy"));
                             html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo"));
@@ -3828,7 +3828,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
                             html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
-                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace());
                             html = html.Replace("{{BillDate}}", dt.GetColValue("BillDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                             html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
                             html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
@@ -3859,7 +3859,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
 
-                            string finalamt = conversion(dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                            string finalamt = conversion(dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace().ToString());
                             html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
                         }
