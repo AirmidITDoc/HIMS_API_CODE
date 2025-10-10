@@ -392,6 +392,7 @@ namespace HIMS.API.Controllers.Report
                 //PATHOLOGY 
                 case "PathologyReportWithHeader":
                 case "PathologyReportWithOutHeader":
+                case "PathologyReportWithImgHeader":
                 case "PathologyReportTemplateWithHeader":
                 case "PathologyReportTemplateWithOutHeader":
             
