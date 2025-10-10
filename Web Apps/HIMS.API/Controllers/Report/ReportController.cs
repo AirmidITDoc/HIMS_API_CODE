@@ -428,6 +428,8 @@ namespace HIMS.API.Controllers.Report
                 case "SalesReturnBill":
                 case "ExpenseVoucharPrint":
 
+                //Clinical Care
+                case "NursingVitalsReport":
                 //OT
                 case "OTRequest":
                 case "OTReservationReport":
