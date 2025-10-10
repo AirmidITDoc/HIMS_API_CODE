@@ -26,6 +26,10 @@ namespace HIMS.API.Models.Pharmacy
         public long? AddedBy { get; set; }
         public long? StoreId { get; set; }
         public string? Narration { get; set; }
+        public bool? IsPurBill { get; set; }
+
+
+        
 
     }
     public class SalesReturnModelValidator : AbstractValidator<SalesReturnModel>

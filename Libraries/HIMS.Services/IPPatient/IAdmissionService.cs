@@ -23,9 +23,7 @@ namespace HIMS.Services.IPPatient
         Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username);
         Task<IPagedList<RequestForIPListDto>> GetAsync(GridRequestModel objGrid);
         Task<List<Bedmaster>> GetBedmaster(int RoomId);
-
-
-
-
+        Task CancelAsync(Admission OBJAdmission, int UserId, string Username);
     }
+
 }

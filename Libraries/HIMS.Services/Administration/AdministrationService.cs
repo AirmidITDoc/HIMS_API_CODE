@@ -51,24 +51,24 @@ namespace HIMS.Services.Administration
         }
 
       
-        public virtual async Task DeleteAsync(Admission ObjAdmission, int UserId, string UserName)
+       
+        public virtual async Task DeleteAsync(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
-
             DatabaseHelper odal = new();
-            string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
-            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
-            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate",
-            "IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt",
-            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge"};
-            var entity = ObjAdmission.ToDictionary();
-            foreach (var rProperty in AEntity)
+            string[] AEntity = { "AdmissionId" };
+            var Rentity = ObjAdmission.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("IP_DISCHARGE_CANCELLATION", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("IP_DISCHARGE_CANCELLATION", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
 
         }
+
         public virtual async Task UpdateAsync(Admission ObjAdmission, int UserId, string UserName)
         {
 
@@ -105,19 +105,6 @@ namespace HIMS.Services.Administration
 
         }
 
-        //public virtual async Task BilldateUpdateAsync(Bill ObjBill, int UserId, string Username)
-        //{
-        //    DatabaseHelper odal = new();
-        //    string[] AEntity = {  "OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","OpdIpdType","PbillNo","TotalAdvanceAmount","AddedBy","ConcessionReasonId","IsSettled", "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer",
-        //        "SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","AddCharges","IsCancelled","AdvanceUsedAmount","CashCounterId","CompDiscAmt","BillDetails","BillPrefix","BillMonth","BillYear","PrintBillNo","RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","PatientType","CompanyName","CompanyAmt","PatientAmt","WardId","BedId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","RefundAmount"};
-        //    var Rentity = ObjBill.ToDictionary();
-        //    foreach (var rProperty in AEntity)
-        //    {
-        //        Rentity.Remove(rProperty);
-        //    }
-
-        //    odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
-        //}
         public virtual async Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
@@ -131,36 +118,10 @@ namespace HIMS.Services.Administration
             }
 
             odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
-
-
-
-
-
-        public virtual async Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.MDoctorPerMasters.Add(ObjMDoctorPerMaster);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-        public virtual async Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                _context.MDoctorPerMasters.Update(ObjMDoctorPerMaster);
-                _context.Entry(ObjMDoctorPerMaster).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
+       
       
         public virtual async Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int UserId, string UserName)
         {

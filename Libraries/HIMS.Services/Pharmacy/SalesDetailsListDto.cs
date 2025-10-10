@@ -27,5 +27,7 @@ namespace HIMS.Services.Pharmacy
         public double IGSTPer { get; set; }
         public decimal IGSTAmt { get; set; }
         public long SalesId { get; set; }
+        public bool IsPurRate { get; set; }
+
     }
 }

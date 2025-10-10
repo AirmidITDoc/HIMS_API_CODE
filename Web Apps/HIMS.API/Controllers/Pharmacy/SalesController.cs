@@ -205,7 +205,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -231,7 +231,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Date = Convert.ToDateTime(obj.Sales.Date);
                 model.Time = Convert.ToDateTime(obj.Sales.Time);
                 model.AddedBy = CurrentUserId;
-                await _ISalesService.InsertAsyncSP(model, CurrentStock, modelPayment, modelPrescription, modelDraftHeader, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertSalesSaveWithPayment(model, CurrentStock, modelPayment, modelPrescription, modelDraftHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

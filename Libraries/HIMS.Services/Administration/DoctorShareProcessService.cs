@@ -1,12 +1,14 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
@@ -34,6 +36,27 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
 
         }
+        public virtual async Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MDoctorPerMasters.Add(ObjMDoctorPerMaster);
+                await _context.SaveChangesAsync();
 
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header & detail table records
+                _context.MDoctorPerMasters.Update(ObjMDoctorPerMaster);
+                _context.Entry(ObjMDoctorPerMaster).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
     }
 }

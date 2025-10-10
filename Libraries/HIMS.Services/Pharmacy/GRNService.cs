@@ -141,6 +141,7 @@ namespace HIMS.Services.Pharmacy
                     _context.MItemMasters.Attach(item);
 
                     _context.Entry(item).Property(x => x.Hsncode).IsModified = true;
+                    _context.Entry(item).Property(x => x.ConversionFactor).IsModified = true;
                     _context.Entry(item).Property(x => x.Cgst).IsModified = true;
                     _context.Entry(item).Property(x => x.Sgst).IsModified = true;
                     _context.Entry(item).Property(x => x.Igst).IsModified = true;

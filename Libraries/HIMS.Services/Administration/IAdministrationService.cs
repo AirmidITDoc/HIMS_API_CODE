@@ -17,12 +17,6 @@ namespace HIMS.Services.Administration
         Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid);
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
-
-        //Task InsertAsync(TExpense ObjTExpense, int UserId, string Username);
-        //Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings);
-
-        //Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel objGrid);
-        //Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
         Task UpdateAsync(Admission ObjAdmission, int UserId, string Username);
 
@@ -30,8 +24,6 @@ namespace HIMS.Services.Administration
 
         Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName);
 
-        Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
-        Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
         //Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
         Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
        

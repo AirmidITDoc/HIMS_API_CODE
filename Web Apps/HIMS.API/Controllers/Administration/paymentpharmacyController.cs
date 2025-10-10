@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyModel obj)
         {
             PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
@@ -89,7 +89,10 @@ namespace HIMS.API.Controllers.Administration
             else
             {
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
-                await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
