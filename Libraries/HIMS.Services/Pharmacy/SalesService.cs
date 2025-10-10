@@ -307,6 +307,8 @@ namespace HIMS.Services.Users
                     }
 
                     odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
+                    await _context.LogProcedureExecution(IIentity, nameof(TCurrentStock), items.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
                 }
 
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
@@ -323,7 +325,7 @@ namespace HIMS.Services.Users
                     }
                 string PaymentId = odal.ExecuteNonQueryNew("ps_insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", SSentity);
                 ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), ObjPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
                 // 5️⃣ Update Prescription
@@ -336,7 +338,7 @@ namespace HIMS.Services.Users
                 }
 
                 odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(TIpPrescription), ObjPrescription.IppreId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
                 // 6️⃣ Update Draft Header
@@ -348,7 +350,7 @@ namespace HIMS.Services.Users
                         Hentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(Hentity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
                 //Commit if all good

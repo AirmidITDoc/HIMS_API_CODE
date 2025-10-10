@@ -38,43 +38,52 @@ namespace HIMS.Services.Inventory
         }
 
 
-        public virtual async Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username)
+        public virtual async Task StockUpdate(TStockAdjustment ObjTStockAdjustment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "CreatedOn", "UpdatedBy", "ModifiedOn", "Stk" };
+            string[] rEntity = { "StoreId", "StkId", "ItemId", "BatchNo", "AdDdType", "AdDdQty", "PreBalQty", "AfterBalQty", "AddedBy", "StockAdgId" };
 
             var entity = ObjTStockAdjustment.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string VStockAdgId = odal.ExecuteNonQuery("ps_Update_Phar_StockAjustment_1", CommandType.StoredProcedure, "StockAdgId", entity);
+            await _context.LogProcedureExecution(entity, nameof(TStockAdjustment), ObjTStockAdjustment.StockAdgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
             ObjTStockAdjustment.StockAdgId = Convert.ToInt32(VStockAdgId);
         }
-        public virtual async Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int UserId, string Username)
+        public virtual async Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "BatchAdjId", "AddedDateTime", "Stk" };
+            string[] rEntity = { "StoreId", "ItemId", "OldBatchNo", "OldExpDate", "NewBatchNo", "NewExpDate", "AddedBy", "StkId" };
 
             var Bentity = ObjTBatchAdjustment.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Bentity.Keys.ToList())
             {
-                Bentity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Phar_BatchExpDate_StockAjustment_1", CommandType.StoredProcedure, Bentity);
+            await _context.LogProcedureExecution(Bentity, nameof(TBatchAdjustment), ObjTBatchAdjustment.BatchAdjId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
         }
-        public virtual async Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int UserId, string Username)
+        public virtual async Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "GstadgId", "CreatedOn", "UpdatedBy", "ModifiedOn" };
+            string[] TEntity = { "StoreId", "StkId", "ItemId", "BatchNo", "OldCgstper", "OldSgstper", "OldIgstper", "Cgstper", "Sgstper", "Igstper", "AddedBy" };
             var Bentity = ObjTGstadjustment.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Bentity.Keys.ToList())
             {
-                Bentity.Remove(rProperty);
+                if (!TEntity.Contains(rProperty))
+                    Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_CurrentStock_GSTAdjustment", CommandType.StoredProcedure, Bentity);
+            await _context.LogProcedureExecution(Bentity, nameof(TGstadjustment), ObjTGstadjustment.GstadgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
         }
         public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {

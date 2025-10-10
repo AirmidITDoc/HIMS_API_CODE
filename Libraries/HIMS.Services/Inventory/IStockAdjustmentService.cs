@@ -14,9 +14,9 @@ namespace HIMS.Services.Inventory
     {
        
         Task<IPagedList<ItemWiseStockListDto>> StockAdjustmentList(GridRequestModel objGrid);
-        Task InsertAsyncSP(TStockAdjustment ObjTStockAdjustment, int UserId, string Username);
-        Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int UserId, string Username);
-        Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int UserId, string Username);
+        Task StockUpdate(TStockAdjustment ObjTStockAdjustment, int CurrentUserId, string CurrentUserName);
+        Task BatchUpdateSP(TBatchAdjustment ObjTBatchAdjustment, int CurrentUserId, string CurrentUserName);
+        Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int CurrentUserId, string CurrentUserId);
         Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock ,int UserId, string Username );
 
 
