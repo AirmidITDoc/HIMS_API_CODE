@@ -35,14 +35,14 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("StockUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Insert(PharStockAdjustmentModel obj)
         {
             TStockAdjustment model = obj.MapTo<TStockAdjustment>();
             if (obj.StockAdgId == 0)
             {
                 model.AddedBy = CurrentUserId;
-                await _IStockAdjustmentService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IStockAdjustmentService.StockUpdate(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("BatchUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> BatchUpdate(BatchAdjustmentModel obj)
         {
             TBatchAdjustment model = obj.MapTo<TBatchAdjustment>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
         [HttpPost("GSTUpdate")]
-        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> GSTUpdate(GSTUpdateModel obj)
         {
             TGstadjustment model = obj.MapTo<TGstadjustment>();
@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Inventory
         //Shilpa//22/05/2025 updated
 
         [HttpPost("MrpAdjustmentUpdate")]
-        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
