@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPut("pathologyOutsourceUpdate/{id:int}")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathologyResultUpdate obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
