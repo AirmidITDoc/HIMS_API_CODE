@@ -273,22 +273,21 @@ namespace HIMS.Services.Pharmacy
 
 
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual async Task VerifyAsyncSp(TGrnheader objGRN, int UserId, string UserName)
+        public virtual async Task VerifyAsyncSp(TGrnheader objGRN, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "GrnNumber", "Grndate", "Grntime", "StoreId", "SupplierId","InvoiceNo","DeliveryNo","GateEntryNo","CashCreditType",
-               "Grntype", "TotalAmount", "TotalDiscAmount", "TotalVatamount",  "NetAmount","InvDate",
-                "Remark","ReceivedBy","IsClosed","IsPaymentProcess","PaymentPrcDate","ProcessDes","DebitNote","CreditNote","OtherCharge",
-                "RoundingAmt","PaidAmount","BalAmount","TotCgstamt","TotSgstamt","AddedBy","UpdatedBy","IsVerified","IsCancelled","IsClosed","Prefix","TotIgstamt",
-                "TranProcessId","TranProcessMode","BillDiscAmt","PaymentDate","EwayBillNo","EwayBillDate","TGrndetails","TSupPayDets"};
+            string[] rEntity = { "Grnid", "VerifiedBy"};
             var entity = objGRN.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
-            entity["VerifiedBy"] = UserId;
+            entity["VerifiedBy"] = CurrentUserId;
             odal.ExecuteNonQuery("m_Update_GRN_Verify_Status_1", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TGrnheader), objGRN.Grnid.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
 
         }

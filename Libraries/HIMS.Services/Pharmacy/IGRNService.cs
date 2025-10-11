@@ -14,7 +14,7 @@ namespace HIMS.Services.Pharmacy
         Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username);
         Task InsertWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username);
         Task UpdateWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username);
-        Task VerifyAsyncSp(TGrnheader objGRN, int UserId, string Username);
+        Task VerifyAsyncSp(TGrnheader objGRN, int CurrentUserId, string CurrentUserName);
         Task AsyncSp(TGrnheader objGRN, int UserId, string Username);
         Task UpdateAsyncsp(TGrnheader objGRN, int UserId, string Username);
         Task UpdateAsyncSP(TCurrentStock ObjTCurrentStock, int UserId, string Username);
