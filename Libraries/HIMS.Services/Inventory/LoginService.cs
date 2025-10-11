@@ -20,6 +20,10 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<LoginGetMobileDto>> GetListAsyncg(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LoginGetMobileDto>(model, "ps_getMobileNo");
+        }
         public virtual async Task<IPagedList<LoginManagerListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<LoginManagerListDto>(model, "ps_Rtrv_UserList");

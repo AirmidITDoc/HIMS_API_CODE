@@ -487,6 +487,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPhoneAppointment> TPhoneAppointments { get; set; } = null!;
         public virtual DbSet<TPrePostOperativeNote> TPrePostOperativeNotes { get; set; } = null!;
         public virtual DbSet<TPrescription> TPrescriptions { get; set; } = null!;
+        public virtual DbSet<TProcessOtp> TProcessOtps { get; set; } = null!;
         public virtual DbSet<TPurchaseDetail> TPurchaseDetails { get; set; } = null!;
         public virtual DbSet<TPurchaseHeader> TPurchaseHeaders { get; set; } = null!;
         public virtual DbSet<TRadiologyReportHeader> TRadiologyReportHeaders { get; set; } = null!;
@@ -14251,6 +14252,25 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SpO2).HasMaxLength(20);
 
                 entity.Property(e => e.Temp).HasMaxLength(10);
+            });
+
+            modelBuilder.Entity<TProcessOtp>(entity =>
+            {
+                entity.HasKey(e => e.MsgId);
+
+                entity.ToTable("T_ProcessOTP");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailId).HasMaxLength(255);
+
+                entity.Property(e => e.Message).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Otpno)
+                    .HasMaxLength(10)
+                    .HasColumnName("OTPNo");
             });
 
             modelBuilder.Entity<TPurchaseDetail>(entity =>

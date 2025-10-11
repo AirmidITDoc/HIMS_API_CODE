@@ -24,6 +24,7 @@ namespace HIMS.Data.Models
         public decimal? NetAmount { get; set; }
         public decimal? PaidAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
+        public decimal? RoundOff { get; set; }
         public long? ConcessionReasonId { get; set; }
         public long? ConcessionAuthorizationId { get; set; }
         public long? CashCounterId { get; set; }
@@ -47,7 +48,6 @@ namespace HIMS.Data.Models
         public string? ExternalPatientName { get; set; }
         public string? DoctorName { get; set; }
         public string? ExtAddress { get; set; }
-        public decimal? RoundOff { get; set; }
         public bool? IsPurBill { get; set; }
         public bool? IsBillCheck { get; set; }
         public bool? IsRefundFlag { get; set; }

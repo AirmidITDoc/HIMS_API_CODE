@@ -28,6 +28,14 @@ namespace HIMS.API.Controllers.Login
         {
             _ILoginService = repository;
         }
+
+        [HttpPost("GetUserData")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> Listg(GridRequestModel objGrid)
+        {
+            IPagedList<LoginGetMobileDto> LoginGetMobile = await _ILoginService.GetListAsyncg(objGrid);
+            return Ok(LoginGetMobile.ToGridResponse(objGrid, "LoginGetMobile"));
+        }
         [HttpPost("LoginList")]
         [Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
