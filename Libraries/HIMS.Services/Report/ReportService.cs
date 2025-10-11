@@ -1625,6 +1625,29 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
+
+
+                #region :: PathologyReportTemplateWithImgHeader ::
+                case "PathologyReportTemplateWithImgHeader":
+                    {
+
+
+                        model.RepoertName = "PathologyReportTemplate";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplateImgHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithImgHeader", "PathologyReportTemplateWithImgHeader" + vDate, Orientation.Portrait);
+
+                        break;
+
+                    }
+                #endregion
+
                 #region :: PathologyReportTemplateWithHeader ::
                 case "PathologyReportTemplateWithHeader":
                     {
@@ -1644,8 +1667,8 @@ namespace HIMS.Services.Report
 
 
                 //Radiology
-                #region :: RadiologyTemplateReport ::
-                case "RadiologyTemplateReport":
+                #region :: RadiologyTemplateReportWithHeader ::
+                case "RadiologyTemplateReportWithHeader":
                     {
 
                         model.RepoertName = "Radiology  Template Report ";
@@ -1658,10 +1681,50 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReport", "RadiologyTemplateReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithHeader", "RadiologyTeRadiologyTemplateReportWithHeadermplateReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
+
+                #region :: RadiologyTemplateReportWithoutHeader ::
+                case "RadiologyTemplateReportWithoutHeader":
+                    {
+
+                        model.RepoertName = "Radiology  Template Report ";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RadiologyTemplateReportwithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithoutHeader", "RadiologyTemplateReportWithoutHeader" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+                #region :: RadiologyTemplateReportWithImgHeader ::
+                case "RadiologyTemplateReportWithImgHeader":
+                    {
+
+                        model.RepoertName = "Radiology  Template Report ";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RadiologyTemplateReportwithImgHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithImgHeader", "RadiologyTemplateReportWithImgHeader" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
 
 
 
@@ -8647,6 +8710,72 @@ namespace HIMS.Services.Report
                     }
 
                     break;
+
+
+
+                case "PathologyReportTemplateWithImgHeader":
+                    {
+
+                        int i = 0;
+                        Boolean chkresonflag = false;
+
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
+                        html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("bedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString());
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString());
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName").ConvertToString());
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName").ConvertToString());
+                        html = html.Replace("{{ComapanyName}}", dt.GetColValue("ComapanyName"));
+
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{Path_RefDoctorName}}", dt.GetColValue("Path_RefDoctorName"));
+                        html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
+                        //string s = dt.GetColValue("PathTemplateDetailsResult").ConvertToString();
+                        //html = html.Replace("{{PathTemplateDetailsResult}}", s);
+
+                        html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
+                        html = html.Replace("{{Path_DoctorName}}", dt.GetColValue("Path_DoctorName"));
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        html = html.Replace("{{SampleCollection}}", dt.GetColValue("SampleCollection").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
+                        //html = html.Replace("{{chkresonflag}}", dt.GetColValue("reason").ConvertToString() != null ? "block" : "none");
+                        return html;
+                    }
+
+                    break;
+
                 case "PathologyReportTemplateWithHeader":
                     {
 
@@ -8712,7 +8841,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                case "RadiologyTemplateReport":
+                case "RadiologyTemplateReportWithHeader":
                     {
 
 
@@ -8751,6 +8880,92 @@ namespace HIMS.Services.Report
                     }
 
                     break;
+
+
+
+                case "RadiologyTemplateReportWithoutHeader":
+                    {
+
+
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("OPDNo"));
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+
+                        html = html.Replace("{{ConsultantName}}", dt.GetColValue("ConsultantName"));
+                        //  html = html.Replace("{{ReportTime}}", Bills.GetColValue("ReportTime").ConvertToDateString());
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yy | hh:mm tt"));
+                        html = html.Replace("{{RadTime}}", dt.GetColValue("RadTime").ConvertToDateString("dd/MM/yy | hh:mm tt"));
+
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{RadiologyDocName}}", dt.GetColValue("RadiologyDocName"));
+                        html = html.Replace("{{ResultEntry}}", dt.GetColValue("ResultEntry").ConvertToString());
+                        html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
+                        html = html.Replace("{{SuggestionNotes}}", dt.GetColValue("SuggestionNotes"));
+
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+
+
+                        html = html.Replace("{{RadiologyDocName}}", dt.GetColValue("RadiologyDocName"));
+
+                    }
+
+                    break;
+
+
+                case "RadiologyTemplateReportWithImgHeader":
+                    {
+
+
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("OPDNo"));
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+
+                        html = html.Replace("{{ConsultantName}}", dt.GetColValue("ConsultantName"));
+                        //  html = html.Replace("{{ReportTime}}", Bills.GetColValue("ReportTime").ConvertToDateString());
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yy | hh:mm tt"));
+                        html = html.Replace("{{RadTime}}", dt.GetColValue("RadTime").ConvertToDateString("dd/MM/yy | hh:mm tt"));
+
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{RadiologyDocName}}", dt.GetColValue("RadiologyDocName"));
+                        html = html.Replace("{{ResultEntry}}", dt.GetColValue("ResultEntry").ConvertToString());
+                        html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
+                        html = html.Replace("{{SuggestionNotes}}", dt.GetColValue("SuggestionNotes"));
+
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+
+
+                        html = html.Replace("{{RadiologyDocName}}", dt.GetColValue("RadiologyDocName"));
+
+                    }
+
+                    break;
+
+
+
                 case "NurMaterialConsumption":
                     {
 
