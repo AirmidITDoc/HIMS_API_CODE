@@ -56,12 +56,21 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "Browse OPD Bill Pagi App List"));
         }
         [HttpPost("BrowseOPPaymentList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
             return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
         }
+
+        [HttpPost("PatientWisePaymentList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> PatientWisePaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GetPatientWisePaymentList(objGrid);
+            return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
+        }
+
         [HttpPost("OPBillListSettlementList")]
         [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)

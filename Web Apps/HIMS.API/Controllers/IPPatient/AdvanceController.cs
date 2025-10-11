@@ -41,8 +41,31 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientWiseAdvanceList(GridRequestModel objGrid)
         {
-            IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
+            //IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
+            //return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "Patient Wise Advance List"));
+
+            var PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
+
+            // 🧠 Handle null or empty
+            if (PatientWiseAdvanceList == null || !PatientWiseAdvanceList.Any())
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    statusCode = 404,
+                    statusText = "No data found",
+                    data = new
+                    {
+                        data = new List<PatientWiseAdvanceListDto>(),
+                        recordsFiltered = 0,
+                        recordsTotal = 0,
+                        pageIndex = 0
+                    }
+                });
+            }
+
+            // ✅ Success
             return Ok(PatientWiseAdvanceList.ToGridResponse(objGrid, "Patient Wise Advance List"));
+
         }
 
         [HttpPost("BrowseAdvanceList")]

@@ -20,8 +20,9 @@ namespace HIMS.Data.DTO.OPPatient
         public DateTime? VisitDate { get; set; }
         public string? PBillNo { get; set; }
         public string? BillDate { get; set; }
-
         public decimal BillAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal PaidAmount { get; set; }
         public DateTime? PaymentDate { get; set; }
@@ -36,9 +37,7 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal OnlinePay { get; set; }
         public long PaymentId { get; set; }
         public string? UserName { get; set; }
-      
-
-
+        public long? CompanyId { get; set; }
 
     }
 }
