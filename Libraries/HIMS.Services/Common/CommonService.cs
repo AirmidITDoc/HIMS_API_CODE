@@ -114,7 +114,15 @@ namespace HIMS.Services.Common
 
 
                 // Mobile App API
-                case "HomeDashboardAPI": sp_Name = "ps_m_DASH_IP_ADMISSION_DISCHARGE_COUNT"; break;
+                case "HomeDashboardAPI": sp_Name = "ps_DASH_APPOINTMENT_COUNT"; break;
+                case "DashWardWiseBed": sp_Name = "ps_Dash_WardWiseBedOccupancy_1"; break;
+                case "DashBedWiseList": sp_Name = "ps_Dash_BedWiseList_1"; break;
+                case "DashBedStatistics": sp_Name = "ps_Dash_Bed_statistics_1"; break;
+                case "DashOPDepatmentWiseCount": sp_Name = "ps_DASH_OP_DEPARTMENTCOUNT"; break;
+                case "DashOPConsultantWiseCount": sp_Name = "ps_DASH_OP_ConsultantDoctorWise_COUNT"; break;
+                case "DashOPUserWiseRevenue": sp_Name = "ps_DASH_OP_BILL_PAYMENT_SUMMARY"; break;
+                case "DashRegistrationAgeWiseCount": sp_Name = "ps_DASH_RegistrationAgeWise_COUNT"; break;
+
 
                 default: break;
             }

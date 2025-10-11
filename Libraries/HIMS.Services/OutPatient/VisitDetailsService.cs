@@ -192,6 +192,11 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
         }
+        
+        public virtual async Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_PatientWisePaymentList");
+        }
 
         public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model)
         {

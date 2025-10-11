@@ -182,9 +182,9 @@ namespace HIMS.API.Controllers.Login
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
        
-        [HttpPost("updatepassword")]
+        [HttpPost("Updatepassword")]
         //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
+        public async Task<ApiResponse> UpdatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
             {
