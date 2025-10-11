@@ -21,7 +21,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? PBillNo { get; set; }
         public string? BillDate { get; set; }
         public decimal BillAmount { get; set; }
-        public decimal DiscAmount { get; set; }
+        public double? DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal PaidAmount { get; set; }
