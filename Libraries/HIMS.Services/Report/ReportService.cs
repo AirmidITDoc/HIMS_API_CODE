@@ -10273,6 +10273,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster").ConvertToString());
                         html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{OnlineAmount}}", dt.GetColValue("OnlineAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount").ConvertToDouble().ToString("F2"));
+
 
                         html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo").ConvertToString());
                         html = html.Replace("{{PayTMDate}}", dt.GetColValue("PayTMDate").ConvertToDouble().To2DecimalPlace());
