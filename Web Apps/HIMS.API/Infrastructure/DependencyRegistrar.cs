@@ -130,6 +130,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ICompanyMasterService, CompanyMasterService>();
             services.AddScoped<IPrescriptionService, PrescriptionServise>();
             services.AddScoped<IWardMasterService, WardMasterService>();
+            services.AddScoped<ITprocessOtpService, TprocessOtpService>();
+
 
 
 

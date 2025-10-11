@@ -28,6 +28,14 @@ namespace HIMS.API.Controllers.Login
         {
             _ILoginService = repository;
         }
+
+        [HttpPost("GetUserData")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> Listg(GridRequestModel objGrid)
+        {
+            IPagedList<LoginGetMobileDto> LoginGetMobile = await _ILoginService.GetListAsyncg(objGrid);
+            return Ok(LoginGetMobile.ToGridResponse(objGrid, "LoginGetMobile"));
+        }
         [HttpPost("LoginList")]
         [Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -174,9 +182,9 @@ namespace HIMS.API.Controllers.Login
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
        
-        [HttpPost("updatepassword")]
+        [HttpPost("Updatepassword")]
         //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> updatepassAsync(ChangePassword obj)
+        public async Task<ApiResponse> UpdatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
             {
