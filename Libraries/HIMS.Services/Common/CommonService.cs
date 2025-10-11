@@ -121,7 +121,7 @@ namespace HIMS.Services.Common
                 case "DashOPDepatmentWiseCount": sp_Name = "ps_DASH_OP_DEPARTMENTCOUNT"; break;
                 case "DashOPConsultantWiseCount": sp_Name = "ps_DASH_OP_ConsultantDoctorWise_COUNT"; break;
                 case "DashOPUserWiseRevenue": sp_Name = "ps_DASH_OP_BILL_PAYMENT_SUMMARY"; break;
-
+                case "DashRegistrationAgeWiseCount": sp_Name = "ps_DASH_RegistrationAgeWise_COUNT"; break;
 
 
                 default: break;
