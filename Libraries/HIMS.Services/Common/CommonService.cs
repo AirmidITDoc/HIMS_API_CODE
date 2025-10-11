@@ -113,6 +113,8 @@ namespace HIMS.Services.Common
                 case "TemplateDescCategory": sp_Name = "ps_TemplateDescCategoryList"; break;
 
 
+                // Mobile App API
+                case "HomeDashboardAPI": sp_Name = "ps_m_DASH_IP_ADMISSION_DISCHARGE_COUNT"; break;
 
                 default: break;
             }
