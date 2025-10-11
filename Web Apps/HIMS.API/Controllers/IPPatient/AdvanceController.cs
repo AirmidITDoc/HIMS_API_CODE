@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return StatusCode(StatusCodes.Status404NotFound, new
                 {
                     statusCode = 404,
-                    statusText = "No data found",
+                    message = "No data found",
                     data = new
                     {
                         data = new List<PatientWiseAdvanceListDto>(),
