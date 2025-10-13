@@ -140,15 +140,16 @@ namespace HIMS.Services.Pathlogy
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "PathReportDetId","CategoryId","TestId","SubTestId","ParameterId","ResultValue","UnitId","NormalRange","PrintOrder","PisNumeric","CategoryName","TestName","SubTestName","ParameterName","UnitName","PatientName","RegNo",
-            "SampleId","MinValue","MaxValue","ParaBoldFlag"};
+            string[] AEntity = { "PathReportId" };
             var entity = ObjTPathologyReportDetail.ToDictionary();
-            foreach (var rProperty in AEntity)
-            {
-                entity.Remove(rProperty);
-            }
 
-            odal.ExecuteNonQuery("m_RollBack_TestForResult", CommandType.StoredProcedure, entity);
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_RollBack_TestForResult", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TPathologyReportDetail), ObjTPathologyReportDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
         }
         public virtual async Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)

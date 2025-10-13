@@ -104,7 +104,7 @@ namespace HIMS.Services.IPPatient
                     AAdvanceEntity.Remove(rProperty);
             }
 
-            string AdvanceDetailId = odal.ExecuteNonQuery("ps_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AdvanceEntity);
+            string AdvanceDetailId = odal.ExecuteNonQuery("ps_insert_AdvanceDetail_1", CommandType.StoredProcedure, "AdvanceDetailId", AAdvanceEntity);
             objPayment.AdvanceId = Convert.ToInt32(AdvanceDetailId);
             await _context.LogProcedureExecution(AAdvanceEntity, nameof(AdvanceDetail), objAdvanceDetail.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 

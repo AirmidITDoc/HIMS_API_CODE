@@ -25,7 +25,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string PatientType { get; set; }
         public bool? IsCancelled { get; set; }
         public long ReqDetId { get; set; }
-
+        public long CompanyId { get; set; }
 
 
 
