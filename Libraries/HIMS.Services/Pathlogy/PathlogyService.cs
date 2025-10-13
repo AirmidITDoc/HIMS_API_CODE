@@ -117,23 +117,27 @@ namespace HIMS.Services.Pathlogy
                 PathReportID = Convert.ToInt32(ObjTPathologyReportTemplateDetail.PathReportId)
             };
             odal.ExecuteNonQuery("m_Delete_T_PathologyReportTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            await _context.LogProcedureExecution(tokensObj.ToDictionary(), "PathologyTemplate", tokensObj.PathReportID.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
-            string[] rEntity = { "PathReportTemplateDetId", "PathReport" };
+            string[] rEntity = { "PathReportId", "PathTemplateId", "PathTemplateDetailsResult", "TestId", "TemplateResultInHtml", "SuggestionNotes", "PathResultDr1" };
             var entity = ObjTPathologyReportTemplateDetail.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, "PathologyTemplate", ObjTPathologyReportTemplateDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
-            string[] Entity = { "OpdIpdType", "OpdIpdId", "PathTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "SampleNo", "SampleCollectionTime",
-                "IsSampleCollection","TestType","IsVerifySign","IsVerifyid","IsVerifyedDate","TPathologyReportDetails","TPathologyReportTemplateDetails","PathDate","PathTime","OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"}; 
-            var Hentity = ObjTPathologyReportHeader.ToDictionary();
-            foreach (var rProperty in Entity)
+            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes","AdmVisitDoctorId","RefDoctorId"}; 
+            var PathHeaderentity = ObjTPathologyReportHeader.ToDictionary();
+            foreach (var rProperty in PathHeaderentity.Keys.ToList())
             {
-                Hentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    PathHeaderentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+            odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, PathHeaderentity);
+            await _context.LogProcedureExecution(PathHeaderentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
         }
         public virtual async Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string UserName)
