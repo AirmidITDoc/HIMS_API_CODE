@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionPatientList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionListDto> PrescriptiontList = await _IPriscriptionReturnService.GetPrescriptionListAsync(objGrid);
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("PrescriptionDetailList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListDetail(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionDetailListDto> PrescriptiontDetailList = await _IPriscriptionReturnService.GetListAsyncDetail(objGrid);
@@ -70,14 +70,14 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("IPPrescriptionReturnList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListReturn(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnListDto> PrescriptiontReturnList = await _IPriscriptionReturnService.GetListAsyncReturn(objGrid);
             return Ok(PrescriptiontReturnList.ToGridResponse(objGrid, "PrescriptionReturn  List "));
         }
         [HttpPost("IPPrescReturnItemDetList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionReturnList(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnDto> PrescriptionReturnList = await _IPriscriptionReturnService.GetListAsync(objGrid);
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRadRequestList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestListDto> LabRequestList = await _ILabRequestService.GetListAsync(objGrid);
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRadRequestDetailList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
@@ -137,7 +137,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestCancel")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(LabRequestCancel obj)
         {
             THlabRequest model = new();
