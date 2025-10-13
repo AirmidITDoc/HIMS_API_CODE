@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -94,6 +95,7 @@ namespace HIMS.Services.IPPatient
                  }
                  string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
                  objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+          
             string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var tokenObj = new
             {
@@ -282,18 +284,30 @@ namespace HIMS.Services.IPPatient
         public virtual async Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] IEntity = { "RegId","AdmissionDate" ,"AdmissionTime","PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId","WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
-            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
-            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUpdateDate",
-            "IsUpdatedBy","SubTpaComId","CompDod","IsPharClearance","Ipnumber","CompBillNo","CompBillDate","CompDisDate","CompDiscount","CBillNo","HChargeAmt","HAdvAmt","HBillId","HBillDate",
-            "HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsCovidUserId","AprovAmount"};
-            var centity = OBJAdmission.ToDictionary();
-            foreach (var rProperty in IEntity)
-            {
-                centity.Remove(rProperty);
-            }
+            //string[] IEntity = { "RegId","AdmissionDate" ,"AdmissionTime","PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId","WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId",
+            //"ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
+            //"Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUpdateDate",
+            //"IsUpdatedBy","SubTpaComId","CompDod","IsPharClearance","Ipnumber","CompBillNo","CompBillDate","CompDisDate","CompDiscount","CBillNo","HChargeAmt","HAdvAmt","HBillId","HBillDate",
+            //"HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsCovidUserId","AprovAmount"};
+            //var centity = OBJAdmission.ToDictionary();
+            //foreach (var rProperty in IEntity)
+            //{
+            //    centity.Remove(rProperty);
+            //}
 
-            odal.ExecuteNonQuery("ps_update_CompanyInfo", CommandType.StoredProcedure, centity);
+            //odal.ExecuteNonQuery("ps_update_CompanyInfo", CommandType.StoredProcedure, centity);
+
+            string[] AEntity = { "PolicyNo", "ApprovedAmount", "AdmissionId" };
+            var entity = OBJAdmission.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_update_CompanyInfoPatient", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, "Admission-CompanyInfo", OBJAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, Username);
+
         }
 
         public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)

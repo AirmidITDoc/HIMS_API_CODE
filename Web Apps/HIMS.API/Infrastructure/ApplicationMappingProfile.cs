@@ -214,7 +214,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMaterialConsumptionHeader, MaterialConsumptionHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
+            CreateMap<TCompanyApprovalDetail, CompanyApprovalDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

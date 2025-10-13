@@ -2,9 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -144,7 +144,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("Companyinformation/{id:int}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(CompanyinformationModel obj)
         {
             Admission model = obj.MapTo<Admission>();
@@ -158,7 +158,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(AdmissionCancel obj)
         {
             Admission model = obj.MapTo<Admission>();

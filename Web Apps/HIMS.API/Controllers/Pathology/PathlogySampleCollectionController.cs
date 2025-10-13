@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -60,7 +61,7 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(PathRadServiceList.ToGridResponse(objGrid, "PathRadService List "));
         }
         [HttpPut("Update")]
-        //[Permission(PageCode = "PathologyReport", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PathologyReport", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
             List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
