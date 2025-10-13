@@ -13,5 +13,6 @@ namespace HIMS.Data.Models
         public string? Padding { get; set; }
         public string? Margin { get; set; }
         public bool IsActive { get; set; }
+        public string? BarcodeData { get; set; }
     }
 }
