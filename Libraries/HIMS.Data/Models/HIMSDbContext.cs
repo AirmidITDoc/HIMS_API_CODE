@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        //    public HIMSDbContext()
+        //    {
+        //    }
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        //    public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //        : base(options)
+        //    {
+        //    }
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -26,6 +26,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<AllOutStandingPatientWise> AllOutStandingPatientWises { get; set; } = null!;
         public virtual DbSet<AllOutStandingPatientWiseLedger> AllOutStandingPatientWiseLedgers { get; set; } = null!;
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public virtual DbSet<BarcodeConfigMaster> BarcodeConfigMasters { get; set; } = null!;
         public virtual DbSet<Bedmaster> Bedmasters { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;
         public virtual DbSet<BillDetail> BillDetails { get; set; } = null!;
@@ -954,6 +955,21 @@ namespace HIMS.Data.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.EntityName).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<BarcodeConfigMaster>(entity =>
+            {
+                entity.ToTable("BarcodeConfigMaster");
+
+                entity.Property(e => e.Height).HasMaxLength(50);
+
+                entity.Property(e => e.Margin).HasMaxLength(100);
+
+                entity.Property(e => e.Padding).HasMaxLength(100);
+
+                entity.Property(e => e.TemplateCode).HasMaxLength(50);
+
+                entity.Property(e => e.Width).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Bedmaster>(entity =>
