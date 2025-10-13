@@ -134,8 +134,15 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription List.", resultList);
         }
 
+        [HttpGet("GetItemListForPrescriptionReturn")]
+        public async Task<ApiResponse> GetItemListForPrescriptionReturn(int StoreId, string ItemName)
+        {
+            var resultList = await _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription Return  List.", resultList);
+        }
 
-            [HttpGet("GetItemListForGRNOrPO")]
+
+        [HttpGet("GetItemListForGRNOrPO")]
         public async Task<ApiResponse> GetItemListForGRNOrPO(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.GetItemListForGRNOrPO(StoreId, ItemName);

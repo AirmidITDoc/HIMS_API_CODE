@@ -29,19 +29,19 @@ namespace HIMS.Services.Nursing
       
         public virtual async Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DoctorNoteListDto>(model, "Rtrv_DoctorsNotesList");
+            return await DatabaseHelper.GetGridDataBySp<DoctorNoteListDto>(model, "ps_Rtrv_DoctorsNotesList");
         }
         public virtual async Task<IPagedList<TDoctorPatientHandoverListDto>> TDoctorPatientHandoverList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<TDoctorPatientHandoverListDto>(model, "m_Rtrv_T_Doctor_PatientHandoverList");
+            return await DatabaseHelper.GetGridDataBySp<TDoctorPatientHandoverListDto>(model, "ps_Rtrv_T_Doctor_PatientHandoverList");
         }
         public virtual async Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<CanteenRequestListDto>(model, "m_Rtrv_CanteenRequestDet");
+            return await DatabaseHelper.GetGridDataBySp<CanteenRequestListDto>(model, "ps_Rtrv_CanteenRequestDet");
         }
         public virtual async Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "m_Rtrv_CanteenRequestListFromWard");
+            return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "ps_Rtrv_CanteenRequestListFromWard");
         }
       
         public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)

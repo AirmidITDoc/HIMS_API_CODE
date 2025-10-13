@@ -178,7 +178,7 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathResult entry rollback  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Test has been rolled back successfully.");
         }
 
         [HttpPost("Verify")]

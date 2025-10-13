@@ -32,7 +32,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public bool? Isclosed { get; set; }
-
+        public long CompanyId { get; set; }
 
 
 

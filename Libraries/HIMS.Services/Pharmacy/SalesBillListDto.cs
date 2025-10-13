@@ -34,6 +34,8 @@ namespace HIMS.Services.Pharmacy
         public string IPNO { get; set; }
         public bool IsPrint { get; set; }
         public bool IsPurBill { get; set; }
+        public string CompanyName { get; set; }
+
 
     }
 

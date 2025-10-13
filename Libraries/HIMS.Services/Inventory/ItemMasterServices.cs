@@ -8,6 +8,7 @@ using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -243,42 +244,11 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task<List<ItemListForSearchDTO>> GetItemListForPrescriptionretrun(int StoreId, string ItemName)
         {
-            var qry = (from itemMaster in _context.MItemMasters
-                       join uomMaster in _context.MUnitofMeasurementMasters
-                       on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
-                       join genericNameMaster in _context.MItemGenericNameMasters
-                       on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
-                       join assignItemToStore in _context.MAssignItemToStores
-                       on itemMaster.ItemId equals assignItemToStore.ItemId into storeGroup
-                       from assignItem in storeGroup.DefaultIfEmpty()
-                       where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
-                          && (assignItem == null || assignItem.StoreId == StoreId)
-                       orderby itemMaster.ItemId
-
-                       select new ItemListForSearchDTO
-                       {
-                           //StoreId = assignItem != null ? assignItem.StoreId : 0,
-                           ItemId = itemMaster.ItemId,
-                           ItemName = itemMaster.ItemName,
-                           BalanceQty = 0,
-                           LandedRate = 0,
-                           UnitMRP = 0,
-                           PurchaseRate = 0,
-                           //VatPercentage = 0,
-                           //itemMaster.IsBatchRequired,
-                           //ReOrder = itemMaster.ReOrder,
-                           //IsNarcotic = itemMaster.IsNarcotic ?? 0,
-                           //CGSTPer = itemMaster.CGST,
-                           //SGSTPer = itemMaster.SGST,
-                           //IGSTPer = itemMaster.IGST,
-                           //UOM = uomMaster.UnitofMeasurementName,
-                           //itemMaster.ItemGenericNameId,
-                           //itemGenericNameMaster.ItemGenericName,
-                           DoseName = itemMaster.DoseName ?? string.Empty,
-                           DoseDay = itemMaster.DoseDay ?? 0,
-                           Instruction = itemMaster.Instruction ?? string.Empty
-                       });
-            return await qry.Take(50).ToListAsync();
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[1] = new SqlParameter("@ItemName", ItemName);
+            return sql.FetchListBySP<ItemListForSearchDTO>("ps_Rtrv_PatientVisitedListSearch", para);
         }
         public virtual async Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName)
         {
