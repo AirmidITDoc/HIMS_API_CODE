@@ -384,6 +384,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TChrgComp> TChrgComps { get; set; } = null!;
         public virtual DbSet<TCompBl> TCompBls { get; set; } = null!;
         public virtual DbSet<TCompBlDt> TCompBlDts { get; set; } = null!;
+        public virtual DbSet<TCompanyApprovalDetail> TCompanyApprovalDetails { get; set; } = null!;
         public virtual DbSet<TCompanyDetail> TCompanyDetails { get; set; } = null!;
         public virtual DbSet<TCompanyHeader> TCompanyHeaders { get; set; } = null!;
         public virtual DbSet<TConsentInformation> TConsentInformations { get; set; } = null!;
@@ -542,7 +543,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -10854,6 +10855,27 @@ namespace HIMS.Data.Models
                     .HasColumnName("DRBillDetId");
 
                 entity.Property(e => e.Drno).HasColumnName("DRNo");
+            });
+
+            modelBuilder.Entity<TCompanyApprovalDetail>(entity =>
+            {
+                entity.ToTable("T_CompanyApprovalDetail");
+
+                entity.Property(e => e.Alentry)
+                    .HasMaxLength(255)
+                    .HasColumnName("ALEntry");
+
+                entity.Property(e => e.ApprovedAmount).HasColumnType("money");
+
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateApproved).HasColumnType("datetime");
+
+                entity.Property(e => e.EstimateAmount).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TCompanyDetail>(entity =>

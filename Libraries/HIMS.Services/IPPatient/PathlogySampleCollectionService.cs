@@ -54,14 +54,24 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in objTPathologyReportHeader)
             {
-                string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",  "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType",
-                                     "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",  "TPathologyReportTemplateDetails", "OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                //string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",  "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType",
+                //                     "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",  "TPathologyReportTemplateDetails", "OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                //var entity = item.ToDictionary();
+                //foreach (var rProperty in rEntity)
+                //{
+                //    entity.Remove(rProperty);
+                //}
+
+                string[] AEntity = { "PathReportId", "SampleCollectionTime", "IsSampleCollection", "SampleNo", "SampleCollectedBy" };
                 var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
+
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!AEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Update_PathologySampleCollection_1", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, "SampleCollection", item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, Username);
             }
         }
 

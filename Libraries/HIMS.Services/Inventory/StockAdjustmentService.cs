@@ -50,7 +50,7 @@ namespace HIMS.Services.Inventory
                     entity.Remove(rProperty);
             }
             string VStockAdgId = odal.ExecuteNonQuery("ps_Update_Phar_StockAjustment_1", CommandType.StoredProcedure, "StockAdgId", entity);
-            await _context.LogProcedureExecution(entity, nameof(TStockAdjustment), ObjTStockAdjustment.StockAdgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(entity, "StockAdjutment-AdditionAndDeduction", ObjTStockAdjustment.StockAdgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             ObjTStockAdjustment.StockAdgId = Convert.ToInt32(VStockAdgId);
         }
@@ -67,7 +67,7 @@ namespace HIMS.Services.Inventory
                     Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Phar_BatchExpDate_StockAjustment_1", CommandType.StoredProcedure, Bentity);
-            await _context.LogProcedureExecution(Bentity, nameof(TBatchAdjustment), ObjTBatchAdjustment.BatchAdjId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Bentity, "StockAdjutment-BatchExpDate", ObjTBatchAdjustment.BatchAdjId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
         public virtual async Task GSTUpdateSP(TGstadjustment ObjTGstadjustment, int CurrentUserId, string CurrentUserName)
@@ -82,7 +82,7 @@ namespace HIMS.Services.Inventory
                     Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_CurrentStock_GSTAdjustment", CommandType.StoredProcedure, Bentity);
-            await _context.LogProcedureExecution(Bentity, nameof(TGstadjustment), ObjTGstadjustment.GstadgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Bentity, "StockAdjutment-GSTAdjustment", ObjTGstadjustment.GstadgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
         public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)

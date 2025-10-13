@@ -59,6 +59,10 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _temprepository.GetById(x => x.PathReportId == id);
+            if (data == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+            }
             return data.ToSingleResponse<TPathologyReportTemplateDetail, PathologyReportTemplateModel>("TPathologyReportTemplateDetail");
         }
 
