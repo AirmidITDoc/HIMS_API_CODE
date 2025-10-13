@@ -28,6 +28,7 @@ using HIMS.Services.Transaction;
 using HIMS.Services.Notification;
 using HIMS.Services.OTManagment;
 using HIMS.Services.Radiology;
+using HIMS.Services.MRD;
 
 namespace HIMS.API.Infrastructure
 {
@@ -181,7 +182,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IHospitalMasterService, HospitalMasterService>();
             services.AddScoped<INotificationUtility, NotificationUtility>();
 
-            //services.AddScoped<IPrescriptionService1, PrescriptionService1>();
+            services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();
             services.AddScoped<IBillCancellationService, BillCancellationService>();
             services.AddScoped<INotificationService, NotificationService>();
