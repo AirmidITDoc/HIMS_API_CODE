@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully."+ model.AdmissionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model.AdmissionId);
         }
         //Delete API
         [HttpDelete]
