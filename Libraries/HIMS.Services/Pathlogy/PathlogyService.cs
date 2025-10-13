@@ -149,7 +149,7 @@ namespace HIMS.Services.Pathlogy
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_RollBack_TestForResult", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, nameof(TPathologyReportDetail), ObjTPathologyReportDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            await _context.LogProcedureExecution(entity, "PathTestRollback", ObjTPathologyReportDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
         }
         public virtual async Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)

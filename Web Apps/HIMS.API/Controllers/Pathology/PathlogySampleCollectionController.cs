@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<PathRadServiceListDto> PathRadServiceList = await _IPathlogySampleCollectionService.GetListAsync1(objGrid);
             return Ok(PathRadServiceList.ToGridResponse(objGrid, "PathRadService List "));
         }
-        [HttpPut("PathlogySampleCollectionUpdate")]
+        [HttpPut("Update")]
         //[Permission(PageCode = "PathologyReport", Permission = PagePermission.View)]
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathlogySampleCollection Update successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Sample Collection updated successfully.");
         }
        
     }

@@ -24,6 +24,7 @@ namespace HIMS.Data.Models
         public string? SampleNo { get; set; }
         public DateTime? SampleCollectionTime { get; set; }
         public bool? IsSampleCollection { get; set; }
+        public long? SampleCollectedBy { get; set; }
         public string? SuggestionNotes { get; set; }
         public long? AdmVisitDoctorId { get; set; }
         public long? RefDoctorId { get; set; }
