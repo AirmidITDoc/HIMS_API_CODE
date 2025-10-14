@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -237,6 +237,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MLvwRtrvPathologyResultOpwithAgeMachineUpload> MLvwRtrvPathologyResultOpwithAgeMachineUploads { get; set; } = null!;
         public virtual DbSet<MManufactureMaster> MManufactureMasters { get; set; } = null!;
         public virtual DbSet<MMaritalStatusMaster> MMaritalStatusMasters { get; set; } = null!;
+        public virtual DbSet<MMarketingHospitalMaster> MMarketingHospitalMasters { get; set; } = null!;
         public virtual DbSet<MMemberCategoryMaster> MMemberCategoryMasters { get; set; } = null!;
         public virtual DbSet<MMessageTemplate> MMessageTemplates { get; set; } = null!;
         public virtual DbSet<MModeOfDeliveryMaster> MModeOfDeliveryMasters { get; set; } = null!;
@@ -440,6 +441,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLoginUnitDetail> TLoginUnitDetails { get; set; } = null!;
         public virtual DbSet<TMailOutGoing1> TMailOutGoings1 { get; set; } = null!;
         public virtual DbSet<TMailOutgoing> TMailOutgoings { get; set; } = null!;
+        public virtual DbSet<TMarketingDailyVisitInformation> TMarketingDailyVisitInformations { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionHeader> TMaterialConsumptionHeaders { get; set; } = null!;
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
@@ -7395,6 +7397,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MMarketingHospitalMaster>(entity =>
+            {
+                entity.HasKey(e => e.HospitalId);
+
+                entity.ToTable("M_Marketing_HospitalMaster");
+
+                entity.Property(e => e.ContactMobileNo).HasMaxLength(10);
+
+                entity.Property(e => e.ContactPerson).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorMobileNo).HasMaxLength(10);
+
+                entity.Property(e => e.DoctorName).HasMaxLength(50);
+
+                entity.Property(e => e.HospitalAddress).HasMaxLength(255);
+
+                entity.Property(e => e.HospitalName).HasMaxLength(255);
+
+                entity.Property(e => e.Location).HasMaxLength(255);
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MMemberCategoryMaster>(entity =>
             {
                 entity.HasKey(e => e.MemberCategoryId);
@@ -12672,6 +12701,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ToEmail).HasMaxLength(250);
             });
 
+            modelBuilder.Entity<TMarketingDailyVisitInformation>(entity =>
+            {
+                entity.ToTable("T_Marketing_DailyVisitInformation");
+
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FollowupTypeName).HasMaxLength(255);
+
+                entity.Property(e => e.Location).HasMaxLength(255);
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VisitDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VisitTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TMaterialConsumptionDetail>(entity =>
             {
                 entity.HasKey(e => e.MaterialConDetId);
@@ -14711,7 +14761,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
 
+                entity.Property(e => e.Cgstsgatamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTSGATAmt");
+
+                entity.Property(e => e.Cgstsgatper).HasColumnName("CGSTSGATPer");
+
                 entity.Property(e => e.ConcessionReasonId).HasColumnName("ConcessionReasonID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreditReason).HasMaxLength(100);
 
@@ -14733,7 +14791,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExternalPatientName).HasMaxLength(200);
 
+                entity.Property(e => e.Igstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("IGSTAmt");
+
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Isgtper).HasColumnName("ISGTPer");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
 

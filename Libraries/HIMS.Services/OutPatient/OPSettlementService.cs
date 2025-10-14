@@ -1,9 +1,11 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System.Data;
+using System.Security.Principal;
 using System.Transactions;
 
 namespace HIMS.Services.OutPatient
@@ -19,38 +21,90 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "ps_Rtrv_OP_Bill_List_Settlement");
         }
-
         public virtual async Task InsertAsyncSP(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
+
         {
             DatabaseHelper odal = new();
-            // Insert In Payment 
-            string[] rpayEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount",
-                                    "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] rpayEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+
             var payentity = objpayment.ToDictionary();
             foreach (var rProperty in rpayEntity)
             {
-                payentity.Remove(rProperty);
+             payentity.Remove(rProperty);
+
             }
             // Add the new parameter
-            payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+           payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+
             string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
+
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
 
             //Udpate Bill Table 
+
             string[] rBillEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt",
-                                    "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
-                                    "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
-                                    "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails",
-                                    "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","RefundAmount"
-                                    };
+
+                              "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
+
+                              "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
+
+                              "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails",
+
+                              "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","RefundAmount" };
+
             var rAdmissentity1 = objBill.ToDictionary();
+
             foreach (var rProperty in rBillEntity)
             {
+
                 rAdmissentity1.Remove(rProperty);
+
             }
+
             odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+        }
+
+
+        public virtual async Task InsertSettlementMultiple(List<Payment> objpayment, List<Bill> objBill, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            // Insert In Payment 
+            foreach (var items in objpayment)
+            {
+
+                string[] rpayEntity = { "BillNo", "UnitId", "ReceiptNo","PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate","Tdsamount", "Wfamount", "OPDIPDType", "PaymentId" };
+                var payentity = items.ToDictionary();
+                foreach (var rProperty in payentity.Keys.ToList())
+                {
+                    if (!rpayEntity.Contains(rProperty))
+                        payentity.Remove(rProperty);
+                }
+                // Add the new parameter
+                payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+                string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
+                items.PaymentId = Convert.ToInt32(PaymentId);
+                await _context.LogProcedureExecution(payentity, nameof(Payment), items.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            }
+
+            //Udpate Bill Table
+            foreach (var items in objBill)
+            {
+
+                string[] rBillEntity = { "BillNo", "BalanceAmt" };
+                var rAdmissentity1 = items.ToDictionary();
+                foreach (var rProperty in rAdmissentity1.Keys.ToList())
+                {
+                    if (!rBillEntity.Contains(rProperty))
+                        rAdmissentity1.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+                await _context.LogProcedureExecution(rAdmissentity1, nameof(Bill), items.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+            }
         }
         public virtual async Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {

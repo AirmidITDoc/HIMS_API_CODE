@@ -249,7 +249,19 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TCurrentStock> CurrentStock = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
             TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
             TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
-
+            string stockmsg = "";
+            foreach (var item in model.TSalesDetails)
+            {
+                var stock = await _ISalesService.GetStock(item.StkId.Value);
+                if (stock < item.Qty)
+                {
+                    stockmsg += item.BatchNo + " has only " + stock + " available stock. \n";
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(stockmsg))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, stockmsg);
+            }
             if (obj.Sales.SalesId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.Sales.Date);

@@ -8,8 +8,9 @@ namespace HIMS.API.Models.OutPatient
     public class OPCreditPaymentModel
     {
 
-        public long PaymentId { get; set; }
         public long? BillNo { get; set; }
+        public long? UnitId { get; set; }
+        public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
@@ -30,7 +31,6 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public int? OPDIPDType { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -38,9 +38,11 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public long? UnitId { get; set; }
         public long? Tdsamount { get; set; }
         public decimal? Wfamount { get; set; }
+        public int? OPDIPDType { get; set; }
+        public long PaymentId { get; set; }
+
 
         //public List<BilModel> Bill { get; set; }
 
@@ -71,6 +73,11 @@ namespace HIMS.API.Models.OutPatient
         }
     }
 
+    public class OPSettlementMultipleModel
+    {
+        public List<OPCreditPaymentModel> OPCreditPayment { get; set; }
+        public List<BillUpdateModel> BillUpdate { get; set; }
+    }
     public class OPSettlementModel
     {
         public OPCreditPaymentModel OPCreditPayment { get; set; }

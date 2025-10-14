@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.OPPatient
             _OPSettlementService = repository;
         }
 
-        [HttpPost("SettlementInsert")]
+        [HttpPost("InsertSettlement")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
@@ -44,28 +44,27 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Op Settlement Save successfully.",model.PaymentId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Op Settlement Save successfully.", model.PaymentId);
         }
 
-        [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(OPSettlementModel obj)
+        [HttpPost("InsertSettlementMultiple")]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(OPSettlementMultipleModel obj)
+
         {
-            Payment model = obj.MapTo<Payment>();
-            Bill Billmodel = obj.MapTo<Bill>();
+            List<Payment> model = obj.OPCreditPayment.MapTo<List<Payment>>();
+            List<Bill> BillUpdateModel = obj.BillUpdate.MapTo<List<Bill>>();
+            if (model.Count> 0)
 
-            if (obj.OPCreditPayment.PaymentId == 0)
             {
-                model.PaymentTime = Convert.ToDateTime(obj.OPCreditPayment.PaymentTime);
-                model.PaymentDate = Convert.ToDateTime(obj.OPCreditPayment.PaymentDate);
+                
+                await _OPSettlementService.InsertSettlementMultiple(model, BillUpdateModel, CurrentUserId, CurrentUserName);
 
-                model.AddBy = CurrentUserId;
-                //model.IsActive = true;
-                await _OPSettlementService.InsertAsync(model, Billmodel, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, " Record Added successfully.", model.FirstOrDefault()?.PaymentId);
         }
+
     }
 }

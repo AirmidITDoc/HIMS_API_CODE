@@ -99,6 +99,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MExpensesHeadMaster> _MExpensesHeadMaster;
         private readonly IGenericService<MOutSourcelabMaster> _MOutSourcelabMaster;
         private readonly IGenericService<MCreditReasonMaster> _MCreditReasonMaster;
+        private readonly IGenericService<MMarketingHospitalMaster> _MMarketingHospitalMaster;
+
 
 
 
@@ -142,7 +144,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MPathTestMaster> IMPathTestMaster, 
                               IGenericService<MExpensesHeadMaster> IMExpensesHeadMaster,
                               IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster,
-                              IGenericService<MCreditReasonMaster> IMCreditReasonMaster
+                              IGenericService<MCreditReasonMaster> IMCreditReasonMaster,
+                              IGenericService<MMarketingHospitalMaster> IMMarketingHospitalMaster
+
 
 
 
@@ -232,6 +236,8 @@ namespace HIMS.API.Controllers.Common
             _MExpensesHeadMaster = IMExpensesHeadMaster;
             _MOutSourcelabMaster = IMOutSourcelabMaster;
             _MCreditReasonMaster = IMCreditReasonMaster;
+            _MMarketingHospitalMaster = IMMarketingHospitalMaster;
+
 
 
 
@@ -380,12 +386,9 @@ namespace HIMS.API.Controllers.Common
                 "ExpHeadMaster" => (await _MExpensesHeadMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "OutsourceLab" => (await _MOutSourcelabMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOutSourcelabMaster.OutSourceId), nameof(MOutSourcelabMaster.OutSourceLabName)),
                 "CreditReason" => (await _MCreditReasonMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCreditReasonMaster.CreditId), nameof(MCreditReasonMaster.CreditReason)),
+                "MarketingHospital" => (await _MMarketingHospitalMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MMarketingHospitalMaster.HospitalId), nameof(MMarketingHospitalMaster.HospitalName)),
 
-
-
-
-
-                "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
+                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
                 _ => new List<SelectListItem>()
             };

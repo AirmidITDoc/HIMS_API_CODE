@@ -31,6 +31,10 @@ namespace HIMS.Data.Models
         public string? CreditReason { get; set; }
         public long? CreditReasonId { get; set; }
         public decimal? RefundAmt { get; set; }
+        public long? Cgstsgatper { get; set; }
+        public decimal? Cgstsgatamt { get; set; }
+        public long? Isgtper { get; set; }
+        public decimal? Igstamt { get; set; }
         public long? WardId { get; set; }
         public long? BedId { get; set; }
         public float? DiscperH { get; set; }
@@ -52,8 +56,13 @@ namespace HIMS.Data.Models
         public bool? IsBillCheck { get; set; }
         public bool? IsRefundFlag { get; set; }
         public long? IsCancelled { get; set; }
+        public bool? IsDue { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TSalesDetail> TSalesDetails { get; set; }
     }
