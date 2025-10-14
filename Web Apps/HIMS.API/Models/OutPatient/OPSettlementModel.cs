@@ -73,10 +73,15 @@ namespace HIMS.API.Models.OutPatient
         }
     }
 
-    public class OPSettlementModel
+    public class OPSettlementMultipleModel
     {
         public List<OPCreditPaymentModel> OPCreditPayment { get; set; }
         public List<BillUpdateModel> BillUpdate { get; set; }
+    }
+    public class OPSettlementModel
+    {
+        public OPCreditPaymentModel OPCreditPayment { get; set; }
+        public BillUpdateModel BillUpdate { get; set; }
     }
 
 }
