@@ -33,6 +33,7 @@ using System.Data;
 using System.Reflection;
 using System.Security;
 using System.Text;
+using System.Threading.Tasks;
 using WkHtmlToPdfDotNet;
 
 namespace HIMS.API.Controllers.Report
@@ -235,7 +236,7 @@ namespace HIMS.API.Controllers.Report
             return sdata.ToSingleResponse<MReportConfig, MReportConfig>("Report");
         }
         [HttpPost("ViewReport")]
-        public IActionResult ViewReport(ReportRequestModel model)
+        public async Task<IActionResult> ViewReport(ReportRequestModel model)
         {
             switch (model.Mode)
             {
@@ -451,7 +452,7 @@ namespace HIMS.API.Controllers.Report
             }
             model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+            string byteFile = await _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
 

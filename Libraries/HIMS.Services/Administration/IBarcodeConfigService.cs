@@ -10,6 +10,6 @@ namespace HIMS.Services.Administration
 {
     public partial interface IBarcodeConfigService
     {
-        Task<IPagedList<DbPrefixMaster>> GetAllPagedAsync(GridRequestModel objGrid);
+        Task<BarcodeConfigMaster> GetConfigByCode(string TemplateCode);
     }
 }

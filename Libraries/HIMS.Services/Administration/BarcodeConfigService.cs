@@ -12,12 +12,9 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<DbPrefixMaster>> GetAllPagedAsync(GridRequestModel objGrid)
+        public virtual async Task<BarcodeConfigMaster> GetConfigByCode(string TemplateCode)
         {
-            var qry = from p in _context.DbPrefixMasters
-                      join s in _context.DbGenderMasters on p.SexId equals s.GenderId
-                      select new DbPrefixMaster() { PrefixId = p.PrefixId, PrefixName = p.PrefixName, IsActive = p.IsActive, GenderName = s.GenderName, SexId = p.SexId };
-            return await qry.BuildPredicate(objGrid);
+            return await _context.BarcodeConfigMasters.FirstOrDefaultAsync(x => x.TemplateCode == TemplateCode);
         }
     }
 }
