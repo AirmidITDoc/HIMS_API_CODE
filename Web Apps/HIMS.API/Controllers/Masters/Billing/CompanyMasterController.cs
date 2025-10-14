@@ -74,7 +74,12 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
+           
             var data = await _repository.GetById(x => x.CompanyId == id);
+            if (data == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+            }
             return data.ToSingleResponse<CompanyMaster, CompanyMasterModel>("CompanyMaster");
         }
 
