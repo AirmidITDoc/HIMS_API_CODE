@@ -38,6 +38,8 @@ namespace HIMS.Data.DTO.OPPatient
         public long PaymentId { get; set; }
         public string? UserName { get; set; }
         public long? CompanyId { get; set; }
+        public long BillNo { get; set; }
+
 
     }
 }

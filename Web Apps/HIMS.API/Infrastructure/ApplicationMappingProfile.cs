@@ -752,6 +752,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMrpAdjustment, MRPAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, TCurrentStockModellll>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportTemplateConfig, ReportTemplateConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<BarcodeConfigMaster, BarcodeConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         }
     }

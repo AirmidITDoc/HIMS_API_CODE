@@ -189,6 +189,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IBarcodeConfigService, BarcodeConfigService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddScoped<DinkToPdfService>();
             services.AddHttpContextAccessor();
