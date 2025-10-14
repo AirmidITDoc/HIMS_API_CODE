@@ -8,22 +8,18 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\InPatient\**" />
-    <Compile Remove="Controllers\NewFolder\**" />
     <Compile Remove="Models\InPatient\**" />
     <Compile Remove="Models\OutPatient\NewFolder\**" />
     <Compile Remove="Models\Users\**" />
     <Content Remove="Controllers\InPatient\**" />
-    <Content Remove="Controllers\NewFolder\**" />
     <Content Remove="Models\InPatient\**" />
     <Content Remove="Models\OutPatient\NewFolder\**" />
     <Content Remove="Models\Users\**" />
     <EmbeddedResource Remove="Controllers\InPatient\**" />
-    <EmbeddedResource Remove="Controllers\NewFolder\**" />
     <EmbeddedResource Remove="Models\InPatient\**" />
     <EmbeddedResource Remove="Models\OutPatient\NewFolder\**" />
     <EmbeddedResource Remove="Models\Users\**" />
     <None Remove="Controllers\InPatient\**" />
-    <None Remove="Controllers\NewFolder\**" />
     <None Remove="Models\InPatient\**" />
     <None Remove="Models\OutPatient\NewFolder\**" />
     <None Remove="Models\Users\**" />
@@ -66,6 +62,7 @@
 
   <ItemGroup>
     <Folder Include="DbData\" />
+    <Folder Include="Models\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

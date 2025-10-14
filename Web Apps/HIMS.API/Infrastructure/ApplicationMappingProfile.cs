@@ -9,6 +9,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Login;
+using HIMS.API.Models.Marketing;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
@@ -687,7 +688,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIndentHeader, IndentVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TProcessOtp, TProcessOtpModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TProcessOtp, TProcessOtpUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMarketingDailyVisitInformation, Market_DailyVisitInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MMarketingHospitalMaster, MarketHospitalMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
+            
 
 
 
