@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public long Id { get; set; }
         public DateTime? VisitDate { get; set; }
         public DateTime? VisitTime { get; set; }
+        public long? MarketingPersonId { get; set; }
         public long? HospitalId { get; set; }
         public long? CityId { get; set; }
         public string? Location { get; set; }
