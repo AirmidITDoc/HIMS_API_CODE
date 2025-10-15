@@ -133,7 +133,7 @@ namespace HIMS.Services.Utilities
                     ColorMode = ColorMode.Color,
                     Orientation = PageOrientation,
                     PaperSize = PaperSize, // Now defaults to A5
-                    Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+                    Margins = new MarginSettings() { Top = 8, Bottom = 8, Left = 8, Right = 8 },
                     // Scale = 0.9f, // Uncomment if scaling is needed
                 },
                 Objects = 
