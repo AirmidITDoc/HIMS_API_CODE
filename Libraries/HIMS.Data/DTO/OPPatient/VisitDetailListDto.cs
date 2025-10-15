@@ -68,8 +68,10 @@ namespace HIMS.Data.DTO.OPPatient
         public string CampName { get; set; }
         public bool? IsConvertRequestForIp { get; set; }
         public long EMRReady { get; set; }
+        public string TokenNo { get; set; } 
 
-        
+
+
 
     }
     public class VisitDetailsListSearchDto
