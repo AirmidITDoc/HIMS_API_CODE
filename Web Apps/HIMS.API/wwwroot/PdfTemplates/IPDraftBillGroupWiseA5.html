@@ -18,7 +18,7 @@
                     <tr class="title-date-row">
                         <td>
                             <table style="width: 100%; border-collapse: collapse;">
-                                <tr style="font-size: 18px">
+                                <tr style="font-size: 16px">
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                         <b>
                                             IP Estimated Bill
@@ -37,7 +37,13 @@
                     </tr>
                     <tr class="bill-info-row">
                         <td>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 15px; table-layout:fixed;">
+                                <colgroup>
+                                    <col style="width:40%;">
+                                    <col style="width:27%;">
+                                    <col style="width:33%;">
+
+                                </colgroup>
                                 <tr>
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">UHID No:</span>
@@ -49,9 +55,9 @@
                                         <span>{{IPDNo}}</span>
                                     </td>
                                     <!--<td style="padding: 2px;">
-                                        <span style="font-weight: bold;"> Date | Time:</span>
-                                        <span>{{BillDate}}</span>
-                                    </td>-->
+            <span style="font-weight: bold;"> Date | Time:</span>
+            <span>{{BillDate}}</span>
+        </td>-->
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">DOA | Time:</span>
                                         <span>{{AdmissionDate}}</span>
@@ -67,9 +73,9 @@
                                         <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
                                     </td>
                                     <!--<td style="padding: 2px;">
-                                        <span style="font-weight: bold;">DOA | Time:</span>
-                                        <span>{{AdmissionDate}}</span>
-                                    </td>-->
+            <span style="font-weight: bold;">DOA | Time:</span>
+            <span>{{AdmissionDate}}</span>
+        </td>-->
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">Ward | Bed Name: </span>
                                         <span>{{RoomName}} | {{BedName}}</span>

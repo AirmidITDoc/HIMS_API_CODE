@@ -36,80 +36,83 @@
                     </tr>
                     <tr class="bill-info-row">
                         <td>
-                            <table style="width: 100%; border-collapse: collapse;font-size:15px;">
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Bill No :</span>
-                                        <span>{{BillNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">IPD No :</span>
-                                        <span>{{IPDNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Bill Date|Time:</span>
-                                        <span>{{BillDate}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">UHID No :</span>
-                                        <span>{{RegNo}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Age|Gender :</span>
-                                        <span> {{Age}}|{{GenderName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">DOA|Time :</span>
-                                        <span>{{AdmissionDate}}</span>
-                                    </td>
-                                </tr>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 15px; table-layout: fixed;">
+                                    <colgroup>
+                                        <col style="width:40%;"
+                                        <col style="width:27%;">
+                                        <col style="width:33%;">
+                                    </colgroup>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Bill No :</span>
+                                            <span>{{BillNo}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">IPD No :</span>
+                                            <span>{{IPDNo}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Bill Date|Time :</span>
+                                            <span>{{BillDate}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">UHID No :</span>
+                                            <span>{{RegNo}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Age|Gender :</span>
+                                            <span> {{Age}}|{{GenderName}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">DOA|Time :</span>
+                                            <span>{{AdmissionDate}}</span>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Patient Name :</span>
-                                        <span>{{PatientName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Patient Type :</span>
-                                        <span>{{PatientType}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">DOD|Time :</span>
-                                        <span>{{DischargeDate}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Patient Name :</span>
+                                            <span>{{PatientName}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Patient Type :</span>
+                                            <span>{{PatientType}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">DOD|Time :</span>
+                                            <span>{{DischargeDate}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
 
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Doctor Name :</span>
-                                        <span>{{DoctorName}}</span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Department :</span>
-                                        <span>{{DepartmentName}} </span>
-                                    </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ward | Bed Name : </span>
-                                        <span>{{RoomName}}|{{BedName}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ref.Doctor Name :</span>
-                                        <span>{{RefDocName}}</span>
-                                    </td>
-                                    <td></td>
-                                    <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
-                                        <b>Company Name :</b> {{CompanyName}}
-                                    </td>
-                                </tr>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Doctor Name :</span>
+                                            <span>{{DoctorName}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Department :</span>
+                                            <span>{{DepartmentName}} </span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span style="font-weight: bold;">Ward|Bed :</span>
+                                            <span>{{RoomName}}|{{BedName}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr> 
+                                        <td style="padding-left:10px; display:{{chkRefDocNameflag}}">
+                                            <b>Ref.Doctor Name  :</b> {{RefDocName}}
+                                        </td>
+                                        <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                            <b>Company Name :</b> {{CompanyName}}
+                                        </td>
+                                    </tr>
 
-                            </table>
-                        </td>
+                                </table>
+</td>
                     </tr>
 
                     <tr>
@@ -120,16 +123,16 @@
                             <table style="width: 100%; border-collapse: collapse;">
 
                                 <tr style="font-weight:bold;font-size:15px;">
-                                    <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">Sr.No</td>
+                                    <td style="border: 1px solid #000; text-align: left; padding: 6px;">
                                         Service Name
                                     </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: left; padding: 6px;">
                                         Doctor Name
                                     </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Price</td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">Qty </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">Price</td>
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">Qty </td>
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         Net Amount
                                     </td>
                                 </tr>
@@ -235,36 +238,36 @@
                             <thead style="font-size: 15px;">
 
                                 <tr>
-                                    <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                         Cash Amount
                                     </th>
-                                    <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                         Card Amount
                                     </th>
-                                    <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                         Cheque Amount
                                     </th>
 
-                                    <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                         Online Amount
                                     </th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 15px;">
                                 <tr>
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px; ">
                                         {{CashPayAmount}}
                                     </td>
 
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{CardPayAmount}}
                                     </td>
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{ChequePayAmount}}
                                     </td>
 
 
-                                    <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{PayTMPayAmount}}
                                     </td>
 
@@ -292,17 +295,17 @@
                                 <thead style="font-size: 15px;">
 
                                     <tr>
-                                        <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                             Advance Amount
                                         </th>
-                                        <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                             Advance Used Amount
                                         </th>
 
-                                        <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                             Advance Balance Amount
                                         </th>
-                                        <th style=" border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
                                             Advance Refund Amount
                                         </th>
 
@@ -311,17 +314,17 @@
                                 </thead>
                                 <tbody style="font-size: 15px;">
                                     <tr>
-                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                             {{TotalAdvanceAmount}}
                                         </td>
 
-                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                             {{AdvanceUsedAmount}}
                                         </td>
-                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                             {{AdvanceBalAmount}}
                                         </td>
-                                        <td style="border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                             {{AdvanceRefundAmount}}
                                         </td>
 
