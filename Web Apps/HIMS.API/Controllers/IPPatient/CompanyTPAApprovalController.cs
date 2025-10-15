@@ -8,6 +8,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.API.Models.IPPatient;
 using HIMS.Api.Controllers;
+using HIMS.Core.Domain.Grid;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -20,6 +21,27 @@ namespace HIMS.API.Controllers.IPPatient
         public CompanyTPAApprovalController(IGenericService<TCompanyApprovalDetail> repository)
         {
             _repository = repository;
+        }
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //[Permission(PageCode = "TPACompanyDet", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TCompanyApprovalDetail> CompanyApprovalDetailList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(CompanyApprovalDetailList.ToGridResponse(objGrid, "CompanyApprovalDetailList"));
+        }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "TPACompanyDet", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.Id == id);
+            return data.ToSingleResponse<TCompanyApprovalDetail, CompanyApprovalDetModel>("TCompanyApprovalDetail");
         }
 
         [HttpPost]
