@@ -52,6 +52,8 @@ namespace HIMS.API.Controllers.Marketing
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else

@@ -4,7 +4,6 @@ namespace HIMS.API.Models.Inventory
 {
     public class PathologyResultEntryModel
     {
-        //public long PathReportDetId { get; set; }
         public long? PathReportId { get; set; }
         public long? CategoryId { get; set; }
         public long? TestId { get; set; }

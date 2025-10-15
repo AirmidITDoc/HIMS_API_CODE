@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNUpdateList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNUpdateList(GridRequestModel objGrid)
         {
             IPagedList<ItemDetailsForGRNUpdateListDto> GRNUpdateList = await _IGRNService.GRNUpdateList(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNDetailsList")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNDetailsList(GridRequestModel objGrid)
         {
             IPagedList<GRNDetailsListDto> GRNUpdateList = await _IGRNService.GRNDetailsList(objGrid);
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-      //  [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -198,7 +198,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("UpdateGrnSupplierDetails{id:int}")]
-    //    [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateGRNSupplierModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
@@ -214,7 +214,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("UpdateCurrentStockBarcode")]
-        //  [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(UpdateCurrentStockModel obj)
         {
             TCurrentStock model = obj.MapTo<TCurrentStock>();

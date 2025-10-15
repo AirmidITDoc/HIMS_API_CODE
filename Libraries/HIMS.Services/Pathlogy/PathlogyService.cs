@@ -53,7 +53,7 @@ namespace HIMS.Services.Pathlogy
                     PathReportID = Convert.ToInt32(item.PathReportId)
                 };
 
-                odal.ExecuteNonQuery("m_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                odal.ExecuteNonQuery("ps_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
             }
 
             foreach (var item in ObjPathologyReportDetail)
@@ -67,9 +67,11 @@ namespace HIMS.Services.Pathlogy
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_insert_PathRrptDet_1", CommandType.StoredProcedure, entity);
+                odal.ExecuteNonQuery("ps_insert_PathRrptDet_1", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, "PathologyTemplate", item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+
             }
-            
+
                 string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId"};
                 var Hentity = ObjTPathologyReportHeader.ToDictionary();
                 foreach (var rProperty in Hentity.Keys.ToList())
@@ -77,7 +79,10 @@ namespace HIMS.Services.Pathlogy
                 if (!Entity.Contains(rProperty))
                     Hentity.Remove(rProperty);
                 }
-               odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+               odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+
+               await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
+
         }
         public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int UserId, string UserName)
         {
@@ -118,7 +123,7 @@ namespace HIMS.Services.Pathlogy
             {
                 PathReportID = Convert.ToInt32(ObjTPathologyReportTemplateDetail.PathReportId)
             };
-            odal.ExecuteNonQuery("m_Delete_T_PathologyReportTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Delete_T_PathologyReportTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
             await _context.LogProcedureExecution(tokensObj.ToDictionary(), "PathologyTemplate", tokensObj.PathReportID.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
             string[] rEntity = { "PathReportId", "PathTemplateId", "PathTemplateDetailsResult", "TestId", "TemplateResultInHtml", "SuggestionNotes", "PathResultDr1" };
@@ -138,8 +143,8 @@ namespace HIMS.Services.Pathlogy
                 if (!AEntity.Contains(rProperty))
                     PathHeaderentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, PathHeaderentity);
-            await _context.LogProcedureExecution(PathHeaderentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, PathHeaderentity);
+            await _context.LogProcedureExecution(PathHeaderentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
 
         }
         public virtual async Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string UserName)
