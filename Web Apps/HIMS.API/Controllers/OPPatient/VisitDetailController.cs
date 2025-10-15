@@ -95,15 +95,6 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
 
-
-        //[HttpGet("BedList")]
-        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> GetBedmaster(int RoomId)
-        //{
-        //    var result = await _IDoctorMasterService.GetBedmaster(RoomId);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "BedList", result);
-        //}
-
         [HttpGet("DoctorTypeDoctorList")]
         public async Task<ApiResponse> DoctorTypeDoctorList(int DocTypeId)
         {
