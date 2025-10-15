@@ -124,6 +124,63 @@ namespace HIMS.Services.Utilities
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }
+        public Tuple<byte[], string> GeneratePdfFromHtmlA5(string html,string storageBasePath,string FolderName,string FileName = "",Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A5) // Default to A5 size
+        {
+            var doc = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = PageOrientation,
+                    PaperSize = PaperSize, // Now defaults to A5
+                    Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+                    // Scale = 0.9f, // Uncomment if scaling is needed
+                },
+                Objects = 
+        {
+            new ObjectSettings()
+            {
+                PagesCount = true,
+                HtmlContent = html,
+                WebSettings = new WebSettings()
+                {
+                    DefaultEncoding = "utf-8"
+                },
+                FooterSettings = new FooterSettings()
+                {
+                    FontSize = 9,
+                    Right = "Page [page] of [toPage]",
+                    Line = true,
+                    Spacing = 2.812
+                }
+            }
+        }
+            };
+
+            // Convert HTML to PDF
+            byte[] bytes = converter.Convert(doc);
+
+            // Determine and create storage path
+            string DestinationPath = string.IsNullOrWhiteSpace(storageBasePath) ? "" : storageBasePath;
+            string dateFolder = DateTime.Now.ToString("ddMMyyyy");
+            string fullFolderPath = Path.Combine(DestinationPath, FolderName, dateFolder);
+
+            if (!Directory.Exists(fullFolderPath))
+                Directory.CreateDirectory(fullFolderPath);
+
+            // Generate unique filename if not provided
+            string fileBaseName = string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName;
+            string newFileName = Path.Combine(fullFolderPath, $"{fileBaseName}.pdf");
+
+            // Avoid file name conflict
+            if (File.Exists(newFileName))
+                newFileName = Path.Combine(fullFolderPath, $"{fileBaseName}_{Guid.NewGuid()}.pdf");
+
+            // Save the PDF
+            File.WriteAllBytes(newFileName, bytes);
+
+            return new Tuple<byte[], string>(bytes, newFileName);
+        }
 
         public Tuple<byte[], string> GeneratePdfFromHtmlBarCode(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {

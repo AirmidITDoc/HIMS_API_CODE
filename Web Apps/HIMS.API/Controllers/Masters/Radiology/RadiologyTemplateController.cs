@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
 
          //List API Get By Id
         [HttpGet("RadReportId/{id?}")]
-        [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> RGet(int id)
         {
             if (id == 0)
@@ -61,6 +61,10 @@ namespace HIMS.API.Controllers.Masters.Radiology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _radiorepository2.GetById(x => x.RadReportId == id);
+            if (data == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+            }
             return data.ToSingleResponse<TRadiologyReportHeader, TRadiologyReportModel>("TRadiologyReportHeader");
         }
         //Add API
