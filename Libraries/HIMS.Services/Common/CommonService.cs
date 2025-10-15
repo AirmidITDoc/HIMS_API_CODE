@@ -84,8 +84,8 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryOPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge_Test"; break;
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;
 
-                //System Configuration
-                case "SysConfig": sp_Name = "ps_SS_ConfigSettingParam"; break;
+                //////System Configuration
+                ////case "SysConfig": sp_Name = "ps_SS_ConfigSettingParam"; break;
                 case "NewSysConfig": sp_Name = "m_SS_ConfigSettingParam"; break;
 
                 //Pharmacy Sales return
@@ -106,6 +106,7 @@ namespace HIMS.Services.Common
                 // Sysytem Config and Login Access
                 case "LoginAccessConfigList": sp_Name = "ps_M_LoginAccessConfigList"; break;
                 case "SystemConfigList": sp_Name = "ps_M_SystemConfigList"; break;
+
                 //GSTType  
                 case "grnInvoicenocheck": sp_Name = "ps_m_grnInvoiceno_check"; break;
                 case "CheckExistingBatchAvailable": sp_Name = "ps_CheckExistingBatchAvailable"; break;
