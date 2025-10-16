@@ -256,6 +256,7 @@ namespace HIMS.API.Controllers.Report
                 case "OPPaymentReceipt":
                 case "AppointmentReceipt":
                 case "OpBillReceipt":
+                case "OpBillReceiptT":
                 case "OPBillWithPackagePrint":
                 case "GRNReport":
                 case "GRNReturnReport":
