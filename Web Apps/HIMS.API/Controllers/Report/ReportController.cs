@@ -371,7 +371,10 @@ namespace HIMS.API.Controllers.Report
                 //     case "IpFinalClasswiseBill":
                 case "IPFinalBillGroupwise"://Namechanges
                 case "IpCreditBill":
-                case "IpInterimBill"://change
+                case "IPDInterimBill"://change
+                case "IPDInterimBillA5"://change
+
+
                 case "IpPaymentReceipt":
                 case "IpAdvanceRefundReceipt":
                 case "IpBillRefundReceipt":
