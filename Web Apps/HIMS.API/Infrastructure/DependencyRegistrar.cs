@@ -29,6 +29,7 @@ using HIMS.Services.Notification;
 using HIMS.Services.OTManagment;
 using HIMS.Services.Radiology;
 using HIMS.Services.MRD;
+using HIMS.Services.DoctorPayout;
 
 namespace HIMS.API.Infrastructure
 {
@@ -132,6 +133,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPrescriptionService, PrescriptionServise>();
             services.AddScoped<IWardMasterService, WardMasterService>();
             services.AddScoped<ITprocessOtpService, TprocessOtpService>();
+            services.AddScoped<IDoctorPayService, DoctorPayService>();
+
 
 
 

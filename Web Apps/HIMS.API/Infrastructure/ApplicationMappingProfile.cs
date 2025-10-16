@@ -5,6 +5,7 @@ using HIMS.API.Controllers.Pharmacy;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
+using HIMS.API.Models.DoctorPayout;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
@@ -623,11 +624,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<Refund, UpdateRefundModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, PharmSalesPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceDetail, DifferTraiffModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TAdditionalDocPay, DoctorPayModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
 
-            
+
+
 
 
 
