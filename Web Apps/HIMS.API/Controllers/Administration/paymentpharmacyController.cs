@@ -14,6 +14,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Administration;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -133,6 +135,23 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully .");
         }
 
+        [HttpPost("PhBillGlobalDiscount")]
+      //  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP1(GlobalDiscountModels obj)
+        {
 
+            List<TSalesHeader> model = obj.Sales.MapTo<List<TSalesHeader>>();
+            if (model.Count > 0)
+            {
+
+                await _paymentpharmacyService.InsertAsyncSp(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
+        }
+
+
+      
     }
 }

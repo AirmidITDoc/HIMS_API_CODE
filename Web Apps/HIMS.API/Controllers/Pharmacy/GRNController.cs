@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)

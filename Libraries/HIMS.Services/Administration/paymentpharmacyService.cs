@@ -4,6 +4,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -135,6 +136,26 @@ namespace HIMS.Services.Administration
 
         }
 
+        public virtual async Task InsertAsyncSp(List<TSalesHeader> ObjTSalesHeader, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTSalesHeader)
+            {
+                string[] AEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "UpdatedBy", "IsCancelled", "TSalesDetails",
+               "AddedBy","BedId","ConcessionAuthorizationId","CreditReason","CreditReasonId","Date","DiscperH","DoctorName","ExtAddress","ExternalPatientName","ExtMobileNo","IsBillCheck",
+                "IsFree","IsPrescription","IsPrint","IsPurBill","NetPayableAmt","IsSellted","OpIpId","OpIpType","PaidAmount","RoundOff","SalesHeadName","SalesTypeId","StoreId","Time","TotalAmount",
+                "UnitId","VatAmount","WardId","Cgstsgatper","Cgstsgatamt","Isgtper","Igstamt","IsDue","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                var entity = item.ToDictionary();
+
+                foreach (var rProperty in AEntity)
+                {
+                    entity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQuery("m_Update_PhBillDiscountAfter", CommandType.StoredProcedure, entity);
+            }
+        }
     }
 }
  

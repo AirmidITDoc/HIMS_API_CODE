@@ -5,6 +5,7 @@ using HIMS.API.Controllers.Pharmacy;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
+using HIMS.API.Models.DoctorPayout;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
@@ -237,6 +238,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, SalesReturnModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDetail, SalesDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SalesHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TSalesHeader, GlobalDiscountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<PaymentPharmacy, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
@@ -623,11 +626,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<Refund, UpdateRefundModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, PharmSalesPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceDetail, DifferTraiffModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TAdditionalDocPay, DoctorPayModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
 
-            
+
+
 
 
 
