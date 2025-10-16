@@ -102,7 +102,7 @@ namespace HIMS.Services.Utilities
                         PagesCount = true,
                         HtmlContent = html,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        FooterSettings = { FontSize = 9, Center = "AirmidTech Innovation Pvt. Ltd | M : 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd | M : 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                     }
                 }
             };
@@ -149,7 +149,7 @@ namespace HIMS.Services.Utilities
                 FooterSettings = new FooterSettings()
                 {
                     FontSize = 9,
-                    Center = "AirmidTech Innovation Pvt. Ltd | M : 9970164262",
+                    Left = "AirmidTech Innovation Pvt. Ltd | M : 9970164262",
                     Right = "Page [page] of [toPage]",
                     Line = true,
                     Spacing = 2.812
@@ -178,6 +178,60 @@ namespace HIMS.Services.Utilities
                 newFileName = Path.Combine(fullFolderPath, $"{fileBaseName}_{Guid.NewGuid()}.pdf");
 
             // Save the PDF
+            File.WriteAllBytes(newFileName, bytes);
+
+            return new Tuple<byte[], string>(bytes, newFileName);
+        }
+        public Tuple<byte[], string> GeneratePdfFromHtmlThermal(string html,string storageBasePath,string FolderName,string FileName = "",Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.Custom) // You won't use this since it's overridden below
+        {
+            var doc = new HtmlToPdfDocument()
+            {
+                GlobalSettings = {
+            ColorMode = ColorMode.Color,
+            Orientation = PageOrientation,
+            PaperSize = new PechkinPaperSize("30mm", "1000mm"), // 3cm width, height = max A4 height (you can increase if needed)
+            Margins = new MarginSettings()
+            {
+                Top = 5,
+                Bottom = 10, // Add bottom space for footer
+                Left = 0,
+                Right = 0
+            }
+        },
+                Objects = {
+            new ObjectSettings() {
+                PagesCount = true,
+                HtmlContent = html,
+                WebSettings = { DefaultEncoding = "utf-8" },
+                FooterSettings = new FooterSettings()
+                {
+                    FontSize = 7,
+                    Right = "Page [page] of [toPage]",
+                    Line = true,
+                    Spacing = 1.5
+                }
+            }
+        }
+            };
+
+            byte[] bytes = converter.Convert(doc);
+
+            string DestinationPath = string.Empty;
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = storageBasePath;
+
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+
+            string datedFolderPath = Path.Combine(DestinationPath, FolderName, DateTime.Now.ToString("ddMMyyyy"));
+            if (!Directory.Exists(datedFolderPath))
+                Directory.CreateDirectory(datedFolderPath);
+
+            string newFileName = Path.Combine(datedFolderPath, (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf");
+
+            if (File.Exists(newFileName))
+                newFileName = Path.Combine(datedFolderPath, FileName + "_" + Guid.NewGuid().ToString() + ".pdf");
+
             File.WriteAllBytes(newFileName, bytes);
 
             return new Tuple<byte[], string>(bytes, newFileName);
