@@ -10,11 +10,13 @@ using LinqToDB.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using QRCoder;
 using System.Data;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using WkHtmlToPdfDotNet;
+using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -428,7 +430,7 @@ namespace HIMS.Services.Report
                 #region :: OPStickerPrint ::
                 case "OPStickerPrint":
                     {
-                        string[] colList = { };
+                        string[] colList = Array.Empty<string>();
 
                         var dt = GetDataBySp(model, "rptAppointmentPrint1");
                         //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPatientBarCodeSticker.html");
@@ -438,7 +440,12 @@ namespace HIMS.Services.Report
                         //htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         int i = 0;
 
-
+                        using var qrGenerator = new QRCodeGenerator();
+                        using var qrCodeData = qrGenerator.CreateQrCode(dt.GetColValue("RegNo"), QRCodeGenerator.ECCLevel.Q);
+                        using var qrCode = new PngByteQRCode(qrCodeData);
+                        var qrBytes = qrCode.GetGraphic(20);
+                        var base64Qr = $"data:image/png;base64,{Convert.ToBase64String(qrBytes)}";
+                        html = html.Replace("{{QrCode}}", base64Qr);
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -1157,7 +1164,7 @@ namespace HIMS.Services.Report
                 case "IPDInterimBillA5":
                     {
 
-                         
+
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPInterimBillA5.html");
@@ -6855,7 +6862,7 @@ namespace HIMS.Services.Report
                             items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
-                         //   items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
+                            //   items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: right; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["TotalAmt"].ConvertToDouble()).Append("</td></tr>");
