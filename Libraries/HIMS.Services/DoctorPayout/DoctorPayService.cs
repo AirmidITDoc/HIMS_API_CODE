@@ -29,7 +29,7 @@ namespace HIMS.Services.DoctorPayout
         public virtual async Task InsertAsync(TAdditionalDocPay ObjTAdditionalDocPay, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "TranDate", "TranTime", "PbillNo", "CompanyId", "BillDate", "ServiceName", "Price", "Qty", "TotalAmount", "DocAmount", "IsProcess", "DocId", "PatientName" };
+            string[] AEntity = { "TranDate", "TranTime", "PbillNo", "CompanyId", "BillDate", "ServiceName", "Price", "Qty", "TotalAmount", "DocAmount", "IsProcess", "DocId", "PatientName", "TranId" };
             var entity = ObjTAdditionalDocPay.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())

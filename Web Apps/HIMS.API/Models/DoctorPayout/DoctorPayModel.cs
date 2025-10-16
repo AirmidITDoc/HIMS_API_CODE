@@ -18,6 +18,8 @@ namespace HIMS.API.Models.DoctorPayout
         public long? IsProcess { get; set; }
         public long? DocId { get; set; }
         public string? PatientName { get; set; }
+        public long TranId { get; set; }
+
     }
     public class DoctorPayModelValidator : AbstractValidator<DoctorPayModel>
     {

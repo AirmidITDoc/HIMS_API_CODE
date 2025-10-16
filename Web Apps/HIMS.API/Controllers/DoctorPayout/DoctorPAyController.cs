@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.DoctorPayout
             _IDoctorPayService = repository;
         }
         [HttpPost("DoctorPayList")]
-        //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<DoctorPayListDto> DoctorPayList = await _IDoctorPayService.GetList(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         public async Task<ApiResponse> InsertSPD(DoctorPayModel obj)
         {
             TAdditionalDocPay model = obj.MapTo<TAdditionalDocPay>();
-            if (obj.DocId == 0)
+            if (obj.TranId == 0)
             {
                 model.TranDate = Convert.ToDateTime(obj.TranDate);
                 model.TranTime = Convert.ToDateTime(obj.TranTime);
