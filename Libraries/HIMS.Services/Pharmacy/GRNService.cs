@@ -237,10 +237,20 @@ namespace HIMS.Services.Pharmacy
             _context.TGrnheaders.Add(objGRN);
             await _context.SaveChangesAsync();
 
-
             // Update item master table records
-            _context.MItemMasters.UpdateRange(objItems);
+            foreach (var objItem in objItems)
+            {
+                _context.MItemMasters.Attach(objItem);
+
+                // Mark only the required fields as modified
+                _context.Entry(objItem).Property(x => x.Hsncode).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Cgst).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Sgst).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Igst).IsModified = true;
+            }
+
             await _context.SaveChangesAsync();
+
             // 4️⃣ Update purchase details
             var objPurDetailsList = new List<TPurchaseDetail>();
             foreach (var objDet in objPurDetails)
@@ -340,9 +350,18 @@ namespace HIMS.Services.Pharmacy
             await _context.SaveChangesAsync();
 
             // Update item master table records
-            _context.MItemMasters.UpdateRange(objItems);
-            await _context.SaveChangesAsync();
+            foreach (var objItem in objItems)
+            {
+                _context.MItemMasters.Attach(objItem);
 
+                // Mark only the required fields as modified
+                _context.Entry(objItem).Property(x => x.Hsncode).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Cgst).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Sgst).IsModified = true;
+                _context.Entry(objItem).Property(x => x.Igst).IsModified = true;
+            }
+
+            await _context.SaveChangesAsync();
             // 4️⃣ Update purchase details
             var objPurDetailsList = new List<TPurchaseDetail>();
 
