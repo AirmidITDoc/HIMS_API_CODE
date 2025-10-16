@@ -159,6 +159,7 @@ namespace HIMS.Services.OutPatient
                 VisitId = Convert.ToInt32(VisitId)
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
 
         public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
@@ -187,7 +188,7 @@ namespace HIMS.Services.OutPatient
                     visitentity.Remove(rProperty);
             }
             string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
 
@@ -196,28 +197,7 @@ namespace HIMS.Services.OutPatient
                 VisitId = Convert.ToInt32(VisitId)
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-
-            //// Add TokenNumber table records
-            //List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
-            //foreach (var item in objVisit)
-            //{
-            //    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
-            //    if (objToken != null)
-            //    {
-            //        objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
-
-            //        TTokenNumberWithDoctorWise objCurrentToken = new()
-            //        {
-            //            TokenNo = objToken.TokenNo,
-            //            VisitDate = item.VisitDate,
-            //            VisitId = item.VisitId,
-            //            DoctorId = item.ConsultantDocId,
-            //            IsStatus = false
-            //        };
-            //        _context.TTokenNumberWithDoctorWises.Add(objCurrentToken);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //}
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
 
 
@@ -443,21 +423,6 @@ namespace HIMS.Services.OutPatient
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Update header table records
-                //VisitDetail objVisit = await _context.VisitDetails.FindAsync(objPara.VisitId);
-                //objVisit.Height = objPara?.Height;
-                //objVisit.Pweight = objPara?.Pweight;
-                //objVisit.Bmi = objPara?.Bmi;
-                //objVisit.Bsl = objPara?.Bsl;
-                //objVisit.SpO2 = objPara?.SpO2;
-                //objVisit.Temp = objPara?.Temp;
-                //objVisit.Pulse = objPara?.Pulse;
-                //objVisit.Bp = objPara?.Bp;
-
-
-                //_context.VisitDetails.Update(objVisit);
-                //_context.Entry(objVisit).State = EntityState.Modified;
-                //await _context.SaveChangesAsync();
 
                 DatabaseHelper odal = new();
                 string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "CheckInTime", "CheckOutTime", "ConStartTime", "CampId", "CrossConsultantDrId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "ConEndTime", "IsConvertRequestForIp" };
