@@ -45,10 +45,22 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
-            htmlHeader = htmlHeader.Replace("{{Header}}", objHospital?.Header ?? "");
+
+            //RS
+            string logoFileName = (objHospital?.Header ?? "");
+
+            
+            var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo",objHospital?.Header);
+
+            htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
+
+
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
             //return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
             //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
+
+           
+
 
         }
         //public string GetHeader(int Id, int Type = 1)
