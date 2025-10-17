@@ -506,21 +506,7 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-                #region :: OPDSpineCasePaper ::
-                case "OPDSpineCasePaper":
-                    {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPDCASEPAPERSpineClinic.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDSpineCasePaper", "OPDSpineCasePaper" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
+               
 
                 #region :: OPPrescription ::
                 case "OPPrescription":
@@ -8790,13 +8776,23 @@ namespace HIMS.Services.Report
                         int i = 0, j = 0, k = 0, testlength = 0, m;
                         String Label = "", Suggchk = "", Suggestion = "";
                         string previousLabel = "", previoussubLabel = "";
-                        //string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+                       
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
 
-                        //var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
 
-                        //html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+
+                        //string LogoFileName = dt.Rows[0]["Header"].ConvertToString();
+
+                        //var Logo = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Header"].ConvertToString());
+
+                        html = html.Replace("{{Header}}", signature);
                         //html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-                        //html = html.Replace("{{ImgHeader}}", htmlHeader);
+
+
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -8975,6 +8971,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+                        html = html.Replace("{{Header}}", signature);
 
 
                         foreach (DataRow dr in dt.Rows)
