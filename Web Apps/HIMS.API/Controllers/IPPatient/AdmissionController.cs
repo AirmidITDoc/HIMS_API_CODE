@@ -136,7 +136,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpGet("Dischargesearch-patient")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> DischargeSearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientDischargeListSearch(Keyword);

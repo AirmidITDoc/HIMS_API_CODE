@@ -21,11 +21,10 @@ namespace HIMS.API.Models.Marketing
     {
         public MarketHospitalMasterModelValidator()
         {
-            RuleFor(x => x.HospitalName).NotNull().NotEmpty().WithMessage("HospitalName  is required");
-            RuleFor(x => x.HospitalAddress).NotNull().NotEmpty().WithMessage("HospitalAddress  is required");
-            RuleFor(x => x.Location).NotNull().NotEmpty().WithMessage("Location  is required");
-            RuleFor(x => x.Latitude).NotNull().NotEmpty().WithMessage("Latitude  is required");
-            RuleFor(x => x.Longitude).NotNull().NotEmpty().WithMessage("Longitude  is required");
+            //RuleFor(x => x.HospitalName).NotNull().NotEmpty().WithMessage("HospitalName  is required");
+            //RuleFor(x => x.HospitalAddress).NotNull().NotEmpty().WithMessage("HospitalAddress  is required");
+            //RuleFor(x => x.Latitude).NotNull().NotEmpty().WithMessage("Latitude  is required");
+            //RuleFor(x => x.Longitude).NotNull().NotEmpty().WithMessage("Longitude  is required");
 
 
         }

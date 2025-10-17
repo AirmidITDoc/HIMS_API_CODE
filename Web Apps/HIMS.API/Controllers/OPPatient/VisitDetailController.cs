@@ -52,14 +52,14 @@ namespace HIMS.API.Controllers.OPPatient
             return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
         }
         [HttpGet("search-patient")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _visitDetailsService.VisitDetailsListSearchDto(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
         }
         [HttpGet("search-patient-1")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse SearchPatientNew(string Keyword)
         {
             var data = _visitDetailsService.SearchPatient(Keyword);
