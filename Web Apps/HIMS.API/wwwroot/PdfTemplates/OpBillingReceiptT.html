@@ -13,7 +13,7 @@
             <div class="main-content-wrapper">
                 <div class="invoice-box" style="font-size: 10px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
                     <table style="width: 110px;line-height: inherit;text-align: left;">
-                    {{NewHeader}}
+                        {{NewHeader}}
                         <tr class="title-date-row">
                             <td style="padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
@@ -26,64 +26,29 @@
                         </tr>
                         <tr class="bill-info-row">
                             <td style="padding: 6px;">
-                                <table style="width: 100%; border-collapse: collapse; font-size:10px">
-                                    <!--<tr>
-
-                                        <td style="padding: 2px;">
-                                            <span><b>Bill No :</b> </span>
-                                            <span>{{BillNo}}</span>
-                                        </td>
-                                        <td style="padding: 2px;">
-                                            <span><b>OPD No:</b> </span>
-                                            <span>{{OPDNo}}</span>
-                                        </td>
-                                        <td style="padding: 2px;">
-                                            <span> <b>Date | Time :</b> </span>
-                                            <span>{{BillDate}}</span>
-                                        </td>
-                                    </tr>-->
+                                <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
                                     <tr>
-                                        <td style="padding: 2px; width:50%">
+                                        <td style="padding: 2px; width: 50%;">
                                             <span><b>UHID :</b> </span>
                                             <span>{{RegNo}}</span>
                                         </td>
-                                        <td style="padding: 2px; width: 50%">
+                                        <td style="padding: 2px; width: 50%;">
                                             <span><b>Bill No :</b> </span>
                                             <span>{{BillNo}}</span>
                                         </td>
-
                                     </tr>
                                     <tr>
-
-                                        <td style="padding: 2px;">
+                                        <td style="padding: 2px;" colspan="2">
                                             <span><b>Patient Name :</b> </span>
                                             <span>{{PatientName}}</span>
                                         </td>
-
-                                        <!--<td style="padding: 2px;">
-                                            <span><b>Patient Type :</b> </span>
-                                            <span>{{PatientType}}</span>
-                                        </td>
-                                        <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
-                                            <b>Company Name :</b> {{CompanyName}}
-                                        </td>-->
                                     </tr>
-
                                     <tr>
-                                        <td style="padding: 2px;">
+                                        <td style="padding: 2px;" colspan="2">
                                             <span><b>Doctor Name :</b> </span>
                                             <span>{{ConsultantDocName}}</span>
                                         </td>
-                                        <!--<td style="padding: 2px;">
-                                            <span><b>Department :</b></span>
-                                            <span>{{DepartmentName}}</span>
-                                        </td>-->
-                                        <!--<td style="padding: 2px;">
-                                            <span><b>Ref Dr Name :</b> </span>
-                                            <span>{{RefDocName}}</span>
-                                        </td>-->
                                     </tr>
-
                                 </table>
                             </td>
                         </tr>
@@ -96,7 +61,7 @@
                                             <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: left;">Service Name </th>
                                             <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
                                             <!--<th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
-    <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Value</th>-->
+                        <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Value</th>-->
                                         </tr>
                                     </thead>
                                     {{Items}}
@@ -150,11 +115,18 @@
                             <table style="width: 100%; border-collapse: collapse;margin-top:10px;">
                                 <tr class="payment-info-row">
                                     <td style="padding: 6px;">
-                                        <table style="width: 110px; border-collapse: collapse;font-size:10px">
+                                        <table style="width: 100%; border-collapse: collapse;font-size:10px">
                                             <tr>
-                                                <td> Amount in words :-{{finalamt}}</td>
+                                                <td style="padding: 6px; text-align: left; ">
+                                                    <span>{{finalamt}}</span><br>
+                                                </td>
                                             </tr>
-
+                                            <tr>
+                                                <td style="padding: 6px; text-align: left;">
+                                                    <span>{{AddedByName}}</span><br>
+                                                    <span>Generated By</span>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
                                 </tr>
