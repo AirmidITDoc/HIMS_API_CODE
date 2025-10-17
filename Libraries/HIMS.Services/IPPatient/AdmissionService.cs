@@ -44,58 +44,133 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        public virtual void InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        //public virtual void InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        //{
+
+        //    // OLD CODE With SP
+        //    DatabaseHelper odal = new();
+        //    string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
+        //    "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
+        //    "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
+        //    "HBalAmt","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+        //    var admientity = objAdmission.ToDictionary();
+        //    foreach (var rProperty in rVisitEntity)
+        //    {
+        //        admientity.Remove(rProperty);
+        //    }
+        //    string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
+        //    objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
+
+        //    var tokenObj = new
+        //    {
+        //        BedId = Convert.ToInt32(objAdmission.BedId),
+        //        RoomId = Convert.ToInt32(objAdmission.WardId)
+
+
+        //    };
+        //    odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+        //}
+
+        public virtual async Task InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
-            "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
-            "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
-            "HBalAmt","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
+            "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
+            "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity"};
             var admientity = objAdmission.ToDictionary();
-            foreach (var rProperty in rVisitEntity)
+
+            foreach (var rProperty in admientity.Keys.ToList())
             {
-                admientity.Remove(rProperty);
+                if (!rVisitEntity.Contains(rProperty))
+                    admientity.Remove(rProperty);
             }
             string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {
                 BedId = Convert.ToInt32(objAdmission.BedId),
                 RoomId = Convert.ToInt32(objAdmission.WardId)
-
-
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-        }
-        //UPDATE SHILPA 09-08-2025//
-        public virtual async Task InsertRegAsyncSP(Registration ObjRegistration, Admission objAdmission, int currentUserId, string currentUserName)
-        {
-                  DatabaseHelper odal = new();
-                  string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-                  var entity = ObjRegistration.ToDictionary();
-                 foreach (var rProperty in rEntity)
-                 {
-                  entity.Remove(rProperty);
-                 }
-                 string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-                 ObjRegistration.RegId = Convert.ToInt64(RegId);
-                 objAdmission.RegId = Convert.ToInt64(RegId);
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-                 string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag" , "IsCovidUserId", "IsCovidUpdateDate",
-                 "IsUpdatedBy", "MedicalApreAmt" , "IsPharClearance", "Ipnumber", "EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","IsUpdatedBy"
-                ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
-                 "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
-                 var visitentity = objAdmission.ToDictionary();
-                 foreach (var rProperty in rVisitEntity)
-                 {
-                    visitentity.Remove(rProperty);
-                 }
-                 string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
-                 objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
-          
+
+
+        }
+
+        ////UPDATE SHILPA 09-08-2025//
+        //public virtual async Task InsertRegAsyncSP(Registration ObjRegistration, Admission objAdmission, int currentUserId, string currentUserName)
+        //{
+        //          DatabaseHelper odal = new();
+        //          string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+        //          var entity = ObjRegistration.ToDictionary();
+        //         foreach (var rProperty in rEntity)
+        //         {
+        //          entity.Remove(rProperty);
+        //         }
+        //         string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+        //         ObjRegistration.RegId = Convert.ToInt64(RegId);
+        //         objAdmission.RegId = Convert.ToInt64(RegId);
+
+        //         string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag" , "IsCovidUserId", "IsCovidUpdateDate",
+        //         "IsUpdatedBy", "MedicalApreAmt" , "IsPharClearance", "Ipnumber", "EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","IsUpdatedBy"
+        //        ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
+        //         "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+        //         var visitentity = objAdmission.ToDictionary();
+        //         foreach (var rProperty in rVisitEntity)
+        //         {
+        //            visitentity.Remove(rProperty);
+        //         }
+        //         string AdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", visitentity);
+        //         objAdmission.AdmissionId = Convert.ToInt32(AdmissionId);
+
+        //        string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+        //        var tokenObj = new
+        //        {
+        //           BedId = Convert.ToInt32(objAdmission.BedId),
+        //           RoomId = Convert.ToInt32(objAdmission.WardId)
+        //        };
+        //        odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+
+
+        //}
+
+        //UPDATE SHILPA 09-08-2025//
+        public virtual async Task InsertRegAsyncSP(Registration ObjRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId" };
+
+            var entity = ObjRegistration.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+            ObjRegistration.RegId = Convert.ToInt64(RegId);
+            objAdmission.RegId = Convert.ToInt64(RegId);
+            await _context.LogProcedureExecution(entity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+            string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
+                "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
+                "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId"};
+            var admientity = objAdmission.ToDictionary();
+
+            foreach (var rProperty in admientity.Keys.ToList())
+            {
+                if (!rVisitEntity.Contains(rProperty))
+                    admientity.Remove(rProperty);
+            }
+            string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
+            objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+   
             string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var tokenObj = new
             {
@@ -103,6 +178,8 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             //var Bedentity = ObjBedmaster.ToDictionary();
             //foreach (var rProperty in BEntity)
@@ -112,24 +189,21 @@ namespace HIMS.Services.IPPatient
             //odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, Bedentity);
         }
 
-
-        public virtual async Task UpdateAdmissionAsyncSP(Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual async Task UpdateAdmissionAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rAdmissEntity = {"RegId", "Ipdno", "IsCancelled", "IsProcessing", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
-               "MedicalApreAmt" , "IsPharClearance", "Ipnumber", "EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","AddedBy"
-            ,"PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
-                "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges"
-            ,"WardId", "BedId", "DischargeDate", "DischargeTime","IsDischarged","IsBillGenerated","ClassId","Discharges","PhoneNo ","MobileNo","PolicyNo",
-            "AprovAmount","CompDod","RefDoctorDept","AdmissionType","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] rAdmissEntity = {"AdmissionId", "AdmissionDate", "AdmissionTime", "HospitalId", "PatientTypeId", "CompanyId", "TariffId", "DepartmentId", "DocNameId", "RefDocNameId",
+               "RelativeName" , "RelativeAddress", "PhoneNo", "RelationshipId", "IsMlc", "MotherName", "AdmittedDoctor1" ,"AdmittedDoctor2", "RefByTypeId","RefByName","IsUpdatedBy","SubTpaComId","IsOpToIpconv","ConvertId","Ischarity"};
             var rAdmissentity1 = objAdmission.ToDictionary();
-            foreach (var rProperty in rAdmissEntity)
+            foreach (var rProperty in rAdmissentity1.Keys.ToList())
             {
-                rAdmissentity1.Remove(rProperty);
+                if (!rAdmissEntity.Contains(rProperty))
+                    rAdmissentity1.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
-            // objAdmission.AdmissionId = Convert.ToInt32(objAdmission.AdmissionId);
+            await _context.LogProcedureExecution(rAdmissentity1, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
         }
 
         public virtual async Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword)
@@ -173,7 +247,7 @@ namespace HIMS.Services.IPPatient
                           TariffName = t.TariffName,
                           TariffId = a.TariffId,
                           ClassId = a.ClassId,
-                          DoctorName ="Dr. "+ d.FirstName + " " + d.LastName,
+                          DoctorName = "Dr. " + d.FirstName + " " + d.LastName,
                           RoomName = rm.RoomName,
                           BedName = b.BedName,
                           Age = r.Age,
@@ -181,7 +255,7 @@ namespace HIMS.Services.IPPatient
                           AgeDay = r.AgeDay,
                           GenderName = g.GenderName,
                           DepartmentName = de.DepartmentName,
-                          PatientType=p.PatientType,
+                          PatientType = p.PatientType,
                           RefDoctorName = "Dr. " + doc.FirstName + " " + doc.LastName,
 
                       };
@@ -198,7 +272,7 @@ namespace HIMS.Services.IPPatient
                       join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
                       join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
                       from c in comp.DefaultIfEmpty()
-                      where a.IsDischarged == 0 && a.AdmissionId==AdmissionId
+                      where a.IsDischarged == 0 && a.AdmissionId == AdmissionId
                       select new PatientAdmittedListSearchDto()
                       {
                           FirstName = r.FirstName,
@@ -271,7 +345,7 @@ namespace HIMS.Services.IPPatient
                           TariffName = t.TariffName,
                           TariffId = a.TariffId,
                           ClassId = a.ClassId,
-                          DoctorName =  d.FirstName + " " + d.LastName,
+                          DoctorName = d.FirstName + " " + d.LastName,
                           RoomName = rm.RoomName,
                           BedName = b.BedName,
                           Age = r.Age,

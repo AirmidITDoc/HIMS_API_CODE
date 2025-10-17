@@ -109,12 +109,12 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> UpdateSP(NewAdmission obj)
+        [Permission(PageCode = "Admission", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> UpdateSP(AdmissionUpdate obj)
         {
 
-            Admission objAdmission = obj.Admission.MapTo<Admission>();
-            if (obj.Admission.AdmissionId != 0)
+            Admission objAdmission = obj.MapTo<Admission>();
+            if (obj.AdmissionId != 0)
             {
 
                 objAdmission.IsUpdatedBy = CurrentUserId;
