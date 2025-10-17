@@ -45,10 +45,23 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
-            htmlHeader = htmlHeader.Replace("{{Header}}", objHospital?.Header ?? "");
+
+            //RS
+            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+
+            var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo",objHospital?.Header.ConvertToString());
+
+            htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
+
+
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
+
+
             //return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
             //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
+
+
+
 
         }
         //public string GetHeader(int Id, int Type = 1)
@@ -297,17 +310,19 @@ namespace HIMS.Services.Utilities
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration["StorageBaseUrl"];
+            //string fullFilePath = "E:\\Storage\\Hospital\\Logo\\hospitallogo.jfif";
 
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
-            string fullFilePath = Path.Combine(FilePath, filename);
+          string  fullFilePath = Path.Combine(FilePath, filename);
 
+          
             if (!File.Exists(fullFilePath))
                 return "";
 
             byte[] imageArray = File.ReadAllBytes(fullFilePath);
             return "data:image/png;base64," + Convert.ToBase64String(imageArray);
         }
-
+        
 
 
         //public Tuple<byte[], string> CreateExel(string html, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait)
