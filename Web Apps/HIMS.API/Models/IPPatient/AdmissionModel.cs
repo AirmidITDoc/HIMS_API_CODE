@@ -105,7 +105,7 @@ namespace HIMS.API.Models.IPPatient
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
         public long AdmissionId { get; set; }
-        public bool? Ischarity { get; set; }
+        //public bool? Ischarity { get; set; }
 
 
 
@@ -116,7 +116,7 @@ namespace HIMS.API.Models.IPPatient
         {
             RuleFor(x => x.AdmissionDate).NotNull().NotEmpty().WithMessage("AdmissionDate is required");
             RuleFor(x => x.AdmissionTime).NotNull().NotEmpty().WithMessage("AdmissionTime is required");
-            
+
         }
     }
     public class BedModel
@@ -127,7 +127,6 @@ namespace HIMS.API.Models.IPPatient
     {
         public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel Admission { get; set; }
-        //public BedModel BedMaster { get; set; }
 
     }
     public class AdmissionRegistered
@@ -144,6 +143,34 @@ namespace HIMS.API.Models.IPPatient
     {
         public long AdmissionId { get; set; }
         public long? IsCancelled { get; set; }
+    }
+    public class AdmissionUpdate
+    {
+        public long AdmissionId { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public string? AdmissionTime { get; set; }
+        public long? HospitalId { get; set; }
+        public long? PatientTypeId { get; set; }
+        public long? CompanyId { get; set; }
+        public long? TariffId { get; set; }
+        public long? DepartmentId { get; set; }
+        public long? DocNameId { get; set; }
+        public long? RefDocNameId { get; set; }
+        public string? RelativeName { get; set; }
+        public string? RelativeAddress { get; set; }
+        public string? PhoneNo { get; set; }
+        public long? RelationshipId { get; set; }
+        public bool? IsMlc { get; set; }
+        public string? MotherName { get; set; }
+        public long? AdmittedDoctor1 { get; set; }
+        public long? AdmittedDoctor2 { get; set; }
+        public long? RefByTypeId { get; set; }
+        public long? RefByName { get; set; }
+        public long? IsUpdatedBy { get; set; }
+        public long? SubTpaComId { get; set; }
+        public bool? IsOpToIpconv { get; set; }
+        public long? ConvertId { get; set; }
+        public bool? Ischarity { get; set; }
     }
 }
 

@@ -37,6 +37,7 @@ namespace HIMS.Services.Utilities
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
             HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
             htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
             htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
             htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
@@ -47,19 +48,20 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
             //RS
-            string logoFileName = (objHospital?.Header ?? "");
+            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
 
-            
-            var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo",objHospital?.Header);
+            var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
 
             htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
 
 
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
+
+
             //return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
             //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
 
-           
+
 
 
         }
@@ -137,7 +139,7 @@ namespace HIMS.Services.Utilities
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }
-        public Tuple<byte[], string> GeneratePdfFromHtmlA5(string html,string storageBasePath,string FolderName,string FileName = "",Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A5) // Default to A5 size
+        public Tuple<byte[], string> GeneratePdfFromHtmlA5(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A5) // Default to A5 size
         {
             var doc = new HtmlToPdfDocument()
             {
@@ -149,7 +151,7 @@ namespace HIMS.Services.Utilities
                     Margins = new MarginSettings() { Top = 8, Bottom = 8, Left = 8, Right = 8 },
                     // Scale = 0.9f, // Uncomment if scaling is needed
                 },
-                Objects = 
+                Objects =
         {
             new ObjectSettings()
             {
@@ -195,7 +197,7 @@ namespace HIMS.Services.Utilities
 
             return new Tuple<byte[], string>(bytes, newFileName);
         }
-        public Tuple<byte[], string> GeneratePdfFromHtmlThermal(string html,string storageBasePath,string FolderName,string FileName = "",Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.Custom) // You won't use this since it's overridden below
+        public Tuple<byte[], string> GeneratePdfFromHtmlThermal(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.Custom) // You won't use this since it's overridden below
         {
             var doc = new HtmlToPdfDocument()
             {
@@ -309,9 +311,11 @@ namespace HIMS.Services.Utilities
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = _configuration["StorageBaseUrl"];
+            //string fullFilePath = "E:\\Storage\\Hospital\\Logo\\hospitallogo.jfif";
 
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
             string fullFilePath = Path.Combine(FilePath, filename);
+
 
             if (!File.Exists(fullFilePath))
                 return "";
