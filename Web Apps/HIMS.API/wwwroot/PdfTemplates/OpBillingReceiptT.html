@@ -13,7 +13,7 @@
             <div class="main-content-wrapper">
                 <div class="invoice-box" style="font-size: 10px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
                     <table style="width: 110px;line-height: inherit;text-align: left;">
-                        {{NewHeader}}
+                    {{NewHeader}}
                         <tr class="title-date-row">
                             <td style="padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
@@ -43,18 +43,14 @@
                                         </td>
                                     </tr>-->
                                     <tr>
-                                        <td style="padding: 2px;">
+                                        <td style="padding: 2px; width:50%">
                                             <span><b>UHID :</b> </span>
                                             <span>{{RegNo}}</span>
                                         </td>
-                                        <!--<td style="padding: 2px;">
-                                            <span><b>Age | Gender :</b> </span>
-                                            <span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
+                                        <td style="padding: 2px; width: 50%">
+                                            <span><b>Bill No :</b> </span>
+                                            <span>{{BillNo}}</span>
                                         </td>
-                                        <td style="padding: 2px;">
-                                            <span><b>OPD | Time :</b> </span>
-                                            <span>{{VisitDate}}</span>
-                                        </td>-->
 
                                     </tr>
                                     <tr>
@@ -94,23 +90,14 @@
                         <tr class="bill-table-row">
                             <td style="padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
-                                    <thead style="font-size: 10px;">
-                                        <tr style="border-top: 1px solid #d4c3c3;">
-
-                                            <th style="border-bottom: 1px solid #d4c3c3; text-align: center; padding: 2px;">
-                                                Sr.No
-                                            </th>
-                                            <th style="border-bottom: 1px solid #d4c3c3; text-align: center; padding: 2px;">
-                                                Service Name
-                                            </th>
-                                            <!--<th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;"> Doctor Name</th>
-                                            <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Price </th>
-                                            <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Qty </th>
-                                            <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Service Charge </th>
-                                            <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Disc Amount</th>
-                                            <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Net Amount</th>-->
+                                    <thead style="font-size:10px">
+                                        <tr>
+                                            <th style="border-bottom: 1px dotted #aaa; padding: 2px; text-align: left;">Sr.No </th>
+                                            <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: left;">Service Name </th>
+                                            <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
+                                            <!--<th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
+    <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Value</th>-->
                                         </tr>
-
                                     </thead>
                                     {{Items}}
 
@@ -163,7 +150,7 @@
                             <table style="width: 100%; border-collapse: collapse;margin-top:10px;">
                                 <tr class="payment-info-row">
                                     <td style="padding: 6px;">
-                                        <table style="width: 110px; border-collapse: collapse; font-weight: bold;font-size:10px">
+                                        <table style="width: 110px; border-collapse: collapse;font-size:10px">
                                             <tr>
                                                 <td> Amount in words :-{{finalamt}}</td>
                                             </tr>
