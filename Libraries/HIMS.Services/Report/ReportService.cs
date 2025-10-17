@@ -1673,8 +1673,6 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        //html.Replace("{{Signature}}", signature);
-
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
 
 
@@ -1693,7 +1691,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithOutHeader", "PathologyReportWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
@@ -8785,15 +8783,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
 
-                        //string LogoFileName = dt.Rows[0]["Header"].ConvertToString();
-
-                        //var Logo = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Header"].ConvertToString());
-
-                       
-                        //html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
-
-
                         foreach (DataRow dr in dt.Rows)
                         {
 
@@ -8972,8 +8961,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
-                        html = html.Replace("{{Header}}", signature);
-
+                        
 
                         foreach (DataRow dr in dt.Rows)
                         {
