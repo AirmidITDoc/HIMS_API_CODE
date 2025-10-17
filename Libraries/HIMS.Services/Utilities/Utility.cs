@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QRCoder;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
@@ -178,6 +179,14 @@ namespace HIMS.Services.Utilities
             }
 
             return instance;
+        }
+        public static string GetQrCodeBase64(string Data)
+        {
+            using var qrGenerator = new QRCodeGenerator();
+            using var qrCodeData = qrGenerator.CreateQrCode(Data, QRCodeGenerator.ECCLevel.Q);
+            using var qrCode = new PngByteQRCode(qrCodeData);
+            var qrBytes = qrCode.GetGraphic(20);
+            return $"data:image/png;base64,{Convert.ToBase64String(qrBytes)}";
         }
     }
 }

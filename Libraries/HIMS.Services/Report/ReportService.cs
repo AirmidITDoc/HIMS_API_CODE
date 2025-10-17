@@ -440,12 +440,12 @@ namespace HIMS.Services.Report
                         //htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         int i = 0;
 
-                        using var qrGenerator = new QRCodeGenerator();
-                        using var qrCodeData = qrGenerator.CreateQrCode(dt.GetColValue("RegNo"), QRCodeGenerator.ECCLevel.Q);
-                        using var qrCode = new PngByteQRCode(qrCodeData);
-                        var qrBytes = qrCode.GetGraphic(20);
-                        var base64Qr = $"data:image/png;base64,{Convert.ToBase64String(qrBytes)}";
-                        html = html.Replace("{{QrCode}}", base64Qr);
+                        //using var qrGenerator = new QRCodeGenerator();
+                        //using var qrCodeData = qrGenerator.CreateQrCode(dt.GetColValue("RegNo"), QRCodeGenerator.ECCLevel.Q);
+                        //using var qrCode = new PngByteQRCode(qrCodeData);
+                        //var qrBytes = qrCode.GetGraphic(20);
+                        //var base64Qr = $"data:image/png;base64,{Convert.ToBase64String(qrBytes)}";
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -506,7 +506,7 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-               
+
 
                 #region :: OPPrescription ::
                 case "OPPrescription":
@@ -1673,8 +1673,6 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        //html.Replace("{{Signature}}", signature);
-
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
 
 
@@ -1693,7 +1691,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithOutHeader", "PathologyReportWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
@@ -8776,22 +8774,13 @@ namespace HIMS.Services.Report
                         int i = 0, j = 0, k = 0, testlength = 0, m;
                         String Label = "", Suggchk = "", Suggestion = "";
                         string previousLabel = "", previoussubLabel = "";
-                       
+
                         string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
 
                         var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
-
-                        //string LogoFileName = dt.Rows[0]["Header"].ConvertToString();
-
-                        //var Logo = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Header"].ConvertToString());
-
-                       
-                        //html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
 
 
                         foreach (DataRow dr in dt.Rows)
@@ -8972,8 +8961,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
-                        html = html.Replace("{{Header}}", signature);
-
+                        
 
                         foreach (DataRow dr in dt.Rows)
                         {
