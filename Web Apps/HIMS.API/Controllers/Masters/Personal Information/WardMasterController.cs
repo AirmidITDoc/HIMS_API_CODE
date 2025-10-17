@@ -115,7 +115,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("get-WardClass")]
-        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var WardClassWiseList = await _repository.GetAll(x => x.IsActive.Value);

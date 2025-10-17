@@ -4242,7 +4242,7 @@ namespace HIMS.Services.Report
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:10px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 

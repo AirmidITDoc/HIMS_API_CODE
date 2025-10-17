@@ -372,6 +372,8 @@ namespace HIMS.API.Controllers.Common
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "FollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "FollowupType ")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
 
 
 
