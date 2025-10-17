@@ -4232,6 +4232,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
+
 
                         double T_NetAmount = 0;
                         foreach (DataRow dr in dt.Rows)
