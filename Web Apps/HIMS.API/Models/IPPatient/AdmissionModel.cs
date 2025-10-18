@@ -105,7 +105,7 @@ namespace HIMS.API.Models.IPPatient
         public string? RefDoctorDept { get; set; }
         public byte? AdmissionType { get; set; }
         public long AdmissionId { get; set; }
-        //public bool? Ischarity { get; set; }
+        public bool? Ischarity { get; set; }
 
 
 

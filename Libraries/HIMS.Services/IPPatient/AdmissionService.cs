@@ -96,9 +96,7 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }
 
@@ -159,7 +157,7 @@ namespace HIMS.Services.IPPatient
 
             string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
                 "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
-                "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId"};
+                "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity"};
             var admientity = objAdmission.ToDictionary();
 
             foreach (var rProperty in admientity.Keys.ToList())
@@ -178,7 +176,7 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             //var Bedentity = ObjBedmaster.ToDictionary();
