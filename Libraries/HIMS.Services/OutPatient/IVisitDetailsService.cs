@@ -21,7 +21,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task InsertAsync(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
-        Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
+        Task UpdateAsyncSP( VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         List<DeptDoctorListDoT> GetDoctor(int DepartmentId);
         Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel objGrid);

@@ -169,7 +169,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class AppointmentUpdate
     {
-        public AppReistrationUpdateModel AppReistrationUpdate { get; set; }
+        //public AppReistrationUpdateModel AppReistrationUpdate { get; set; }
         public AppVisitDetailModel Visit { get; set; }
 
     }

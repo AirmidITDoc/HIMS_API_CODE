@@ -101,9 +101,9 @@ namespace HIMS.API.Controllers.OPPatient
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DocTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
-
+        //this api not use anywhere//
         [HttpPost("AppVisitInsert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -154,14 +154,14 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
-            Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
+            //Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-            if (obj.AppReistrationUpdate.RegId != 0)
+            if (obj.Visit.RegId != 0)
             {
-                model.AddedBy = CurrentUserId;
+                objVisitDetail.AddedBy = CurrentUserId;
 
                 if (obj.Visit.VisitId == 0)
                 {
@@ -169,7 +169,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.UpdateAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.UpdateAsyncSP( objVisitDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

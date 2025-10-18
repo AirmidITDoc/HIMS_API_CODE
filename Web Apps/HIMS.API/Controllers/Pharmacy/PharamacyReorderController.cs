@@ -32,6 +32,21 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<NonMovingItemListDto> NonMovingItemList = await _IPharmacyReorderService.GetListAsync(objGrid);
             return Ok(NonMovingItemList.ToGridResponse(objGrid, "Registration List"));
         }
+        [HttpPost("NonMovingItemWithoutBatchNoList")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<NonMovingItemListBatchNoDto> NonMovingItemListWithoutBatchNo = await _IPharmacyReorderService.GetListAsyncB(objGrid);
+            return Ok(NonMovingItemListWithoutBatchNo.ToGridResponse(objGrid, "Registration List"));
+        }
+        [HttpPost("ItemExpReportMonthWiseList")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListM(GridRequestModel objGrid)
+        {
+            IPagedList<ItemExpReportMonthWiseListDto> ItemExpReportMonthWiseList = await _IPharmacyReorderService.GetListAsyncM(objGrid);
+            return Ok(ItemExpReportMonthWiseList.ToGridResponse(objGrid, "Registration List"));
+        }
+
 
 
 

@@ -51,7 +51,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public DoctorModelValidator()
         {
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
-            RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
+            //RuleFor(x => x.MiddleName).NotNull().NotEmpty().WithMessage("MiddleName is required");
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
         }
     }
@@ -84,8 +84,8 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public DoctorQualificationDetailModelValidator()
         {
-            RuleFor(x => x.QualificationId).NotNull().NotEmpty().WithMessage("QualificationId  is required");
-            RuleFor(x => x.PassingYear).NotNull().NotEmpty().WithMessage("PassingYear  is required");
+            //RuleFor(x => x.QualificationId).NotNull().NotEmpty().WithMessage("QualificationId  is required");
+            //RuleFor(x => x.PassingYear).NotNull().NotEmpty().WithMessage("PassingYear  is required");
 
         }
     }

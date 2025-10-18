@@ -162,22 +162,22 @@ namespace HIMS.Services.OutPatient
             await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
 
-        public virtual async Task UpdateAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsyncSP( VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegId", "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "UpdatedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("ps_update_RegistrationForAppointment_1", CommandType.StoredProcedure, entity);
-            objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
-            objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
-            await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            //string[] rEntity = { "RegId", "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "UpdatedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress" };
+            //var entity = objRegistration.ToDictionary();
+            //foreach (var rProperty in entity.Keys.ToList())
+            //{
+            //    if (!rEntity.Contains(rProperty))
+            //        entity.Remove(rProperty);
+            //}
+            //odal.ExecuteNonQuery("ps_update_RegistrationForAppointment_1", CommandType.StoredProcedure, entity);
+            //objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
+            //objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
+            //await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
             string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
