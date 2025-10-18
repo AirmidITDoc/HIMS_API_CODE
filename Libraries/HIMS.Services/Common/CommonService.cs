@@ -128,6 +128,13 @@ namespace HIMS.Services.Common
                 case "DashAdmissionDateWiseCount": sp_Name = "ps_Dash_AdmissionCountLessthan15Day_1"; break;
                 case "DashDischargeDateWiseCount": sp_Name = "ps_Dash_DischargeCountLessthan15Day_1"; break;
 
+
+                // Marketing Mobile App API
+                case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
+                case "MarketingTodayVisitCityWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCityWiseCount"; break;
+                case "MarketingTodayVisitCategoryWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCategoryWiseCount"; break;
+
+
                 default: break;
             }
             foreach (var property in fields)
