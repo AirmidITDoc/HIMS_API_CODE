@@ -364,7 +364,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added Successfully.", model.RefundId);
         }
 
 
@@ -385,10 +385,10 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added Successfully.");
         }
         [HttpPost("PhBillDiscountAfter")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> InsertSP1(PhBillDiscountAfterModel obj)
         {
 
@@ -400,7 +400,23 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Updated  successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated Successfully.");
+        }
+
+        [HttpPost("ExtpatientDetUpdate")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> InsertSP(ExtpatientDetModel obj)
+        {
+
+            TSalesHeader Model = obj.MapTo<TSalesHeader>();
+            if (obj.SalesId != 0)
+            {
+
+                await _ISalesService.InsertSP(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated Successfully.");
         }
 
 

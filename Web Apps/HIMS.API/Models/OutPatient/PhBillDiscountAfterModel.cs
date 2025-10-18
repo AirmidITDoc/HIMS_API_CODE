@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using FluentValidation;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Data.Models;
@@ -28,5 +29,17 @@ namespace HIMS.API.Models.OutPatient
         public List<GlobalDiscountModel> Sales { get; set; }
     
 
+    }
+
+
+    public class ExtpatientDetModel
+    {
+        public string? ExtMobileNo { get; set; }
+        public string? ExternalPatientName { get; set; }
+        public string? ExtAddress { get; set; }
+        public string? DoctorName { get; set; }
+        public long? SalesId { get; set; }
+
+       
     }
 }

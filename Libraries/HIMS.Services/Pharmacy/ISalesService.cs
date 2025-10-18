@@ -43,6 +43,8 @@ namespace HIMS.Services.Users
         Task DeleteAsync(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertAsync(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username);
         Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+        Task InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
         Task<float> GetStock(long StockId);
