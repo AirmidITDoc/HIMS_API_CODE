@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //UPDATE SHILPA 09-08-2025//
         [HttpPost("AdmissionRegInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse Insert(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
