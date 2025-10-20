@@ -12,6 +12,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? StoreId { get; set; }
         public string? StoreName {  get; set; }
         public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
         public float? OpeningBalance { get; set; }
         public float? ReceivedQty { get; set; }
         public float? IssueQty { get; set; }
