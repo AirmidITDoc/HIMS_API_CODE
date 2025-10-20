@@ -25,26 +25,13 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPharmacyReorderService = repository;
            
         }
-        [HttpPost("NonMovingItemList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<NonMovingItemListDto> NonMovingItemList = await _IPharmacyReorderService.GetListAsync(objGrid);
-            return Ok(NonMovingItemList.ToGridResponse(objGrid, "NonMovingItemList "));
-        }
-        [HttpPost("NonMovingItemWithoutBatchNoList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        public async Task<IActionResult> Lists(GridRequestModel objGrid)
-        {
-            IPagedList<NonMovingItemListBatchNoDto> NonMovingItemListWithoutBatchNo = await _IPharmacyReorderService.GetListAsyncB(objGrid);
-            return Ok(NonMovingItemListWithoutBatchNo.ToGridResponse(objGrid, "NonMovingItemWithoutBatchNoList "));
-        }
-        [HttpPost("ItemExpReportMonthWiseList")]
+      
+        [HttpPost("ItemReorderList")]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> ListM(GridRequestModel objGrid)
         {
-            IPagedList<ItemExpReportMonthWiseListDto> ItemExpReportMonthWiseList = await _IPharmacyReorderService.GetListAsyncM(objGrid);
-            return Ok(ItemExpReportMonthWiseList.ToGridResponse(objGrid, "ItemExpReportMonthWiseList "));
+            IPagedList<ItemReorderListDto> ItemReorderList = await _IPharmacyReorderService.GetListAsync(objGrid);
+            return Ok(ItemReorderList.ToGridResponse(objGrid, "ItemReorderList "));
         }
 
 
