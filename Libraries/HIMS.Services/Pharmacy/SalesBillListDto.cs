@@ -35,6 +35,10 @@ namespace HIMS.Services.Pharmacy
         public bool IsPrint { get; set; }
         public bool IsPurBill { get; set; }
         public string CompanyName { get; set; }
+        public string? ExtMobileNo { get; set; }
+        public string? DoctorName { get; set; }
+        public string? ExtAddress { get; set; }
+
 
 
     }
