@@ -17,17 +17,10 @@ namespace HIMS.Services.Pharmacy
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<NonMovingItemListDto>> GetListAsync(GridRequestModel model)
+     
+        public virtual async Task<IPagedList<ItemReorderListDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<NonMovingItemListDto>(model, "m_PharSales_NonMovingItemList");
-        }
-        public virtual async Task<IPagedList<NonMovingItemListBatchNoDto>> GetListAsyncB(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<NonMovingItemListBatchNoDto>(model, "ps_PharSales_NonMovingItemListWithoutBatchNo");
-        }
-        public virtual async Task<IPagedList<ItemExpReportMonthWiseListDto>> GetListAsyncM(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemExpReportMonthWiseListDto>(model, "ps_Phar_ItemExpReportMonthWise");
+            return await DatabaseHelper.GetGridDataBySp<ItemReorderListDto>(model, "ps_rtrvItemReorderList");
         }
     }
 }
