@@ -81,46 +81,68 @@
                     </td>
                 </tr>
             </table>
-                <hr />
-                <tr><td style="text-align:center; font-size:20px">{{PrintTestName}}</td></tr>
-                <hr />
-                <tr style=" border-collapse: collapse;">
-                    <div>
-                        <div style="display:flex;justify-content:space-between;padding:10px;border:2px solid gray;margin:5px;width:100%;">
-                            <div style="display:flex;width:100%;margin-left:10px;height:auto">
-                                <div [innerHtml]="PathTemplateDetailsResult"></div>
-                                {{ResultEntry}}
-                            </div>
+            <hr />
+            <tr><td style="text-align:center; font-size:20px">{{PrintTestName}}</td></tr>
+            <hr />
+            <tr style=" border-collapse: collapse;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;padding:10px;border:2px solid gray;margin:5px;width:100%;">
+                        <div style="display:flex;width:100%;margin-left:10px;height:auto">
+                            <div [innerHtml]="PathTemplateDetailsResult"></div>
+                            {{ResultEntry}}
                         </div>
                     </div>
-                </tr>
-                <tr>
-                    <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+                </div>
+            </tr>
+            <tr>
+                <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
 
-                        <tr style="margin-top: 12px;">
-                            SuggestionNotes :{{SuggestionNotes}}
-                        <tr>
-                            <!--<td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>-->
-                        </tr>
-                        <tr></tr>
-                        <tr style="padding: 6px; text-align: right;">
-                            <td>
+                    <tr style="margin-top: 12px;">
+                        SuggestionNotes :{{SuggestionNotes}}
+                    <tr>
+                        <!--<td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesnï¿½t require signature</td>-->
+                    </tr>
+                    <tr></tr>
+                    <!--<tr style="padding: 6px; text-align: right;">
+                        <td>
 
-                                <span>{{RadiologyDocName}}</span>
-                            </td>
-                        </tr>
-                        <tr style="padding: 6px; text-align: right; font-weight:bold">
+                            <span>{{RadiologyDocName}}</span>
+                        </td>
+                    </tr>
+                    <tr style="padding: 6px; text-align: right; font-weight:bold">
 
-                            <td>
+                        <td>
 
-                                <span>Radiology Doctor Name</span>
-                            </td>
-                        </tr>
+                            <span>Radiology Doctor Name</span>
+                        </td>
+                    </tr>-->
 
-                    </table>
-                </tr>
+                </table>
+            </tr>
         </div>
     </div>
+
+    <table style="width: 100%; line-height: inherit; text-align: left; padding-left: 20px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
+        <tr>
+            <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">"END OF REPORT"</td>
+        </tr>
+    </table>
+    <table style="width: 100%; line-height: inherit; text-align: left; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
+        <tr>
+            <span style="margin-left:70%">
+                <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
+            </span>
+            <footer style="margin-left: 70%; font-size: 19px;">
+                <div style="font-weight:bold;">{{RadiologyDocName}}</div>
+                <div style="font-weight:bold;">{{Education}}</div>
+                <div style="font-weight:bold;">{{MahRegNo}}</div>
+            </footer>
+        </tr>
+
+        <!--<tr>
+            {{Imgfooter}}
+        </tr>-->
+    </table>
 </body>
 
 </html>

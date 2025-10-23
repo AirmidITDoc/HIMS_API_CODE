@@ -9509,6 +9509,12 @@ namespace HIMS.Services.Report
                 case "RadiologyTemplateReportWithHeader":
                     {
 
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -9551,6 +9557,12 @@ namespace HIMS.Services.Report
                 case "RadiologyTemplateReportWithoutHeader":
                     {
 
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));

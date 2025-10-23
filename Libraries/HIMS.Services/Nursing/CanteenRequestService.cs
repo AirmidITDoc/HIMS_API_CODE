@@ -44,7 +44,8 @@ namespace HIMS.Services.Nursing
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "ps_Rtrv_CanteenRequestListFromWard");
         }
       
-        public virtual async Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
+        public virtual async Task 
+            InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },

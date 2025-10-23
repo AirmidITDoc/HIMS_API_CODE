@@ -52,5 +52,11 @@ namespace HIMS.Data.DTO.Administration
         public decimal PayTMAmount { get; set; }
 
 
+        public DateTime ChequeDate { get; set; }
+
+        public DateTime CardDate { get; set; }
+        public DateTime NEFTDate { get; set; }
+        public DateTime PayTMDate { get; set; }
+
     }
 }

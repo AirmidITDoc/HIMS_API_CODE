@@ -34,7 +34,7 @@
                                 </td>
 
                                 <td style="padding: 2px;">
-                                    <span style="font-weight: bold;" >PathDate Time: </span>
+                                    <span style="font-weight: bold;">PathDate Time: </span>
                                     <span>{{RadTime}} </span>
                                 </td>
                             </tr>
@@ -47,7 +47,7 @@
                                     <span style="font-weight: bold;">ReportTime  : </span>
                                     <span>{{ReportTime}}</span>
                                 </td>
-                              
+
                             </tr>
 
                             <tr>
@@ -60,7 +60,7 @@
                                     <span style="font-weight: bold;">Age / Gender : </span>
                                     <span> {{AgeYear}} Y| {{AgeMonth}} M| {{AgeDay}}D / {{GenderName}}</span>
                                 </td>
-                              
+
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
@@ -101,7 +101,7 @@
                             <!--<td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>-->
                         </tr>
                         <tr></tr>
-                        <tr style="padding: 6px; text-align: right;">
+                        <!--<tr style="padding: 6px; text-align: right;">
                             <td>
 
                                 <span>{{RadiologyDocName}}</span>
@@ -113,13 +113,37 @@
 
                                 <span>Radiology Doctor Name</span>
                             </td>
-                        </tr>
+                        </tr>-->
 
                     </table>
                 </tr>
             </table>
         </div>
     </div>
+
+
+    <table style="width: 100%; line-height: inherit; text-align: left; padding-left: 20px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
+        <tr>
+            <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">"END OF REPORT"</td>
+        </tr>
+    </table>
+    <table style="width: 100%; line-height: inherit; text-align: left; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
+        <tr>
+            <span style="margin-left:70%">
+                <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
+            </span>
+            <footer style="margin-left: 70%; font-size: 19px;">
+                <div style="font-weight:bold;">{{RadiologyDocName}}</div>
+                <!--<div style="font-weight:bold;">{{DoctorType}}</div>-->
+                <div style="font-weight:bold;">{{Education}}</div>
+                <div style="font-weight:bold;">{{MahRegNo}}</div>
+            </footer>
+        </tr>
+
+        <!--<tr>
+            {{Imgfooter}}
+        </tr>-->
+    </table>
 </body>
 
 </html>

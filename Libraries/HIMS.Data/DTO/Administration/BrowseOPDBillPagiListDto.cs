@@ -42,7 +42,7 @@ namespace HIMS.Data.DTO.Administration
         public string CashCounterName { get; set; }
         public long BillNo { get; set; }
         public long CompanyId { get; set; }
-
+        public long PaymentId { get; set; }
 
     }
 }
