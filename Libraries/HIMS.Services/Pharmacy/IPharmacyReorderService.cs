@@ -10,9 +10,8 @@ namespace HIMS.Services.Pharmacy
 {
     public partial interface IPharmacyReorderService
     {
-        Task<IPagedList<NonMovingItemListDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<NonMovingItemListBatchNoDto>> GetListAsyncB(GridRequestModel objGrid);
-        Task<IPagedList<ItemExpReportMonthWiseListDto>> GetListAsyncM(GridRequestModel objGrid);
+        
+        Task<IPagedList<ItemReorderListDto>> GetListAsync(GridRequestModel objGrid);
 
 
 

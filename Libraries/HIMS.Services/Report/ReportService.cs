@@ -406,7 +406,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceiptT" + vDate, Orientation.Portrait);
                         break;
@@ -2225,10 +2225,10 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "TNursingVitalsReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_T_NursingVitals", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_ClinicalData_All", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingVitalsReport", "NursingVitalsReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingVitalsReport", "NursingVitalsReport" + vDate, Orientation.Landscape);
 
 
                         break;
@@ -4239,12 +4239,12 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:10px;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:10px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:8px;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:8px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:10px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:8px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
@@ -11263,62 +11263,36 @@ namespace HIMS.Services.Report
                     {
 
                         int i = 0, j = 0;
+                        double Dcount = 0;
                         string previousLabel = "";
-                        String Label = "", Label1 = "", Label2 = "";
+                        string htmlHeader = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
 
-                        //foreach (DataRow dr in Bills.Rows)
-                        //{
-                        //    i++;
+                            items.Append("<tr style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;font-size: 18px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Temperature"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Pulse"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Respiration"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["BloodPresure"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["CVP"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Peep"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ArterialBloodPressure"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PAPressureReading"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Brady"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Apnea"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["AbdominalGrith"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["Desaturation"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["SaturationWithO2"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["SaturationWithoutO2"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PO2"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["FIO2"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PFRation"].ConvertToString()).Append("</td></tr>");
 
-                        //    items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:15;\"><td style=\"border-left: 1px solid black;border-bottom:1px solid #000;vertical-align: top;padding: 0;height: 20px;text-align:center;\">").Append(i).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;padding:3px;border-bottom:1px solid #000;height:10px;text-align:left;vertical-align:middle;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;padding:3px;border-bottom:1px solid #000;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
-
-                        //}
-
-
-
-
-
-                        //foreach (DataRow dr in dt.Rows)
-                        //{
-                        //    i++;
-                        //    //if (i == 1 || Label != previousLabel)
-                        //    //{
-                        //    //    j = 1;
-                        //    //    Label = dr["DrugName"].ConvertToString();
-                        //    //    Label1 = dr["GenericName"].ConvertToString();
-                        //    //    Label2 = dr["OldClassName"].ConvertToString();
-
-                        //    //    items.Append("<tr style=\"font-size:22px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"2\" style=\";padding:6px;height:10px;text-align:left;font-weight:bold;vertical-align:middle;padding-left:60px;\">").Append(Label2).Append("-----").Append(Label).Append("</td><td  style=\"padding:6px;height:10px;text-align:left;vertical-align:middle\">").Append(Label1).Append("</td></tr>");
-                        //    //}
-                        //    //previousLabel = dr["DrugName"].ConvertToString();
-
-                        //    //if (Label == previousLabel)
-                        //    //{
-
-                        //    //    i++;
-                        //    items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
-                        //    items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
-                        //    items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
-                        //    items.Append("</tr>");
-                        //    if (dr["ItemGenericName"].ConvertToString() != null)
-                        //    {
-                        //        items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
-
-                        //    }
-
-                        //    items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
-
-
-
-
-
-                        //}
+                        }
+                        
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -11362,7 +11336,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Apnea}}", dt.GetColValue("Apnea"));
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
 
-                        html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
+                        html = html.Replace("{{AbdominalGrith}}", dt.GetColValue("AbdominalGrith"));
+                        html = html.Replace("{{Desaturation}}", dt.GetColValue("Desaturation"));
+                        html = html.Replace("{{SaturationWithO2}}", dt.GetColValue("SaturationWithO2"));
+                        html = html.Replace("{{SaturationWithoutO2}}", dt.GetColValue("SaturationWithoutO2"));
+                        html = html.Replace("{{PO2}}", dt.GetColValue("PO2"));
+                        html = html.Replace("{{FIO2}}", dt.GetColValue("FIO2"));
+                        html = html.Replace("{{PFRation}}", dt.GetColValue("PFRation"));
+                        html = html.Replace("{{SuctionType}}", dt.GetColValue("SuctionType"));
+
 
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));

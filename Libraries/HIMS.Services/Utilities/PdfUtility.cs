@@ -204,7 +204,7 @@ namespace HIMS.Services.Utilities
                 GlobalSettings = {
             ColorMode = ColorMode.Color,
             Orientation = PageOrientation,
-            PaperSize = new PechkinPaperSize("30mm", "1000mm"), // 3cm width, height = max A4 height (you can increase if needed)
+            PaperSize = new PechkinPaperSize("30mm", "200mm"), // 3cm width, height = max A4 height (you can increase if needed)
             Margins = new MarginSettings()
             {
                 Top = 5,
@@ -218,13 +218,13 @@ namespace HIMS.Services.Utilities
                 PagesCount = true,
                 HtmlContent = html,
                 WebSettings = { DefaultEncoding = "utf-8" },
-                FooterSettings = new FooterSettings()
-                {
-                    FontSize = 7,
-                    Right = "Page [page] of [toPage]",
-                    Line = true,
-                    Spacing = 1.5
-                }
+                //FooterSettings = new FooterSettings()
+                //{
+                //    FontSize = 7,
+                //    Right = "Page [page] of [toPage]",
+                //    Line = true,
+                //    Spacing = 1.5
+                //}
             }
         }
             };

@@ -110,23 +110,23 @@ namespace HIMS.API.Controllers.NursingStation
 
 
 
-        [HttpPost("CanteenInsert")]
+        //[HttpPost("CanteenInsert")]
 
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(CanteenRequestModel obj)
-        {
-            TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
-            if (obj.ReqId == 0)
-            {
-                model.Date = Convert.ToDateTime(obj.Date);
-                model.Time = Convert.ToDateTime(obj.Time);
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Insert(CanteenRequestModel obj)
+        //{
+        //    TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
+        //    if (obj.ReqId == 0)
+        //    {
+        //        model.Date = Convert.ToDateTime(obj.Date);
+        //        model.Time = Convert.ToDateTime(obj.Time);
 
-                await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
-        }
+        //        await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
+        //}
 
 
         //List API Get By Id

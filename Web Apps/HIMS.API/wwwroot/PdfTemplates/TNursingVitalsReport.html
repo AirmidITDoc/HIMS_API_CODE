@@ -80,19 +80,36 @@
                     </tr>
                 </table>
              
-                <tr class="bill-info-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;font-size:20px;">
-                            <thead style="font-size: 14px;">
-                                <tr style="border-bottom: 1px solid #d4c3c3;">
-                                    <td style="text-align: left; padding-top: 10px; padding-bottom: 10px; font-size: 20px; padding-left: 2px; " colspan="5"><span style="font-weight: bold; margin-left: 4px; display:{{chkTemperatureflag}}">Temperature : </span>{{Temperature}} <span style="margin-left: 4px; display:{{chkTemperatureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px;display:{{chkPulseflag}}">Pulse : </span> {{Pulse}} <span style="margin-left: 5px;display:{{chkPulseflag}}">|</span> <span style="font-weight:bold;margin-left:10px;display:{{chkRespirationflag}}">Respiration : </span>{{Respiration}} <span style="margin-left:5px;display:{{chkRespirationflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBloodPresureflag}}">BloodPresure : </span>{{BloodPresure}}  <span style="margin-left: 5px; display:{{chkBloodPresureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkCVPflag}}">CVP : </span> {{CVP}} <span style="margin-left: 5px; display:{{chkCVPflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPeepflag}}">Peep : </span> {{Peep}} <span style="margin-left: 5px; display:{{chkPeepflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkArterialBloodPressureflag}}">ArterialBloodPressure : </span> {{ArterialBloodPressure}} <span style="margin-left: 5px; display:{{chkArterialBloodPressureflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPAPressureReadingflag}}">PAPressureReading : </span> {{PAPressureReading}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkBradyflag}}">Brady : </span> {{Brady}} |<span style="font-weight: bold; margin-left: 10px; display:{{chkApneaflag}}">Apnea : </span> {{Apnea}} </td>
-                                </tr>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead style="font-size: 14px;">
+                        <tr style="font-weight:bold;">
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Sr.No</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;">Temp</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Pulse</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Respiration</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> BP</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> CVP</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Peep</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Arterial BP</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> PAPressure Reading</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Brady</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Apnea</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Abdominal Grith</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;">Desaturation</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Saturation WithO2</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> Saturation WithoutO2</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> PO2</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> FIO2</td>
+                            <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; width: 10%;"> PFRation</td>
 
-                        </table>
-                    </td>
-                </tr>
+                        </tr>
+                        {{Items}}
 
 
+
+
+                    </thead>
+                </table>
             </table>
             <tr>
                 <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
