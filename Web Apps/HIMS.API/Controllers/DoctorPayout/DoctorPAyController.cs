@@ -31,6 +31,26 @@ namespace HIMS.API.Controllers.DoctorPayout
             IPagedList<DoctorPayListDto> DoctorPayList = await _IDoctorPayService.GetList(objGrid);
             return Ok(DoctorPayList.ToGridResponse(objGrid, "DoctorPayList"));
         }
+
+        [HttpPost("DoctorBilldetailList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorbilldetailList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorBilldetailListDto> DoctorList = await _IDoctorPayService.GetBillDetailList(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorBilldetailList"));
+        }
+
+
+        [HttpPost("DoctorPaySummaryList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorPaysummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<DcotorpaysummaryListDto> DoctorpayList = await _IDoctorPayService.GetDoctroSummaryList(objGrid);
+            return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaySummaryList"));
+        }
+
+
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPD(DoctorPayModel obj)

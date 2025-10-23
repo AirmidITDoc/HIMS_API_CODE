@@ -20,10 +20,18 @@ namespace HIMS.Services.DoctorPayout
         {
             _context = HIMSDbContext;
         }
+
+       
         public virtual async Task<IPagedList<DoctorPayListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorPayListDto>(model, "ps_rtrv_T_AdditionalDocPay_List");
         }
+
+        public virtual async Task<IPagedList<DoctorBilldetailListDto>> GetBillDetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorBilldetailListDto>(model, "Rtrv_IPBillForDocShr");
+        }
+
 
 
         public virtual async Task InsertAsync(TAdditionalDocPay ObjTAdditionalDocPay, int CurrentUserId, string CurrentUserName)
@@ -41,5 +49,13 @@ namespace HIMS.Services.DoctorPayout
             odal.ExecuteNonQuery("ps_insert_T_AdditionalDocPay_1", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity,  nameof(TAdditionalDocPay), (int)ObjTAdditionalDocPay.TranId,  Core.Domain.Logging.LogAction.Add,  CurrentUserId,  CurrentUserName);
         }
+
+             
+        public virtual async Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DcotorpaysummaryListDto>(model, "ps_rtrv_DoctorWiseShareAmount");
+        }
+
+
     }
 }

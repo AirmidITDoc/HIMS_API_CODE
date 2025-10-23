@@ -14,5 +14,9 @@ namespace HIMS.Services.DoctorPayout
     {
         Task InsertAsync(TAdditionalDocPay ObjTAdditionalDocPay, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<DoctorPayListDto>> GetList(GridRequestModel objGrid);
+
+        Task<IPagedList<DoctorBilldetailListDto>> GetBillDetailList(GridRequestModel objGrid);
+
+        Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel objGrid);
     }
 }
