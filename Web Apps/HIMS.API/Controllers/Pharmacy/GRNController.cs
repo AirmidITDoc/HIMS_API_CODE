@@ -114,8 +114,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.Grndate = DateTime.Now.Date;
-                model.Grntime = DateTime.Now;
+                //model.Grndate = DateTime.Now.Date;
+                //model.Grntime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
