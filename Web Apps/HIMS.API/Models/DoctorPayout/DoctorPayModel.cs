@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.DoctorPayout
 {
@@ -35,4 +36,17 @@ namespace HIMS.API.Models.DoctorPayout
 
         }
     }
+    public class ShareDoctAddChargesUpdate
+    {
+        public double? DocAmt { get; set; }
+        public double? HospitalAmt { get; set; }
+        public long ChargesId { get; set; }
+
+    }
+   
+    public class ShareDoctAddCharges
+    {
+        public List<ShareDoctAddChargesUpdate> ShareDoctAddCharge { get; set; }
+    }
+
 }

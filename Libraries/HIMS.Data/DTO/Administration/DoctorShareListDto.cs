@@ -19,9 +19,8 @@ namespace HIMS.Data.DTO.Administration
         public string? CompanyName { get; set; }
         public bool? IsBillShrHold { get; set; }
         public int  opdipdtype  { get; set; }
-
-        //public double? DoctorShareAmount { get; set; }
-        //public double? HospitalAmount { get; set; }
+        public int? DoctorShareAmount { get; set; }
+        public int? HospitalAmount { get; set; }
 
 
 

@@ -11,6 +11,7 @@ using HIMS.API.Models.DoctorPayout;
 using HIMS.Services.DoctorPayout;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Controllers.DoctorPayout
 {
@@ -66,5 +67,21 @@ namespace HIMS.API.Controllers.DoctorPayout
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+        [HttpPut("ShareDocAddCharges")]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> GSTUpdate(ShareDoctAddCharges obj)
+        {
+            List<AddCharge> model = obj.ShareDoctAddCharge.MapTo<List<AddCharge>>();
+            if (model.Count > 0)
+            {
+                //model.AddedBy = CurrentUserId;
+                await _IDoctorPayService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Update successfully.");
+        }
+       
     }
 }

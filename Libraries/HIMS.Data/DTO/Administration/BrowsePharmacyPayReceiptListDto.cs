@@ -26,13 +26,14 @@ namespace HIMS.Data.DTO.Administration
         public long? SalesId { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
-
-
         public DateTime ChequeDate { get; set; }
-
         public DateTime CardDate { get; set; }
         public DateTime NEFTDate { get; set; }
         public DateTime PayTMDate { get; set; }
+        public long TransactionType { get; set; }
+        public long CashCounterId { get; set; }
+        public long StoreId { get; set; }
+        public long OPDIPDType { get; set; }
 
     }
 }

@@ -1,7 +1,9 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
 using System;
@@ -31,6 +33,11 @@ namespace HIMS.Services.DoctorPayout
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorBilldetailListDto>(model, "Rtrv_IPBillForDocShr");
         }
+        public virtual async Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DcotorpaysummaryListDto>(model, "ps_rtrv_DoctorWiseShareAmount");
+        }
+
 
 
 
@@ -49,13 +56,29 @@ namespace HIMS.Services.DoctorPayout
             odal.ExecuteNonQuery("ps_insert_T_AdditionalDocPay_1", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity,  nameof(TAdditionalDocPay), (int)ObjTAdditionalDocPay.TranId,  Core.Domain.Logging.LogAction.Add,  CurrentUserId,  CurrentUserName);
         }
-
-             
-        public virtual async Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel model)
+        public virtual async Task UpdateAsync(List<AddCharge> ObjAddCharge, int CurrentUserId, string CurrentUserName)
         {
-            return await DatabaseHelper.GetGridDataBySp<DcotorpaysummaryListDto>(model, "ps_rtrv_DoctorWiseShareAmount");
-        }
 
+            DatabaseHelper odal = new();
+            foreach (var item in ObjAddCharge)
+            {
+
+                string[] rEntity = { "DocAmt", "HospitalAmt", "ChargesId" };
+
+                var Aentity = item.ToDictionary();
+                foreach (var rProperty in Aentity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        Aentity.Remove(rProperty);
+                }
+
+
+                odal.ExecuteNonQuery("ps_Update_ShrDoc_AddChar_1", CommandType.StoredProcedure, Aentity); 
+                //await _context.LogProcedureExecution(Aentity, nameof(AddCharge), ObjAddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+            }
+
+        }
 
     }
 }
