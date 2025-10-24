@@ -373,6 +373,8 @@ namespace HIMS.API.Controllers.Common
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "FollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "FollowupType ")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory ")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
 
 
 

@@ -27,10 +27,35 @@ namespace HIMS.Services.Administration
         }
 
 
+        //public virtual async Task InsertAsync(TExpense ObjTExpense, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TExpenses.Add(ObjTExpense);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+
+
         public virtual async Task InsertAsync(TExpense ObjTExpense, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
             {
+                // Get last SequenceNo (string type)
+                var lastSeqNoStr = await _context.TExpenses
+                    .OrderByDescending(x => x.SequenceNo)
+                    .Select(x => x.SequenceNo)
+                    .FirstOrDefaultAsync();
+
+                int lastSeqNo = 0;
+                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+                    lastSeqNo = parsed;
+
+                ObjTExpense.SequenceNo = (lastSeqNo + 1).ToString();
+
                 _context.TExpenses.Add(ObjTExpense);
                 await _context.SaveChangesAsync();
 
@@ -38,13 +63,24 @@ namespace HIMS.Services.Administration
             }
         }
 
-        public virtual async Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[] strings)
+
+
+        public virtual async Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // Update header & detail table records
                 _context.TExpenses.Update(ObjTExpense);
                 _context.Entry(ObjTExpense).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(ObjTExpense).Property(column).IsModified = false;
+                    }
+                }
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
