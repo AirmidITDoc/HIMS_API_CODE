@@ -173,11 +173,11 @@ namespace HIMS.API.Controllers.Emergency
                 Text = x.FirstName + " " + x.LastName + " | " + x.SeqNo + " | " + x.Mobile,
                 Value = x.EmgId,
                 RegNo = x.SeqNo,
-                RegId = x.RegId,
-                MobileNo = x.MobileNo,
-                AgeYear = x.AgeYear,
-                AgeMonth = x.AgeMonth,
-                AgeDay = x.AgeDay,
+                x.RegId,
+                x.MobileNo,
+                x.AgeYear,
+                x.AgeMonth,
+                x.AgeDay,
                 PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
         }

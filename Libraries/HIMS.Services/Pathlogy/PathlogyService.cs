@@ -2,13 +2,12 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System.Transactions;
 using System.Data;
 using System.Transactions;
-using HIMS.Data.Extensions;
 
 
 namespace HIMS.Services.Pathlogy

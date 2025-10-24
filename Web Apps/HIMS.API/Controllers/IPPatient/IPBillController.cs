@@ -338,9 +338,8 @@ namespace HIMS.API.Controllers.IPPatient
                 ServiceId = obj.ServiceId,
                 ChargesDate = obj.ChargesDate,
                 DoctorId = obj.DoctorId,
-
+                AddedBy = CurrentUserId
             };
-            model.AddedBy = CurrentUserId;
             _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId, obj.ReqDetId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }

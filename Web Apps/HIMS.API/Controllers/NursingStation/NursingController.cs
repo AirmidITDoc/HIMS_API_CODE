@@ -338,7 +338,7 @@ namespace HIMS.API.Controllers.NursingStation
             MNursingTemplateMaster model = await _repository1.GetById(x => x.NursingId == Id);
             if ((model?.NursingId ?? 0) > 0)
             {
-                model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);

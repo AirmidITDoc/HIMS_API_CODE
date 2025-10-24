@@ -426,8 +426,8 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 Text = x.ExternalPatientName + " | " + x.ExtMobileNo + " | " + x.DoctorName,
                 Value = x.ExtMobileNo,
-                ExtMobileNo = x.ExtMobileNo,
-                DoctorName = x.DoctorName,
+                x.ExtMobileNo,
+                x.DoctorName,
                 PatientName = x.ExternalPatientName
             }));
         }
@@ -442,7 +442,7 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 Text = x.DoctorName,
                 Value = x.DoctorName,
-                DoctorName = x.DoctorName,
+                x.DoctorName,
             }));
         }
     }

@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             CompanyMaster model = await _repository.GetById(x => x.CompanyId == Id);
             if ((model?.CompanyId ?? 0) > 0)
             {
-                model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
