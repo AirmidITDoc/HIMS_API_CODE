@@ -9,7 +9,7 @@ namespace HIMS.Services.Administration
 {
     public partial  interface IDoctorShareProcessService
     {
-        Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
+        void DoctorShareInsert(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
         Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
         Task UpdateAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username);
 

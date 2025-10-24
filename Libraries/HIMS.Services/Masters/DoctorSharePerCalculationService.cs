@@ -18,13 +18,13 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task UpdateAsyncOP(Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual void UpdateOP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
 
 
-           
+
             DatabaseHelper odal = new();
-            string[] rEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "OpdIpdType", "IsCancelled", "PbillNo", "TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy", "CashCounterId", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree","CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo","ConcessionAuthorizationName","IsBillCheck", "SpeTaxPer", "SpeTaxAmt", "IsBillShrHold", "DiscComments", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CompDiscAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
+            string[] rEntity = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "OpdIpdType", "IsCancelled", "PbillNo", "TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy", "CashCounterId", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "IsBillCheck", "SpeTaxPer", "SpeTaxAmt", "IsBillShrHold", "DiscComments", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CompDiscAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
             var entity = objBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -34,7 +34,7 @@ namespace HIMS.Services.Masters
             //objBill.BillNo = Convert.ToInt32(vBillNo);
 
         }
-        public virtual async Task UpdateAsyncIP(Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual void UpdateIP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
 
 

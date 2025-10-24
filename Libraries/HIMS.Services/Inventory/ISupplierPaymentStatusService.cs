@@ -18,7 +18,7 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<SupplierPaymentStatusListDto>> GetSupplierPaymentStatusList(GridRequestModel objGrid);
         Task<IPagedList<GetSupplierPaymentListDto>> GetSupplierPaymentList(GridRequestModel objGrid);
 
-        Task InsertAsyncSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string Username);
+        void InsertSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string Username);
 
 
 

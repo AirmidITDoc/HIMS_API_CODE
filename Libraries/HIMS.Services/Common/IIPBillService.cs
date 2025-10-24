@@ -29,23 +29,23 @@ namespace HIMS.Services.Common
 
 
         Task InsertAsync(AddCharge objAddCharge,List<AddCharge> objAddCharges, int UserId, string Username);
-        Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
-        Task IPbillAsyncSp(Bill ObjBill, List <BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
-        Task IPbillCreditAsyncSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
+        void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
+        void IPbillSp(Bill ObjBill, List <BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
+        void IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
-        Task IPInterimBillCashCounterAsyncSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails,  Payment Objpayment, int UserId, string Username);
-        Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
+        void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails,  Payment Objpayment, int UserId, string Username);
+        void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
 
-        Task IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
-        Task Update(AddCharge objAddCharge, int UserId, string Username);
-        Task InsertLabRequest(AddCharge objAddCharge, int UserId, string Username, long traiffId, long ReqDetId);
-        Task InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
+        void IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
+        void Update(AddCharge objAddCharge, int UserId, string Username);
+        void InsertLabRequest(AddCharge objAddCharge, int UserId, string Username, long traiffId, long ReqDetId);
+        void InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
         Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName);
-        Task InsertSP(AddCharge objAddCharge, int UserId, string Username);
-        Task InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
-        Task InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
+        void InsertSP(AddCharge objAddCharge, int UserId, string Username);
+        void InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
+        void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 
-        Task IPbillAsyncSp(Bill ObjBill,  int UserId, string Username);
+        void IPbillSp(Bill ObjBill,  int UserId, string Username);
 
     }
 }

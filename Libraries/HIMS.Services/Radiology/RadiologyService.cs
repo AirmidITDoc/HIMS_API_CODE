@@ -27,7 +27,7 @@ namespace HIMS.Services.Radiology
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
         }
-        public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
+        public virtual void RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();

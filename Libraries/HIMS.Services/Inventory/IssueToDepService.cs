@@ -177,7 +177,7 @@ namespace HIMS.Services.Inventory
             scope.Complete();
 
         }
-        public virtual async Task Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock, int UserId, string Username)
+        public virtual void Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {
             // //Add header table records
             {

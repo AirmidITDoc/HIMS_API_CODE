@@ -242,7 +242,7 @@ namespace HIMS.Services.Inventory
                          });
             return await qry.Take(50).ToListAsync();
         }
-        public virtual async Task<List<ItemListForSearchDTO>> GetItemListForPrescriptionretrun(int StoreId, string ItemName)
+        public virtual List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, string ItemName)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[2];

@@ -69,7 +69,7 @@ namespace HIMS.Services.Administration
 
         }
 
-        public virtual async Task UpdateAsync(Admission ObjAdmission, int UserId, string UserName)
+        public virtual void Update(Admission ObjAdmission, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -88,7 +88,7 @@ namespace HIMS.Services.Administration
 
         }
 
-        public virtual async Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username)
+        public virtual void PaymentUpdate(Payment ObjPayment, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -121,9 +121,9 @@ namespace HIMS.Services.Administration
             await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
-       
-      
-        public virtual async Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int UserId, string UserName)
+
+
+        public virtual void Insert(List<MAutoServiceList> ObjMAutoServiceList, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -142,7 +142,7 @@ namespace HIMS.Services.Administration
 
             }
         }
-             
+
     }
 }
 

@@ -51,7 +51,7 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<IPPrescriptiononDischargeListDto>(objGrid, "ps_Rtrv_IP_Prescription_Discharge");
         }
-        public virtual async Task InsertAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
+        public virtual void InsertSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "AddedByDate", "UpdatedByDate", "TemplateDescriptionHtml" };
@@ -76,7 +76,7 @@ namespace HIMS.Services.IPPatient
 
             }
         }
-        public virtual async Task UpdateAsyncSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
+        public virtual void UpdateSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "AdmissionId", "DischargeSummaryDate", "DischargeSummaryTime", "AddedByDate", "UpdatedByDate", "TemplateDescriptionHtml" };
@@ -112,7 +112,7 @@ namespace HIMS.Services.IPPatient
             }
 
         }
-        public virtual async Task InsertAsyncTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
+        public virtual void InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "History", "Diagnosis", "Investigation", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "DischargeSummaryDate", "OpDate","Optime","DischargeSummaryTime","DoctorAssistantName","ClaimNumber","PreOthNumber","AddedByDate",
@@ -137,7 +137,7 @@ namespace HIMS.Services.IPPatient
                 odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
             }
         }
-        public virtual async Task UpdateAsyncTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
+        public virtual void UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = {"History", "Diagnosis", "Investigation", "ClinicalFinding", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Remark", "OpDate", "Optime", "DischargeSummaryTime", "DoctorAssistantName", "ClaimNumber", "PreOthNumber",
@@ -148,7 +148,7 @@ namespace HIMS.Services.IPPatient
                 Sentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
-          
+
             var tokensObj = new
             {
                 OPDIPDID = Convert.ToInt32(ObjDischargeTemplate.AdmissionId)
@@ -167,11 +167,11 @@ namespace HIMS.Services.IPPatient
 
             }
         }
-        public virtual async Task InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName)
+        public virtual void InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy","CreatedDate","ModifiedDate" };
+            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy", "CreatedDate", "ModifiedDate" };
             var entity = ObjDischarge.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -201,11 +201,11 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity); ;
 
         }
-        public virtual async Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
+        public virtual void UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName","CreatedBy","CreatedDate","ModifiedDate"};
+            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy", "CreatedDate", "ModifiedDate" };
             var Dentity = ObjDischarge.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -213,7 +213,7 @@ namespace HIMS.Services.IPPatient
                 // Add the new parameter
                 //change by  Ashutosh 06 Jun 2025
                 //Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
-            //    Dentity["ModifiedBy"] = 0; // Ensure objpayment 
+                //    Dentity["ModifiedBy"] = 0; // Ensure objpayment 
             }
             odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
 
@@ -230,7 +230,7 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
         }
-       
+
         public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

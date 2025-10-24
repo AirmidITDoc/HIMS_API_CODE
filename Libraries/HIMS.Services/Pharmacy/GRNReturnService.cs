@@ -114,7 +114,7 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        public virtual async Task VerifyAsync(TGrnreturnHeader objGRN, int UserId, string UserName)
+        public virtual void Verify(TGrnreturnHeader objGRN, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -128,11 +128,11 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
 
         }
-        public virtual async Task InsertAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
+        public virtual void Insertsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = {  "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] rEntity = { "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objGRNReturn.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -178,18 +178,18 @@ namespace HIMS.Services.Pharmacy
 
         }
 
-        public virtual async Task UpdateAsyncsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
+        public virtual void Updatesp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "Prefix","UpdatedBy","TGrnreturnDetails" , "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] rEntity = { "Prefix", "UpdatedBy", "TGrnreturnDetails", "GrnreturnNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objGRNReturn.ToDictionary();
-            foreach (var rProperty in rEntity)    
+            foreach (var rProperty in rEntity)
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure,  entity);
-         
+            odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure, entity);
+
             var DeleteGrnReturnDetObj = new
             {
                 GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
@@ -225,7 +225,7 @@ namespace HIMS.Services.Pharmacy
                 }
                 odal.ExecuteNonQuery("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, gentity);
             }
-            
+
             foreach (var item in ObjTGrndetails)
             {
                 string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn" };

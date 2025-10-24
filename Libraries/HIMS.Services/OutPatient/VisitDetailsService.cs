@@ -419,7 +419,7 @@ namespace HIMS.Services.OutPatient
 
         }
 
-        public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)
+        public virtual void UpdateVital(VisitDetail objPara, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -476,7 +476,7 @@ namespace HIMS.Services.OutPatient
             await _context.SaveChangesAsync();
             scope.Complete();
         }
-        public virtual async Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username)
+        public virtual void RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();

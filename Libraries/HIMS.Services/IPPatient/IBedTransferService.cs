@@ -13,7 +13,7 @@ namespace HIMS.Services.IPPatient
     {
         Task<IPagedList<BedTransferDetailListDto>> BedTransferDetailList(GridRequestModel objGrid);
 
-        Task InsertAsyncSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster , Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName);
+        void InsertSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster , Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName);
 
     }
 }

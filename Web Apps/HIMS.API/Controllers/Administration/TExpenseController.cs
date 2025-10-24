@@ -74,13 +74,13 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPost("TExpenseCancel")]
         [Permission(PageCode = "managment", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> TExpenseCancel(TExpenseCancelModel obj)
+        public ApiResponse TExpenseCancel(TExpenseCancelModel obj)
         {
             TExpense Model = obj.MapTo<TExpense>();
 
             if (obj.ExpId != 0)
             {
-                await _Texpenseservice.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
+                _Texpenseservice.TExpenseCancel(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

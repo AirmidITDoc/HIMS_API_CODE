@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
             _paymentpharmacyService = repository;
         }
 
-         [HttpPost("IPDPaymentReceiptList")]
+        [HttpPost("IPDPaymentReceiptList")]
         //  [Permission(PageCode = "IPDPaymentReceiptList", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<BrowsePharmacyPayReceiptListDto> PharmacyPayReceiptList = await _paymentpharmacyService.GetListAsync3(objGrid);
             return Ok(PharmacyPayReceiptList.ToGridResponse(objGrid, "BrowsePharmacyPayReceiptList"));
         }
-      
+
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(paymentpharmacyModel obj)
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Administration
         }
         [HttpPut("UpdatePharmSalesDate")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(PharmSalesPaymentModel obj)
+        public ApiResponse Update(PharmSalesPaymentModel obj)
         {
             TSalesHeader model = obj.MapTo<TSalesHeader>();
 
@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.Administration
                 model.Date = Convert.ToDateTime(model.Date);
 
                 model.AddedBy = CurrentUserId;
-                await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                _paymentpharmacyService.Update(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -136,15 +136,15 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("PhBillGlobalDiscount")]
-      //  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP1(GlobalDiscountModels obj)
+        //  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public ApiResponse InsertSP1(GlobalDiscountModels obj)
         {
 
             List<TSalesHeader> model = obj.Sales.MapTo<List<TSalesHeader>>();
             if (model.Count > 0)
             {
 
-                await _paymentpharmacyService.InsertAsyncSp(model, CurrentUserId, CurrentUserName);
+                _paymentpharmacyService.InsertSp(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -152,6 +152,6 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-      
+
     }
 }

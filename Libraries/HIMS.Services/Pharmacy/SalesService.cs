@@ -522,7 +522,7 @@ namespace HIMS.Services.Users
         }
 
 
-        public virtual async Task InsertAsyncSPD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
+        public virtual void InsertSPD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
         {
 
             // //Add header table records
@@ -553,7 +553,7 @@ namespace HIMS.Services.Users
 
 
 
-        public virtual async Task DeleteAsync(TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
+        public virtual void Delete(TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -571,7 +571,7 @@ namespace HIMS.Services.Users
 
 
         //shilpa//26/05/2025
-        public virtual async Task InsertAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        public virtual void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
@@ -588,7 +588,7 @@ namespace HIMS.Services.Users
 
 
 
-            string[] DEntity = { "AdvanceNo","CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] DEntity = { "AdvanceNo", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Dentity = ObjTPhadvanceDetail.ToDictionary();
             foreach (var rProperty in DEntity)
             {
@@ -599,7 +599,7 @@ namespace HIMS.Services.Users
             ObjPaymentPharmacy.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
 
 
-            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] PEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Entity = ObjPaymentPharmacy.ToDictionary();
             foreach (var rProperty in PEntity)
             {
@@ -610,12 +610,12 @@ namespace HIMS.Services.Users
         }
 
 
-        public virtual async Task UpdateAsyncS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        public virtual void UpdateS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "Date", "RefId", "OpdIpdType", "UnitId","OpdIpdId", "AdvanceUsedAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] Entity = { "Date", "RefId", "OpdIpdType", "UnitId", "OpdIpdId", "AdvanceUsedAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Uentity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -644,7 +644,7 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, PPEntity);
 
         }
-        public virtual async Task InsertAsyncR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        public virtual void InsertR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
@@ -659,7 +659,7 @@ namespace HIMS.Services.Users
             ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
             ObjPaymentPharmacy.RefundId = Convert.ToInt32(VRefundId);
 
-            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "UnitId", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Aentity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in AEntity)
             {
@@ -699,7 +699,7 @@ namespace HIMS.Services.Users
             }
             odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
         }
-        public virtual async Task InsertAsync(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username)
+        public virtual void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username)
         {
 
             // //Add header table records
@@ -707,7 +707,7 @@ namespace HIMS.Services.Users
 
             foreach (var item in ObjPayment)
             {
-                string[] rEntity = { "StrId","ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "StrId", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -752,7 +752,7 @@ namespace HIMS.Services.Users
 
         }
 
-        public virtual async Task InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        public virtual void InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -771,7 +771,7 @@ namespace HIMS.Services.Users
 
         }
 
-        public virtual async Task InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        public virtual void InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();

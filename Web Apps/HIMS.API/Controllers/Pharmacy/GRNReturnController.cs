@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //}
         [HttpPost("Insert")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
+        public ApiResponse Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
             List<TGrnreturnDetail> model1 = obj.tGrnreturnDetails.MapTo<List<TGrnreturnDetail>>();
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                await _gRNReturnService.InsertAsyncsp(model, model1, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
+                _gRNReturnService.Insertsp(model, model1, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -103,11 +103,11 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("UpdateGRNReturn")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Update(GRNReturnUpdatereqDto obj)
+        public ApiResponse Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
             List<TGrnreturnDetail> model1 = obj.tGrnreturnDetails.MapTo<List<TGrnreturnDetail>>();
-            List<TCurrentStock> model2= obj.GrnReturnCurrentStock.MapTo<List<TCurrentStock>>();
+            List<TCurrentStock> model2 = obj.GrnReturnCurrentStock.MapTo<List<TCurrentStock>>();
             List<TGrndetail> model3 = obj.GrnReturnReturnQt.MapTo<List<TGrndetail>>();
             if (obj.GrnReturn.GrnreturnId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -118,20 +118,19 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.GrnreturnDate = Convert.ToDateTime(obj.GrnReturn.GrnreturnDate);
                 model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
 
-                await _gRNReturnService.UpdateAsyncsp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+                _gRNReturnService.Updatesp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("Verify")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Verify(GRNReturnVerifyModel obj)
+        public ApiResponse Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
             if (obj.GrnreturnId != 0)
             {
-
-                await _gRNReturnService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+                _gRNReturnService.Verify(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

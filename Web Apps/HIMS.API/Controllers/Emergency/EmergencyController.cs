@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Emergency
 
         [HttpPost("InsertSP")]
         [Permission(PageCode = "Emergency", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(EmergencyModel obj)
+        public ApiResponse Insert(EmergencyModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Emergency
                 //model.EmgTime = DateTime.Now;
 
                 model.CreatedBy = CurrentUserId;
-                await _EmergencyService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                _EmergencyService.InsertSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.Emergency
 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(EmergencyupdateModel obj)
+        public ApiResponse Edit(EmergencyupdateModel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
             if (obj.EmgId == 0)
@@ -94,20 +94,20 @@ namespace HIMS.API.Controllers.Emergency
                 model.EmgDate = Convert.ToDateTime(obj.EmgDate);
                 model.ModifiedBy = CurrentUserId;
 
-                await _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
+                _EmergencyService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.EmgId);
         }
         [HttpPost("Cancel")]
         //[Permission(PageCode = "Emergency", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(EmergencyCancel obj)
+        public ApiResponse Cancel(EmergencyCancel obj)
         {
             TEmergencyAdm model = obj.MapTo<TEmergencyAdm>();
 
             if (obj.EmgId != 0)
             {
                 model.EmgId = obj.EmgId;
-                await _EmergencyService.CancelSP(model, CurrentUserId, CurrentUserName);
+                _EmergencyService.CancelSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.Emergency
 
         [HttpPut("UpdateAddChargesFromEmergency")]
         [Permission(PageCode = "Emergency", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> POST(UpdateAddChargesFromEmergency obj)
+        public ApiResponse POST(UpdateAddChargesFromEmergency obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.EmgId == 0)
@@ -158,7 +158,7 @@ namespace HIMS.API.Controllers.Emergency
             else
             {
                 model.ChargesDate = DateTime.Now;
-                await _EmergencyService.Update(model, CurrentUserId, CurrentUserName, obj.EmgId, obj.NewAdmissionId);
+                _EmergencyService.Update(model, CurrentUserId, CurrentUserName, obj.EmgId, obj.NewAdmissionId);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -168,7 +168,8 @@ namespace HIMS.API.Controllers.Emergency
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _EmergencyService.SearchRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Emergency Patient Data.", data.Select(x => new {
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Emergency Patient Data.", data.Select(x => new
+            {
                 Text = x.FirstName + " " + x.LastName + " | " + x.SeqNo + " | " + x.Mobile,
                 Value = x.EmgId,
                 RegNo = x.SeqNo,
@@ -177,7 +178,7 @@ namespace HIMS.API.Controllers.Emergency
                 AgeYear = x.AgeYear,
                 AgeMonth = x.AgeMonth,
                 AgeDay = x.AgeDay,
-                PatientName = x.FirstName + " "+ x.MiddleName + " " + x.LastName
+                PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
         }
 

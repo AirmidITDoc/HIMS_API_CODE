@@ -72,20 +72,20 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(TestMasterModel obj)
+        public ApiResponse Insert(TestMasterModel obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
             List<MPathTemplateDetail> PathTemplate = obj.PathTemplateDetail.MapTo<List<MPathTemplateDetail>>();
             List<MPathTestDetailMaster> TemplateDetail = obj.PathTestDetail.MapTo<List<MPathTestDetailMaster>>();
 
-            
+
             if (obj.PathTest.TestId == 0)
             {
                 //PathTemplate.ForEach(x => { x.TestId = obj.PathTest.TestId;});
                 //TemplateDetail.ForEach(x => { x.TestId = obj.PathTest.TestId; });
-                 model.IsActive = true;
+                model.IsActive = true;
 
-                 await _ITestmasterService.InsertAsyncSP(model, PathTemplate, TemplateDetail ,CurrentUserId, CurrentUserName);
+                _ITestmasterService.InsertSP(model, PathTemplate, TemplateDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         [HttpPut("Update/{id:int}")]
         //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(TestMasterUpdate obj)
+        public ApiResponse Update(TestMasterUpdate obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
             List<MPathTemplateDetail> PathTemplate = obj.PathTemplateDetail.MapTo<List<MPathTemplateDetail>>();
@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 //TemplateDetail.ForEach(x => { x.TestId = obj.PathTest.TestId; });
                 model.IsActive = true;
 
-                await _ITestmasterService.UpdateAsyncSP(model, PathTemplate, TemplateDetail, CurrentUserId, CurrentUserName);
+                _ITestmasterService.UpdateSP(model, PathTemplate, TemplateDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -132,7 +132,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathTest  added successfully.");
         //}
 
-       
+
         [HttpDelete("PathTestDelete")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)

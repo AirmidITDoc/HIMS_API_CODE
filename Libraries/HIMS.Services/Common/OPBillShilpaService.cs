@@ -44,7 +44,7 @@ namespace HIMS.Services.Common
 
             
         }
-        public virtual async Task InsertAsyncSP1(Bill objBill, int UserId, string Username)
+        public virtual void InsertSP1(Bill objBill, int UserId, string Username)
         {
 
 

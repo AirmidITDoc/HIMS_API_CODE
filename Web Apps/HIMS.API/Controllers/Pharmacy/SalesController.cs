@@ -276,7 +276,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("SalesDraftBillSave")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSPD(SalesDraftHeadersModel obj)
+        public ApiResponse InsertSPD(SalesDraftHeadersModel obj)
         {
             TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
             List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
@@ -285,7 +285,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
                 model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
                 model.AddedBy = CurrentUserId;
-                await _ISalesService.InsertAsyncSPD(model, modelTSales, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertSPD(model, modelTSales, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -294,12 +294,12 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("SalesDraftbillcancel")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Delete(TSalesDraftsHeaderModel obj)
+        public ApiResponse Delete(TSalesDraftsHeaderModel obj)
         {
             TSalesDraftHeader model = obj.MapTo<TSalesDraftHeader>();
             if (obj.DsalesId != 0)
             {
-                await _ISalesService.DeleteAsync(model, CurrentUserId, CurrentUserName);
+                _ISalesService.Delete(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -311,7 +311,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PharmacyAdvanceInsert")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PharAdvanceModel obj)
+        public ApiResponse Insert(PharAdvanceModel obj)
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
@@ -321,7 +321,7 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);
                 model.AddedBy = CurrentUserId;
-                await _ISalesService.InsertAsyncS(model, model1, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertS(model, model1, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -329,7 +329,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPut("PharmacyAdvanceUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(PharmacyHeaderUpdate obj)
+        public ApiResponse Update(PharmacyHeaderUpdate obj)
         {
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
@@ -339,7 +339,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PharmacyHeader.AdvanceId != 0)
             {
                 model.AddedBy = CurrentUserId;
-                await _ISalesService.UpdateAsyncS(model, model1, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.UpdateS(model, model1, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -349,7 +349,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PharmacyRefundInsert")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(PharRefundModel obj)
+        public ApiResponse InsertSP(PharRefundModel obj)
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
             TPhadvanceHeader model1 = obj.PhAdvanceHeader.MapTo<TPhadvanceHeader>();
@@ -360,7 +360,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PharmacyRefund.RefundId == 0)
             {
                 model.AddBy = CurrentUserId;
-                await _ISalesService.InsertAsyncR(model, model1, model3, model4, model5, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertR(model, model1, model3, model4, model5, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -370,7 +370,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PaymentSettlement")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertAsync(PharmacyModel obj)
+        public ApiResponse Insert(PharmacyModel obj)
         {
             List<PaymentPharmacy> model = obj.Payment.MapTo<List<PaymentPharmacy>>();
             List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
@@ -380,8 +380,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
             if (model.Count > 0)
             {
-
-                await _ISalesService.InsertAsync(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.Insert(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -389,14 +388,13 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("PhBillDiscountAfter")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> InsertSP1(PhBillDiscountAfterModel obj)
+        public ApiResponse InsertSP1(PhBillDiscountAfterModel obj)
         {
 
             TSalesHeader Model = obj.MapTo<TSalesHeader>();
             if (obj.SalesId != 0)
             {
-
-                await _ISalesService.InsertSP1(Model, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertSP1(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -405,14 +403,13 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("ExtpatientDetUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> InsertSP(ExtpatientDetModel obj)
+        public ApiResponse InsertSP(ExtpatientDetModel obj)
         {
 
             TSalesHeader Model = obj.MapTo<TSalesHeader>();
             if (obj.SalesId != 0)
             {
-
-                await _ISalesService.InsertSP(Model, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertSP(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

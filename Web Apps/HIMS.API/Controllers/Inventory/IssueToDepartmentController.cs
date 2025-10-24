@@ -100,12 +100,12 @@ namespace HIMS.API.Controllers.Inventory
                 model.Addedby = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
                 model.Addedby = CurrentUserId;
-               
+
                 await _IIssueToDepService.InsertAsyncSP(model, model1, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.IssueId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IssueId);
         }
         [HttpPost("Insert")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
@@ -146,10 +146,10 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateIndentStatusAganist  successfully.", model.IssueId);
         }
 
-      
+
         [HttpPost("UpdateMaterialAcceptance")]
         [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(UpdateMaterialAcceptanceModel obj)
+        public ApiResponse Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
             List<TIssueToDepartmentDetail> model1 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
@@ -157,10 +157,9 @@ namespace HIMS.API.Controllers.Inventory
 
             if (obj.materialAcceptIssueHeader.IssueId != 0)
             {
-                
-                model.Addedby = CurrentUserId;
 
-                await _IIssueToDepService.Update(model, model1, model3, CurrentUserId, CurrentUserName);
+                model.Addedby = CurrentUserId;
+                _IIssueToDepService.Update(model, model1, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

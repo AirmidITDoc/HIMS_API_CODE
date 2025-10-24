@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Inventory
         // changes done by Subhash -- Date : 19 May 2025
         [HttpPost("OpeningBalanceSave")]
         [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> OpeningBalAsyncSp(OpeningBalanceModel obj)
+        public ApiResponse OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
             TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();
             List<TOpeningTransactionDetail> Models = obj.OpeningTransaction.MapTo<List<TOpeningTransactionDetail>>();
@@ -50,8 +50,8 @@ namespace HIMS.API.Controllers.Inventory
             if (obj.OpeningBal.OpeningHid == 0)
             {
                 Model.CreatedBy = CurrentUserId;
-                Model.OpeningDate= Convert.ToDateTime(Model.OpeningDate);
-                await _IOpeningBalanceService.OpeningBalAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
+                Model.OpeningDate = Convert.ToDateTime(Model.OpeningDate);
+                _IOpeningBalanceService.OpeningBalSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -13,7 +13,7 @@ namespace HIMS.Services.Administration
     {
         Task InsertAsync(TExpense ObjTExpense, int UserId, string Username);
         Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[]? references);
-        Task TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
+        void TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel objGrid);
 
 

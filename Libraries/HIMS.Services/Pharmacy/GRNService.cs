@@ -459,7 +459,7 @@ namespace HIMS.Services.Pharmacy
 
         }
 
-        public virtual async Task UpdateAsyncsp(TGrnheader objGRN, int UserId, string UserName)
+        public virtual void Updatesp(TGrnheader objGRN, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -478,7 +478,7 @@ namespace HIMS.Services.Pharmacy
 
         }
 
-        public virtual async Task UpdateAsyncSP(TCurrentStock ObjTCurrentStock, int UserId, string UserName)
+        public virtual void UpdateSP(TCurrentStock ObjTCurrentStock, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -571,7 +571,7 @@ namespace HIMS.Services.Pharmacy
 
 
 
-        public virtual async Task AsyncSp(TGrnheader objGRN, int UserId, string UserName)
+        public virtual void Sp(TGrnheader objGRN, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -585,7 +585,7 @@ namespace HIMS.Services.Pharmacy
             {
                 entity.Remove(rProperty);
             }
-              odal.ExecuteNonQuery("ps_m_grnInvoiceno_check", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_m_grnInvoiceno_check", CommandType.StoredProcedure, entity);
 
 
         }

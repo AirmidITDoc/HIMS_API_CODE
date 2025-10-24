@@ -48,11 +48,11 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        public virtual async Task CancelAsync(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username)
+        public virtual void Cancel(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] BEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "OtrequestDate", "OtrequestTime", "OtrequestId", "SurgeryCategoryId", "DepartmentId", "CategoryId", "SiteDescId", "SurgeryId", "SurgeonId", "SurgeryTypeId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled","IsCancelledDateTime" };
+            string[] BEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "OtrequestDate", "OtrequestTime", "OtrequestId", "SurgeryCategoryId", "DepartmentId", "CategoryId", "SiteDescId", "SurgeryId", "SurgeonId", "SurgeryTypeId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledDateTime" };
             var TEntity = OBJOtbookingRequest.ToDictionary();
             foreach (var rProperty in BEntity)
             {

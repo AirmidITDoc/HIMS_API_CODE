@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         [HttpPut("UpdateDifferTariff")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Update(DifferTraiffModel obj)
+        public ApiResponse Update(DifferTraiffModel obj)
         {
             if (obj.OldTariffId == 0 || obj.NewTariffId == 0)
             {
@@ -123,13 +123,13 @@ namespace HIMS.API.Controllers.Masters.Billing
             int userId = 1;
             string userName = "admin";
 
-            await _BillingService.UpdateDifferTariff(model, obj.OldTariffId, obj.NewTariffId, userId, userName);
+            _BillingService.UpdateDifferTariff(model, obj.OldTariffId, obj.NewTariffId, userId, userName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
         [HttpPost("ServiceWiseCompanyCode")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(ServiceWiseCompanyCodeModel obj)
+        public ApiResponse Insert(ServiceWiseCompanyCodeModel obj)
         {
             ServiceWiseCompanyCode model = obj.MapTo<ServiceWiseCompanyCode>();
             if (obj.TariffId == 0)
@@ -138,7 +138,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _BillingService.InsertAsyncS(model, CurrentUserId, CurrentUserName);
+                _BillingService.InsertS(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -172,14 +172,13 @@ namespace HIMS.API.Controllers.Masters.Billing
         //Add API
         [HttpPost("PackageDetailsInsert")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(PackageDetModel obj)
+        public ApiResponse Insert(PackageDetModel obj)
         {
             List<MPackageDetail> model = obj.packageDetail.MapTo<List<MPackageDetail>>();
 
             if (model.Count > 0)
             {
-               
-                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName, obj.PackageTotalDays, obj.PackageIcudays, obj.PackageMedicineAmount, obj.PackageConsumableAmount);
+                _BillingService.Insert(model, CurrentUserId, CurrentUserName, obj.PackageTotalDays, obj.PackageIcudays, obj.PackageMedicineAmount, obj.PackageConsumableAmount);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -195,9 +194,9 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicesNew")]
-        public async Task<ApiResponse> GetServices(int TariffId)
+        public ApiResponse GetServices(int TariffId)
         {
-            var resultList = await _BillingService.GetServiceListNew(TariffId);
+            var resultList = _BillingService.GetServiceListNew(TariffId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
         [HttpPost("save-services-new")]

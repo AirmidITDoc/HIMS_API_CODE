@@ -55,11 +55,11 @@ namespace HIMS.API.Controllers.NursingStation
             IPagedList<ConsentDeptListDto> SupplierList = await _NursingConsentService.GetListAsync(objGrid);
             return Ok(SupplierList.ToGridResponse(objGrid, "DeptConsentList "));
         }
-      
+
 
         [HttpPost("InsertConsent")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public async Task<ApiResponse>insert(ConsentInformationModel obj)
+        public ApiResponse insert(ConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
 
@@ -67,17 +67,17 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 Model.CreatedDatetime = DateTime.Now;
                 Model.CreatedBy = CurrentUserId;
-                await _NursingConsentService.InsertAsync(Model, CurrentUserId, CurrentUserName);
+                _NursingConsentService.Insert(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Added successfully.",Model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentInformation Added successfully.", Model);
         }
 
 
         [HttpPut("UpdateConsent")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Update(UpdateConsentInformationModel obj)
+        public ApiResponse Update(UpdateConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
 
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 Model.ModifiedDateTime = DateTime.Now;
                 Model.ModifiedBy = CurrentUserId;
-                await _NursingConsentService.UpdateAsync(Model, CurrentUserId, CurrentUserName);
+                _NursingConsentService.Update(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
