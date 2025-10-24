@@ -22,6 +22,12 @@ namespace HIMS.Data.DTO.Administration
         public string HeadName { get; set; }
         public long? ExpHeadId { get; set; }
         public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public string? Utrno { get; set; }
+        public long? ExpCategoryId { get; set; }
+
+
+
 
 
     }

@@ -35,12 +35,18 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TExpenseInsert")]
-        [Permission(PageCode = "managment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
+
             if (obj.ExpId == 0)
+
             {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
 
                 await _Texpenseservice.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -50,7 +56,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]
-        [Permission(PageCode = "managment", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "managment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edits(TExpenseModel obj)
         {
             TExpense model = obj.MapTo<TExpense>();
@@ -58,8 +64,10 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
 
-                await _Texpenseservice.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2]);
+                await _Texpenseservice.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record updated successfully.", model.ExpId);
         }
