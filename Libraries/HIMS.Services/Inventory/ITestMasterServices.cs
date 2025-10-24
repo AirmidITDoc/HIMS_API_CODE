@@ -20,8 +20,8 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel objGrid);
 
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
-        Task InsertAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster ,int UserId, string Username);
-        Task UpdateAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
+        void InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster ,int UserId, string Username);
+        void UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
 
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
 

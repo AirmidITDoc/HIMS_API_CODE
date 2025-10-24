@@ -31,7 +31,7 @@ namespace HIMS.Data
         /// <returns>A task that represents the asynchronous operation</returns>
         Task ReIndexTablesAsync();
 
-        
+
         /// <summary>
         /// Executes command asynchronously and returns number of affected records
         /// </summary>
@@ -66,7 +66,7 @@ namespace HIMS.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the collection of values of specified type
         /// </returns>
-        Task<IList<T>> QueryAsync<T>(string sql, params DataParameter[] parameters);
+        IList<T> Query<T>(string sql, params DataParameter[] parameters);
 
         /// <summary>
         /// Executes command using LinqToDB.Mapping.StoredProcedure command type and returns
@@ -105,7 +105,7 @@ namespace HIMS.Data
         /// The task result contains the returns collection of query result records
         /// </returns>
         Task<IList<T>> QueryProcAsync<T>(string procedureName, params DataParameter[] parameters);
-        IList<T> QueryProc<T>(string procedureName, params DataParameter[] parameters);
+        Task<IList<T>> QueryProc<T>(string procedureName, params DataParameter[] parameters);
         System.Data.DataSet ExecuteStoredProcedureForDataSetAsync(string procedureName, params DataParameter[] parameters);
 
         #endregion
@@ -131,7 +131,7 @@ namespace HIMS.Data
 
         #region Log Methods
 
-     
+
         #endregion
     }
 }

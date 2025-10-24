@@ -14,8 +14,8 @@ namespace HIMS.Services.Nursing
     {
 
         Task<IPagedList<ConsentDeptListDto>> GetListAsync(GridRequestModel objGrid);
-        Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
-        Task UpdateAsync(TConsentInformation ObjTConsentInformation, int UserId, string Username);
+        void Insert(TConsentInformation ObjTConsentInformation, int UserId, string Username);
+        void Update(TConsentInformation ObjTConsentInformation, int UserId, string Username);
         Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel objGrid);
         Task<List<MConsentMaster>> GetConsent(int DeptId);
 

@@ -146,13 +146,13 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost("TNursingVitalCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Delete(NursingVitalsDeleteModel obj)
+        public ApiResponse Delete(NursingVitalsDeleteModel obj)
         {
             TNursingVital model = obj.MapTo<TNursingVital>();
             if (obj.VitalId != 0)
             {
-                
-                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+
+                _ClinicalCareService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -196,13 +196,13 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost("TNursingSugarLevelCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Deletes(NursingSugarDeleteModel obj)
+        public ApiResponse Deletes(NursingSugarDeleteModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
             if (obj.Id != 0)
             {
 
-                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                _ClinicalCareService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -245,13 +245,13 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost("TNursingOrygenVentilatorCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Cancel(TNursingOrygenVentilatorDeleteModel obj)
+        public ApiResponse Cancel(TNursingOrygenVentilatorDeleteModel obj)
         {
             TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
             if (obj.Id != 0)
             {
 
-                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                _ClinicalCareService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -294,13 +294,13 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost("TNursingPainAssessmentCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Cancel(TNursingPainAssessmentDeleteModel obj)
+        public ApiResponse Cancel(TNursingPainAssessmentDeleteModel obj)
         {
             TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
             if (obj.PainAssessmentId != 0)
             {
 
-                await _ClinicalCareService.CancelAsync1(model, CurrentUserId, CurrentUserName);
+                _ClinicalCareService.Cancel1(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -345,13 +345,13 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost("TNursingWeightCancel")]
 
         //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Cancel(TNursingWeightDeleteModel obj)
+        public ApiResponse Cancel(TNursingWeightDeleteModel obj)
         {
             TNursingWeight model = obj.MapTo<TNursingWeight>();
             if (obj.PatWeightId != 0)
             {
 
-                await _ClinicalCareService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                _ClinicalCareService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

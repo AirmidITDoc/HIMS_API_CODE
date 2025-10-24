@@ -170,23 +170,23 @@ namespace HIMS.Services.Nursing
         //    }
         //}
 
-        public virtual async Task InsertAsync(List<TNursingMedicationChart> ObjTNursingMedicationChart, int UserId, string UserName)
+        public virtual void Insert(List<TNursingMedicationChart> ObjTNursingMedicationChart, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-          
+
 
             foreach (var item in ObjTNursingMedicationChart)
             {
-                string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime" , "ModifiedBy", "ModifiedDateTime" };
-     
+                string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
+
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
                     entity.Remove(rProperty);
                 }
-                 odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure,  entity);
-               // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
+                odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+                // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
             }
         }
 

@@ -23,15 +23,15 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-      
-        public virtual async Task InsertAsyncSP(Payment objPayment, int CurrentUserId, string CurrentUserName)
+
+        public virtual void InsertSP(Payment objPayment, int CurrentUserId, string CurrentUserName)
         {
 
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            string[] rEntity = { "ReceiptNo", "CashCounterId","IsSelfOrcompany","CompanyId","Neftno", "Ch_CashPayAmount", "Ch_ChequePayAmount", "Ch_CardPayAmount", "Ch_AdvanceUsedAmount", "Ch_NEFTPayAmount", "Ch_PayTMAmount", "TranMode"};
-           
+            string[] rEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "Neftno", "Ch_CashPayAmount", "Ch_ChequePayAmount", "Ch_CardPayAmount", "Ch_AdvanceUsedAmount", "Ch_NEFTPayAmount", "Ch_PayTMAmount", "TranMode" };
+
             var entity = objPayment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -39,7 +39,7 @@ namespace HIMS.Services.OutPatient
             }
             string PaymentId = odal.ExecuteNonQuery("m_insert_Payment_New_1", CommandType.StoredProcedure, "PaymentId", entity);
             objPayment.PaymentId = Convert.ToInt32(PaymentId);
-           
+
         }
     }
 }

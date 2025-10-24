@@ -20,15 +20,15 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<NursingVitalsListDto>> NursingVitalsList(GridRequestModel objGrid);
         Task<IPagedList<NursingOxygenVentilatorListDto>> NursingOxygenVentilatorList(GridRequestModel objGrid);
         Task InsertAsync(TNursingVital ObjTNursingVital, int UserId, string Username);
-        Task CancelAsync(TNursingVital objTNursingVital, int UserId, string Username);
+        void Cancel(TNursingVital objTNursingVital, int UserId, string Username);
 
-        Task CancelAsync(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username);
+        void Cancel(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username);
 
 
-        Task CancelAsync1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username);
+        void Cancel1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username);
 
-        Task CancelAsync(TNursingWeight objTNursingWeight, int UserId, string Username);
-        Task CancelAsync(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username);
+        void Cancel(TNursingWeight objTNursingWeight, int UserId, string Username);
+        void Cancel(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username);
 
 
 

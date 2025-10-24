@@ -24,46 +24,9 @@ namespace HIMS.Data.DataProviders
         /// Creates the database connection
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task<DataConnection> CreateDataConnectionAsync()
-        {
-            return await CreateDataConnectionAsync(LinqToDbDataProvider);
-        }
-
-        /// <summary>
-        /// Creates the database connection
-        /// </summary>
         protected virtual DataConnection CreateDataConnection()
         {
             return CreateDataConnection(LinqToDbDataProvider);
-        }
-
-        /// <summary>
-        /// Creates the database connection
-        /// </summary>
-        /// <param name="dataProvider">Data provider</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the database connection
-        /// </returns>
-        protected virtual async Task<DataConnection> CreateDataConnectionAsync(LinqToDB.DataProvider.IDataProvider dataProvider)
-        {
-            DataConnection dataContext = new();
-            return dataContext;
-        }
-
-        /// <summary>
-        /// Creates the log database connection
-        /// </summary>
-        /// <param name="dataProvider">Data provider</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the database connection
-        /// </returns>
-        protected virtual async Task<DataConnection> CreateLogDataConnectionAsync(LinqToDB.DataProvider.IDataProvider dataProvider)
-        {
-            DataConnection dataContext = new();
-
-            return dataContext;
         }
 
         /// <summary>
@@ -81,21 +44,6 @@ namespace HIMS.Data.DataProviders
             DataConnection dataContext = new();
 
             return dataContext;
-        }
-
-        /// <summary>
-        /// Creates a connection to a database
-        /// </summary>
-        /// <param name="connectionString">Connection string</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the connection to a database
-        /// </returns>
-        protected virtual async Task<IDbConnection> CreateDbConnectionAsync(string connectionString = null)
-        {
-            DbConnection dbConnection = null;
-
-            return dbConnection;
         }
 
         /// <summary>
@@ -127,7 +75,7 @@ namespace HIMS.Data.DataProviders
         /// </returns>
         public virtual async Task<int> ExecuteNonQueryAsync(string sql, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, sql, parameters);
             int affectedRecords = await command.ExecuteAsync();
             return affectedRecords;
@@ -145,7 +93,7 @@ namespace HIMS.Data.DataProviders
         /// </returns>
         public virtual async Task<T> ExecuteNonQueryAsync<T>(string sql, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, sql, parameters);
             T affectedRecords = await command.ExecuteAsync<T>();
             return affectedRecords;
@@ -153,7 +101,7 @@ namespace HIMS.Data.DataProviders
 
         public virtual async Task<object> ExecuteAsync(string sql, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, sql, parameters);
             object affectedRecords = await command.ExecuteAsync<object>();
             return affectedRecords;
@@ -169,9 +117,9 @@ namespace HIMS.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the collection of values of specified type
         /// </returns>
-        public virtual async Task<IList<T>> QueryAsync<T>(string sql, params DataParameter[] parameters)
+        public virtual IList<T> Query<T>(string sql, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             return dataContext.Query<T>(sql, parameters).ToList();
         }
 
@@ -187,7 +135,7 @@ namespace HIMS.Data.DataProviders
         /// </returns>
         public virtual async Task<int> ExecuteStoredProcedureAsync(string procedureName, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, procedureName, parameters);
             int affectedRecords = await command.ExecuteProcAsync();
             return affectedRecords;
@@ -206,7 +154,7 @@ namespace HIMS.Data.DataProviders
         /// </returns>
         public virtual async Task<T> ExecuteStoredProcedureAsync<T>(string procedureName, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, procedureName, parameters);
             T result = await command.ExecuteProcAsync<T>();
             return result;
@@ -225,15 +173,15 @@ namespace HIMS.Data.DataProviders
         /// </returns>
         public virtual async Task<IList<T>> QueryProcAsync<T>(string procedureName, params DataParameter[] parameters)
         {
-            using DataConnection dataContext = await CreateDataConnectionAsync();
+            using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, procedureName, parameters);
             return (await command.QueryProcAsync<T>()).ToList();
         }
-        public virtual IList<T> QueryProc<T>(string procedureName, params DataParameter[] parameters)
+        public virtual async Task<IList<T>> QueryProc<T>(string procedureName, params DataParameter[] parameters)
         {
             using DataConnection dataContext = CreateDataConnection();
             CommandInfo command = new(dataContext, procedureName, parameters);
-            List<T> rez = command.QueryProc<T>().ToList();
+            List<T> rez = (await command.QueryProcAsync<T>()).ToList();
             return rez;
         }
         public virtual System.Data.DataSet ExecuteStoredProcedureForDataSetAsync(string procedureName, params DataParameter[] parameters)

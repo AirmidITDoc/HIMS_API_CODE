@@ -20,7 +20,7 @@ namespace HIMS.Services.Common
             _context = HIMSDbContext;
         }
 
-        public virtual async Task DeleteAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
+        public virtual void DeleteAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
         {
             DatabaseHelper odal = new();
 
@@ -34,7 +34,7 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task InsertAsyncSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
+        public virtual void InsertSP(AddCharge objAddcharges, int currentUserId, string currentUserName)
         {
 
             //throw new NotImplementedException();

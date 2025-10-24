@@ -51,11 +51,11 @@ namespace HIMS.Services.Nursing
 
 
 
-        public virtual async Task InsertAsync(TConsentInformation ObjTConsentInformation, int UserId, string UserName)
+        public virtual void Insert(TConsentInformation ObjTConsentInformation, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "CreatedDatetime", "ModifiedBy",  "ModifiedDateTime"};
+            string[] AEntity = { "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
             var entity = ObjTConsentInformation.ToDictionary();
 
             foreach (var rProperty in AEntity)
@@ -68,7 +68,7 @@ namespace HIMS.Services.Nursing
 
         }
 
-        public virtual async Task UpdateAsync(TConsentInformation ObjTConsentInformation, int UserId, string UserName)
+        public virtual void Update(TConsentInformation ObjTConsentInformation, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -80,8 +80,8 @@ namespace HIMS.Services.Nursing
                 entity.Remove(rProperty);
             }
 
-             odal.ExecuteNonQuery("m_update_T_ConsentInformation", CommandType.StoredProcedure, entity);
-            
+            odal.ExecuteNonQuery("m_update_T_ConsentInformation", CommandType.StoredProcedure, entity);
+
 
         }
 

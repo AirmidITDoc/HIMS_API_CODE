@@ -29,10 +29,10 @@ namespace HIMS.Services.OutPatient
         Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword);
         Task<VisitDetailsListSearchDto> PatientByVisitId(long VisitId);
         Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
-        Task UpdateVitalAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
+        void UpdateVital(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task UpdateAsyncv(VisitDetail ObjVisitDetail, int UserId, string Username);
-        Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username);
+        void RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username);
         List<VisitDetailsListSearchDto> SearchPatient(string Keyword);
 
 

@@ -119,7 +119,7 @@ namespace HIMS.Services.IPPatient
             await _context.LogProcedureExecution(PAdvanceEntity, nameof(Payment), objAdvanceHeader.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }
-        public virtual async Task CancelAsync(AdvanceHeader ObjAdvanceHeader, long AdvanceDetailId)
+        public virtual void Cancel(AdvanceHeader ObjAdvanceHeader, long AdvanceDetailId)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -135,10 +135,10 @@ namespace HIMS.Services.IPPatient
         }
 
 
-       
 
 
-        public virtual async Task IPInsertAsyncSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, int UserId, string UserName)
+
+        public virtual void IPInsertSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -193,7 +193,7 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, entity1);
         }
-       
+
         public virtual async Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();

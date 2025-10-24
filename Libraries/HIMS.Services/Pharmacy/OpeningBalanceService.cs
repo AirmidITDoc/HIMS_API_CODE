@@ -30,7 +30,7 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-        public virtual async Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader,List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string UserName)
+        public virtual void OpeningBalSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();

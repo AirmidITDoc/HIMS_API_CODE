@@ -27,10 +27,10 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<MenuMasterListDto>(model, "ps_Rtrv_Menu_master");
         }
-        public virtual async Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
+        public virtual void InsertSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = {"RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionMasters" };
+            string[] rEntity = { "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionMasters" };
             var entity = objMenuMaster.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -39,7 +39,7 @@ namespace HIMS.Services.Masters
             string vId = odal.ExecuteNonQuery("ps_Insert_MenuMaster_1", CommandType.StoredProcedure, "Id", entity);
 
         }
-        public virtual async Task UpdateAsyncSP(MenuMaster objMenuMaster, int UserId, string Username)
+        public virtual void UpdateSP(MenuMaster objMenuMaster, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RoleId", "IsView", "IsAdd", "IsEdit", "IsDelete", "PermissionMasters" };

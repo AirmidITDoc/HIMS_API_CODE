@@ -88,10 +88,10 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("SalesReturnWithCash")]
         [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)
+        public ApiResponse InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
-            List <TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
+            List<TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
             PaymentPharmacy model4 = obj.Payment.MapTo<PaymentPharmacy>();
@@ -100,32 +100,32 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                await _ISalesReturnService.InsertAsyncSP(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
+                _ISalesReturnService.InsertSP(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesReturnId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesReturnId);
         }
 
 
         [HttpPost("SalesReturnWithCredit")]
         [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSPC(SalesReturnsModel obj)
+        public ApiResponse InsertSPC(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
             List<TSalesReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
-            List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();        
+            List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                await _ISalesReturnService.InsertAsyncSPCredit(model, model1, model2, model3,  CurrentUserId, CurrentUserName);
+                _ISalesReturnService.InsertSPCredit(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.SalesReturnId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesReturnId);
         }
 
     }

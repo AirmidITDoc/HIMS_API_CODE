@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("InsertSP")]
         [Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(BTransferModel obj)
+        public ApiResponse Insert(BTransferModel obj)
         {
             TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
             Bedmaster objbed = obj.BedTofreed.MapTo<Bedmaster>();
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.IPPatient
                 //objbed.AddedBy = CurrentUserId;
 
                 obj.Admssion.AdmissionId = obj.Admssion.AdmissionId;
-                await _IBedTransferService.InsertAsyncSP(model, objbed, ObjbedUpdate, objAdd ,CurrentUserId, CurrentUserName);
+                _IBedTransferService.InsertSP(model, objbed, ObjbedUpdate, objAdd, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

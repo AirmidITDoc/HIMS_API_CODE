@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Radiology
 
         [HttpPut("RadiologyUpdate/{id:int}")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Update(TRadiologyReportModel obj)
+        public ApiResponse Update(TRadiologyReportModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
             if (obj.RadReportId == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Radiology
                 model.RadDate = DateTime.Now;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
+                _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

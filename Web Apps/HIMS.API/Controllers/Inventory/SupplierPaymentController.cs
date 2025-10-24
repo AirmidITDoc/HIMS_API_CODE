@@ -63,8 +63,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("Insert")]
-     // [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(TGRNSupPayment obj)
+        // [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        public ApiResponse Insert(TGRNSupPayment obj)
         {
             TGrnsupPayment model = obj.GrnsupPayment.MapTo<TGrnsupPayment>();
             List<TGrnheader> model1 = obj.GRN.MapTo<List<TGrnheader>>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.SupPayDate = Convert.ToDateTime(obj.GrnsupPayment.SupPayDate);
                 model.SupPayTime = Convert.ToDateTime(obj.GrnsupPayment.SupPayTime);
                 model.IsAddedBy = CurrentUserId;
-                await _SupplierPaymentStatusService.InsertAsyncSP(model, model1, Model2, CurrentUserId, CurrentUserName);
+                _SupplierPaymentStatusService.InsertSP(model, model1, Model2, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

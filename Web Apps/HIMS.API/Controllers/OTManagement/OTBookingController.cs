@@ -91,14 +91,14 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("Cancel")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(OTBookingRequestCancel obj)
+        public ApiResponse Cancel(OTBookingRequestCancel obj)
         {
             TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
 
             if (obj.OtbookingId != 0)
             {
                 model.OtbookingId = obj.OtbookingId;
-                await _OTBookingRequestService.CancelAsync(model, CurrentUserId, CurrentUserName);
+                _OTBookingRequestService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

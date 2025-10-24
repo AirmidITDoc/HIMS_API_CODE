@@ -338,7 +338,7 @@ namespace HIMS.API.Controllers.NursingStation
             MNursingTemplateMaster model = await _repository1.GetById(x => x.NursingId == Id);
             if ((model?.NursingId ?? 0) > 0)
             {
-                model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
@@ -383,12 +383,12 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingMedicationChartInsert")]
         [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(NursingMedicationChartModel obj)
+        public ApiResponse InsertEDMX(NursingMedicationChartModel obj)
         {
             List<TNursingMedicationChart> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart>>();
             if (model.Count > 0)
             {
-                await _INursingNoteService.InsertAsync(model,  CurrentUserId, CurrentUserName);
+                _INursingNoteService.Insert(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

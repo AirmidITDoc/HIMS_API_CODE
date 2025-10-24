@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPost("DoctorShareProcess")]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(DoctorShareProcessModel obj)
+        public ApiResponse Insert(DoctorShareProcessModel obj)
         {
             if (obj.FromDate == new DateTime(1900 / 01 / 01))
 
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Administration
                 //FromDate = obj.FromDate,
             };
 
-            await _IDoctorShareProcessService.DoctorShareInsertAsync(model, CurrentUserId, CurrentUserName, obj.FromDate, obj.ToDate);
+            _IDoctorShareProcessService.DoctorShareInsert(model, CurrentUserId, CurrentUserName, obj.FromDate, obj.ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 

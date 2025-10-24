@@ -22,14 +22,14 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
         Task<List<ServiceMaster>> GetAllRadiologyTest();
-        Task UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
+        void UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
        
-        Task<BillingServiceNewDto> GetServiceListNew(int TariffId);
+        BillingServiceNewDto GetServiceListNew(int TariffId);
         Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data);
-        Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount);
+        void Insert(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount);
         Task<IPagedList<PackageDetListDto>> GetListAsyncD(GridRequestModel objGrid);
-        Task  InsertAsyncS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string Username);
+        void  InsertS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string Username);
 
     }
 }

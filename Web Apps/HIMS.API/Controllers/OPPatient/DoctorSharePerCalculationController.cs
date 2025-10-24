@@ -22,12 +22,12 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPut("OPDoctorSharePerCalculation")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> UpdateAsyncOP(DoctorSharePerCalculationModel obj)
+        public ApiResponse UpdateAsyncOP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
             if (obj.BillNo == 0)
             {
-                await _IDoctorSharePerCalculationService.UpdateAsyncOP(model, CurrentUserId, CurrentUserName);
+                _IDoctorSharePerCalculationService.UpdateOP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -35,12 +35,12 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPut("IPDoctorSharePerCalculation")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> UpdateAsyncIP(DoctorSharePerCalculationModel obj)
+        public ApiResponse UpdateAsyncIP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
             if (obj.BillNo != 0)
             {
-                await _IDoctorSharePerCalculationService.UpdateAsyncIP(model, CurrentUserId, CurrentUserName);
+                _IDoctorSharePerCalculationService.UpdateIP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

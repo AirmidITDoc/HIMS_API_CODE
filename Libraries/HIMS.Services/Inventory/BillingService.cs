@@ -199,11 +199,11 @@ namespace HIMS.Services.Inventory
 
         //}
 
-        public virtual async Task UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId, long NewTariffId, int UserId, string UserName)
+        public virtual void UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId, long NewTariffId, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
 
-            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "TariffId", "DiscountAmount","DiscountPercentage" };
+            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "TariffId", "DiscountAmount", "DiscountPercentage" };
             var sEntity = ObjServiceDetail.ToDictionary();
 
             foreach (var rProperty in detailEntity)
@@ -216,7 +216,7 @@ namespace HIMS.Services.Inventory
             sEntity["NewTariffId"] = NewTariffId;
             odal.ExecuteNonQuery("ps_Assign_Servicesto_DifferTraiff", CommandType.StoredProcedure, sEntity);
         }
-        public virtual async Task InsertAsyncS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode,  int UserId, string UserName)
+        public virtual void InsertS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string UserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
@@ -230,8 +230,8 @@ namespace HIMS.Services.Inventory
                 Entity.Remove(rProperty);
             }
 
-             odal.ExecuteNonQuery("ps_insert_ServiceWiseCompanyCode", CommandType.StoredProcedure, Entity);
-             scope.Complete();
+            odal.ExecuteNonQuery("ps_insert_ServiceWiseCompanyCode", CommandType.StoredProcedure, Entity);
+            scope.Complete();
 
         }
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName)
@@ -264,7 +264,7 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
 
         }
-        public virtual async Task InsertAsync(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount)
+        public virtual void Insert(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount)
         {
             DatabaseHelper odal = new();
 
@@ -293,10 +293,10 @@ namespace HIMS.Services.Inventory
 
                 string VPackageId = odal.ExecuteNonQuery("PS_insert_PackageDetails", CommandType.StoredProcedure, "PackageId", Pentity);
                 item.PackageId = Convert.ToInt32(VPackageId);
-                
+
             }
         }
-        public virtual async Task<BillingServiceNewDto> GetServiceListNew(int TariffId)
+        public virtual BillingServiceNewDto GetServiceListNew(int TariffId)
         {
             BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
             DatabaseHelper sql = new();

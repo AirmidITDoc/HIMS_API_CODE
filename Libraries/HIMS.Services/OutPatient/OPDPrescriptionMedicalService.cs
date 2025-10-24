@@ -67,9 +67,9 @@ namespace HIMS.Services.OutPatient
 
         }
 
-     
+
         //Ashu///  Modifierd by shilpa 2025/14/06 m_Update_VisitFollowupDate//
-        public virtual async Task InsertPrescriptionAsyncSP(List<TPrescription> objTPrescription,VisitDetail ObjVisitDetail,List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
+        public virtual void InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
             foreach (var modelItem in objTPrescription)
@@ -135,7 +135,7 @@ namespace HIMS.Services.OutPatient
                 odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
             }
         }
-      
+
         public virtual async Task UpdateAsync(TPrescription OBJTPrescription, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,

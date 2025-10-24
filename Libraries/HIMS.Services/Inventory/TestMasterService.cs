@@ -37,13 +37,13 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
         }
-        public virtual async Task InsertAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        public virtual void InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
         {
 
 
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetail1s", "MPathTemplateDetails","MPathTestDetailMasters" };
+            string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetail1s", "MPathTemplateDetails", "MPathTestDetailMasters" };
             var entity = objTest.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -52,8 +52,8 @@ namespace HIMS.Services.Inventory
             string VTestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
             objTest.TestId = Convert.ToInt32(VTestId);
 
-             if (objTest.IsTemplateTest == 1 )
-            { 
+            if (objTest.IsTemplateTest == 1)
+            {
                 foreach (var item in ObjMPathTemplateDetail)
 
                 {
@@ -69,10 +69,10 @@ namespace HIMS.Services.Inventory
                 }
 
             }
-            else if (objTest.IsTemplateTest == 0 )
+            else if (objTest.IsTemplateTest == 0)
             {
-                 foreach (var Titem in ObjMPathTestDetailMaster)
-                 {
+                foreach (var Titem in ObjMPathTestDetailMaster)
+                {
 
                     Titem.TestId = Convert.ToInt32(VTestId);
 
@@ -84,15 +84,15 @@ namespace HIMS.Services.Inventory
                         dentity.Remove(rProperty);
                     }
                     odal.ExecuteNonQuery("m_insert_PathTestDetailMaster_1", CommandType.StoredProcedure, dentity);
-                 }
-             }
+                }
+            }
         }
 
-        public virtual async Task UpdateAsyncSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        public virtual void UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
         {
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "AddedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTemplateDetail1s" ,"MPathTestDetailMasters" };
+            string[] rEntity = { "AddedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTemplateDetail1s", "MPathTestDetailMasters" };
             var entity = objTest.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -113,7 +113,7 @@ namespace HIMS.Services.Inventory
             }
             if (objTest.IsTemplateTest == 1)
             {
-               
+
                 foreach (var item in ObjMPathTemplateDetail)
 
                 {

@@ -38,7 +38,7 @@ namespace HIMS.Services.Inventory
         }
 
 
-        public virtual async Task InsertAsyncSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string UserName)
+        public virtual void InsertSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();

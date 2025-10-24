@@ -15,7 +15,7 @@ namespace HIMS.Services.Pharmacy
 
         Task<IPagedList<OpeningBalanaceItemDetailListDto>> GetOPningBalItemDetailList(GridRequestModel objGrid);
 
-        Task OpeningBalAsyncSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string Username);
+        void OpeningBalSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string Username);
 
 
     }

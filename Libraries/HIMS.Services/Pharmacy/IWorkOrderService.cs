@@ -12,9 +12,9 @@ namespace HIMS.Services.Pharmacy
     public partial  interface IWorkOrderService
     {
         Task<IPagedList<WorkOrderListDto>> GetWorkorderList(GridRequestModel objGrid);
-        Task WorkOrderAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail,  int UserId, string Username);
+        void WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail,  int UserId, string Username);
       
-        Task UpdateAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username);
+        void UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username);
 
         Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel objGrid);
 

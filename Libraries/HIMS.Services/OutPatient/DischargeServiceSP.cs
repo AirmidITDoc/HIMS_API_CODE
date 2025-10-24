@@ -19,7 +19,7 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<DischargeDateListDto>(model, "m_rtrv_AdmtdWithDischargeDate_Ptnt_Dtls");
         }
-        public virtual async Task InsertAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual void InsertSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -53,7 +53,7 @@ namespace HIMS.Services.OutPatient
             odal.ExecuteNonQuery("m_Update_DischargeBedRelease", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
 
-        public virtual async Task UpdateAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName)
+        public virtual void UpdateSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName)
         {
             // throw new NotImplementedException();
 
@@ -64,7 +64,7 @@ namespace HIMS.Services.OutPatient
             {
                 entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_update_Discharge_1", CommandType.StoredProcedure,entity);
+            odal.ExecuteNonQuery("m_update_Discharge_1", CommandType.StoredProcedure, entity);
             //objDischarge.DischargeId = Convert.ToInt32(DischargeId);
             objAdmission.AdmissionId = Convert.ToInt32(objDischarge.AdmissionId);
 

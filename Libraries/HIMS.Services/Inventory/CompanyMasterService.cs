@@ -31,7 +31,7 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<ServiceCompanyTariffWiseListDto>(model, "ps_Rtrv_ServiceList_CompanyTariffWise");
         }
 
-        public virtual async Task InsertAsyncsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
+        public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();
 
@@ -64,7 +64,7 @@ namespace HIMS.Services.Inventory
             await _context.SaveChangesAsync();
             scope.Complete();
         }
-        public virtual async Task InsertAsyncs(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int UserId, string UserName, long? userId)
+        public virtual void Inserts(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();
 

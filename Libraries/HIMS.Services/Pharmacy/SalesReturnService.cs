@@ -54,12 +54,12 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual async Task InsertAsyncSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, int UserId, string Username)
+        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, int UserId, string Username)
         {
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy",  "IsBillCheck", "TSalesReturnDetails" };
+            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy", "IsBillCheck", "TSalesReturnDetails" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -127,7 +127,7 @@ namespace HIMS.Services.Pharmacy
             };
             odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
-            string[] PEntity = { "StrId","ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] PEntity = { "StrId", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var Sentity = ObjPayment.ToDictionary();
             foreach (var rProperty in PEntity)
             {
@@ -138,12 +138,12 @@ namespace HIMS.Services.Pharmacy
 
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual async Task InsertAsyncSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username)
+        public virtual void InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username)
         {
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy",  "IsBillCheck", "TSalesReturnDetails" };
+            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy", "IsBillCheck", "TSalesReturnDetails" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {
@@ -220,7 +220,7 @@ namespace HIMS.Services.Pharmacy
             //ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
         }
-    
+
 
     }
 }

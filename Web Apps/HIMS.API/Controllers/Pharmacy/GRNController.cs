@@ -114,8 +114,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.Grndate = DateTime.Now.Date;
-                model.Grntime = DateTime.Now;
+                //model.Grndate = DateTime.Now.Date;
+                //model.Grntime = DateTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
@@ -199,15 +199,14 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("UpdateGrnSupplierDetails{id:int}")]
         [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(UpdateGRNSupplierModel obj)
+        public ApiResponse Edit(UpdateGRNSupplierModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
             if (obj.Grnid == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-        
-                await _IGRNService.UpdateAsyncsp(model,  CurrentUserId, CurrentUserName);
+                _IGRNService.Updatesp(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -215,15 +214,14 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("UpdateCurrentStockBarcode")]
         [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edits(UpdateCurrentStockModel obj)
+        public ApiResponse Edits(UpdateCurrentStockModel obj)
         {
             TCurrentStock model = obj.MapTo<TCurrentStock>();
             if (obj.StockId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-
-                await _IGRNService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+                _IGRNService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

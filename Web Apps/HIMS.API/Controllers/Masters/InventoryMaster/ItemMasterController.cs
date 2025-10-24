@@ -116,7 +116,7 @@ namespace HIMS.API.Controllers.Inventory
             MItemMaster model = await _repository.GetById(x => x.ItemId == Id);
             if ((model?.ItemId ?? 0) > 0)
             {
-                model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
@@ -135,9 +135,9 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListForPrescriptionReturn")]
-        public async Task<ApiResponse> GetItemListForPrescriptionReturn(int StoreId, string ItemName)
+        public ApiResponse GetItemListForPrescriptionReturn(int StoreId, string ItemName)
         {
-            var resultList = await _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId, ItemName);
+            var resultList = _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId, ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription Return  List.", resultList);
         }
 

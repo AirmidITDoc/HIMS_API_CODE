@@ -19,7 +19,7 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task DoctorShareInsertAsync(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
+        public virtual void DoctorShareInsert(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper odal = new();
             string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",

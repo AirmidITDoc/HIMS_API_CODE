@@ -11,7 +11,7 @@ namespace HIMS.Services.OutPatient
          public partial interface IOPPayment
     {
    
-        Task InsertAsyncSP(Payment objPayment, int UserId, string Username);
+        void InsertSP(Payment objPayment, int UserId, string Username);
         //Task InsertAsync(Payment objPayment, int UserId, string Username);
        // Task UpdateAsync(Payment objPayment, int UserId, string Username);
     }

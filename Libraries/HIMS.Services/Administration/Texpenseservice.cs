@@ -87,11 +87,11 @@ namespace HIMS.Services.Administration
             }
         }
 
-        public virtual async Task TExpenseCancel(TExpense ObjTExpense, int UserId, string UserName)
+        public virtual void TExpenseCancel(TExpense ObjTExpense, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby","IsUpdatedBy","IsCancelled", "VoucharNo", "ExpHeadId" };
+            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby", "IsUpdatedBy", "IsCancelled", "VoucharNo", "ExpHeadId" };
             var entity = ObjTExpense.ToDictionary();
             foreach (var rProperty in AEntity)
             {
