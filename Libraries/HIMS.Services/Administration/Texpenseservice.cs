@@ -91,14 +91,16 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ExpDate", "ExpTime", "ExpType", "ExpAmount", "PersonName", "Narration", "IsAddedby", "IsUpdatedBy", "IsCancelled", "VoucharNo", "ExpHeadId" };
+            string[] AEntity = { "ExpId", "IsCancelledBy"};
             var entity = ObjTExpense.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("m_Update_T_Expenses_IsCancel", CommandType.StoredProcedure, entity);
+
 
         }
     }
