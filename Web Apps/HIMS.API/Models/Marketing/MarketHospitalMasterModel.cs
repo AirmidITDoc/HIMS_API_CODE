@@ -16,6 +16,8 @@ namespace HIMS.API.Models.Marketing
         public string? ContactMobileNo { get; set; }
         public string? DoctorName { get; set; }
         public string? DoctorMobileNo { get; set; }
+        public long? BedCategoryId { get; set; }
+
     }
     public class MarketHospitalMasterModelValidator : AbstractValidator<MarketHospitalMasterModel>
     {

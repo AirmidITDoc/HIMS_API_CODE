@@ -17,6 +17,7 @@ namespace HIMS.Data.Models
         public string? ContactMobileNo { get; set; }
         public string? DoctorName { get; set; }
         public string? DoctorMobileNo { get; set; }
+        public long? BedCategoryId { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
