@@ -93,8 +93,8 @@ namespace HIMS.API.Controllers.Pharmacy
             List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             if (obj.Grn.Grnid == 0)
             {
-                model.Grndate = DateTime.Now.Date;
-                model.Grntime = DateTime.Now;
+                //model.Grndate = DateTime.Now.Date;
+                //model.Grntime = DateTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
                 await _IGRNService.InsertAsync(model, objItems, CurrentUserId, CurrentUserName);
