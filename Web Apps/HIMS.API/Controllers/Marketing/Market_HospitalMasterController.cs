@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Marketing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.HospitalId == id);
-            return data.ToSingleResponse<MMarketingHospitalMaster, MarketHospitalMasterModel>("BankMaster");
+            return data.ToSingleResponse<MMarketingHospitalMaster, MarketHospitalMasterModel>("MarketingHospitalMaster");
         }
         [HttpPost]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Add)]

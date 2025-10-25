@@ -212,6 +212,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; } = null!;
         public virtual DbSet<MDoctorSignPageDetail> MDoctorSignPageDetails { get; set; } = null!;
         public virtual DbSet<MDoseMaster> MDoseMasters { get; set; } = null!;
+        public virtual DbSet<MDriverMaster> MDriverMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
@@ -299,6 +300,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MTermsOfPaymentMaster> MTermsOfPaymentMasters { get; set; } = null!;
         public virtual DbSet<MUnitofMeasurementMaster> MUnitofMeasurementMasters { get; set; } = null!;
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
+        public virtual DbSet<MVehicleMaster> MVehicleMasters { get; set; } = null!;
         public virtual DbSet<MVillage> MVillages { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
         public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
@@ -6778,6 +6780,34 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MDriverMaster>(entity =>
+            {
+                entity.HasKey(e => e.DriverId)
+                    .HasName("PK__M_Driver__F1B1CD047A9E3423");
+
+                entity.ToTable("M_DriverMaster");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+
+                entity.Property(e => e.DriverName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JoinDate).HasColumnType("date");
+
+                entity.Property(e => e.LicenceNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<MDrugMaster>(entity =>
             {
                 entity.HasKey(e => e.DrugId);
@@ -8546,6 +8576,38 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CategoryName).HasMaxLength(100);
 
                 entity.Property(e => e.UploadCategoryId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<MVehicleMaster>(entity =>
+            {
+                entity.HasKey(e => e.VehicleId)
+                    .HasName("PK__M_Vehicl__476B54920D94FC30");
+
+                entity.ToTable("M_VehicleMaster");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ManuDate).HasColumnType("date");
+
+                entity.Property(e => e.Note)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleModel)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<MVillage>(entity =>
