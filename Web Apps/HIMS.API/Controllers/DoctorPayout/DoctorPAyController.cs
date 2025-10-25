@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorBilldetailList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.ViewDoctorPAy
         public async Task<IActionResult> DotorbilldetailList(GridRequestModel objGrid)
         {
             IPagedList<DoctorBilldetailListDto> DoctorList = await _IDoctorPayService.GetBillDetailList(objGrid);
@@ -48,6 +48,15 @@ namespace HIMS.API.Controllers.DoctorPayout
         {
             IPagedList<DcotorpaysummaryListDto> DoctorpayList = await _IDoctorPayService.GetDoctroSummaryList(objGrid);
             return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaySummaryList"));
+        }
+
+
+        [HttpPost("DoctorsharSummarydetail")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
 
 
