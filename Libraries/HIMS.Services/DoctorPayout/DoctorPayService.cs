@@ -6,12 +6,14 @@ using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.DoctorPayout
 {
@@ -36,6 +38,10 @@ namespace HIMS.Services.DoctorPayout
         public virtual async Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DcotorpaysummaryListDto>(model, "ps_rtrv_DoctorWiseShareAmount");
+        }
+        public virtual async Task<IPagedList<DoctorPaysummarydetailListDto>> GetDoctorsummaryDetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorPaysummarydetailListDto>(model, "ps_view_DoctorPayoutPatientSummary");
         }
 
 
@@ -80,9 +86,45 @@ namespace HIMS.Services.DoctorPayout
 
         }
 
-        public virtual async Task<IPagedList<DoctorPaysummarydetailListDto>> GetDoctorsummaryDetailList(GridRequestModel model)
+      
+        public virtual async Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username)
         {
-             return await DatabaseHelper.GetGridDataBySp<DoctorPaysummarydetailListDto>(model, "ps_view_DoctorPayoutPatientSummary");
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TDoctorPayoutProcessHeaders.Add(ObjTDoctorPayoutProcessHeader);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(ObjTDoctorPayoutProcessHeader);
+                _context.Entry(ObjTDoctorPayoutProcessHeader).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(ObjTDoctorPayoutProcessHeader).Property(column).IsModified = false;
+                    }
+                }
+                //Delete details table realted records
+               var lst = await _context.TDoctorPayoutProcessDetails.Where(x => x.DoctorPayoutId == ObjTDoctorPayoutProcessHeader.DoctorPayoutId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.TDoctorPayoutProcessDetails.RemoveRange(lst);
+                }
+
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
         }
     }
 }

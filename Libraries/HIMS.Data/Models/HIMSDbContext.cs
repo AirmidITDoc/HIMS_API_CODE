@@ -405,6 +405,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
         public virtual DbSet<TDoctorPatientHandover> TDoctorPatientHandovers { get; set; } = null!;
+        public virtual DbSet<TDoctorPayoutProcessDetail> TDoctorPayoutProcessDetails { get; set; } = null!;
+        public virtual DbSet<TDoctorPayoutProcessHeader> TDoctorPayoutProcessHeaders { get; set; } = null!;
         public virtual DbSet<TDoctorShareDetail> TDoctorShareDetails { get; set; } = null!;
         public virtual DbSet<TDoctorShareGenerationLog> TDoctorShareGenerationLogs { get; set; } = null!;
         public virtual DbSet<TDoctorShareHeader> TDoctorShareHeaders { get; set; } = null!;
@@ -11485,6 +11487,50 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Ttime)
                     .HasColumnType("datetime")
                     .HasColumnName("TTime");
+            });
+
+            modelBuilder.Entity<TDoctorPayoutProcessDetail>(entity =>
+            {
+                entity.HasKey(e => e.DoctorPayoutDetId);
+
+                entity.ToTable("T_DoctorPayoutProcessDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DoctorPayout)
+                    .WithMany(p => p.TDoctorPayoutProcessDetails)
+                    .HasForeignKey(d => d.DoctorPayoutId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_DoctorPayoutProcessDetails_DoctorPayoutProcessHeader");
+            });
+
+            modelBuilder.Entity<TDoctorPayoutProcessHeader>(entity =>
+            {
+                entity.HasKey(e => e.DoctorPayoutId);
+
+                entity.ToTable("T_DoctorPayoutProcessHeader");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorAmount).HasColumnType("money");
+
+                entity.Property(e => e.HospitalAmount).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.ProcessDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcessEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcessStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Tdsamount)
+                    .HasColumnType("money")
+                    .HasColumnName("TDSAmount");
             });
 
             modelBuilder.Entity<TDoctorShareDetail>(entity =>

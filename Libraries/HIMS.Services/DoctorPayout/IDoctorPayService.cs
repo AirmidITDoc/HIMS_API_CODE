@@ -14,14 +14,12 @@ namespace HIMS.Services.DoctorPayout
     {
         Task InsertAsync(TAdditionalDocPay ObjTAdditionalDocPay, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<DoctorPayListDto>> GetList(GridRequestModel objGrid);
-
         Task<IPagedList<DoctorBilldetailListDto>> GetBillDetailList(GridRequestModel objGrid);
-
         Task<IPagedList<DoctorPaysummarydetailListDto>> GetDoctorsummaryDetailList(GridRequestModel objGrid);
-
-
         Task<IPagedList<DcotorpaysummaryListDto>> GetDoctroSummaryList(GridRequestModel objGrid);
         Task UpdateAsync(List<AddCharge> ObjAddCharge, int CurrentUserId, string CurrentUserName);
+        Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username);
+        Task UpdateAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username, string[]? references);
 
     }
 }
