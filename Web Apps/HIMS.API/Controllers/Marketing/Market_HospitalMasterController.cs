@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Marketing
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MMarketingHospitalMaster> MarketingHospitalList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MarketingHospitalList.ToGridResponse(objGrid, "Bank List"));
+            return Ok(MarketingHospitalList.ToGridResponse(objGrid, "Marketing Hospital Master List"));
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]

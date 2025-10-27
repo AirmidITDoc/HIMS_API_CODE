@@ -550,7 +550,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6793,6 +6793,10 @@ namespace HIMS.Data.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CityName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
                 entity.Property(e => e.DriverName)
@@ -6808,6 +6812,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MobileNo)
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MDrugMaster>(entity =>
@@ -7434,6 +7440,8 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.HospitalId);
 
                 entity.ToTable("M_Marketing_HospitalMaster");
+
+                entity.Property(e => e.BedCategoryName).HasMaxLength(50);
 
                 entity.Property(e => e.ContactMobileNo).HasMaxLength(10);
 
@@ -8587,9 +8595,13 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_VehicleMaster");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.ManuDate).HasColumnType("date");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Note)
                     .HasMaxLength(255)
@@ -12825,9 +12837,13 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("T_Marketing_DailyVisitInformation");
 
+                entity.Property(e => e.ClosedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EstimatedValue).HasColumnType("money");
 
                 entity.Property(e => e.FollowupTypeName).HasMaxLength(255);
 
@@ -12836,6 +12852,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Longitude).HasColumnName("longitude");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StatusName).HasMaxLength(50);
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 
