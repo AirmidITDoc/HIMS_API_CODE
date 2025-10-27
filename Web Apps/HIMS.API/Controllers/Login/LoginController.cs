@@ -48,52 +48,53 @@ namespace HIMS.API.Controllers.Login
         {
             //string id = Guid.NewGuid().ToString();
             //string secret = ApiKeyUtility.EncryptString(id + "|" + DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
-            //string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value;
-            //string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value;
-            //string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
-            //if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= DateTime.Now)
-            //{
-            if (string.IsNullOrWhiteSpace(model.CaptchaCode))
+            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value;
+            string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value;
+            string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
+            if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= DateTime.Now)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
-            }
-            else
-            {
-                model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
-                model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
-                if (string.IsNullOrWhiteSpace(model.Username))
+                if (string.IsNullOrWhiteSpace(model.CaptchaCode))
                 {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is required");
                 }
                 else
                 {
-                    if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                    model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
+                    model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
+                    if (string.IsNullOrWhiteSpace(model.Username))
                     {
-                        LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
-                        if (user == null)
-                        {
-                            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
-                        }
-                        else if (!string.IsNullOrWhiteSpace(user.UserToken) && user.UserId > 0)
-                        {
-                            string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
-                            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
-                        }
-                        else
-                        {
-                            return await AfterLogin(user, model.LoginType);
-                        }
+                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
                     }
                     else
                     {
-                        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                        if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                        {
+                            LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
+                            if (user == null)
+                            {
+                                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+                            }
+                            else if (!string.IsNullOrWhiteSpace(user.UserToken) && user.UserId > 0)
+                            {
+                                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+                                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
+                            }
+                            else
+                            {
+                                return await AfterLogin(user, model.LoginType);
+                            }
+                        }
+                        else
+                        {
+                            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Captcha code is expired OR Invalid");
+                        }
                     }
                 }
             }
-            //}
-            //else {
-            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "API product key expired.");
-            //}
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "API product key expired.");
+            }
         }
         [HttpPost]
         [Route("[action]")]
