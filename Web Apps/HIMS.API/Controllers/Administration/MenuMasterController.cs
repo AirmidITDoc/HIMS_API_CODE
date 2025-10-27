@@ -35,14 +35,14 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPost("Insertsp")]
         [Permission(PageCode = "Menu", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(MenuMasterModel obj)
+        public ApiResponse InsertSP(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
             if (obj.Id == 0)
             {
 
                 model.IsActive = true;
-                await _MenuMasterService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                _MenuMasterService.InsertSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Menu", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(MenuMasterModel obj)
+        public ApiResponse Edit(MenuMasterModel obj)
         {
             MenuMaster model = obj.MapTo<MenuMaster>();
             model.IsActive = true;
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                await _MenuMasterService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
+                _MenuMasterService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

@@ -78,12 +78,12 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Update successfully.");
         }
-      
+
         //Shilpa//22/05/2025 updated
 
         [HttpPost("MrpAdjustmentUpdate")]
         [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
+        public ApiResponse GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
             TCurrentStock CurruntStock = obj.CurruntStockModel.MapTo<TCurrentStock>();
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.Inventory
                 BatchNo = CurruntStock.BatchNo,
 
             };
-            await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
+            _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.");
         }
 

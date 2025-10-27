@@ -4239,12 +4239,12 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:8px;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:8px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:8px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:14px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 

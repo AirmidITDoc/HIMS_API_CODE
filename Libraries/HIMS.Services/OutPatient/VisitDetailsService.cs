@@ -419,7 +419,7 @@ namespace HIMS.Services.OutPatient
 
         }
 
-        public virtual async Task UpdateVitalAsync(VisitDetail objPara, int UserId, string Username)
+        public virtual void UpdateVital(VisitDetail objPara, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -436,20 +436,20 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
-        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username)
+        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "Opdno", "IsMark", "Comments", "IsXray", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIp" };
+            string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
             var entity = objCrossConsultation.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
-
-            await _context.SaveChangesAsync(UserId, Username);
-
+            await _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
             return objCrossConsultation;
 
         }
@@ -476,7 +476,7 @@ namespace HIMS.Services.OutPatient
             await _context.SaveChangesAsync();
             scope.Complete();
         }
-        public virtual async Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username)
+        public virtual void RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();

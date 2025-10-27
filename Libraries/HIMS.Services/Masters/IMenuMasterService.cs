@@ -11,8 +11,8 @@ namespace HIMS.Services.Masters
 {
     public partial  interface IMenuMasterService
     {
-        Task InsertAsyncSP(MenuMaster objMenuMaster, int UserId, string Username);
-        Task UpdateAsyncSP(MenuMaster objMenuMaster, int UserId, string Username);
+        void InsertSP(MenuMaster objMenuMaster, int UserId, string Username);
+        void UpdateSP(MenuMaster objMenuMaster, int UserId, string Username);
         Task<IPagedList<MenuMasterListDto>> MenuMasterList(GridRequestModel objGrid);
 
     }

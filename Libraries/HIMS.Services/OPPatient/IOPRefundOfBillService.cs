@@ -12,8 +12,8 @@ namespace HIMS.Services.OPPatient
 {
     public partial interface IOPRefundOfBillService
     {
-        Task InsertAsyncIP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username);
-        Task InsertAsyncOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username);
+        void InsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username);
+        void InsertOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, int UserId, string Username);
 
         Task<long> InsertAsync(Refund objRefund, int UserId, string Username);
         Task<IPagedList<OpBilllistforRefundDto>> GeOpbilllistforrefundAsync(GridRequestModel objGrid);

@@ -85,7 +85,7 @@ namespace HIMS.Services.Inventory
             await _context.LogProcedureExecution(Bentity, "StockAdjutment-GSTAdjustment", ObjTGstadjustment.GstadgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
-        public virtual async Task MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)
+        public virtual void MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)
         {
 
             DatabaseHelper odal = new();
@@ -103,7 +103,7 @@ namespace HIMS.Services.Inventory
             {
                 Uentity.Remove(rProperty);
             }
-            
+
             Uentity["OldUnitMrp"] = 0; // Ensure objpayment
             Uentity["OldUnitPur"] = 0; // Ensure objpayment
             Uentity["OldUnitLanded"] = 0; // Ensure objpayment

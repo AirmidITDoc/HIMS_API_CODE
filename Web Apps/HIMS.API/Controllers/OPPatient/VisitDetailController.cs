@@ -227,20 +227,20 @@ namespace HIMS.API.Controllers.OPPatient
         //Edit EditVital
         [HttpPut("EditVital/{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)
+        public ApiResponse Edit(UpdateVitalInfModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
             if (obj.VisitId != 0)
             {
                 model.VisitId = obj.VisitId;
-                await _visitDetailsService.UpdateVitalAsync(model, CurrentUserId, CurrentUserName);
+                _visitDetailsService.UpdateVital(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully.");
         }
         [HttpPost("CrossConsultationInsert")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -318,14 +318,14 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("RequestForOPTOIP")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse> Cancel(RequestForOPTOIP obj)
+        public ApiResponse Cancel(RequestForOPTOIP obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
 
             if (obj.VisitId != 0)
             {
                 model.VisitId = obj.VisitId;
-                await _visitDetailsService.RequestForOPTOIP(model, CurrentUserId, CurrentUserName);
+                _visitDetailsService.RequestForOPTOIP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

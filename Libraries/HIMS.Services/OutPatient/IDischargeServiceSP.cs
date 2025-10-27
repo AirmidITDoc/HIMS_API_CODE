@@ -12,8 +12,8 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IDischargeServiceSP
     {
-        Task InsertAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);
-        Task UpdateAsyncSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);
+        void InsertSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);
+        void UpdateSP(Discharge objDischarge, Admission objAdmission, int currentUserId, string currentUserName);
         Task<IPagedList<DischargeDateListDto>> GetListAsync(GridRequestModel objGrid);
 
     }

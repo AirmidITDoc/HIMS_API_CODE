@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.AdmissionTime = Convert.ToDateTime(model.AdmissionTime);
                 model.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
                 objAdmission.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertRegAsyncSP(model, objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertRegSP(model, objAdmission, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

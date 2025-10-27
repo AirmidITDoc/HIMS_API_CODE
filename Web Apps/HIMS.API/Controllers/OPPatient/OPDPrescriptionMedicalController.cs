@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly HIMSDbContext _context;
         private readonly INotificationUtility _notificationUtility;
         private readonly IVisitDetailsService _visitDetailsService;
-        public OPDPrescriptionMedicalController(IOPDPrescriptionMedicalService repository, IPrescriptionOPTemplateService repository1, IGenericService<ServiceMaster> ServiceMasterrepository, 
+        public OPDPrescriptionMedicalController(IOPDPrescriptionMedicalService repository, IPrescriptionOPTemplateService repository1, IGenericService<ServiceMaster> ServiceMasterrepository,
             IGenericService<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasterrepository, IGenericService<MExaminationMaster> MExaminationMasterrepository
             , IGenericService<MComplaintMaster> MComplaintMasterrepository, HIMSDbContext HIMSDbContext, INotificationUtility notificationUtility, IVisitDetailsService visitDetailsService)
         {
@@ -128,7 +128,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(List.ToGridResponse(objGrid, "OP Rtrv Dignosis  List"));
         }
 
-      
+
         [HttpGet("GetDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
@@ -186,7 +186,7 @@ namespace HIMS.API.Controllers.OPPatient
 
             if (model.Count > 0)
             {
-                await _OPDPrescriptionService.InsertPrescriptionAsyncSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+                _OPDPrescriptionService.InsertPrescriptionSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
 
 
                 //get patient details
@@ -222,7 +222,7 @@ namespace HIMS.API.Controllers.OPPatient
             //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-        
+
         //Edit API
         [HttpPut("PrescriptionEdit/{id:int}")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
@@ -261,7 +261,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("OPTemplateInsert")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(PreTemplateModel obj)
+        public ApiResponse InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
             List<MPresTemplateD> objTemplate = obj.PresTemplate.MapTo<List<MPresTemplateD>>();
@@ -271,7 +271,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedBy = CurrentUserId;
                 objTemplate.ForEach(x => { x.PresId = obj.PrescriptionOPTemplate.PresId; });
 
-                await _PrescriptionOPTemplateService.InsertAsyncSP(model, objTemplate, CurrentUserId, CurrentUserName);
+                _PrescriptionOPTemplateService.InsertSP(model, objTemplate, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

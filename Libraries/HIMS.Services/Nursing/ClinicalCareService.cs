@@ -71,7 +71,7 @@ namespace HIMS.Services.Nursing
         }
 
 
-        public virtual async Task CancelAsync(TNursingVital objTNursingVital, int UserId, string Username)
+        public virtual void Cancel(TNursingVital objTNursingVital, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -87,11 +87,11 @@ namespace HIMS.Services.Nursing
         }
 
 
-        public virtual async Task CancelAsync(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username)
+        public virtual void Cancel(TNursingSugarLevel objTNursingSugarLevel, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "EntryDate", "EntryTime", "Bsl", "UrineSugar", "Ettpressure", "UrineKetone", "Bodies", "IntakeMode", "AdmissionId", "ReportedToRmo", "CreatedBy","CreatedDate","ModifiedDate","ModifiedBy"};
+            string[] rEntity = { "EntryDate", "EntryTime", "Bsl", "UrineSugar", "Ettpressure", "UrineKetone", "Bodies", "IntakeMode", "AdmissionId", "ReportedToRmo", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
             var eEntity = objTNursingSugarLevel.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -102,11 +102,11 @@ namespace HIMS.Services.Nursing
         }
 
 
-        public virtual async Task CancelAsync1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username)
+        public virtual void Cancel1(TNursingPainAssessment objTNursingPainAssessment, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = {  "PainAssessementValue", "PainAssessmentTime", "PainAssessmentDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
+            string[] rEntity = { "PainAssessementValue", "PainAssessmentTime", "PainAssessmentDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
             var TEntity = objTNursingPainAssessment.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -118,11 +118,11 @@ namespace HIMS.Services.Nursing
 
 
 
-        public virtual async Task CancelAsync(TNursingWeight objTNursingWeight, int UserId, string Username)
+        public virtual void Cancel(TNursingWeight objTNursingWeight, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = {  "PatWeightValue", "PatWeightTime", "PatWeightDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
+            string[] rEntity = { "PatWeightValue", "PatWeightTime", "PatWeightDate", "AdmissionId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy" };
             var HEntity = objTNursingWeight.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -132,7 +132,7 @@ namespace HIMS.Services.Nursing
             odal.ExecuteNonQuery("PS_Delete_T_NursingWeight", CommandType.StoredProcedure, HEntity);
         }
 
-        public virtual async Task CancelAsync(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username)
+        public virtual void Cancel(TNursingOrygenVentilator objTNursingOrygenVentilator, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();

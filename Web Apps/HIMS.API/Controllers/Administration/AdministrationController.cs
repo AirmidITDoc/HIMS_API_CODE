@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Administration
             if (obj.AdmissionID != 0)
             {
 
-                 //  Model.AddedBy = CurrentUserId;
+                //  Model.AddedBy = CurrentUserId;
                 await _IAdministrationService.DeleteAsync(Model, CurrentUserId, CurrentUserName);
             }
             else
@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.Administration
         }
         [HttpPut("UpdateAdmissiondatetime{id:int}")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Update(AdmissionModell obj)
+        public ApiResponse Update(AdmissionModell obj)
         {
             Admission model = obj.MapTo<Admission>();
             if (obj.AdmissionID == 0)
@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.Administration
             else
             {
 
-                await _IAdministrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                _IAdministrationService.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -113,15 +113,14 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPut("UpdatePaymentdatetime{id:int}")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> PaymentdatetimeUpdate(PaymenntModel obj)
+        public ApiResponse PaymentdatetimeUpdate(PaymenntModel obj)
         {
             Payment model = obj.MapTo<Payment>();
             if (obj.PaymentId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-
-                await _IAdministrationService.PaymentUpdateAsync(model, CurrentUserId, CurrentUserName);
+                _IAdministrationService.PaymentUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

@@ -32,7 +32,7 @@ namespace HIMS.Data.DataProviders
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task ReIndexTablesAsync()
         {
-            using DataConnection currentConnection = await CreateDataConnectionAsync();
+            using DataConnection currentConnection = CreateDataConnection();
             string commandText = $@"
                     DECLARE @TableName sysname 
                     DECLARE cur_reindex CURSOR FOR

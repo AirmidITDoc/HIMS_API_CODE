@@ -212,6 +212,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDoctorScheduleDetail> MDoctorScheduleDetails { get; set; } = null!;
         public virtual DbSet<MDoctorSignPageDetail> MDoctorSignPageDetails { get; set; } = null!;
         public virtual DbSet<MDoseMaster> MDoseMasters { get; set; } = null!;
+        public virtual DbSet<MDriverMaster> MDriverMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
@@ -299,6 +300,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MTermsOfPaymentMaster> MTermsOfPaymentMasters { get; set; } = null!;
         public virtual DbSet<MUnitofMeasurementMaster> MUnitofMeasurementMasters { get; set; } = null!;
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
+        public virtual DbSet<MVehicleMaster> MVehicleMasters { get; set; } = null!;
         public virtual DbSet<MVillage> MVillages { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
         public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
@@ -403,6 +405,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
         public virtual DbSet<TDoctorPatientHandover> TDoctorPatientHandovers { get; set; } = null!;
+        public virtual DbSet<TDoctorPayoutProcessDetail> TDoctorPayoutProcessDetails { get; set; } = null!;
+        public virtual DbSet<TDoctorPayoutProcessHeader> TDoctorPayoutProcessHeaders { get; set; } = null!;
         public virtual DbSet<TDoctorShareDetail> TDoctorShareDetails { get; set; } = null!;
         public virtual DbSet<TDoctorShareGenerationLog> TDoctorShareGenerationLogs { get; set; } = null!;
         public virtual DbSet<TDoctorShareHeader> TDoctorShareHeaders { get; set; } = null!;
@@ -6778,6 +6782,40 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MDriverMaster>(entity =>
+            {
+                entity.HasKey(e => e.DriverId)
+                    .HasName("PK__M_Driver__F1B1CD047A9E3423");
+
+                entity.ToTable("M_DriverMaster");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CityName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+
+                entity.Property(e => e.DriverName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JoinDate).HasColumnType("date");
+
+                entity.Property(e => e.LicenceNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MDrugMaster>(entity =>
             {
                 entity.HasKey(e => e.DrugId);
@@ -7402,6 +7440,8 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.HospitalId);
 
                 entity.ToTable("M_Marketing_HospitalMaster");
+
+                entity.Property(e => e.BedCategoryName).HasMaxLength(50);
 
                 entity.Property(e => e.ContactMobileNo).HasMaxLength(10);
 
@@ -8546,6 +8586,42 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CategoryName).HasMaxLength(100);
 
                 entity.Property(e => e.UploadCategoryId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<MVehicleMaster>(entity =>
+            {
+                entity.HasKey(e => e.VehicleId)
+                    .HasName("PK__M_Vehicl__476B54920D94FC30");
+
+                entity.ToTable("M_VehicleMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ManuDate).HasColumnType("date");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Note)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleModel)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VehicleType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<MVillage>(entity =>
@@ -11425,6 +11501,50 @@ namespace HIMS.Data.Models
                     .HasColumnName("TTime");
             });
 
+            modelBuilder.Entity<TDoctorPayoutProcessDetail>(entity =>
+            {
+                entity.HasKey(e => e.DoctorPayoutDetId);
+
+                entity.ToTable("T_DoctorPayoutProcessDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DoctorPayout)
+                    .WithMany(p => p.TDoctorPayoutProcessDetails)
+                    .HasForeignKey(d => d.DoctorPayoutId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_DoctorPayoutProcessDetails_DoctorPayoutProcessHeader");
+            });
+
+            modelBuilder.Entity<TDoctorPayoutProcessHeader>(entity =>
+            {
+                entity.HasKey(e => e.DoctorPayoutId);
+
+                entity.ToTable("T_DoctorPayoutProcessHeader");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorAmount).HasColumnType("money");
+
+                entity.Property(e => e.HospitalAmount).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.ProcessDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcessEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcessStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Tdsamount)
+                    .HasColumnType("money")
+                    .HasColumnName("TDSAmount");
+            });
+
             modelBuilder.Entity<TDoctorShareDetail>(entity =>
             {
                 entity.HasKey(e => e.DocDetId);
@@ -11793,15 +11913,27 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExpId).HasColumnName("ExpID");
 
+                entity.Property(e => e.CancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.ExpAmount).HasColumnType("money");
 
                 entity.Property(e => e.ExpDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ExpTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Narration).HasMaxLength(200);
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PersonName).HasMaxLength(100);
+                entity.Property(e => e.Narration).HasMaxLength(255);
+
+                entity.Property(e => e.PersonName).HasMaxLength(255);
+
+                entity.Property(e => e.SequenceNo).HasMaxLength(10);
+
+                entity.Property(e => e.Utrno)
+                    .HasMaxLength(10)
+                    .HasColumnName("UTRNo");
 
                 entity.Property(e => e.VoucharNo).HasMaxLength(50);
             });
@@ -12705,9 +12837,13 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("T_Marketing_DailyVisitInformation");
 
+                entity.Property(e => e.ClosedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EstimatedValue).HasColumnType("money");
 
                 entity.Property(e => e.FollowupTypeName).HasMaxLength(255);
 
@@ -12716,6 +12852,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Longitude).HasColumnName("longitude");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StatusName).HasMaxLength(50);
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 

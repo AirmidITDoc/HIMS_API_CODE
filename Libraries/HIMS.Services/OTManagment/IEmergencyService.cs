@@ -13,10 +13,10 @@ namespace HIMS.Services.OTManagment
     public partial interface IEmergencyService
     {
         Task<IPagedList<EmergencyListDto>> GetListAsyn(GridRequestModel objGrid);
-        Task InsertAsyncSP(TEmergencyAdm objTEmergencyAdm, int UserId, string Username);
-        Task UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
-        Task CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
-        Task Update(AddCharge ObjAddCharge, int UserId, string UserName, long EmgId, long NewAdmissionId);
+        void InsertSP(TEmergencyAdm objTEmergencyAdm, int UserId, string Username);
+        void UpdateSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
+        void CancelSP(TEmergencyAdm objTEmergencyAdm, int UserId, string UserName);
+        void Update(AddCharge ObjAddCharge, int UserId, string UserName, long EmgId, long NewAdmissionId);
         Task<List<EmergencyAutoCompleteDto>> SearchRegistration(string str);
 
     }

@@ -630,6 +630,13 @@ namespace HIMS.API.Infrastructure
             CreateMap<ServiceDetail, DifferTraiffModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TAdditionalDocPay, DoctorPayModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Admission, AdmissionUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, ShareDoctAddChargesUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<AddCharge, ShareDoctAddCharges>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDoctorPayoutProcessHeader, DoctorPayoutProcessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDoctorPayoutProcessDetail, DoctorPayoutProcessDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
 
 
 

@@ -33,7 +33,7 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<WorkorderIteListDto>(model, "Rtrv_ItemDetailsForWorkOrderUpdate");
         }
-        public virtual async Task WorkOrderAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string UserName)
+        public virtual void WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
 
@@ -51,7 +51,7 @@ namespace HIMS.Services.Pharmacy
             {
                 item.Woid = Convert.ToInt32(AWOId);
 
-                string[] rEntity = { "WodetId", "PendQty"};
+                string[] rEntity = { "WodetId", "PendQty" };
                 var entity = item.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -62,7 +62,7 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-        public virtual async Task UpdateAsyncSp(TWorkOrderHeader ObjTWorkOrderHeader,List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username)
+        public virtual void UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "Wono", "Date", "Time", "IsCancelled", "IsCancelledBy", "IsCancelDate", "AddedBy" };
@@ -94,7 +94,7 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-       
+
     }
 }
 

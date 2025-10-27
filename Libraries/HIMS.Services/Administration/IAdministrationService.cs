@@ -18,14 +18,14 @@ namespace HIMS.Services.Administration
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
-        Task UpdateAsync(Admission ObjAdmission, int UserId, string Username);
+        void Update(Admission ObjAdmission, int UserId, string Username);
 
-        Task PaymentUpdateAsync(Payment ObjPayment, int UserId, string Username);
+        void PaymentUpdate(Payment ObjPayment, int UserId, string Username);
 
         Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName);
 
         //Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
-        Task InsertAsync(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
+        void Insert(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
        
 
 

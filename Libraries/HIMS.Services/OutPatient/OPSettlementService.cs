@@ -25,16 +25,16 @@ namespace HIMS.Services.OutPatient
 
         {
             DatabaseHelper odal = new();
-            string[] rpayEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+            string[] rpayEntity = { "BillNo", "UnitId", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "OPDIPDType", "PaymentId" };
 
             var payentity = objpayment.ToDictionary();
-            foreach (var rProperty in rpayEntity)
+            foreach (var rProperty in payentity.Keys.ToList())
             {
-             payentity.Remove(rProperty);
-
+                if (!rpayEntity.Contains(rProperty))
+                    payentity.Remove(rProperty);
             }
             // Add the new parameter
-           payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+            payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
 
             string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
 
@@ -42,23 +42,15 @@ namespace HIMS.Services.OutPatient
 
             //Udpate Bill Table 
 
-            string[] rBillEntity = {"OpdIpdId","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt",
+            string[] rBillEntity = { "BillNo", "BalanceAmt" };
 
-                              "BillDate","OpdIpdType","IsCancelled","PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted",
-
-                              "IsFree", "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck","SpeTaxPer","SpeTaxAmt","IsBillShrHold",
-
-                              "DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","CompDiscAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","BillDetails",
-
-                              "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","RefundAmount" };
 
             var rAdmissentity1 = objBill.ToDictionary();
 
-            foreach (var rProperty in rBillEntity)
+            foreach (var rProperty in rAdmissentity1.Keys.ToList())
             {
-
-                rAdmissentity1.Remove(rProperty);
-
+                if (!rBillEntity.Contains(rProperty))
+                    rAdmissentity1.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);

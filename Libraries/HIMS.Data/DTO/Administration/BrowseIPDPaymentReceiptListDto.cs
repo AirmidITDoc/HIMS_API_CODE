@@ -8,12 +8,8 @@ namespace HIMS.Data.DTO.Administration
 {
     public class BrowseIPDPaymentReceiptListDto
     {
-
-
-
         public long PaymentId { get; set; }
         public long BillNo { get; set; }
-
         public DateTime BillDate { get; set; }
         public string RegNo { get; set; }
         public string PatientName { get; set; }
@@ -44,16 +40,10 @@ namespace HIMS.Data.DTO.Administration
         public string UserName { get; set; }
         public string PayDate { get; set; }
         public decimal PaidAmount { get; set; }
-
         public decimal TotalAmt { get; set; }
-
         public decimal NEFTPayAmount { get; set; }
-
         public decimal PayTMAmount { get; set; }
-
-
         public DateTime ChequeDate { get; set; }
-
         public DateTime CardDate { get; set; }
         public DateTime NEFTDate { get; set; }
         public DateTime PayTMDate { get; set; }

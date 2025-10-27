@@ -11,6 +11,7 @@ using HIMS.API.Models.DoctorPayout;
 using HIMS.Services.DoctorPayout;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Controllers.DoctorPayout
 {
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorBilldetailList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.ViewDoctorPAy
         public async Task<IActionResult> DotorbilldetailList(GridRequestModel objGrid)
         {
             IPagedList<DoctorBilldetailListDto> DoctorList = await _IDoctorPayService.GetBillDetailList(objGrid);
@@ -47,6 +48,15 @@ namespace HIMS.API.Controllers.DoctorPayout
         {
             IPagedList<DcotorpaysummaryListDto> DoctorpayList = await _IDoctorPayService.GetDoctroSummaryList(objGrid);
             return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaySummaryList"));
+        }
+
+
+        [HttpPost("DoctorsharSummarydetail")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]r
+        public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
 
 
@@ -66,5 +76,56 @@ namespace HIMS.API.Controllers.DoctorPayout
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+        [HttpPut("ShareDocAddCharges")]
+        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> GSTUpdate(ShareDoctAddCharges obj)
+        {
+            List<AddCharge> model = obj.ShareDoctAddCharge.MapTo<List<AddCharge>>();
+            if (model.Count > 0)
+            {
+                //model.AddedBy = CurrentUserId;
+                await _IDoctorPayService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Update successfully.");
+        }
+        [HttpPost("DoctorPayoutProcess")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(DoctorPayoutProcessModel obj)
+        {
+            TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();
+            if (obj.DoctorPayoutId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IDoctorPayService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
+        [HttpPut("DoctorPayoutProcess")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(DoctorPayoutProcessModel obj)
+        {
+            TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();
+            if (obj.DoctorPayoutId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IDoctorPayService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
     }
 }

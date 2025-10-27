@@ -149,6 +149,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
         }
 
+      
 
         //List API
         [HttpPost]

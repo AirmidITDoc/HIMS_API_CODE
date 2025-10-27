@@ -43,16 +43,15 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("WorkOrderSave")]
         //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> WorkOrderAsyncSp(WorksOrderModel obj)
+        public ApiResponse WorkOrderAsyncSp(WorksOrderModel obj)
         {
-            
+
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
             List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
 
             if (obj.WorkOrders.Woid == 0)
             {
-
-                await _IWorkOrderService.WorkOrderAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
+                _IWorkOrderService.WorkOrderSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -63,15 +62,14 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("WorkOrderUpdate")]
         //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> WorkOrderUpdate(UpdateWorkOrderModel obj)
+        public ApiResponse WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
-           List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
+            List<TWorkOrderDetail> Models = obj.WorkOrderDetails.MapTo<List<TWorkOrderDetail>>();
 
             if (obj.WorkOrders.Woid != 0)
             {
-
-                await _IWorkOrderService.UpdateAsyncSp(Model, Models, CurrentUserId, CurrentUserName);
+                _IWorkOrderService.UpdateSp(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

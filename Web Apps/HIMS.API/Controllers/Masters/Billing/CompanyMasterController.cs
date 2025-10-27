@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             CompanyMaster model = await _repository.GetById(x => x.CompanyId == Id);
             if ((model?.CompanyId ?? 0) > 0)
             {
-                model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
@@ -137,14 +137,14 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         [HttpPost("ServiceWiseCompanySave")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Insert(ServiceWiseModel obj)
+        public ApiResponse Insert(ServiceWiseModel obj)
         {
             List<ServiceWiseCompanyCode> model = obj.ServiceWise.MapTo<List<ServiceWiseCompanyCode>>();
 
             if (model.Count > 0)
             {
 
-                await _CompanyMasterService.InsertAsyncsp(model, CurrentUserId, CurrentUserName, obj.userId);
+                _CompanyMasterService.Insertsp(model, CurrentUserId, CurrentUserName, obj.userId);
             }
 
             else
@@ -152,8 +152,8 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-  
-      
+
+
         [HttpPut("updatecompanywiseservicerate")]
         //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
@@ -173,18 +173,18 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
 
-     
+
 
         [HttpPost("CompanyWiseServiceDiscount")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> postc(CompanyWiseServiceModel obj)
+        public ApiResponse postc(CompanyWiseServiceModel obj)
         {
             List<MCompanyWiseServiceDiscount> model = obj.CompanyWiseService.MapTo<List<MCompanyWiseServiceDiscount>>();
 
             if (model.Count > 0)
             {
 
-                await _CompanyMasterService.InsertAsyncs(model, CurrentUserId, CurrentUserName, obj.userId);
+                _CompanyMasterService.Inserts(model, CurrentUserId, CurrentUserName, obj.userId);
             }
 
             else

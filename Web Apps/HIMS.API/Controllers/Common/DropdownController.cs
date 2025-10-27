@@ -100,6 +100,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOutSourcelabMaster> _MOutSourcelabMaster;
         private readonly IGenericService<MCreditReasonMaster> _MCreditReasonMaster;
         private readonly IGenericService<MMarketingHospitalMaster> _MMarketingHospitalMaster;
+        private readonly IGenericService<MVehicleMaster> _MVehicleMaster;
+        private readonly IGenericService<MDriverMaster> _MDriverMaster;
 
 
 
@@ -145,7 +147,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MExpensesHeadMaster> IMExpensesHeadMaster,
                               IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster,
                               IGenericService<MCreditReasonMaster> IMCreditReasonMaster,
-                              IGenericService<MMarketingHospitalMaster> IMMarketingHospitalMaster
+                              IGenericService<MMarketingHospitalMaster> IMMarketingHospitalMaster,
+                                 IGenericService<MVehicleMaster> MVehicleMaster,
+                              IGenericService<MDriverMaster> MDriverMaster
 
 
 
@@ -237,6 +241,8 @@ namespace HIMS.API.Controllers.Common
             _MOutSourcelabMaster = IMOutSourcelabMaster;
             _MCreditReasonMaster = IMCreditReasonMaster;
             _MMarketingHospitalMaster = IMMarketingHospitalMaster;
+            _MVehicleMaster = MVehicleMaster;
+            _MDriverMaster = MDriverMaster;
 
 
 
@@ -307,8 +313,6 @@ namespace HIMS.API.Controllers.Common
 
                  //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => !_context.PathTestMaster.Any(p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-
-
                 "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
                 "DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
                 "Bank" => (await _IMbankService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MBankMaster.BankId), nameof(MBankMaster.BankName)),
@@ -372,9 +376,9 @@ namespace HIMS.API.Controllers.Common
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                "FollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "FollowupType ")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-
-
+                
+                
+                "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
@@ -388,10 +392,20 @@ namespace HIMS.API.Controllers.Common
                 "ExpHeadMaster" => (await _MExpensesHeadMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "OutsourceLab" => (await _MOutSourcelabMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOutSourcelabMaster.OutSourceId), nameof(MOutSourcelabMaster.OutSourceLabName)),
                 "CreditReason" => (await _MCreditReasonMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCreditReasonMaster.CreditId), nameof(MCreditReasonMaster.CreditReason)),
-                "MarketingHospital" => (await _MMarketingHospitalMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MMarketingHospitalMaster.HospitalId), nameof(MMarketingHospitalMaster.HospitalName)),
 
-                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
+
+                "vechicle" => (await _MVehicleMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MVehicleMaster.VehicleId), nameof(MVehicleMaster.VehicleName)),
+                //"Driver" => (await _MDriverMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDriverMaster.DriverId), nameof(MDriverMaster.DriverName)),
+
+                "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
+
+                // Marketing Application API
+                "MarketingHospital" => (await _MMarketingHospitalMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MMarketingHospitalMaster.HospitalId), nameof(MMarketingHospitalMaster.HospitalName)),
+                "MarketingBedCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingBedCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "MarketingFollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingFollowupType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "MarketingStatus" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingStatus")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
                 _ => new List<SelectListItem>()
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");

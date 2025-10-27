@@ -91,7 +91,7 @@ namespace HIMS.Services.Administration
             scope.Complete();
         }
 
-        public virtual async Task UpdateAsync(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        public virtual void Update(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -136,7 +136,7 @@ namespace HIMS.Services.Administration
 
         }
 
-        public virtual async Task InsertAsyncSp(List<TSalesHeader> ObjTSalesHeader, int UserId, string UserName)
+        public virtual void InsertSp(List<TSalesHeader> ObjTSalesHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();

@@ -19,7 +19,7 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task InsertAsyncSP(MPresTemplateH ObjMPresTemplateH, List<MPresTemplateD> ObjMPresTemplateD, int UserId, string Username)
+        public virtual void InsertSP(MPresTemplateH ObjMPresTemplateH, List<MPresTemplateD> ObjMPresTemplateD, int UserId, string Username)
         {
             //Add header table records
             DatabaseHelper odal = new();

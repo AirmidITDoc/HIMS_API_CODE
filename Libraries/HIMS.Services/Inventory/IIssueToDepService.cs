@@ -32,7 +32,7 @@ namespace HIMS.Services.Inventory
 
         Task InsertAsync(TIssueToDepartmentHeader objIssueToDeptIndent, int UserId, string Username);
         Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username);
-        Task Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock,  int UserId, string Username);
+        void Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock,  int UserId, string Username);
 
 
     }

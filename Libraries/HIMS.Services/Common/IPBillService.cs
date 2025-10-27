@@ -281,7 +281,7 @@ namespace HIMS.Services.Common
             }
         }
 
-        public virtual async Task IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -357,7 +357,7 @@ namespace HIMS.Services.Common
 
             await _context.SaveChangesAsync(UserId, UserName);
         }
-        public virtual async Task IPbillAsyncSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
+        public virtual void IPbillSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -412,7 +412,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
 
-            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode","CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity1 = Objpayment.ToDictionary();
             foreach (var rProperty in pEntity)
             {
@@ -449,7 +449,7 @@ namespace HIMS.Services.Common
 
             }
 
-            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails","UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] AHeaderEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AdvanceDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
             foreach (var rProperty in AHeaderEntity)
             {
@@ -460,11 +460,11 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task IPbillCreditAsyncSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
+        public virtual void IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -551,7 +551,7 @@ namespace HIMS.Services.Common
         }
 
 
-        public virtual async Task IPInterimBillCashCounterAsyncSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, int UserId, string UserName)
+        public virtual void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -569,7 +569,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt",  "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
+            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -599,7 +599,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
         }
-        public virtual async Task IPDraftBillAsync(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
+        public virtual void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -628,7 +628,7 @@ namespace HIMS.Services.Common
         }
 
 
-        public virtual async Task IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string UserName)
+        public virtual void IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -661,7 +661,7 @@ namespace HIMS.Services.Common
             }
         }
 
-        public virtual async Task Update(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual void Update(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -682,7 +682,7 @@ namespace HIMS.Services.Common
 
 
 
-        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId, long ReqDetId)
+        public virtual void InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId, long ReqDetId)
         {
             DatabaseHelper odal = new();
             string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
@@ -705,7 +705,7 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual void InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -754,7 +754,7 @@ namespace HIMS.Services.Common
 
 
 
-        public virtual async Task InsertSP(AddCharge ObjaddCharge, int UserId, string UserName)
+        public virtual void InsertSP(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -776,7 +776,7 @@ namespace HIMS.Services.Common
 
 
 
-        public virtual async Task InsertSPC(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId)
+        public virtual void InsertSPC(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId)
         {
 
             DatabaseHelper odal = new();
@@ -797,7 +797,7 @@ namespace HIMS.Services.Common
 
         }
 
-        public virtual async Task InsertSPT(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId, long? NewTariffId)
+        public virtual void InsertSPT(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId, long? NewTariffId)
         {
 
             DatabaseHelper odal = new();
@@ -821,7 +821,7 @@ namespace HIMS.Services.Common
         }
 
 
-        public virtual async Task IPbillAsyncSp(Bill ObjBill, int UserId, string UserName)
+        public virtual void IPbillSp(Bill ObjBill, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();

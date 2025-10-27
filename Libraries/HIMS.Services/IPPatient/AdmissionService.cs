@@ -71,7 +71,7 @@ namespace HIMS.Services.IPPatient
         //    odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
         //}
 
-        public virtual async Task InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        public virtual void InsertSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
@@ -138,12 +138,12 @@ namespace HIMS.Services.IPPatient
         //}
 
         //UPDATE SHILPA 09-08-2025//
-        public virtual async Task InsertRegAsyncSP(Registration ObjRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
+        public virtual void InsertRegSP(Registration ObjRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", 
+            string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear",
                 "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId",
-                "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", 
+                "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship",
                 "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId" };
 
             var entity = ObjRegistration.ToDictionary();
@@ -171,7 +171,7 @@ namespace HIMS.Services.IPPatient
             string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
             //await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-   
+
             string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var tokenObj = new
             {

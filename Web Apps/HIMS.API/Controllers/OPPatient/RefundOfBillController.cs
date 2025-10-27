@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("IPRefundOfBILLInsert")]
         [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertSP(RefundBillModel obj)
+        public ApiResponse InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                await _IRefundOfBillService.InsertAsyncIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+                _IRefundOfBillService.InsertIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -115,7 +115,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertOPRefundOfBill")]
         [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(RefundBillModel obj)
+        public ApiResponse Insert(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                await _IRefundOfBillService.InsertAsyncOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+                _IRefundOfBillService.InsertOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -14,7 +14,6 @@ namespace HIMS.Services.Pharmacy
         public String SalesNo { get; set; }
         public String RegNo { get; set; }
         public decimal TotalAmount { get; set; }
-
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
         public decimal PaidAmount { get; set; }
@@ -25,8 +24,7 @@ namespace HIMS.Services.Pharmacy
         public decimal PaidAmountPayment { get; set; }
         public long TransactionType { get; set; }
         public decimal RefundAmt { get; set; }
-
-
+        public float? DiscperSalesTab { get; set; }
         public String PatientName { get; set; }
         public long StoreId { get; set; }
         public String PatientType { get; set; }

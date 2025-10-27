@@ -1,25 +1,5 @@
-﻿using HIMS.Data.DataProviders;
-using HIMS.Data.Models;
+﻿using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
-using HIMS.Data.Extensions;
-using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.Administration
