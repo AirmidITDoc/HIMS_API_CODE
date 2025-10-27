@@ -21,7 +21,7 @@ namespace HIMS.Data.DTO.Administration
         public int  opdipdtype  { get; set; }
         public decimal DoctorShareAmount { get; set; }
         public int? HospitalAmount { get; set; }
-
+        public int? DoctorId { get; set; }
 
 
     }

@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.DoctorPayout
 
 
         [HttpPost("DoctorsharSummarydetail")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]r
         public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
         {
             IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);

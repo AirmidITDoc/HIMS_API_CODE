@@ -12,6 +12,7 @@ namespace HIMS.Data.DTO.Administration
         public string? AddChargeDrName { get; set; }
         public long PBillNo { get; set; }
 
+        public long? ChargesId { get; set; }
         public string? ServiceName { get; set; }
         
         public decimal? NetAmount { get; set; }
