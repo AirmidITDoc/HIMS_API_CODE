@@ -1,13 +1,4 @@
-﻿using LinqToDB;
-using LinqToDB.Data;
-using LinqToDB.DataProvider.SqlServer;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using HIMS.Core;
+﻿using LinqToDB.Data;
 
 namespace HIMS.Data.DataProviders
 {
@@ -18,7 +9,7 @@ namespace HIMS.Data.DataProviders
     {
         #region Fields
 
-       // private static readonly Lazy<LinqToDB.DataProvider.IDataProvider> _dataProvider = new(() => new SqlServerDataProvider(ProviderName.SqlServer, SqlServerVersion.v2012, SqlServerProvider.SystemDataSqlClient), true);
+        // private static readonly Lazy<LinqToDB.DataProvider.IDataProvider> _dataProvider = new(() => new SqlServerDataProvider(ProviderName.SqlServer, SqlServerVersion.v2012, SqlServerProvider.SystemDataSqlClient), true);
 
         #endregion
 

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
-    public  class DoctorQualificationDetailsListDto
+    public class DoctorQualificationDetailsListDto
     {
-        public long DocQualfiId {  get; set; }
+        public long DocQualfiId { get; set; }
         public long DoctorId { get; set; }
         public long QualificationId { get; set; }
         public string? PassingYear { get; set; }

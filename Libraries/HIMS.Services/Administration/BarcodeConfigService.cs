@@ -1,6 +1,4 @@
-﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.Extensions;
-using HIMS.Data.Models;
+﻿using HIMS.Data.Models;
 using LinqToDB;
 
 namespace HIMS.Services.Administration

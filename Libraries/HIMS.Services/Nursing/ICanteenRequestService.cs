@@ -1,20 +1,13 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Nursing
 {
-    public partial  interface ICanteenRequestService
+    public partial interface ICanteenRequestService
     {
-        
+
         Task InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username);
         Task<IPagedList<CanteenRequestListDto>> CanteenRequestsList(GridRequestModel objGrid);
         Task<IPagedList<CanteenRequestHeaderListDto>> CanteenRequestHeaderList(GridRequestModel objGrid);

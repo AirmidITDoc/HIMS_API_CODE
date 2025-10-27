@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Masters
         public SurgeryCategoryMasterModelValidator()
         {
             RuleFor(x => x.SurgeryCategoryName).NotNull().NotEmpty().WithMessage("SurgeryCategoryName is required");
-          
+
 
         }
     }

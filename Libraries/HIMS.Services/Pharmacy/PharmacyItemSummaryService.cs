@@ -2,15 +2,10 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Pharmacy
 {
-    public  class PharmacyItemSummaryService:IPharmacyItemSummaryService
+    public class PharmacyItemSummaryService : IPharmacyItemSummaryService
     {
         private readonly HIMSDbContext _context;
         public PharmacyItemSummaryService(HIMSDbContext HIMSDbContext)

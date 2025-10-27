@@ -1,17 +1,16 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Services.Masters;
-using HIMS.API.Models.OutPatient;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
+using HIMS.Services.Masters;
 using HIMS.Services.Pathlogy;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.PathologyMaster
 {

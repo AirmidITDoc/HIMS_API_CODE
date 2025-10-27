@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-
-namespace HIMS.Api.Models.Common
+﻿namespace HIMS.Api.Models.Common
 {
     public static class ApiResponseHelper
     {
         public static ApiResponse GenerateResponse(ApiStatusCode StatusCode, string Message, object Data = null, object ExtraData = null, string StatusText = "")
         {
-            return  new ApiResponse() { StatusCode = (int)StatusCode, StatusText = StatusText == "" ? StatusCode.ToString() : StatusText, Message = Message, Data = Data, ExtraData = ExtraData };
+            return new ApiResponse() { StatusCode = (int)StatusCode, StatusText = StatusText == "" ? StatusCode.ToString() : StatusText, Message = Message, Data = Data, ExtraData = ExtraData };
         }
-        
+
     }
     public class ApiResponse
     {

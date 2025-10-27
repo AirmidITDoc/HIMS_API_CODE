@@ -1,7 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.GRN;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
@@ -75,37 +73,37 @@ namespace HIMS.Services.Pharmacy
 
         public virtual async Task InsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled);
-            { 
-            // Fetch Store Info
-            MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
-
-            if (StoreInfo == null)
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                throw new Exception($"StoreInfo is null. No store found with StoreId: {objPurchase.StoreId}");
+                // Fetch Store Info
+                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
+
+                if (StoreInfo == null)
+                {
+                    throw new Exception($"StoreInfo is null. No store found with StoreId: {objPurchase.StoreId}");
+                }
+
+                // Ensure PurchaseNo is valid
+                int purchaseNo = 0;
+                if (!string.IsNullOrEmpty(StoreInfo.PurchaseNo))
+                {
+                    purchaseNo = Convert.ToInt32(StoreInfo.PurchaseNo);
+                }
+                StoreInfo.PurchaseNo = (purchaseNo + 1).ToString();
+
+                // Update Store Record
+                _context.MStoreMasters.Update(StoreInfo);
+                await _context.SaveChangesAsync();
+
+                // Add Purchase Header
+                objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
+                _context.TPurchaseHeaders.Add(objPurchase);
+                await _context.SaveChangesAsync();
+
+                // Complete Transaction
+                scope.Complete();
+
             }
-
-            // Ensure PurchaseNo is valid
-            int purchaseNo = 0;
-            if (!string.IsNullOrEmpty(StoreInfo.PurchaseNo))
-            {
-                purchaseNo = Convert.ToInt32(StoreInfo.PurchaseNo);
-            }
-            StoreInfo.PurchaseNo = (purchaseNo + 1).ToString();
-
-            // Update Store Record
-            _context.MStoreMasters.Update(StoreInfo);
-            await _context.SaveChangesAsync();
-
-            // Add Purchase Header
-            objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
-            _context.TPurchaseHeaders.Add(objPurchase);
-            await _context.SaveChangesAsync();
-
-            // Complete Transaction
-            scope.Complete();
-     
-         }
         }
 
         //public virtual async Task InsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
@@ -199,7 +197,7 @@ namespace HIMS.Services.Pharmacy
                 scope.Complete();
             }
         }
-      
+
         public virtual async Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "ps_Rtrv_PurchaseOrderList_by_Name_Pagn");
@@ -229,4 +227,4 @@ namespace HIMS.Services.Pharmacy
 
 
 }
-    
+

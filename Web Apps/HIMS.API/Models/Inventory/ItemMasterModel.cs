@@ -42,8 +42,8 @@ namespace HIMS.API.Models.Inventory
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
         public string? Instruction { get; set; }
-      //  public DateTime? IsCreatedBy { get; set; }
-       // public DateTime? IsUpdatedBy { get; set; }
+        //  public DateTime? IsCreatedBy { get; set; }
+        // public DateTime? IsUpdatedBy { get; set; }
         public List<AssignItemToStoreModel> MAssignItemToStores { get; set; }
     }
     public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
@@ -66,20 +66,20 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.DrugType).NotNull().NotEmpty().WithMessage("DrugType is required");
         }
     }
-        public class AssignItemToStoreModel
+    public class AssignItemToStoreModel
+    {
+        public long AssignId { get; set; }
+        public long? StoreId { get; set; }
+        public long? ItemId { get; set; }
+    }
+    public class AssignItemToStoreModelValidator : AbstractValidator<AssignItemToStoreModel>
+    {
+        public AssignItemToStoreModelValidator()
         {
-            public long AssignId { get; set; }
-            public long? StoreId { get; set; }
-            public long? ItemId { get; set; }
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
         }
-        public class AssignItemToStoreModelValidator : AbstractValidator<AssignItemToStoreModel>
-        {
-            public AssignItemToStoreModelValidator()
-            {
-                RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
-                RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
-            }
-        }
+    }
     public class DeleteAssignItemToStore
     {
         public long ItemId { get; set; }

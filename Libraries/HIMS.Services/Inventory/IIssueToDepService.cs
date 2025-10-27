@@ -1,16 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Inventory
 {
-    public partial  interface IIssueToDepService
+    public partial interface IIssueToDepService
     {
 
         Task<IPagedList<IssuetodeptListDto>> GetListAsync(GridRequestModel objGrid);
@@ -32,8 +26,8 @@ namespace HIMS.Services.Inventory
 
         Task InsertAsync(TIssueToDepartmentHeader objIssueToDeptIndent, int UserId, string Username);
         Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username);
-        void Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock,  int UserId, string Username);
+        void Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock, int UserId, string Username);
 
 
     }
-} 
+}

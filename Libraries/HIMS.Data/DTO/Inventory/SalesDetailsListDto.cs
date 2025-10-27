@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class SalesDetailsListDto
+    public class SalesDetailsListDto
     {
         public string? Date { get; set; }
         public string? SalesReturnNo { get; set; }

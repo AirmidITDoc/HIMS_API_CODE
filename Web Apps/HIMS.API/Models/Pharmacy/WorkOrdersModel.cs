@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.OutPatient;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -47,7 +45,7 @@ namespace HIMS.API.Models.Pharmacy
         public double? VatAmount { get; set; }
         public double? NetAmount { get; set; }
         public string? Remark { get; set; }
-     
+
     }
     public class WorkOrderDetailsModelValidator : AbstractValidator<WorkOrderDetailsModel>
     {
@@ -68,6 +66,6 @@ namespace HIMS.API.Models.Pharmacy
 
         public WorkOrdersModel? WorkOrders { get; set; }
         public List<WorkOrderDetailsModel>? WorkOrderDetails { get; set; }
-      
+
     }
 }

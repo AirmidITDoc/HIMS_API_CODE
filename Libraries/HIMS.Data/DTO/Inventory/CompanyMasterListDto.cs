@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class CompanyMasterListDto
     {
@@ -56,7 +50,7 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? DiscountAmount { get; set; }
         public double? DiscountPercentage { get; set; }
 
-     
+
     }
     public class ServiceCompanyTariffWiseListDto
     {

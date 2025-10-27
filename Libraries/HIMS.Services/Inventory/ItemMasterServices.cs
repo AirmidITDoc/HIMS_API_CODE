@@ -2,20 +2,12 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.IPPatient;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -44,7 +36,7 @@ namespace HIMS.Services.Inventory
             {
                 //Add header table records
                 DatabaseHelper odal = new();
-                string[] rEntity = { " UpDatedBy", "IsNarcotic", "IsUpdatedBy","CreatedBy",  "CreatedDate", " ItemTime", "MAssignItemToStore" };
+                string[] rEntity = { " UpDatedBy", "IsNarcotic", "IsUpdatedBy", "CreatedBy", "CreatedDate", " ItemTime", "MAssignItemToStore" };
                 var entity = objItemMaster.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -132,58 +124,58 @@ namespace HIMS.Services.Inventory
         //     if (lst.Count > 0)
         //        _context.MAssignItemToStores.RemoveRange(lst);
 
-            //        await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-            //    var existing = await _context.MItemMasters .FirstOrDefaultAsync(x => x.ItemId == objItemMaster.ItemId);
+        //    var existing = await _context.MItemMasters .FirstOrDefaultAsync(x => x.ItemId == objItemMaster.ItemId);
 
-            //    // Manually copy only the fields you want to update (do NOT touch CreatedBy/CreatedDate)
-            //    existing.ItemShortName = objItemMaster.ItemShortName;
-            //    existing.ItemName = objItemMaster.ItemName;
-            //    existing.ItemTypeId = objItemMaster.ItemTypeId;
-            //    existing.ItemCategaryId = objItemMaster.ItemCategaryId;
-            //    existing.ItemGenericNameId = objItemMaster.ItemGenericNameId;
-            //    existing.ItemClassId = objItemMaster.ItemClassId;
-            //    existing.PurchaseUomid = objItemMaster.PurchaseUomid;
-            //    existing.ItemClassId = objItemMaster.ItemClassId;
-            //    existing.StockUomid = objItemMaster.StockUomid;
-            //    existing.ConversionFactor = objItemMaster.ConversionFactor;
-            //    existing.CurrencyId = objItemMaster.CurrencyId;
-            //    existing.TaxPer = objItemMaster.TaxPer;
-            //    existing.IsActive = objItemMaster.IsActive;
-            //    existing.IsBatchRequired = objItemMaster.IsBatchRequired;
-            //    existing.MinQty = objItemMaster.MinQty;
-            //    existing.MaxQty = objItemMaster.MaxQty;
-            //    existing.ReOrder = objItemMaster.ReOrder;
-            //    existing.Hsncode = objItemMaster.Hsncode;
-            //    existing.Cgst = objItemMaster.Cgst;
-            //    existing.Sgst = objItemMaster.Sgst;
-            //    existing.Igst = objItemMaster.Igst;
-            //    existing.ManufId = objItemMaster.ManufId;
-            //    existing.IsNarcotic = objItemMaster.IsNarcotic;
-            //    existing.IsH1drug = objItemMaster.IsH1drug;
-            //    existing.IsScheduleH = objItemMaster.IsScheduleH;
-            //    existing.IsHighRisk = objItemMaster.IsHighRisk;
-            //    existing.IsScheduleX = objItemMaster.IsScheduleX;
-            //    existing.IsLasa = objItemMaster.IsLasa;
-            //    existing.DrugType = objItemMaster.DrugType;
-            //    existing.DrugTypeName = objItemMaster.DrugTypeName;
-            //    existing.ProdLocation = objItemMaster.ProdLocation;
-            //    existing.ItemCompnayId = objItemMaster.ItemCompnayId;
-            //    existing.ItemTime = objItemMaster.ItemTime;
-            //    existing.Addedby = objItemMaster.Addedby;
-            //    existing.UpDatedBy = objItemMaster.UpDatedBy;
-            //    existing.DoseDay = objItemMaster.DoseDay;
-            //    existing.Instruction = objItemMaster.Instruction;
+        //    // Manually copy only the fields you want to update (do NOT touch CreatedBy/CreatedDate)
+        //    existing.ItemShortName = objItemMaster.ItemShortName;
+        //    existing.ItemName = objItemMaster.ItemName;
+        //    existing.ItemTypeId = objItemMaster.ItemTypeId;
+        //    existing.ItemCategaryId = objItemMaster.ItemCategaryId;
+        //    existing.ItemGenericNameId = objItemMaster.ItemGenericNameId;
+        //    existing.ItemClassId = objItemMaster.ItemClassId;
+        //    existing.PurchaseUomid = objItemMaster.PurchaseUomid;
+        //    existing.ItemClassId = objItemMaster.ItemClassId;
+        //    existing.StockUomid = objItemMaster.StockUomid;
+        //    existing.ConversionFactor = objItemMaster.ConversionFactor;
+        //    existing.CurrencyId = objItemMaster.CurrencyId;
+        //    existing.TaxPer = objItemMaster.TaxPer;
+        //    existing.IsActive = objItemMaster.IsActive;
+        //    existing.IsBatchRequired = objItemMaster.IsBatchRequired;
+        //    existing.MinQty = objItemMaster.MinQty;
+        //    existing.MaxQty = objItemMaster.MaxQty;
+        //    existing.ReOrder = objItemMaster.ReOrder;
+        //    existing.Hsncode = objItemMaster.Hsncode;
+        //    existing.Cgst = objItemMaster.Cgst;
+        //    existing.Sgst = objItemMaster.Sgst;
+        //    existing.Igst = objItemMaster.Igst;
+        //    existing.ManufId = objItemMaster.ManufId;
+        //    existing.IsNarcotic = objItemMaster.IsNarcotic;
+        //    existing.IsH1drug = objItemMaster.IsH1drug;
+        //    existing.IsScheduleH = objItemMaster.IsScheduleH;
+        //    existing.IsHighRisk = objItemMaster.IsHighRisk;
+        //    existing.IsScheduleX = objItemMaster.IsScheduleX;
+        //    existing.IsLasa = objItemMaster.IsLasa;
+        //    existing.DrugType = objItemMaster.DrugType;
+        //    existing.DrugTypeName = objItemMaster.DrugTypeName;
+        //    existing.ProdLocation = objItemMaster.ProdLocation;
+        //    existing.ItemCompnayId = objItemMaster.ItemCompnayId;
+        //    existing.ItemTime = objItemMaster.ItemTime;
+        //    existing.Addedby = objItemMaster.Addedby;
+        //    existing.UpDatedBy = objItemMaster.UpDatedBy;
+        //    existing.DoseDay = objItemMaster.DoseDay;
+        //    existing.Instruction = objItemMaster.Instruction;
 
-            //    // Update audit fields
-            //    existing.ModifiedBy = UserId;
-            //    existing.ModifiedDate = DateTime.Now;
-            //    existing.IsUpdatedBy = DateTime.Now;
+        //    // Update audit fields
+        //    existing.ModifiedBy = UserId;
+        //    existing.ModifiedDate = DateTime.Now;
+        //    existing.IsUpdatedBy = DateTime.Now;
 
-            //    await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            //    scope.Complete();
-            //}
+        //    scope.Complete();
+        //}
 
 
 
@@ -206,40 +198,40 @@ namespace HIMS.Services.Inventory
         public virtual async Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName)
         {
             var qry = (from itemMaster in _context.MItemMasters
-                         join uomMaster in _context.MUnitofMeasurementMasters
-                         on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
-                         join genericNameMaster in _context.MItemGenericNameMasters
-                         on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
-                         join assignItemToStore in _context.MAssignItemToStores
-                         on itemMaster.ItemId equals assignItemToStore.ItemId into storeGroup
-                         from assignItem in storeGroup.DefaultIfEmpty()
-                         where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
-                            && (assignItem == null || assignItem.StoreId == StoreId)
-                         orderby itemMaster.ItemId
+                       join uomMaster in _context.MUnitofMeasurementMasters
+                       on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
+                       join genericNameMaster in _context.MItemGenericNameMasters
+                       on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
+                       join assignItemToStore in _context.MAssignItemToStores
+                       on itemMaster.ItemId equals assignItemToStore.ItemId into storeGroup
+                       from assignItem in storeGroup.DefaultIfEmpty()
+                       where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
+                          && (assignItem == null || assignItem.StoreId == StoreId)
+                       orderby itemMaster.ItemId
 
-                         select new ItemListForSearchDTO
-                         {
-                             //StoreId = assignItem != null ? assignItem.StoreId : 0,
-                             ItemId = itemMaster.ItemId,
-                             ItemName = itemMaster.ItemName,
-                             BalanceQty = 0,
-                             LandedRate = 0,
-                             UnitMRP = 0,
-                             PurchaseRate = 0,
-                             //VatPercentage = 0,
-                             //itemMaster.IsBatchRequired,
-                             //ReOrder = itemMaster.ReOrder,
-                             //IsNarcotic = itemMaster.IsNarcotic ?? 0,
-                             //CGSTPer = itemMaster.CGST,
-                             //SGSTPer = itemMaster.SGST,
-                             //IGSTPer = itemMaster.IGST,
-                             //UOM = uomMaster.UnitofMeasurementName,
-                             //itemMaster.ItemGenericNameId,
-                             //itemGenericNameMaster.ItemGenericName,
-                             DoseName = itemMaster.DoseName ?? string.Empty,
-                             DoseDay = itemMaster.DoseDay ?? 0,
-                             Instruction = itemMaster.Instruction ?? string.Empty
-                         });
+                       select new ItemListForSearchDTO
+                       {
+                           //StoreId = assignItem != null ? assignItem.StoreId : 0,
+                           ItemId = itemMaster.ItemId,
+                           ItemName = itemMaster.ItemName,
+                           BalanceQty = 0,
+                           LandedRate = 0,
+                           UnitMRP = 0,
+                           PurchaseRate = 0,
+                           //VatPercentage = 0,
+                           //itemMaster.IsBatchRequired,
+                           //ReOrder = itemMaster.ReOrder,
+                           //IsNarcotic = itemMaster.IsNarcotic ?? 0,
+                           //CGSTPer = itemMaster.CGST,
+                           //SGSTPer = itemMaster.SGST,
+                           //IGSTPer = itemMaster.IGST,
+                           //UOM = uomMaster.UnitofMeasurementName,
+                           //itemMaster.ItemGenericNameId,
+                           //itemGenericNameMaster.ItemGenericName,
+                           DoseName = itemMaster.DoseName ?? string.Empty,
+                           DoseDay = itemMaster.DoseDay ?? 0,
+                           Instruction = itemMaster.Instruction ?? string.Empty
+                       });
             return await qry.Take(50).ToListAsync();
         }
         public virtual List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, string ItemName)
@@ -253,55 +245,55 @@ namespace HIMS.Services.Inventory
         public virtual async Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName)
         {
             var qry = (from itemMaster in _context.MItemMasters
-                         join uomMaster in _context.MUnitofMeasurementMasters
-                         on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
-                         join assignItemToStore in _context.MAssignItemToStores
-                         on itemMaster.ItemId equals assignItemToStore.ItemId
-                         join itemCompanyMaster in _context.MItemCompanyMasters
-                         on itemMaster.ItemCompnayId equals itemCompanyMaster.CompanyId into companyGroup
-                         from company in companyGroup.DefaultIfEmpty()
-                         join currentStock in _context.TCurrentStocks
-                         on itemMaster.ItemId equals currentStock.ItemId into stockGroup
-                         from stock in stockGroup.DefaultIfEmpty()
-                         where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
-                            && assignItemToStore.StoreId == StoreId
-                       group new { itemMaster, uomMaster, assignItemToStore, stock, company } by new 
-                         {
-                             itemMaster.ItemId,
-                             itemMaster.ItemName,
-                             uomMaster.UnitofMeasurementName,
-                             uomMaster.UnitofMeasurementId,
-                             itemMaster.ConversionFactor,
-                             itemMaster.TaxPer,
-                             itemMaster.IsBatchRequired,
-                             assignItemToStore.StoreId,
-                             itemMaster.ItemCategaryId,
-                             itemMaster.Cgst,
-                             itemMaster.Sgst,
-                             itemMaster.Igst,
-                             itemMaster.Hsncode,
-                             company.CompanyName
-                         } into grouped
-                         select new ItemListForSearchDTO
-                         { 
-                            ItemId = grouped.Key.ItemId,
-                            ItemName = grouped.Key.ItemName,
-                             //grouped.Key.UnitofMeasurementName,
-                             UMOId = grouped.Key.UnitofMeasurementId,
-                             UMOName = grouped.Key.UnitofMeasurementName,
-                             ConverFactor = grouped.Key.ConversionFactor,
-                             //grouped.Key.TaxPer,
-                             //grouped.Key.IsBatchRequired,
-                             StoreId =  grouped.Key.StoreId,
-                             //grouped.Key.ItemCategaryId,
-                             BalanceQty = grouped.Sum(x => x.stock != null ? x.stock.BalanceQty : 0),
-                             CGSTPer = grouped.Key.Cgst ?? 0,
-                             SGSTPer = grouped.Key.Sgst ?? 0,
-                             IGSTPer = grouped.Key.Igst ?? 0,
-                             HSNcode = grouped.Key.Hsncode,
-                             ItemCompanyName = grouped.Key.CompanyName ?? string.Empty,
-                             TaxPer = grouped.Key.TaxPer
-                         });
+                       join uomMaster in _context.MUnitofMeasurementMasters
+                       on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
+                       join assignItemToStore in _context.MAssignItemToStores
+                       on itemMaster.ItemId equals assignItemToStore.ItemId
+                       join itemCompanyMaster in _context.MItemCompanyMasters
+                       on itemMaster.ItemCompnayId equals itemCompanyMaster.CompanyId into companyGroup
+                       from company in companyGroup.DefaultIfEmpty()
+                       join currentStock in _context.TCurrentStocks
+                       on itemMaster.ItemId equals currentStock.ItemId into stockGroup
+                       from stock in stockGroup.DefaultIfEmpty()
+                       where (string.IsNullOrEmpty(ItemName) || itemMaster.ItemName.Contains(ItemName))
+                          && assignItemToStore.StoreId == StoreId
+                       group new { itemMaster, uomMaster, assignItemToStore, stock, company } by new
+                       {
+                           itemMaster.ItemId,
+                           itemMaster.ItemName,
+                           uomMaster.UnitofMeasurementName,
+                           uomMaster.UnitofMeasurementId,
+                           itemMaster.ConversionFactor,
+                           itemMaster.TaxPer,
+                           itemMaster.IsBatchRequired,
+                           assignItemToStore.StoreId,
+                           itemMaster.ItemCategaryId,
+                           itemMaster.Cgst,
+                           itemMaster.Sgst,
+                           itemMaster.Igst,
+                           itemMaster.Hsncode,
+                           company.CompanyName
+                       } into grouped
+                       select new ItemListForSearchDTO
+                       {
+                           ItemId = grouped.Key.ItemId,
+                           ItemName = grouped.Key.ItemName,
+                           //grouped.Key.UnitofMeasurementName,
+                           UMOId = grouped.Key.UnitofMeasurementId,
+                           UMOName = grouped.Key.UnitofMeasurementName,
+                           ConverFactor = grouped.Key.ConversionFactor,
+                           //grouped.Key.TaxPer,
+                           //grouped.Key.IsBatchRequired,
+                           StoreId = grouped.Key.StoreId,
+                           //grouped.Key.ItemCategaryId,
+                           BalanceQty = grouped.Sum(x => x.stock != null ? x.stock.BalanceQty : 0),
+                           CGSTPer = grouped.Key.Cgst ?? 0,
+                           SGSTPer = grouped.Key.Sgst ?? 0,
+                           IGSTPer = grouped.Key.Igst ?? 0,
+                           HSNcode = grouped.Key.Hsncode,
+                           ItemCompanyName = grouped.Key.CompanyName ?? string.Empty,
+                           TaxPer = grouped.Key.TaxPer
+                       });
             return await qry.Take(50).ToListAsync();
         }
         public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId)
@@ -423,9 +415,9 @@ namespace HIMS.Services.Inventory
                 } into g
                 select new ItemListForSalesPageDTO
                 {
-                    StoreId= g.Key.StoreId,
-                    ItemId=g.Key.ItemId,
-                    ItemName=g.Key.ItemName + " | Bal Qty : " + g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)) + " | Price : " + g.Max(x => x.stock.UnitMrp),
+                    StoreId = g.Key.StoreId,
+                    ItemId = g.Key.ItemId,
+                    ItemName = g.Key.ItemName + " | Bal Qty : " + g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)) + " | Price : " + g.Max(x => x.stock.UnitMrp),
                     BalanceQty = g.Sum(x => (x.stock.BalanceQty ?? 0) - (x.stock.GrnRetQty ?? 0)),
                     LandedRate = g.Max(x => x.stock.LandedRate),
                     UnitMRP = g.Max(x => x.stock.UnitMrp),
@@ -449,7 +441,7 @@ namespace HIMS.Services.Inventory
                     //Instruction = g.Key.Instruction ?? ""
                 }
             );
-            return await qry.Take(50).ToListAsync(); 
+            return await qry.Take(50).ToListAsync();
         }
     }
 }

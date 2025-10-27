@@ -2,12 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -15,11 +12,7 @@ using HIMS.Services.Administration;
 using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
-using HIMS.Services.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -42,21 +35,21 @@ namespace HIMS.API.Controllers.OPPatient
             _IVisitDetailsService = repository4;
         }
         [HttpPost("BrowseOPRefundList")]
-     //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
         {
             IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid);
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
-     //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "Browse OPD Bill Pagi App List"));
         }
         [HttpPost("BrowseOPPaymentList")]
-    //    [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //    [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
@@ -85,7 +78,7 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Bill model = obj.MapTo<Bill>();
             Payment objPayment = obj.Payments.MapTo<Payment>();
-            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo <List<AddCharge>>();
+            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
 
 
             if (obj.BillNo == 0)
@@ -97,7 +90,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge,  CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

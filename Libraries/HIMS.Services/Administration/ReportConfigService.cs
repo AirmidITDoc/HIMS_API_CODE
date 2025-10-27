@@ -3,23 +3,17 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
-using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
-    public  class ReportConfigService:IReportConfigService
+    public class ReportConfigService : IReportConfigService
     {
         private readonly Data.Models.HIMSDbContext _context;
-        public ReportConfigService(HIMSDbContext HIMSDbContext )
+        public ReportConfigService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
-           
+
         }
         public virtual async Task<IPagedList<MReportConfigListDto>> MReportConfigList(GridRequestModel model)
         {

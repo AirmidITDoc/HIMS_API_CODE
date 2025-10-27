@@ -7,7 +7,6 @@ using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Transactions;
 
 namespace HIMS.Services.OutPatient
@@ -162,7 +161,7 @@ namespace HIMS.Services.OutPatient
             await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
 
-        public virtual async Task UpdateAsyncSP( VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsyncSP(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
@@ -210,7 +209,7 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
         }
-        
+
         public virtual async Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_PatientWisePaymentList");

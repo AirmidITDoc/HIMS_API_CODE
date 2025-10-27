@@ -1,17 +1,15 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Services.Inventory;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Services.Common;
+using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -26,7 +24,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         public SubTpaCompanyController(ISubTPACompanyService repository, IGenericService<MSubTpacompanyMaster> repository1)
         {
             _SubTPACompanyService = repository;
-             _repository = repository1;
+            _repository = repository1;
 
 
         }

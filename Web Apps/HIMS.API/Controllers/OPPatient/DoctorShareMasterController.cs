@@ -3,17 +3,11 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
-using HIMS.Services.Masters;
-using HIMS.Services.OPPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.Administration;
 using HIMS.Services.Inventory;
-using HIMS.Services.IPPatient;
+using HIMS.Services.Masters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -31,7 +25,7 @@ namespace HIMS.API.Controllers.OPPatient
             _BillingService = repository1;
 
         }
-      
+
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "Doctorshare", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorShareMasterModel obj)
@@ -39,7 +33,7 @@ namespace HIMS.API.Controllers.OPPatient
             MDoctorPerMaster model = obj.MapTo<MDoctorPerMaster>();
             if (obj.DoctorShareId == 0)
             {
-                 await _DoctorShareMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _DoctorShareMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -59,6 +53,6 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-        
+
     }
 }

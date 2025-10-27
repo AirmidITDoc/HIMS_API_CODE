@@ -2,11 +2,11 @@
 {
     public class DoctorShareProcessModel
     {
-        
-            public DateTime FromDate { get; set; }
-            public DateTime ToDate { get; set; }
+
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
 
 
-        
+
     }
 }

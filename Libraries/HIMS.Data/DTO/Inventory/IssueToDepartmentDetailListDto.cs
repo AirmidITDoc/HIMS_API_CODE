@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class IssueToDepartmentDetailListDto
     {
@@ -21,7 +15,7 @@ namespace HIMS.Data.DTO.Inventory
         public string? Status { get; set; }
         public long? StoreId { get; set; }
         public long? StockId { get; set; }
-       
+
 
     }
 }

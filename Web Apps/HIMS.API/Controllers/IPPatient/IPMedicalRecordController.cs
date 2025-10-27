@@ -1,15 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Inventory;
+using HIMS.API.Extensions;
+using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.Services.IPPatient;
-using HIMS.API.Models.IPPatient;
-using HIMS.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -19,12 +16,12 @@ namespace HIMS.API.Controllers.IPPatient
     public class IPMedicalRecordController : BaseController
     {
         private readonly IMedicalRecordService _MedicalRecordService;
-       
-        
+
+
         public IPMedicalRecordController(IMedicalRecordService repository)
         {
             _MedicalRecordService = repository;
-            
+
         }
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
@@ -55,7 +52,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
-       
+
 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Edit)]

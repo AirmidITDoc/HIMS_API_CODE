@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Purchase
+﻿namespace HIMS.Data.DTO.Purchase
 {
     public class GetSupplierPaymentListDto
     {
@@ -32,7 +26,7 @@ namespace HIMS.Data.DTO.Purchase
         public long SupplierId { get; set; }
 
 
-        
+
 
     }
 }

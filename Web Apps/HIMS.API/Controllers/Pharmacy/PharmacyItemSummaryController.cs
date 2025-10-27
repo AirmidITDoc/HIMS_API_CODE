@@ -41,6 +41,6 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemExpReportMonthWiseListDto> ItemExpReportMonthWiseList = await _IPharmacyItemSummaryService.GetListAsyncItem(objGrid);
             return Ok(ItemExpReportMonthWiseList.ToGridResponse(objGrid, "ItemExpReportMonthWiseList "));
         }
-       
+
     }
 }

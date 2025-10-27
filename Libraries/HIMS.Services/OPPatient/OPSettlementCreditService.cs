@@ -14,7 +14,7 @@ namespace HIMS.Services.OPPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill,Payment objpayment,int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, Payment objpayment, int CurrentUserId, string CurrentUserName)
         {
             // throw new NotImplementedException();
 
@@ -37,7 +37,7 @@ namespace HIMS.Services.OPPatient
                 //_context.Payments.Add(objpayment);
                 //await _context.SaveChangesAsync();
 
-               
+
                 string[] rPaymentEntity = { "ReceiptNo", "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "Tdsamount", "BillNoNavigation" };
 
                 var PaymentEntity = objpayment.ToDictionary();

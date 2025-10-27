@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Services.Pharmacy
+﻿namespace HIMS.Services.Pharmacy
 {
     public class PharSalesCurrentSumryListDto
     {
@@ -12,6 +6,6 @@ namespace HIMS.Services.Pharmacy
         public string BatchNo { get; set; }
         public double SalesQty { get; set; }
         public long StoreId { get; set; }
-   
+
     }
 }

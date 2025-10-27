@@ -4,7 +4,6 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
@@ -17,12 +16,12 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
     [ApiVersion("1")]
     public class AmbulanceController : BaseController
     {
-      
-            private readonly IGenericService<MVehicleMaster> _repository;
-            public AmbulanceController(IGenericService<MVehicleMaster> repository)
-            {
-                _repository = repository;
-            }
+
+        private readonly IGenericService<MVehicleMaster> _repository;
+        public AmbulanceController(IGenericService<MVehicleMaster> repository)
+        {
+            _repository = repository;
+        }
 
         [HttpPost]
         [Route("[action]")]
@@ -96,5 +95,5 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
-    }
+}
 

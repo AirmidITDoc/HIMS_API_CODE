@@ -4,16 +4,12 @@ using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 //using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Pharmacy
 {
-    public  class OpeningBalanceService :IOpeningBalanceService
+    public class OpeningBalanceService : IOpeningBalanceService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public OpeningBalanceService(HIMSDbContext HIMSDbContext)

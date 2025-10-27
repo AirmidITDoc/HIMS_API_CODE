@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HIMS.Data.Models
+﻿namespace HIMS.Data.Models
 {
     public partial class TEndoscopyNote
     {

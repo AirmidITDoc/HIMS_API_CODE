@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
-    public  class FutureAppointmentDetailListDto
+    public class FutureAppointmentDetailListDto
     {
-        public long PhoneAppId {  get; set; }
+        public long PhoneAppId { get; set; }
         public string AppDate { get; set; }
         public string AppTime { get; set; }
         public string SeqNo { get; set; }
@@ -22,6 +16,6 @@ namespace HIMS.Data.DTO.OPPatient
         public long DoctorId { get; set; }
         public string DoctorName { get; set; }
 
-        
+
     }
 }

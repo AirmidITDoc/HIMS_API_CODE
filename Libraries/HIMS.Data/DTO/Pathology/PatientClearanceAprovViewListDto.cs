@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Pathology
+﻿namespace HIMS.Data.DTO.Pathology
 {
-    public  class PatientClearanceAprovViewListDto
+    public class PatientClearanceAprovViewListDto
     {
-        public long InitateDiscId {  get; set; }
+        public long InitateDiscId { get; set; }
         public long AdmID { get; set; }
         public string? DepartmentName { get; set; }
         public long DepartmentID { get; set; }
@@ -21,5 +15,5 @@ namespace HIMS.Data.DTO.Pathology
 
 
     }
-   
+
 }

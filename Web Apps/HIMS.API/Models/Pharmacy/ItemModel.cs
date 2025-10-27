@@ -51,7 +51,7 @@ namespace HIMS.API.Models.Pharmacy
         public GRNVerifyModelValidator()
         {
             RuleFor(x => x.Grnid).NotNull().NotEmpty().WithMessage("Grn id is required");
-         //   RuleFor(x => x.IsVerifiedUserId).NotNull().NotEmpty().WithMessage("Verified user id is required");
+            //   RuleFor(x => x.IsVerifiedUserId).NotNull().NotEmpty().WithMessage("Verified user id is required");
         }
     }
 

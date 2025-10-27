@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -33,9 +32,9 @@ namespace HIMS.API.Models.Inventory
 
     public class PathTemplateDetailModel
     {
-        
+
         public long TestId { get; set; }
-        public long  TemplateId { get; set; }
+        public long TemplateId { get; set; }
     }
     public class PathTemplateDetailModelValidator : AbstractValidator<PathTemplateDetailModel>
     {
@@ -43,7 +42,7 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage("TestId  is required");
             RuleFor(x => x.TemplateId).NotNull().NotEmpty().WithMessage(" TemplateId required");
-            
+
         }
     }
     public class PathTestDetailModel
@@ -60,15 +59,15 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.ParameterId).NotNull().NotEmpty().WithMessage("ParameterId is required");
         }
     }
-        public class PathTestDetDelete
-        {
-            public long TestId { get; set; }
-        }
+    public class PathTestDetDelete
+    {
+        public long TestId { get; set; }
+    }
     public class TestMasterModel
     {
-        public  PathTestMasterModel PathTest {  get; set; }
+        public PathTestMasterModel PathTest { get; set; }
         public List<PathTemplateDetailModel> PathTemplateDetail { get; set; }
-        public List<PathTestDetailModel> PathTestDetail{ get; set; }
+        public List<PathTestDetailModel> PathTestDetail { get; set; }
 
     }
     public class PathTestMasterModel1

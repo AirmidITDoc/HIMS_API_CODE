@@ -55,6 +55,6 @@ namespace HIMS.Services.Inventory
             }
         }
     }
-  
+
 }
 

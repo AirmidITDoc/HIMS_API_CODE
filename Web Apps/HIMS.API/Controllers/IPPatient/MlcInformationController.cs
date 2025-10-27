@@ -1,14 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -42,7 +40,8 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.AdmissionId == id);
-            if (data == null){
+            if (data == null)
+            {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
             }
             return data.ToSingleResponse<TMlcinformation, MlcInformationModel>("TMlcinformation");

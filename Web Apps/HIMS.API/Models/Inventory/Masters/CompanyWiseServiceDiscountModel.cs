@@ -1,7 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using HIMS.API.Models.Masters;
-
-namespace HIMS.API.Models.Inventory.Masters
+﻿namespace HIMS.API.Models.Inventory.Masters
 {
     public class CompanyWiseServiceDiscountModel
     {
@@ -18,7 +15,7 @@ namespace HIMS.API.Models.Inventory.Masters
     public class CompanyWiseServiceModel
     {
 
-        public List<CompanyWiseServiceDiscountModel>CompanyWiseService { get; set; }
+        public List<CompanyWiseServiceDiscountModel> CompanyWiseService { get; set; }
         public long? userId { get; set; }
 
 

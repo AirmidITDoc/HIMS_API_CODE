@@ -1,15 +1,13 @@
-﻿using HIMS.Api.Controllers;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
-using HIMS.Api.Models.Common;
-using HIMS.Core;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
-using HIMS.Data;
-using HIMS.Services.Administration;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -52,7 +50,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.",model.ExpId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.", model.ExpId);
         }
 
         [HttpPut("TExpenseUpdate{id:int}")]

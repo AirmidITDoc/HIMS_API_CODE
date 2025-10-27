@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -33,7 +32,7 @@ namespace HIMS.API.Models.Nursing
     public class NursingMedicationChartModel
     {
         public List<TNursingMedicationChartModel> NursingMedicationChart { get; set; }
- 
+
 
     }
 }

@@ -2,11 +2,6 @@
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Nursing
 {
@@ -33,8 +28,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<NursingPatientHandoverListDto>> NursingPatientHandoverList(GridRequestModel objGrid);
         Task<IPagedList<NursingMedicationListDto>> NursingMedicationlist(GridRequestModel objGrid);
 
-       void Insert(List<TNursingMedicationChart> ObjTNursingMedicationChart , int currentUserId, string currentUserName);
-   
+        void Insert(List<TNursingMedicationChart> ObjTNursingMedicationChart, int currentUserId, string currentUserName);
+
         //Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username);
         //Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username);
     }

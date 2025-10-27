@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace HIMS.API.Models.Pharmacy
+﻿namespace HIMS.API.Models.Pharmacy
 {
     public class SalesDetailModel
     {

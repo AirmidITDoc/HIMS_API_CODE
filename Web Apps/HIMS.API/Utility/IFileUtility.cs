@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace HIMS.API.Utility
+﻿namespace HIMS.API.Utility
 {
     public interface IFileUtility
     {

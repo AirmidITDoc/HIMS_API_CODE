@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
-using System.Transactions;
 
 namespace HIMS.Services.OPPatient
 {
@@ -24,7 +13,7 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-       
+
 
         public virtual async Task UpdateAsync(VisitDetail objVisitDetail, int UserId, string Username)
         {
@@ -38,7 +27,7 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-             odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
 
             await _context.SaveChangesAsync(UserId, Username);
 
@@ -55,15 +44,15 @@ namespace HIMS.Services.OPPatient
             {
                 entity.Remove(rProperty);
             }
-             odal.ExecuteNonQuery("ps_Update_RefDoctor_Visit", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQuery("ps_Update_RefDoctor_Visit", CommandType.StoredProcedure, entity);
 
             await _context.SaveChangesAsync(UserId, Username);
 
-//            await LogProcedureExecution("ps_Update_ConsultationDoctor_Visit",
-//    entity, // your dictionary parameters
-//    UserId,
-//    Username
-//);
+            //            await LogProcedureExecution("ps_Update_ConsultationDoctor_Visit",
+            //    entity, // your dictionary parameters
+            //    UserId,
+            //    Username
+            //);
 
         }
     }

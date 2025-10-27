@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -7,7 +6,7 @@ namespace HIMS.API.Models.Nursing
     {
         public long DocHandId { get; set; }
         public long? AdmId { get; set; }
-        public DateTime? Tdate { get; set; }    
+        public DateTime? Tdate { get; set; }
         public string? Ttime { get; set; }
         public string? ShiftInfo { get; set; }
         public string? PatHandI { get; set; }

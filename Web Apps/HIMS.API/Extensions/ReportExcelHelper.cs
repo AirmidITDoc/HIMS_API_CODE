@@ -1,8 +1,5 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Vml;
 using HIMS.Core.Domain.Grid;
-using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Text;
 
@@ -290,7 +287,7 @@ namespace HIMS.API.Extensions
                         else if (colName == "lableTotal")
                         {
                             workSheet.Cell(RowNo, col).Value = $"{subGroup} Sub Total";
-                            workSheet.Range(RowNo, 1, RowNo, colspan -1).Merge();
+                            workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
                             colspan = 1;
                         }
                         else

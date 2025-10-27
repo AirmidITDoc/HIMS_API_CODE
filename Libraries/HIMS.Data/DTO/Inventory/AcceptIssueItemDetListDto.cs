@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class AcceptIssueItemDetListDto
+    public class AcceptIssueItemDetListDto
     {
-        public long? IssueDepId {  get; set; }
+        public long? IssueDepId { get; set; }
         public string? ItemName { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
         public double? IssueQty { get; set; }
         public long? IssueId { get; set; }
-                
+
         public decimal? PerUnitLandedRate { get; set; }
         public double? VatPercentage { get; set; }
         public decimal? LandedTotalAmount { get; set; }

@@ -1,12 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.OutPatient
 {
@@ -21,7 +15,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task InsertAsync(Registration objRegistration, VisitDetail objVisitDetail, int currentUserId, string currentUserName);
-        Task UpdateAsyncSP( VisitDetail objVisitDetail, int currentUserId, string currentUserName);
+        Task UpdateAsyncSP(VisitDetail objVisitDetail, int currentUserId, string currentUserName);
         Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         List<DeptDoctorListDoT> GetDoctor(int DepartmentId);
         Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel objGrid);

@@ -1,10 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Core.Domain.Logging;
-using HIMS.Data;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
-using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -163,7 +159,7 @@ namespace HIMS.Services.Common
         {
             DatabaseHelper odal = new();
             Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
-           
+
             string sp_Name = string.Empty;
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];

@@ -12,7 +12,7 @@ namespace HIMS.API.Models.Inventory.Masters
     {
         public RoleMasterModelModelValidator()
         {
-           // RuleFor(x => x.RoleId).NotNull().NotEmpty().WithMessage("RoleId is required");
+            // RuleFor(x => x.RoleId).NotNull().NotEmpty().WithMessage("RoleId is required");
             RuleFor(x => x.RoleName).NotNull().NotEmpty().WithMessage("RoleName is required");
         }
     }

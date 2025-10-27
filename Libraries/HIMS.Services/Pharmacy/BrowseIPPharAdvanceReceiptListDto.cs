@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Services.Pharmacy
+﻿namespace HIMS.Services.Pharmacy
 {
-    public  class BrowseIPPharAdvanceReceiptListDto
+    public class BrowseIPPharAdvanceReceiptListDto
     {
         public long RegID { get; set; }
         public string RegNo { get; set; }

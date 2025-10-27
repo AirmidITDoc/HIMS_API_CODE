@@ -4,7 +4,6 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.IPPatient;
 using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 

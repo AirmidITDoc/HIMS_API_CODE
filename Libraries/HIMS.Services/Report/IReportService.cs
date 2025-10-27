@@ -2,8 +2,6 @@
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.Pharmacy;
-using Microsoft.AspNetCore.Http;
 using System.Data;
 
 namespace HIMS.Services.Report

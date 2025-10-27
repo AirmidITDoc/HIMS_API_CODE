@@ -1,8 +1,4 @@
-﻿using System.Drawing.Printing;
-using FluentValidation;
-using HIMS.API.Models.IPPatient;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -49,65 +45,65 @@ namespace HIMS.API.Models.OutPatient
     }
 
     public class PaymentsModelValidator : AbstractValidator<PaymentsModel>
+    {
+        public PaymentsModelValidator()
         {
-            public PaymentsModelValidator()
-            {
-                RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            }
-        }
-
-
-        public class BillModel
-        {
-            public long? BillNo { get; set; }
-             public decimal? balanceAmt { get; set; }
-
-        }
-        public class BillModelValidator : AbstractValidator<BillModel>
-        {
-            public BillModelValidator()
-            {
-                RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-            }
-        }
-
-        public class AdvanceDetailsModel
-        {
-            public long? AdvanceDetailID { get; set; }
-            public decimal? UsedAmount { get; set; }
-            public decimal? BalanceAmount { get; set; }
-        }
-        public class AdvanceDetailsModelValidator : AbstractValidator<AdvanceDetailsModel>
-        {
-            public AdvanceDetailsModelValidator()
-            {
-                RuleFor(x => x.UsedAmount).NotNull().NotEmpty().WithMessage("UsedAmount is required");
-                RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
-            }
-        }
-        
-        public class AdvanceHeadersModel
-        {
-            public long? AdvanceId { get; set; }
-            public decimal? AdvanceUsedAmount { get; set; }
-            public decimal? BalanceAmount { get; set; }
-
-        }
-        public class AdvanceHeadersModelValidator : AbstractValidator<AdvanceHeadersModel>
-        {
-            public AdvanceHeadersModelValidator()
-            {
-                RuleFor(x => x.AdvanceUsedAmount).NotNull().NotEmpty().WithMessage("AdvanceUsedAmount is required");
-                RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
-            }
-        }
-        public class ModelPayment
-        {
-            public PaymentsModel Payment { get; set; }
-            public BillModel Billupdate { get; set; }
-            public List<AdvanceDetailsModel> AdvanceDetailupdate { get; set; }
-            public AdvanceHeadersModel AdvanceHeaderupdate { get; set; }
-
-
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
+
+
+    public class BillModel
+    {
+        public long? BillNo { get; set; }
+        public decimal? balanceAmt { get; set; }
+
+    }
+    public class BillModelValidator : AbstractValidator<BillModel>
+    {
+        public BillModelValidator()
+        {
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+        }
+    }
+
+    public class AdvanceDetailsModel
+    {
+        public long? AdvanceDetailID { get; set; }
+        public decimal? UsedAmount { get; set; }
+        public decimal? BalanceAmount { get; set; }
+    }
+    public class AdvanceDetailsModelValidator : AbstractValidator<AdvanceDetailsModel>
+    {
+        public AdvanceDetailsModelValidator()
+        {
+            RuleFor(x => x.UsedAmount).NotNull().NotEmpty().WithMessage("UsedAmount is required");
+            RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
+        }
+    }
+
+    public class AdvanceHeadersModel
+    {
+        public long? AdvanceId { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+        public decimal? BalanceAmount { get; set; }
+
+    }
+    public class AdvanceHeadersModelValidator : AbstractValidator<AdvanceHeadersModel>
+    {
+        public AdvanceHeadersModelValidator()
+        {
+            RuleFor(x => x.AdvanceUsedAmount).NotNull().NotEmpty().WithMessage("AdvanceUsedAmount is required");
+            RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
+        }
+    }
+    public class ModelPayment
+    {
+        public PaymentsModel Payment { get; set; }
+        public BillModel Billupdate { get; set; }
+        public List<AdvanceDetailsModel> AdvanceDetailupdate { get; set; }
+        public AdvanceHeadersModel AdvanceHeaderupdate { get; set; }
+
+
+    }
+}

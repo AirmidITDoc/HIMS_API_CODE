@@ -2,28 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
-using HIMS.Data.Models;
-using HIMS.Services.OPPatient;
-using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
-using HIMS.Api.Controllers;
-using HIMS.Api.Models.Common;
-using HIMS.API.Extensions;
-using HIMS.API.Models.Common;
-using HIMS.API.Models.IPPatient;
-using HIMS.API.Models.OPPatient;
-using HIMS.Data.Models;
-using HIMS.Services.Common;
-using HIMS.Services.IPPatient;
-using HIMS.Services.OPPatient;
-using HIMS.Services.OutPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
+using HIMS.Services.OPPatient;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace HIMS.API.Controllers.OPPatient
@@ -65,7 +51,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-       //IP// 
+        //IP// 
 
 
         [HttpPost("IPBillListforRefundList")]

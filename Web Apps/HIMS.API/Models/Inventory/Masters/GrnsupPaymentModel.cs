@@ -1,7 +1,3 @@
-using FluentValidation;
-using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pharmacy;
-
 namespace HIMS.API.Models.Masters
 {
     public class GrnsupPaymentModel
@@ -34,7 +30,7 @@ namespace HIMS.API.Models.Masters
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public decimal? CardPayAmt { get; set; }
-        
+
 
     }
 
@@ -42,9 +38,9 @@ namespace HIMS.API.Models.Masters
     {
         public long Grnid { get; set; }
         public decimal PaidAmount { get; set; }
-       public decimal BalAmount { get; set; }
-     
-    
+        public decimal BalAmount { get; set; }
+
+
     }
     public class SupPayDetModel
     {

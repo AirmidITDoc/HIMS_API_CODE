@@ -3,19 +3,13 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
-using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration

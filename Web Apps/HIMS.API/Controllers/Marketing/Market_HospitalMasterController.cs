@@ -1,13 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Marketing;
 using HIMS.Core.Domain.Grid;
-using HIMS.Core;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Marketing
 {

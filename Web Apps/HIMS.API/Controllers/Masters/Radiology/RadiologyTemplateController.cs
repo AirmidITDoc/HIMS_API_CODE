@@ -1,15 +1,14 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.API.Models.Radiology;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Radiology;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Radiology
 {
@@ -51,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return data.ToSingleResponse<MRadiologyTemplateMaster, RadiologyTemplateModel>("MRadiologyTemplateMaster");
         }
 
-         //List API Get By Id
+        //List API Get By Id
         [HttpGet("RadReportId/{id?}")]
         //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> RGet(int id)
@@ -101,7 +100,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-           //Delete API
+        //Delete API
         [HttpDelete]
         [Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
@@ -126,10 +125,10 @@ namespace HIMS.API.Controllers.Masters.Radiology
         public async Task<ApiResponse> GetDropdown()
         {
             var MMasterList = await _radiorepository.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc}));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
         }
 
-       
+
         //[HttpGet]
         //[Route("get-Templates")]
         ////[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]

@@ -89,11 +89,11 @@ namespace HIMS.Services.Pharmacy
                         objCInfo.GrnRetQty = Convert.ToInt32(objCInfo.GrnRetQty) + objC.IssueQty;
                         objCStockList.Add(objC);
                         // Tell EF to only update this property
-                        _context.Entry(objCInfo).Property(x => x.GrnRetQty).IsModified = true; 
+                        _context.Entry(objCInfo).Property(x => x.GrnRetQty).IsModified = true;
                     }
                 }
                 await _context.SaveChangesAsync();
-             //   Update grn details table records
+                //   Update grn details table records
                 List<TGrndetail> objGrnList = new();
                 foreach (var objGrn in objReturnQty)
                 {

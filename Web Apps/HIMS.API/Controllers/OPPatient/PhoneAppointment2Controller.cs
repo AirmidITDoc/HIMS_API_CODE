@@ -1,12 +1,8 @@
 ﻿using Asp.Versioning;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -150,11 +146,11 @@ namespace HIMS.API.Controllers.OPPatient
         {
             if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
             {
-                Keyword = string.Empty; 
+                Keyword = string.Empty;
             }
 
             var data = await _IPhoneAppointment2Service.SearchPhoneApp(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, PhAppId= x.AppId, DoctorId= x.DoctorId, DepartmentId= x.DepartmentId }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, PhAppId = x.AppId, DoctorId = x.DoctorId, DepartmentId = x.DepartmentId }));
         }
 
 

@@ -1,7 +1,4 @@
-using System.Drawing.Printing;
 using FluentValidation;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -9,20 +6,20 @@ namespace HIMS.API.Models.OutPatient
 
     public class RefundModel
     {
-       public DateTime? RefundDate { get; set; }
-       public string? RefundTime { get; set; }
-       public long? BillId { get; set; }
-       public long? AdvanceId { get; set; }
-       public bool? OPDIPDType { get; set; }
-       public long? OPDIPDID { get; set; }
-       public decimal? RefundAmount { get; set; }
-       public string? Remark { get; set; }
-       public long? TransactionId { get; set; }
-       public long? AddedBy { get; set; }
-       public bool? IsCancelled { get; set; }
-       public long? IsCancelledBy { get; set; }
-       public DateTime? IsCancelledDate { get; set; }
-       public long? RefundId { get; set; }
+        public DateTime? RefundDate { get; set; }
+        public string? RefundTime { get; set; }
+        public long? BillId { get; set; }
+        public long? AdvanceId { get; set; }
+        public bool? OPDIPDType { get; set; }
+        public long? OPDIPDID { get; set; }
+        public decimal? RefundAmount { get; set; }
+        public string? Remark { get; set; }
+        public long? TransactionId { get; set; }
+        public long? AddedBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public long? RefundId { get; set; }
         public long? UnitId { get; set; }
 
     }
@@ -62,7 +59,7 @@ namespace HIMS.API.Models.OutPatient
         public AdvanceRefundDetailModelValidator()
         {
             RuleFor(x => x.AdvRefundAmt).NotNull().NotEmpty().WithMessage("AdvRefundAmt is required");
-           
+
         }
     }
     public class AdvDetailModel

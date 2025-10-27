@@ -1,6 +1,3 @@
-using FluentValidation;
-using HIMS.Data.Models;
-
 namespace HIMS.API.Models.Pharmacy
 {
     public class GRNUpdatedModel
@@ -88,4 +85,4 @@ namespace HIMS.API.Models.Pharmacy
         //public List<GRNReturnReturnQty> GrnReturnReturnQt { get; set; }
     }
 }
-    
+

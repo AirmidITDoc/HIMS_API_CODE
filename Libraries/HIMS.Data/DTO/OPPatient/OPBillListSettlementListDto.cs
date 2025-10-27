@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
-    public  class OPBillListSettlementListDto
+    public class OPBillListSettlementListDto
     {
         public long BillNo { get; set; }
         public long OPDIPDID { get; set; }
@@ -17,7 +11,7 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal BalanceAmt { get; set; }
         public DateTime BillDate { get; set; }
         public byte OPD_IPD_Type { get; set; }
-        public string?PaidAmount { get; set; }
+        public string? PaidAmount { get; set; }
         public long IsCancelled { get; set; }
         public string? PBillNo { get; set; }
         public long TransactionType { get; set; }

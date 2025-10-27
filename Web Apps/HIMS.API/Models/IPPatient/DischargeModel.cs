@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 
 namespace HIMS.API.Models.IPPatient
@@ -12,7 +11,7 @@ namespace HIMS.API.Models.IPPatient
         public long? DischargeTypeId { get; set; }
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
-        public long ModeOfDischargeId {  get; set; }
+        public long ModeOfDischargeId { get; set; }
         public long? AddedBy { get; set; }
         public long? ModifiedBy { get; set; }
         public long DischargeId { get; set; }
@@ -57,10 +56,10 @@ namespace HIMS.API.Models.IPPatient
     }
 
     public class DischargeModels
-    { 
+    {
         public DischargeModel Discharge { get; set; }
         public AdmissionModel Admission { get; set; }
-        public BedMasterModel1 Bed {  get; set; }
+        public BedMasterModel1 Bed { get; set; }
 
     }
     public class DischargeUpdateModel
@@ -73,9 +72,9 @@ namespace HIMS.API.Models.IPPatient
         public long? DischargedDocId { get; set; }
         public long? DischargedRmoid { get; set; }
         public long? AddedBy { get; set; }
-        public long? ModeOfDischargeId {  get; set; }
-        public long? ModifiedBy { get;set; }
-        
+        public long? ModeOfDischargeId { get; set; }
+        public long? ModifiedBy { get; set; }
+
 
 
     }

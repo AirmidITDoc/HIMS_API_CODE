@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class DoctorShareListDto
     {
@@ -17,7 +11,7 @@ namespace HIMS.Data.DTO.Administration
         public string? PatientType { get; set; }
         public string? CompanyName { get; set; }
         public bool? IsBillShrHold { get; set; }
-        public int  opdipdtype  { get; set; }
+        public int opdipdtype { get; set; }
 
         //public double? DoctorShareAmount { get; set; }
         //public double? HospitalAmount { get; set; }

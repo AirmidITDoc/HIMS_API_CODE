@@ -1,17 +1,13 @@
+using HIMS.Api.Models.Common;
+using HIMS.Core;
+using HIMS.Core.Infrastructure;
+using HIMS.Services.Users;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Threading.Tasks;
-using HIMS.API.Models.Common;
-using HIMS.Api.Models.Common;
-using HIMS.Services.Users;
-using HIMS.Core;
-using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Extensions
 {

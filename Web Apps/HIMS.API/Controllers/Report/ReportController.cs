@@ -1,40 +1,18 @@
 ﻿using Asp.Versioning;
-using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Office2016.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.Masters;
 using HIMS.API.Utility;
-using HIMS.API.Utility;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.Common;
 using HIMS.Services.Masters;
 using HIMS.Services.OPPatient;
-using HIMS.Services.Pharmacy;
 using HIMS.Services.Report;
 using HIMS.Services.Utilities;
-using LinqToDB.Common;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using WkHtmlToPdfDotNet;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -471,8 +449,8 @@ namespace HIMS.API.Controllers.Report
             //model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             ReportConfigDto model = new();
             GridRequestModel objGrid = new() { Filters = new List<SearchGrid>() };
-            objGrid.Filters.Add(new SearchGrid() { FieldName="Id",FieldValue=request.ReportId.ToString() });
-            objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue ="0" });
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "Id", FieldValue = request.ReportId.ToString() });
+            objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue = "0" });
             objGrid.First = 0;
             objGrid.Rows = 0;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);

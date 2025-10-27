@@ -1,42 +1,17 @@
 ﻿using Asp.Versioning;
-using Asp.Versioning;
-using HIMS.Api.Controllers;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Extensions;
-using HIMS.API.Models.Common;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pharmacy;
-using HIMS.Core;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.Models;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Common;
-using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
-using HIMS.Services.OutPatient;
-using HIMS.Services.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -96,7 +71,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-               
+
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _oPBillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);

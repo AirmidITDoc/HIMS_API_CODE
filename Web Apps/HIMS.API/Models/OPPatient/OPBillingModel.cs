@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -237,7 +236,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public PackcagechargesmodelValidator()
         {
-          //  RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            //  RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }

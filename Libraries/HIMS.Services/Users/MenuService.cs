@@ -1,14 +1,6 @@
-﻿using HIMS.Core.Domain.Logging;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Users
 {
@@ -20,7 +12,7 @@ namespace HIMS.Services.Users
 
         public List<MenuModel> GetMenus(int RoleId, bool isActiveMenuOnly)
         {
-            DatabaseHelper sql=new();
+            DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@RoleId", RoleId);
             List<MenuMasterDTO> lstMenu = sql.FetchListByQuery<MenuMasterDTO>("SELECT M.Id,ISNULL(M.UpId,0) UpId,M.LinkName,M.Icon,M.LinkAction,M.SortOrder,M.IsActive,M.IsDisplay,M.PermissionCode,M.TableNames,P.IsView,P.IsAdd,P.IsEdit,P.IsDelete FROM MenuMaster M LEFT JOIN PermissionMaster P ON M.Id=P.MenuId AND P.RoleId=@RoleId\r\nWHERE IsActive=1 AND IsDisplay=1 Order by UpId,SortOrder ", para);

@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-   
-        public class MRDCertificateListToDo
-        {
+
+    public class MRDCertificateListToDo
+    {
 
         public long AdmissionID { get; set; }
         public long DischargeId { get; set; }
-            public long RegId { get; set; }
-            public string? RegNo { get; set; }
-            public string? PatientName { get; set; }
+        public long RegId { get; set; }
+        public string? RegNo { get; set; }
+        public string? PatientName { get; set; }
         public string? Address { get; set; }
         public string? AdmissionDate { get; set; }
         public string? DischargeDate { get; set; }
         public string? GenderName { get; set; }
         public string? AgeYear { get; set; }
         public string? DepartmentName { get; set; }
-      
+
         public string IPDNo { get; set; }
 
-        public long  BillNo { get; set; }
+        public long BillNo { get; set; }
 
         public string? PBillNo { get; set; }
         public decimal? TotalAmt { get; set; }

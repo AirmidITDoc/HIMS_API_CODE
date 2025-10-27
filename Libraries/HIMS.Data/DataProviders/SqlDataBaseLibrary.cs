@@ -1,10 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using LinqToDB.Data;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
@@ -33,7 +29,7 @@ namespace HIMS.Data.DataProviders
         {
             _transaction = transaction;
         }
-       
+
         public string ExecuteNonQueryNew(string storedProcName, CommandType cmdType, string outputParamName, Dictionary<string, object> parameters)
         {
             using var cmd = _connection.CreateCommand();

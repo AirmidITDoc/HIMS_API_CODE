@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Core;
-using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.Inventory
 {

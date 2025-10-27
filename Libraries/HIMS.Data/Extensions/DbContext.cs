@@ -1,17 +1,8 @@
-﻿using HIMS.Core;
-using HIMS.Core.Domain.Logging;
+﻿using HIMS.Core.Domain.Logging;
 using HIMS.Data.Extensions;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using static LinqToDB.Reflection.Methods.LinqToDB;
 
 namespace HIMS.Data.Models
 {

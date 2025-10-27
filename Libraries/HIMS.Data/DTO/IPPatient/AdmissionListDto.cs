@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
     public class AdmissionListDto
     {
@@ -132,7 +126,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? DepartmentName { get; set; }
 
         public string? RefDoctorName { get; set; }
-        
+
         public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
     }
 }

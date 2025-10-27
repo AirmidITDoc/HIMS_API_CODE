@@ -5,12 +5,7 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.IPPatient
 {
@@ -31,7 +26,7 @@ namespace HIMS.Services.IPPatient
             return await DatabaseHelper.GetGridDataBySp<SampleCollectionTestListDto>(model, "ps_Rtrv_PathSamColllist_Pat_Dtls");
 
         }
-        
+
 
         public virtual async Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel model)
         {

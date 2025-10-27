@@ -5,7 +5,6 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System.Data;
-using System.Security.Principal;
 using System.Transactions;
 
 namespace HIMS.Services.OutPatient
@@ -67,7 +66,7 @@ namespace HIMS.Services.OutPatient
             foreach (var items in objpayment)
             {
 
-                string[] rpayEntity = { "BillNo", "UnitId", "ReceiptNo","PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate","Tdsamount", "Wfamount", "OPDIPDType", "PaymentId" };
+                string[] rpayEntity = { "BillNo", "UnitId", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "OPDIPDType", "PaymentId" };
                 var payentity = items.ToDictionary();
                 foreach (var rProperty in payentity.Keys.ToList())
                 {

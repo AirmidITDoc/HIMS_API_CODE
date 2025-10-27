@@ -1,6 +1,4 @@
-﻿using HIMS.Data.Models;
-
-namespace HIMS.API.Models.IPPatient
+﻿namespace HIMS.API.Models.IPPatient
 {
     public class UpdateAdvanceCancel
     {
@@ -27,7 +25,7 @@ namespace HIMS.API.Models.IPPatient
     public class paymentpharModel
     {
         public DateTime? PaymentDate { get; set; }
-        public string  PaymentTime { get; set; }
+        public string PaymentTime { get; set; }
         public long PaymentId { get; set; }
 
     }

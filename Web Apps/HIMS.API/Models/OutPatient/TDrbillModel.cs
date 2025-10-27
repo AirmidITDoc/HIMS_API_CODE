@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -63,7 +62,7 @@ namespace HIMS.API.Models.OutPatient
     {
 
         public TDrbillModel TDrbill { get; set; }
-       public List<TDRBillDetModel> TDRBillDet { get; set; }
+        public List<TDRBillDetModel> TDRBillDet { get; set; }
 
     }
 

@@ -1,16 +1,13 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class IndentListbyIdDto
+    public class IndentListbyIdDto
     {
         public long IndentId { get; set; }
         public string? IndentNo { get; set; }

@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         public long BankId { get; set; }
         public string? BankName { get; set; }
-       
+
     }
     public class BankMasterModelValidator : AbstractValidator<BankMasterModel>
     {

@@ -1,6 +1,4 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.GRN;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 

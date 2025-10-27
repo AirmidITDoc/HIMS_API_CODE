@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using LinqToDB;
-using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.Nursing
 {
-    public  class ClinicalCareService : IClinicalCareService
+    public class ClinicalCareService : IClinicalCareService
     {
         private readonly HIMSDbContext _context;
         public ClinicalCareService(HIMSDbContext HIMSDbContext)

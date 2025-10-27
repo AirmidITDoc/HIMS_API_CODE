@@ -1,17 +1,13 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Pharmacy;
-using HIMS.Core;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
-using HIMS.Services.Users;
+using HIMS.API.Extensions;
 using HIMS.API.Models.DoctorPayout;
-using HIMS.Services.DoctorPayout;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
-using HIMS.API.Models.Inventory;
+using HIMS.Data.Models;
+using HIMS.Services.DoctorPayout;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.DoctorPayout
 {

@@ -2,15 +2,12 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
-using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pharmacy
@@ -38,7 +35,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List")); 
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Item List"));
         }
 
         [HttpPost("OldPurchaseOrderList")]
@@ -46,7 +43,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
-            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));  
+            return Ok(List1.ToGridResponse(objGrid, "Purchase Order Item List"));
         }
 
         [HttpPost("LastThreeItemList")]
@@ -73,7 +70,7 @@ namespace HIMS.API.Controllers.Pharmacy
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
             if (obj.PurchaseId == 0)
             {
-                
+
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
                 model.PurchaseTime = DateTime.Now;
@@ -85,7 +82,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
-                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PurchaseId);
         }
 

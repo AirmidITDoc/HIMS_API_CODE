@@ -1,12 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-       [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CertificateTemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CertificateTemplateModel obj)
         {
             MCertificateTemplateMaster model = obj.MapTo<MCertificateTemplateMaster>();

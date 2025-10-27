@@ -1,12 +1,11 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Administration
 {
     public class TExpenseCancelModel
     {
         public long ExpId { get; set; }
-        public long IsCancelledBy { get; set; } 
+        public long IsCancelledBy { get; set; }
 
     }
 

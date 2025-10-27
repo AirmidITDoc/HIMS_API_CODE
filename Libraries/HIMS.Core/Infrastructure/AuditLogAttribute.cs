@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HIMS.Core.Infrastructure
+﻿namespace HIMS.Core.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public class AuditLogAttribute : Attribute

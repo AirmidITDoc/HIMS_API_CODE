@@ -7,7 +7,7 @@ namespace HIMS.API.Models.Administration
     {
         public long ExpHedId { get; set; }
         public string? HeadName { get; set; }
-       
+
     }
     public class PatientTypeModelValidator : AbstractValidator<PatientTypeModel>
     {

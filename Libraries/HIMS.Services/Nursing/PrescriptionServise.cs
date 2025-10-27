@@ -1,17 +1,11 @@
 ﻿using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Nursing
 {
-    public  class PrescriptionServise: IPrescriptionService
+    public class PrescriptionServise : IPrescriptionService
     {
         private readonly HIMSDbContext _context;
         public PrescriptionServise(HIMSDbContext HIMSDbContext)
@@ -102,9 +96,9 @@ namespace HIMS.Services.Nursing
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-              
-               
-                TIpprescriptionReturnH Obj1= await _context.TIpprescriptionReturnHs.FindAsync(objIpprescriptionReturnH.PresReId);
+
+
+                TIpprescriptionReturnH Obj1 = await _context.TIpprescriptionReturnHs.FindAsync(objIpprescriptionReturnH.PresReId);
                 if (Obj1 == null)
                     throw new Exception("Prescription Return not found.");
                 // Cancel fields

@@ -3,17 +3,13 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.OutPatient;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Pathology;
-using HIMS.Data;
 
 namespace HIMS.API.Controllers.Masters.Radiology
 {
@@ -40,9 +36,9 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return Ok(MRadiologyTestMasterList.ToGridResponse(objGrid, "MRadiologyTestMaster  List"));
         }
 
-       
+
         [HttpPost("RadiologyTestList")]
-         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RadiologyTestList(GridRequestModel objGrid)
         {
             IPagedList<RadiologyTestListDto> RadiologyTestList = await _RadiologyTestService.RadiologyTestList(objGrid);
@@ -115,8 +111,8 @@ namespace HIMS.API.Controllers.Masters.Radiology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-      
-       
+
+
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]

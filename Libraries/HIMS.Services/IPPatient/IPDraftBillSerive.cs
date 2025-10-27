@@ -1,17 +1,11 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HIMS.Services.IPPatient
 {
-    public class IPDraftBillSerive:IIPDraftBillSerive
+    public class IPDraftBillSerive : IIPDraftBillSerive
     {
         private readonly Data.Models.HIMSDbContext _context;
         public IPDraftBillSerive(HIMSDbContext HIMSDbContext)
@@ -26,7 +20,7 @@ namespace HIMS.Services.IPPatient
             {
                 // Bill Code
                 DatabaseHelper odal = new();
-                string[] rEntity = {"IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "BillNo", "CompDiscAmt", "DiscComments", "CashCounterId"};
+                string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "BillNo", "CompDiscAmt", "DiscComments", "CashCounterId" };
                 var entity = objBill.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {

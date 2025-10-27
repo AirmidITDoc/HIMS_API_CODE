@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 
 namespace HIMS.Data

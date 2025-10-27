@@ -1,9 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 

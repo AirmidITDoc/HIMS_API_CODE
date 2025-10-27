@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Pathology
+﻿namespace HIMS.Data.DTO.Pathology
 {
-    public  class RadiologyPatientListDto
+    public class RadiologyPatientListDto
     {
-        public long RadReportId {  get; set; }
+        public long RadReportId { get; set; }
         public string? RadDate { get; set; }
         public string? RadTime { get; set; }
         public long Visit_Adm_ID { get; set; }
@@ -41,4 +35,3 @@ namespace HIMS.Data.DTO.Pathology
     }
 }
 
-	

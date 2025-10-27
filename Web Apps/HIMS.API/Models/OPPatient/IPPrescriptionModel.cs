@@ -37,7 +37,7 @@ namespace HIMS.API.Models.OPPatient
 
 
     }
- public class PrescriptionMasterModelValidator : AbstractValidator<IPPrescriptionModel>
+    public class PrescriptionMasterModelValidator : AbstractValidator<IPPrescriptionModel>
     {
         public PrescriptionMasterModelValidator()
         {
@@ -57,12 +57,12 @@ namespace HIMS.API.Models.OPPatient
         public long VisitId { get; set; }
         public DateTime? FollowupDate { get; set; }
     }
-     public class VisitDetailsModelValidator : AbstractValidator<VisitDetailsModel>
-     {
+    public class VisitDetailsModelValidator : AbstractValidator<VisitDetailsModel>
+    {
         public VisitDetailsModelValidator()
         {
-           
+
             RuleFor(x => x.FollowupDate).NotNull().NotEmpty().WithMessage("FollowupDate  is required");
         }
-     }
+    }
 }

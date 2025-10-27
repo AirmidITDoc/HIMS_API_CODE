@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class BedTransferDetailListDto
+    public class BedTransferDetailListDto
     {
-        public string RegNo {  get; set; }
+        public string RegNo { get; set; }
         public string PatientName { get; set; }
         public string AdmissionDate { get; set; }
         public string AdmissionTime { get; set; }

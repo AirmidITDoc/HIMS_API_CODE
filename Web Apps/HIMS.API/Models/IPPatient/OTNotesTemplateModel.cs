@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -50,7 +49,7 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.Ottime).NotNull().NotEmpty().WithMessage("Ottime  is required");
             RuleFor(x => x.FromTime).NotNull().NotEmpty().WithMessage("FromTime  is required");
             RuleFor(x => x.ToTime).NotNull().NotEmpty().WithMessage("ToTime  is required");
-           
+
         }
     }
 }

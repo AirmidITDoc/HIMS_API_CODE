@@ -1,7 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 
 
@@ -29,6 +28,6 @@ namespace HIMS.Services.Pharmacy
         Task<List<BatchListDTO>> GetExisitingBatchList(int StoreId, int ItemId, string BatchNo);
         //Task<List<BatchListDTO>> GetGSTList(string GSTNo);
         Task<TGrnheader> GetById(int Id);
-    
+
     }
 }

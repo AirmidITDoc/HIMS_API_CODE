@@ -20,7 +20,7 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.PathTemplateDetailsResult).NotNull().NotEmpty().WithMessage("PathTemplateDetailsResult  is required");
             RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage(" TestId required");
             RuleFor(x => x.TemplateResultInHtml).NotNull().NotEmpty().WithMessage("TemplateResultInHtml is required");
-          
+
         }
     }
 

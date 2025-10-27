@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -12,7 +11,7 @@ namespace HIMS.API.Models.Inventory
         public long? ToStoreId { get; set; }
         public long? Isdeleted { get; set; }
         public bool? Isverify { get; set; }
-        public bool? Isclosed{ get; set; }
+        public bool? Isclosed { get; set; }
         public string? Comments { get; set; }
         public bool? Priority { get; set; }
         public long? UnitId { get; set; }

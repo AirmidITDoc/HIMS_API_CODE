@@ -20,11 +20,11 @@ namespace HIMS.Services.Administration
 
             //scope.Complete();
         }
-       
+
         public virtual async Task UpdateAsync(Payment objPayment, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-             // Get existing entity from DB
+            // Get existing entity from DB
             var existingPayment = await _context.Payments.FindAsync(objPayment.PaymentId);
             if (existingPayment == null)
                 throw new Exception("Payment record not found.");

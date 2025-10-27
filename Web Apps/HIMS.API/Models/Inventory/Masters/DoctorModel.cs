@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Common;
 
 namespace HIMS.API.Models.Inventory.Masters
 {
@@ -37,7 +36,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
         public string? Signature { get; set; }
-       
+
         public List<MDoctorDepartmentDetModel> MDoctorDepartmentDets { get; set; }
         public List<DoctorQualificationDetailModel> MDoctorQualificationDetails { get; set; }
         public List<DoctorExperienceDetailsModel> MDoctorExperienceDetails { get; set; }
@@ -66,10 +65,10 @@ namespace HIMS.API.Models.Inventory.Masters
         public MDoctorDepartmentDetValidator()
         {
             RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId  is required");
-           
+
         }
     }
-    public  class DoctorQualificationDetailModel
+    public class DoctorQualificationDetailModel
     {
         public long DocQualfiId { get; set; }
         public long? DoctorId { get; set; }
@@ -136,7 +135,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? DoctorId { get; set; }
         public long? PageId { get; set; }
     }
-    
+
 }
 
 

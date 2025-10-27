@@ -28,7 +28,7 @@ namespace HIMS.Services.Masters
             {
                 // remove conditional records
                 if (objPara.IsNumeric == 1)
-                    objPara.MParameterDescriptiveMasters = null; 
+                    objPara.MParameterDescriptiveMasters = null;
                 else
                     objPara.MPathParaRangeWithAgeMasters = null;
                 // Add header table records

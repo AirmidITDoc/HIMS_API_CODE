@@ -1,16 +1,13 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.OPPatient
@@ -61,7 +58,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy" ,"CreatedBy", "CreatedDate", "ModifiedBy","ModifiedDate" };
+            string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -110,6 +107,6 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
-       
+
     }
 }

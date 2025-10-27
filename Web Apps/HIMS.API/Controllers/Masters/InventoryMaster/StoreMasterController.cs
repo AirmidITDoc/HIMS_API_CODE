@@ -1,16 +1,14 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.Models;
 using HIMS.Services.Inventory;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Master;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.InventoryMaster
 {
@@ -38,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             return Ok(MStoreMastereList.ToGridResponse(objGrid, "StoreMastere List"));
         }
 
-       
+
         //List API Get By Id
         [HttpGet("{id?}")]
         [Permission(PageCode = "StoreMaster", Permission = PagePermission.View)]

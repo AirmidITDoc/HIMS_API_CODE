@@ -2,12 +2,10 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.GRN;
-using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;

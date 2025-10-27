@@ -1,8 +1,3 @@
-using ClosedXML.Excel;
-using FluentValidation;
-using HIMS.API.Models.Pharmacy;
-using HIMS.Data.Models;
-
 namespace HIMS.API.Models.OutPatient
 {
     public class PhBillDiscountAfterModel
@@ -27,7 +22,7 @@ namespace HIMS.API.Models.OutPatient
     public class GlobalDiscountModels
     {
         public List<GlobalDiscountModel> Sales { get; set; }
-    
+
 
     }
 
@@ -40,6 +35,6 @@ namespace HIMS.API.Models.OutPatient
         public string? DoctorName { get; set; }
         public long? SalesId { get; set; }
 
-       
+
     }
 }

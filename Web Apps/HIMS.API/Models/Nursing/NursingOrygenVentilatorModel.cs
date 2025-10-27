@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace HIMS.API.Models.Nursing
 {
     public class NursingOrygenVentilatorModel

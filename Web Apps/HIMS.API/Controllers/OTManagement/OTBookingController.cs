@@ -2,22 +2,15 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services;
-using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
-using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -68,7 +61,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.Edit)]
@@ -85,7 +78,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.ModifiedBy = CurrentUserId;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.",model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
 
 

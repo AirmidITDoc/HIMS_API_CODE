@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.Login
 {

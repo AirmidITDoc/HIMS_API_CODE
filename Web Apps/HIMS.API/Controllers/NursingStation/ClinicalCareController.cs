@@ -2,19 +2,11 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Administration;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
-using HIMS.API.Models.OutPatient;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using HIMS.Services.Nursing;
 //using HIMS.Services.NursingStation;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +28,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
 
-        public ClinicalCareController(IClinicalCareService repository,  IGenericService<TNursingVital> repository1, IGenericService<TNursingSugarLevel> repository2, IGenericService<TNursingOrygenVentilator> repository3,
+        public ClinicalCareController(IClinicalCareService repository, IGenericService<TNursingVital> repository1, IGenericService<TNursingSugarLevel> repository2, IGenericService<TNursingOrygenVentilator> repository3,
             IGenericService<TNursingPainAssessment> repository4, IGenericService<TNursingWeight> repository5)
         {
             _repository = repository1;
@@ -112,7 +104,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingVitalInsert")]
-    //    [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //    [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Posts(NursingVitalsModel obj)
         {
             TNursingVital model = obj.MapTo<TNursingVital>();
@@ -160,7 +152,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("TNursingSugarLevelInsert")]
-     //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(NursingSugarLevelModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
@@ -176,7 +168,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingSugarLevelUpdate/{id:int}")]
-     //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        //   [Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(NursingSugarLevelModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();

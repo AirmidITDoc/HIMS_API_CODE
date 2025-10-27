@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Inventory
         public long? ServiceId { get; set; }
         public List<RadiologyTemplateDetailModel> MRadiologyTemplateDetails { get; set; }
     }
-     public class RadiologyTestModelValidator : AbstractValidator<RadiologyTestModel>
+    public class RadiologyTestModelValidator : AbstractValidator<RadiologyTestModel>
     {
         public RadiologyTestModelValidator()
         {
@@ -19,7 +19,7 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.PrintTestName).NotNull().NotEmpty().WithMessage("PrintTestName is required");
             RuleFor(x => x.CategoryId).NotNull().NotEmpty().WithMessage("CategoryId is required");
             RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
-            
+
         }
     }
     public class RadiologyTemplateDetailModel

@@ -1,5 +1,3 @@
-using System;
-
 namespace HIMS.Api.Models.Login
 {
     public class CaptchaResult

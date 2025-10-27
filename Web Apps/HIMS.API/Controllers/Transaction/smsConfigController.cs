@@ -2,13 +2,11 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Transaction;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
-using HIMS.Services.IPPatient;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 

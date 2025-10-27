@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Purchase
+﻿namespace HIMS.Data.DTO.Purchase
 {
     public class WorkorderIteListDto
     {
-      
+
         public string? ItemName { get; set; }
         public long? Qty { get; set; }
         public decimal? Rate { get; set; }
@@ -20,6 +14,6 @@ namespace HIMS.Data.DTO.Purchase
         public decimal? NetAmount { get; set; }
         public string? Remark { get; set; }
         public long? PendQty { get; set; }
-        public long? ItemID {  get; set; }
+        public long? ItemID { get; set; }
     }
 }

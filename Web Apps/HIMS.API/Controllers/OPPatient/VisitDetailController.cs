@@ -4,17 +4,15 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.OPPatient;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Services.Common;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.Models;
 using HIMS.Services.Masters;
 using HIMS.Services.OPPatient;
-using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
+using HIMS.Services.OutPatient;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -169,7 +167,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.UpdateAsyncSP( objVisitDetail, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.UpdateAsyncSP(objVisitDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

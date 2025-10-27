@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 
 namespace HIMS.API.Models.Inventory
@@ -21,7 +20,7 @@ namespace HIMS.API.Models.Inventory
         public DateTime? AddedDateTime { get; set; }
         public List<TCurrentStockModellll> TCurrentStock { get; set; }
     }
-  
+
     public class MRPAdjustmentModelValidator : AbstractValidator<MRPAdjustmentModel>
     {
         public MRPAdjustmentModelValidator()
@@ -37,12 +36,12 @@ namespace HIMS.API.Models.Inventory
         public long StockId { get; set; }
         public long? StoreId { get; set; }
         public long? ItemId { get; set; }
-      
+
         public string? BatchNo { get; set; }
-      
+
         public decimal? PurUnitRate { get; set; }
         public decimal? PurUnitRateWf { get; set; }
-        
+
 
     }
     public class TCurrentStockModellllValidator : AbstractValidator<TCurrentStockModellll>

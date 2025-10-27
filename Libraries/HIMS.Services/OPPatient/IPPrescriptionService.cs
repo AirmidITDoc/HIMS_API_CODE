@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
 
 namespace HIMS.Services.OPPatient
 {
@@ -48,7 +37,7 @@ namespace HIMS.Services.OPPatient
 
             await _context.SaveChangesAsync(UserId, Username);
         }
-        
+
 
         public virtual async Task InsertAsyncSP(TPrescription objPrescription, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUsername)
         {
@@ -59,7 +48,7 @@ namespace HIMS.Services.OPPatient
                 _context.TPrescriptions.Add(objPrescription);
                 await _context.SaveChangesAsync();
 
-               // Add VisitDetail table records
+                // Add VisitDetail table records
                 objVisitDetail.RegId = objPrescription.PrecriptionId;
                 _context.VisitDetails.Add(objVisitDetail);
                 await _context.SaveChangesAsync();

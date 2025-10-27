@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Inventory.Masters
     public class OTBookingRequestModel
     {
         public long OtbookingId { get; set; }
- 
+
         public DateTime? OtbookingDate { get; set; }
         public string? OtbookingTime { get; set; }
         public long? OpIpId { get; set; }

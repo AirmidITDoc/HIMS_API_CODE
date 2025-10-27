@@ -1,21 +1,17 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
 
- [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
     public class PrescriptionCertificateMasterController : BaseController
@@ -30,14 +26,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCertificateMaster> CertificateMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(CertificateMasterList.ToGridResponse(objGrid, "CertificateMaster List"));
         }
         [HttpGet("{id?}")]
-     //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CertificateMasterModel obj)
         {
             MCertificateMaster model = obj.MapTo<MCertificateMaster>();
@@ -67,7 +63,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CertificateMasterModel obj)
         {
             MCertificateMaster model = obj.MapTo<MCertificateMaster>();
@@ -84,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCertificateMaster? model = await _repository.GetById(x => x.CertificateId == Id);

@@ -1,20 +1,12 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Inventory
 {
     public partial interface IBillingService
     {
-         Task InsertAsync(ServiceMaster objService, int UserId, string Username);
+        Task InsertAsync(ServiceMaster objService, int UserId, string Username);
         //Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username);
         Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? references);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
@@ -24,12 +16,12 @@ namespace HIMS.Services.Inventory
         Task<List<ServiceMaster>> GetAllRadiologyTest();
         void UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
-       
+
         BillingServiceNewDto GetServiceListNew(int TariffId);
         Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data);
         void Insert(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount);
         Task<IPagedList<PackageDetListDto>> GetListAsyncD(GridRequestModel objGrid);
-        void  InsertS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string Username);
+        void InsertS(ServiceWiseCompanyCode ObjServiceWiseCompanyCode, int UserId, string Username);
 
     }
 }

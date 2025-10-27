@@ -1,12 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Customer;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.Models;
 using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 
 namespace HIMS.API.Controllers.Customer
 {

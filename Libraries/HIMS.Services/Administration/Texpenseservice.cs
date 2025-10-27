@@ -4,17 +4,12 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
-    public  class Texpenseservice: ITexpenseservice
+    public class Texpenseservice : ITexpenseservice
     {
         private readonly Data.Models.HIMSDbContext _context;
         public Texpenseservice(HIMSDbContext HIMSDbContext)
@@ -91,7 +86,7 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ExpId", "IsCancelledBy"};
+            string[] AEntity = { "ExpId", "IsCancelledBy" };
             var entity = ObjTExpense.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {

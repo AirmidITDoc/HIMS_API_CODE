@@ -1,20 +1,16 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Models.Inventory;
-using HIMS.Services.Masters;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.Administration;
-using HIMS.API.Utility;
-using System.Net.Mime;
-using static LinqToDB.Reflection.Methods.LinqToDB.Insert;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Utility;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
+using HIMS.Services.Masters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DoctorMasterm
 {
@@ -149,7 +145,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
         }
 
-      
+
 
         //List API
         [HttpPost]

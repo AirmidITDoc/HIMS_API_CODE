@@ -1,13 +1,13 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "GenericMaster", Permission = PagePermission.Delete)]
-        public async Task<ApiResponse>  Delete(int Id)
+        public async Task<ApiResponse> Delete(int Id)
         {
             MGenericMaster model = await _repository.GetById(x => x.GenericId == Id);
             if ((model?.GenericId ?? 0) > 0)

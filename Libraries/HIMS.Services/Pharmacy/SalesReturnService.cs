@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using System.Data;
 //using static LinqToDB.Sql;
 //using static LinqToDB.SqlQuery.SqlPredicate;
-using System.Text.RegularExpressions;
-using WkHtmlToPdfDotNet;
-using HIMS.Services.OutPatient;
 
 namespace HIMS.Services.Pharmacy
 {

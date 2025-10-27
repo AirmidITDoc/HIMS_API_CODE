@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pathology
 {
@@ -50,11 +49,11 @@ namespace HIMS.API.Models.Pathology
         }
     }
 
-        public class PathologyTemplatesModel
-        {
-            public PathologyReportTemplateModel PathologyReportTemplate { get; set; }
+    public class PathologyTemplatesModel
+    {
+        public PathologyReportTemplateModel PathologyReportTemplate { get; set; }
         public PathologyReportHeadermodel PathologyReportHeader { get; set; }
 
     }
-    
+
 }

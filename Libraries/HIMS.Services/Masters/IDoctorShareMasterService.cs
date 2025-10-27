@@ -1,16 +1,8 @@
-﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HIMS.Data.Models;
 
 namespace HIMS.Services.Masters
 {
-   public partial interface IDoctorShareMasterService
+    public partial interface IDoctorShareMasterService
     {
         Task InsertAsync(MDoctorPerMaster objMDoctorPerMaster, int UserId, string Username);
         Task UpdateAsync(MDoctorPerMaster objMDoctorPerMaster, int UserId, string Username);

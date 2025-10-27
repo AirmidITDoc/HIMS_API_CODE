@@ -24,8 +24,8 @@ namespace HIMS.API.Models.IPPatient
     }
     public class AdmisionModel
     {
-        public long AdmID {  get; set; }     
-        public bool IsInitinatedDischarge {  get; set; }
+        public long AdmID { get; set; }
+        public bool IsInitinatedDischarge { get; set; }
     }
     public class AdmisionModelValidator : AbstractValidator<AdmisionModel>
     {
@@ -35,7 +35,7 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.IsInitinatedDischarge).NotNull().NotEmpty().WithMessage("IsInitinatedDischarge is required");
         }
     }
-    
+
     public class InitiateDModel
     {
         public InitiateDischargeModel InitiateDischarge { get; set; }

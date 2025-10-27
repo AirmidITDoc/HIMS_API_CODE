@@ -2,14 +2,10 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.OPPatient;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 

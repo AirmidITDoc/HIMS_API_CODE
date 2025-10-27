@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using HIMS.API.Models;
-using HIMS.Core;
 
 namespace HIMS.API.Extensions
 {

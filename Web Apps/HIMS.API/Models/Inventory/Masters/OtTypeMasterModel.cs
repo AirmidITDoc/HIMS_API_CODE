@@ -14,7 +14,7 @@ namespace HIMS.API.Models.Masters
         public OtTypeMasterModelValidator()
         {
             RuleFor(x => x.TypeName).NotNull().NotEmpty().WithMessage("TypeName is required");
-         //   RuleFor(x => x.LocationId).NotNull().NotEmpty().WithMessage("LocationId is required");
+            //   RuleFor(x => x.LocationId).NotNull().NotEmpty().WithMessage("LocationId is required");
 
         }
     }

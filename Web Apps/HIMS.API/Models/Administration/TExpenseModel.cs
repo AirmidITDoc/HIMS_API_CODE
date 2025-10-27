@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Administration
 {
@@ -29,11 +28,10 @@ namespace HIMS.API.Models.Administration
         {
             RuleFor(x => x.ExpDate).NotNull().NotEmpty().WithMessage("ExpDate is required");
             RuleFor(x => x.ExpTime).NotNull().NotEmpty().WithMessage("ExpTime is required");
-           
+
 
         }
     }
-   
+
 }
 
-    

@@ -1,17 +1,12 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Common
 {
-    public class IPBILLCreditService:IIPBILLCreditService
+    public class IPBILLCreditService : IIPBILLCreditService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public IPBILLCreditService(HIMSDbContext HIMSDbContext)

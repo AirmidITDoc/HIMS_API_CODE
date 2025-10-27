@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Services.Pharmacy
+﻿namespace HIMS.Services.Pharmacy
 {
-    public  class PhARefundOfAdvanceListDto
+    public class PhARefundOfAdvanceListDto
     {
         public long AdvanceDetailId { get; set; }
         public string Date { get; set; }
@@ -24,7 +18,7 @@ namespace HIMS.Services.Pharmacy
         //public decimal? NetBalAmt { get; set; }
         //public string UserName { get; set; }
         //public DateTime? PaymentDate { get; set; }
-       
+
         //public decimal ChequePayAmount { get; set; }
         //public decimal CardPayAmount { get; set; }
         //public decimal NEFTPayAmount { get; set; }

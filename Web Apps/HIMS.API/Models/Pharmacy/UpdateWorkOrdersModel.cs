@@ -1,7 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.IPPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -18,7 +15,7 @@ namespace HIMS.API.Models.Pharmacy
         public bool? Isclosed { get; set; }
         public string? Remark { get; set; }
         public long? UpdatedBy { get; set; }
-      
+
     }
     public class UpdateWorkOrdersModelValidator : AbstractValidator<UpdateWorkOrdersModel>
     {

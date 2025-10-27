@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Data.Extensions
 {
@@ -34,7 +28,7 @@ namespace HIMS.Data.Extensions
         public static Type CompileResultType(List<DynamicClassField> Fields)
         {
             TypeBuilder tb = GetTypeBuilder();
-         
+
             // NOTE: assuming your list contains Field objects with fields FieldName(string) and FieldType(Type)
             foreach (var field in Fields)
                 CreateProperty(tb, field.FieldName, field.FieldType);

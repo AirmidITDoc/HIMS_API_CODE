@@ -2,11 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;

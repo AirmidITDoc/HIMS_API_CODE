@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HIMS.Core.Domain.Grid
+﻿namespace HIMS.Core.Domain.Grid
 {
     /// <summary>
     /// Paged list interface

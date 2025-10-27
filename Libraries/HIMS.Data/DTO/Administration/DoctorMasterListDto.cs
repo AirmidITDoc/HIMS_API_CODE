@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class DoctorMasterListDto
     {
@@ -31,7 +25,7 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsRefDoc { get; set; }
         public bool? IsActive { get; set; }
         public string? DoctorType { get; set; }
-        public long DoctorTypeId{ get; set; }
+        public long DoctorTypeId { get; set; }
         public bool? IsInHouseDoctor { get; set; }
         public bool? IsOnCallDoctor { get; set; }
         public string? PassportNo { get; set; }

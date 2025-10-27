@@ -50,7 +50,7 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.PurchaseDate).NotNull().NotEmpty().WithMessage("PurchaseDate is required");
             RuleFor(x => x.PurchaseTime).NotNull().NotEmpty().WithMessage("PurchaseTime is required");
-           
+
         }
     }
 

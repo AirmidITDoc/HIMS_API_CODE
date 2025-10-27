@@ -7,12 +7,9 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -60,7 +57,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("Insert")]
-       //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {

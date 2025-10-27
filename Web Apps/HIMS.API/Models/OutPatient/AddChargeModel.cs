@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.OPPatient;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -67,7 +65,7 @@ namespace HIMS.API.Models.OutPatient
         public AddChargesModelValidator()
         {
             RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
-           
+
         }
     }
 

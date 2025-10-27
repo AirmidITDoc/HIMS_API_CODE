@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class DayWiseCurrentStockDto
+    public class DayWiseCurrentStockDto
     {
         public string ItemName { get; set; }
         public long StockId { get; set; }
-        public long StoreId {  get; set; }
+        public long StoreId { get; set; }
         public long ItemId { get; set; }
         public float? OpeningBalance { get; set; }
         public float? ReceivedQty { get; set; }

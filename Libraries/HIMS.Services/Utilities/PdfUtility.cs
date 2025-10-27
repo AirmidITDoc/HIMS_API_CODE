@@ -201,7 +201,7 @@ namespace HIMS.Services.Utilities
         {
             var doc = new HtmlToPdfDocument()
             {
-            GlobalSettings = {
+                GlobalSettings = {
             ColorMode = ColorMode.Color,
             Orientation = PageOrientation,
             PaperSize = new PechkinPaperSize("80mm", "200mm"), // 3cm width, height = max A4 height (you can increase if needed)
@@ -209,7 +209,7 @@ namespace HIMS.Services.Utilities
             {
                 Top = 5,
                 Bottom = 10, // Add bottom space for footer
-                Left = 0, 
+                Left = 0,
 
                 Right = 0
             }

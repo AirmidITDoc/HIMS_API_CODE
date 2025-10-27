@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class MPathParameterMasterListDto
     {
@@ -22,13 +16,13 @@ namespace HIMS.Data.DTO.Administration
         public long UpdatedBy { get; set; }
         public bool IsPrintDisSummary { get; set; }
         public string MethodName { get; set; }
-       
-       
-      
 
- 
 
-   
-       
+
+
+
+
+
+
     }
 }

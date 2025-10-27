@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class NursingMedicationListDto
+    public class NursingMedicationListDto
     {
-        public long MedChartId {  get; set; }
-        public string  MDate { get; set; }
+        public long MedChartId { get; set; }
+        public string MDate { get; set; }
         public string MTime { get; set; }
         public string DurgId { get; set; }
         public string DrugName { get; set; }

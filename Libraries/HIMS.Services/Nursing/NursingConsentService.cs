@@ -1,20 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 
 namespace HIMS.Services.Nursing

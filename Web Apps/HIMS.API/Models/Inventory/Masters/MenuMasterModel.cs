@@ -26,5 +26,5 @@ namespace HIMS.API.Models.Inventory.Masters
 
         }
     }
-   
+
 }

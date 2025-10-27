@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class ItemMovementSummeryListDto
+    public class ItemMovementSummeryListDto
     {
-        public string TransactionDate { get; set; }    
+        public string TransactionDate { get; set; }
         public string TranDate { get; set; }
         public string TransactionTime { get; set; }
         public string? MovementNo { get; set; }

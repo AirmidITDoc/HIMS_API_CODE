@@ -13,7 +13,7 @@ namespace HIMS.API.Models.Inventory
         public long? AddedBy { get; set; }
         public long? StkId { get; set; }
 
-       
+
     }
     public class BatchAdjustmentModelValidator : AbstractValidator<BatchAdjustmentModel>
     {
@@ -29,7 +29,7 @@ namespace HIMS.API.Models.Inventory
         public long StockId { get; set; }
         public long? StoreId { get; set; }
         public long? ItemId { get; set; }
-      
+
     }
     public class TCurrentStockModelllValidator : AbstractValidator<TCurrentStockModelll>
     {

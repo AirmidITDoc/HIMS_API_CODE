@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning;
-using DocumentFormat.OpenXml.Spreadsheet;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
@@ -10,15 +9,9 @@ using HIMS.Core.Utilities;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security;
-using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
@@ -48,8 +41,8 @@ namespace HIMS.API.Controllers.Login
         {
             //string id = Guid.NewGuid().ToString();
             //string secret = ApiKeyUtility.EncryptString(id + "|" + DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
-            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value;
-            string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value;
+            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
+            string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value ?? "";
             string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
             if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= DateTime.Now)
             {

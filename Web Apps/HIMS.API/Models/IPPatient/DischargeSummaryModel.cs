@@ -84,7 +84,7 @@ namespace HIMS.API.Models.IPPatient
         public List<PrescriptionDischargeModel> PrescriptionDischarge { get; set; }
 
     }
-    
+
     public class DischargeSummaryUpdate
     {
         public long DischargeSummaryId { get; set; }

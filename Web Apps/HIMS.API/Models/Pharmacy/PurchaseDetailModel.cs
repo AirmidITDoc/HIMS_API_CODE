@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Text.Json.Serialization;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -44,7 +43,7 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long PurchaseId { get; set; }
         public long IsVerifiedId { get; set; }
-   
+
     }
     public class PurchaseVerifyModelValidator : AbstractValidator<PurchaseVerifyModel>
     {

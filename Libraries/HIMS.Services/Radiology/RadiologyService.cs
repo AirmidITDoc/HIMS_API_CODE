@@ -3,14 +3,9 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Transactions;
 
 
 namespace HIMS.Services.Radiology

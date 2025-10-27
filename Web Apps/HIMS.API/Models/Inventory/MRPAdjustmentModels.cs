@@ -48,8 +48,8 @@ namespace HIMS.API.Models.Inventory
     }
     public class MRPAdjModel
     {
-            public MRPAdjustmentModels MRPAdjustmentMod {  get; set; }
-            public CurStockModel CurruntStockModel { get; set; }
+        public MRPAdjustmentModels MRPAdjustmentMod { get; set; }
+        public CurStockModel CurruntStockModel { get; set; }
 
     }
 }

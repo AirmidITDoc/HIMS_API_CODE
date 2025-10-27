@@ -1,8 +1,6 @@
-using System;
-
 namespace HIMS.Core.Domain.Logging
 {
-    public class RequestLog 
+    public class RequestLog
     {
         public RequestLog()
         {

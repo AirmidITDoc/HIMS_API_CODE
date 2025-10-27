@@ -1,15 +1,15 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
-using HIMS.Services.Administration;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -22,7 +22,7 @@ namespace HIMS.API.Controllers.Administration
         private readonly IReportConfigService _ReportConfigService;
         private readonly IGenericService<MReportConfig> _repository1;
 
-        public ReportConfigController(IGenericService<MReportConfig> repository1, IReportConfigService  repository)
+        public ReportConfigController(IGenericService<MReportConfig> repository1, IReportConfigService repository)
         {
             _ReportConfigService = repository;
             _repository1 = repository1;
@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-           //[Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportConfig> MReportConfigList = await _repository1.GetAllPagedAsync(objGrid);
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
-   
+
 
         [HttpPost("ReportConfigsave")]
         [Permission(PageCode = "ReportConfig", Permission = PagePermission.Add)]

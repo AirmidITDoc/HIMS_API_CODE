@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Purchase
+﻿namespace HIMS.Data.DTO.Purchase
 {
     public class WorkOrderListDto
     {
@@ -26,8 +20,8 @@ namespace HIMS.Data.DTO.Purchase
         public decimal? WoNetAmount { get; set; }
         public string? WORemark { get; set; }
 
-        
 
-            
+
+
     }
 }

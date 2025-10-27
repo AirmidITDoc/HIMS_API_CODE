@@ -1,25 +1,13 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Core.Domain.Logging;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.Master;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using static LinqToDB.Common.Configuration;
 
 namespace HIMS.Services.Users
 {
@@ -235,7 +223,7 @@ namespace HIMS.Services.Users
                 ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
 
                 // 5️⃣ Update Prescription
-                string[] TEntity = { "IppreId","IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark","IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty" ,"Ipmed"};
+                string[] TEntity = { "IppreId", "IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark", "IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty", "Ipmed" };
                 var Nentity = ObjPrescription.ToDictionary();
                 foreach (var rProperty in TEntity)
                     Nentity.Remove(rProperty);
@@ -254,7 +242,7 @@ namespace HIMS.Services.Users
                 //Commit if all good
                 await transaction.CommitAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //Rollback on error
                 await transaction.RollbackAsync();
@@ -272,7 +260,7 @@ namespace HIMS.Services.Users
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 // 1️⃣ Insert Sales Header
-                string[] AEntity = {"Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId" /*TSalesDetails*/ };
+                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId" /*TSalesDetails*/ };
                 var entity = ObjSalesHeader.ToDictionary();
 
                 foreach (var rProperty in entity.Keys.ToList())
@@ -294,7 +282,7 @@ namespace HIMS.Services.Users
                 _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
-               
+
                 // 3️⃣ Update Current Stock (SP)
                 foreach (var items in ObjTCurrentStock)
                 {
@@ -318,11 +306,11 @@ namespace HIMS.Services.Users
                 // 4️⃣ Insert Payment
                 string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
                 var SSentity = ObjPayment.ToDictionary();
-                 foreach (var rProperty in SSentity.Keys.ToList())
-                    {
-                        if (!PEntity.Contains(rProperty))
+                foreach (var rProperty in SSentity.Keys.ToList())
+                {
+                    if (!PEntity.Contains(rProperty))
                         SSentity.Remove(rProperty);
-                    }
+                }
                 string PaymentId = odal.ExecuteNonQueryNew("ps_insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", SSentity);
                 ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
                 await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), ObjPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
     public class RegistrationListDto
     {
@@ -45,7 +36,7 @@ namespace HIMS.Data.DTO.OPPatient
         public long? ReligionId { get; set; }
         public long? AreaId { get; set; }
         public string? AadharCardNo { get; set; }
-      
+
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

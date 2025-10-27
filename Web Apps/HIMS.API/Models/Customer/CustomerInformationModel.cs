@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.Customer
 {
@@ -24,7 +23,7 @@ namespace HIMS.API.Models.Customer
         {
             RuleFor(x => x.CustomerNumber).NotNull().NotEmpty().WithMessage("CustomerNumber  is required");
             RuleFor(x => x.CustomerName).NotNull().NotEmpty().WithMessage("CustomerName  is required");
-            RuleFor(x => x.CustomerAddress).NotNull().NotEmpty().WithMessage("CustomerAddress  is required");        
+            RuleFor(x => x.CustomerAddress).NotNull().NotEmpty().WithMessage("CustomerAddress  is required");
             RuleFor(x => x.CustomerContactNo).NotNull().NotEmpty().WithMessage("CustomerContactNo  is required");
             RuleFor(x => x.CustomerContactPerson).NotNull().NotEmpty().WithMessage("CustomerContactPerson  is required");
             RuleFor(x => x.CustomerCity).NotNull().NotEmpty().WithMessage("CustomerCity  is required");

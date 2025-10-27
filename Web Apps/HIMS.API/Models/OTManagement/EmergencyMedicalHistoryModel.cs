@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.OTManagement
 {
@@ -19,7 +18,7 @@ namespace HIMS.API.Models.OTManagement
         public string? Diagnosis { get; set; }
         public string? Examination { get; set; }
         public string? Advice { get; set; }
-      
+
     }
     public class EmergencyMedicalHistoryModelValidator : AbstractValidator<EmergencyMedicalHistoryModel>
     {

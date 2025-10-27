@@ -2,17 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -36,7 +33,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNHeaderList")]
-  //      [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //      [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNHeaderList(GridRequestModel objGrid)
         {
             IPagedList<GRNListDto> GRNUpdateList = await _IGRNService.GRNHeaderList(objGrid);
@@ -101,7 +98,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.Grnid);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.Grnid);
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -119,7 +116,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.",model.Grnid);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.Grnid);
         }
 
         [HttpPost("InsertPO")]
@@ -140,7 +137,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.Grnid);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.Grnid);
         }
 
         [HttpPut("EditPO/{id:int}")]
@@ -160,7 +157,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.",model.Grnid);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.Grnid);
         }
 
         [HttpPost("Verify")]
