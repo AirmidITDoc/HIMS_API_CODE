@@ -149,12 +149,15 @@ namespace HIMS.API.Controllers.Login
         [SwaggerOperation(Description = "for see actual captcha open <a target='_blank' href='https://codebeautify.org/base64-to-image-converter'>Link</a> and then paste string in textbox, so you can see actual captcha.")]
         public ApiResponse GetCaptcha()
         {
+            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
+            string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
             const int width = 200;
             const int height = 60;
             string captchaCode = Captcha.GenerateCaptchaCode();
             CaptchaResult result = Captcha.GenerateCaptchaImage(width, height, captchaCode);
             string encrToken = EncryptionUtility.EncryptText(result.CaptchaCode + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
-            return new ApiResponse() { Data = new { Img = result.CaptchBase64Data, Token = encrToken }, StatusCode = 200, StatusText = "OK" };
+            return new ApiResponse() { Data = new { Img = result.CaptchBase64Data, Token = encrToken, Expiry = Convert.ToDateTime(keys[1]) }, StatusCode = 200, StatusText = "OK" };
+
         }
 
         [NonAction]
