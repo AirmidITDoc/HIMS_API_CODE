@@ -6721,13 +6721,13 @@ namespace HIMS.Services.Report
 
                             i++; j++;
 
-                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
-                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: right; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["TotalAmt"].ConvertToDouble()).Append("</td></tr>");
+                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:16px;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
+                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["TotalAmt"].ConvertToDouble()).Append("</td></tr>");
 
 
                             TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
@@ -6751,7 +6751,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
 
 
-                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
