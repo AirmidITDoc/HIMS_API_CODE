@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static LinqToDB.Reflection.Methods.LinqToDB;
-
-namespace HIMS.Data.DTO.Pathology
+﻿namespace HIMS.Data.DTO.Pathology
 {
     public class RadiologyListDto
     {
@@ -21,7 +14,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? VisitDate { get; set; }
         public string? VisitTime { get; set; }
         public string? TestName { get; set; }
-        public long opdipdtype { get; set; } 
+        public long opdipdtype { get; set; }
         public string? PBillNo { get; set; }
         public string? ServiceName { get; set; }
         public bool? IsCompleted { get; set; }

@@ -1,53 +1,51 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pharmacy
 {
     public class PharaModel
     {
-            public long? PaymentId { get; set; }
-            public long? UnitId { get; set; }
-            public long? BillNo { get; set; }
-            public DateTime? PaymentDate { get; set; }
-            public string? PaymentTime { get; set; }
-            public decimal? CashPayAmount { get; set; }
-            public decimal? ChequePayAmount { get; set; }
-            public string? ChequeNo { get; set; }
-            public string? BankName { get; set; }
-            public DateTime? ChequeDate { get; set; }
-            public decimal? CardPayAmount { get; set; }
-            public string? CardNo { get; set; }
-            public string? CardBankName { get; set; }
-            public DateTime? CardDate { get; set; }
-            public decimal? AdvanceUsedAmount { get; set; }
-            public long? AdvanceId { get; set; }
-            public long? RefundId { get; set; }
-            public long? TransactionType { get; set; }
-            public string? Remark { get; set; }
-            public long? AddBy { get; set; }
-            public bool? IsCancelled { get; set; }
-            public long? IsCancelledBy { get; set; }
-            public DateTime? IsCancelledDate { get; set; }
-            public long? OPDIPDType { get; set; }
-            public decimal? NeftpayAmount { get; set; }
-            public string? Neftno { get; set; }
-            public string? NeftbankMaster { get; set; }
-            public DateTime? Neftdate { get; set; }
-            public decimal? PayTmamount { get; set; }
-            public string? PayTmtranNo { get; set; }
-            public DateTime? PayTmdate { get; set; }
-            public decimal? TdsAmount { get; set; }
-            public decimal? WfAmount { get; set; }
+        public long? PaymentId { get; set; }
+        public long? UnitId { get; set; }
+        public long? BillNo { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public DateTime? ChequeDate { get; set; }
+        public decimal? CardPayAmount { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
+        public DateTime? CardDate { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+        public long? TransactionType { get; set; }
+        public string? Remark { get; set; }
+        public long? AddBy { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public long? OPDIPDType { get; set; }
+        public decimal? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public DateTime? Neftdate { get; set; }
+        public decimal? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+        public DateTime? PayTmdate { get; set; }
+        public decimal? TdsAmount { get; set; }
+        public decimal? WfAmount { get; set; }
     }
-        public class PharaModelValidator : AbstractValidator<PharaModel>
+    public class PharaModelValidator : AbstractValidator<PharaModel>
+    {
+        public PharaModelValidator()
         {
-            public PharaModelValidator()
-            {
-                RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
-                RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
-            }
+            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
         }
+    }
     public class SaleModel
     {
         public long? SalesID { get; set; }

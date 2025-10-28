@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Services.Pharmacy
+﻿namespace HIMS.Services.Pharmacy
 {
     public class SalesReturnBillListDto
     {
-     
+
         public long SalesReturnId { get; set; }
         public DateTime Date { get; set; }
         public string SalesReturnNo { get; set; }
@@ -27,7 +21,7 @@ namespace HIMS.Services.Pharmacy
         public DateTime PaymentDate { get; set; }
         public string IsPrescription { get; set; }
         public string Label { get; set; }
-      
+
 
 
 

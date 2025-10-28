@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Inventory.Masters;
-using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -52,7 +49,7 @@ namespace HIMS.API.Models.IPPatient
         }
         public class OTReservationCancel
         {
-            public long OtreservationId {  get; set; }
+            public long OtreservationId { get; set; }
             public string? Reason { get; set; }
             public long? IsCancelledBy { get; set; }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
     public class IPAddchargesListDto
     {
@@ -39,8 +33,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string? ChargesAddedName { get; set; }
         public string? ChargesCancelledByName { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-         public string? C_Price { get; set; }
-         public string? C_qty { get; set; }
+        public string? C_Price { get; set; }
+        public string? C_qty { get; set; }
         public string? C_TotalAmount { get; set; }
         public bool? IsComServ { get; set; }
         public bool? IsPrintCompSer { get; set; }

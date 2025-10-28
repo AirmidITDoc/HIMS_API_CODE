@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Common;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -38,7 +37,7 @@ namespace HIMS.API.Models.IPPatient
     {
         public IpDraftBillModelValidator()
         {
-          //  RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
+            //  RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
             //RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
             //RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
             //RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");

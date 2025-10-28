@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
-    public  class DoctorChargesDetailListDto
+    public class DoctorChargesDetailListDto
     {
         public long ServiceId { get; set; }
         public long DocChargeId { get; set; }

@@ -16,7 +16,7 @@ namespace HIMS.API.Models.OPPatient
         {
             RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId is required");
             RuleFor(x => x.VisitId).NotNull().NotEmpty().WithMessage("VisitId is required");
-           
+
         }
     }
     public class RefDoctorModel

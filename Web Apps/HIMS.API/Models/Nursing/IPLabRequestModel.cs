@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -24,9 +23,9 @@ namespace HIMS.API.Models.Nursing
     {
         public IPLabRequestModelValidator()
         {
-                RuleFor(x => x.ReqDate).NotNull().NotEmpty().WithMessage("ReqDate is required");
-                RuleFor(x => x.ReqTime).NotNull().NotEmpty().WithMessage("ReqTime is required");
-           
+            RuleFor(x => x.ReqDate).NotNull().NotEmpty().WithMessage("ReqDate is required");
+            RuleFor(x => x.ReqTime).NotNull().NotEmpty().WithMessage("ReqTime is required");
+
         }
     }
 

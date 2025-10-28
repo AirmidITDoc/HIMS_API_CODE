@@ -5,9 +5,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Transactions;
-using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.Common
 {

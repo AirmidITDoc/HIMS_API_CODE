@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
     public class OPRegistrationList
     {
@@ -13,9 +7,9 @@ namespace HIMS.Data.DTO.OPPatient
         //public DateTime RegTime { get; set; }
         // public long RegNo { get; set; }
         public string PatientName { get; set; }
-       // public string MobileNo { get; set; }
-       // public string Address { get; set; }
-       //public string City { get; set; }
+        // public string MobileNo { get; set; }
+        // public string Address { get; set; }
+        //public string City { get; set; }
         //public decimal TotalAmt { get; set; }
         //public Double ConcessionAmt { get; set; }
 

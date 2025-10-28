@@ -1,27 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Services.Inventory;
-using HIMS.API.Models.Inventory;
-using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
-using HIMS.Services.IPPatient;
 using HIMS.API.Models.IPPatient;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Core;
-using HIMS.Services.OutPatient;
-using static HIMS.API.Models.IPPatient.UpdateAdvanceModelValidator;
-using HIMS.Data.DTO.Administration;
-using HIMS.API.Models.Masters;
-using HIMS.Data;
 using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pathology;
-using HIMS.API.Models.OPPatient;
-using HIMS.Services.OPPatient;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
+using HIMS.Services.IPPatient;
+using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -32,7 +22,7 @@ namespace HIMS.API.Controllers.IPPatient
     {
         private readonly IAdvanceService _IAdvanceService;
         private readonly IGenericService<AdvanceHeader> _repository1;
-        public AdvanceController(IAdvanceService repository,IGenericService<AdvanceHeader> AdvanceHeaderrepository)
+        public AdvanceController(IAdvanceService repository, IGenericService<AdvanceHeader> AdvanceHeaderrepository)
         {
             _IAdvanceService = repository;
             _repository1 = AdvanceHeaderrepository;
@@ -100,7 +90,7 @@ namespace HIMS.API.Controllers.IPPatient
                 objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
                 objpayment.AddBy = CurrentUserId;
 
-               await _IAdvanceService.InsertAdvanceAsyncSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+                await _IAdvanceService.InsertAdvanceAsyncSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -122,7 +112,7 @@ namespace HIMS.API.Controllers.IPPatient
                 objpayment.PaymentTime = Convert.ToDateTime(objpayment.PaymentTime);
                 objpayment.AddBy = CurrentUserId;
 
-            await _IAdvanceService.UpdateAdvanceSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
+                await _IAdvanceService.UpdateAdvanceSP(model, objAdvanceDetail, objpayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -161,14 +151,14 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<ApiResponse> Update(UpdateAdvanceCancel obj)
         {
             AdvanceDetail model = obj.MapTo<AdvanceDetail>();
-            
+
 
             if (obj.AdvanceDetailId != 0)
             {
                 model.AddedBy = CurrentUserId;
                 model.IsCancelledDate = Convert.ToDateTime(model.IsCancelledDate);
                 model.IsCancelledby = CurrentUserId;
-               
+
 
                 await _IAdvanceService.UpdateAdvance(model, CurrentUserId, CurrentUserName);
             }

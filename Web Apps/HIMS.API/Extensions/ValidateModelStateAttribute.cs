@@ -1,9 +1,7 @@
+using HIMS.Api.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Linq;
-using HIMS.API.Models.Common;
-using HIMS.Api.Models.Common;
 
 namespace HIMS.API.Extensions
 {

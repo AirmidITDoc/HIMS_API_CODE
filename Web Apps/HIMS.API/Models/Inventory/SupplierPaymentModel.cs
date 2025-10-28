@@ -5,11 +5,11 @@ namespace HIMS.API.Models.Inventory
     public class SupplierPaymentModel
     {
         public long Grnid { get; set; }
-       
+
         public decimal? PaidAmount { get; set; }
         public decimal? BalAmount { get; set; }
-      
-     
+
+
         public List<TGrnsupPaymentModel>? TGrnsupPayments { get; set; }
         public List<TSupPayDetModel>? TSupPayDets { get; set; }
     }
@@ -19,8 +19,8 @@ namespace HIMS.API.Models.Inventory
         {
             RuleFor(x => x.PaidAmount).NotNull().NotEmpty().WithMessage("PaidAmount is required");
             RuleFor(x => x.BalAmount).NotNull().NotEmpty().WithMessage("BalAmount  is required");
-           
-           
+
+
         }
     }
     public class TGrnsupPaymentModel
@@ -40,12 +40,12 @@ namespace HIMS.API.Models.Inventory
         public long? IsUpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
-      
+
         public string? PartyReceiptNo { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
-       
+
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         //public DateTime? PayTmdate { get; set; }
@@ -70,7 +70,7 @@ namespace HIMS.API.Models.Inventory
         public TSupPayDetModelValidator()
         {
             RuleFor(x => x.SupGrnId).NotNull().NotEmpty().WithMessage("SupGrnId is required");
-            
+
 
         }
     }

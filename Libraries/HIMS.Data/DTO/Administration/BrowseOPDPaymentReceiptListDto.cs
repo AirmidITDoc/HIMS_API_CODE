@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class BrowseOPDPaymentReceiptListDto
     {
@@ -27,7 +21,7 @@ namespace HIMS.Data.DTO.Administration
         public decimal CardPayAmount { get; set; }
         public decimal AdvanceUsedAmount { get; set; }
         public long AdvanceId { get; set; }
-        public long RefundId     { get; set; }
+        public long RefundId { get; set; }
         public bool IsCancelled { get; set; }
         public long AddBy { get; set; }
         public string UserName { get; set; }

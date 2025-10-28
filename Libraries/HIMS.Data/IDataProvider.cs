@@ -1,12 +1,4 @@
-﻿using LinqToDB;
-using LinqToDB.Data;
-using LinqToDB.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using HIMS.Core;
+﻿using LinqToDB.Data;
 
 namespace HIMS.Data
 {

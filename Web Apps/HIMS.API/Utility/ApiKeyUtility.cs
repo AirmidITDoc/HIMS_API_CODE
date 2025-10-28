@@ -1,5 +1,4 @@
-﻿using HIMS.Services.Utilities;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.API.Utility

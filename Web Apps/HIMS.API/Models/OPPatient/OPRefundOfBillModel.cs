@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
-using System;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -111,7 +109,7 @@ namespace HIMS.API.Models.OPPatient
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
         public decimal? Tdsamount { get; set; }
-        public decimal? WFAmount{ get; set; }
+        public decimal? WFAmount { get; set; }
         public long? UnitId { get; set; }
     }
     public class PaymentModellValidator : AbstractValidator<PaymentModell>

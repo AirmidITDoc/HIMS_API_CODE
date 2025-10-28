@@ -20,8 +20,8 @@ namespace HIMS.Services.Pathlogy
         {
             _context = context;
         }
-    
-       
+
+
         public virtual async Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathParaFillListDto>(model, "rtrv_PathParaFill");
@@ -30,7 +30,7 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathSubtestFillListDto>(model, "rtrv_PathSubtestFill");
         }
-       
+
         public virtual async Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathResultEntryListDto>(model, "ps_Rtrv_PathResultEntryList_Test_Dtls");
@@ -40,7 +40,7 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
         }
-       
+
         public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {
 
@@ -57,8 +57,8 @@ namespace HIMS.Services.Pathlogy
 
             foreach (var item in ObjPathologyReportDetail)
             {
-               
-                string[] rEntity = { "PathReportId", "CategoryId", "TestId", "SubTestId", "ParameterId", "ResultValue", "UnitId", "NormalRange", "PrintOrder", "PisNumeric", "CategoryName", "TestName", "SubTestName", "ParameterName", "UnitName", "PatientName", "RegNo", "SampleId", "ParaBoldFlag", "MinValue", "MaxValue", "Opipnumber", "AgeY", "AgeM", "AgeD", "GenderId", "SampleNo", "SuggestionNotes"};
+
+                string[] rEntity = { "PathReportId", "CategoryId", "TestId", "SubTestId", "ParameterId", "ResultValue", "UnitId", "NormalRange", "PrintOrder", "PisNumeric", "CategoryName", "TestName", "SubTestName", "ParameterName", "UnitName", "PatientName", "RegNo", "SampleId", "ParaBoldFlag", "MinValue", "MaxValue", "Opipnumber", "AgeY", "AgeM", "AgeD", "GenderId", "SampleNo", "SuggestionNotes" };
                 var entity = item.ToDictionary();
 
                 foreach (var rProperty in entity.Keys.ToList())
@@ -71,16 +71,16 @@ namespace HIMS.Services.Pathlogy
 
             }
 
-                string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId"};
-                var Hentity = ObjTPathologyReportHeader.ToDictionary();
-                foreach (var rProperty in Hentity.Keys.ToList())
-                {
+            string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId" };
+            var Hentity = ObjTPathologyReportHeader.ToDictionary();
+            foreach (var rProperty in Hentity.Keys.ToList())
+            {
                 if (!Entity.Contains(rProperty))
                     Hentity.Remove(rProperty);
-                }
-               odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+            }
+            odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
 
-               await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
+            await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
 
         }
         public virtual void InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int UserId, string UserName)
@@ -114,10 +114,10 @@ namespace HIMS.Services.Pathlogy
 
 
 
-        public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader,int UserId, string UserName)
+        public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {
             DatabaseHelper odal = new();
-           
+
             var tokensObj = new
             {
                 PathReportID = Convert.ToInt32(ObjTPathologyReportTemplateDetail.PathReportId)
@@ -135,7 +135,7 @@ namespace HIMS.Services.Pathlogy
             odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, "PathologyTemplate", ObjTPathologyReportTemplateDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
-            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes","AdmVisitDoctorId","RefDoctorId"}; 
+            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId" };
             var PathHeaderentity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in PathHeaderentity.Keys.ToList())
             {
@@ -163,7 +163,8 @@ namespace HIMS.Services.Pathlogy
 
         }
         public virtual async Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
-        {       using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             var existing = await _context.TPathologyReportHeaders.FirstOrDefaultAsync(x => x.PathReportId == ObjTPathologyReportHeader.PathReportId);
 
@@ -172,7 +173,7 @@ namespace HIMS.Services.Pathlogy
             existing.OutSourceId = ObjTPathologyReportHeader.OutSourceId;
             existing.OutSourceLabName = ObjTPathologyReportHeader.OutSourceLabName;
             existing.OutSourceSampleSentDateTime = ObjTPathologyReportHeader.OutSourceSampleSentDateTime;
-            existing.OutSourceStatus = ObjTPathologyReportHeader.OutSourceStatus; 
+            existing.OutSourceStatus = ObjTPathologyReportHeader.OutSourceStatus;
             existing.OutSourceReportCollectedDateTime = ObjTPathologyReportHeader.OutSourceReportCollectedDateTime;
             existing.OutSourceCreatedBy = ObjTPathologyReportHeader.OutSourceCreatedBy;
             existing.OutSourceCreatedDateTime = ObjTPathologyReportHeader.OutSourceCreatedDateTime;

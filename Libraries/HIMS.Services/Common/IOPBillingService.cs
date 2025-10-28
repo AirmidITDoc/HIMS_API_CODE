@@ -1,5 +1,4 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 

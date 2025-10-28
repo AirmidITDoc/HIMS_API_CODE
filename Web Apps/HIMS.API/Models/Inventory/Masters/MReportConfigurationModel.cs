@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using FluentValidation;
-using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.Data.Models
 {

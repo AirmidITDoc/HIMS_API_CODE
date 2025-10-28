@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Nursing
+﻿namespace HIMS.Data.DTO.Nursing
 {
     public class NursingWeightListDto
     {
@@ -19,6 +13,6 @@ namespace HIMS.Data.DTO.Nursing
         public string? Reason { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-    
+
     }
 }

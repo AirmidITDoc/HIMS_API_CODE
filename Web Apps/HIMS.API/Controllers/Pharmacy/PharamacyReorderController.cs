@@ -1,15 +1,10 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.API.Utility;
-using HIMS.Data.Models;
-using HIMS.Data;
-using HIMS.Services.OPPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Services.Pharmacy;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.IPPatient;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
-using Asp.Versioning;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Services.Pharmacy;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -19,13 +14,13 @@ namespace HIMS.API.Controllers.Pharmacy
     public class PharamacyReorderController : BaseController
     {
         private readonly IPharmacyReorderService _IPharmacyReorderService;
-       
+
         public PharamacyReorderController(IPharmacyReorderService repository)
         {
             _IPharmacyReorderService = repository;
-           
+
         }
-      
+
         [HttpPost("ItemReorderList")]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> ListM(GridRequestModel objGrid)

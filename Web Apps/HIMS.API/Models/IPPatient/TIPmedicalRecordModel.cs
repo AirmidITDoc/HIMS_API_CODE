@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -15,7 +13,7 @@ namespace HIMS.API.Models.IPPatient
 
     }
     public class TIPmedicalRecordModelValidator : AbstractValidator<TIPmedicalRecordModel>
-    
+
     {
         public TIPmedicalRecordModelValidator()
         {
@@ -24,7 +22,7 @@ namespace HIMS.API.Models.IPPatient
 
         }
     }
-    public  class IpPrescriptionModel
+    public class IpPrescriptionModel
     {
         public long IppreId { get; set; }
         public long? IpmedId { get; set; }

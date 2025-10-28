@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
-    public  class OPRequestListFromEMRDto
+    public class OPRequestListFromEMRDto
     {
-        public long RequestTranId {  get; set; }
+        public long RequestTranId { get; set; }
         public long OPIPID { get; set; }
         public string GroupName { get; set; }
         public long ServiceId { get; set; }

@@ -1,17 +1,15 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Services.Inventory;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -34,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         [Permission(PageCode = "HospitalMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-               IPagedList<HospitalMasterListDto> HospitalMasterList = await _IHospitalMasterService.GetListAsyncH(objGrid);
+            IPagedList<HospitalMasterListDto> HospitalMasterList = await _IHospitalMasterService.GetListAsyncH(objGrid);
             return Ok(HospitalMasterList.ToGridResponse(objGrid, "HospitalMaster List"));
         }
         //List API Get By Id
@@ -85,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
-      
+
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "HospitalMaster", Permission = PagePermission.Delete)]

@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -34,7 +32,7 @@ namespace HIMS.API.Models.Inventory
 
     public class MaterialConsumptionDetailModel
     {
-         public long MaterialConDetId { get; set; }
+        public long MaterialConDetId { get; set; }
         public long? MaterialConsumptionId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
@@ -77,7 +75,7 @@ namespace HIMS.API.Models.Inventory
     }
     public class MaterialConsumptionHeader
     {
-       public  MaterialConsumptionHeaderModel MaterialConsumption {  get; set; }
+        public MaterialConsumptionHeaderModel MaterialConsumption { get; set; }
         public List<CurrentStockUpdateModel> CurrentStockUpdate { get; set; }
 
     }

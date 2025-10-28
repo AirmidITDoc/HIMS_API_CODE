@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Security.Claims;
+﻿using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
 using HIMS.Core.Infrastructure;
-using HIMS.Api.Models.Login;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HIMS.Api.Controllers
 {

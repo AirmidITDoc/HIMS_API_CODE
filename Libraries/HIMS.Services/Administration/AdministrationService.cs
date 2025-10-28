@@ -1,20 +1,11 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
-using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
@@ -50,8 +41,8 @@ namespace HIMS.Services.Administration
             return await DatabaseHelper.GetGridDataBySp<ReportTemplateListDto>(model, "m_Rtrv_ReportTemplateConfig");
         }
 
-      
-       
+
+
         public virtual async Task DeleteAsync(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
@@ -113,7 +104,7 @@ namespace HIMS.Services.Administration
 
             foreach (var rProperty in Rentity.Keys.ToList())
             {
-                if (!AEntity.Contains(rProperty)) 
+                if (!AEntity.Contains(rProperty))
                     Rentity.Remove(rProperty);
             }
 

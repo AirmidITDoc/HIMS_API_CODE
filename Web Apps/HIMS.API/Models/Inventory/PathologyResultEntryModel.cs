@@ -41,7 +41,7 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.CategoryId).NotNull().NotEmpty().WithMessage("CategoryId  is required");
             RuleFor(x => x.SubTestId).NotNull().NotEmpty().WithMessage(" SubTestId required");
             RuleFor(x => x.TestId).NotNull().NotEmpty().WithMessage("TestId is required");
-          
+
         }
     }
     public class TPathologyReportHeaderModel
@@ -70,7 +70,7 @@ namespace HIMS.API.Models.Inventory
     }
     public class PathologyResultModel
     {
-        public List<PathologyResultEntryModel> PathologyResult {  get; set; }
+        public List<PathologyResultEntryModel> PathologyResult { get; set; }
         public TPathologyReportHeaderModel PathologyReport { get; set; }
 
     }

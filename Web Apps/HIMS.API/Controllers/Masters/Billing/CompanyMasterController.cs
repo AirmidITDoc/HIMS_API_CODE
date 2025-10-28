@@ -1,21 +1,17 @@
-﻿using HIMS.API.Extensions;
-using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using Asp.Versioning;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Services.Inventory;
-using HIMS.API.Models.Pharmacy;
-using HIMS.API.Models.Administration;
-using HIMS.Services.Common;
-using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
-using System.Transactions;
+using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -31,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         private readonly IGenericService<ServiceWiseCompanyCode> _temprepository;
         private readonly ICompanyMasterService _CompanyMasterService;
 
-        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1, IGenericService<MCompanyWiseServiceDiscount> repository2,IGenericService<ServiceWiseCompanyCode> repository3)
+        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1, IGenericService<MCompanyWiseServiceDiscount> repository2, IGenericService<ServiceWiseCompanyCode> repository3)
         {
             _CompanyMasterService = repository;
             _repository = repository1;
@@ -74,7 +70,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-           
+
             var data = await _repository.GetById(x => x.CompanyId == id);
             if (data == null)
             {
@@ -159,11 +155,11 @@ namespace HIMS.API.Controllers.Masters.Billing
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
         {
             if (objs == null || objs.Count == 0)
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
             foreach (var obj in objs)
             {
-                if (obj.ServiceId == 0);
+                if (obj.ServiceId == 0) ;
 
                 ServiceDetail model = obj.MapTo<ServiceDetail>();
 

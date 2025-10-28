@@ -1,22 +1,14 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
-    
-         public class OPPayment : IOPPayment
+
+    public class OPPayment : IOPPayment
     {
-   
+
         private readonly Data.Models.HIMSDbContext _context;
         public OPPayment(HIMSDbContext HIMSDbContext)
         {

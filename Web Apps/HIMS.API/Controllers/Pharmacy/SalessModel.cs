@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -122,14 +120,14 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long OpIpId { get; set; }
         public bool IsClosed { get; set; }
-      
+
     }
     public class IPPrescriptionsModelValidator : AbstractValidator<IPPrescriptionsModel>
     {
         public IPPrescriptionsModelValidator()
         {
             RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("opipid is required");
-          
+
         }
     }
     public class SalesDraftHeaderModel
@@ -143,7 +141,7 @@ namespace HIMS.API.Models.Pharmacy
         public SalesDraftHeaderModelValidator()
         {
             RuleFor(x => x.DsalesId).NotNull().NotEmpty().WithMessage("DSalesId is required");
-          
+
         }
     }
     public class SaleReqModel

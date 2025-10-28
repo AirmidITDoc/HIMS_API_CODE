@@ -1,16 +1,12 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-using HIMS.Api.Controllers;
+﻿using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
 using HIMS.API.Utility;
-using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 
 namespace HIMS.API.Controllers.Common
 {

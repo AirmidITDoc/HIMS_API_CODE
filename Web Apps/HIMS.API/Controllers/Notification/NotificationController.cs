@@ -2,17 +2,8 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Masters;
-using HIMS.Core;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data;
-using HIMS.Data.Models;
-using HIMS.Services.Masters;
 using HIMS.Services.Notification;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 
 namespace HIMS.API.Controllers.Notification
 {
@@ -38,7 +29,7 @@ namespace HIMS.API.Controllers.Notification
         [HttpPost]
         [Route("read")]
         [Permission]
-        public async Task<ApiResponse> ReadNotification([FromBody]long Id)
+        public async Task<ApiResponse> ReadNotification([FromBody] long Id)
         {
             await _repository.ReadNotification(Id);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Notification List");

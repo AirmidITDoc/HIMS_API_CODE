@@ -1,21 +1,14 @@
 ﻿using Asp.Versioning;
-using HIMS.API.Extensions;
-using HIMS.Api.Models.Common;
-using HIMS.API.Models.Pharmacy;
-using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Services.Pharmacy;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
-using HIMS.API.Models.Inventory;
 using HIMS.Api.Controllers;
-using HIMS.Services.Inventory;
-using HIMS.API.Models.OPPatient;
+using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Services.Common;
+using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -69,7 +62,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.Addedby = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
-              
+
                 await _IIndentService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -114,7 +107,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verified successfully.");
         }
 
-        
+
         [HttpPost("Cancel")]
         [Permission(PageCode = "Indent", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(IndentCancel obj)

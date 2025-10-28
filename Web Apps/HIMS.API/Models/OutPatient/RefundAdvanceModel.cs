@@ -59,7 +59,7 @@ namespace HIMS.API.Models.OutPatient
 
         }
 
-        public  class AdvRefundDetailModel
+        public class AdvRefundDetailModel
         {
             public long AdvRefId { get; set; }
             public double? AdvDetailId { get; set; }
@@ -174,4 +174,4 @@ namespace HIMS.API.Models.OutPatient
             public PaymentModel2 PaymentModel2 { get; set; }
         }
     }
-    }
+}

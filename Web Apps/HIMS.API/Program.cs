@@ -75,7 +75,7 @@ builder.Services.AddMvc().AddJsonOptions(jsonOptions =>
     jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     jsonOptions.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-   // jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    // jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
 builder.Services.AddApiVersioning(config =>

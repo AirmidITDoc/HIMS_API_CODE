@@ -2,11 +2,6 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Inventory
 {
@@ -21,6 +16,6 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<ItemMovementListDto>(model, "m_rptItemMovementReport");
         }
-       
+
     }
 }

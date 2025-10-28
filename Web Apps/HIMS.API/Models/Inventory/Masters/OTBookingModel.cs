@@ -30,7 +30,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public OTBookingModelValidator()
         {
             RuleFor(x => x.Surgeryname).NotNull().NotEmpty().WithMessage("Surgeryname  is required");
-            RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");  
+            RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");
 
         }
     }

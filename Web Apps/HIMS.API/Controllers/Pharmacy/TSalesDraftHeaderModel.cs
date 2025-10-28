@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -74,7 +72,7 @@ namespace HIMS.API.Models.Pharmacy
         }
     }
 
-  
+
     public class TSalesDraftsHeaderModelValidator : AbstractValidator<TSalesDraftsHeaderModel>
     {
         public TSalesDraftsHeaderModelValidator()
@@ -95,5 +93,5 @@ namespace HIMS.API.Models.Pharmacy
 
 
     }
-   
+
 }

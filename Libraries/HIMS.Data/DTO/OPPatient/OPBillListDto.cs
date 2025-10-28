@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
     public class OPBillListDto
     {
         public string? PbillNo { get; set; }
         public DateTime BillDate { get; set; }
         public DateTime BillTime { get; set; }
-         public string? RegNo { get; set; }
+        public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? PatientAge { get; set; }
         public string? MobileNo { get; set; }

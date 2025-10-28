@@ -3,16 +3,9 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
-using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.DoctorPayout
@@ -25,7 +18,7 @@ namespace HIMS.Services.DoctorPayout
             _context = HIMSDbContext;
         }
 
-       
+
         public virtual async Task<IPagedList<DoctorPayListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorPayListDto>(model, "ps_rtrv_T_AdditionalDocPay_List");
@@ -60,7 +53,7 @@ namespace HIMS.Services.DoctorPayout
             }
 
             odal.ExecuteNonQuery("ps_insert_T_AdditionalDocPay_1", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity,  nameof(TAdditionalDocPay), (int)ObjTAdditionalDocPay.TranId,  Core.Domain.Logging.LogAction.Add,  CurrentUserId,  CurrentUserName);
+            await _context.LogProcedureExecution(entity, nameof(TAdditionalDocPay), (int)ObjTAdditionalDocPay.TranId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
         public virtual async Task UpdateAsync(List<AddCharge> ObjAddCharge, int CurrentUserId, string CurrentUserName)
         {
@@ -79,14 +72,14 @@ namespace HIMS.Services.DoctorPayout
                 }
 
 
-                odal.ExecuteNonQuery("ps_Update_ShrDoc_AddChar_1", CommandType.StoredProcedure, Aentity); 
+                odal.ExecuteNonQuery("ps_Update_ShrDoc_AddChar_1", CommandType.StoredProcedure, Aentity);
                 //await _context.LogProcedureExecution(Aentity, nameof(AddCharge), ObjAddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             }
 
         }
 
-      
+
         public virtual async Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -115,7 +108,7 @@ namespace HIMS.Services.DoctorPayout
                     }
                 }
                 //Delete details table realted records
-               var lst = await _context.TDoctorPayoutProcessDetails.Where(x => x.DoctorPayoutId == ObjTDoctorPayoutProcessHeader.DoctorPayoutId).ToListAsync();
+                var lst = await _context.TDoctorPayoutProcessDetails.Where(x => x.DoctorPayoutId == ObjTDoctorPayoutProcessHeader.DoctorPayoutId).ToListAsync();
                 if (lst.Count > 0)
                 {
                     _context.TDoctorPayoutProcessDetails.RemoveRange(lst);

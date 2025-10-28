@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -86,7 +85,7 @@ namespace HIMS.API.Models.OutPatient
         }
     }
 
-   
+
 
     public class paymentsModel
     {
@@ -129,15 +128,15 @@ namespace HIMS.API.Models.OutPatient
     {
         public paymentsModelValidator()
         {
-              RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
         }
     }
-  
-    
+
+
 
     public class IPBillModel
     {
-      
+
         public AddChargeuModel? AddChargeM { get; set; }
         public IPBilllingModel? IPBillling { get; set; }
         public List<BillingDetailsModel>? BillingDetails { get; set; }

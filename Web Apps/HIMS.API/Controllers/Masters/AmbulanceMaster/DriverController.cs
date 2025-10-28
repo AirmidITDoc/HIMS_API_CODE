@@ -3,7 +3,6 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -52,8 +51,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             //model.IsActive = true;
             if (obj.DriverId == 0)
             {
-                //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -63,7 +62,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "CityMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "CityMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DriverModel obj)
         {
             MDriverMaster model = obj.MapTo<MDriverMaster>();
@@ -71,8 +70,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -85,9 +84,9 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             MDriverMaster model = await _repository.GetById(x => x.DriverId == Id);
             if ((model?.DriverId ?? 0) > 0)
             {
-                //model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.IsActive = false;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

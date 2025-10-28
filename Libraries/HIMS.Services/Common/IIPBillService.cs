@@ -1,12 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Common
 {
@@ -28,12 +22,12 @@ namespace HIMS.Services.Common
         Task<IPagedList<PackagedetListDto>> Retrivepackagedetaillist(GridRequestModel objGrid);
 
 
-        Task InsertAsync(AddCharge objAddCharge,List<AddCharge> objAddCharges, int UserId, string Username);
+        Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
         void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
-        void IPbillSp(Bill ObjBill, List <BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,Payment Objpayment,Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader ,int UserId, string Username);
-        void IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission,  Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
+        void IPbillSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
+        void IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, int CurrentUserId, string CurrentUserName);
-        void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails,  Payment Objpayment, int UserId, string Username);
+        void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, int UserId, string Username);
         void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
 
         void IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
@@ -45,7 +39,7 @@ namespace HIMS.Services.Common
         void InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
         void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 
-        void IPbillSp(Bill ObjBill,  int UserId, string Username);
+        void IPbillSp(Bill ObjBill, int UserId, string Username);
 
     }
 }

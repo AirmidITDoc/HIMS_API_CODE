@@ -1,6 +1,4 @@
-﻿using System.Drawing.Printing;
-using FluentValidation;
-using HIMS.API.Models.IPPatient;
+﻿using FluentValidation;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -48,73 +46,73 @@ namespace HIMS.API.Models.OutPatient
 
 
     }
-        public class RTPrescriptionModelValidator : AbstractValidator<TPrescriptionModel>
+    public class RTPrescriptionModelValidator : AbstractValidator<TPrescriptionModel>
+    {
+        public RTPrescriptionModelValidator()
         {
-            public RTPrescriptionModelValidator()
-            {
-                RuleFor(x => x.OpdIpdIp).NotNull().NotEmpty().WithMessage("OpdIpdIp is required");
-                RuleFor(x => x.OpdIpdType).NotNull().NotEmpty().WithMessage("OpdIpdType is required");
-                RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
-                RuleFor(x => x.GenericId).NotNull().NotEmpty().WithMessage("GenericId is required");
+            RuleFor(x => x.OpdIpdIp).NotNull().NotEmpty().WithMessage("OpdIpdIp is required");
+            RuleFor(x => x.OpdIpdType).NotNull().NotEmpty().WithMessage("OpdIpdType is required");
+            RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            RuleFor(x => x.GenericId).NotNull().NotEmpty().WithMessage("GenericId is required");
 
-            }
         }
+    }
     public class VisitFollowupDateUpdate
     {
-        public long VisitId {  get; set; }
+        public long VisitId { get; set; }
         public DateTime FollowupDate { get; set; }
 
     }
-        public class TOPRequestListModel
-        {
+    public class TOPRequestListModel
+    {
 
-            public long? OpIpId { get; set; }
-            public long? ServiceId { get; set; }
-        }
-        public class TOPRequestListModelValidator : AbstractValidator<TOPRequestListModel>
+        public long? OpIpId { get; set; }
+        public long? ServiceId { get; set; }
+    }
+    public class TOPRequestListModelValidator : AbstractValidator<TOPRequestListModel>
+    {
+        public TOPRequestListModelValidator()
         {
-            public TOPRequestListModelValidator()
-            {
-                RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
+            RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
 
-
-            }
-        }
-        public class MOPCasepaperDignosisMasterModel
-        {
-
-            public long? VisitId { get; set; }
-            public string DescriptionType { get; set; }
-            public string DescriptionName { get; set; }
-        }
-        public class MOPCasepaperDignosisMasterModelValidator : AbstractValidator<MOPCasepaperDignosisMasterModel>
-        {
-            public MOPCasepaperDignosisMasterModelValidator()
-            {
-                RuleFor(x => x.DescriptionType).NotNull().NotEmpty().WithMessage("DescriptionType is required");
-                RuleFor(x => x.DescriptionName).NotNull().NotEmpty().WithMessage("DescriptionName is required");
-
-            }
-        }
-
-        public class ModelTPrescription
-        {
-            public List<TPrescriptionModel> TPrescription { get; set; }
-            public VisitFollowupDateUpdate VisitDetails { get; set; }
-            public List<TOPRequestListModel> TOPRequestList { get; set; }
-            public List<MOPCasepaperDignosisMasterModel> MOPCasepaperDignosisMaster { get; set; }
-        }
-        public class UpdatePrescriptionModel
-        {
-            public long PrecriptionId { get; set; }
-            public long DoseId { get; set; }
 
         }
-        public class UpdatePrescription
+    }
+    public class MOPCasepaperDignosisMasterModel
+    {
+
+        public long? VisitId { get; set; }
+        public string DescriptionType { get; set; }
+        public string DescriptionName { get; set; }
+    }
+    public class MOPCasepaperDignosisMasterModelValidator : AbstractValidator<MOPCasepaperDignosisMasterModel>
+    {
+        public MOPCasepaperDignosisMasterModelValidator()
         {
-            public long PrecriptionId { get; set; }
-            public long GenericId { get; set; }
+            RuleFor(x => x.DescriptionType).NotNull().NotEmpty().WithMessage("DescriptionType is required");
+            RuleFor(x => x.DescriptionName).NotNull().NotEmpty().WithMessage("DescriptionName is required");
 
         }
+    }
+
+    public class ModelTPrescription
+    {
+        public List<TPrescriptionModel> TPrescription { get; set; }
+        public VisitFollowupDateUpdate VisitDetails { get; set; }
+        public List<TOPRequestListModel> TOPRequestList { get; set; }
+        public List<MOPCasepaperDignosisMasterModel> MOPCasepaperDignosisMaster { get; set; }
+    }
+    public class UpdatePrescriptionModel
+    {
+        public long PrecriptionId { get; set; }
+        public long DoseId { get; set; }
 
     }
+    public class UpdatePrescription
+    {
+        public long PrecriptionId { get; set; }
+        public long GenericId { get; set; }
+
+    }
+
+}

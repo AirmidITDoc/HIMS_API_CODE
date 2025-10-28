@@ -1,15 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using HIMS.Services.IPPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core;
+using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.OTManagement
 {

@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using HIMS.Data.Models;
-
-namespace HIMS.API.Models.Pharmacy
+﻿namespace HIMS.API.Models.Pharmacy
 {
     public class PaymentModel
     {

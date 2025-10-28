@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class DischargeDateListDto
+    public class DischargeDateListDto
     {
         public long AdmissionID { get; set; }
         public long RegID { get; set; }
@@ -41,8 +35,8 @@ namespace HIMS.Data.DTO.IPPatient
         public string DischDateTime { get; set; }
         public long TariffId { get; set; }
         public long ClassId { get; set; }
-        public string?TariffName { get; set; }
-        public string?ClassName { get; set; }
+        public string? TariffName { get; set; }
+        public string? ClassName { get; set; }
         public string? MobileNo { get; set; }
         public long CityId { get; set; }
         public long ReligionId { get; set; }

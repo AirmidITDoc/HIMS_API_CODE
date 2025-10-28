@@ -1,16 +1,7 @@
 ﻿using LinqToDB;
 using LinqToDB.Data;
-using LinqToDB.Mapping;
-using LinqToDB.Tools;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using HIMS.Core;
-using HIMS.Core.Infrastructure;
 
 
 namespace HIMS.Data.DataProviders

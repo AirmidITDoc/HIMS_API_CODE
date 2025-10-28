@@ -2,33 +2,16 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Hubs;
-using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Nursing;
-using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pharmacy;
 using HIMS.API.Utility;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
-using HIMS.Services;
 using HIMS.Services.IPPatient;
-using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
-using HIMS.Services.OPPatient;
-using HIMS.Services.OutPatient;
-using HIMS.Services.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System.Security;
-using System.Text.Json;
-using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -99,7 +82,7 @@ namespace HIMS.API.Controllers.NursingStation
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
             return Ok(LabRequestDetailsListDto.ToGridResponse(objGrid, "LabRequestDetailsList "));
         }
-    
+
 
         [HttpPost("LabRequestInsert")]
         //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]
@@ -112,7 +95,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ReqTime = Convert.ToDateTime(obj.ReqTime);
                 model.IsAddedBy = CurrentUserId;
                 await _ILabRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-                
+
                 //get patient details
                 var objPatient = await _admissionService.PatientByAdmissionId(model.OpIpId.Value);
 

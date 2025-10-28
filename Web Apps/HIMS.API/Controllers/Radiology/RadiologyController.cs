@@ -3,12 +3,9 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using HIMS.Services.Radiology;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +22,7 @@ namespace HIMS.API.Controllers.Radiology
             _RadilogyService = repository;
         }
 
-       
+
         [HttpPost("RadiologyList")]
         //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)

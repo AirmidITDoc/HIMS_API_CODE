@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Administration
 {
@@ -15,8 +14,8 @@ namespace HIMS.API.Models.Administration
     {
         public AdmissionModellValidator()
         {
-               RuleFor(x => x.AdmissionDate).NotNull().NotEmpty().WithMessage("AdmissionDate id is required");
-               RuleFor(x => x.AdmissionTime).NotNull().NotEmpty().WithMessage("AdmissionTime  is required");
+            RuleFor(x => x.AdmissionDate).NotNull().NotEmpty().WithMessage("AdmissionDate id is required");
+            RuleFor(x => x.AdmissionTime).NotNull().NotEmpty().WithMessage("AdmissionTime  is required");
         }
     }
 }

@@ -1,15 +1,8 @@
-﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.Extensions;
-using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HIMS.Data.Models;
 
 namespace HIMS.Services.Masters
 {
-    public class   CityMasterServie : ICityMasterServie
+    public class CityMasterServie : ICityMasterServie
     {
         private readonly Data.Models.HIMSDbContext _context;
         public CityMasterServie(HIMSDbContext HIMSDbContext)

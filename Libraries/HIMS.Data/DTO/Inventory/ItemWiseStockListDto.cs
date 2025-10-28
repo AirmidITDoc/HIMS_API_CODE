@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class ItemWiseStockListDto
     {
@@ -20,7 +14,7 @@ namespace HIMS.Data.DTO.Inventory
         public long BarCodeSeqNo { get; set; }
         public long BatchEdit { get; set; }
         public long ExpDateEdit { get; set; }
-        public string ConversionFactor { get; set; }      
+        public string ConversionFactor { get; set; }
         public string? ItemName { get; set; }
         public float? Cgstper { get; set; }
         public float? Sgstper { get; set; }

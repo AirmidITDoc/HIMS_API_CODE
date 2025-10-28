@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Masters
 {
@@ -25,7 +24,7 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.SurgeryCategoryId).NotNull().NotEmpty().WithMessage("SurgeryCategoryId is required");
             RuleFor(x => x.SurgeryName).NotNull().NotEmpty().WithMessage("SurgeryName  is required");
             RuleFor(x => x.IsCancelledDateTime).NotNull().NotEmpty().WithMessage(" IsCancelledDateTime required");
-           
+
 
         }
     }

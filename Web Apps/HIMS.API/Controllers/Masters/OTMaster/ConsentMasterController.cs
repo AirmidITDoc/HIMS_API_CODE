@@ -1,20 +1,20 @@
-﻿using HIMS.Api.Controllers;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.Core;
-using Asp.Versioning;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class ConsentMasterController :BaseController
+    public class ConsentMasterController : BaseController
     {
         private readonly IGenericService<MConsentMaster> _repository;
 

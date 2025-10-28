@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class SubTpaCompanyListDto
+    public class SubTpaCompanyListDto
     {
         public long SubCompanyId { get; set; }
         public long? CompanyId { get; set; }
         public string MainCompanyName { get; set; }
-        public long? CompTypeId { get; set; } 
+        public long? CompTypeId { get; set; }
         public string TypeName { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyShortName { get; set; }

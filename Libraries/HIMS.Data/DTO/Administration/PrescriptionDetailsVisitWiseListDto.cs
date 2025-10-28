@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class PrescriptionDetailsVisitWiseListDto
     {
-        public long PrecriptionId {  get; set; }
+        public long PrecriptionId { get; set; }
         public long? OpdIpdIp { get; set; }
         public long ClassID { get; set; }
         public string? ClassName { get; set; }
@@ -50,4 +44,3 @@ namespace HIMS.Data.DTO.Administration
         public string? BloodGroup { get; set; }
     }
 }
-		

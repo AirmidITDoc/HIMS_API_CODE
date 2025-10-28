@@ -3,17 +3,12 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
-using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
-using HIMS.Services.Masters;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 
 namespace HIMS.API.Controllers.Administration
 {

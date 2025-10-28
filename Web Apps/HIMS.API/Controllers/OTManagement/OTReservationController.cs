@@ -1,20 +1,15 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Services;
-using HIMS.Services.IPPatient;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.IPPatient;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.Data.Models;
+using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
+using HIMS.Services;
+using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using HIMS.API.Models.OTManagement;
-using Asp.Versioning;
 
 namespace HIMS.API.Controllers.IPPatient
 {
@@ -52,15 +47,15 @@ namespace HIMS.API.Controllers.IPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-               
+
                 await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-     
-         [HttpPut("Edit/{id:int}")]
+
+        [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTReservationModel obj)
         {
@@ -71,7 +66,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
                 model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
-              
+
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
 

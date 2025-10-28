@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class LabOrRadRequestListDto
+    public class LabOrRadRequestListDto
     {
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
@@ -24,4 +18,3 @@ namespace HIMS.Data.DTO.IPPatient
 
     }
 }
-    

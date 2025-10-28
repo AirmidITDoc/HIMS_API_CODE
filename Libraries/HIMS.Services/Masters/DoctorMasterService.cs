@@ -70,7 +70,7 @@ namespace HIMS.Services.Masters
 
             return data;
         }
-     
+
         //public virtual async Task<List<BedmasterDto>> GetBedmaster(int RoomId)
         //{
         //    return await _context.Bedmasters
@@ -152,7 +152,7 @@ namespace HIMS.Services.Masters
                 }
                 _context.MDoctorDepartmentDets.AddRange(objDoctorMaster.MDoctorDepartmentDets);
                 await _context.SaveChangesAsync();
-              
+
             }
             catch (Exception)
             {
@@ -184,7 +184,7 @@ namespace HIMS.Services.Masters
                 scope.Complete();
             }
         }
-      
+
 
         public virtual async Task UpdateAsync(DoctorMaster objDoctorMaster, int UserId, string Username)
         {
@@ -250,7 +250,7 @@ namespace HIMS.Services.Masters
         {
             return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.IsConsultant.Value && y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
         }
-     
+
         public async Task<List<DoctorMaster>> GetDoctorsByDocType(int DocTypeId)
         {
             return await _context.DoctorMasters.Where(x => x.IsConsultant == true && x.DoctorTypeId == DocTypeId).ToListAsync();
@@ -262,7 +262,7 @@ namespace HIMS.Services.Masters
         //}
 
 
-       
+
 
         public async Task<List<DoctorMaster>> GetDoctorWithDepartment()
         {
@@ -290,6 +290,6 @@ namespace HIMS.Services.Masters
         {
             return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-       
+
     }
 }

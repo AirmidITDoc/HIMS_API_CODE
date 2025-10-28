@@ -9,7 +9,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? DepartmentId { get; set; }
         public string? ConsentName { get; set; }
         public string? ConsentDesc { get; set; }
-       
+
 
     }
     public class ConsentMasterModelValidator : AbstractValidator<ConsentMasterModel>

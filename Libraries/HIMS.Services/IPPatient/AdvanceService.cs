@@ -115,7 +115,7 @@ namespace HIMS.Services.IPPatient
                 if (!PayEntity.Contains(rProperty))
                     PAdvanceEntity.Remove(rProperty);
             }
-             odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, PAdvanceEntity);
+            odal.ExecuteNonQuery("ps_m_insert_Payment_Advance_1", CommandType.StoredProcedure, PAdvanceEntity);
             await _context.LogProcedureExecution(PAdvanceEntity, nameof(Payment), objAdvanceHeader.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }

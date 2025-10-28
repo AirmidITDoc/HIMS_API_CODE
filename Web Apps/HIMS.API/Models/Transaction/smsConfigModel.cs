@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Transaction
 {

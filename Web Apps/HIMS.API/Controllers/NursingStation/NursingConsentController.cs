@@ -3,17 +3,10 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.Nursing;
-using HIMS.API.Models.OutPatient;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
-using HIMS.Services.Inventory;
 using HIMS.Services.Nursing;
 //using HIMS.Services.NursingStation;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +16,13 @@ namespace HIMS.API.Controllers.NursingStation
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class NursingConsentController: BaseController
+    public class NursingConsentController : BaseController
     {
         private readonly INursingConsentService _NursingConsentService;
 
         private readonly IGenericService<TConsentInformation> _repository;
-      
-        public NursingConsentController(INursingConsentService repository,  IGenericService<TConsentInformation> repository4)
+
+        public NursingConsentController(INursingConsentService repository, IGenericService<TConsentInformation> repository4)
         {
             _repository = repository4;
             _NursingConsentService = repository;
@@ -39,7 +32,7 @@ namespace HIMS.API.Controllers.NursingStation
         public async Task<ApiResponse> GetMConsentMaster(int DeptId)
         {
             var resultList = await _NursingConsentService.GetConsent(DeptId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"ConsentMasterList.", resultList.Select(x => new
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentMasterList.", resultList.Select(x => new
             {
                 x.ConsentId,
                 x.ConsentName,
@@ -48,7 +41,7 @@ namespace HIMS.API.Controllers.NursingStation
             }));
         }
 
-         [HttpGet("DeptConsentList")]
+        [HttpGet("DeptConsentList")]
         //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {

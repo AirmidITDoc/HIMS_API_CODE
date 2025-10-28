@@ -1,15 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Masters
 {
-    public partial  interface IMenuMasterService
+    public partial interface IMenuMasterService
     {
         void InsertSP(MenuMaster objMenuMaster, int UserId, string Username);
         void UpdateSP(MenuMaster objMenuMaster, int UserId, string Username);

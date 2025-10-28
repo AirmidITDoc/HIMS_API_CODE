@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -8,14 +7,14 @@ namespace HIMS.API.Models.OPPatient
 
         public long BillNo { get; set; }
         public DateTime? BillDate { get; set; }
-        
+
     }
     public class DoctorSharePerCalculationModelValidator : AbstractValidator<DoctorSharePerCalculationModel>
     {
         public DoctorSharePerCalculationModelValidator()
         {
             RuleFor(x => x.BillDate).NotNull().NotEmpty().WithMessage("BillDate is required");
-            
+
         }
     }
 }

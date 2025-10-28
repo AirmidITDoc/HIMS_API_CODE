@@ -1,16 +1,8 @@
 ﻿using HIMS.Data.Models;
-using LinqToDB;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HIMS.Services.Nursing
 {
-    public  class MPrescriptionService : IMPrescriptionService
+    public class MPrescriptionService : IMPrescriptionService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public MPrescriptionService(HIMSDbContext HIMSDbContext)
@@ -27,6 +19,6 @@ namespace HIMS.Services.Nursing
         //        scope.Complete();
         //    }
         //}
-        
+
     }
 }

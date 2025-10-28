@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.IPPatient;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {

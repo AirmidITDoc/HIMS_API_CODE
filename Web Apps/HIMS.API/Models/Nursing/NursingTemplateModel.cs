@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Nursing
 {
@@ -16,7 +15,7 @@ namespace HIMS.API.Models.Nursing
         {
             RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("TemplateDesc is required");
             RuleFor(x => x.NursTempName).NotNull().NotEmpty().WithMessage("NursTempName is required");
-          
+
         }
     }
 }

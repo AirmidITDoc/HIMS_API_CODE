@@ -2,17 +2,12 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Common;
 using HIMS.API.Models.IPPatient;
-using HIMS.API.Models.OPPatient;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Common;
-using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
-using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,8 +26,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IIPInterimBillSerive _iPInterimBillSerive;
 
         public BillingController(IOPAddchargesService repository, IOPBillingService repository1, IOPSettlementCreditService repository2, IIPBillService iPBIllwithpay, IIPBILLCreditService iPBILLCreditService,
-            IIPInterimBillSerive iPInterimBill,IIPDraftBillSerive iPDraftBill)
-            {
+            IIPInterimBillSerive iPInterimBill, IIPDraftBillSerive iPDraftBill)
+        {
             _IOPAddchargesService = repository;
             _oPBillingService = repository1;
             _IOPCreditBillService = repository2;
@@ -40,7 +35,7 @@ namespace HIMS.API.Controllers.Common
             _iPDraftBillSerive = iPDraftBill;
             _iPInterimBillSerive = iPInterimBill;
         }
-        
+
 
         [HttpPost("BrowseIPBillList")]
         public async Task<IActionResult> GetIPBillListAsync1(GridRequestModel objGrid)

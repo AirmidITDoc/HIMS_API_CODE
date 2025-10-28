@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Masters;
 
 namespace HIMS.API.Models.Inventory.Masters
 {
@@ -82,7 +81,7 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.Otcharges).NotNull().NotEmpty().WithMessage("Otcharges Type is required");
 
         }
-        public class   SystemConfigUpdate
+        public class SystemConfigUpdate
         {
             public long SystemConfigId { get; set; }
             public long? SystemCategoryId { get; set; }

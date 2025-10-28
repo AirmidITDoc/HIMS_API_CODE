@@ -1,9 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -11,12 +8,7 @@ using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -84,7 +76,7 @@ namespace HIMS.Services.Inventory
             //}
 
 
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // 1. Attach the entity without marking everything as modified
                 _context.Attach(objService);

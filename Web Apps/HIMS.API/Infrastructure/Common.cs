@@ -1,9 +1,6 @@
+using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Infrastructure
 {

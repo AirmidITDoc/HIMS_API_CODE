@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Nursing
+﻿namespace HIMS.Data.DTO.Nursing
 {
     public class NursingNoteListDto
     {
@@ -17,10 +11,10 @@ namespace HIMS.Data.DTO.Nursing
         public string VTDate { get; set; }
         public string PatientName { get; set; }
         public string GenderName { get; set; }
-        public string  Age { get; set; }
+        public string Age { get; set; }
         public string? RegNo { get; set; }
         public string? UserName { get; set; }
 
-        
+
     }
 }

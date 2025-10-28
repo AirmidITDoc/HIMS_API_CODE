@@ -2,10 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OutPatient;
-using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -54,16 +51,16 @@ namespace HIMS.API.Controllers.OPPatient
         {
             List<Payment> model = obj.OPCreditPayment.MapTo<List<Payment>>();
             List<Bill> BillUpdateModel = obj.BillUpdate.MapTo<List<Bill>>();
-            if (model.Count> 0)
+            if (model.Count > 0)
 
             {
-                
+
                 await _OPSettlementService.InsertSettlementMultiple(model, BillUpdateModel, CurrentUserId, CurrentUserName);
 
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, " Record Added successfully.", model.FirstOrDefault()?.PaymentId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Added successfully.", model.FirstOrDefault()?.PaymentId);
         }
 
     }

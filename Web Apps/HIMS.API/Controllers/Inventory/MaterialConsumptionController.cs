@@ -3,7 +3,6 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
@@ -43,7 +42,7 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeader obj)
         {
             TMaterialConsumptionHeader model = obj.MaterialConsumption.MapTo<TMaterialConsumptionHeader>();
-            List<TCurrentStock>ObjCurrentStock = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
+            List<TCurrentStock> ObjCurrentStock = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
             if (obj.MaterialConsumption.MaterialConsumptionId == 0)
             {
 
@@ -52,9 +51,9 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Material Consumption  added successfully.",model.MaterialConsumptionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Material Consumption  added successfully.", model.MaterialConsumptionId);
         }
-        
+
         //[HttpPut("Edit/{id:int}")]
         ////  [Permission(PageCode = "TestMaster", Permission = PagePermission.Edit)]
         //public async Task<ApiResponse> Edit(MaterialConsumptionHeaderModel obj)

@@ -3,10 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.API.Models.Pharmacy;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.GRN;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Purchase;
@@ -27,7 +24,7 @@ namespace HIMS.API.Controllers.Inventory
         {
             _SupplierPaymentStatusService = repository;
         }
-        
+
         [HttpPost("supplierPaymentList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)

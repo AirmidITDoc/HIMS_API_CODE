@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.OTManagement
 {
@@ -43,7 +42,7 @@ namespace HIMS.API.Models.OTManagement
             RuleFor(x => x.EmgDate).NotNull().NotEmpty().WithMessage("EmgDate is required");
             RuleFor(x => x.EmgTime).NotNull().NotEmpty().WithMessage("EmgTime  is required");
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage(" FirstName required");
-          
+
 
         }
     }
@@ -133,8 +132,8 @@ namespace HIMS.API.Models.OTManagement
 
     public class UpdateAddChargesFromEmergency
     {
-        public long EmgId {  get; set; } 
-        public long NewAdmissionId {  get; set; }
+        public long EmgId { get; set; }
+        public long NewAdmissionId { get; set; }
 
     }
 }

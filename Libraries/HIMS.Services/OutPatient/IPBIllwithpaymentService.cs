@@ -15,7 +15,7 @@ namespace HIMS.Services.OutPatient
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill,int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
             try
             {
@@ -35,32 +35,32 @@ namespace HIMS.Services.OutPatient
                     //foreach (var objItem1 in objBill.Bil)
                     //{
 
-                        //Bill detail
-                        DatabaseHelper odal1 = new();
-                        string[] rEntity1 = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "TotalAdvanceAmount", "AddedBy", "BillTime", "BillYear", "PrintBillNo", "AddCharges", "Bill", "Payments" };
-                        var entity1 = objBill.ToDictionary();
-                        foreach (var rProperty in rEntity)
-                        {
-                            entity1.Remove(rProperty);
-                        }
-                        odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, entity1);
-                        
-                       
+                    //Bill detail
+                    DatabaseHelper odal1 = new();
+                    string[] rEntity1 = { "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "TotalAdvanceAmount", "AddedBy", "BillTime", "BillYear", "PrintBillNo", "AddCharges", "Bill", "Payments" };
+                    var entity1 = objBill.ToDictionary();
+                    foreach (var rProperty in rEntity)
+                    {
+                        entity1.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, entity1);
 
 
-                        // m_update_AdvanceDetail_1
-                        //foreach (var a in objBill.IPAdvanceDetailUpdate)
-                        //{
-                        //    DatabaseHelper odal = new();
-                        //    string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
-                        //    var entity = objBill.ToDictionary();
-                        //    foreach (var rProperty in rEntity)
-                        //    {
-                        //        entity.Remove(rProperty);
-                        //    }
-                        //    odal.ExecuteNonQuery("m_update_AdvanceDetail_1", CommandType.StoredProcedure, entity);
 
-                        //}
+
+                    // m_update_AdvanceDetail_1
+                    //foreach (var a in objBill.IPAdvanceDetailUpdate)
+                    //{
+                    //    DatabaseHelper odal = new();
+                    //    string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "CashCounterId", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "BillDetails", "Payments" };
+                    //    var entity = objBill.ToDictionary();
+                    //    foreach (var rProperty in rEntity)
+                    //    {
+                    //        entity.Remove(rProperty);
+                    //    }
+                    //    odal.ExecuteNonQuery("m_update_AdvanceDetail_1", CommandType.StoredProcedure, entity);
+
+                    //}
 
                     //}
 

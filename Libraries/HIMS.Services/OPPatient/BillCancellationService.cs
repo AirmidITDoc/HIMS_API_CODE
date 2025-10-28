@@ -2,13 +2,7 @@
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.OPPatient
 {
@@ -19,11 +13,11 @@ namespace HIMS.Services.OPPatient
         {
             _context = HIMSDbContext;
         }
-        
+
         public virtual async Task UpdateAsyncOp(Bill objOpBillCancellation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "BillNo"};
+            string[] AEntity = { "BillNo" };
             var entity = objOpBillCancellation.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())

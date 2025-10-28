@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WkHtmlToPdfDotNet;
+﻿using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.Utilities
 {
     public interface IPdfUtility
     {
-     
+
         Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4);
         Tuple<byte[], string> GeneratePdfFromHtmlA5(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A5);// Default to A5 size
 

@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.API.Models.Masters;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -65,32 +62,32 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.MailId).NotNull().NotEmpty().WithMessage("MailId Type is required");
             RuleFor(x => x.MailDomain).NotNull().NotEmpty().WithMessage("MailDomain Type is required");
             RuleFor(x => x.LoginStatus).NotNull().NotEmpty().WithMessage("LoginStatus Type is required");
-           
+
         }
     }
-    public  class LoginAccessDetailModel
+    public class LoginAccessDetailModel
     {
         public long LoginAccessId { get; set; }
         public long? LoginId { get; set; }
         public long? AccessValueId { get; set; }
         public bool? AccessValue { get; set; }
         public string? AccessInputValue { get; set; }
-       
+
 
     }
-    public  class LoginUnitDetailModel
+    public class LoginUnitDetailModel
     {
         public long LoginUnitDetId { get; set; }
         public long? LoginId { get; set; }
         public long? UnitId { get; set; }
-      
+
     }
-    public  class LoginStoreDetailModel
+    public class LoginStoreDetailModel
     {
         public long LoginStoreDetId { get; set; }
         public long? LoginId { get; set; }
         public long? StoreId { get; set; }
-      
+
 
     }
     public class loginCancel
@@ -101,7 +98,7 @@ namespace HIMS.API.Models.Inventory
     public class ChangePassword
     {
         public int UserId { get; set; }
-        public string UserName { get; set; } 
+        public string UserName { get; set; }
         public string Password { get; set; }
         public DateTime? LastPasswordChangedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }

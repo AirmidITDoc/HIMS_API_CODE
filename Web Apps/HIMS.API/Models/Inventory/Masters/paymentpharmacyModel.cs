@@ -44,7 +44,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? AddBy { get; set; }
     }
     public class paymentpharmacyModelValidator : AbstractValidator<paymentpharmacyModel>
-    
+
     {
         public paymentpharmacyModelValidator()
         {
@@ -52,10 +52,10 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.ReceiptNo).NotNull().NotEmpty().WithMessage("ReceiptNo  is required");
             RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate  is required");
             RuleFor(x => x.PaymentTime).NotNull().NotEmpty().WithMessage("PaymentTime  is required");
-           
-          
+
+
 
         }
     }
-   
+
 }

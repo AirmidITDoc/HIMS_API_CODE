@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Pathology
+﻿namespace HIMS.Data.DTO.Pathology
 {
-    public  class PathTestListDto
+    public class PathTestListDto
     {
         public long TestId { get; set; }
         public string? TestName { get; set; }

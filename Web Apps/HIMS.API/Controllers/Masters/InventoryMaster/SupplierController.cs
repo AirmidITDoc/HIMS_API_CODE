@@ -3,14 +3,11 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using HIMS.Services.Common;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 

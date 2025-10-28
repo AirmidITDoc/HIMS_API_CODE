@@ -1,13 +1,13 @@
-﻿using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
         }
-       
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)

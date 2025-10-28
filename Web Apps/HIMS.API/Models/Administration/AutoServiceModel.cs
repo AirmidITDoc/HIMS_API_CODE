@@ -1,7 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Nursing;
-using System.ComponentModel.DataAnnotations;
 
 namespace HIMS.API.Models.Administration
 {
@@ -10,7 +7,7 @@ namespace HIMS.API.Models.Administration
         public long SysId { get; set; }
         public long? ServiceId { get; set; }
         public bool? IsAutoBedCharges { get; set; }
-    
+
     }
 
     public class AutoServiceModelValidator : AbstractValidator<AutoServiceModel>

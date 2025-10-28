@@ -3,17 +3,12 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
-using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Inventory.PathTestDetailModelModelValidator;
 
 namespace HIMS.API.Controllers.Login
 {
@@ -109,7 +104,7 @@ namespace HIMS.API.Controllers.Login
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User added successfully.");
         }
 
-       
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
@@ -181,7 +176,7 @@ namespace HIMS.API.Controllers.Login
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Canceled successfully.");
         }
-       
+
         [HttpPost("Updatepassword")]
         //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdatepassAsync(ChangePassword obj)
@@ -194,7 +189,7 @@ namespace HIMS.API.Controllers.Login
             LoginManager model = new()
             {
                 UserId = obj.UserId,
-                UserName = obj.UserName,       
+                UserName = obj.UserName,
                 Password = obj.Password,
                 //LastPasswordChangedDate = obj.LastPasswordChangedDate,
                 //LastLoginDate = obj.LastLoginDate,

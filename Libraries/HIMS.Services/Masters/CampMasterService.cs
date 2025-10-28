@@ -1,12 +1,7 @@
-﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data;
-using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Master;
+﻿using HIMS.Data;
 using HIMS.Data.Models;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 using System.Transactions;
 
 namespace HIMS.Services.Masters
@@ -63,7 +58,7 @@ namespace HIMS.Services.Masters
                 scope.Complete();
             }
         }
-      
+
 
     }
 }

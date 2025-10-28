@@ -1,20 +1,12 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.Administration
 {
@@ -71,7 +63,7 @@ namespace HIMS.Services.Administration
             var existingPayment = await _context.PaymentPharmacies.FindAsync(objPaymentPharmacy.PaymentId);
             if (existingPayment == null)
                 throw new Exception("Payment record not found.");
-            
+
             // Copy updated values (except null ones)
             _context.Entry(existingPayment).CurrentValues.SetValues(objPaymentPharmacy);
 
@@ -158,4 +150,3 @@ namespace HIMS.Services.Administration
         }
     }
 }
- 

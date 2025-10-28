@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -18,7 +17,7 @@ namespace HIMS.API.Models.OutPatient
         public PrescriptionOPTemplateModelValidator()
         {
             RuleFor(x => x.PresTemplateName).NotNull().NotEmpty().WithMessage("PresTemplateName is required");
-           
+
         }
     }
     public class PresTemplateDModel
@@ -48,7 +47,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class PreTemplateModel
     {
-        public PrescriptionOPTemplateModel PrescriptionOPTemplate {  get; set; }
+        public PrescriptionOPTemplateModel PrescriptionOPTemplate { get; set; }
         public List<PresTemplateDModel> PresTemplate { get; set; }
 
     }

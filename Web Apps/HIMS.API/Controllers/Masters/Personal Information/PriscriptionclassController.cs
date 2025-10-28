@@ -1,22 +1,22 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
-using HIMS.Data.Models;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
-      //SHILPA ///
-        [Route("api/v{version:apiVersion}/[controller]")]
-        [ApiController]
-        [ApiVersion("1")]   
-        public class PriscriptionclassController : BaseController
-        {
+    //SHILPA ///
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
+    public class PriscriptionclassController : BaseController
+    {
         private readonly IGenericService<MClassMaster> _repository;
         public PriscriptionclassController(IGenericService<MClassMaster> repository)
         {

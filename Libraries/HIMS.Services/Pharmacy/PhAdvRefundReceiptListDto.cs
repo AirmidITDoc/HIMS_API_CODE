@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Services.Pharmacy
+﻿namespace HIMS.Services.Pharmacy
 {
-    public  class PhAdvRefundReceiptListDto
+    public class PhAdvRefundReceiptListDto
     {
-        
+
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
         public string? RegNo { get; set; }

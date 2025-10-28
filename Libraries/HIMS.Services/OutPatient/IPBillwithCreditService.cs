@@ -7,7 +7,7 @@ using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
-    public class IPBillwithCreditService:IIPBillwithCreditService
+    public class IPBillwithCreditService : IIPBillwithCreditService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public IPBillwithCreditService(HIMSDbContext HIMSDbContext)
@@ -67,7 +67,7 @@ namespace HIMS.Services.OutPatient
 
                     }
 
-                   
+
                     scope.Complete();
 
                 }

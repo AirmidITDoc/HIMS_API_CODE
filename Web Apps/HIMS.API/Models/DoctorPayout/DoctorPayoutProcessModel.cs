@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.DoctorPayout
 {
@@ -24,7 +23,7 @@ namespace HIMS.API.Models.DoctorPayout
             RuleFor(x => x.ProcessStartDate).NotNull().NotEmpty().WithMessage("ProcessStartDate is required");
             RuleFor(x => x.ProcessEndDate).NotNull().NotEmpty().WithMessage(" ProcessEndDate required");
             RuleFor(x => x.ProcessDate).NotNull().NotEmpty().WithMessage("ProcessDate is required");
-           
+
 
         }
     }
@@ -40,7 +39,7 @@ namespace HIMS.API.Models.DoctorPayout
         public DoctorPayoutProcessDetailsModelValidator()
         {
             RuleFor(x => x.DoctorId).NotNull().NotEmpty().WithMessage("DoctorId is required");
-           
+
 
         }
     }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using HIMS.Core.Utilities;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using HIMS.Core.Utilities;
 
 namespace HIMS.Services.Utilities
 {

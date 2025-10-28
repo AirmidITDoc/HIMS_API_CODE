@@ -1,8 +1,4 @@
-﻿using HIMS.Data.Models;
-using System.ComponentModel.Design;
-using System.Net;
-
-namespace HIMS.Data.DTO.OPPatient
+﻿namespace HIMS.Data.DTO.OPPatient
 {
     public class VisitDetailListDto
     {
@@ -68,7 +64,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string CampName { get; set; }
         public bool? IsConvertRequestForIp { get; set; }
         public long EMRReady { get; set; }
-        public long TokenNo { get; set; } 
+        public long TokenNo { get; set; }
 
 
 

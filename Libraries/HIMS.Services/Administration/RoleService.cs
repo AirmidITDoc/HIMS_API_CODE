@@ -1,17 +1,8 @@
-﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.OPPatient;
+﻿using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.User;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HIMS.Services.Administration
 {

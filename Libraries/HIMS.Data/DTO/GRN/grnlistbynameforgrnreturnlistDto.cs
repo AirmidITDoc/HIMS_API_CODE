@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.GRN
+﻿namespace HIMS.Data.DTO.GRN
 {
     public class grnlistbynameforgrnreturnlistDto
     {
@@ -17,6 +11,6 @@ namespace HIMS.Data.DTO.GRN
         public decimal? NetAmount { get; set; }
         public bool? Cash_CreditType { get; set; }
         public long? StoreId { get; set; }
-       
+
     }
 }

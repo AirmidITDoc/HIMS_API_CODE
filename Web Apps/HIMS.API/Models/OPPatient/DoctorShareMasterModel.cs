@@ -12,7 +12,7 @@ namespace HIMS.API.Models.OPPatient
         public decimal? ServicePercentage { get; set; }
         public decimal? ServiceAmount { get; set; }
         public long? ClassId { get; set; }
-       public long? ShrTypeSerOrGrp { get; set; }
+        public long? ShrTypeSerOrGrp { get; set; }
         public byte? OpIpType { get; set; }
     }
     public class DoctorShareMasterModelValidator : AbstractValidator<DoctorShareMasterModel>
@@ -23,6 +23,6 @@ namespace HIMS.API.Models.OPPatient
             RuleFor(x => x.ServiceId).NotNull().NotEmpty().WithMessage("ServiceId is required");
 
         }
-        
+
     }
 }

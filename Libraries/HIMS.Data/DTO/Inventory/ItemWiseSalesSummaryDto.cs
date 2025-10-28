@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
-    public  class ItemWiseSalesSummaryDto
+    public class ItemWiseSalesSummaryDto
     {
         public long ItemId { get; set; }
         public string ItemName { get; set; }

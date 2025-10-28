@@ -2,24 +2,15 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
-using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pharmacy;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
-using HIMS.Services.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -81,9 +72,9 @@ namespace HIMS.API.Controllers.OPPatient
         //  [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RegistrationModel obj)
         {
-            
+
             if (!string.IsNullOrWhiteSpace(obj.Photo))
-            obj.Photo = _FileUtility.SaveImageFromBase64(obj.Photo, "Persons\\Photo");
+                obj.Photo = _FileUtility.SaveImageFromBase64(obj.Photo, "Persons\\Photo");
             Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
@@ -121,14 +112,15 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IRegistrationService.SearchRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new { 
-                Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, 
-                Value = x.Id ,
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
+            {
+                Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+                Value = x.Id,
                 RegNo = x.RegNo,
                 MobileNo = x.MobileNo,
-                AgeYear = x.AgeYear ,
-                AgeMonth = x.AgeMonth ,
-                AgeDay = x.AgeDay ,
+                AgeYear = x.AgeYear,
+                AgeMonth = x.AgeMonth,
+                AgeDay = x.AgeDay,
                 PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
         }

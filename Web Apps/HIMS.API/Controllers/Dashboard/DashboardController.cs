@@ -1,13 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Api.Models.Common;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO;
-using HIMS.Data.Models;
-using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Dashboard

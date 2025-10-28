@@ -1,5 +1,4 @@
 using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -93,13 +92,13 @@ namespace HIMS.API.Models.OutPatient
     {
         public long? ChargesID { get; set; }
 
-       
+
     }
     public class AddChargessModelValidator : AbstractValidator<AddChargessModel>
     {
         public AddChargessModelValidator()
         {
-     //       RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            //       RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 
@@ -113,8 +112,8 @@ namespace HIMS.API.Models.OutPatient
     {
         public AddmissionModelValidator()
         {
-          //  RuleFor(x => x.AdmissionID).NotNull().NotEmpty().WithMessage("AdmissionID is required");
-        }   
+            //  RuleFor(x => x.AdmissionID).NotNull().NotEmpty().WithMessage("AdmissionID is required");
+        }
     }
 
     public class paymentModel
@@ -157,7 +156,7 @@ namespace HIMS.API.Models.OutPatient
     {
         public paymentModelValidator()
         {
-              RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
         }
     }
     public class BillMModel
@@ -206,7 +205,7 @@ namespace HIMS.API.Models.OutPatient
 
     public class BillingModel
     {
-      
+
         public BillsModel? Bill { get; set; }
         public List<BillingDetailModel?> BillDetail { get; set; }
         public AdddChargeModel? AddCharge { get; set; }

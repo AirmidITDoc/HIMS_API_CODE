@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using HIMS.Core.Domain.Grid;
-using System.Text.RegularExpressions;
-
-namespace HIMS.API.Models.Common
+﻿namespace HIMS.API.Models.Common
 {
     public class GridResponseModel
     {

@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Inventory;
-using System.ComponentModel.DataAnnotations;
 
 namespace HIMS.API.Models.Administration
 {
@@ -28,6 +26,6 @@ namespace HIMS.API.Models.Administration
 
         }
     }
-   
+
 
 }

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class ItemExpReportMonthWiseListDto
+    public class ItemExpReportMonthWiseListDto
     {
         public long StockId { get; set; }
         public long? StoreId { get; set; }
-        public string? StoreName {  get; set; }
+        public string? StoreName { get; set; }
         public long? ItemId { get; set; }
         public string? ItemName { get; set; }
         public float? OpeningBalance { get; set; }

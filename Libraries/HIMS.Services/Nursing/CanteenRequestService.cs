@@ -1,20 +1,11 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Transactions;
-using static LinqToDB.Sql;
-using static LinqToDB.SqlQuery.SqlPredicate;
 
 
 namespace HIMS.Services.Nursing
@@ -26,7 +17,7 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
-      
+
         public virtual async Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorNoteListDto>(model, "ps_Rtrv_DoctorsNotesList");
@@ -43,8 +34,8 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<CanteenRequestHeaderListDto>(model, "ps_Rtrv_CanteenRequestListFromWard");
         }
-      
-        public virtual async Task 
+
+        public virtual async Task
             InsertAsync(TCanteenRequestHeader objCanteen, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,
@@ -75,14 +66,14 @@ namespace HIMS.Services.Nursing
         {
             var qry = from s in _context.MCanItemMasters
                       where (ItemName == "" || s.ItemName.Contains(ItemName))
-                                    
+
                       select new CanteenListDto()
                       {
                           ItemID = s.ItemId,
                           ItemName = s.ItemName,
                           //Price = s.Price,
                           //IsBatchRequired = s.IsBatchRequired,
-                         
+
                       };
             return await qry.Take(50).ToListAsync();
         }
@@ -91,7 +82,7 @@ namespace HIMS.Services.Nursing
         {
             var qry = (from MCanItemMaster in _context.MCanItemMasters
                        where MCanItemMaster.ItemName == "" || MCanItemMaster.ItemName.Contains(ItemName)
-                         
+
                        select new CanteenListDto
                        {
                            ItemID = MCanItemMaster.ItemId,

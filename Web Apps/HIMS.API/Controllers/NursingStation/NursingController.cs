@@ -2,8 +2,6 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -20,7 +18,7 @@ namespace HIMS.API.Controllers.NursingStation
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class NursingController: BaseController
+    public class NursingController : BaseController
     {
         private readonly ILabRequestService _ILabRequestService;
         private readonly IMPrescriptionService _IMPrescriptionService;
@@ -32,7 +30,7 @@ namespace HIMS.API.Controllers.NursingStation
         private readonly IGenericService<MDoctorNotesTemplateMaster> _repository2;
 
 
-        public NursingController(ILabRequestService repository, IMPrescriptionService repository1 ,IPriscriptionReturnService repository2, ICanteenRequestService repository3, IGenericService<TNurNote> repository4,IGenericService<MNursingTemplateMaster> repository5, IGenericService<MDoctorNotesTemplateMaster> repository6, INursingNoteService INursingNoteService)
+        public NursingController(ILabRequestService repository, IMPrescriptionService repository1, IPriscriptionReturnService repository2, ICanteenRequestService repository3, IGenericService<TNurNote> repository4, IGenericService<MNursingTemplateMaster> repository5, IGenericService<MDoctorNotesTemplateMaster> repository6, INursingNoteService INursingNoteService)
         {
             _ILabRequestService = repository;
             _IMPrescriptionService = repository1;
@@ -45,8 +43,8 @@ namespace HIMS.API.Controllers.NursingStation
             _INursingNoteService = INursingNoteService;
 
         }
-     
-        [HttpPost("LabRequestDetailsList")] 
+
+        [HttpPost("LabRequestDetailsList")]
         [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
@@ -172,7 +170,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.ModifiedDatetime = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDatetime" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.",model.AdmId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model.AdmId);
         }
         //Delete API
         [HttpDelete]
@@ -204,7 +202,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.",model.AdmId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.AdmId);
         }
 
 
@@ -223,7 +221,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
         }
-       
+
 
         [HttpPost("DoctorPatientHandoverInsert")]
         [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
@@ -238,7 +236,7 @@ namespace HIMS.API.Controllers.NursingStation
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.",model.AdmId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.AdmId);
         }
 
         [HttpPut("DoctorPatientHandover/{id:int}")]

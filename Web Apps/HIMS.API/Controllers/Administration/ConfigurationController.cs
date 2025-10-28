@@ -1,16 +1,14 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.Masters.ConfigurationModelValidator;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -99,7 +97,7 @@ namespace HIMS.API.Controllers.Administration
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-      
+
         [HttpPut("SystemConfig")]
         [Permission(PageCode = "Configuration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(List<SystemConfigUpdate> items)
@@ -107,19 +105,19 @@ namespace HIMS.API.Controllers.Administration
             if (items == null || !items.Any())
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-                foreach (var obj in items)
-                {
-                  if (obj.SystemConfigId == 0);
-   
-                   MSystemConfig model = obj.MapTo<MSystemConfig>();
+            foreach (var obj in items)
+            {
+                if (obj.SystemConfigId == 0) ;
 
-                  await _repository1.Update(model, CurrentUserId, CurrentUserName, Array.Empty<string>());
-                }
+                MSystemConfig model = obj.MapTo<MSystemConfig>();
+
+                await _repository1.Update(model, CurrentUserId, CurrentUserName, Array.Empty<string>());
+            }
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
 
-      
+
 
     }
 }

@@ -1,11 +1,4 @@
-﻿using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class ItemMasterListDto
     {
@@ -53,7 +46,7 @@ namespace HIMS.Data.DTO.Inventory
         public string DrugTypeName { get; set; }
         public long ItemCompnayId { get; set; }
 
-         public string ManufName { get; set; }
+        public string ManufName { get; set; }
         public string UserName { get; set; }
 
 
@@ -67,19 +60,19 @@ namespace HIMS.Data.DTO.Inventory
         public float? BalanceQty { get; set; }
         public long? LandedRate { get; set; }
         public long? UnitMRP { get; set; }
-        public long? PurchaseRate { get;set; }
-        public string? DoseName { get;set; }
+        public long? PurchaseRate { get; set; }
+        public string? DoseName { get; set; }
         public long? DoseDay { get; set; }
         public string? Instruction { get; set; }
         public string? HSNcode { get; set; }
-        public double? CGSTPer {  get; set; }
+        public double? CGSTPer { get; set; }
         public double? SGSTPer { get; set; }
-        public double? IGSTPer { get;set; }
-        public string? ConverFactor{ get; set; }
+        public double? IGSTPer { get; set; }
+        public string? ConverFactor { get; set; }
         public long? StoreId { get; set; }
         public long? UMOId { get; set; }
         public string UMOName { get; set; }
-        public string? ItemCompanyName {  get; set; }
+        public string? ItemCompanyName { get; set; }
         //public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty; } }
         public double? TaxPer { get; set; }

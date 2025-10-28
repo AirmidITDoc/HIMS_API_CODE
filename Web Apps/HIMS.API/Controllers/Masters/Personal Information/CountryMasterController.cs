@@ -1,13 +1,13 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
 {
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             return data.ToSingleResponse<MCountryMaster, CountryMasterModel>("CountryMaster");
         }
 
-       
+
         [HttpPost]
         [Permission(PageCode = "CountryMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CountryMasterModel obj)

@@ -1,6 +1,3 @@
-using FluentValidation;
-using static HIMS.API.Models.Inventory.Masters.ReportConfigModelModelValidator;
-
 namespace HIMS.API.Models.Inventory.Masters
 {
     public class MReportConfigModel

@@ -1,15 +1,8 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
-using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Nursing
@@ -32,7 +25,7 @@ namespace HIMS.Services.Nursing
             return await DatabaseHelper.GetGridDataBySp<LabRequestDetailsListDto>(model, "ps_Rtrv_NursingLabRequestDetails");
 
         }
-       
+
 
 
         public virtual async Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username)
@@ -54,7 +47,7 @@ namespace HIMS.Services.Nursing
                 if (ObjLab == null)
                     throw new Exception("Lab request not found.");
                 // Cancel fields
-                ObjLab.IsCancelled = true;               
+                ObjLab.IsCancelled = true;
                 ObjLab.IsCancelledBy = CurrentUserId;
                 ObjLab.IsCancelledDate = DateTime.Now.Date;
                 ObjLab.IsCancelledTime = DateTime.Now;
@@ -66,7 +59,7 @@ namespace HIMS.Services.Nursing
                 scope.Complete();
             }
         }
-        
+
     }
 
 }

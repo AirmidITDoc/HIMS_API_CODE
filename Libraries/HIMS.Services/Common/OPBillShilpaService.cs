@@ -1,14 +1,7 @@
-﻿using HIMS.Data;
-using HIMS.Data.DataProviders;
+﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HIMS.Services.Common
 {
@@ -42,7 +35,7 @@ namespace HIMS.Services.Common
             _context.BillDetails.AddRange(objBill.BillDetails);
             await _context.SaveChangesAsync();
 
-            
+
         }
         public virtual void InsertSP1(Bill objBill, int UserId, string Username)
         {

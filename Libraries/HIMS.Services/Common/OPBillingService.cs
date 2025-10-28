@@ -60,7 +60,7 @@ namespace HIMS.Services.Common
         //        TCertificateInformation.CertificateName = objReg.CertificateName;
         //        TCertificateInformation.CertificateText = objReg.CertificateText;
         //        //TCertificateInformation.ModifiedBy = objReg.ModifiedBy;
-              
+
         //        _context.TCertificateInformations.Update(TCertificateInformation);
         //        _context.Entry(TCertificateInformation).State = EntityState.Modified;
 
@@ -70,7 +70,7 @@ namespace HIMS.Services.Common
         //    }
         //}
 
-        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment,  List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -153,7 +153,7 @@ namespace HIMS.Services.Common
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = {"IsDoctorShareGenerated","CPrice","CQty","CTotalAmount","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","IsInterimBillFlag","BillNoNavigation","CreatedDate","ModifiedBy","ModifiedDate"};
+                                string[] AEntity = { "IsDoctorShareGenerated", "CPrice", "CQty", "CTotalAmount", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "IsInterimBillFlag", "BillNoNavigation", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                                 var Packagescharge = item.ToDictionary();
 
                                 foreach (var rProperty in AEntity)
@@ -174,13 +174,13 @@ namespace HIMS.Services.Common
 
                                 odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
                             }
-                          
+
                         }
 
-                    
+
                     }
 
-                    string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "BillNoNavigation","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+                    string[] rPaymentEntity = { "CashCounterId", "IsSelfOrcompany", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "BillNoNavigation", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
                     Payment objPay = new();
                     objPay = objPayment;
                     objPay.BillNo = objBill.BillNo;
@@ -192,7 +192,7 @@ namespace HIMS.Services.Common
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
-                
+
                     scope.Complete();
                 }
 
@@ -380,7 +380,7 @@ namespace HIMS.Services.Common
                             await _context.SaveChangesAsync();
                         }
                     }
-                   
+
                 }
             }
 

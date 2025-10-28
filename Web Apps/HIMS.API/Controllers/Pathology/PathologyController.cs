@@ -2,25 +2,15 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pathology;
-using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
-using HIMS.Services.Common;
-using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
-using HIMS.Services.OPPatient;
-using HIMS.Services.OutPatient;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 

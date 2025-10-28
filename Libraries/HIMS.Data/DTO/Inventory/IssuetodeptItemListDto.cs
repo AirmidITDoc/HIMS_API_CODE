@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class IssuetodeptItemListDto
     {
 
 
-        
-              public long? IssueDepId { get; set; }
+
+        public long? IssueDepId { get; set; }
         public long? ItemId { get; set; }
         public string? ItemName { get; set; }
 
@@ -28,7 +22,7 @@ namespace HIMS.Data.DTO.Inventory
 
         public long? Status { get; set; }
 
-         public long? StockId { get; set; }
+        public long? StockId { get; set; }
 
         public long? StoreId { get; set; }
     }

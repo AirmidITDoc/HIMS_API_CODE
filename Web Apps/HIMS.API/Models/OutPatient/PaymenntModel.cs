@@ -1,7 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.IPPatient;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Models.OutPatient
 {

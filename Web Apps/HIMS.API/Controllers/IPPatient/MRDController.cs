@@ -1,12 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.Models;
-using HIMS.Services.IPPatient;
 using HIMS.Services.MRD;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +19,7 @@ namespace HIMS.API.Controllers.IPPatient
         public MRDController(I_MRDCertificate repository)
         {
             _I_MRDCertificate = repository;
-           
+
         }
 
         [HttpPost("MRDList")]

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Administration
 {
@@ -10,11 +9,11 @@ namespace HIMS.API.Models.Administration
         public long? ServiceId { get; set; }
         public long? PackageServiceId { get; set; }
         public int? QtyLimit { get; set; }
-       
+
         public decimal? Price { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
-      
+
 
     }
     public class PackageDetailsModel1
@@ -23,12 +22,12 @@ namespace HIMS.API.Models.Administration
 
     }
     public class PackageDetailsModelValidator : AbstractValidator<PackageDetailsModel>
-     {
+    {
         public PackageDetailsModelValidator()
         {
-               RuleFor(x => x.PackageServiceId).NotNull().NotEmpty().WithMessage("PackageServiceId id is required");
+            RuleFor(x => x.PackageServiceId).NotNull().NotEmpty().WithMessage("PackageServiceId id is required");
         }
-     }
+    }
     public class PackageDetModel
     {
 

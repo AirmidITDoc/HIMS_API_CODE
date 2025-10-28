@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 
@@ -34,7 +28,7 @@ namespace HIMS.Services.Nursing
 
 
 
-        
+
 
 
 

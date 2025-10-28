@@ -1,22 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.IPPatient;
-using HIMS.Services.IPPatient;
-using HIMS.API.Models.Nursing;
 using HIMS.Core;
-using HIMS.API.Models.OPPatient;
-using HIMS.Services.OPPatient;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data;
-using HIMS.Data.DataProviders;
-using System.Data;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Models;
+using HIMS.Services.IPPatient;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.IPPatient
 {

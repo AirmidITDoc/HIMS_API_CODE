@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Models.OPPatient
 {

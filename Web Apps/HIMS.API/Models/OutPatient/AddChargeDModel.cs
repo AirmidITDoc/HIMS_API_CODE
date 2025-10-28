@@ -1,7 +1,4 @@
 using FluentValidation;
-using HIMS.Data.Models;
-using HIMS.API.Models.IPPatient;
-using Microsoft.AspNetCore.Mvc;
 namespace HIMS.API.Models.OutPatient
 {
     public class AddChargesDeleteModel

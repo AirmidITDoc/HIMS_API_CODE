@@ -1,6 +1,6 @@
 namespace HIMS.Core.Domain.Logging
 {
-    public class AuditDetails 
+    public class AuditDetails
     {
         public int Id { get; set; }
         public string AuditResponse { get; set; }

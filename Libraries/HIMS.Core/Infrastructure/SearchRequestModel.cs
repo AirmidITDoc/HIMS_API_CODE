@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HIMS.Core.Domain.Grid
+﻿namespace HIMS.Core.Domain.Grid
 {
     public class SearchRequestModel
     {
@@ -13,7 +11,7 @@ namespace HIMS.Core.Domain.Grid
             Timezone = string.Empty; // Initialize Timezone to avoid CS8618
         }
     }
-   
+
     public class SearchGridValue
     {
         public string FieldName { get; set; }

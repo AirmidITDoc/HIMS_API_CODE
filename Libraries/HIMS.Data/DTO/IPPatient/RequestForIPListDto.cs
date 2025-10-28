@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class RequestForIPListDto
+    public class RequestForIPListDto
     {
         public string RegNo { get; set; }
-        public string PatientName {  get; set; }
-        public string AgeYear { get; set; } 
+        public string PatientName { get; set; }
+        public string AgeYear { get; set; }
         public string GenderName { get; set; }
         public string VisitDate { get; set; }
         public string VisitTime { get; set; }
@@ -23,8 +17,8 @@ namespace HIMS.Data.DTO.IPPatient
         public long AdmissionType { get; set; }
         public string RefDoctorName { get; set; }
         public string CompanyName { get; set; }
-        public string PatientType { get; set; } 
- 
+        public string PatientType { get; set; }
+
 
     }
 }

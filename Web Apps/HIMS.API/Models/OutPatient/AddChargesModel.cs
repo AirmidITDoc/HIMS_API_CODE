@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Pathology;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -29,7 +27,7 @@ namespace HIMS.API.Models.OutPatient
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
         public long? IsPackage { get; set; }
-       public long? IsSelfOrCompanyService { get; set; }
+        public long? IsSelfOrCompanyService { get; set; }
         public long? PackageId { get; set; }
         public long? WardId { get; set; }
         public long? BedId { get; set; }
@@ -49,7 +47,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class AddChargeModell
     {
-     
+
         public DateTime? ChargesDate { get; set; }
         public byte? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
@@ -78,8 +76,8 @@ namespace HIMS.API.Models.OutPatient
         public long? BedId { get; set; }
         public long? PackageMainChargeId { get; set; }
         public string? ChargesTime { get; set; }
-      
-   
+
+
     }
 
     public class AddChargeModellValidator : AbstractValidator<AddChargeModell>

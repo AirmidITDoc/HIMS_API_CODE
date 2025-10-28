@@ -2,16 +2,12 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -30,9 +26,9 @@ namespace HIMS.Services.Inventory
             {
                 // //Add header table records
                 DatabaseHelper odal = new();
-                
 
-                string[] rEntity = {"IndentNo","Isdeleted","Isverify","Isclosed","IsInchargeVerify","IsInchargeVerifyId","IsInchargeVerifyDate","TIndentDetails" };
+
+                string[] rEntity = { "IndentNo", "Isdeleted", "Isverify", "Isclosed", "IsInchargeVerify", "IsInchargeVerifyId", "IsInchargeVerifyDate", "TIndentDetails" };
                 var entity = objIndent.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
@@ -56,11 +52,11 @@ namespace HIMS.Services.Inventory
                 if (objInd != null)
                 {
                     _context.TIndentHeaders.Remove(objInd);
-                }                
+                }
 
                 // Delete details table realted records
                 var lst = await _context.TIndentDetails.Where(x => x.IndentId == objIndent.IndentId).ToListAsync();
-                if(lst.Count > 0)
+                if (lst.Count > 0)
                 {
                     _context.TIndentDetails.RemoveRange(lst);
                 }
@@ -139,7 +135,7 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        
+
 
         public virtual async Task CancelAsync(TIndentHeader objIndent, int CurrentUserId, string CurrentUserName)
         {
@@ -148,7 +144,7 @@ namespace HIMS.Services.Inventory
                 // Update header table records
                 TIndentHeader objind = await _context.TIndentHeaders.FindAsync(objIndent.IndentId);
                 objind.Isdeleted = objIndent.Isdeleted;
-                objind.IsCancelledBy=objIndent.IsCancelledBy;
+                objind.IsCancelledBy = objIndent.IsCancelledBy;
                 objind.IsCancelledDateTime = objIndent.IsCancelledDateTime;
 
                 _context.TIndentHeaders.Update(objind);
@@ -177,6 +173,6 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<IndentItemListDto>(model, "ps_rtrv_IndentItemList");
         }
-       
+
     }
 }

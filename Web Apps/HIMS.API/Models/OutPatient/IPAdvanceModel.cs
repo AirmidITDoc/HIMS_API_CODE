@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -18,7 +17,7 @@ namespace HIMS.API.Models.OutPatient
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
 
-      //  public virtual ICollection<AdvanceDetail> AdvanceDetails { get; set; }
+        //  public virtual ICollection<AdvanceDetail> AdvanceDetails { get; set; }
 
     }
 
@@ -27,7 +26,7 @@ namespace HIMS.API.Models.OutPatient
         public IPAdvanceModelValidator()
         {
             RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
-           
+
         }
     }
 
@@ -60,7 +59,7 @@ namespace HIMS.API.Models.OutPatient
         public IPAdvanceDetailValidator()
         {
             RuleFor(x => x.AdvanceId).NotNull().NotEmpty().WithMessage("AdvanceId is required");
-            
+
         }
     }
 

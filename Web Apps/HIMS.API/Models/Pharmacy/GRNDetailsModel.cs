@@ -1,7 +1,3 @@
-using FluentValidation;
-using HIMS.API.Models.OutPatient;
-using HIMS.Data.Models;
-
 namespace HIMS.API.Models.Pharmacy
 {
     public class GRNDetailsModel
@@ -46,14 +42,14 @@ namespace HIMS.API.Models.Pharmacy
     }
 
 
-   
+
 
 
     public class GRNDModel
     {
 
         public GRNDetailsModel? GRNDetails { get; set; }
-     //   public IPBilllingModel? IPBillling { get; set; }
+        //   public IPBilllingModel? IPBillling { get; set; }
         //public List<BillingDetailsModel>? BillingDetails { get; set; }
         //public paymentsModel? payments { get; set; }
         ////public paymentModel? payment { get; set; }

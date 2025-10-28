@@ -1,9 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Services.Common;
 using Microsoft.AspNetCore.Mvc;
 

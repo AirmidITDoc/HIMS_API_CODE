@@ -1,21 +1,16 @@
-﻿using HIMS.API.Extensions;
-using HIMS.Api.Models.Common;
-using HIMS.API.Models.Inventory;
-using HIMS.Core;
-using HIMS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using HIMS.Services.Inventory;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.Services.Administration;
-using HIMS.API.Models.Masters;
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Administration;
+using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OutPatient;
-using HIMS.API.Models.Pharmacy;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration
 {

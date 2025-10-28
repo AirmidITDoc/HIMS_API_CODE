@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.Data.Models;
 
 
 namespace HIMS.API.Models.IPPatient
@@ -117,8 +116,8 @@ namespace HIMS.API.Models.IPPatient
 
     public class UpdateAdvanceModel
     {
-        public long AdvanceId {  get; set; }   
-        public double? AdvanceAmount {  get; set; }
+        public long AdvanceId { get; set; }
+        public double? AdvanceAmount { get; set; }
     }
     public class UpdateAdvanceModelValidator : AbstractValidator<UpdateAdvanceModel>
     {
@@ -129,8 +128,8 @@ namespace HIMS.API.Models.IPPatient
 
         }
     }
-        public class AdvanceDetailModel2
-        {
+    public class AdvanceDetailModel2
+    {
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
         public long? AdvanceId { get; set; }
@@ -176,7 +175,7 @@ namespace HIMS.API.Models.IPPatient
 
 
     }
-   
+
 }
 
 

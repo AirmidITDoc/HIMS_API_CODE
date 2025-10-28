@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.OutPatient;
 namespace HIMS.API.Models.Inventory
 {
     public class PharStockAdjustmentModel
@@ -68,5 +67,5 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
         }
     }
-    
+
 }

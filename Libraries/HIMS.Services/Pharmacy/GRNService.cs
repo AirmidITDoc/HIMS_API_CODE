@@ -2,15 +2,12 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using System.Data;
-using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.Pharmacy
@@ -111,7 +108,7 @@ namespace HIMS.Services.Pharmacy
             //_context.MItemMasters.UpdateRange(objItems);
 
 
-          
+
             await _context.SaveChangesAsync();
         }
 
@@ -224,7 +221,7 @@ namespace HIMS.Services.Pharmacy
         //}
         public virtual async Task InsertWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
 
-            {        
+        {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             // Update store table records
             MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRN.StoreId);
@@ -336,7 +333,7 @@ namespace HIMS.Services.Pharmacy
         //        scope.Complete();
         //    }
         //}
-        public virtual async Task UpdateWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems,  List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
+        public virtual async Task UpdateWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
@@ -369,7 +366,7 @@ namespace HIMS.Services.Pharmacy
             {
                 foreach (var objDet in objPurDetails)
                 {
-                    var detailsInfo = await _context.TPurchaseDetails .FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
+                    var detailsInfo = await _context.TPurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == objDet.PurchaseId && x.PurDetId == objDet.PurDetId);
 
                     if (detailsInfo != null)
                     {
@@ -380,7 +377,7 @@ namespace HIMS.Services.Pharmacy
                     }
                     else
                     {
-                       
+
                     }
                 }
 
@@ -404,18 +401,18 @@ namespace HIMS.Services.Pharmacy
 
             scope.Complete();
         }
-    
 
 
 
 
 
-    //Changes Done By Ashutosh 19 May 2025 
-    public virtual async Task VerifyAsyncSp(TGrnheader objGRN, int CurrentUserId, string CurrentUserName)
+
+        //Changes Done By Ashutosh 19 May 2025 
+        public virtual async Task VerifyAsyncSp(TGrnheader objGRN, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "Grnid", "VerifiedBy"};
+            string[] rEntity = { "Grnid", "VerifiedBy" };
             var entity = objGRN.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -442,9 +439,9 @@ namespace HIMS.Services.Pharmacy
                            BatchNo = cs.BatchNo,
                            BatchExpDate = cs.BatchExpDate,
                            UnitMRP = cs.UnitMrp,
-                           UnitPurRate=cs.PurUnitRateWf,
-                           UnitLandedRate=cs.LandedRate,
-                           GST=cs.VatPercentage,
+                           UnitPurRate = cs.PurUnitRateWf,
+                           UnitLandedRate = cs.LandedRate,
+                           GST = cs.VatPercentage,
                            CGSTPer = cs.Cgstper,
                            SGSTPer = cs.Sgstper,
                            IGSTPer = cs.Igstper,

@@ -3,16 +3,13 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Pathology;
-using HIMS.Data;
-using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.Masters.PathologyMaster
 {

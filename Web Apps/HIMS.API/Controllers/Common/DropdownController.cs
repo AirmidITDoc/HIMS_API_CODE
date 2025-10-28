@@ -1,16 +1,12 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.Models;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
-using HIMS.Services.Common;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using HIMS.Core.Infrastructure;
 using Microsoft.VisualBasic;
-using ClosedXML.Excel;
 
 namespace HIMS.API.Controllers.Common
 {
@@ -69,7 +65,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MUnitofMeasurementMaster> _IMUnitOfMeasurmentService;
 
         private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
-       
+
         private readonly IGenericService<MPathParameterMaster> _IMparameterservice;
         private readonly IGenericService<RoleMaster> _IMRoleMasterservice;
         private readonly IGenericService<MenuMaster> _IMmenuMasterService;
@@ -113,7 +109,7 @@ namespace HIMS.API.Controllers.Common
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
                                 , IGenericService<MStateMaster> iMDoStateMaster, IGenericService<MCountryMaster> iMDoCountryMaster, IGenericService<ClassMaster> iMDoClassMaster, IGenericService<CompanyMaster> iMDoCompanyMaster
-                                  ,IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
+                                  , IGenericService<MSubTpacompanyMaster> iMDoSubCompanyMaster, IGenericService<Bedmaster> iMDoBedMaster, IGenericService<RoomMaster> iMDoRoomMaster,
                                  IGenericService<MRelationshipMaster> iMDoRelationshipMaster, IGenericService<ServiceMaster> iMDoServiceMaster, IGenericService<MItemMaster> iMDoItemMaster
                                 , IGenericService<HospitalMaster> iMDoHospitalMaster, IGenericService<DischargeTypeMaster> iMDoDischargetypelMaster,
                                  IGenericService<MModeOfPayment> iMDoModeofpaymentMaster
@@ -143,7 +139,7 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOtSurgeryMaster> iMOtSurgeryMaster,
                               IGenericService<LocationMaster> iLocationMaster,
                               IGenericService<MOttableMaster> iMOttableMaster,
-                              IGenericService<MPathTestMaster> IMPathTestMaster, 
+                              IGenericService<MPathTestMaster> IMPathTestMaster,
                               IGenericService<MExpensesHeadMaster> IMExpensesHeadMaster,
                               IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster,
                               IGenericService<MCreditReasonMaster> IMCreditReasonMaster,
@@ -161,7 +157,7 @@ namespace HIMS.API.Controllers.Common
 
               )
         {
-           
+
             _IAreaService = areaservice;
             _IPrefixService = iPrefixService;
             _IGenderService = iGenderService;
@@ -277,7 +273,7 @@ namespace HIMS.API.Controllers.Common
                 "PatientType" => (await _IPatientTypeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(PatientTypeMaster.PatientTypeId), nameof(PatientTypeMaster.PatientType)),
                 "Tariff" => (await _TariffMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(TariffMaster.TariffId), nameof(TariffMaster.TariffName)),
                 "Department" => (await _IMDepartmentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDepartmentMaster.DepartmentId), nameof(MDepartmentMaster.DepartmentName)),
-               
+
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
@@ -308,10 +304,10 @@ namespace HIMS.API.Controllers.Common
                 "RelationShip" => (await _IMRelationshipService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MRelationshipMaster.RelationshipId), nameof(MRelationshipMaster.RelationshipName)),
                 "Service" => (await _IMServiceService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-                "PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
-                "RadiologyService" => (await _IMServiceService.GetAll(x => x.IsRadiology==1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                "PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                "RadiologyService" => (await _IMServiceService.GetAll(x => x.IsRadiology == 1)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
-                 //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => !_context.PathTestMaster.Any(p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
+                //"PathologyService" => (await _IMServiceService.GetAll(x => x.IsPathology == 1)).Where(s => !_context.PathTestMaster.Any(p => p.ServiceId == s.ServiceId)).ToList().ToDropDown(nameof(ServiceMaster.ServiceId), nameof(ServiceMaster.ServiceName)),
 
                 "Item" => (await _IMItemService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemMaster.ItemId), nameof(MItemMaster.ItemName)),
                 "DichargeType" => (await _IMDischargetypelService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(DischargeTypeMaster.DischargeTypeId), nameof(DischargeTypeMaster.DischargeTypeName)),
@@ -342,7 +338,7 @@ namespace HIMS.API.Controllers.Common
                 "SupplierMaster" => (await _IMSupplierMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSupplierMaster.SupplierId), nameof(MSupplierMaster.SupplierName), nameof(MSupplierMaster.Gstno)),
                 "GstCalcType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_CALC_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Anesthesiatypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ANESTHESIA_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                
+
 
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
@@ -363,10 +359,10 @@ namespace HIMS.API.Controllers.Common
 
                 "Concession" => (await _IMConcessService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConcessionReasonMaster.ConcessionId), nameof(MConcessionReasonMaster.ConcessionReason)),
                 //"CanteenItem" => (await _IMcanteen.GetAll().ToList().ToDropDown(nameof(MCanItemMaster.Ca), nameof(MConcessionReasonMaster.ConcessionReason)),
-               
+
                 "ConsentMaster" => (await _MConsentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MConsentMaster.ConsentId), nameof(MConsentMaster.ConsentName)),
 
-                "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId),nameof(MCertificateMaster.CertificateName),nameof(MCertificateMaster.CertificateDesc)),
+                "OPDEMR" => (await _MCertificateMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCertificateMaster.CertificateId), nameof(MCertificateMaster.CertificateName), nameof(MCertificateMaster.CertificateDesc)),
                 "ReportConfig" => (await _MReportConfig.GetAll(x => x.Parentid == null)).ToList().ToDropDown(nameof(MReportConfig.ReportId), nameof(MReportConfig.ReportSection)),
                 "MenuMaster" => (await _MenuMaster.GetAll(x => x.UpId == 10)).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
                 "Qualification" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorQualification")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
@@ -376,8 +372,8 @@ namespace HIMS.API.Controllers.Common
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                
-                
+
+
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 

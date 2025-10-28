@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.IPPatient;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -26,6 +25,6 @@ namespace HIMS.API.Models.OPPatient
     public class PathlogySampleCollectionsModel
     {
         public List<PathlogySampleCollectionModel> PathlogySampleCollection { get; set; }
-      
+
     }
 }

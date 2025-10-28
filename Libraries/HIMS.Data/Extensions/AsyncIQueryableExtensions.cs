@@ -1,11 +1,7 @@
-﻿using LinqToDB;
+﻿using HIMS.Core.Domain.Grid;
+using LinqToDB;
 using LinqToDB.Linq;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Threading.Tasks;
-using HIMS.Core;
-using HIMS.Core.Domain.Grid;
 
 namespace HIMS.Data
 {

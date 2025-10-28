@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Masters
         public string? Formula { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
-       // public DateTime? CreatedDate { get; set; }
+        // public DateTime? CreatedDate { get; set; }
 
     }
     public class MPathTestFormulaModelValidator : AbstractValidator<MPathTestFormulaModel>

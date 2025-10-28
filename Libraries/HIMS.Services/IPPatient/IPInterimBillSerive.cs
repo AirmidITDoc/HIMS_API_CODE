@@ -1,17 +1,12 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.IPPatient
 {
-    public class IPInterimBillSerive:IIPInterimBillSerive
+    public class IPInterimBillSerive : IIPInterimBillSerive
     {
         private readonly Data.Models.HIMSDbContext _context;
         public IPInterimBillSerive(HIMSDbContext HIMSDbContext)

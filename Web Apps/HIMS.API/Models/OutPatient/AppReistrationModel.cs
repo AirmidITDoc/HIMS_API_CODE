@@ -138,7 +138,7 @@ namespace HIMS.API.Models.OutPatient
         public long? CityId { get; set; }
         public long? MaritalStatusId { get; set; }
         public bool? IsCharity { get; set; }
-       
+
         public string? AadharCardNo { get; set; }
         public string? PanCardNo { get; set; }
         public string? Photo { get; set; }

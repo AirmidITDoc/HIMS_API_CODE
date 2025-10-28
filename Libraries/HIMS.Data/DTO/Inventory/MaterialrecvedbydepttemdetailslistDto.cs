@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Inventory
+﻿namespace HIMS.Data.DTO.Inventory
 {
     public class MaterialrecvedbydepttemdetailslistDto
     {
         public long IssueDepId { get; set; }
         public long IssueId { get; set; }
-        
+
         public String? ItemName { get; set; }
 
         public string? BatchNo { get; set; }

@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.IPPatient;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -60,7 +57,7 @@ namespace HIMS.API.Models.OPPatient
 
             }
         }
- }
+    }
     public class DeleteChargesModel
     {
         public long ChargesId { get; set; }

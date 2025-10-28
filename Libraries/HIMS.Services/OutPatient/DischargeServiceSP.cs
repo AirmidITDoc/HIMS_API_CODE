@@ -8,7 +8,7 @@ using System.Data;
 
 namespace HIMS.Services.OutPatient
 {
-    public class DischargeServiceSP:IDischargeServiceSP
+    public class DischargeServiceSP : IDischargeServiceSP
     {
         private readonly Data.Models.HIMSDbContext _context;
         public DischargeServiceSP(HIMSDbContext HIMSDbContext)
@@ -88,4 +88,4 @@ namespace HIMS.Services.OutPatient
             odal.ExecuteNonQuery("m_Update_DischargeBedRelease", CommandType.StoredProcedure, tokenObj.ToDictionary());
         }
     }
-    }
+}

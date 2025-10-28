@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class OTBookingRequestListDto
+    public class OTBookingRequestListDto
     {
         public long OTRequestId { get; set; }
         public DateTime? OtbookingDate { get; set; }
@@ -36,7 +29,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? OpIpId { get; set; }
         public long SurgeryTypeId { get; set; }
         public long OTBookingId { get; set; }
-         public bool? IsCancelled { get; set; }
+        public bool? IsCancelled { get; set; }
         public DateTime? OTRequestDate { get; set; }
         public DateTime? OTRequestTime { get; set; }
         public long SurgeryCategoryId { get; set; }
@@ -73,6 +66,6 @@ namespace HIMS.Data.DTO.IPPatient
         public long? SurgeonId { get; set; }
         public long? SurgeryId { get; set; }
         public long? OpIpId { get; set; }
-       
+
     }
 }

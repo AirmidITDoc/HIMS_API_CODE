@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Pathology
+﻿namespace HIMS.Data.DTO.Pathology
 {
     public class PatientClearanceApprovalListDto
     {
@@ -17,6 +11,6 @@ namespace HIMS.Data.DTO.Pathology
         public string? ApprovedDatetime { get; set; }
         public bool? IsNoDues { get; set; }
         public string? Comments { get; set; }
-        
+
     }
 }

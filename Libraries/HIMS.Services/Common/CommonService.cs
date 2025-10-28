@@ -1,10 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Core.Domain.Logging;
-using HIMS.Data;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
-using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -85,7 +81,7 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;
 
                 //////System Configuration
-                ////case "SysConfig": sp_Name = "ps_SS_ConfigSettingParam"; break;
+               
                 case "NewSysConfig": sp_Name = "m_SS_ConfigSettingParam"; break;
 
                 //Pharmacy Sales return
@@ -106,6 +102,7 @@ namespace HIMS.Services.Common
                 // Sysytem Config and Login Access
                 case "LoginAccessConfigList": sp_Name = "ps_M_LoginAccessConfigList"; break;
                 case "SystemConfigList": sp_Name = "ps_M_SystemConfigList"; break;
+                case "UnitWiseSystemConfige": sp_Name = "ps_UnitWiseSystemConfige"; break;
 
                 //GSTType  
                 case "grnInvoicenocheck": sp_Name = "ps_m_grnInvoiceno_check"; break;
@@ -163,7 +160,7 @@ namespace HIMS.Services.Common
         {
             DatabaseHelper odal = new();
             Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
-           
+
             string sp_Name = string.Empty;
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];

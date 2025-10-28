@@ -2,19 +2,12 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace HIMS.Services.Inventory
 {
@@ -154,7 +147,7 @@ namespace HIMS.Services.Inventory
                 }
                 odal.ExecuteNonQuery("m_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Centity);
             }
-            string[] Entity = { "IndentNo", "IndentDate", "IndentTime", "FromStoreId", "ToStoreId", "Addedby", "Isdeleted", "Isverify", "IsInchargeVerify", "IsInchargeVerifyId", "IsInchargeVerifyDate", "Comments", "Priority", "TIndentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate","IsCancelledBy","IsCancelledDateTime" };
+            string[] Entity = { "IndentNo", "IndentDate", "IndentTime", "FromStoreId", "ToStoreId", "Addedby", "Isdeleted", "Isverify", "IsInchargeVerify", "IsInchargeVerifyId", "IsInchargeVerifyDate", "Comments", "Priority", "TIndentDetails", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsCancelledBy", "IsCancelledDateTime" };
             var Tentity = ObjTIndentHeader.ToDictionary();
             foreach (var rProperty in Entity)
             {

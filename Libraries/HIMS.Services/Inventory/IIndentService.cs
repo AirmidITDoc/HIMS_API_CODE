@@ -1,6 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.Inventory

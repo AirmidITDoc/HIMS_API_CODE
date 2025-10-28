@@ -1,15 +1,15 @@
 ﻿using Asp.Versioning;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Controllers;
-using HIMS.Core.Domain.Grid;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
-using HIMS.Services.Administration;
-using HIMS.Data.DTO.User;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.User;
+using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -20,7 +20,7 @@ namespace HIMS.API.Controllers.Administration
     {
         private readonly IGenericService<RoleMaster> _repository;
         private readonly IRoleService _IRoleService;
-        public RoleMasterController(IGenericService<RoleMaster> repository,IRoleService roleService)
+        public RoleMasterController(IGenericService<RoleMaster> repository, IRoleService roleService)
         {
             _repository = repository;
             _IRoleService = roleService;

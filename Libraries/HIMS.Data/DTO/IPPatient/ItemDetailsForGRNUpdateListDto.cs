@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static LinqToDB.Sql;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class ItemDetailsForGRNUpdateListDto
+    public class ItemDetailsForGRNUpdateListDto
     {
-        public long ItemId {  get; set; }
+        public long ItemId { get; set; }
         public string? ItemName { get; set; }
         public long UOMId { get; set; }
         public string? UnitofMeasurementName { get; set; }

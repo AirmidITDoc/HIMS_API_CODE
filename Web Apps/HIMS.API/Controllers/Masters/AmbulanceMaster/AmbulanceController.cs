@@ -4,7 +4,6 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
@@ -17,12 +16,12 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
     [ApiVersion("1")]
     public class AmbulanceController : BaseController
     {
-      
-            private readonly IGenericService<MVehicleMaster> _repository;
-            public AmbulanceController(IGenericService<MVehicleMaster> repository)
-            {
-                _repository = repository;
-            }
+
+        private readonly IGenericService<MVehicleMaster> _repository;
+        public AmbulanceController(IGenericService<MVehicleMaster> repository)
+        {
+            _repository = repository;
+        }
 
         [HttpPost]
         [Route("[action]")]
@@ -53,8 +52,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             model.IsActive = true;
             if (obj.VehicleId == 0)
             {
-                //model.CopyProperties = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -72,8 +71,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -87,8 +86,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             if ((model?.VehicleId ?? 0) > 0)
             {
                 model.IsActive = false;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
@@ -96,5 +95,5 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
-    }
+}
 

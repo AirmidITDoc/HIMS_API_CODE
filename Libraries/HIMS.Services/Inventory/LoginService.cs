@@ -1,14 +1,8 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -106,7 +100,7 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-       
+
         public virtual async Task updatepassAsync(LoginManager objLogin, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(
@@ -118,9 +112,9 @@ namespace HIMS.Services.Inventory
             LoginManager user = await _context.LoginManagers.FindAsync(objLogin.UserId);
             if (user != null)
             {
-                user.UserName = objLogin.UserName;     
+                user.UserName = objLogin.UserName;
                 user.Password = objLogin.Password;
-              
+
                 user.ModifiedBy = objLogin.ModifiedBy;
                 user.ModifiedDate = objLogin.ModifiedDate;
 

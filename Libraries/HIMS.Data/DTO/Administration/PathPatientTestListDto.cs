@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
-    public  class PathPatientTestListDto
+    public class PathPatientTestListDto
     {
         public string RegNo { get; set; }
         public string? PatientName { get; set; }
@@ -35,7 +29,7 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsRadOutSource { get; set; }
         public bool? IsPathOutSource { get; set; }
 
-        
+
 
 
 

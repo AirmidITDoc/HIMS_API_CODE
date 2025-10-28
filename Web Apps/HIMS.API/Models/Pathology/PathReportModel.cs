@@ -1,6 +1,4 @@
 using FluentValidation;
-using HIMS.API.Models.Administration;
-using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pathology
 {

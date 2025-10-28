@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HIMS.Data
+﻿namespace HIMS.Data
 {
     /// <summary>
     /// Paged list interface

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
-    public  class NonMovingItemListBatchNoDto
+    public class NonMovingItemListBatchNoDto
     {
         public DateTime? LastSalesDate { get; set; }
         public string? DaySales { get; set; }

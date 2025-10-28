@@ -1,7 +1,4 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using FluentValidation;
-using HIMS.API.Models.Inventory;
-using HIMS.API.Models.OutPatient;
+﻿using FluentValidation;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -29,7 +26,7 @@ namespace HIMS.API.Models.Pharmacy
         public bool? IsPurBill { get; set; }
 
 
-        
+
 
     }
     public class SalesReturnModelValidator : AbstractValidator<SalesReturnModel>
@@ -69,7 +66,7 @@ namespace HIMS.API.Models.Pharmacy
         public float? Igstper { get; set; }
         public decimal? Igstamt { get; set; }
         public long? StkId { get; set; }
-     
+
     }
     public class SalesReturnDetailsModelValidator : AbstractValidator<SalesReturnDetailsModel>
     {
@@ -103,7 +100,7 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long? SalesDetId { get; set; }
         public double? ReturnQty { get; set; }
-     
+
     }
 
     public class SalesDetailsModelValidator : AbstractValidator<SalesDetailsModel>
@@ -125,7 +122,7 @@ namespace HIMS.API.Models.Pharmacy
         public SalesHeaderModelValidator()
         {
             RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("Id  is required");
-           
+
 
         }
     }
@@ -161,8 +158,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal?TdsAmount { get;set; }
-        public decimal?WFAmount { get; set; }
+        public decimal? TdsAmount { get; set; }
+        public decimal? WFAmount { get; set; }
         public long? UnitId { get; set; }
 
     }
@@ -184,6 +181,6 @@ namespace HIMS.API.Models.Pharmacy
         public List<SalesReturnDetailsModel> SalesReturnDetails { get; set; }
         public List<CurrentStockModels> CurrentStock { get; set; }
         public List<SalesDetailsModel> SalesDetail { get; set; }
-       public PaymentModels? Payment { get; set; }
+        public PaymentModels? Payment { get; set; }
     }
 }

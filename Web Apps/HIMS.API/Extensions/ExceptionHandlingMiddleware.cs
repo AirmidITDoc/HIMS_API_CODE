@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
+﻿using HIMS.Api.Models.Common;
+using HIMS.Core.Domain.Logging;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
-using HIMS.API.Models.Common;
-using HIMS.Core.Domain.Logging;
-using HIMS.Api.Models.Common;
 
 namespace HIMS.API.Extensions
 {
@@ -61,7 +55,7 @@ namespace HIMS.API.Extensions
                     context.Request.Body.Dispose();
                 }
                 var msg = ex == null ? "{Params:" + param + "}" : "{ Params: " + param + ",DetailError: " + (ex.InnerException != null ? (ex.InnerException.ToString().ToLower() == "undefined" ? ex.Message : ex.InnerException) : ex?.Message ?? "") + "}";
-              
+
                 string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
 
                 await response.WriteAsync(errorJson);

@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Inventory
 {
     public class ServiceWiseCompanyCodeModel
     {
-       public long TariffId {  get; set; }
+        public long TariffId { get; set; }
     }
 }
 public class ServiceWiseCompanyCodeModelValidator : AbstractValidator<ServiceWiseCompanyCodeModel>
@@ -13,7 +13,7 @@ public class ServiceWiseCompanyCodeModelValidator : AbstractValidator<ServiceWis
     public ServiceWiseCompanyCodeModelValidator()
     {
         RuleFor(x => x.TariffId).NotNull().NotEmpty().WithMessage("TariffId is required");
-     
+
     }
 }
 

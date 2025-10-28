@@ -2,18 +2,12 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.OutPatient
@@ -141,14 +135,14 @@ namespace HIMS.Services.OutPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
                 TransactionScopeAsyncFlowOption.Enabled);
-                var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
+            var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
 
-            if (Prescription != null)  
+            if (Prescription != null)
             {
                 Prescription.DoseId = OBJTPrescription.DoseId;
-                await _context.SaveChangesAsync();  
+                await _context.SaveChangesAsync();
 
-                scope.Complete(); 
+                scope.Complete();
             }
         }
         public virtual async Task UpdateAsyncGeneric(TPrescription OBJTPrescription, int UserId, string Username)
@@ -156,7 +150,7 @@ namespace HIMS.Services.OutPatient
             using var scope = new TransactionScope(TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
                 TransactionScopeAsyncFlowOption.Enabled);
-                var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
+            var Prescription = await _context.TPrescriptions.FindAsync(OBJTPrescription.PrecriptionId);
 
             if (Prescription != null)
             {
@@ -212,7 +206,7 @@ namespace HIMS.Services.OutPatient
                 .Take(50)
                 .ToListAsync();
 
-            return data; 
+            return data;
         }
 
 

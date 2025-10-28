@@ -1,22 +1,17 @@
 ﻿using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
 {
-    public  class TprocessOtpService : ITprocessOtpService
+    public class TprocessOtpService : ITprocessOtpService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public TprocessOtpService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-       
+
         public virtual async Task UpdateAsync(TProcessOtp ObjTProcessOtp, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

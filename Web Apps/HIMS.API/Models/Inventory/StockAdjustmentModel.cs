@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Inventory
 {
-    
+
     public class TCurrentStockModel3
     {
         public long StockId { get; set; }

@@ -3,8 +3,6 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
-using HIMS.API.Models.OutPatient;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -73,6 +71,6 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Sample Collection updated successfully.");
         }
-       
+
     }
 }

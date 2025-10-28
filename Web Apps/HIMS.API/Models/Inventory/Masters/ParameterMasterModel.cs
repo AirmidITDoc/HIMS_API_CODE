@@ -26,7 +26,7 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.ParameterName).NotNull().NotEmpty().WithMessage("ParameterName is required");
             RuleFor(x => x.PrintParameterName).NotNull().NotEmpty().WithMessage("PrintParameterName is required");
             RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
-           
+
         }
     }
     public class MParameterDescriptiveMasterModel
@@ -65,7 +65,7 @@ namespace HIMS.API.Models.Masters
         public MPathParaRangeWithAgeMasterModelValidator()
         {
             RuleFor(x => x.SexId).NotNull().NotEmpty().WithMessage("SexId  is required");
-           
+
         }
     }
     public class CancelParameter

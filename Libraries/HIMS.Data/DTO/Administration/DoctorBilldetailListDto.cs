@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
     public class DoctorBilldetailListDto
     {
         public long ChargesId { get; set; }
-      
+
         public string? ServiceName { get; set; }
         public double? Price { get; set; }
         public double? Qty { get; set; }
@@ -23,6 +17,6 @@ namespace HIMS.Data.DTO.Administration
         public long? DoctorId { get; set; }
         public string? PatientName { get; set; }
         public string? AddChargeDrName { get; set; }
-      
+
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.IPPatient
 {
     public class IPBillForRefundListDto
     {
@@ -23,7 +17,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsCancelled { get; set; }
         public string? RefundAmount { get; set; }
         public decimal? PreviousRefundAmt { get; set; }
-         public decimal? BalanceAmount { get; set; }
+        public decimal? BalanceAmount { get; set; }
 
     }
 }

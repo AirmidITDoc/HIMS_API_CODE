@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using HIMS.API.Controllers.Pharmacy;
-using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -38,7 +37,7 @@ namespace HIMS.API.Controllers.Pharmacy
     {
         public DateTime? Date { get; set; }
         public string? Time { get; set; }
-        public long? UnitId{ get; set; }
+        public long? UnitId { get; set; }
         public long? AdvanceId { get; set; }
         public long? RefId { get; set; }
         public long? TransactionId { get; set; }
@@ -61,7 +60,7 @@ namespace HIMS.API.Controllers.Pharmacy
     public class PaymentPharmacyModel
     {
         public long? BillNo { get; set; }
-        public long? UnitId{ get; set; }
+        public long? UnitId { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
@@ -102,7 +101,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public double? BalanceAmount { get; set; }
         public long AdvanceId { get; set; }
 
-        
+
     }
 
 

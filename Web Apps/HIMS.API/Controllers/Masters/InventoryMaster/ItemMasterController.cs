@@ -1,18 +1,15 @@
-﻿using HIMS.Api.Controllers;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Inventory;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
-using HIMS.Services.Inventory;
-using Asp.Versioning;
-using HIMS.Services.OutPatient;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.Inventory;
+using HIMS.API.Models.Inventory;
 using HIMS.Core;
-using HIMS.Services.OPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Inventory
 {
@@ -106,7 +103,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-     
+
 
         //Delete API
         [HttpDelete]

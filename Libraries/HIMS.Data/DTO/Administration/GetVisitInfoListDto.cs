@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIMS.Data.DTO.Administration
+﻿namespace HIMS.Data.DTO.Administration
 {
-    public  class GetVisitInfoListDto
+    public class GetVisitInfoListDto
     {
-       public long PrecriptionId { get; set; }   
+        public long PrecriptionId { get; set; }
         public DateTime VisitDate { get; set; }
         public long VisitId { get; set; }
         public long OPD_IPD_IP { get; set; }

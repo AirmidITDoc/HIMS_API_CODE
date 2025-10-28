@@ -6,17 +6,13 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Utilities;
-using LinqToDB.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using QRCoder;
 using System.Data;
 using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 using WkHtmlToPdfDotNet;
-using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -8963,7 +8959,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
-                        
+
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -11292,7 +11288,7 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["PFRation"].ConvertToString()).Append("</td></tr>");
 
                         }
-                        
+
 
 
                         html = html.Replace("{{Items}}", items.ToString());
