@@ -36,6 +36,14 @@ namespace HIMS.Services.DoctorPayout
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorPaysummarydetailListDto>(model, "ps_view_DoctorPayoutPatientSummary");
         }
+        public virtual async Task<IPagedList<DoctorShareListDto>> GetLists(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
+        }
+        public virtual async Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
+        }
 
 
 

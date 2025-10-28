@@ -37,7 +37,6 @@ namespace HIMS.API.Controllers.DoctorPayout
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorBilldetailList"));
         }
 
-
         [HttpPost("DoctorPaySummaryList")]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorPaysummaryList(GridRequestModel objGrid)
@@ -54,8 +53,20 @@ namespace HIMS.API.Controllers.DoctorPayout
             IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
-
-
+        [HttpPost("DoctorshareBillList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareListDto> DoctorList = await _IDoctorPayService.GetLists(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
+        }
+        [HttpPost("DoctorshareListByName")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorPayService.GetList1(objGrid);
+            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
+        }
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]

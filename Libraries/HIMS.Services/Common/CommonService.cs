@@ -126,6 +126,11 @@ namespace HIMS.Services.Common
                 case "DashDischargeDateWiseCount": sp_Name = "ps_Dash_DischargeCountLessthan15Day_1"; break;
 
 
+                // Admin Task for Update dates and times
+                case "Admin_Visitlist": sp_Name = "ps_Admin_VisitList"; break;
+                case "Admin_VisitWiseBilllist": sp_Name = "ps_Admin_VisitWiseBillList"; break;
+                case "Admin_VisitBillWisePaymentlist": sp_Name = "ps_Admin_VisitWiseBillPaymentList"; break;
+
                 // Marketing Mobile App API
                 case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
                 case "MarketingTodayVisitCityWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCityWiseCount"; break;

@@ -41,6 +41,8 @@
         public DateTime CardDate { get; set; }
         public DateTime NEFTDate { get; set; }
         public DateTime PayTMDate { get; set; }
+        public long? InterimOrFinal { get; set; }
+
 
     }
 }

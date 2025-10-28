@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public DateTime? ManuDate { get; set; }
         public string? VehicleType { get; set; }
         public string? Note { get; set; }
-        public bool? IsActive { get; set; }
+      
     }
 
     public class VehicleMasterModelValidator : AbstractValidator<VechicleModel>

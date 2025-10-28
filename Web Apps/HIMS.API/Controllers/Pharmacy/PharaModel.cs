@@ -27,7 +27,7 @@ namespace HIMS.API.Models.Pharmacy
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? OPDIPDType { get; set; }
+        public long? Opdipdtype { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -35,8 +35,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TdsAmount { get; set; }
-        public decimal? WfAmount { get; set; }
+        public decimal? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
     }
     public class PharaModelValidator : AbstractValidator<PharaModel>
     {
@@ -48,9 +48,9 @@ namespace HIMS.API.Models.Pharmacy
     }
     public class SaleModel
     {
-        public long? SalesID { get; set; }
-        public double? BalanceAmount { get; set; }
-        public double? RefundAmt { get; set; }
+        public long SalesId { get; set; }
+        public decimal? BalanceAmount { get; set; }
+        public decimal? RefundAmt { get; set; }
     }
     public class SaleModelValidator : AbstractValidator<SaleModel>
     {
