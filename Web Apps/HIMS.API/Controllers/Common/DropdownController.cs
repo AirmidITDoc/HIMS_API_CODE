@@ -61,7 +61,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MCurrencyMaster> _IMCurrencyeService;
         private readonly IGenericService<MItemDrugTypeMaster> _IMItemDrugtypeService;
 
-        private readonly IGenericService<MItemManufactureMaster> _IMItemManufService;
+        private readonly IGenericService<MManufactureMaster> _IMItemManufService;
+
         private readonly IGenericService<MUnitofMeasurementMaster> _IMUnitOfMeasurmentService;
 
         private readonly IGenericService<MConcessionReasonMaster> _IMConcessService;
@@ -119,7 +120,7 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<GroupMaster> iMDgroupMaster, IGenericService<MSubGroupMaster> iMDsubgroupMaster, IGenericService<MTemplateMaster> iMDtemplateMaster,
                               IGenericService<MItemClassMaster> iMDItemClassMaster, IGenericService<MItemCategoryMaster> iMDItemCategoryMaster, IGenericService<MItemTypeMaster> iMDItemTypeMaster
                               , IGenericService<MItemGenericNameMaster> iMDItemgenericeMaster, IGenericService<MCurrencyMaster> iMDCurrencyMaster
-                            , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MItemManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
+                            , IGenericService<MItemDrugTypeMaster> iMDItemdrugtypeMaster, IGenericService<MManufactureMaster> iMDItemanufMaster, IGenericService<MUnitofMeasurementMaster> iMDunitofmeasurementMaster
                             , IGenericService<MConcessionReasonMaster> iMDConcessionMaster, IGenericService<MNursingTemplateMaster> iMDnurNoteMaster, IGenericService<MPathParameterMaster> iMDparameterMaster
                             , IGenericService<RoleMaster> iMDrolerMaster, IGenericService<MDoctorNotesTemplateMaster> iMDrNote, IGenericService<Constants> iconstant,
                               IGenericService<MenuMaster> iMDmenuMaster,
@@ -333,7 +334,8 @@ namespace HIMS.API.Controllers.Common
                 "Currency" => (await _IMCurrencyeService.GetAll()).ToList().ToDropDown(nameof(MCurrencyMaster.CurrencyId), nameof(MCurrencyMaster.CurrencyName)),
                 "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
-                "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemManufactureMaster.ItemManufactureId), nameof(MItemManufactureMaster.ManufactureName)),
+                
+                "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MManufactureMaster.ManufId), nameof(MManufactureMaster.ManufName)),
 
                 "SupplierMaster" => (await _IMSupplierMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSupplierMaster.SupplierId), nameof(MSupplierMaster.SupplierName), nameof(MSupplierMaster.Gstno)),
                 "GstCalcType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_CALC_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
