@@ -16,11 +16,13 @@ namespace HIMS.Data.DTO.Administration
         public string? AdmittedDoctorName { get; set; }
         public string? PatientType { get; set; }
         public string? CompanyName { get; set; }
-        public bool? IsBillShrHold { get; set; }
-        public int  opdipdtype  { get; set; }
+        public byte opdipdtype { get; set; }
+        public long? IsBillShrHold { get; set; }
+        public long DoctorId { get; set; }
+        public decimal? DoctorShareAmount { get; set; }
+        public int? HospitalAmount { get; set; }
+ 
 
-        //public double? DoctorShareAmount { get; set; }
-        //public double? HospitalAmount { get; set; }
 
 
 
