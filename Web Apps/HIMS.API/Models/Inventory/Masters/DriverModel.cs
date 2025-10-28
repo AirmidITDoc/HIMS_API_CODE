@@ -1,4 +1,7 @@
-﻿namespace HIMS.API.Models.Inventory.Masters
+﻿using FluentValidation;
+using HIMS.API.Models.Masters;
+
+namespace HIMS.API.Models.Inventory.Masters
 {
     public class DriverModel
     {
@@ -11,5 +14,15 @@
         public DateTime? JoinDate { get; set; }
         public long? Experience { get; set; }
         public string? LicenceNo { get; set; }
+        public string? CityName { get; set; }
+    }
+    public class DriverModelValidator : AbstractValidator<DriverModel>
+    {
+        public DriverModelValidator()
+        {
+            RuleFor(x => x.DateOfBirth).NotNull().NotEmpty().WithMessage("DateOfBirth  is required");
+            RuleFor(x => x.JoinDate).NotNull().NotEmpty().WithMessage("JoinDate  is required");
+
+        }
     }
 }

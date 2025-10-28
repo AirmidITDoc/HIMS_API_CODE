@@ -14,6 +14,8 @@ namespace HIMS.Services.DoctorPayout
         Task UpdateAsync(List<AddCharge> ObjAddCharge, int CurrentUserId, string CurrentUserName);
         Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username);
         Task UpdateAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username, string[]? references);
+        Task<IPagedList<DoctorShareListDto>> GetLists(GridRequestModel objGrid);
+        Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
 
     }
 }

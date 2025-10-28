@@ -40,14 +40,14 @@ namespace HIMS.Services.Masters
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorLeaveDetailsListDto>(model, "ps_DoctorLeaveDetailsList");
         }
-        public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
-        }
-        public virtual async Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
-        }
+        //public virtual async Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<DoctorShareListDto>(model, "PS_Rtrv_BillListForDocShr");
+        //}
+        //public virtual async Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
+        //}
         public virtual async Task<List<ContantListDto>> ConstantListAsync(string ConstantType)
         {
             var query = _context.MConstants.AsQueryable();
