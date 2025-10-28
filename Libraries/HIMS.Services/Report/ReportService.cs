@@ -4229,6 +4229,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
+                        html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
+
 
 
                         double T_NetAmount = 0;
