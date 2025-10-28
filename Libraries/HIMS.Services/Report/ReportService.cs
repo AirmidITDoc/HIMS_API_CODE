@@ -4229,6 +4229,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
+                        html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
+
 
 
                         double T_NetAmount = 0;
@@ -11010,7 +11012,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));
                         html = html.Replace("{{DL_NO}}", dt.GetColValue("DL_NO"));
-
+                        html = html.Replace("{{TermsAndCondition}}", dt.GetColValue("TermsAndCondition"));
                         html = html.Replace("{{SalesNo}}", dt.GetColValue("SalesNo"));
                         // html = html.Replace("{{Date}}", Bills.GetColValue("Date"));
                         html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/M/yyyy hh:mm tt"));
