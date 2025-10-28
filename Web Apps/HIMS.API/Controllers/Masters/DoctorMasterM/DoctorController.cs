@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
@@ -130,20 +130,20 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
 
-        [HttpPost("DoctorshareBillList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
-        {
-            IPagedList<DoctorShareListDto> DoctorList = await _IDoctorMasterService.GetList(objGrid);
-            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
-        }
-        [HttpPost("DoctorshareListByName")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
-        {
-            IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorMasterService.GetList1(objGrid);
-            return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
-        }
+        //[HttpPost("DoctorshareBillList")]
+        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DoctorShareListDto> DoctorList = await _IDoctorMasterService.GetList(objGrid);
+        //    return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
+        //}
+        //[HttpPost("DoctorshareListByName")]
+        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
+        //{
+        //    IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorMasterService.GetList1(objGrid);
+        //    return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
+        //}
 
 
 
@@ -219,7 +219,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         //}
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(DoctorModel obj)
         {
             if (!string.IsNullOrWhiteSpace(obj.Signature))
@@ -372,7 +372,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpDelete]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             DoctorMaster model = await _IDoctorMasterService.GetById(Id);

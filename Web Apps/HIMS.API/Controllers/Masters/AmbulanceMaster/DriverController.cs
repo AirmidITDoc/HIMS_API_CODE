@@ -48,11 +48,13 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         public async Task<ApiResponse> Post(DriverModel obj)
         {
             MDriverMaster model = obj.MapTo<MDriverMaster>();
-            //model.IsActive = true;
+            model.IsActive = true;
             if (obj.DriverId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -66,6 +68,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         public async Task<ApiResponse> Edit(DriverModel obj)
         {
             MDriverMaster model = obj.MapTo<MDriverMaster>();
+            model.IsActive = true;
             if (obj.DriverId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
@@ -84,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             MDriverMaster model = await _repository.GetById(x => x.DriverId == Id);
             if ((model?.DriverId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

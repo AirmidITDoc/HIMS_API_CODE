@@ -21,11 +21,10 @@ namespace HIMS.Services.Masters
         Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId);
 
         Task<List<DoctorMaster>> SearchDoctor(string str);
-        Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel objGrid);
-        Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
+        //Task<IPagedList<DoctorShareListDto>> GetList(GridRequestModel objGrid);
+        //Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
         Task<List<DoctorMaster>> GetDoctorWithDepartment();
         Task<List<ContantListDto>> ConstantListAsync(string ConstantType);
-        //Task<List<BedmasterDto>> GetBedmaster(int RoomId);
 
 
 
