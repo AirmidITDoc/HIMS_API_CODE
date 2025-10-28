@@ -8,6 +8,7 @@ using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using System.Security.Principal;
 
 namespace HIMS.Services.Users
 {
@@ -695,11 +696,12 @@ namespace HIMS.Services.Users
 
             foreach (var item in ObjPayment)
             {
-                string[] rEntity = { "StrId", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "PaymentId", "UnitId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "Tdsamount", "Wfamount", "PayTmdate" };
                 var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
                 string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", entity);
                 //    ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
@@ -707,34 +709,34 @@ namespace HIMS.Services.Users
 
             foreach (var item in ObjTSalesHeader)
             {
-                string[] REntity = {  "Date","Time","SalesNo","OpIpId", "OpIpType","NetAmount","PaidAmount", "TotalAmount", "VatAmount", "DiscAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy",
-                "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "CreditReason", "CreditReasonId", "ExtRegNo", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "IsRefundFlag", "RegId", "SalesHeadName", "SalesTypeId", "PatientName", "RegNo",
-                "UpdatedBy", "ExtMobileNo", "RoundOff","ExtAddress","IsCancelled", "TSalesDetails" };
+                string[] REntity = { "SalesId", "BalanceAmount", "RefundAmt" };
                 var Tentity = item.ToDictionary();
-                foreach (var rProperty in REntity)
+                foreach (var rProperty in Tentity.Keys.ToList())
                 {
-                    Tentity.Remove(rProperty);
+                    if (!REntity.Contains(rProperty))
+                        Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_update_Pharmacy_BillBalAmount_1", CommandType.StoredProcedure, Tentity);
             }
             foreach (var item in ObjAdvanceDetail)
             {
 
-                string[] Entity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "RefundAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason",
-                                       "UnitId","CashCounterId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                string[] Entity = { "AdvanceDetailID", "UsedAmount", "BalanceAmount"};
                 var Ientity = item.ToDictionary();
-                foreach (var rProperty in Entity)
+                foreach (var rProperty in Ientity.Keys.ToList())
                 {
-                    Ientity.Remove(rProperty);
+                    if (!Entity.Contains(rProperty))
+                        Ientity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetail_1", CommandType.StoredProcedure, Ientity);
             }
 
-            string[] TEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "UnitId", "CashCounterId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] TEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
             var Nentity = ObjAdvanceHeader.ToDictionary();
-            foreach (var rProperty in TEntity)
+            foreach (var rProperty in Nentity.Keys.ToList())
             {
-                Nentity.Remove(rProperty);
+                if (!TEntity.Contains(rProperty))
+                    Nentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_T_PHAdvanceHeader_1", CommandType.StoredProcedure, Nentity);
 

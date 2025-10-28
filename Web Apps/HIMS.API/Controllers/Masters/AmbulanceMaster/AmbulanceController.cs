@@ -54,6 +54,8 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -85,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
             MVehicleMaster model = await _repository.GetById(x => x.VehicleId == Id);
             if ((model?.VehicleId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
