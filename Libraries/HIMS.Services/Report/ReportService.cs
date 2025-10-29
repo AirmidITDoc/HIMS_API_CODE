@@ -5903,6 +5903,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName").ToUpper());
                             html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                             html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+                            html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
+
                             html = html.Replace("{{AdmittedDoctor1}}", dt.GetColValue("AdmittedDoctor1").ToUpper());
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName").ToUpper());
 
@@ -5925,7 +5927,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkMLCflag}}", isMLC ? "table-row" : "none");
                             html = html.Replace("{{chkMLCflag1}}", !isMLC ? "table-row" : "none");
 
-
+                            html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
                             html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
 
