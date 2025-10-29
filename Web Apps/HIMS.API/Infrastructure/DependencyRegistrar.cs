@@ -154,6 +154,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDischargeServiceSP, DischargeServiceSP>();
             services.AddScoped<IOPSettlementService, OPSettlementService>();
             services.AddScoped<IOPBillShilpaService, OPBillShilpaService>();
+            services.AddScoped<ILabPatientRegistrationService, LabPatientRegistrationService>();
+
 
 
 

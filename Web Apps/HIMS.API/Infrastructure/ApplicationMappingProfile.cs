@@ -770,6 +770,15 @@ namespace HIMS.API.Infrastructure
             CreateMap<MReportTemplateConfig, ReportTemplateConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<BarcodeConfigMaster, BarcodeConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TOtRequestHeader, TOtRequestHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtRequestSurgeryDetail, TOtRequestSurgeryDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtRequestAttendingDetail, TOtRequestAttendingDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabPatientRegistration, LabPatientRegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabTestRequest, TLabTestRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            
+
+
         }
     }
 }
