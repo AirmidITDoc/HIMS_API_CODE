@@ -393,7 +393,7 @@ namespace HIMS.API.Controllers.Common
 
 
                 "vechicle" => (await _MVehicleMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MVehicleMaster.VehicleId), nameof(MVehicleMaster.VehicleName)),
-                //"Driver" => (await _MDriverMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDriverMaster.DriverId), nameof(MDriverMaster.DriverName)),
+                "Driver" => (await _MDriverMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDriverMaster.DriverId), nameof(MDriverMaster.DriverName)),
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),

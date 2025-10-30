@@ -5,7 +5,7 @@
 
         public string? AddChargeDrName { get; set; }
         public long PBillNo { get; set; }
-
+        public long BillNo { get; set; }
         public long? ChargesId { get; set; }
         public string? ServiceName { get; set; }
 
