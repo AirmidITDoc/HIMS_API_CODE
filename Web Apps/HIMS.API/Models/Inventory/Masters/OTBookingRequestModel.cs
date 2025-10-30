@@ -48,7 +48,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long OtrequestId { get; set; }
         public DateTime? OtrequestDate { get; set; }
         public string? OtrequestTime { get; set; }
-        public string? OtrequestNo { get; set; }
+        //public string? OtrequestNo { get; set; }
         public long? Opipid { get; set; }
         public byte? Opiptype { get; set; }
         public string? BloodGroup { get; set; }
@@ -56,7 +56,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? Ottable { get; set; }
         public DateTime? SurgeryDate { get; set; }
         public string? EstimateTime { get; set; }
-        public string? Diagnosis { get; set; }
+        //public string? Diagnosis { get; set; }
         public string? Comments { get; set; }
         public bool? RequestType { get; set; }
         public bool? Pacrequired { get; set; }
@@ -69,6 +69,8 @@ namespace HIMS.API.Models.Inventory.Masters
         public DateTime? IsCancelledDateTime { get; set; }
         public List<TOtRequestSurgeryDetailModel> TOtRequestSurgeryDetails { get; set; }
         public List<TOtRequestAttendingDetailModel> TOtRequestAttendingDetails { get; set; }
+        public List<TOtRequestDiagnosisModel> TOtRequestDiagnoses { get; set; }
+
 
 
     }
@@ -95,7 +97,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
-        public int? SeqNo { get; set; }
+        //public int? SeqNo { get; set; }
 
     }
     public class TOtRequestSurgeryDetailModelModelValidator : AbstractValidator<TOtRequestSurgeryDetailModel>
@@ -113,7 +115,15 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? OtrequestId { get; set; }
         public long? DoctorTypeId { get; set; }
         public long? DoctorId { get; set; }
-        public int? SeqNo { get; set; }
+        //public int? SeqNo { get; set; }
 
     }
+    public partial class TOtRequestDiagnosisModel
+    {
+        public long OtrequestDiagnosisDetId { get; set; }
+        public long? OtrequestId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+    }
 }
+

@@ -46,16 +46,7 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        //public virtual async Task InsertAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TOtRequestHeaders.Add(ObjTOtRequestHeader);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
+     
 
         public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
@@ -88,42 +79,6 @@ namespace HIMS.Services.Pathlogy
         }
       
 
-        //public virtual async Task UpdateAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username, string[]? ignoreColumns = null)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // 1. Attach the entity without marking everything as modified
-        //        _context.Attach(ObjTOtRequestHeader);
-        //        _context.Entry(ObjTOtRequestHeader).State = EntityState.Modified;
-
-        //        // 2. Ignore specific columns
-        //        if (ignoreColumns?.Length > 0)
-        //        {
-        //            foreach (var column in ignoreColumns)
-        //            {
-        //                _context.Entry(ObjTOtRequestHeader).Property(column).IsModified = false;
-        //            }
-        //        }
-        //        //Delete details table realted records
-        //        var lst = await _context.TOtRequestSurgeryDetails.Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId).ToListAsync();
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.TOtRequestSurgeryDetails.RemoveRange(lst);
-        //        }
-
-        //        await _context.SaveChangesAsync();
-        //        //Delete details table realted records
-        //        var lsts = await _context.TOtRequestAttendingDetails.Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId).ToListAsync();
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.TOtRequestSurgeryDetails.RemoveRange(lst);
-        //        }
-
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
-
+        
     }
 }

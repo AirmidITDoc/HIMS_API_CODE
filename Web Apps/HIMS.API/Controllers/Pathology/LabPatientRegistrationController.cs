@@ -69,41 +69,6 @@ namespace HIMS.API.Controllers.Pathology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-        //[HttpPost("Insert")]
-        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(TOtRequestHeaderModel obj)
-        //{
-        //    TOtRequestHeader model = obj.MapTo<TOtRequestHeader>();
-        //    if (obj.OtrequestId == 0)
-        //    {
-        //        model.CreatedDate = DateTime.Now;
-        //        model.Createdby = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _ILabPatientRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
-    
-
-
-        //[HttpPut("Edit/{id:int}")]
-        ////[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(TOtRequestHeaderModel obj)
-        //{
-        //    TOtRequestHeader model = obj.MapTo<TOtRequestHeader>();
-        //    if (obj.OtrequestId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.ModifiedDate = DateTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _ILabPatientRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
+       
     }
 }

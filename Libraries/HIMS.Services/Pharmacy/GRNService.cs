@@ -112,12 +112,54 @@ namespace HIMS.Services.Pharmacy
             await _context.SaveChangesAsync();
         }
 
+        //public virtual async Task InsertAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update store table records
+        //        MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRN.StoreId);
+        //        StoreInfo.GrnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnNo) + 1);
+        //        _context.MStoreMasters.Update(StoreInfo);
+        //        await _context.SaveChangesAsync();
+
+        //        // Add header & detail table records
+        //        objGRN.GrnNumber = StoreInfo.GrnNo;
+        //        _context.TGrnheaders.Add(objGRN);
+        //        await _context.SaveChangesAsync();
+
+        //        //// Update item master table records
+        //        //_context.MItemMasters.UpdateRange(objItems);
+        //        //await _context.SaveChangesAsync();
+        //        //scope.Complete();
+
+        //        // Update item master table records (only specific fields)
+        //        foreach (var item in objItems)
+        //        {
+        //            _context.MItemMasters.Attach(item);
+
+        //            _context.Entry(item).Property(x => x.Hsncode).IsModified = true;
+        //            _context.Entry(item).Property(x => x.ConversionFactor).IsModified = true;
+        //            _context.Entry(item).Property(x => x.Cgst).IsModified = true;
+        //            _context.Entry(item).Property(x => x.Sgst).IsModified = true;
+        //            _context.Entry(item).Property(x => x.Igst).IsModified = true;
+        //        }
+
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+
+
+        //    }
+        //}
         public virtual async Task InsertAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
             {
-                // Update store table records
                 MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objGRN.StoreId);
+
+                if (StoreInfo == null)
+                    throw new Exception("Invalid StoreId.");
+
                 StoreInfo.GrnNo = Convert.ToString(Convert.ToInt32(StoreInfo.GrnNo) + 1);
                 _context.MStoreMasters.Update(StoreInfo);
                 await _context.SaveChangesAsync();
@@ -127,16 +169,19 @@ namespace HIMS.Services.Pharmacy
                 _context.TGrnheaders.Add(objGRN);
                 await _context.SaveChangesAsync();
 
-                //// Update item master table records
-                //_context.MItemMasters.UpdateRange(objItems);
-                //await _context.SaveChangesAsync();
-                //scope.Complete();
-
-                // Update item master table records (only specific fields)
+                // ✅ Update only specific fields for ItemMaster safely
                 foreach (var item in objItems)
                 {
+                    var local = _context.MItemMasters.Local
+                        .FirstOrDefault(entry => entry.ItemId == item.ItemId);
+
+                    if (local != null)
+                        _context.Entry(local).State = EntityState.Detached;
+
+                    // Attach fresh instance
                     _context.MItemMasters.Attach(item);
 
+                    // Mark only selected fields as modified
                     _context.Entry(item).Property(x => x.Hsncode).IsModified = true;
                     _context.Entry(item).Property(x => x.ConversionFactor).IsModified = true;
                     _context.Entry(item).Property(x => x.Cgst).IsModified = true;
@@ -146,10 +191,9 @@ namespace HIMS.Services.Pharmacy
 
                 await _context.SaveChangesAsync();
                 scope.Complete();
-
-
             }
         }
+
 
         public virtual async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {

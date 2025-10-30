@@ -99,6 +99,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MMarketingHospitalMaster> _MMarketingHospitalMaster;
         private readonly IGenericService<MVehicleMaster> _MVehicleMaster;
         private readonly IGenericService<MDriverMaster> _MDriverMaster;
+        private readonly IGenericService<MOttypeMaster> _MOttypeMaster;
+
 
 
 
@@ -145,8 +147,10 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOutSourcelabMaster> IMOutSourcelabMaster,
                               IGenericService<MCreditReasonMaster> IMCreditReasonMaster,
                               IGenericService<MMarketingHospitalMaster> IMMarketingHospitalMaster,
-                                 IGenericService<MVehicleMaster> MVehicleMaster,
-                              IGenericService<MDriverMaster> MDriverMaster
+                              IGenericService<MVehicleMaster> MVehicleMaster,
+                              IGenericService<MDriverMaster> MDriverMaster,
+                              IGenericService<MOttypeMaster> MOttypeMaster
+
 
 
 
@@ -240,6 +244,8 @@ namespace HIMS.API.Controllers.Common
             _MMarketingHospitalMaster = IMMarketingHospitalMaster;
             _MVehicleMaster = MVehicleMaster;
             _MDriverMaster = MDriverMaster;
+            _MOttypeMaster = MOttypeMaster;
+
 
 
 
@@ -390,6 +396,8 @@ namespace HIMS.API.Controllers.Common
                 "ExpHeadMaster" => (await _MExpensesHeadMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
                 "OutsourceLab" => (await _MOutSourcelabMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOutSourcelabMaster.OutSourceId), nameof(MOutSourcelabMaster.OutSourceLabName)),
                 "CreditReason" => (await _MCreditReasonMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCreditReasonMaster.CreditId), nameof(MCreditReasonMaster.CreditReason)),
+                "OttypeMaster" => (await _MOttypeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOttypeMaster.OttypeId), nameof(MOttypeMaster.TypeName)),
+
 
 
                 "vechicle" => (await _MVehicleMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MVehicleMaster.VehicleId), nameof(MVehicleMaster.VehicleName)),

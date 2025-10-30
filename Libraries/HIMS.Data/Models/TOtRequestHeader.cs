@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public TOtRequestHeader()
         {
             TOtRequestAttendingDetails = new HashSet<TOtRequestAttendingDetail>();
+            TOtRequestDiagnoses = new HashSet<TOtRequestDiagnosis>();
             TOtRequestSurgeryDetails = new HashSet<TOtRequestSurgeryDetail>();
         }
 
@@ -30,7 +31,7 @@ namespace HIMS.Data.Models
         public bool? ClearanceMedical { get; set; }
         public bool? ClearanceFinancial { get; set; }
         public bool? Infective { get; set; }
-        public long? Createdby { get; set; }
+        public long? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
@@ -39,6 +40,7 @@ namespace HIMS.Data.Models
         public DateTime? IsCancelledDateTime { get; set; }
 
         public virtual ICollection<TOtRequestAttendingDetail> TOtRequestAttendingDetails { get; set; }
+        public virtual ICollection<TOtRequestDiagnosis> TOtRequestDiagnoses { get; set; }
         public virtual ICollection<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; }
     }
 }

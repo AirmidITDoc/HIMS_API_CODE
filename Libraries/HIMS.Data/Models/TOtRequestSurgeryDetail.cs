@@ -17,6 +17,10 @@ namespace HIMS.Data.Models
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
         public string? SeqNo { get; set; }
+        public long? Createdby { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
 
         public virtual TOtRequestHeader? Otrequest { get; set; }
     }
