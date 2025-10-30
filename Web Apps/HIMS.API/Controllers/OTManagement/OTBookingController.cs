@@ -19,6 +19,8 @@ namespace HIMS.API.Controllers.IPPatient
     [ApiVersion("1")]
 
     public class OTBookingController : BaseController
+            //public class OTRequestController : BaseController
+
     {
         private readonly IOTBookingRequestService _OTBookingRequestService;
         private readonly IGenericService<TOtbookingRequest> _repository;
@@ -44,43 +46,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
         }
 
-        [HttpPost("Insert")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(OTBookingRequestModel obj)
-        {
-            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
-            if (obj.OtbookingId == 0)
-            {
-                model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
-                model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
-                model.CreatedDate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.ModifiedBy = CurrentUserId;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
-        }
-        [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(OTBookingRequestModel obj)
-        {
-            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
-            if (obj.OtbookingId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.OtbookingDate = Convert.ToDateTime(obj.OtbookingDate);
-                model.OtbookingTime = Convert.ToDateTime(obj.OtbookingTime);
-                model.ModifiedDate = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
-        }
-
+      
 
         [HttpPost("Cancel")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]

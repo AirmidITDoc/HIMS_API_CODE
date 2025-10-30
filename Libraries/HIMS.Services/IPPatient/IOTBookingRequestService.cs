@@ -6,8 +6,6 @@ namespace HIMS.Services.IPPatient
 {
     public partial interface IOTBookingRequestService
     {
-        Task InsertAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
-        Task UpdateAsync(TOtbookingRequest objOTBooking, int UserId, string Username);
         Task<IPagedList<OTBookingRequestListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<OTBookingRequestEmergencyListDto>> GetListAsynco(GridRequestModel objGrid);
 
