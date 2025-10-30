@@ -238,7 +238,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record update successfully.");
         }
         [HttpPost("CrossConsultationInsert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CrossConsultationModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -255,7 +255,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPut("ConsultantDoctorUpdate/{id:int}")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdateAsync(ConsRefDoctorModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -263,7 +263,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                await _IConsRefDoctorService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.ConsultantDoctorUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

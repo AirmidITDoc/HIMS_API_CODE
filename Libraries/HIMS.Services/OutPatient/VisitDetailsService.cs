@@ -452,6 +452,21 @@ namespace HIMS.Services.OutPatient
             return objCrossConsultation;
 
         }
+        public virtual async Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] rEntity = { "ConsultantDocId", "DepartmentId", "VisitId"};
+            var entity = objVisitDetail.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+        }
         public virtual async Task UpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

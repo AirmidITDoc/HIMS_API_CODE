@@ -69,6 +69,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         public async Task<ApiResponse> Edit(VechicleModel obj)
         {
             MVehicleMaster model = obj.MapTo<MVehicleMaster>();
+            model.IsActive = true;
             if (obj.VehicleId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
