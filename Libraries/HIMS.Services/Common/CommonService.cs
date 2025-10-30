@@ -110,7 +110,6 @@ namespace HIMS.Services.Common
                 case "ExpHeadMaster": sp_Name = "Retrieve_M_ExpHeadMasterForCombo"; break;
                 case "TemplateDescCategory": sp_Name = "ps_TemplateDescCategoryList"; break;
 
-
                 // Mobile App API
                 case "HomeDashboardAPI": sp_Name = "ps_DASH_APPOINTMENT_COUNT"; break;
                 case "DashOPDepatmentWiseCount": sp_Name = "ps_DASH_OP_DEPARTMENTCOUNT"; break;
@@ -130,6 +129,7 @@ namespace HIMS.Services.Common
                 case "Admin_Visitlist": sp_Name = "ps_Admin_VisitList"; break;
                 case "Admin_VisitWiseBilllist": sp_Name = "ps_Admin_VisitWiseBillList"; break;
                 case "Admin_VisitBillWisePaymentlist": sp_Name = "ps_Admin_VisitWiseBillPaymentList"; break;
+                case "Admin_VisitRefundBillWiselist": sp_Name = "ps_Admin_VisitWiseRefundBillList"; break;
 
                 // Marketing Mobile App API
                 case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
