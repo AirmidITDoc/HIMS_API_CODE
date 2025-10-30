@@ -10,13 +10,13 @@
 <div>
     <body>
         <div class="main-content-wrapper">
-            <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;padding-top:100px;">
+            <div class="invoice-box" style="font-size: 22px;line-height: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;padding-top:100px;">
                 <table style="width: 100%;line-height: inherit;text-align: left;">
                     <!--{{NewHeader}}-->
                     <tr class="title-date-row">
                         <td style="padding: 6px;">
                             <table style="width: 100%; border-collapse: collapse;">
-                                <tr style="font-size: 22px;">
+                                <tr style="font-size: 20px;">
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>OP Case Paper</b></td>
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                                 </tr>
@@ -25,7 +25,7 @@
                     </tr>
                     <tr class="bill-info-row">
                         <td style="padding: 6px;">
-                            <table style="width: 100%; border-collapse: collapse;font-size: 22px;">
+                            <table style="width: 100%; border-collapse: collapse;font-size: 20px;">
                                 <tr>
                                     <td style="padding: 2px;">
                                         <span style="font-weight:bold;">UHID No. : </span>
@@ -119,8 +119,8 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr>
             <td style="padding: 6px;">
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead style="font-size: 14px; font-weight: bold; font-size: 24px;">
+                <table style="width: 100%; border-collapse: collapse; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+                    <thead style="font-size: 14px; font-weight: bold; font-size: 20px;">
                         <tr>
                             <td style="border: 1px solid #000; text-align: center; padding: 6px; width:10%" rowspan="2">Sr.No</td>
                             <td style="border: 1px solid #000; text-align: center; padding: 6px;width:40%" rowspan="2">
@@ -272,14 +272,14 @@
 
 
         <tr>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 24px;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
                 <tr></tr>
 
-                <tr><td><span style="font-size:24px;font-weight:bold;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
-                <br />
-                <tr><td><sapn style="font-size:24px;font-weight:bold;">Emergency Contact</sapn></td></tr>
+                <!--<tr><td><span style="font-size:20px;font-weight:bold;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
+                <br />-->
+                <tr><td><sapn style="font-size:20px;font-weight:bold;">Emergency Contact</sapn></td></tr>
                 <tr style="padding: 6px; text-align: left;">
-                    <td><sapn style="font-size:24px;font-weight:bold;"> Follow Up Date : </sapn></td>
+                    <td><sapn style="font-size:20px;font-weight:bold;"> Follow Up Date : </sapn></td>
 
                     <td>
                     </td>
@@ -289,7 +289,12 @@
                     </td>
                 </tr>
 
-
+                <tr>
+                    <td style="padding-top:40px;">
+                        <!-- 👈 Adds vertical space before the note -->
+                        <span style="font-size: 20px; font-style: italic;">Note:- Don't Stop any Medication Without Doctor Consultation...</span>
+                    </td>
+                </tr>
 
 
             </table>
