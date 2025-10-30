@@ -476,6 +476,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
         public virtual DbSet<TOtRequestAttendingDetail> TOtRequestAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtRequestDiagnosis> TOtRequestDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtRequestHeader> TOtRequestHeaders { get; set; } = null!;
         public virtual DbSet<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
@@ -13793,16 +13794,36 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.OtrequestAttendingDetId).HasColumnName("OTRequestAttendingDetId");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
 
                 entity.HasOne(d => d.Otrequest)
                     .WithMany(p => p.TOtRequestAttendingDetails)
                     .HasForeignKey(d => d.OtrequestId)
                     .HasConstraintName("FK_T_OT_RequestAttendingDetails_T_OT_RequestHeader");
+            });
+
+            modelBuilder.Entity<TOtRequestDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtrequestDiagnosisDetId);
+
+                entity.ToTable("T_OT_RequestDiagnosis");
+
+                entity.Property(e => e.OtrequestDiagnosisDetId).HasColumnName("OTRequestDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
+
+                entity.HasOne(d => d.Otrequest)
+                    .WithMany(p => p.TOtRequestDiagnoses)
+                    .HasForeignKey(d => d.OtrequestId)
+                    .HasConstraintName("FK_T_OT_RequestDiagnosis_T_OT_RequestHeader");
             });
 
             modelBuilder.Entity<TOtRequestHeader>(entity =>
@@ -13859,7 +13880,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.OtrequestSurgeryDetId).HasColumnName("OTRequestSurgeryDetId");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.IsPrimary).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
 

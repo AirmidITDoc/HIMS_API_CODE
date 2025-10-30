@@ -16,8 +16,7 @@ namespace HIMS.Services.Pathlogy
 
         Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
         Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? references);
-        //Task InsertAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username);
-        //Task UpdateAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username, string[]? references);
+       
 
     }
 }
