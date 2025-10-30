@@ -355,15 +355,15 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                #region :: AppointmentReceipt ::
-                case "AppointmentReceipt":
+                #region :: AppointmentReceiptWithoutHeader ::
+                case "AppointmentReceiptWithoutHeader":
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceiptWithoutHeader" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -377,9 +377,10 @@ namespace HIMS.Services.Report
                         //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt", Orientation.Portrait);
                         //break;
                     }
-                #endregion
-                #region :: AppointmentReceiptWithHeader ::
-                case "AppointmentReceiptWithHeader":
+                    #endregion
+                    
+                #region :: AppointmentReceipt ::
+                case "AppointmentReceipt":
                     {
                         string[] colList = { };
 
@@ -389,7 +390,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceiptWithHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -5494,7 +5495,7 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-                case "AppointmentReceiptWithHeader":
+                case "AppointmentReceiptWithoutHeader":
                     {
 
 
