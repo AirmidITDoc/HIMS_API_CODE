@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 
+
 namespace HIMS.API.Models.Inventory.Masters
 {
     public class OTBookingRequestModel
@@ -84,7 +85,7 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.EstimateTime).NotNull().NotEmpty().WithMessage("EstimateTime is required");
         }
     }
-    public partial class TOtRequestSurgeryDetailModel
+    public  class TOtRequestSurgeryDetailModel
     {
         public long OtrequestSurgeryDetId { get; set; }
         public long? OtrequestId { get; set; }
@@ -118,12 +119,14 @@ namespace HIMS.API.Models.Inventory.Masters
         //public int? SeqNo { get; set; }
 
     }
-    public partial class TOtRequestDiagnosisModel
+    public  class TOtRequestDiagnosisModel
     {
         public long OtrequestDiagnosisDetId { get; set; }
         public long? OtrequestId { get; set; }
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
     }
+    
+
 }
 

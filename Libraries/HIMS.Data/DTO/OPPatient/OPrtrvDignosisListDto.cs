@@ -6,4 +6,11 @@
         public long Id { get; set; }
         public string DescriptionName { get; set; }
     }
+    public class TOtRequestDiagnosisListDto
+    {
+        public long OtrequestDiagnosisDetId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+    }
+
 }

@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -102,8 +103,34 @@ namespace HIMS.Services.IPPatient
                     scope.Complete();
                 }
             }
+        public virtual async Task<List<TOtRequestDiagnosisListDto>> GetDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtRequestDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtrequestDiagnosisDetId)
+                .Select(d => new TOtRequestDiagnosisListDto
+                {
+                    OtrequestDiagnosisDetId = d.OtrequestDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
         }
+   
+
+
     }
+}
 
    
 

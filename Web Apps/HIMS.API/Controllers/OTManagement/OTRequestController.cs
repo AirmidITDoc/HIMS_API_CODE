@@ -21,12 +21,22 @@ namespace HIMS.API.Controllers.IPPatient
     public class OTRequestController : BaseController
     {
         private readonly IOTBookingRequestService _OTBookingRequestService;
-        private readonly IGenericService<TOtbookingRequest> _repository;
+        private readonly IGenericService<TOtRequestHeader> _repository;
+        private readonly IGenericService<TOtRequestAttendingDetail> _repository1;
+        private readonly IGenericService<TOtRequestDiagnosis> _repository2;
+        private readonly IGenericService<TOtRequestSurgeryDetail> _repository3;
 
-        public OTRequestController(IOTBookingRequestService repository, IGenericService<TOtbookingRequest> repository1)
+
+
+        public OTRequestController(IOTBookingRequestService repository, IGenericService<TOtRequestHeader> repository1, IGenericService<TOtRequestAttendingDetail> repository2, IGenericService<TOtRequestDiagnosis> repository3, IGenericService<TOtRequestSurgeryDetail> repository4)
         {
             _OTBookingRequestService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+            _repository2 = repository3;
+            _repository3 = repository4;
+
+
 
         }
         [HttpPost("OtbookingRequestList")]
@@ -43,24 +53,49 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OTBookingRequestEmergencyListDto> OTBookingRequestEmergencyList = await _OTBookingRequestService.GetListAsynco(objGrid);
             return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
         }
+        //List API
+        [HttpPost("RequestList")]
 
-
-
-        [HttpPost("Cancel")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
-        public ApiResponse Cancel(OTBookingRequestCancel obj)
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List2(GridRequestModel objGrid)
         {
-            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
-
-            if (obj.OtbookingId != 0)
-            {
-                model.OtbookingId = obj.OtbookingId;
-                _OTBookingRequestService.Cancel(model, CurrentUserId, CurrentUserName);
-            }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+            IPagedList<TOtRequestHeader> RequestList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(RequestList.ToGridResponse(objGrid, "RequestList "));
         }
+        [HttpPost("OtRequestAttendingDetailList")]
+
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List3(GridRequestModel objGrid)
+        {
+            IPagedList<TOtRequestAttendingDetail> OtRequestAttendingDetailList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OtRequestAttendingDetailList "));
+        }
+        [HttpPost("OtRequestDiagnosisList")]
+
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List4(GridRequestModel objGrid)
+        {
+            IPagedList<TOtRequestDiagnosis> OtRequestDiagnosisList = await _repository2.GetAllPagedAsync(objGrid);
+            return Ok(OtRequestDiagnosisList.ToGridResponse(objGrid, "OtRequestDiagnosisList "));
+        }
+        [HttpPost("OtRequestSurgeryDetailList")]
+
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List5(GridRequestModel objGrid)
+        {
+            IPagedList<TOtRequestSurgeryDetail> OtRequestSurgeryDetailList = await _repository3.GetAllPagedAsync(objGrid);
+            return Ok(OtRequestSurgeryDetailList.ToGridResponse(objGrid, "OtRequestDiagnosisList "));
+        }
+       
+        [HttpGet("GetRequestDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDiagnosisList(string DescriptionType)
+        {
+            var result = await _OTBookingRequestService.GetDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetDiagnosisList", result);
+        }
+
+
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
@@ -98,5 +133,22 @@ namespace HIMS.API.Controllers.IPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpPost("Cancel")]
+        [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(OTBookingRequestCancel obj)
+        {
+            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
+
+            if (obj.OtbookingId != 0)
+            {
+                model.OtbookingId = obj.OtbookingId;
+                _OTBookingRequestService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
     }
+
 }
