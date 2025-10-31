@@ -22,13 +22,15 @@ namespace HIMS.Services.OutPatient
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
         Task<List<VisitDetailsListSearchDto>> VisitDetailsListSearchDto(string Keyword);
         Task<VisitDetailsListSearchDto> PatientByVisitId(long VisitId);
-        Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
+        Task InsertAsyncSP(VisitDetail objCrossConsultation, int UserId, string Username);
         void UpdateVital(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task UpdateAsyncv(VisitDetail ObjVisitDetail, int UserId, string Username);
         void RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username);
         List<VisitDetailsListSearchDto> SearchPatient(string Keyword);
         Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int UserId, string Username);
+        Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
+
 
 
 

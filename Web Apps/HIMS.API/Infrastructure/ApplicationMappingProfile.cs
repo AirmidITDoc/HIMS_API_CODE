@@ -756,6 +756,8 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TStockAdjustment, PharStockAdjustmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, TCurrentStockModell>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, VisitDateTimeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

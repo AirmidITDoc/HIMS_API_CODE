@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -25,6 +26,20 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OTBookingRequestEmergencyListDto>(model, "m_Rtrv_OTBookingRequestlist_EmergencyList");
         }
+        public virtual async Task<IPagedList<OtRequestSurgeryDetailListDto>> GetListAsyncs(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OtRequestSurgeryDetailListDto>(model, "rtrv_requestsurgeryList");
+        }
+        public virtual async Task<IPagedList<OtRequestListDto>> GetListAsyncot(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OTRequestListDemo");
+        }
+        public virtual async Task<IPagedList<OtRequestAttendingDetailListDto>> GetListAsyncor(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OtRequestAttendingDetailListDto>(model, "rtrv_requestAttendentList");
+        }
+
+
 
         public virtual void Cancel(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username)
         {
@@ -102,8 +117,34 @@ namespace HIMS.Services.IPPatient
                     scope.Complete();
                 }
             }
+        public virtual async Task<List<TOtRequestDiagnosisListDto>> GetDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtRequestDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtrequestDiagnosisDetId)
+                .Select(d => new TOtRequestDiagnosisListDto
+                {
+                    OtrequestDiagnosisDetId = d.OtrequestDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
         }
+   
+
+
     }
+}
 
    
 
