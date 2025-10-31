@@ -127,7 +127,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -152,7 +152,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
             //Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
@@ -248,7 +248,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
                 model.UpdatedBy = CurrentUserId;
-                model = await _visitDetailsService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+               await _visitDetailsService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

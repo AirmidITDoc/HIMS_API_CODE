@@ -435,7 +435,7 @@ namespace HIMS.Services.OutPatient
                 scope.Complete();
             }
         }
-        public virtual async Task<VisitDetail> InsertAsyncSP(VisitDetail objCrossConsultation, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(VisitDetail objCrossConsultation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
@@ -447,9 +447,14 @@ namespace HIMS.Services.OutPatient
             }
             string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
-            await _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+            var tokenObj = new
+            {
+                VisitId = Convert.ToInt32(VisitID)
+            };
+            odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-            return objCrossConsultation;
 
         }
         public virtual async Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)

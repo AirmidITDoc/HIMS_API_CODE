@@ -411,6 +411,8 @@ namespace HIMS.API.Controllers.Common
                 "MarketingBedCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingBedCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "MarketingFollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingFollowupType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "MarketingStatus" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingStatus")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "ResourcesTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Resources_Types")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
 
                 _ => new List<SelectListItem>()
             };
