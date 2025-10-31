@@ -101,6 +101,13 @@
         public string ConversionFactor { get; set; }
         public long? ExpDays { get; set; }
         public long? DaysFlag { get; set; }
+        public double? MinQty { get; set; }
+        public double? MaxQty { get; set; }
+        public long? ItemGenericNameId { get; set; }
+        public string? ItemGenericName { get; set; }
+
+
+
         public string? ProdLocation { get; set; }
     }
 
