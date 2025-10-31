@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Administration;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
@@ -315,7 +316,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RequestForOPTOIP")]
-        //[Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(RequestForOPTOIP obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
@@ -329,6 +330,22 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
         }
+
+        [HttpPut("UpdateVisitdatetime{id:int}")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
+        public ApiResponse Update(VisitDateTimeModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                _visitDetailsService.VistDateTimeUpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
 
     }
 }

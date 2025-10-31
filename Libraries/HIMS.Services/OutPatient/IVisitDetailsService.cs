@@ -29,6 +29,8 @@ namespace HIMS.Services.OutPatient
         void RequestForOPTOIP(VisitDetail ObjVisitDetail, int UserId, string Username);
         List<VisitDetailsListSearchDto> SearchPatient(string Keyword);
         Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int UserId, string Username);
+        Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
+
 
 
 

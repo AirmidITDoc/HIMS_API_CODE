@@ -510,6 +510,20 @@ namespace HIMS.Services.OutPatient
 
             odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
         }
+        public virtual async Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "VisitId", "VisitDate", "VisitTime" };
+            var Rentity = ObjVisitDetail.ToDictionary();
+            foreach (var rProperty in Rentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_VisitDateTime", CommandType.StoredProcedure, Rentity);
+
+        }
 
 
 
