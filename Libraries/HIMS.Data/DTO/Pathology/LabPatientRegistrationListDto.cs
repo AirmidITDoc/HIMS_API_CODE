@@ -27,10 +27,10 @@ namespace HIMS.Data.DTO.Pathology
         public string? DepartmentName { get; set; }
         public string? UserName { get; set; }
         public string? HospitalName { get; set; }
-        public decimal? TotalAmount { get; set; }
-        public decimal? DiscAmount { get; set; }
-        public decimal? NetAmount { get; set; }
-        public decimal? PaidAmount { get; set; }
+        public long TotalAmount { get; set; }
+        public long DiscAmount { get; set; }
+        public long NetAmount { get; set; }
+        public long PaidAmount { get; set; }
 
 
     }

@@ -79,6 +79,14 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OtRequestAttendingDetailListDto> OtRequestAttendingDetailList = await _OTBookingRequestService.GetListAsyncor(objGrid);
             return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OtRequestAttendingDetailList "));
         }
+        [HttpGet("GetRequestDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDiagnosisList(string DescriptionType)
+        {
+            var result = await _OTBookingRequestService.GetDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetDiagnosisList", result);
+        }
+
 
 
         [HttpPost("Insert")]
