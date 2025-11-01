@@ -558,7 +558,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -4211,11 +4211,17 @@ namespace HIMS.Data.Models
 
                 entity.ToView("lvwCurrentAdmBed");
 
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
                 entity.Property(e => e.DocNameId).HasColumnName("DocNameID");
 
                 entity.Property(e => e.DoctorName).HasMaxLength(105);
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
 
                 entity.Property(e => e.LastName).HasMaxLength(100);
 
@@ -12761,6 +12767,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MiddleName).HasMaxLength(100);
 
+                entity.Property(e => e.MobileNo).HasMaxLength(11);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RegDate).HasColumnType("datetime");
@@ -13793,6 +13801,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_OT_RequestAttendingDetails");
 
                 entity.Property(e => e.OtrequestAttendingDetId).HasColumnName("OTRequestAttendingDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
 
