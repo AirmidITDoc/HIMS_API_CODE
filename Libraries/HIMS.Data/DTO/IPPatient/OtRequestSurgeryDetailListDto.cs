@@ -61,7 +61,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
-        public DateTime? OTRequestDateTime { get; set; }
+        public string? OTRequestDateTime { get; set; }
 
         
 
