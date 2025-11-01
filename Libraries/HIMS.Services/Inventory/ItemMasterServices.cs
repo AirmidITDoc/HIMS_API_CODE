@@ -337,6 +337,8 @@ namespace HIMS.Services.Inventory
                 (from cs in _context.TCurrentStocks
                  join im in _context.MItemMasters
                      on cs.ItemId equals im.ItemId
+                   join gm in _context.MItemGenericNameMasters
+                    on im.ItemGenericNameId equals gm.ItemGenericNameId
                  join mf in _context.MItemManufactureMasters
                      on im.ManufId equals mf.ItemManufactureId into manufactureGroup
                  from mf in manufactureGroup.DefaultIfEmpty() // LEFT JOIN
@@ -350,6 +352,10 @@ namespace HIMS.Services.Inventory
                      StoreId = cs.StoreId,
                      ItemId = cs.ItemId,
                      ItemName = im.ItemName,
+                     MinQty = im.MinQty,
+                     MaxQty = im.MaxQty,
+                     ItemGenericNameId = gm.ItemGenericNameId,
+                     ItemGenericName = gm.ItemGenericName,
                      ProdLocation = im.ProdLocation,
                      BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
                      LandedRate = cs.LandedRate,
@@ -370,7 +376,8 @@ namespace HIMS.Services.Inventory
                      //IsLASA = cs.IsLasa,
                      //IsH1Drug = cs.IsH1Drug,
                      GrnRetQty = cs.GrnRetQty,
-                     ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, DateTime.Now),
+                     //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, DateTime.Now),
+                     ExpDays = EF.Functions.DateDiffDay(DateTime.Now ,cs.BatchExpDate),
                      DaysFlag = (EF.Functions.DateDiffDay(DateTime.Now, cs.BatchExpDate) < 30) ? 1
                                : (EF.Functions.DateDiffDay(DateTime.Now, cs.BatchExpDate) > 50) ? 2
                                : 3,

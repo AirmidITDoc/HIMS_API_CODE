@@ -7937,72 +7937,133 @@ namespace HIMS.Services.Report
                 //        }
 
                 //    }
+            //    Changes by 01/11/25
+                //case "AdmissionList":
+                //    {
+                //        HeaderItems.Append("<tr>");
+                //        foreach (var hr in headerList)
+                //        {
+                //            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">");
+                //            HeaderItems.Append(hr.ConvertToString());
+                //            HeaderItems.Append("</th>");
+                //        }
+                //        HeaderItems.Append("</tr>");
+
+                //        int k = 0, i = 0, D = 0, j = 0;
+                //        string previousLabel = "";
+                //        var groupedData = dt.AsEnumerable().GroupBy(row => row["AdmittedDoctorName"]).ToList();
+                //        foreach (DataRow dr in dt.Rows)
+                //        {
+                //            i++; j++;
+                //            if (i == 1)
+                //            {
+                //                string Label = dr["AdmittedDoctorName"].ConvertToString();
+                //                items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\"><td colspan=\"4\" style=\"border:1px solid #000; font-weight:bold; padding:3px; height:10px; text-align:left; vertical-align:middle; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                     .Append(Label)
+                //                     .Append("</td></tr>");
+                //            }
+
+                //            if (previousLabel != "" && previousLabel != dr["AdmittedDoctorName"].ConvertToString())
+                //            {
+                //                j = 1;
+                //                items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'><td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                //                     .Append(D)
+                //                     .Append("</td></tr>");
+
+                //                D = 0;
+                //                items.Append("<tr style=\"font-size:20px; border-bottom: 1px; border-right: 1px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000; padding:3px; height:10px; text-align:left; font-weight:bold; vertical-align:middle; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                     .Append(dr["AdmittedDoctorName"].ConvertToString())
+                //                     .Append("</td></tr>");
+                //            }
+
+                //            D++;
+                //            previousLabel = dr["AdmittedDoctorName"].ConvertToString();
+
+                //            items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                 .Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                 .Append(j)
+                //                 .Append("</td>");
+
+                //            foreach (var colName in colList)
+                //            {
+                //                items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                     .Append(dr[colName].ConvertToString())
+                //                     .Append("</td>");
+                //            }
+
+                //            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                //            {
+                //                items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'><td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                //                     .Append(D)
+                //                     .Append("</td></tr>");
+                //            }
+                //        }
+                //    }
+
+
+
+                //    break;
+
                 case "AdmissionList":
                     {
+                        // Build table headers
                         HeaderItems.Append("<tr>");
                         foreach (var hr in headerList)
                         {
-                            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">");
-                            HeaderItems.Append(hr.ConvertToString());
-                            HeaderItems.Append("</th>");
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                       .Append(hr.ConvertToString())
+                                       .Append("</th>");
                         }
                         HeaderItems.Append("</tr>");
 
-                        int k = 0, i = 0, D = 0, j = 0;
-                        string previousLabel = "";
-                        var groupedData = dt.AsEnumerable().GroupBy(row => row["AdmittedDoctorName"]).ToList();
-                        foreach (DataRow dr in dt.Rows)
+                        // Group data by AdmittedDoctorName
+                        var groupedData = dt.AsEnumerable()
+                                            .GroupBy(row => row["AdmittedDoctorName"].ConvertToString())
+                                            .ToList();
+
+                        // Loop through each doctor group
+                        foreach (var group in groupedData)
                         {
-                            i++; j++;
-                            if (i == 1)
+                            string doctorName = group.Key;
+                            int count = 0;
+                            int j = 0;
+
+                            // Doctor Header Row
+                            items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                 .Append("<td colspan=\"4\" style=\"border:1px solid #000; font-weight:bold; padding:3px; height:10px; text-align:left; vertical-align:middle;\">")
+                                 .Append(doctorName)
+                                 .Append("</td></tr>");
+
+                            // Data Rows for each patient under that doctor
+                            foreach (var dr in group)
                             {
-                                string Label = dr["AdmittedDoctorName"].ConvertToString();
-                                items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\"><td colspan=\"4\" style=\"border:1px solid #000; font-weight:bold; padding:3px; height:10px; text-align:left; vertical-align:middle; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                     .Append(Label)
-                                     .Append("</td></tr>");
-                            }
+                                j++;
+                                count++;
 
-                            if (previousLabel != "" && previousLabel != dr["AdmittedDoctorName"].ConvertToString())
-                            {
-                                j = 1;
-                                items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'><td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td><td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
-                                     .Append(D)
-                                     .Append("</td></tr>");
-
-                                D = 0;
-                                items.Append("<tr style=\"font-size:20px; border-bottom: 1px; border-right: 1px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\"><td colspan=\"5\" style=\"border:1px solid #000; padding:3px; height:10px; text-align:left; font-weight:bold; vertical-align:middle; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                     .Append(dr["AdmittedDoctorName"].ConvertToString())
-                                     .Append("</td></tr>");
-                            }
-
-                            D++;
-                            previousLabel = dr["AdmittedDoctorName"].ConvertToString();
-
-                            items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                 .Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                 .Append(j)
-                                 .Append("</td>");
-
-                            foreach (var colName in colList)
-                            {
-                                items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                     .Append(dr[colName].ConvertToString())
+                                items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                     .Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">")
+                                     .Append(j)
                                      .Append("</td>");
+
+                                foreach (var colName in colList)
+                                {
+                                    items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">")
+                                         .Append(dr[colName].ConvertToString())
+                                         .Append("</td>");
+                                }
+
+                                items.Append("</tr>");
                             }
 
-                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
-                            {
-                                items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'><td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\"> Total Count</td><td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
-                                     .Append(D)
-                                     .Append("</td></tr>");
-                            }
+                            // Total Count Row for this doctor
+                            items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
+                                 .Append("<td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
+                                 .Append("<td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                                 .Append(count)
+                                 .Append("</td></tr>");
                         }
                     }
-
-
-
                     break;
-
 
 
                 case "IpPaymentReceipt":

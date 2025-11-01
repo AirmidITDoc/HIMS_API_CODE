@@ -35,17 +35,8 @@ namespace HIMS.API.Controllers.IPPatient
             _repository1 = repository2;
             _repository2 = repository3;
             _repository3 = repository4;
-
-
-
         }
-        [HttpPost("OtbookingRequestList")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<OTBookingRequestListDto> OTBookinglist = await _OTBookingRequestService.GetListAsync(objGrid);
-            return Ok(OTBookinglist.ToGridResponse(objGrid, "OTBookinglist "));
-        }
+       
         [HttpPost("OTBookingRequestEmergencyList")]
         [Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
@@ -53,23 +44,8 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OTBookingRequestEmergencyListDto> OTBookingRequestEmergencyList = await _OTBookingRequestService.GetListAsynco(objGrid);
             return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
         }
-        //List API
-        [HttpPost("RequestList")]
-
-        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
-        public async Task<IActionResult> List2(GridRequestModel objGrid)
-        {
-            IPagedList<TOtRequestHeader> RequestList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(RequestList.ToGridResponse(objGrid, "RequestList "));
-        }
-        [HttpPost("OtRequestAttendingDetailList")]
-
-        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
-        public async Task<IActionResult> List3(GridRequestModel objGrid)
-        {
-            IPagedList<TOtRequestAttendingDetail> OtRequestAttendingDetailList = await _repository1.GetAllPagedAsync(objGrid);
-            return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OtRequestAttendingDetailList "));
-        }
+       
+     
         [HttpPost("OtRequestDiagnosisList")]
 
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
@@ -78,23 +54,31 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<TOtRequestDiagnosis> OtRequestDiagnosisList = await _repository2.GetAllPagedAsync(objGrid);
             return Ok(OtRequestDiagnosisList.ToGridResponse(objGrid, "OtRequestDiagnosisList "));
         }
-        [HttpPost("OtRequestSurgeryDetailList")]
-
-        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
-        public async Task<IActionResult> List5(GridRequestModel objGrid)
-        {
-            IPagedList<TOtRequestSurgeryDetail> OtRequestSurgeryDetailList = await _repository3.GetAllPagedAsync(objGrid);
-            return Ok(OtRequestSurgeryDetailList.ToGridResponse(objGrid, "OtRequestDiagnosisList "));
-        }
        
-        [HttpGet("GetRequestDiagnosisList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetDiagnosisList(string DescriptionType)
+
+        [HttpPost("OtRequestSurgeryDetailList")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List6(GridRequestModel objGrid)
         {
-            var result = await _OTBookingRequestService.GetDiagnosisListAsync(DescriptionType);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetDiagnosisList", result);
+            IPagedList<OtRequestSurgeryDetailListDto> OtRequestSurgeryDetailList = await _OTBookingRequestService.GetListAsyncs(objGrid);
+            return Ok(OtRequestSurgeryDetailList.ToGridResponse(objGrid, "OtRequestSurgeryDetailList "));
         }
 
+        [HttpPost("OTRequestList")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List7(GridRequestModel objGrid)
+        {
+            IPagedList<OtRequestListDto> OTRequestList = await _OTBookingRequestService.GetListAsyncot(objGrid);
+            return Ok(OTRequestList.ToGridResponse(objGrid, "OTRequestList "));
+        }
+
+        [HttpPost("OtRequestAttendingDetailList")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> Listr(GridRequestModel objGrid)
+        {
+            IPagedList<OtRequestAttendingDetailListDto> OtRequestAttendingDetailList = await _OTBookingRequestService.GetListAsyncor(objGrid);
+            return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OtRequestAttendingDetailList "));
+        }
 
 
         [HttpPost("Insert")]
