@@ -17,6 +17,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
         public DateTime? DateofBirth { get; set; }
+        public string? MobileNo { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }

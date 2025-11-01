@@ -1,7 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -32,7 +32,7 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<OtRequestListDto>> GetListAsyncot(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OTRequestListDemo");
+            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OT_RequestList");
         }
         public virtual async Task<IPagedList<OtRequestAttendingDetailListDto>> GetListAsyncor(GridRequestModel model)
         {

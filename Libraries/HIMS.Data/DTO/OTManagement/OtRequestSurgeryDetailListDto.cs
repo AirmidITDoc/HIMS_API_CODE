@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.IPPatient
+namespace HIMS.Data.DTO.OTManagement
 {
     public class OtRequestSurgeryDetailListDto
     {
@@ -22,7 +22,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
         public string? AnestheticsName { get; set; }
-       
+
 
     }
     public class OtRequestListDto
@@ -74,7 +74,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? DoctorType { get; set; }
         public long? DoctorId { get; set; }
         public string? DoctorName { get; set; }
-      
+
     }
 
 

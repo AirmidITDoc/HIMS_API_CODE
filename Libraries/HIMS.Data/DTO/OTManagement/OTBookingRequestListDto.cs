@@ -1,4 +1,4 @@
-﻿namespace HIMS.Data.DTO.IPPatient
+﻿namespace HIMS.Data.DTO.OTManagement
 {
     public class OTBookingRequestListDto
     {

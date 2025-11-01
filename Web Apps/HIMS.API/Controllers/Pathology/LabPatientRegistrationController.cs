@@ -26,12 +26,12 @@ namespace HIMS.API.Controllers.Pathology
         {
             _ILabPatientRegistrationService = repository;
         }
-        [HttpPost("LabPatientRegistrationList")]
+        [HttpPost("List")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabPatientRegistrationListDto> LabPatientRegistrationList = await _ILabPatientRegistrationService.GetListAsync(objGrid);
-            return Ok(LabPatientRegistrationList.ToGridResponse(objGrid, "LabPatientRegistrationList List"));
+            return Ok(LabPatientRegistrationList.ToGridResponse(objGrid, "Lab Patient Registration List"));
         }
 
         [HttpPost("Insert")]
