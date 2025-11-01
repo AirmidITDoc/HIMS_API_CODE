@@ -96,6 +96,24 @@ namespace HIMS.API.Controllers.IPPatient
             TOtRequestHeader model = obj.MapTo<TOtRequestHeader>();
             if (obj.OtrequestId == 0)
             {
+                foreach (var q in model.TOtRequestAttendingDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var q in model.TOtRequestDiagnoses)
+                {
+                    q.Createdby = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var q in model.TOtRequestSurgeryDetails)
+                {
+                    q.Createdby = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
@@ -106,6 +124,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+       
 
 
 
@@ -118,6 +137,41 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                foreach (var q in model.TOtRequestAttendingDetails)
+                {
+                    if (q.OtrequestAttendingDetId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = DateTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = DateTime.Now;
+                    q.OtrequestAttendingDetId = 0;
+                }
+
+                foreach (var v in model.TOtRequestDiagnoses)
+                {
+                    if (v.OtrequestDiagnosisDetId == 0)
+                    {
+                        v.Createdby = CurrentUserId;
+                        v.CreatedDate = DateTime.Now;
+                    }
+                    v.ModifiedBy = CurrentUserId;
+                    v.ModifiedDate = DateTime.Now;
+                    v.OtrequestDiagnosisDetId = 0;
+                }
+
+                foreach (var p in model.TOtRequestSurgeryDetails)
+                {
+                    if (p.OtrequestSurgeryDetId == 0)
+                    {
+                        p.Createdby = CurrentUserId;
+                        p.CreatedDate = DateTime.Now;
+                    }
+                    p.ModifiedBy = CurrentUserId;
+                    p.ModifiedDate = DateTime.Now;
+                    p.OtrequestSurgeryDetId = 0;
+                }
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });

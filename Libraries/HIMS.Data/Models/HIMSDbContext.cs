@@ -4211,11 +4211,17 @@ namespace HIMS.Data.Models
 
                 entity.ToView("lvwCurrentAdmBed");
 
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
                 entity.Property(e => e.DocNameId).HasColumnName("DocNameID");
 
                 entity.Property(e => e.DoctorName).HasMaxLength(105);
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
 
                 entity.Property(e => e.LastName).HasMaxLength(100);
 
@@ -13793,6 +13799,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_OT_RequestAttendingDetails");
 
                 entity.Property(e => e.OtrequestAttendingDetId).HasColumnName("OTRequestAttendingDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtrequestId).HasColumnName("OTRequestId");
 

@@ -11,6 +11,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? OtrequestId { get; set; }
         public long? SurgeryCategoryId { get; set; }
         public long? SurgeryId { get; set; }
+        public string? SurgeonName { get; set; }
         public string? SurgeryCategoryName { get; set; }
         public string? SurgeryName { get; set; }
         public string? SurgeryPart { get; set; }
@@ -62,10 +63,10 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? OTRequestDateTime { get; set; }
-
-        
-
+        public string? BedName { get; set; }
+        public string? RoomName { get; set; }
     }
+    
     public class OtRequestAttendingDetailListDto
     {
         public long OtrequestId { get; set; }
