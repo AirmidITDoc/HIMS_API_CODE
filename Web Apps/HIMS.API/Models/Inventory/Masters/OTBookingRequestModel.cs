@@ -85,7 +85,7 @@ namespace HIMS.API.Models.Inventory.Masters
             RuleFor(x => x.EstimateTime).NotNull().NotEmpty().WithMessage("EstimateTime is required");
         }
     }
-    public  class TOtRequestSurgeryDetailModel
+    public class TOtRequestSurgeryDetailModel
     {
         public long OtrequestSurgeryDetId { get; set; }
         public long? OtrequestId { get; set; }
@@ -98,7 +98,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
-        //public int? SeqNo { get; set; }
+        public int? SeqNo { get; set; }
 
     }
     public class TOtRequestSurgeryDetailModelModelValidator : AbstractValidator<TOtRequestSurgeryDetailModel>
@@ -116,17 +116,57 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? OtrequestId { get; set; }
         public long? DoctorTypeId { get; set; }
         public long? DoctorId { get; set; }
-        //public int? SeqNo { get; set; }
+        public int? SeqNo { get; set; }
 
     }
-    public  class TOtRequestDiagnosisModel
+    public class TOtRequestDiagnosisModel
     {
         public long OtrequestDiagnosisDetId { get; set; }
         public long? OtrequestId { get; set; }
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
     }
-    
+    public class GetTOtRequestHeaderModel
+    {
+        public long OtrequestId { get; set; }
+        public DateTime? OtrequestDate { get; set; }
+        public DateTime? OtrequestTime { get; set; }
+        public string? OtrequestNo { get; set; }
+        public long? Opipid { get; set; }
+        public byte? Opiptype { get; set; }
+        public string? BloodGroup { get; set; }
+        public string? OPDNo { get; set; }
+        public string? PatientName { get; set; }
+        public long? CategoryType { get; set; }
+        public string? TypeName { get; set; }
+        public string? Comments { get; set; }
+        public string? OTTableName { get; set; }
+        public long? Ottable { get; set; }
+        public DateTime? SurgeryDate { get; set; }
+        public DateTime? EstimateTime { get; set; }
+        public bool? RequestType { get; set; }
+        public bool? Pacrequired { get; set; }
+        public bool? EquipmentsRequired { get; set; }
+        public bool? ClearanceMedical { get; set; }
+        public bool? ClearanceFinancial { get; set; }
+        public bool? Infective { get; set; }
+        public long? CreatedBy { get; set; }
+        public string? UserName { get; set; }
+        public string? DoctorName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? TariffName { get; set; }
+        public string? CompanyName { get; set; }
+        public string? PatientType { get; set; }
+        public string? RegNo { get; set; }
+        public string? MobileNo { get; set; }
+        public string? GenderName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public string? OTRequestDateTime { get; set; }
+        public string? BedName { get; set; }
+        public string? RoomName { get; set; }
 
+    }
 }
 

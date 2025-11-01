@@ -127,5 +127,22 @@ namespace HIMS.Services.DoctorPayout
                 scope.Complete();
             }
         }
+            public virtual async Task InsertAsync(AddCharge ObjAddCharge, int CurrentUserId, string CurrentUserName)
+            {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "BillNo", "DoctorId" };
+            var entity = ObjAddCharge.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+
+            odal.ExecuteNonQuery("ps_IP_DoctorShrCalcAsPerReferDocVisitBillWise_]", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TAdditionalDocPay), (int)ObjAddCharge.BillNo, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+        }
     }
 }
+

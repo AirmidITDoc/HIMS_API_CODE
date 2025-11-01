@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.DoctorPayout
 {
@@ -46,5 +47,11 @@ namespace HIMS.API.Models.DoctorPayout
     {
         public List<ShareDoctAddChargesUpdate> ShareDoctAddCharge { get; set; }
     }
+    public class CalcAsPerReferDocVisitBillWiseModel
+    {
+        public long BillNo { get; set; }
+        public long DoctorId { get; set; }
 
+      
+    }
 }

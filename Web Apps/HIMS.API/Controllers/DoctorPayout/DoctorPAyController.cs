@@ -133,6 +133,20 @@ namespace HIMS.API.Controllers.DoctorPayout
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPost("DoctorShrCalcAsPerReferDocVisitBillWise")]
+        //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(CalcAsPerReferDocVisitBillWiseModel obj)
+        {
+            AddCharge model = obj.MapTo<AddCharge>();
+            if (obj.BillNo != 0)
+            {
+               
+                await _IDoctorPayService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
 
     }
 }

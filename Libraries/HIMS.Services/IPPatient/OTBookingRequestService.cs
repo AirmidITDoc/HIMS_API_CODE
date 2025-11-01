@@ -154,8 +154,7 @@ namespace HIMS.Services.IPPatient
 
             return data;
         }
-   
-
+      
 
     }
 }
