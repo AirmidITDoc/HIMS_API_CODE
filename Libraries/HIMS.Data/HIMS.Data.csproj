@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTO\IPPatient\NewFolder\**" />
     <Compile Remove="DTO\NewFolder1\**" />
     <Compile Remove="DTO\NewFolder2\**" />
     <Compile Remove="DTO\NewFolder3\**" />
+    <EmbeddedResource Remove="DTO\IPPatient\NewFolder\**" />
     <EmbeddedResource Remove="DTO\NewFolder1\**" />
     <EmbeddedResource Remove="DTO\NewFolder2\**" />
     <EmbeddedResource Remove="DTO\NewFolder3\**" />
+    <None Remove="DTO\IPPatient\NewFolder\**" />
     <None Remove="DTO\NewFolder1\**" />
     <None Remove="DTO\NewFolder2\**" />
     <None Remove="DTO\NewFolder3\**" />
@@ -29,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\IPPatient\NewFolder\" />
     <Folder Include="DTO\Master\NewFolder\" />
   </ItemGroup>
 

@@ -1,8 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
@@ -24,6 +26,13 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "ps_Rtrv_OTBookinglist");
         }
+        public List<OTRequestDetailsListSearchDto> SearchPatient(string Keyword)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<OTRequestDetailsListSearchDto>("ps_Rtrv_PatientOTRequestListSearch", para);
+        }
 
         public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
@@ -36,25 +45,6 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        //public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, TOtbookingRequest objTOtbookingRequests, int UserId, string Username)
-        //{
-        //     using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-        //     _context.TOtReservations.Add(OBJTOtbooking);
-        //    await _context.SaveChangesAsync();   
-
-        //    var existing = await _context.TOtbookingRequests .FirstOrDefaultAsync(x => x.OtbookingId == objTOtbookingRequests.OtrequestId);
-
-        //    if (existing != null) 
-        //    {
-        //        existing.OtrequestId = objTOtbookingRequests.OtrequestId;
-
-        //        _context.Entry(existing).Property(x => x.OtrequestId).IsModified = true;
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    scope.Complete();
-        //}
         public virtual async Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -5,7 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,14 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OTBookinglistDto> OTBookinglist = await _OTService.GetListAsync(objGrid);
-            return Ok(OTBookinglist.ToGridResponse(objGrid, "OTReservationlist "));
+            return Ok(OTBookinglist.ToGridResponse(objGrid, "OT Reservation list "));
+        }
+
+        [HttpGet("search-patient-OTRequest")]
+        public ApiResponse SearchPatientNew(string Keyword)
+        {
+            var data = _OTService.SearchPatient(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OT Request List data", data);
         }
 
         [HttpPost("Insert")]
@@ -94,7 +101,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
-        [HttpPost("OTBookingPostPone ")]
+        [HttpPost("OTBookingPostPone")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
         public ApiResponse Insert(OTBookingPostPoneModel obj)
         {
