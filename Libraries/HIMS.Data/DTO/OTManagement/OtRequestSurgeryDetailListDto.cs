@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Data.DTO.IPPatient
+namespace HIMS.Data.DTO.OTManagement
 {
     public class OtRequestSurgeryDetailListDto
     {
         public long? OtrequestId { get; set; }
         public long? SurgeryCategoryId { get; set; }
         public long? SurgeryId { get; set; }
+        public string? SurgeonName { get; set; }
         public string? SurgeryCategoryName { get; set; }
         public string? SurgeryName { get; set; }
         public string? SurgeryPart { get; set; }
@@ -21,7 +22,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
         public string? AnestheticsName { get; set; }
-       
+
 
     }
     public class OtRequestListDto
@@ -61,7 +62,11 @@ namespace HIMS.Data.DTO.IPPatient
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
+        public string? OTRequestDateTime { get; set; }
+        public string? BedName { get; set; }
+        public string? RoomName { get; set; }
     }
+    
     public class OtRequestAttendingDetailListDto
     {
         public long OtrequestId { get; set; }
@@ -69,7 +74,7 @@ namespace HIMS.Data.DTO.IPPatient
         public string? DoctorType { get; set; }
         public long? DoctorId { get; set; }
         public string? DoctorName { get; set; }
-      
+
     }
 
 

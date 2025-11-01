@@ -21,6 +21,7 @@ namespace HIMS.Data.Models
         public string? LastName { get; set; }
         public long? GenderId { get; set; }
         public DateTime? DateofBirth { get; set; }
+        public string? MobileNo { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }

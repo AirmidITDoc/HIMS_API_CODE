@@ -15,6 +15,7 @@ namespace HIMS.API.Models.Pathology
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public long? GenderId { get; set; }
+        public string? MobileNo { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }

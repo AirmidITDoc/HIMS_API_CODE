@@ -6,7 +6,7 @@ using HIMS.API.Models.Inventory.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
-using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -37,13 +37,13 @@ namespace HIMS.API.Controllers.IPPatient
             _repository3 = repository4;
         }
        
-        [HttpPost("OTBookingRequestEmergencyList")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
-        public async Task<IActionResult> List1(GridRequestModel objGrid)
-        {
-            IPagedList<OTBookingRequestEmergencyListDto> OTBookingRequestEmergencyList = await _OTBookingRequestService.GetListAsynco(objGrid);
-            return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
-        }
+        //[HttpPost("OTBookingRequestEmergencyList")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        //public async Task<IActionResult> List1(GridRequestModel objGrid)
+        //{
+        //    IPagedList<OTBookingRequestEmergencyListDto> OTBookingRequestEmergencyList = await _OTBookingRequestService.GetListAsynco(objGrid);
+        //    return Ok(OTBookingRequestEmergencyList.ToGridResponse(objGrid, "OTBookingRequestEmergencyList "));
+        //}
        
      
         [HttpPost("OtRequestDiagnosisList")]
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> List4(GridRequestModel objGrid)
         {
             IPagedList<TOtRequestDiagnosis> OtRequestDiagnosisList = await _repository2.GetAllPagedAsync(objGrid);
-            return Ok(OtRequestDiagnosisList.ToGridResponse(objGrid, "OtRequestDiagnosisList "));
+            return Ok(OtRequestDiagnosisList.ToGridResponse(objGrid, "OT Request Diagnosis List "));
         }
        
 
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> List6(GridRequestModel objGrid)
         {
             IPagedList<OtRequestSurgeryDetailListDto> OtRequestSurgeryDetailList = await _OTBookingRequestService.GetListAsyncs(objGrid);
-            return Ok(OtRequestSurgeryDetailList.ToGridResponse(objGrid, "OtRequestSurgeryDetailList "));
+            return Ok(OtRequestSurgeryDetailList.ToGridResponse(objGrid, "OT Request SurgeryDetail List "));
         }
 
         [HttpPost("OTRequestList")]
@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> List7(GridRequestModel objGrid)
         {
             IPagedList<OtRequestListDto> OTRequestList = await _OTBookingRequestService.GetListAsyncot(objGrid);
-            return Ok(OTRequestList.ToGridResponse(objGrid, "OTRequestList "));
+            return Ok(OTRequestList.ToGridResponse(objGrid, "OT Request List "));
         }
 
         [HttpPost("OtRequestAttendingDetailList")]
@@ -77,8 +77,17 @@ namespace HIMS.API.Controllers.IPPatient
         public async Task<IActionResult> Listr(GridRequestModel objGrid)
         {
             IPagedList<OtRequestAttendingDetailListDto> OtRequestAttendingDetailList = await _OTBookingRequestService.GetListAsyncor(objGrid);
-            return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OtRequestAttendingDetailList "));
+            return Ok(OtRequestAttendingDetailList.ToGridResponse(objGrid, "OT Request AttendingDetail List "));
         }
+
+        [HttpGet("GetRequestDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDiagnosisList(string DescriptionType)
+        {
+            var result = await _OTBookingRequestService.GetDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Diagnosis List", result);
+        }
+
 
 
         [HttpPost("Insert")]
@@ -88,6 +97,24 @@ namespace HIMS.API.Controllers.IPPatient
             TOtRequestHeader model = obj.MapTo<TOtRequestHeader>();
             if (obj.OtrequestId == 0)
             {
+                foreach (var q in model.TOtRequestAttendingDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var q in model.TOtRequestDiagnoses)
+                {
+                    q.Createdby = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+                foreach (var q in model.TOtRequestSurgeryDetails)
+                {
+                    q.Createdby = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
@@ -98,6 +125,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+       
 
 
 
@@ -110,6 +138,41 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                foreach (var q in model.TOtRequestAttendingDetails)
+                {
+                    if (q.OtrequestAttendingDetId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = DateTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = DateTime.Now;
+                    q.OtrequestAttendingDetId = 0;
+                }
+
+                foreach (var v in model.TOtRequestDiagnoses)
+                {
+                    if (v.OtrequestDiagnosisDetId == 0)
+                    {
+                        v.Createdby = CurrentUserId;
+                        v.CreatedDate = DateTime.Now;
+                    }
+                    v.ModifiedBy = CurrentUserId;
+                    v.ModifiedDate = DateTime.Now;
+                    v.OtrequestDiagnosisDetId = 0;
+                }
+
+                foreach (var p in model.TOtRequestSurgeryDetails)
+                {
+                    if (p.OtrequestSurgeryDetId == 0)
+                    {
+                        p.Createdby = CurrentUserId;
+                        p.CreatedDate = DateTime.Now;
+                    }
+                    p.ModifiedBy = CurrentUserId;
+                    p.ModifiedDate = DateTime.Now;
+                    p.OtrequestSurgeryDetId = 0;
+                }
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });

@@ -14,5 +14,8 @@ namespace HIMS.Data.Models
         public long? DocNameId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public string? AgeYear { get; set; }
+        public string? GenderName { get; set; }
     }
 }

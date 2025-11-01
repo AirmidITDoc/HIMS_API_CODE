@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 
 namespace HIMS.Services
@@ -14,6 +15,7 @@ namespace HIMS.Services
         Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username);
         void Cancel(TOtReservation objTOtReservation, int UserId, string Username);
         Task<TOtReservation?> GetByIdAsync(int id);
+        List<OTRequestDetailsListSearchDto> SearchPatient(string Keyword);
 
 
     }

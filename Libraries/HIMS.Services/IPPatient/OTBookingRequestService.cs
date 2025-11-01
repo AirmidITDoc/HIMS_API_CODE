@@ -1,7 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -32,7 +32,7 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<OtRequestListDto>> GetListAsyncot(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OTRequestListDemo");
+            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OT_RequestList");
         }
         public virtual async Task<IPagedList<OtRequestAttendingDetailListDto>> GetListAsyncor(GridRequestModel model)
         {
@@ -84,39 +84,53 @@ namespace HIMS.Services.IPPatient
             }
         }
 
+      
         public virtual async Task UpdateAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
             {
+                // Attach entity
+                _context.Attach(ObjTOtRequestHeader);
+                _context.Entry(ObjTOtRequestHeader).State = EntityState.Modified;
 
+                // Prevent overwriting of important fields
+                _context.Entry(ObjTOtRequestHeader).Property(x => x.CreatedBy).IsModified = false;
+                _context.Entry(ObjTOtRequestHeader).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(ObjTOtRequestHeader).Property(x => x.OtrequestNo).IsModified = false;
 
-                    // Delete details table realted records
-                    var lst = await _context.TOtRequestSurgeryDetails.Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId).ToListAsync();
-                    if (lst.Count > 0)
-                    {
-                        _context.TOtRequestSurgeryDetails.RemoveRange(lst);
-                    }
-                    // Delete details table realted records
-                    var lsts = await _context.TOtRequestAttendingDetails.Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId).ToListAsync();
-                    if (lst.Count > 0)
-                    {
-                        _context.TOtRequestAttendingDetails.RemoveRange(lsts);
-                    }
-                    // Delete details table realted records
-                    var lstd = await _context.TOtRequestDiagnoses.Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId).ToListAsync();
-                    if (lst.Count > 0)
-                    {
-                        _context.TOtRequestDiagnoses.RemoveRange(lstd);
-                    }
+                // Update modified fields
+                ObjTOtRequestHeader.ModifiedBy = UserId;
+                ObjTOtRequestHeader.ModifiedDate = DateTime.Now;
 
-                     await _context.SaveChangesAsync();
-                    // Update header & detail table records
-                    _context.TOtRequestHeaders.Update(ObjTOtRequestHeader);
-                    _context.Entry(ObjTOtRequestHeader).State = EntityState.Modified;
-                    await _context.SaveChangesAsync();
-                    scope.Complete();
+                // Ignore any additional columns if specified
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(ObjTOtRequestHeader).Property(column).IsModified = false;
+                    }
                 }
+                // Delete related detail records safely
+                var lstSurgery = await _context.TOtRequestSurgeryDetails .Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId) .ToListAsync();
+                if (lstSurgery.Count > 0)
+                    _context.TOtRequestSurgeryDetails.RemoveRange(lstSurgery);
+
+                var lstAttend = await _context.TOtRequestAttendingDetails  .Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId) .ToListAsync();
+                if (lstAttend.Count > 0)
+                    _context.TOtRequestAttendingDetails.RemoveRange(lstAttend);
+
+                var lstDiagnosis = await _context.TOtRequestDiagnoses  .Where(x => x.OtrequestId == ObjTOtRequestHeader.OtrequestId)  .ToListAsync();
+                if (lstDiagnosis.Count > 0)
+                    _context.TOtRequestDiagnoses.RemoveRange(lstDiagnosis);
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
             }
+        }
+
+
+
         public virtual async Task<List<TOtRequestDiagnosisListDto>> GetDiagnosisListAsync(string DescriptionType)
         {
             var query = _context.TOtRequestDiagnoses.AsQueryable();
