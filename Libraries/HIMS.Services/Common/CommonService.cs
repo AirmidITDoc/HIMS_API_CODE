@@ -130,7 +130,11 @@ namespace HIMS.Services.Common
                 case "Admin_VisitWiseBilllist": sp_Name = "ps_Admin_VisitWiseBillList"; break;
                 case "Admin_VisitBillWisePaymentlist": sp_Name = "ps_Admin_VisitWiseBillPaymentList"; break;
                 case "Admin_VisitRefundBillWiselist": sp_Name = "ps_Admin_VisitWiseRefundBillList"; break;
+                case "Admin_VisitAdvanceWiselist":sp_Name = "ps_Admin_VisitWiseAdvanceList"; break;
 
+
+
+                    
                 // Marketing Mobile App API
                 case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
                 case "MarketingTodayVisitCityWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCityWiseCount"; break;
