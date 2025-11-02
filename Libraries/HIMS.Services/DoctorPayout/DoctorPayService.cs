@@ -143,6 +143,11 @@ namespace HIMS.Services.DoctorPayout
             odal.ExecuteNonQuery("ps_IP_DoctorShrCalcAsPerReferDocVisitBillWise_]", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, nameof(TAdditionalDocPay), (int)ObjAddCharge.BillNo, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
+
+        public virtual async Task<IPagedList<DoctorShareprocessListDto>> GetDoctorProcessList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctorShareprocessListDto>(objGrid, "ps_Rtrv_T_DoctorPayoutProcesslist");
+        }
     }
 }
 
