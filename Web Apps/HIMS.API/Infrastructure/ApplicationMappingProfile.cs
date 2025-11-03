@@ -92,6 +92,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<MVehicleMaster, VechicleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, CalcAsPerReferDocVisitBillWiseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtRequestHeader, GetTOtRequestHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOttableMaster, OtTableModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtSurgeryMaster, SurgeryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

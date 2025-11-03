@@ -2,6 +2,7 @@ using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -23,6 +24,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             _repository = repository;
         }
 
+
         [HttpPost]
         [Route("[action]")]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
@@ -31,6 +33,18 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             IPagedList<MOtSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSurgeryMasterList.ToGridResponse(objGrid, "SurgeryMaster List"));
         }
+        [HttpGet("GetSurgeryTypeByOTSurgery/{id?}")]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetOt(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.SurgeryId == id);
+            return data.ToSingleResponse<MOtSurgeryMaster, SurgeryModel>("MOtSurgeryMaster");
+        }
+
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]

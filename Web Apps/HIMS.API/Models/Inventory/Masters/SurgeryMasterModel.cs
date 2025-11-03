@@ -28,4 +28,11 @@ namespace HIMS.API.Models.Masters
 
         }
     }
+    public class SurgeryModel
+    {
+        public long SurgeryId { get; set; }
+        public string? SurgeryName { get; set; }
+        public long? SiteDescId { get; set; }
+        public bool? IsActive { get; set; }
+    }
 }
