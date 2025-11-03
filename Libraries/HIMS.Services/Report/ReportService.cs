@@ -1516,6 +1516,8 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
                 #region :: IpDischargeReceipt ::
                 case "IpDischargeReceipt":
                     {
@@ -1532,6 +1534,29 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
+                #region :: BedTransferReceipt ::
+                case "BedTransferReceipt":
+                    {
+                        model.RepoertName = "BedTransferReceipt ";
+                        string[] headerList = {  };
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BedTransferReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptBedTransferDetails", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BedTransferReceipt", "BedTransferReceipt" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+
+
+
                 #region :: IPDCurrentwardwisecharges ::
                 case "IPDCurrentwardwisecharges":
                     {
@@ -8371,6 +8396,7 @@ namespace HIMS.Services.Report
 
 
                     break;
+
                 case "IpDischargeReceipt":
                     {
 
@@ -8419,6 +8445,70 @@ namespace HIMS.Services.Report
 
 
                     break;
+
+
+                case "BedTransferReceipt":
+                    {
+
+                        int i = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                          //  items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["FromWardName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["FromBedNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["FromClassName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["ToWardName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["ToBedNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["ToClassName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;border: 1px solid #d4c3c3; \">").Append(dr["TransferId"].ConvertToString()).Append("</td>");
+
+
+
+
+
+
+                        }
+
+                        string htmlHeader = "";
+                        html = html.Replace("{{RegId}}", dt.GetColValue("RegId"));
+                        html = html.Replace("{{ReqDate}}", dt.GetColValue("ReqDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ReqNo}}", dt.GetColValue("ReqNo"));
+                        html = html.Replace("{{OP_IP_ID}}", dt.GetColValue("OP_IP_ID"));
+                        html = html.Replace("{{ItemName}}", dt.GetColValue("ItemName"));
+                        html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{AddUserName}}", dt.GetColValue("AddUserName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddUserName"));
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
+
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AddUserName}}", dt.GetColValue("AddUserName"));
+
+
+                    }
+
+                    break;
+
+
+
                 case "IpDischargeSummaryReport":
                     {
 
