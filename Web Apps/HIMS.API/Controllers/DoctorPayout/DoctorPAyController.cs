@@ -148,5 +148,15 @@ namespace HIMS.API.Controllers.DoctorPayout
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPost("DoctorProcessedList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> getDoctorprocessedlist(GridRequestModel objGrid)
+        {
+            IPagedList<DoctorShareprocessListDto> DoctorProcessList = await _IDoctorPayService.GetDoctorProcessList(objGrid);
+            return Ok(DoctorProcessList.ToGridResponse(objGrid, "DoctorProcessList"));
+        }
+
+
+
     }
 }
