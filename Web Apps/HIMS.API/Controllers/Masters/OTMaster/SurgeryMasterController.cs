@@ -33,17 +33,25 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             IPagedList<MOtSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSurgeryMasterList.ToGridResponse(objGrid, "SurgeryMaster List"));
         }
-        [HttpGet("GetSurgeryTypeByOTSurgery/{id?}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetOt(int id)
+        [HttpGet]
+        [Route("GetSurgeryTypeByOTSurgery")]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
         {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-            var data = await _repository.GetById(x => x.SurgeryId == id);
-            return data.ToSingleResponse<MOtSurgeryMaster, SurgeryModel>("MOtSurgeryMaster");
+            var MOttableMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "getlocationByOttable dropdown", MOttableMasterList.Select(x => new { x.SurgeryId, x.SiteDescId, x.SurgeryName }));
         }
+        //[HttpGet("GetSurgeryTypeByOTSurgery/{id?}")]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetOt(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository.GetById(x => x.SurgeryId == id);
+        //    return data.ToSingleResponse<MOtSurgeryMaster, SurgeryModel>("MOtSurgeryMaster");
+        //}
 
 
         [HttpGet("{id?}")]
