@@ -20,6 +20,7 @@ namespace HIMS.Services.DoctorPayout
         void InsertSP(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, List<TDoctorPayoutProcessDetail> ObjTDoctorPayoutProcessDetail,  int UserId, string Username);
 
 
+        Task<IPagedList<DoctorShareprocessListDto>> GetDoctorProcessList(GridRequestModel objGrid);
 
     }
 }

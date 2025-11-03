@@ -8,6 +8,6 @@
         public double? HospitalAmt { get; set; }
 
 
-        public double? DoctorId { get; set; }
+        public long DoctorId { get; set; }
     }
 }
