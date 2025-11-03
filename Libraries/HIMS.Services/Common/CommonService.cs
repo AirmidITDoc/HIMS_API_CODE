@@ -110,7 +110,7 @@ namespace HIMS.Services.Common
                 case "ExpHeadMaster": sp_Name = "Retrieve_M_ExpHeadMasterForCombo"; break;
                 case "TemplateDescCategory": sp_Name = "ps_TemplateDescCategoryList"; break;
 
-                // Mobile App API
+                // Applicaation Dashboard App API
                 case "HomeDashboardAPI": sp_Name = "ps_DASH_APPOINTMENT_COUNT"; break;
                 case "DashOPDepatmentWiseCount": sp_Name = "ps_DASH_OP_DEPARTMENTCOUNT"; break;
                 case "DashOPConsultantWiseCount": sp_Name = "ps_DASH_OP_ConsultantDoctorWise_COUNT"; break;
@@ -134,7 +134,11 @@ namespace HIMS.Services.Common
 
 
 
-                    
+                // AirmidMobile App API
+                case "Mobile_PatientRegistration": sp_Name = "ps_MobileApp_HomePage_PatientRegistration"; break;
+                case "Mobile_AppointmentAdmissionSummary": sp_Name = "ps_MobileApp_HomePage_AppointmentAdmissionSummary"; break;
+
+
                 // Marketing Mobile App API
                 case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
                 case "MarketingTodayVisitCityWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCityWiseCount"; break;
