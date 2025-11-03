@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -26,17 +27,16 @@ namespace HIMS.API.Controllers.IPPatient
         private readonly IGenericService<TOtRequestAttendingDetail> _repository1;
         private readonly IGenericService<TOtRequestDiagnosis> _repository2;
         private readonly IGenericService<TOtRequestSurgeryDetail> _repository3;
-
-
-
-
-        public OTRequestController(IOTBookingRequestService repository, IGenericService<TOtRequestHeader> repository1, IGenericService<TOtRequestAttendingDetail> repository2, IGenericService<TOtRequestDiagnosis> repository3, IGenericService<TOtRequestSurgeryDetail> repository4)
+        private readonly IGenericService<MOttableMaster> _repository4;
+        public OTRequestController(IOTBookingRequestService repository, IGenericService<TOtRequestHeader> repository1, IGenericService<TOtRequestAttendingDetail> repository2, IGenericService<TOtRequestDiagnosis> repository3, IGenericService<TOtRequestSurgeryDetail> repository4, IGenericService<MOttableMaster> repository5)
         {
             _OTBookingRequestService = repository;
             _repository = repository1;
             _repository1 = repository2;
             _repository2 = repository3;
             _repository3 = repository4;
+            _repository4 = repository5;
+
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
@@ -46,6 +46,20 @@ namespace HIMS.API.Controllers.IPPatient
             var data1 = await _repository.GetById(x => x.OtrequestId == id);
             return data1.ToSingleResponse<TOtRequestHeader, GetTOtRequestHeaderModel>("TOtRequestHeader");
         }
+
+
+        [HttpGet("getlocationByOttable/{id?}")]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetOt(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository4.GetById(x => x.OttableId == id);
+            return data.ToSingleResponse<MOttableMaster, OtTableModel>("MOttableMaster");
+        }
+
 
         [HttpPost("OTRequestList")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]

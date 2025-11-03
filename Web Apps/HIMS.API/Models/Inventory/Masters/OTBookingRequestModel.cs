@@ -168,5 +168,12 @@ namespace HIMS.API.Models.Inventory.Masters
         public string? RoomName { get; set; }
 
     }
+    public class OtTableModel
+    {
+        public long OttableId { get; set; }
+        public string? OttableName { get; set; }
+        public long? LocationId { get; set; }
+        public bool? IsActive { get; set; }
+    }
 }
 

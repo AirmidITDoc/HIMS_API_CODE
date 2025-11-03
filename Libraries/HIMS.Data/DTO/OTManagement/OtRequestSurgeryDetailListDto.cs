@@ -65,8 +65,12 @@ namespace HIMS.Data.DTO.OTManagement
         public string? OTRequestDateTime { get; set; }
         public string? BedName { get; set; }
         public string? RoomName { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public DateTime? VisitDate { get; set; }
+
+
     }
-    
+
     public class OtRequestAttendingDetailListDto
     {
         public long OtrequestId { get; set; }

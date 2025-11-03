@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TDoctorPayoutProcessHeader
     {
-        public TDoctorPayoutProcessHeader()
-        {
-            TDoctorPayoutProcessDetails = new HashSet<TDoctorPayoutProcessDetail>();
-        }
-
         public long DoctorPayoutId { get; set; }
         public long? DoctorId { get; set; }
         public DateTime? ProcessStartDate { get; set; }
@@ -23,7 +18,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public virtual ICollection<TDoctorPayoutProcessDetail> TDoctorPayoutProcessDetails { get; set; }
     }
 }
