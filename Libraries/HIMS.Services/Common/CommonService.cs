@@ -137,6 +137,7 @@ namespace HIMS.Services.Common
                 // AirmidMobile App API
                 case "Mobile_PatientRegistration": sp_Name = "ps_MobileApp_HomePage_PatientRegistration"; break;
                 case "Mobile_AppointmentAdmissionSummary": sp_Name = "ps_MobileApp_HomePage_AppointmentAdmissionSummary"; break;
+                case "Mobile_WardWiseBedOccupancy": sp_Name = "ps_MobileApp_WardWiseBedOccupancy"; break;
 
 
                 // Marketing Mobile App API
