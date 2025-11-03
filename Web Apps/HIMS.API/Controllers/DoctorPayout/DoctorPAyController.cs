@@ -3,10 +3,13 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.DoctorPayout;
+using HIMS.API.Models.OPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.DoctorPayout;
+using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.DoctorPayout
@@ -98,41 +101,28 @@ namespace HIMS.API.Controllers.DoctorPayout
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Update successfully.");
         }
+      
+
         [HttpPost("DoctorPayoutProcess")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertEDMX(DoctorPayoutProcessModel obj)
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        public ApiResponse InsertSP(DoctorPayoutModel obj)
         {
-            TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();
-            if (obj.DoctorPayoutId == 0)
+            TDoctorPayoutProcessHeader model = obj.DoctorPayoutProcess.MapTo<TDoctorPayoutProcessHeader>();
+            List<TDoctorPayoutProcessDetail> model1 = obj.DoctorPayoutProcessDetail.MapTo<List<TDoctorPayoutProcessDetail>>();
+            if (obj.DoctorPayoutProcess.DoctorPayoutId == 0)
             {
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                await _IDoctorPayService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                model.ProcessStartDate = Convert.ToDateTime(obj.DoctorPayoutProcess.ProcessStartDate);
+
+                obj.DoctorPayoutProcess.DoctorPayoutId = obj.DoctorPayoutProcess.DoctorPayoutId;
+              
+
+                _IDoctorPayService.InsertSP(model, model1 , CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DoctorPayoutId);
         }
 
-
-        [HttpPut("DoctorPayoutProcess")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DoctorPayoutProcessModel obj)
-        {
-            TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();
-            if (obj.DoctorPayoutId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
-            {
-                model.ModifiedDate = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                await _IDoctorPayService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        }
         [HttpPost("DoctorShrCalcAsPerReferDocVisitBillWise")]
         //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(CalcAsPerReferDocVisitBillWiseModel obj)

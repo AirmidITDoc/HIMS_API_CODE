@@ -86,48 +86,77 @@ namespace HIMS.Services.DoctorPayout
             }
 
         }
-
-
-        public virtual async Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username)
+        public virtual void InsertSP(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, List<TDoctorPayoutProcessDetail> ObjTDoctorPayoutProcessDetail, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.TDoctorPayoutProcessHeaders.Add(ObjTDoctorPayoutProcessHeader);
-                await _context.SaveChangesAsync();
 
-                scope.Complete();
+            DatabaseHelper odal = new();
+            string[] rEntity = {  "DoctorId", "ProcessStartDate", "ProcessEndDate", "ProcessDate", "NetAmount", "DoctorAmount", "HospitalAmount", "Tdsamount", "CreatedBy" };
+
+            var dentity = ObjTDoctorPayoutProcessHeader.ToDictionary();
+            foreach (var rProperty in dentity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    dentity.Remove(rProperty);
+            }
+            string DoctorPayoutId = odal.ExecuteNonQuery("ps_Insert_T_DoctorPayoutProcessHeader", CommandType.StoredProcedure, "DoctorPayoutId", dentity);
+            ObjTDoctorPayoutProcessHeader.DoctorPayoutId = Convert.ToInt32(DoctorPayoutId);
+
+            foreach (var item in ObjTDoctorPayoutProcessDetail)
+            {
+                item.DoctorPayoutId = Convert.ToInt32(DoctorPayoutId);
+                string[] rRefundEntity = { "DoctorPayoutDetId", "DoctorPayoutId", "DoctorId", "ChargeId", "CreatedBy" };
+                var RefundEntity = item.ToDictionary();
+                foreach (var rProperty in RefundEntity.Keys.ToList())
+                {
+                    if (!rRefundEntity.Contains(rProperty))
+                        RefundEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Insert_DoctorPayoutProcessDetails", CommandType.StoredProcedure, RefundEntity);
             }
         }
 
-        public virtual async Task UpdateAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username, string[]? ignoreColumns = null)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // 1. Attach the entity without marking everything as modified
-                _context.Attach(ObjTDoctorPayoutProcessHeader);
-                _context.Entry(ObjTDoctorPayoutProcessHeader).State = EntityState.Modified;
 
-                // 2. Ignore specific columns
-                if (ignoreColumns?.Length > 0)
-                {
-                    foreach (var column in ignoreColumns)
-                    {
-                        _context.Entry(ObjTDoctorPayoutProcessHeader).Property(column).IsModified = false;
-                    }
-                }
-                //Delete details table realted records
-                var lst = await _context.TDoctorPayoutProcessDetails.Where(x => x.DoctorPayoutId == ObjTDoctorPayoutProcessHeader.DoctorPayoutId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TDoctorPayoutProcessDetails.RemoveRange(lst);
-                }
 
-                await _context.SaveChangesAsync();
+        //public virtual async Task InsertAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.TDoctorPayoutProcessHeaders.Add(ObjTDoctorPayoutProcessHeader);
+        //        await _context.SaveChangesAsync();
 
-                scope.Complete();
-            }
-        }
-            public virtual async Task InsertAsync(AddCharge ObjAddCharge, int CurrentUserId, string CurrentUserName)
+        //        scope.Complete();
+        //    }
+        //}
+
+        //public virtual async Task UpdateAsync(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // 1. Attach the entity without marking everything as modified
+        //        _context.Attach(ObjTDoctorPayoutProcessHeader);
+        //        _context.Entry(ObjTDoctorPayoutProcessHeader).State = EntityState.Modified;
+
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(ObjTDoctorPayoutProcessHeader).Property(column).IsModified = false;
+        //            }
+        //        }
+        //        //Delete details table realted records
+        //        var lst = await _context.TDoctorPayoutProcessDetails.Where(x => x.DoctorPayoutId == ObjTDoctorPayoutProcessHeader.DoctorPayoutId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.TDoctorPayoutProcessDetails.RemoveRange(lst);
+        //        }
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task InsertAsync(AddCharge ObjAddCharge, int CurrentUserId, string CurrentUserName)
             {
             DatabaseHelper odal = new();
             string[] AEntity = { "BillNo", "DoctorId" };

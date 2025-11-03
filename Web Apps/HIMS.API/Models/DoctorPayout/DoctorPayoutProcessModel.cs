@@ -4,7 +4,6 @@ namespace HIMS.API.Models.DoctorPayout
 {
     public class DoctorPayoutProcessModel
     {
-        public long DoctorPayoutId { get; set; }
         public long? DoctorId { get; set; }
         public DateTime? ProcessStartDate { get; set; }
         public DateTime? ProcessEndDate { get; set; }
@@ -13,7 +12,11 @@ namespace HIMS.API.Models.DoctorPayout
         public decimal? DoctorAmount { get; set; }
         public decimal? HospitalAmount { get; set; }
         public decimal? Tdsamount { get; set; }
-        public List<DoctorPayoutProcessDetailsModel> TDoctorPayoutProcessDetails { get; set; }
+        public int? CreatedBy { get; set; }
+        public long DoctorPayoutId { get; set; }
+
+
+
 
     }
     public class DoctorPayoutProcessModelValidator : AbstractValidator<DoctorPayoutProcessModel>
@@ -33,6 +36,8 @@ namespace HIMS.API.Models.DoctorPayout
         public long? DoctorPayoutId { get; set; }
         public long? DoctorId { get; set; }
         public long? ChargeId { get; set; }
+        public int? CreatedBy { get; set; }
+
     }
     public class DoctorPayoutProcessDetailsModelValidator : AbstractValidator<DoctorPayoutProcessDetailsModel>
     {
@@ -42,6 +47,12 @@ namespace HIMS.API.Models.DoctorPayout
 
 
         }
+    }
+    public class DoctorPayoutModel
+    {
+        public DoctorPayoutProcessModel DoctorPayoutProcess {  get; set; }
+        public List<DoctorPayoutProcessDetailsModel> DoctorPayoutProcessDetail { get; set; }
+
     }
 
 
