@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Transaction
             _repository = repository1;
         }
 
-        [HttpPost("SMSconfigList")]
+        [HttpPost("SMSendoutList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SMSList(GridRequestModel objGrid)
         {
@@ -63,6 +63,32 @@ namespace HIMS.API.Controllers.Transaction
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SmsConfig Updated successfully.", model);
+        }
+
+        [HttpPost("EmailsendoutList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> emailList(GridRequestModel objGrid)
+        {
+            IPagedList<EmailSendoutListDto> List = await _IsmsConfigService.GetEmailSconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Email Send List"));
+        }
+
+
+        [HttpPost("WhatsappSendoutList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> WhatsappList(GridRequestModel objGrid)
+        {
+            IPagedList<WhatsAppsendOutListDto> List = await _IsmsConfigService.GetWhatsAppconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Whatsapp Send List"));
+        }
+
+
+        [HttpPost("AuditLogList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> AuditlogList(GridRequestModel objGrid)
+        {
+            IPagedList<AuditlogDtoList> List = await _IsmsConfigService.GetAuditlog(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Audit Log List"));
         }
     }
 }

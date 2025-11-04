@@ -7,7 +7,16 @@ namespace HIMS.Services.Transaction
     public partial interface IsmsConfigService
     {
         Task<IPagedList<SMSConfigListDto>> GetSMSconfig(GridRequestModel objGrid);
+
+        Task<IPagedList<EmailSendoutListDto>> GetEmailSconfig(GridRequestModel objGrid);
+
+
+        Task<IPagedList<WhatsAppsendOutListDto>> GetWhatsAppconfig(GridRequestModel objGrid);
+
+        Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel objGrid);
+
         Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
+
     }
 }
