@@ -67,5 +67,16 @@
         public long OPIPID { get; set; }
 
     }
+    public class requestAttendentListDto
+    {
+        public long OTReservationId { get; set; }
+        public long DoctorTypeId { get; set; }
+        public string DoctorType { get; set; }
+        public long DoctorId { get; set; }
+        public long DoctorName { get; set; }
+
+
+    }
+
 
 }

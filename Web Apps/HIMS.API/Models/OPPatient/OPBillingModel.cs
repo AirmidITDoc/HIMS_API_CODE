@@ -6,8 +6,7 @@ namespace HIMS.API.Models.OPPatient
 
     public class OPBillIngModel
     {
-        public int BillNo { get; set; }
-        public int? OPDIPDID { get; set; }
+        public int? OpdIpdId { get; set; }
         public long? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? Ipdno { get; set; }
@@ -28,7 +27,7 @@ namespace HIMS.API.Models.OPPatient
         public float? PaidAmt { get; set; }
         public float? BalanceAmt { get; set; }
         public string? BillDate { get; set; }
-        public int? OPDIPDType { get; set; }
+        public int? OpdIpdType { get; set; }
         public int? AddedBy { get; set; }
         public float? TotalAdvanceAmount { get; set; }
         public decimal? AdvanceUsedAmount { get; set; }
@@ -49,6 +48,8 @@ namespace HIMS.API.Models.OPPatient
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
         public long? CreatedBy { get; set; }
+        public int BillNo { get; set; }
+
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
         public List<Packcagechargesmodel?> Packcagecharges { get; set; }
@@ -58,7 +59,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public BillModelValidator()
         {
-            RuleFor(x => x.OPDIPDID).NotNull().NotEmpty().WithMessage("OPDIPDID is required");
+            RuleFor(x => x.OpdIpdId).NotNull().NotEmpty().WithMessage("OpdIpdId is required");
             RuleFor(x => x.TotalAmt).NotNull().NotEmpty().WithMessage("TotalAmt is required");
             RuleFor(x => x.NetPayableAmt).NotNull().NotEmpty().WithMessage("NetPayableAmt is required");
             RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
@@ -179,7 +180,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public OPPaymentModelValidator()
         {
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 
@@ -237,7 +238,7 @@ namespace HIMS.API.Models.OPPatient
         public PackcagechargesmodelValidator()
         {
             //  RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
-            RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
+            //RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }
 

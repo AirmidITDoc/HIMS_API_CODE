@@ -25,12 +25,19 @@ namespace HIMS.API.Controllers.IPPatient
         {
             _OTService = repository;
         }
+        //[HttpPost("OTReservationlist")]
+        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        //public async Task<IActionResult> List(GridRequestModel objGrid)
+        //{
+        //    IPagedList<OTBookinglistDto> OTBookinglist = await _OTService.GetListAsync(objGrid);
+        //    return Ok(OTBookinglist.ToGridResponse(objGrid, "OT Reservation list "));
+        //}
         [HttpPost("OTReservationlist")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<OTBookinglistDto> OTBookinglist = await _OTService.GetListAsync(objGrid);
-            return Ok(OTBookinglist.ToGridResponse(objGrid, "OT Reservation list "));
+            IPagedList<requestAttendentListDto> OTReservationlist = await _OTService.OTGetListAsync(objGrid);
+            return Ok(OTReservationlist.ToGridResponse(objGrid, "OT Reservation list "));
         }
 
         [HttpGet("search-patient-OTRequest")]

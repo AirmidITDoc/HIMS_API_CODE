@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathTestMaster> MPathTestMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -43,6 +43,15 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             IPagedList<PathTestListDto> PathTestList = await _ITestmasterService.PetListAsync(objGrid);
             return Ok(PathTestList.ToGridResponse(objGrid, "PathTestList"));
         }
+
+        [HttpPost("PathTestDetailList")]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathSubTestList(GridRequestModel objGrid)
+        {
+            IPagedList<PathTestDetailDto> TestMasterList = await _ITestmasterService.PathTestDetailListAsync(objGrid);
+            return Ok(TestMasterList.ToGridResponse(objGrid, "PathTestDetailList"));
+        }
+
         [HttpPost("PathTestForUpdateList")]
         [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> TestForUpdateList(GridRequestModel objGrid)
@@ -52,7 +61,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("PathSubTestList")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<SubTestMasterListDto> TestMasterList = await _ITestmasterService.GetListAsync(objGrid);

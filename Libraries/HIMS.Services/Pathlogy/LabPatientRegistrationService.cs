@@ -3,9 +3,12 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
+using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +49,161 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-     
+        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, List<TLabTestRequest> OBjTLabTestRequest, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserNameint)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+
+                DatabaseHelper odal = new();
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId" };
+
+                var lentity = ObjTLabPatientRegistration.ToDictionary();
+                foreach (var rProperty in lentity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        lentity.Remove(rProperty);
+                }
+                string LabPatientId = odal.ExecuteNonQuery("ps_Insert_LabPatientRegistration", CommandType.StoredProcedure, "LabPatientId", lentity);
+                ObjTLabPatientRegistration.LabPatientId = Convert.ToInt32(LabPatientId);
+
+                foreach (var item in OBjTLabTestRequest)
+                {
+                    item.LabPatientId = Convert.ToInt32(LabPatientId);
+                    string[] rRefundEntity = { "LabPatientId", "LabServiceId", "Qty", "TotalAmount", "DiscountAmount", "NetAmount", "PaidAmount", "CreatedBy" };
+                    var RefundEntity = item.ToDictionary();
+                    foreach (var rProperty in RefundEntity.Keys.ToList())
+                    {
+                        if (!rRefundEntity.Contains(rProperty))
+                            RefundEntity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Insert_T_LabTestRequest", CommandType.StoredProcedure, RefundEntity);
+                }
+                string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","BillNo"};
+                var bentity = objBill.ToDictionary();
+                foreach (var rProperty in bentity.Keys.ToList())
+                {
+                    if (!BEntity.Contains(rProperty))
+                        bentity.Remove(rProperty);
+                }
+                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                objBill.BillNo = Convert.ToInt32(vBillNo);
+
+
+                foreach (var objItem1 in objBill.AddCharges)
+                {
+                    // Add Charges Code
+                    objItem1.BillNo = objBill.BillNo;
+                    objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
+                    objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
+                    objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
+                    _context.AddCharges.Add(objItem1);
+                    await _context.SaveChangesAsync();
+
+                    // Bill Details Code
+                    BillDetail objBillDet = new()
+                    {
+                        BillNo = objBill.BillNo,
+                        ChargesId = objItem1?.ChargesId
+                    };
+                    _context.BillDetails.Add(objBillDet);
+                    await _context.SaveChangesAsync();
+
+                    // Pathology Code
+                    if (objItem1.IsPathology == 1)
+                    {
+                        TPathologyReportHeader objPatho = new()
+                        {
+                            PathDate = objItem1.ChargesDate,
+                            PathTime = objItem1?.ChargesDate,
+                            OpdIpdType = objItem1?.OpdIpdType,
+                            OpdIpdId = objItem1?.OpdIpdId,
+                            PathTestId = objItem1?.ServiceId,
+                            AddedBy = objItem1?.AddedBy,
+                            ChargeId = objItem1?.ChargesId,
+                            IsCompleted = false,
+                            IsPrinted = false,
+                            IsSampleCollection = false,
+                            TestType = false
+                        };
+
+                        _context.TPathologyReportHeaders.Add(objPatho);
+                        await _context.SaveChangesAsync();
+                    }
+                    // Radiology Code
+                    if (objItem1?.IsRadiology == 1)
+                    {
+                        TRadiologyReportHeader objRadio = new()
+                        {
+                            RadDate = objItem1.ChargesDate,
+                            RadTime = objItem1?.ChargesDate,
+                            OpdIpdType = objItem1?.OpdIpdType,
+                            OpdIpdId = objItem1?.OpdIpdId,
+                            RadTestId = objItem1?.ServiceId,
+                            AddedBy = objItem1?.AddedBy,
+                            ChargeId = objItem1?.ChargesId,
+                            IsCompleted = false,
+                            IsCancelled = 0,
+                            IsPrinted = false,
+                            TestType = false
+                        };
+
+                        _context.TRadiologyReportHeaders.Add(objRadio);
+                        await _context.SaveChangesAsync();
+                    }
+                    if (objItem1.IsPackage == 1)
+                    {
+                        foreach (var item in ObjaddCharge)
+                        {
+                            string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
+                            var Packagescharge = item.ToDictionary();
+
+                            foreach (var rProperty in Packagescharge.Keys.ToList())
+                            {
+                                if (!AEntity.Contains(rProperty))
+                                    Packagescharge.Remove(rProperty);
+                            }
+                            Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
+                            Packagescharge["BillNo"] = objBill.BillNo;
+                            var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                            item.ChargesId = Convert.ToInt32(VChargesId);
+
+                            // //   Package Service add in Bill Details
+                            Dictionary<string, object> OPBillDet2 = new()
+                            {
+                                ["BillNo"] = objBill.BillNo,
+                                ["ChargesId"] = VChargesId
+                            };
+
+                            odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                        }
+
+                    }
+                    string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
+                    Payment objPay = new();
+                    objPay = objPayment;
+                    objPay.BillNo = objBill.BillNo;
+                    var entity2 = objPayment.ToDictionary();
+                    foreach (var rProperty in entity2.Keys.ToList())
+                    {
+                        if (!rPaymentEntity.Contains(rProperty))
+                            entity2.Remove(rProperty);
+                    }
+                    entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+                    string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    objPayment.PaymentId = Convert.ToInt32(PaymentId);
+
+                    scope.Complete();
+                }
+
+
+
+            }
+        }
+        
+        
+
+
 
         public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
