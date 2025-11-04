@@ -15,11 +15,25 @@ namespace HIMS.Services.Transaction
             _context = HIMSDbContext;
         }
 
+        public virtual async Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AuditlogDtoList>(model, "ps_Rtrv_T_Auditloglist");
+        }
+
+        public virtual async Task<IPagedList<EmailSendoutListDto>> GetEmailSconfig(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<EmailSendoutListDto>(model, "ps_Rtrv_T_Emailoutlist");
+        }
+
         public virtual async Task<IPagedList<SMSConfigListDto>> GetSMSconfig(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SMSConfigListDto>(model, "Rtrv_Sent_SMS_List");
         }
 
+        public virtual async Task<IPagedList<WhatsAppsendOutListDto>> GetWhatsAppconfig(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<WhatsAppsendOutListDto>(model, "ps_Rtrv_T_Whatsappoutlist");
+        }
 
         public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
         {

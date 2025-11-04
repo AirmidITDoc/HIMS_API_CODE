@@ -6,7 +6,10 @@ using HIMS.API.Models.Inventory.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.Inventory.Masters.ConfigurationModelValidator;
 
@@ -17,13 +20,16 @@ namespace HIMS.API.Controllers.Administration
     [ApiVersion("1")]
     public class ConfigurationController : BaseController
     {
+        private readonly IConfigService _IConfigService;
+
         private readonly IGenericService<ConfigSetting> _repository;
         private readonly IGenericService<MSystemConfig> _repository1;
 
-        public ConfigurationController(IGenericService<ConfigSetting> repository, IGenericService<MSystemConfig> repository1)
+        public ConfigurationController(IGenericService<ConfigSetting> repository, IGenericService<MSystemConfig> repository1, IConfigService IIConfigService)
         {
             _repository = repository;
             _repository1 = repository1;
+            _IConfigService = IIConfigService;
         }
         //List API
         [HttpPost]
@@ -117,7 +123,21 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
 
+        [HttpPost("SmsconfigList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> smsconfigList(GridRequestModel objGrid)
+        {
+            IPagedList<Smsconfigdetail> List = await _IConfigService.GetSMSconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "SMS Config List"));
+        }
 
+        [HttpPost("EmailconfigList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> EmailConfigList(GridRequestModel objGrid)
+        {
+            IPagedList<EmailConfigurationdetailListDto> List = await _IConfigService.GetEmailconfigdetail(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Email Config List"));
+        }
 
     }
 }
