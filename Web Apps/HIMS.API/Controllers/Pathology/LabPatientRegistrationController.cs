@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<ApiResponse> InsertSP(LabRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
-            List<TLabTestRequest> model1 = obj.TLabTestRequest.MapTo<List<TLabTestRequest>>();
+            //List<TLabTestRequest> model1 = obj.TLabTestRequest.MapTo<List<TLabTestRequest>>();
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Pathology
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _ILabPatientRegistrationService.InsertAsyncSP(model, model1, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _ILabPatientRegistrationService.InsertAsyncSP(model, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

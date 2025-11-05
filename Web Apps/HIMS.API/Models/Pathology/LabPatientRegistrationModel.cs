@@ -123,7 +123,7 @@ namespace HIMS.API.Models.Pathology
     public class LabRegistrationModels
     {
         public LabPatientRegistrationModel LabPatientRegistration {  get; set; }
-        public List<TLabTestRequestModel> TLabTestRequest { get; set; }
+        //public List<TLabTestRequestModel> TLabTestRequest { get; set; }
         public OPBillIngLabModel OPBillIngModels { get; set; }
         //public List<ChargesModel> AddCharges { get; set; }
         //public List<BillDetailsModel> BillDetails { get; set; }
