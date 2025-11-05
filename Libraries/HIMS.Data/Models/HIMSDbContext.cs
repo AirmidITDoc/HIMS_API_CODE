@@ -13986,15 +13986,18 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_ReservationAttendingDetails");
 
-                entity.Property(e => e.OtreservationAttendingDetId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTReservationAttendingDetId");
+                entity.Property(e => e.OtreservationAttendingDetId).HasColumnName("OTReservationAttendingDetId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.HasOne(d => d.Otreservation)
+                    .WithMany(p => p.TOtReservationAttendingDetails)
+                    .HasForeignKey(d => d.OtreservationId)
+                    .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
             });
 
             modelBuilder.Entity<TOtReservationHeader>(entity =>
@@ -14051,9 +14054,7 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_ReservationSurgeryDetails");
 
-                entity.Property(e => e.OtreservationSurgeryDetId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTReservationSurgeryDetId");
+                entity.Property(e => e.OtreservationSurgeryDetId).HasColumnName("OTReservationSurgeryDetId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -14070,6 +14071,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
 
                 entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.HasOne(d => d.Otreservation)
+                    .WithMany(p => p.TOtReservationSurgeryDetails)
+                    .HasForeignKey(d => d.OtreservationId)
+                    .HasConstraintName("FK_T_OT_ReservationSurgeryDetails_T_OT_ReservationHeader");
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>

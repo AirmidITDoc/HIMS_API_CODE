@@ -1,39 +1,40 @@
-﻿namespace HIMS.Data.DTO.OTManagement
+﻿using System.Xml.Linq;
+
+namespace HIMS.Data.DTO.OTManagement
 {
-    public class OTBookinglistDto
+    public class OTReservationListDto
     {
 
-        public long OtreservationId { get; set; }
+        public long OTReservationId { get; set; }
         public DateTime? ReservationDate { get; set; }
         public DateTime? ReservationTime { get; set; }
+        public DateTime? OTReservationDateTime { get; set; }
+        public string? OTReservationNo { get; set; }
         public long? OpIpId { get; set; }
         public bool? OpIpType { get; set; }
-        public DateTime? Opdate { get; set; }
-        public DateTime? OpstartTime { get; set; }
-        public DateTime? OpendTime { get; set; }
-        public long? OTTypeID { get; set; }
+        public long? BloodGroup { get; set; }
+        public long? CategoryType { get; set; }
+        public long? Ottable { get; set; }
+        public string? TypeName { get; set; }
         public int? Duration { get; set; }
         public long? OttableId { get; set; }
-        public long? SurgeryId { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDateTime { get; set; }
-        public string? SurgeryName { get; set; }
-        public string? DepartmentName { get; set; }
-        public long? AdmissionID { get; set; }
         public string? OTTableName { get; set; }
-        public string? PatientName { get; set; }
-        public string? RegNo { get; set; }
-        public long? DoctorId { get; set; }
-        public string SurgenName { get; set; }
-        public string SurgenName1 { get; set; }
-        public string? AnestheticsDr { get; set; }
-        public string AnestheticsDr1 { get; set; }
-        public long? InstructionId { get; set; }
+        public DateTime? SurgeryDate { get; set; }
+        public DateTime? EstimateTime { get; set; }
+        public string? Comments { get; set; }
+        public bool? Pacrequired { get; set; }
+        public bool? EquipmentsRequired { get; set; }
+        public bool? ClearanceMedical { get; set; }
+        public bool? ClearanceFinancial { get; set; }
+        public bool? Infective { get; set; }
+        public long? Createdby { get; set; }
+        public string? UserName { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public long? OPDNo { get; set; }
+        public string PatientName { get; set; }
+        public string RoomName { get; set; }
+        public string? BedName { get; set; }
+        public string RegNo { get; set; }
         public string? Instruction { get; set; }
         public long? SurgeonId { get; set; }
         public long? SurgeonId1 { get; set; }
@@ -45,11 +46,14 @@
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
-        public string? CompanyName { get; set; }
-        public string? IPDNo { get; set; }
-        public string? UnBooking { get; set; }
+        public string? DepartmentName { get; set; }
         public string? TariffName { get; set; }
-        public string? UserName { get; set; }
+        public string? CompanyName { get; set; }
+        public string? PatientType { get; set; }
+        public string? GenderName { get; set; }
+        public long? OTRequestId { get; set; }
+
+
     }
 
     public class OTRequestDetailsListSearchDto
