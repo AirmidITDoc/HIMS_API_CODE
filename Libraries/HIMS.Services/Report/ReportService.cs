@@ -167,7 +167,20 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+                #region :: LabRegistrationListReport ::
+                case "LabRegistrationListReport":
+                    {
 
+                        model.RepoertName = "Appointment List";
+                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name" };
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabregistrationDetailList.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        var html = GetHTMLView("ps_Rtrv_LabRegisterDetailReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
 
                 #region :: DoctorWiseVisitReport ::
                 case "DoctorWiseVisitReport":
@@ -3868,7 +3881,7 @@ namespace HIMS.Services.Report
                 // Simple Report Format
                 //case "RegistrationReport":
                 case "AppointmentListReport":
-                //case "DepartmentWisecountSummury":
+                case "LabRegistrationListReport":
                 case "OPDoctorWiseVisitCountSummary":
                 case "OPAppoinmentListWithServiseAvailed":
                 case "CrossConsultationReport":

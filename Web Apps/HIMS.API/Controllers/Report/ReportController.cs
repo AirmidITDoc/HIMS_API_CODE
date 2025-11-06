@@ -429,8 +429,9 @@ namespace HIMS.API.Controllers.Report
                 case "OTReservationReport":
                 case "SupplierPaymentReciept":
 
-
-
+                //Labrequest Detail
+                case "LabRegistrationListReport":
+                    
 
                 #endregion
 

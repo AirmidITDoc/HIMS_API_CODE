@@ -4,14 +4,14 @@ namespace HIMS.API.Models.Masters
 {
     public class GenericMasterModel
     {
-        public long GenericId { get; set; }
-        public string? GenericName { get; set; }
+        public long ItemGenericNameId { get; set; }
+        public string? ItemGenericName { get; set; }
     }
     public class GenericMasterModelValidator : AbstractValidator<GenericMasterModel>
     {
         public GenericMasterModelValidator()
         {
-            RuleFor(x => x.GenericName).NotNull().NotEmpty().WithMessage("GenericName is required");
+            RuleFor(x => x.ItemGenericName).NotNull().NotEmpty().WithMessage("ItemGenericName is required");
         }
     }
 }
