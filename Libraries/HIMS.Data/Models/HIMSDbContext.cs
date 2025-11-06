@@ -12940,6 +12940,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.EstimatedValue).HasColumnType("money");
 
+                entity.Property(e => e.FollowTypeDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("followTypeDate");
+
                 entity.Property(e => e.FollowupTypeName).HasMaxLength(255);
 
                 entity.Property(e => e.Location).HasMaxLength(255);
@@ -12949,6 +12953,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.StatusName).HasMaxLength(50);
+
+                entity.Property(e => e.VerifyVisit).HasColumnName("verifyVisit");
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 

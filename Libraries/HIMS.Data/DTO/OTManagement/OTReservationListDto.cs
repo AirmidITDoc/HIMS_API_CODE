@@ -6,21 +6,21 @@ namespace HIMS.Data.DTO.OTManagement
     {
 
         public long OTReservationId { get; set; }
-        public DateTime? ReservationDate { get; set; }
-        public DateTime? ReservationTime { get; set; }
-        public DateTime? OTReservationDateTime { get; set; }
-        public string? OTReservationNo { get; set; }
+        public string ReservationDate { get; set; }
+        public string ReservationTime { get; set; }
+        public string OTReservationDateTime { get; set; }
+        public string OTReservationNo { get; set; }
         public long? OpIpId { get; set; }
-        public bool? OpIpType { get; set; }
-        public long? BloodGroup { get; set; }
+        public byte? OpIpType { get; set; }
+        public string? BloodGroup { get; set; }
         public long? CategoryType { get; set; }
         public long? Ottable { get; set; }
         public string? TypeName { get; set; }
-        public int? Duration { get; set; }
+        public string? Duration { get; set; }
         public long? OttableId { get; set; }
         public string? OTTableName { get; set; }
-        public DateTime? SurgeryDate { get; set; }
-        public DateTime? EstimateTime { get; set; }
+        public string? SurgeryDate { get; set; }
+        public string EstimateTime { get; set; }
         public string? Comments { get; set; }
         public bool? Pacrequired { get; set; }
         public bool? EquipmentsRequired { get; set; }
@@ -29,8 +29,8 @@ namespace HIMS.Data.DTO.OTManagement
         public bool? Infective { get; set; }
         public long? Createdby { get; set; }
         public string? UserName { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public long? OPDNo { get; set; }
+        public string VisitDate { get; set; }
+        public string? OPDNo { get; set; }
         public string PatientName { get; set; }
         public string RoomName { get; set; }
         public string? BedName { get; set; }

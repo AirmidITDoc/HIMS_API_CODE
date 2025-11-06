@@ -29,6 +29,8 @@ namespace HIMS.API.Models.Inventory.Masters
         public DateTime? IsCancelledDateTime { get; set; }
         public List<OtReservationAttendingDetailModel> TOtReservationAttendingDetails { get; set; }
         public List<TOtReservationSurgeryDetailModel> TOtReservationSurgeryDetails { get; set; }
+        //public List<TOtRequestDiagnosisModel> TOtReservationSurgeryDetails { get; set; }
+
     }
     public class OTReservationModelValidator : AbstractValidator<ReservationModel>
     {
@@ -59,7 +61,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? SurgeryCategoryId { get; set; }
         public long? SurgeryId { get; set; }
         public string? SurgeryPart { get; set; }
-        public DateTime? SurgeryFromTime { get; set; }
+        public string? SurgeryFromTime { get; set; }
         public string? SurgeryEndTime { get; set; }
         public int? SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
@@ -68,4 +70,30 @@ namespace HIMS.API.Models.Inventory.Masters
         public int? SeqNo { get; set; }
 
     }
+    public class ReservationGetModel
+    {
+        public long OtreservationId { get; set; }
+        public DateTime? OtreservationDate { get; set; }
+        public string? OtreservationTime { get; set; }
+        public long? OtrequestId { get; set; }
+        public long? Opipid { get; set; }
+        public byte? Opiptype { get; set; }
+        public string? BloodGroup { get; set; }
+        public long? CategoryType { get; set; }
+        public long? Ottable { get; set; }
+        public DateTime? SurgeryDate { get; set; }
+        public string? EstimateTime { get; set; }
+        public string? Diagnosis { get; set; }
+        public string? Comments { get; set; }
+        public bool? ReservationType { get; set; }
+        public bool? Pacrequired { get; set; }
+        public bool? EquipmentsRequired { get; set; }
+        public bool? ClearanceMedical { get; set; }
+        public bool? ClearanceFinancial { get; set; }
+        public bool? Infective { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
+    }
 }
+    

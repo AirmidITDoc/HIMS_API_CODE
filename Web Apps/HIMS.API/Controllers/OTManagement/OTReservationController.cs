@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services;
@@ -22,9 +23,21 @@ namespace HIMS.API.Controllers.IPPatient
     {
 
         private readonly IOTService _OTService;
-        public OTReservationController(IOTService repository)
+        private readonly IGenericService<TOtReservationHeader> _repository;
+
+        public OTReservationController(IOTService repository, IGenericService<TOtReservationHeader> repository1)
         {
             _OTService = repository;
+            _repository = repository1;
+
+        }
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+
+            var data1 = await _repository.GetById(x => x.OtreservationId == id);
+            return data1.ToSingleResponse<TOtReservationHeader, ReservationGetModel>("TOtReservationHeader");
         }
         [HttpPost("OTReservationlist")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]

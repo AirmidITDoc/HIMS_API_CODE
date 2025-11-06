@@ -13,6 +13,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public long? ReservationId { get; set; }
 
         public virtual TOtRequestHeader? Otrequest { get; set; }
     }
