@@ -175,19 +175,19 @@ namespace HIMS.Services.Pathlogy
 
                         }
                     }
-                        string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
-                        Payment objPay = new();
-                        objPay = objPayment;
-                        objPay.BillNo = objBill.BillNo;
-                        var entity2 = objPayment.ToDictionary();
-                        foreach (var rProperty in entity2.Keys.ToList())
-                        {
-                            if (!rPaymentEntity.Contains(rProperty))
-                                entity2.Remove(rProperty);
-                        }
-                        entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-                        string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
-                        objPayment.PaymentId = Convert.ToInt32(PaymentId);
+                        //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
+                        //Payment objPay = new();
+                        //objPay = objPayment;
+                        //objPay.BillNo = objBill.BillNo;
+                        //var entity2 = objPayment.ToDictionary();
+                        //foreach (var rProperty in entity2.Keys.ToList())
+                        //{
+                        //    if (!rPaymentEntity.Contains(rProperty))
+                        //        entity2.Remove(rProperty);
+                        //}
+                        //entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+                        //string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                        //objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
                         scope.Complete();
                     }
