@@ -30,6 +30,10 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<requestAttendentListDto>(model, "rtrv_reservationAttendentList");
         }
+        public virtual async Task<IPagedList<ReservationSurgeryDetailListDto>> OTreservationGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ReservationSurgeryDetailListDto>(model, "rtrv_reservationsurgeryList");
+        }
         public List<OTRequestDetailsListSearchDto> SearchPatient(string Keyword)
         {
             DatabaseHelper sql = new();
