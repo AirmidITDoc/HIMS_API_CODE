@@ -6092,6 +6092,15 @@ namespace HIMS.Services.Report
                     {
 
 
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+
+
                         foreach (DataRow dr in dt.Rows)
                         {
                             //html = html.Replace("{{DataContent}}", htmlHeader);
