@@ -1,4 +1,6 @@
-﻿namespace HIMS.API.PaymentGateway
+﻿using Microsoft.OpenApi.Validations;
+
+namespace HIMS.API.PaymentGateway
 {
     public class MpesaAuthService
     {
@@ -52,8 +54,8 @@
             {
                 ShortCode = "600978",
                 ResponseType = "Completed",
-                ConfirmationURL = "https://api.airmid.co.in/api/payment/callback",
-                ValidationURL = "https://api.airmid.co.in/api/payment/callback"
+                ConfirmationURL = "https://api.airmid.co.in/api/payment/confirmation",
+                ValidationURL= "https://api.airmid.co.in/api/payment/validation"
             };
 
             var request = new HttpRequestMessage(HttpMethod.Post,
@@ -112,21 +114,29 @@
                 System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}")
             );
 
+            //var payload = new
+            //{
+            //    BusinessShortCode,
+            //    Password = password,
+            //    Timestamp = timestamp,
+            //    TransactionType = "CustomerPayBillOnline",
+            //    Amount = amount,
+            //    PartyA = phoneNumber,
+            //    PartyB = BusinessShortCode,
+            //    PhoneNumber = phoneNumber,
+            //    CallBackURL = callbackUrl,
+            //    AccountReference = "Test123",
+            //    TransactionDesc = "Payment"
+            //};
             var payload = new
             {
-                BusinessShortCode,
-                Password = password,
-                Timestamp = timestamp,
-                TransactionType = "CustomerPayBillOnline",
-                Amount = amount,
-                PartyA = phoneNumber,
-                PartyB = BusinessShortCode,
-                PhoneNumber = phoneNumber,
-                CallBackURL = callbackUrl,
-                AccountReference = "Test123",
-                TransactionDesc = "Payment"
+                ShortCode = 600986,
+                CommandID = "CustomerPayBillOnline",
+                Amount = 2,
+                Msisdn = phoneNumber,
+                BillRefNumber = "57567",
+                ResponseType = "Completed",
             };
-
             //var payload = new
             //{
             //    MerchantName = "TEST SUPERMARKET",

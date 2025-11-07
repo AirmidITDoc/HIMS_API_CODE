@@ -18,23 +18,51 @@ using System.Text;
 
 namespace HIMS.API.Controllers.Login
 {
-    [Route("api/payment/callback")]
+    //[Route("api/payment/callback")]
+    //[ApiController]
+    //public class MpesaCallbackController : ControllerBase
+    //{
+    //    [HttpPost]
+    //    public async Task<IActionResult> PostAsync([FromBody] Dictionary<string, object> callbackData)
+    //    {
+    //        // Save callbackData to DB
+    //        string path = "C:\\PaymentDataLogs\\";
+    //        if (!System.IO.Directory.Exists(path))
+    //            System.IO.Directory.CreateDirectory(path);
+    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        System.IO.File.AppendAllText(filename, JsonConvert.SerializeObject(callbackData));
+
+    //        return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = callbackData });
+    //    }
+    //}
+
     [ApiController]
+    [Route("api/payment")]
     public class MpesaCallbackController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Dictionary<string, object> callbackData)
+        [HttpPost("validation")]
+        public IActionResult Validate([FromBody] Dictionary<string, object> payload)
         {
-            // Save callbackData to DB
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, JsonConvert.SerializeObject(callbackData));
+            System.IO.File.AppendAllText(filename, "\n Validation =>" + JsonConvert.SerializeObject(payload));
+            return Ok(new { ResultCode = 0, ResultDesc = "Success" });
+        }
 
-            return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = callbackData });
+        [HttpPost("confirmation")]
+        public IActionResult Confirm([FromBody] Dictionary<string, object> payload)
+        {
+            string path = "C:\\PaymentDataLogs\\";
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            System.IO.File.AppendAllText(filename, "\n Validation =>" + JsonConvert.SerializeObject(payload));
+            return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
     }
+
 
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -263,8 +291,8 @@ namespace HIMS.API.Controllers.Login
         public async Task<IActionResult> Pay(string phone, decimal amount)
         {
             var result = await _stkService.RegisterUrls();
-            //var result = await _stkService.StkPushAsync(phone, amount,
-            //    "https://localhost:5251/api/mpesa/callback");
+            result = await _stkService.StkPushAsync(phone, amount,
+               "https://api.airmid.co.in/api/payment/callback");
 
             return Ok(result);
         }
