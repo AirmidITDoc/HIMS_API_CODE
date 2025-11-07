@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
+using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
 using HIMS.Core.Infrastructure;
 using HIMS.Core.Utilities;
@@ -12,10 +13,29 @@ using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
 {
+    [Route("api/payment/callback")]
+    [ApiController]
+    public class MpesaCallbackController : ControllerBase
+    {
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] Dictionary<string, object> callbackData)
+        {
+            // Save callbackData to DB
+            string path = "C:\\PaymentDataLogs\\";
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            System.IO.File.AppendAllText(filename, JsonConvert.SerializeObject(callbackData));
+
+            return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = callbackData });
+        }
+    }
+
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
@@ -25,12 +45,14 @@ namespace HIMS.API.Controllers.Login
         private readonly IConfiguration _Configuration;
         private readonly IPermissionService _IPermissionService;
         private readonly IMenuService _IMenuService;
-        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService)
+        private readonly MpesaStkService _stkService;
+        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService, MpesaStkService mpesaStkService)
         {
             _userService = userService;
             _Configuration = configuration;
             _IPermissionService = permission;
             _IMenuService = iMenuService;
+            _stkService = mpesaStkService;
         }
 
 
@@ -226,4 +248,26 @@ namespace HIMS.API.Controllers.Login
         }
 
     }
+    [ApiController]
+    [Route("api/mpesa")]
+    public class MpesaController : ControllerBase
+    {
+        private readonly MpesaStkService _stkService;
+
+        public MpesaController(MpesaStkService service)
+        {
+            _stkService = service;
+        }
+
+        [HttpPost("pay")]
+        public async Task<IActionResult> Pay(string phone, decimal amount)
+        {
+            var result = await _stkService.RegisterUrls();
+            //var result = await _stkService.StkPushAsync(phone, amount,
+            //    "https://localhost:5251/api/mpesa/callback");
+
+            return Ok(result);
+        }
+    }
+
 }

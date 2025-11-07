@@ -1,6 +1,7 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using HIMS.API.Extensions;
+using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
 using HIMS.Data;
 using HIMS.Data.Extensions;
@@ -190,6 +191,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IConfigService, ConfigService>();
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddHttpClient<MpesaAuthService>();
+            services.AddHttpClient<MpesaStkService>();
+
             services.AddScoped<DinkToPdfService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
