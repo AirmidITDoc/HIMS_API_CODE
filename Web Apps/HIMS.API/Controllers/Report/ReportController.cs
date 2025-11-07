@@ -249,7 +249,7 @@ namespace HIMS.API.Controllers.Report
                 case "EmergencyPrint":
                 case "EmergencyPrescription":
                 case "ConsentInformation":
-
+                case "LabregisterBillReceipt":
 
 
 
