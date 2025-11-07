@@ -288,11 +288,11 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("pay")]
-        public async Task<IActionResult> Pay(string phone, decimal amount)
+        public async Task<IActionResult> Pay(string phone, decimal amount,string reference)
         {
             var result = await _stkService.RegisterUrls();
             result = await _stkService.StkPushAsync(phone, amount,
-               "https://api.airmid.co.in/api/payment/callback");
+               "https://api.airmid.co.in/api/payment/confirmation", reference);
 
             return Ok(result);
         }

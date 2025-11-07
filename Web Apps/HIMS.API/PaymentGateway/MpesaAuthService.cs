@@ -39,7 +39,7 @@ namespace HIMS.API.PaymentGateway
         private readonly HttpClient _client;
 
         private readonly string BusinessShortCode = "174379"; // Test Paybill/Till
-        private readonly string PassKey = "YOUR_PASSKEY";
+        private readonly string PassKey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
 
         public MpesaStkService(HttpClient client, MpesaAuthService auth)
         {
@@ -102,41 +102,42 @@ namespace HIMS.API.PaymentGateway
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> StkPushAsync(string phoneNumber, decimal amount, string callbackUrl)
+        public async Task<string> StkPushAsync(string phoneNumber, decimal amount, string callbackUrl,string reference)
         {
             string token = await _authService.GetAccessTokenAsync();
 
-            //string endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+            string endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
             //string endpoint = "https://sandbox.safaricom.co.ke/mpesa/qrcode/v1/generate";
-            string endpoint = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+            //string endpoint = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             string password = Convert.ToBase64String(
                 System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}")
             );
 
-            //var payload = new
-            //{
-            //    BusinessShortCode,
-            //    Password = password,
-            //    Timestamp = timestamp,
-            //    TransactionType = "CustomerPayBillOnline",
-            //    Amount = amount,
-            //    PartyA = phoneNumber,
-            //    PartyB = BusinessShortCode,
-            //    PhoneNumber = phoneNumber,
-            //    CallBackURL = callbackUrl,
-            //    AccountReference = "Test123",
-            //    TransactionDesc = "Payment"
-            //};
             var payload = new
             {
-                ShortCode = 600986,
-                CommandID = "CustomerPayBillOnline",
+                BusinessShortCode,
+                Password = password,
+                Timestamp = timestamp,
+                TransactionType = "CustomerPayBillOnline",
                 Amount = amount,
-                Msisdn = phoneNumber,
-                BillRefNumber = "57567",
-                ResponseType = "Completed",
+                PartyA = phoneNumber,
+                PartyB = BusinessShortCode,
+                PhoneNumber = NormalizePhone(phoneNumber),
+                CallBackURL = callbackUrl,
+                AccountReference = reference,
+                TransactionDesc = "Payment",
+                ResponseType="Completed"
             };
+            //var payload = new
+            //{
+            //    ShortCode = 600986,
+            //    CommandID = "CustomerPayBillOnline",
+            //    Amount = amount,
+            //    Msisdn = phoneNumber,
+            //    BillRefNumber = "57567",
+            //    ResponseType = "Completed",
+            //};
             //var payload = new
             //{
             //    MerchantName = "TEST SUPERMARKET",
@@ -158,6 +159,25 @@ namespace HIMS.API.PaymentGateway
             var response = await _client.SendAsync(request);
             return await response.Content.ReadAsStringAsync();
         }
+        private string NormalizePhone(string phone)
+        {
+            phone = phone.Trim().Replace("+", "");
+
+            // Local: 07XXXXXXXX
+            if (phone.StartsWith("07"))
+                return "254" + phone.Substring(1);
+
+            // Local no zero: 7XXXXXXXX
+            if (phone.StartsWith("7"))
+                return "254" + phone;
+
+            // Already correct?
+            if (phone.StartsWith("2547"))
+                return phone;
+
+            throw new Exception("Invalid Kenyan phone number");
+        }
+
     }
 
 }
