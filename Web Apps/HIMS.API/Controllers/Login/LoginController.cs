@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Login
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n Validation =>" + JsonConvert.SerializeObject(payload));
+            System.IO.File.AppendAllText(filename, "\n Confirmation =>" + JsonConvert.SerializeObject(payload));
             return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
     }
