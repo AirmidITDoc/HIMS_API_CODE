@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("confirmation")]
-        public IActionResult Confirm([FromBody] Dictionary<string, object> payload)
+        public IActionResult Confirm([FromBody] object payload)
         {
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
