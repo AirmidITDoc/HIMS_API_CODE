@@ -43,13 +43,13 @@ namespace HIMS.API.Controllers.Login
     public class MpesaCallbackController : ControllerBase
     {
         [HttpPost("validation")]
-        public IActionResult Validate([FromBody] Dictionary<string, object> payload)
+        public IActionResult Validate([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n Validation =>" + JsonConvert.SerializeObject(payload));
+            System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
             return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
 
