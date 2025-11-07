@@ -857,6 +857,11 @@ namespace HIMS.Services.Users
             return await DatabaseHelper.GetGridDataBySp<salespatientwiseListDto>(model, "ps_rptget_CreditAmount");
         }
 
+        public virtual async Task<IPagedList<ItemGenericByNameListDto>> ItemGenericByNameList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemGenericByNameListDto>(model, "Retrieve_Item_Generic_ByName");
+        }
+
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
         {
 

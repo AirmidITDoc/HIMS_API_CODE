@@ -195,6 +195,14 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salespatientwiseList.ToGridResponse(objGrid, "salespatientwiseList List"));
         }
 
+        [HttpPost("ItemGenericByNameList")]
+        //   [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> saleList(GridRequestModel objGrid)
+        {
+            IPagedList<ItemGenericByNameListDto> ItemGenericByNameList = await _ISalesService.ItemGenericByNameList(objGrid);
+            return Ok(ItemGenericByNameList.ToGridResponse(objGrid, "ItemGenericByName List"));
+        }
+
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]

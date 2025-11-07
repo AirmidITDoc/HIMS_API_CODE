@@ -25,6 +25,8 @@ namespace HIMS.Services.Users
         Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel objGrid);
         Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel objGrid);
+        Task<IPagedList<ItemGenericByNameListDto>> ItemGenericByNameList(GridRequestModel objGrid);
+
         Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
 
