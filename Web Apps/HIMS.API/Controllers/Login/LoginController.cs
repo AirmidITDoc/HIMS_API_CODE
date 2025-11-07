@@ -12,9 +12,11 @@ using HIMS.Services.Permissions;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace HIMS.API.Controllers.Login
 {
@@ -52,13 +54,13 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("confirmation")]
-        public IActionResult Confirm([FromBody] object payload)
+        public IActionResult Confirm([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n Confirmation =>" + JsonConvert.SerializeObject(payload));
+            System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
             return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
     }
