@@ -132,7 +132,7 @@ namespace HIMS.API.PaymentGateway
             {
                 ShortCode = 600986,
                 CommandID = "CustomerPayBillOnline",
-                Amount = 2,
+                Amount = amount,
                 Msisdn = phoneNumber,
                 BillRefNumber = "57567",
                 ResponseType = "Completed",
