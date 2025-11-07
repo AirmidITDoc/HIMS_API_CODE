@@ -46,19 +46,27 @@ namespace HIMS.API.Controllers.IPPatient
             var data1 = await _repository.GetById(x => x.OtrequestId == id);
             return data1.ToSingleResponse<TOtRequestHeader, GetTOtRequestHeaderModel>("TOtRequestHeader");
         }
-
-
-        [HttpGet("getlocationByOttable/{id?}")]
+        [HttpGet]
+        [Route("getlocationByOttable")]
         //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetOt(int id)
+        public async Task<ApiResponse> GetDropdown()
         {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-            var data = await _repository4.GetById(x => x.OttableId == id);
-            return data.ToSingleResponse<MOttableMaster, OtTableModel>("MOttableMaster");
+            var MOttableMasterList = await _repository4.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "getlocationByOttable dropdown", MOttableMasterList.Select(x => new { x.OttableId, x.LocationId, x.OttableName }));
         }
+
+
+        //[HttpGet("getlocationByOttable/{id?}")]
+        ////[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetOt(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository4.GetById(x => x.OttableId == id);
+        //    return data.ToSingleResponse<MOttableMaster, OtTableModel>("MOttableMaster");
+        //}
 
 
         [HttpPost("OTRequestList")]

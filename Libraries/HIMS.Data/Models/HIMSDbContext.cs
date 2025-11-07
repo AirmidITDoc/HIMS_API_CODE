@@ -321,6 +321,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<OpsmsqueryTempleteSm> OpsmsqueryTempleteSms { get; set; } = null!;
         public virtual DbSet<Otcharge> Otcharges { get; set; } = null!;
         public virtual DbSet<Otdetail> Otdetails { get; set; } = null!;
+        public virtual DbSet<PatientTransport> PatientTransports { get; set; } = null!;
         public virtual DbSet<PatientTypeMaster> PatientTypeMasters { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentPharmacy> PaymentPharmacies { get; set; } = null!;
@@ -9128,6 +9129,36 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<PatientTransport>(entity =>
+            {
+                entity.HasKey(e => e.AmbulanceTransId)
+                    .HasName("PK__PatientT__DF8F42E0F52F9768");
+
+                entity.ToTable("PatientTransport");
+
+                entity.Property(e => e.DriverContactNo).HasMaxLength(15);
+
+                entity.Property(e => e.DriverName).HasMaxLength(100);
+
+                entity.Property(e => e.DropoffAddress).HasMaxLength(250);
+
+                entity.Property(e => e.Note)
+                    .HasMaxLength(250)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.PatientAddress).HasMaxLength(250);
+
+                entity.Property(e => e.PatientName).HasMaxLength(100);
+
+                entity.Property(e => e.PickupAddress).HasMaxLength(250);
+
+                entity.Property(e => e.PickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VehicleModel).HasMaxLength(100);
+
+                entity.Property(e => e.VehicleNo).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<PatientTypeMaster>(entity =>
             {
                 entity.HasKey(e => e.PatientTypeId);
@@ -12789,11 +12820,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
-
-                entity.HasOne(d => d.LabPatient)
-                    .WithMany(p => p.TLabTestRequests)
-                    .HasForeignKey(d => d.LabPatientId)
-                    .HasConstraintName("FK_T_LabTestRequest_T_LabPatientRegistration");
             });
 
             modelBuilder.Entity<TLoginAccessDetail>(entity =>
@@ -12914,6 +12940,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.EstimatedValue).HasColumnType("money");
 
+                entity.Property(e => e.FollowTypeDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("followTypeDate");
+
                 entity.Property(e => e.FollowupTypeName).HasMaxLength(255);
 
                 entity.Property(e => e.Location).HasMaxLength(255);
@@ -12923,6 +12953,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.StatusName).HasMaxLength(50);
+
+                entity.Property(e => e.VerifyVisit).HasColumnName("verifyVisit");
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 
@@ -13960,15 +13992,18 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_ReservationAttendingDetails");
 
-                entity.Property(e => e.OtreservationAttendingDetId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTReservationAttendingDetId");
+                entity.Property(e => e.OtreservationAttendingDetId).HasColumnName("OTReservationAttendingDetId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.HasOne(d => d.Otreservation)
+                    .WithMany(p => p.TOtReservationAttendingDetails)
+                    .HasForeignKey(d => d.OtreservationId)
+                    .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
             });
 
             modelBuilder.Entity<TOtReservationHeader>(entity =>
@@ -14025,9 +14060,7 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_ReservationSurgeryDetails");
 
-                entity.Property(e => e.OtreservationSurgeryDetId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTReservationSurgeryDetId");
+                entity.Property(e => e.OtreservationSurgeryDetId).HasColumnName("OTReservationSurgeryDetId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -14044,6 +14077,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
 
                 entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.HasOne(d => d.Otreservation)
+                    .WithMany(p => p.TOtReservationSurgeryDetails)
+                    .HasForeignKey(d => d.OtreservationId)
+                    .HasConstraintName("FK_T_OT_ReservationSurgeryDetails_T_OT_ReservationHeader");
             });
 
             modelBuilder.Entity<TOtcathLabBooking>(entity =>

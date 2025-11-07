@@ -6,7 +6,6 @@ namespace HIMS.API.Models.OPPatient
 
     public class OPBillIngModel
     {
-        public int BillNo { get; set; }
         public int? OPDIPDID { get; set; }
         public long? RegNo { get; set; }
         public string? PatientName { get; set; }
@@ -49,6 +48,8 @@ namespace HIMS.API.Models.OPPatient
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
         public long? CreatedBy { get; set; }
+        public int BillNo { get; set; }
+
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
         public List<Packcagechargesmodel?> Packcagecharges { get; set; }
@@ -236,7 +237,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public PackcagechargesmodelValidator()
         {
-            //  RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
+            RuleFor(x => x.ClassId).NotNull().NotEmpty().WithMessage("ClassId is required");
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
         }
     }

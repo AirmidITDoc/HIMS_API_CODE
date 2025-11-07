@@ -33,6 +33,11 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<SubTestMasterListDto>(model, "m_Retrieve_PathSubTestListForCombo");
 
         }
+        public virtual async Task<IPagedList<PathTestDetailDto>> PathTestDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathTestDetailDto>(model, "rtrv_pathTestDetailList");
+
+        }
         public virtual async Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");

@@ -5,6 +5,12 @@ namespace HIMS.Data.Models
 {
     public partial class TOtReservationHeader
     {
+        public TOtReservationHeader()
+        {
+            TOtReservationAttendingDetails = new HashSet<TOtReservationAttendingDetail>();
+            TOtReservationSurgeryDetails = new HashSet<TOtReservationSurgeryDetail>();
+        }
+
         public long OtreservationId { get; set; }
         public DateTime? OtreservationDate { get; set; }
         public DateTime? OtreservationTime { get; set; }
@@ -32,5 +38,8 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
+
+        public virtual ICollection<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; }
+        public virtual ICollection<TOtReservationSurgeryDetail> TOtReservationSurgeryDetails { get; set; }
     }
 }

@@ -5,11 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class TLabPatientRegistration
     {
-        public TLabPatientRegistration()
-        {
-            TLabTestRequests = new HashSet<TLabTestRequest>();
-        }
-
         public long LabPatientId { get; set; }
         public DateTime? RegDate { get; set; }
         public DateTime? RegTime { get; set; }
@@ -39,7 +34,5 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public virtual ICollection<TLabTestRequest> TLabTestRequests { get; set; }
     }
 }

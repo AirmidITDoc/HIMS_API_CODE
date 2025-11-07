@@ -22,6 +22,8 @@ namespace HIMS.API.Models.Marketing
         public DateTime? ClosedDate { get; set; }
         public decimal? EstimatedValue { get; set; }
         public bool? IsLeadPriority { get; set; }
+        public DateTime? FollowTypeDate { get; set; }
+        public bool? VerifyVisit { get; set; }
     }
     public class Market_DailyVisitInfoModelValidator : AbstractValidator<Market_DailyVisitInfoModel>
     {

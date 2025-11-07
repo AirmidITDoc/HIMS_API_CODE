@@ -33,6 +33,20 @@ namespace HIMS.Data.DTO.Pathology
         public long NetAmount { get; set; }
         public long PaidAmount { get; set; }
 
+       
+
+        public long IsCancelled { get; set; }
+        public decimal PaidAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public decimal? CardPay { get; set; }
+        public decimal? OnlinePay { get; set; }
+        //public int? PayCount { get; set; }
+       
+        //public string? CashCounterName { get; set; }
+        public string? BillNo { get; set; }
+
 
     }
 }

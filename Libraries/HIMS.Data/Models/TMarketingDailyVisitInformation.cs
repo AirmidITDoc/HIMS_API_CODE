@@ -27,5 +27,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public DateTime? FollowTypeDate { get; set; }
+        public bool? VerifyVisit { get; set; }
     }
 }

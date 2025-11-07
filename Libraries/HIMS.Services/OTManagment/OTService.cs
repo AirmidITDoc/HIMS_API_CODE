@@ -22,9 +22,17 @@ namespace HIMS.Services.IPPatient
         {
             return await _context.TOtReservations.FirstOrDefaultAsync(x => x.OtreservationId == id);
         }
-        public virtual async Task<IPagedList<OTBookinglistDto>> GetListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<OTReservationListDto>> GetListOtReservationAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<OTBookinglistDto>(model, "ps_Rtrv_OTBookinglist");
+            return await DatabaseHelper.GetGridDataBySp<OTReservationListDto>(model, "ps_Rtrv_OT_ReservationList");
+        }
+        public virtual async Task<IPagedList<requestAttendentListDto>> OTGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<requestAttendentListDto>(model, "rtrv_reservationAttendentList");
+        }
+        public virtual async Task<IPagedList<ReservationSurgeryDetailListDto>> OTreservationGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ReservationSurgeryDetailListDto>(model, "rtrv_reservationsurgeryList");
         }
         public List<OTRequestDetailsListSearchDto> SearchPatient(string Keyword)
         {
@@ -33,6 +41,77 @@ namespace HIMS.Services.IPPatient
             para[0] = new SqlParameter("@Keyword", Keyword);
             return sql.FetchListBySP<OTRequestDetailsListSearchDto>("ps_Rtrv_PatientOTRequestListSearch", para);
         }
+        public virtual async Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            {
+                var lastSeqNoStr = await _context.TOtReservationHeaders
+                    .OrderByDescending(x => x.OtreservationNo)
+                    .Select(x => x.OtreservationNo)
+                    .FirstOrDefaultAsync();
+
+                int lastSeqNo = 0;
+                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+                    lastSeqNo = parsed;
+
+                // Increment the sequence number
+                int newSeqNo = lastSeqNo + 1;
+                ObjTOtReservationHeader.OtreservationNo = newSeqNo.ToString();
+
+
+                ObjTOtReservationHeader.Createdby = UserId;
+                ObjTOtReservationHeader.CreatedDate = DateTime.Now;
+
+                _context.TOtReservationHeaders.Add(ObjTOtReservationHeader);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            {
+                // Attach entity
+                _context.Attach(ObjTOtReservationHeader);
+                _context.Entry(ObjTOtReservationHeader).State = EntityState.Modified;
+
+                // Prevent overwriting of important fields
+                _context.Entry(ObjTOtReservationHeader).Property(x => x.Createdby).IsModified = false;
+                _context.Entry(ObjTOtReservationHeader).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(ObjTOtReservationHeader).Property(x => x.OtreservationNo).IsModified = false;
+
+                // Update modified fields
+                ObjTOtReservationHeader.ModifiedBy = UserId;
+                ObjTOtReservationHeader.ModifiedDate = DateTime.Now;
+
+                // Ignore any additional columns if specified
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(ObjTOtReservationHeader).Property(column).IsModified = false;
+                    }
+                }
+                // Delete related detail records safely
+                var lstSurgery = await _context.TOtReservationAttendingDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
+                if (lstSurgery.Count > 0)
+                    _context.TOtReservationAttendingDetails.RemoveRange(lstSurgery);
+
+                var lstAttend = await _context.TOtReservationSurgeryDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
+                if (lstAttend.Count > 0)
+                    _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
+
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
+
+
+
 
         public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {

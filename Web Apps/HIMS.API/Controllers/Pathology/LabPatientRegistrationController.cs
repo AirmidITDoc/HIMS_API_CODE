@@ -34,9 +34,17 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabPatientRegistrationList.ToGridResponse(objGrid, "Lab Patient Registration List"));
         }
 
+        [HttpPost("LabBillDetailList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> BillDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabregBilldetailListDto> LabPatientBillList = await _ILabPatientRegistrationService.GetBillDetailListAsync(objGrid);
+            return Ok(LabPatientBillList.ToGridResponse(objGrid, "Lab Patient Bill Detail List"));
+        }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Insert(LabPatientRegistrationModel obj)
+        public async Task<ApiResponse> Insert(LabPatientRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.MapTo<TLabPatientRegistration>();
             if (obj.LabPatientId == 0)
@@ -51,6 +59,55 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+        [HttpPost("PatientRegistrationcreditbill")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(LabRegistrationModels obj)
+        {
+            TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
+            Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
+            Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
+            List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+
+
+
+            if (obj.LabPatientRegistration.LabPatientId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _ILabPatientRegistrationService.InsertAsyncSP(model, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        [HttpPost("PatientRegistrationPaidBill")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertPaidBill(LabRegistrationModels obj)
+        {
+            TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
+            Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
+            Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
+            List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+
+
+
+            if (obj.LabPatientRegistration.LabPatientId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _ILabPatientRegistrationService.InsertPaidBillAsync(model, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
 
 
         [HttpPut("Edit/{id:int}")]
