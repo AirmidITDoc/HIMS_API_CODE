@@ -12,5 +12,12 @@
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
     }
+    public class ReservationDiagnosisListDto
+    {
+        public long OtreservationDiagnosisDetId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+    }
+
 
 }

@@ -55,15 +55,10 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.ItemTypeId).NotNull().NotEmpty().WithMessage("ItemTypeId is required");
             RuleFor(x => x.ItemCategaryId).NotNull().NotEmpty().WithMessage("ItemCategaryId is required");
             RuleFor(x => x.ItemGenericNameId).NotNull().NotEmpty().WithMessage("ItemGenericNameId is required");
-            RuleFor(x => x.ItemClassId).NotNull().NotEmpty().WithMessage("ItemClassId is required");
             RuleFor(x => x.PurchaseUomid).NotNull().NotEmpty().WithMessage("PurchaseUomid is required");
-            RuleFor(x => x.StockUomid).NotNull().NotEmpty().WithMessage("StockUomid is required");
             RuleFor(x => x.ConversionFactor).NotNull().NotEmpty().WithMessage("ConversionFactor is required");
             RuleFor(x => x.CurrencyId).NotNull().NotEmpty().WithMessage("CurrencyId is required");
             RuleFor(x => x.IsBatchRequired).NotNull().NotEmpty().WithMessage("IsBatchRequired is required");
-            RuleFor(x => x.DrugType).NotNull().NotEmpty().WithMessage("DrugType is required");
-            RuleFor(x => x.ItemCompnayId).NotNull().NotEmpty().WithMessage("ItemCompnayId is required");
-            RuleFor(x => x.DrugType).NotNull().NotEmpty().WithMessage("DrugType is required");
         }
     }
     public class AssignItemToStoreModel

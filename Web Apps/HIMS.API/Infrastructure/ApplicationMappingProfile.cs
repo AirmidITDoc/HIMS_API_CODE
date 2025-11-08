@@ -716,6 +716,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMarketingDailyVisitInformation, Market_DailyVisitInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MMarketingHospitalMaster, MarketHospitalMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtRequestDiagnosis, TOtRequestDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservationDiagnosis, ReservationDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
