@@ -15,11 +15,7 @@ namespace HIMS.Services.Transaction
             _context = HIMSDbContext;
         }
 
-        public virtual async Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<AuditlogDtoList>(model, "ps_Rtrv_T_Auditloglist");
-        }
-
+       
         public virtual async Task<IPagedList<EmailSendoutListDto>> GetEmailSconfig(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<EmailSendoutListDto>(model, "ps_Rtrv_T_Emailoutlist");

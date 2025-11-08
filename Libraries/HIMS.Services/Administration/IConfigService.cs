@@ -15,6 +15,9 @@ namespace HIMS.Services.Administration
         Task<IPagedList<EmailConfigurationdetailListDto>> GetEmailconfigdetail(GridRequestModel objGrid);
 
 
+        Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel objGrid);
+
+
         //Task<IPagedList<EmailConfigurationdetailListDto>> GetWhatsAppconfig(GridRequestModel objGrid);
     }
 }

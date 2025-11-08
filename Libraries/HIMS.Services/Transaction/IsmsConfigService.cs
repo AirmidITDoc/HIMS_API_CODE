@@ -13,8 +13,7 @@ namespace HIMS.Services.Transaction
 
         Task<IPagedList<WhatsAppsendOutListDto>> GetWhatsAppconfig(GridRequestModel objGrid);
 
-        Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel objGrid);
-
+     
         Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
 
