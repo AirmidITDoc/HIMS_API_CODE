@@ -30,6 +30,11 @@ namespace HIMS.Services.Administration
         }
 
 
+        public virtual async Task<IPagedList<AuditlogDtoList>> GetAuditlog(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AuditlogDtoList>(model, "ps_Rtrv_T_Auditloglist");
+        }
+
 
         //public Task<IPagedList<EmailConfigurationdetailListDto>> GetWhatsAppconfig(GridRequestModel objGrid)
         //{

@@ -83,12 +83,6 @@ namespace HIMS.API.Controllers.Transaction
         }
 
 
-        [HttpPost("AuditLogList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        public async Task<IActionResult> AuditlogList(GridRequestModel objGrid)
-        {
-            IPagedList<AuditlogDtoList> List = await _IsmsConfigService.GetAuditlog(objGrid);
-            return Ok(List.ToGridResponse(objGrid, "Audit Log List"));
-        }
+       
     }
 }

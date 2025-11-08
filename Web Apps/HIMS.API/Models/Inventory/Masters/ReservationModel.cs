@@ -29,7 +29,7 @@ namespace HIMS.API.Models.Inventory.Masters
         public DateTime? IsCancelledDateTime { get; set; }
         public List<OtReservationAttendingDetailModel> TOtReservationAttendingDetails { get; set; }
         public List<TOtReservationSurgeryDetailModel> TOtReservationSurgeryDetails { get; set; }
-        //public List<TOtRequestDiagnosisModel> TOtReservationSurgeryDetails { get; set; }
+        public List<ReservationDiagnosisModel> TOtReservationDiagnoses { get; set; }
 
     }
     public class OTReservationModelValidator : AbstractValidator<ReservationModel>
@@ -95,5 +95,14 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
     }
+    public class ReservationDiagnosisModel
+    {
+        public long OtreservationDiagnosisDetId { get; set; }
+        public long? OtreservationId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+       
+    }
+  
+
 }
-    

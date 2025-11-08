@@ -40,7 +40,7 @@ namespace HIMS.Services.IPPatient
         }
         public virtual async Task<IPagedList<PathRadServiceListDto>> GetListAsync1(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<PathRadServiceListDto>(model, "Rtrv_PathRadServiceList");
+            return await DatabaseHelper.GetGridDataBySp<PathRadServiceListDto>(model, "ps_Rtrv_PathRadServiceList");
 
         }
         public virtual async Task UpdateAsyncSP(List<TPathologyReportHeader> objTPathologyReportHeader, int UserId, string Username)

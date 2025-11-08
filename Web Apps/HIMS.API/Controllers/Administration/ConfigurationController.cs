@@ -139,5 +139,13 @@ namespace HIMS.API.Controllers.Administration
             return Ok(List.ToGridResponse(objGrid, "Email Config List"));
         }
 
+        [HttpPost("AuditLogList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> AuditlogList(GridRequestModel objGrid)
+        {
+            IPagedList<AuditlogDtoList> List = await _IConfigService.GetAuditlog(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Audit Log List"));
+        }
+
     }
 }
