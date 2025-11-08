@@ -34,6 +34,30 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<ReservationSurgeryDetailListDto>(model, "rtrv_reservationsurgeryList");
         }
+        public virtual async Task<List<ReservationDiagnosisListDto>> GetDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtReservationDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtreservationDiagnosisDetId)
+                .Select(d => new ReservationDiagnosisListDto
+                {
+                    OtreservationDiagnosisDetId = d.OtreservationDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
+
         public List<OTRequestDetailsListSearchDto> SearchPatient(string Keyword)
         {
             DatabaseHelper sql = new();
@@ -104,6 +128,9 @@ namespace HIMS.Services.IPPatient
                 if (lstAttend.Count > 0)
                     _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
 
+                var slstAttend = await _context.TOtReservationDiagnoses.Where(x => x.OtreservationDiagnosisDetId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
+                if (lstAttend.Count > 0)
+                    _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
 
                 await _context.SaveChangesAsync();
                 scope.Complete();

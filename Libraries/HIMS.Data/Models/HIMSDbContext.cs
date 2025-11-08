@@ -343,10 +343,12 @@ namespace HIMS.Data.Models
         public virtual DbSet<RoleTemplateMaster> RoleTemplateMasters { get; set; } = null!;
         public virtual DbSet<RoomMaster> RoomMasters { get; set; } = null!;
         public virtual DbSet<RtrvAdvDetForPay> RtrvAdvDetForPays { get; set; } = null!;
+        public virtual DbSet<SalesGstdateWise> SalesGstdateWises { get; set; } = null!;
         public virtual DbSet<SalesGststoreWiseOpip> SalesGststoreWiseOpips { get; set; } = null!;
         public virtual DbSet<SalesPaymentDateWise> SalesPaymentDateWises { get; set; } = null!;
         public virtual DbSet<SalesRefundDateWise> SalesRefundDateWises { get; set; } = null!;
         public virtual DbSet<SalesReturnAmt> SalesReturnAmts { get; set; } = null!;
+        public virtual DbSet<SalesReturnGstdateWise> SalesReturnGstdateWises { get; set; } = null!;
         public virtual DbSet<SalesReturnGststoreWise> SalesReturnGststoreWises { get; set; } = null!;
         public virtual DbSet<SalesReturnGststoreWiseOpip> SalesReturnGststoreWiseOpips { get; set; } = null!;
         public virtual DbSet<ScheduleLog> ScheduleLogs { get; set; } = null!;
@@ -482,6 +484,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtReservationHeader> TOtReservationHeaders { get; set; } = null!;
         public virtual DbSet<TOtReservationSurgeryDetail> TOtReservationSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtcathLabBooking> TOtcathLabBookings { get; set; } = null!;
@@ -9874,6 +9877,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UsedAmount).HasColumnType("money");
             });
 
+            modelBuilder.Entity<SalesGstdateWise>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SalesGSTDateWise");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Mrpamount)
+                    .HasColumnType("money")
+                    .HasColumnName("MRPAmount");
+
+                entity.Property(e => e.SalesDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Sales_Date");
+
+                entity.Property(e => e.TotalGstamount)
+                    .HasColumnType("money")
+                    .HasColumnName("Total_GSTAmount");
+            });
+
             modelBuilder.Entity<SalesGststoreWiseOpip>(entity =>
             {
                 entity.HasNoKey();
@@ -9954,6 +9978,27 @@ namespace HIMS.Data.Models
                     .HasColumnName("MDate");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
+            });
+
+            modelBuilder.Entity<SalesReturnGstdateWise>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("SalesReturnGSTDateWise");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Mrpamount)
+                    .HasColumnType("money")
+                    .HasColumnName("MRPAmount");
+
+                entity.Property(e => e.SalesReturnDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SalesReturn_Date");
+
+                entity.Property(e => e.TotalGstamount)
+                    .HasColumnType("money")
+                    .HasColumnName("Total_GSTAmount");
             });
 
             modelBuilder.Entity<SalesReturnGststoreWise>(entity =>
@@ -14004,6 +14049,30 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.TOtReservationAttendingDetails)
                     .HasForeignKey(d => d.OtreservationId)
                     .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
+            });
+
+            modelBuilder.Entity<TOtReservationDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtreservationDiagnosisDetId);
+
+                entity.ToTable("T_OT_ReservationDiagnosis");
+
+                entity.Property(e => e.OtreservationDiagnosisDetId).HasColumnName("OTReservationDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.HasOne(d => d.Otreservation)
+                    .WithMany(p => p.TOtReservationDiagnoses)
+                    .HasForeignKey(d => d.OtreservationId)
+                    .HasConstraintName("FK_T_OT_ReservationDiagnosis_T_OT_ReservationHeader");
             });
 
             modelBuilder.Entity<TOtReservationHeader>(entity =>

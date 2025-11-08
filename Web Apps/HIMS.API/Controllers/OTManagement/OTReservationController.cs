@@ -24,11 +24,15 @@ namespace HIMS.API.Controllers.IPPatient
 
         private readonly IOTService _OTService;
         private readonly IGenericService<TOtReservationHeader> _repository;
+        private readonly IGenericService<TOtReservationDiagnosis> _repository1;
 
-        public OTReservationController(IOTService repository, IGenericService<TOtReservationHeader> repository1)
+
+        public OTReservationController(IOTService repository, IGenericService<TOtReservationHeader> repository1, IGenericService<TOtReservationDiagnosis> repository2)
         {
             _OTService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+
 
         }
         [HttpGet("{id?}")]
@@ -39,6 +43,15 @@ namespace HIMS.API.Controllers.IPPatient
             var data1 = await _repository.GetById(x => x.OtreservationId == id);
             return data1.ToSingleResponse<TOtReservationHeader, ReservationGetModel>("TOtReservationHeader");
         }
+
+        [HttpGet("GetReservationDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetReservationDiagnosisList(string DescriptionType)
+        {
+            var result = await _OTService.GetDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Diagnosis List", result);
+        }
+
         [HttpPost("OTReservationlist")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
         public async Task<IActionResult> Reservationlist(GridRequestModel objGrid)
@@ -46,6 +59,16 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<OTReservationListDto> ReservationAttendingDetailList = await _OTService.GetListOtReservationAsync(objGrid);
             return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "OTReservation List"));
         }
+
+        [HttpPost("OtReservationDiagnosisList")]
+
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> List4(GridRequestModel objGrid)
+        {
+            IPagedList<TOtReservationDiagnosis> OtReservationDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(OtReservationDiagnosisList.ToGridResponse(objGrid, "OT Request Diagnosis List "));
+        }
+
 
         [HttpPost("OtReservationAttendingDetailList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
@@ -87,7 +110,13 @@ namespace HIMS.API.Controllers.IPPatient
                     q.CreatedDate = DateTime.Now;
 
                 }
-             
+                foreach (var q in model.TOtReservationDiagnoses)
+                {
+                    q.Createdby = CurrentUserId;
+                    q.CreatedDate = DateTime.Now;
+
+                }
+
                 model.CreatedDate = DateTime.Now;
                 model.Createdby = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
@@ -131,8 +160,20 @@ namespace HIMS.API.Controllers.IPPatient
                     v.ModifiedDate = DateTime.Now;
                     v.OtreservationSurgeryDetId = 0;
                 }
+                foreach (var v in model.TOtReservationDiagnoses)
+                {
+                    if (v.OtreservationDiagnosisDetId == 0)
+                    {
+                        v.Createdby = CurrentUserId;
+                        v.CreatedDate = DateTime.Now;
+                    }
+                    v.ModifiedBy = CurrentUserId;
+                    v.ModifiedDate = DateTime.Now;
+                    v.OtreservationDiagnosisDetId = 0;
+                }
 
-               
+
+
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
