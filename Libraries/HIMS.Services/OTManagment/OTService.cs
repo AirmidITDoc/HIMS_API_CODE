@@ -93,54 +93,110 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
-        {
+        //public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+        //    {
+        //        // Attach entity
+        //        _context.Attach(ObjTOtReservationHeader);
+        //        _context.Entry(ObjTOtReservationHeader).State = EntityState.Modified;
+
+        //        // Prevent overwriting of important fields
+        //        _context.Entry(ObjTOtReservationHeader).Property(x => x.Createdby).IsModified = false;
+        //        _context.Entry(ObjTOtReservationHeader).Property(x => x.CreatedDate).IsModified = false;
+        //        _context.Entry(ObjTOtReservationHeader).Property(x => x.OtreservationNo).IsModified = false;
+
+        //        // Update modified fields
+        //        ObjTOtReservationHeader.ModifiedBy = UserId;
+        //        ObjTOtReservationHeader.ModifiedDate = DateTime.Now;
+
+        //        // Ignore any additional columns if specified
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(ObjTOtReservationHeader).Property(column).IsModified = false;
+        //            }
+        //        }
+        //        // Delete related detail records safely
+        //        var lstSurgery = await _context.TOtReservationAttendingDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
+        //        if (lstSurgery.Count > 0)
+        //            _context.TOtReservationAttendingDetails.RemoveRange(lstSurgery);
+
+        //        var lstAttend = await _context.TOtReservationSurgeryDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
+        //        if (lstAttend.Count > 0)
+        //            _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
+
+        //        var lstDiagnosis = await _context.TOtReservationDiagnoses
+        //            .Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId)
+        //            .ToListAsync();
+        //        if (lstDiagnosis.Count > 0)
+        //            _context.TOtReservationDiagnoses.RemoveRange(lstDiagnosis);
+
+
+
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+            public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
+            {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
+
             {
-                // Attach entity
+                long reservationId = ObjTOtReservationHeader.OtreservationId;
+
+                // ✅ Delete related details first
+                var lstAttend = await _context.TOtReservationAttendingDetails
+                    .Where(x => x.OtreservationId == reservationId)
+                    .ToListAsync();
+                if (lstAttend.Any())
+                    _context.TOtReservationAttendingDetails.RemoveRange(lstAttend);
+
+                var lstSurgery = await _context.TOtReservationSurgeryDetails
+                    .Where(x => x.OtreservationId == reservationId)
+                    .ToListAsync();
+                if (lstSurgery.Any())
+                    _context.TOtReservationSurgeryDetails.RemoveRange(lstSurgery);
+
+                var lstDiagnosis = await _context.TOtReservationDiagnoses
+                    .Where(x => x.OtreservationId == reservationId)
+                    .ToListAsync();
+                if (lstDiagnosis.Any())
+                    _context.TOtReservationDiagnoses.RemoveRange(lstDiagnosis);
+
+                // ✅ Save deletion first
+                await _context.SaveChangesAsync();
+
+                // ✅ Then attach and update header
                 _context.Attach(ObjTOtReservationHeader);
                 _context.Entry(ObjTOtReservationHeader).State = EntityState.Modified;
 
-                // Prevent overwriting of important fields
                 _context.Entry(ObjTOtReservationHeader).Property(x => x.Createdby).IsModified = false;
                 _context.Entry(ObjTOtReservationHeader).Property(x => x.CreatedDate).IsModified = false;
                 _context.Entry(ObjTOtReservationHeader).Property(x => x.OtreservationNo).IsModified = false;
 
-                // Update modified fields
                 ObjTOtReservationHeader.ModifiedBy = UserId;
                 ObjTOtReservationHeader.ModifiedDate = DateTime.Now;
 
-                // Ignore any additional columns if specified
                 if (ignoreColumns?.Length > 0)
                 {
                     foreach (var column in ignoreColumns)
-                    {
                         _context.Entry(ObjTOtReservationHeader).Property(column).IsModified = false;
-                    }
                 }
-                // Delete related detail records safely
-                var lstSurgery = await _context.TOtReservationAttendingDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
-                if (lstSurgery.Count > 0)
-                    _context.TOtReservationAttendingDetails.RemoveRange(lstSurgery);
-
-                var lstAttend = await _context.TOtReservationSurgeryDetails.Where(x => x.OtreservationId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
-                if (lstAttend.Count > 0)
-                    _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
-
-                var slstAttend = await _context.TOtReservationDiagnoses.Where(x => x.OtreservationDiagnosisDetId == ObjTOtReservationHeader.OtreservationId).ToListAsync();
-                if (lstAttend.Count > 0)
-                    _context.TOtReservationSurgeryDetails.RemoveRange(lstAttend);
 
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }
         }
 
+    
 
 
 
-        public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
+
+    public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
