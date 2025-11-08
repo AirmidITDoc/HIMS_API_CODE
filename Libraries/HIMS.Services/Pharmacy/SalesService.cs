@@ -862,44 +862,115 @@ namespace HIMS.Services.Users
             return await DatabaseHelper.GetGridDataBySp<ItemGenericByNameListDto>(model, "Retrieve_Item_Generic_ByName");
         }
 
+        //public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
+        //{
+
+        //    return await this._context.TSalesHeaders
+        //        .Where(x =>
+        //            (x.ExternalPatientName).ToLower().StartsWith(str) || // Optional: if you want full name search
+        //            x.ExtMobileNo.ToLower().StartsWith(str)                    // Match first name starting with str
+        //        )
+        //        .Take(25)
+        //        .Select(x => new SalesPatientAutoCompleteDto
+        //        {
+        //            ExternalPatientName = x.ExternalPatientName,
+        //            ExtMobileNo = x.ExtMobileNo,
+        //            DoctorName = x.DoctorName,
+        //        })
+        //       .Distinct()  // ✅ remove duplicates
+        //       .OrderByDescending(x => x.ExtMobileNo == str ? 3 : x.ExtMobileNo == str ? 2 : (x.ExternalPatientName) == str ? 1 : 0)
+        //       .ThenBy(x => x.ExternalPatientName).ToListAsync();
+
+        //}
+
+
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
         {
+            var headers = await _context.TSalesHeaders
+               .Where(x => x.ExternalPatientName.ToLower().StartsWith(str) || x.ExtMobileNo.ToLower().StartsWith(str))
+              .Select(x => new SalesPatientAutoCompleteDto
+              {
+                    ExternalPatientName = x.ExternalPatientName,
+                    ExtMobileNo = x.ExtMobileNo,
+                    DoctorName = x.DoctorName
+               })
+                .ToListAsync();
 
-            return await this._context.TSalesHeaders
-                .Where(x =>
-                    (x.ExternalPatientName).ToLower().StartsWith(str) || // Optional: if you want full name search
-                    x.ExtMobileNo.ToLower().StartsWith(str)                    // Match first name starting with str
-                )
-                .Take(25)
+            var drafts = await _context.TSalesDraftHeaders
+                .Where(x => x.ExternalPatientName.ToLower().StartsWith(str) || x.ExtMobileNo.ToLower().StartsWith(str))
                 .Select(x => new SalesPatientAutoCompleteDto
                 {
                     ExternalPatientName = x.ExternalPatientName,
                     ExtMobileNo = x.ExtMobileNo,
-                    DoctorName = x.DoctorName,
+                    DoctorName = x.DoctorName
                 })
-               .Distinct()  // ✅ remove duplicates
-               .OrderByDescending(x => x.ExtMobileNo == str ? 3 : x.ExtMobileNo == str ? 2 : (x.ExternalPatientName) == str ? 1 : 0)
-               .ThenBy(x => x.ExternalPatientName).ToListAsync();
+                .ToListAsync();
+
+            var result = headers.Union(drafts)
+                .DistinctBy(x => new { x.ExtMobileNo, x.ExternalPatientName }) 
+                .OrderByDescending(x => x.ExtMobileNo == str ? 3 :
+                                        x.ExtMobileNo.StartsWith(str) ? 2 :
+                                        x.ExternalPatientName == str ? 1 : 0)
+                .ThenBy(x => x.ExternalPatientName)
+                .Take(25)
+                .ToList();
+
+            return result;
+
 
         }
+
+        //public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str)
+        //{
+
+        //    return await this._context.TSalesHeaders
+        //        .Where(x =>
+        //            (x.DoctorName).ToLower().StartsWith(str) // Optional: if you want full name search
+        //        )
+        //        .Take(25)
+        //        .Select(x => new SalesPatientAutoCompleteDto
+        //        {
+        //            DoctorName = x.DoctorName,
+        //        })
+        //       .Distinct()  // ✅ remove duplicates
+        //       .OrderByDescending(x => x.DoctorName == str ? 3 : x.DoctorName == str ? 2 : (x.DoctorName) == str ? 1 : 0)
+        //       .ThenBy(x => x.DoctorName).ToListAsync();
+
+        //}
+
+
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str)
         {
+            var headers = await _context.TSalesHeaders
+               .Where(x => x.DoctorName.ToLower().StartsWith(str))
+              .Select(x => new SalesPatientAutoCompleteDto
+              {
 
-            return await this._context.TSalesHeaders
-                .Where(x =>
-                    (x.DoctorName).ToLower().StartsWith(str) // Optional: if you want full name search
-                )
-                .Take(25)
+                  DoctorName = x.DoctorName
+              })
+                .ToListAsync();
+
+            var drafts = await _context.TSalesDraftHeaders
+                .Where(x => x.DoctorName.ToLower().StartsWith(str))
                 .Select(x => new SalesPatientAutoCompleteDto
                 {
-                    DoctorName = x.DoctorName,
+
+                    DoctorName = x.DoctorName
                 })
-               .Distinct()  // ✅ remove duplicates
-               .OrderByDescending(x => x.DoctorName == str ? 3 : x.DoctorName == str ? 2 : (x.DoctorName) == str ? 1 : 0)
-               .ThenBy(x => x.DoctorName).ToListAsync();
+                .ToListAsync();
+
+            var result = headers.Union(drafts)
+                .DistinctBy(x => new { x.DoctorName })
+                .OrderByDescending(x => x.DoctorName == str ? 3 :
+                                        x.DoctorName.StartsWith(str) ? 2 :
+                                        x.DoctorName == str ? 1 : 0)
+                .ThenBy(x => x.DoctorName)
+                .Take(25)
+                .ToList();
+
+            return result;
 
         }
-
         public virtual async Task<float> GetStock(long StockId)
         {
             TCurrentStock objStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.StockId == StockId);
