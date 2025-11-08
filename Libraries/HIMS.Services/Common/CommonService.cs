@@ -144,6 +144,8 @@ namespace HIMS.Services.Common
                 case "MarketingTodayVisitCount": sp_Name = "ps_Marketing_App_TodayVisitCount"; break;
                 case "MarketingTodayVisitCityWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCityWiseCount"; break;
                 case "MarketingTodayVisitCategoryWiseCount": sp_Name = "ps_Marketing_App_TodayVisitCategoryWiseCount"; break;
+                case "MarketingTodayVisitPersonWiseCount": sp_Name = "ps_Marketing_App_TodayVisitPersonWiseCount"; break;
+                    
 
                 case "ItemSupplierDetails": sp_Name = "ps_Rtrv_LastThreeSupplierInfo"; break;
 
