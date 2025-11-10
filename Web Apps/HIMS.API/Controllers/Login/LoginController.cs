@@ -3,7 +3,6 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
-using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
 using HIMS.Core.Infrastructure;
 using HIMS.Core.Utilities;
@@ -12,11 +11,8 @@ using HIMS.Services.Permissions;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 
 namespace HIMS.API.Controllers.Login
 {
@@ -38,32 +34,34 @@ namespace HIMS.API.Controllers.Login
     //    }
     //}
 
-    [ApiController]
-    [Route("api/payment")]
-    public class MpesaCallbackController : ControllerBase
-    {
-        [HttpPost("validation")]
-        public IActionResult Validate([FromBody] JsonElement payload)
-        {
-            string path = "C:\\PaymentDataLogs\\";
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
-            return Ok(new { ResultCode = 0, ResultDesc = "Success" });
-        }
+    //[ApiController]
+    //[Route("api/payment")]
+    //public class MpesaCallbackController : ControllerBase
+    //{
+    //    [HttpPost("validation")]
+    //    public IActionResult Validate([FromBody] JsonElement payload)
+    //    {
+    //        string path = "C:\\PaymentDataLogs\\";
+    //        if (!System.IO.Directory.Exists(path))
+    //            System.IO.Directory.CreateDirectory(path);
+    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
+    //        return Ok(new { ResultCode = 0, ResultDesc = "Success" });
+    //    }
 
-        [HttpPost("confirmation")]
-        public IActionResult Confirm([FromBody] JsonElement payload)
-        {
-            string path = "C:\\PaymentDataLogs\\";
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
-            return Ok(new { ResultCode = 0, ResultDesc = "Success" });
-        }
-    }
+    //    [HttpPost("confirmation")]
+    //    public IActionResult Confirm([FromBody] JsonElement payload)
+    //    {
+    //        string path = "C:\\PaymentDataLogs\\";
+    //        if (!System.IO.Directory.Exists(path))
+    //            System.IO.Directory.CreateDirectory(path);
+    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
+    //        var obj = JsonConvert.DeserializeObject<MpesaCallbackRoot>(payload.ToString());
+    //        var result = MPesaResponse.MapMpesaToTestA(obj);
+    //        return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = result });
+    //    }
+    //}
 
 
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -75,14 +73,12 @@ namespace HIMS.API.Controllers.Login
         private readonly IConfiguration _Configuration;
         private readonly IPermissionService _IPermissionService;
         private readonly IMenuService _IMenuService;
-        private readonly MpesaStkService _stkService;
-        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService, MpesaStkService mpesaStkService)
+        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService)
         {
             _userService = userService;
             _Configuration = configuration;
             _IPermissionService = permission;
             _IMenuService = iMenuService;
-            _stkService = mpesaStkService;
         }
 
 
@@ -278,26 +274,26 @@ namespace HIMS.API.Controllers.Login
         }
 
     }
-    [ApiController]
-    [Route("api/mpesa")]
-    public class MpesaController : ControllerBase
-    {
-        private readonly MpesaStkService _stkService;
+    //[ApiController]
+    //[Route("api/mpesa")]
+    //public class MpesaController : ControllerBase
+    //{
+    //    private readonly MpesaStkService _stkService;
 
-        public MpesaController(MpesaStkService service)
-        {
-            _stkService = service;
-        }
+    //    public MpesaController(MpesaStkService service)
+    //    {
+    //        _stkService = service;
+    //    }
 
-        [HttpPost("pay")]
-        public async Task<IActionResult> Pay(string phone, decimal amount,string reference)
-        {
-            var result = await _stkService.RegisterUrls();
-            result = await _stkService.StkPushAsync(phone, amount,
-               "https://api.airmid.co.in/api/payment/confirmation", reference);
+    //    [HttpPost("pay")]
+    //    public async Task<IActionResult> Pay(string phone, decimal amount, string reference)
+    //    {
+    //        var result = await _stkService.RegisterUrls();
+    //        result = await _stkService.StkPushAsync(phone, amount,
+    //           "https://api.airmid.co.in/api/payment/confirmation", reference);
 
-            return Ok(result);
-        }
-    }
+    //        return Ok(result);
+    //    }
+    //}
 
 }
