@@ -99,6 +99,8 @@ namespace HIMS.Services.Pathlogy
                         objItem1.ChargesDate = Convert.ToDateTime(objItem1.ChargesDate);
                         objItem1.IsCancelledDate = Convert.ToDateTime(objItem1.IsCancelledDate);
                         objItem1.ChargesTime = Convert.ToDateTime(objItem1.ChargesTime);
+                        objItem1.OpdIpdId = ObjTLabPatientRegistration.LabPatientId;
+
                         _context.AddCharges.Add(objItem1);
                         await _context.SaveChangesAsync();
 

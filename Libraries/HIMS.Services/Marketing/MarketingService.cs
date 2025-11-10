@@ -23,5 +23,9 @@ namespace HIMS.Services.Marketing
         {
             return await DatabaseHelper.GetGridDataBySp<MarketingListDto>(model, "ps_Marketing_App_VisitSummary");
         }
+        public virtual async Task<IPagedList<MarketingAppFollowVisitSummaryDto>> FollowVisitSummaryAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MarketingAppFollowVisitSummaryDto>(model, "ps_Marketing_App_FollowVisitSummary");
+        }
     }
 }

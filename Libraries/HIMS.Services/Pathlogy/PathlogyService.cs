@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -8,6 +9,7 @@ using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
+using Microsoft.Data.SqlClient;
 
 
 namespace HIMS.Services.Pathlogy
@@ -39,6 +41,14 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
+        }
+       
+        public List<pathologistdoctorDto> SearchPatient()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>(); 
+            var data = sql.FetchListBySP<pathologistdoctorDto>("Retrieve_PathologistDoctorMasterForCombo", para);
+            return data;
         }
 
         public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
