@@ -37,12 +37,13 @@ namespace HIMS.API.Controllers.Pathology
             _radiorepository1 = pathrepository1;
             _radiorepository2 = pathrepository2;
         }
+
        
         [HttpGet("search-pathologistdoctor")]
         public ApiResponse SearchPatientNew()
         {
-            var data = _IPathlogyService.SearchPatient(null); // or remove the argument entirely
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OT Request List data", data);
+            var data = _IPathlogyService.SearchPatient();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathologist Doctor List", data);
         }
 
         [HttpPost("PathologyPatientTestList")]
