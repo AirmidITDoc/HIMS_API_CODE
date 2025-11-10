@@ -7808,8 +7808,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdvanceRefundAmount}}", dt.GetColValue("AdvanceRefundAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{ConcessionAmount}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{BillRefAmt}}", dt.GetColValue("BillRefAmt").ConvertToDouble().ToString("0.00"));
-
 
 
                         html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
@@ -7834,8 +7832,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
 
                         html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkRefundflag}}", dt.GetColValue("BillRefAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-
 
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkbalafterdudcflag}}", BalancewdudcAmt.ConvertToDouble() > 0 ? "table-row " : "none");
