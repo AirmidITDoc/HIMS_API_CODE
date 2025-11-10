@@ -455,6 +455,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMaterialConsumptionHeader> TMaterialConsumptionHeaders { get; set; } = null!;
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
         public virtual DbSet<TMlcinformation> TMlcinformations { get; set; } = null!;
+        public virtual DbSet<TMpesaResponse> TMpesaResponses { get; set; } = null!;
         public virtual DbSet<TMrdAdmFile> TMrdAdmFiles { get; set; } = null!;
         public virtual DbSet<TMrdcasePaperIssueReturn> TMrdcasePaperIssueReturns { get; set; } = null!;
         public virtual DbSet<TMrpAdjustment> TMrpAdjustments { get; set; } = null!;
@@ -13132,6 +13133,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportingDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ReportingTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TMpesaResponse>(entity =>
+            {
+                entity.ToTable("T_MpesaResponses");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.CheckoutRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("CheckoutRequestID");
+
+                entity.Property(e => e.MerchantRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("MerchantRequestID");
+
+                entity.Property(e => e.MpesaReceiptNumber).HasMaxLength(255);
+
+                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+
+                entity.Property(e => e.ResponseOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultDesc).HasMaxLength(255);
+
+                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TMrdAdmFile>(entity =>
