@@ -5,7 +5,11 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Marketing;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Marketing;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Marketing;
+using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Marketing
@@ -16,19 +20,28 @@ namespace HIMS.API.Controllers.Marketing
     public class Market_DailyVisitInfoController : BaseController
     {
         private readonly IGenericService<TMarketingDailyVisitInformation> _repository;
-        public Market_DailyVisitInfoController(IGenericService<TMarketingDailyVisitInformation> repository)
+        private readonly IMarketingService _IMarketingService;
+
+        public Market_DailyVisitInfoController(IGenericService<TMarketingDailyVisitInformation> repository, IMarketingService repository1)
         {
             _repository = repository;
+
+            _IMarketingService = repository1;
         }
 
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]
+        [HttpPost("MarketingAppVisitSummaryList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TMarketingDailyVisitInformation> MarketDailyVisitInfoList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MarketDailyVisitInfoList.ToGridResponse(objGrid, "Bank List"));
+            IPagedList<MarketingListDto> MarketingAppVisitSummaryList = await _IMarketingService.MarketingAsync(objGrid);
+            return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
+        }
+        [HttpPost("MarketingAppFollowVisitSummary")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<MarketingAppFollowVisitSummaryDto> MarketingAppVisitSummaryList = await _IMarketingService.FollowVisitSummaryAsync(objGrid);
+            return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]

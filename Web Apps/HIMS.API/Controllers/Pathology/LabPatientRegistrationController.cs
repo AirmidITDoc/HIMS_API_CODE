@@ -13,6 +13,8 @@ using HIMS.Services.DoctorPayout;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.Pathology;
+using HIMS.API.Models.OutPatient;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -22,10 +24,25 @@ namespace HIMS.API.Controllers.Pathology
     public class LabPatientRegistrationController : BaseController
     {
         private readonly ILabPatientRegistrationService _ILabPatientRegistrationService;
-        public LabPatientRegistrationController(ILabPatientRegistrationService repository)
+        private readonly IGenericService<TLabPatientRegistration> _repository;
+
+        public LabPatientRegistrationController(ILabPatientRegistrationService repository, IGenericService<TLabPatientRegistration> repository1)
         {
             _ILabPatientRegistrationService = repository;
+            _repository = repository1;
+
         }
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            var data = await _repository.GetById(x => x.LabPatientId == id);
+            return data.ToSingleResponse<TLabPatientRegistration, TLabPatientRegistrationModel>("LabPatientRegistration");
+        }
+
+
+       
+
         [HttpPost("List")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -68,9 +85,6 @@ namespace HIMS.API.Controllers.Pathology
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-
-
-
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
                 model.CreatedDate = DateTime.Now;
@@ -104,7 +118,7 @@ namespace HIMS.API.Controllers.Pathology
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model2.BillNo);
         }
 
 
@@ -126,6 +140,25 @@ namespace HIMS.API.Controllers.Pathology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-       
+
+
+        [HttpGet("Labauto-complete")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        {
+            var data = await _ILabPatientRegistrationService.SearchlabRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Lab Registration Data.", data.Select(x => new
+            {
+                Text = x.FirstName + " " + x.LastName  + " | " + x.MobileNo,
+                Value = x.LabPatientId,
+                //RegNo = x.RegNo,
+                MobileNo = x.MobileNo,
+                AgeYear = x.AgeYear,
+                AgeMonth = x.AgeMonth,
+                AgeDay = x.AgeDay,
+                PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
+            }));
+        }
+
     }
 }

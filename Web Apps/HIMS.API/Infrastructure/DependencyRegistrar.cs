@@ -13,6 +13,7 @@ using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
+using HIMS.Services.Marketing;
 using HIMS.Services.Masters;
 using HIMS.Services.MRD;
 using HIMS.Services.Notification;
@@ -142,6 +143,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IRadiologyTestService, RadiologyTestService>();
             services.AddScoped<IsmsConfigService, smsConfigService>();
             services.AddScoped<ISupplierPaymentStatusService, SupplierPaymentStatusService>();
+            services.AddScoped<IMarketingService, MarketingService>();
+
 
 
 
