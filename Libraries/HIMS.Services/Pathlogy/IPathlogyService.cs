@@ -19,6 +19,8 @@ namespace HIMS.Services.Pathlogy
         void InsertPathPrintResultentry(List<TempPathReportId> model, int currentUserId, string currentUserName);
         Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         Task VerifyAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
+        List<pathologistdoctorDto> SearchPatient(string Keyword);
+
 
 
     }

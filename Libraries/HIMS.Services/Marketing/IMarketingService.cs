@@ -12,6 +12,8 @@ namespace HIMS.Services.Marketing
     public partial interface IMarketingService
     {
         Task<IPagedList<MarketingListDto>> MarketingAsync(GridRequestModel objGrid);
+        Task<IPagedList<MarketingAppFollowVisitSummaryDto>> FollowVisitSummaryAsync(GridRequestModel objGrid);
+
 
     }
 }

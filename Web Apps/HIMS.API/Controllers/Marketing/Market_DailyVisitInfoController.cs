@@ -36,6 +36,13 @@ namespace HIMS.API.Controllers.Marketing
             IPagedList<MarketingListDto> MarketingAppVisitSummaryList = await _IMarketingService.MarketingAsync(objGrid);
             return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
         }
+        [HttpPost("MarketingAppFollowVisitSummary")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<MarketingAppFollowVisitSummaryDto> MarketingAppVisitSummaryList = await _IMarketingService.FollowVisitSummaryAsync(objGrid);
+            return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
+        }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)

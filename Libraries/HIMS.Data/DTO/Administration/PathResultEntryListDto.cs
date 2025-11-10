@@ -1,4 +1,6 @@
-﻿namespace HIMS.Data.DTO.Administration
+﻿using System.Numerics;
+
+namespace HIMS.Data.DTO.Administration
 {
     public class PathResultEntryListDto
     {
@@ -47,4 +49,18 @@
         public bool? IsPathOutSource { get; set; }
         public bool? IsRadOutSource { get; set; }
     }
+    public class pathologistdoctorDto
+    {
+        public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public long? IsRefDoc { get; set; }
+        public long? IsConsultant { get; set; }
+        public long? DoctorTypeId { get; set; }
+        public bool? IsActive { get; set; }
+        public string? DepartmentName { get; set; }
+        public long? DepartmentId { get; set; }
+
+
+    }
 }
+
