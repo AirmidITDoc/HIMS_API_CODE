@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.PaymentGateway;
 using HIMS.API.PaymentGateway;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -14,6 +15,7 @@ using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -99,7 +101,8 @@ namespace HIMS.API.Controllers.OPPatient
                 /// set condition based on payment type=mpesa.
                 string phone = "254723939232";
                 var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
+                var Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.BillNo, MPesaResponse = Data });
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
