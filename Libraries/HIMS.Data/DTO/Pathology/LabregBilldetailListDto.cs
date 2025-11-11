@@ -20,7 +20,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? IsRadiology { get; set; }
         public string? DoctorName { get; set; }
 
-        //public decimal? CardPay { get; set; }
+        public bool? IsCompleted { get; set; }
+
         //public decimal? OnlinePay { get; set; }
     }
 }
