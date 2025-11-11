@@ -62,9 +62,15 @@ namespace HIMS.API.Controllers.Login
         [HttpPost("pay")]
         public async Task<ApiResponse> Pay(string phone, decimal amount, string reference)
         {
-            var result = await _stkService.RegisterUrls();
-            result = await _stkService.StkPushAsync(phone, amount, _config["MPesa:ConfirmationUrl"], reference);
+            //var result = await _stkService.RegisterUrls();
+            var result = await _stkService.StkPushAsync(phone, amount, _config["MPesa:ConfirmationUrl"], reference);
             return new ApiResponse() { StatusCode = 200, Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result), StatusText = "Ok", Message = "Payment Done" };
+        }
+        [HttpPost("register-urls")]
+        public async Task<ApiResponse> RegisterUrl()
+        {
+            var result = await _stkService.RegisterUrls();
+            return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done" };
         }
     }
 }

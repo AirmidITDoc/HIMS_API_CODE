@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.PaymentGateway;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
@@ -26,13 +27,17 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IOPSettlementService _IOPSettlementService;
         private readonly IAdministrationService _IAdministrationService;
         private readonly IVisitDetailsService _IVisitDetailsService;
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
+        private readonly MpesaStkService _stkService;
+        private readonly IConfiguration _config;
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4, MpesaStkService mpesaStkService, IConfiguration configuration)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService = repository2;
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
+            _stkService = mpesaStkService;
+            _config = configuration;
         }
         [HttpPost("BrowseOPRefundList")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
@@ -91,6 +96,10 @@ namespace HIMS.API.Controllers.OPPatient
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                /// set condition based on payment type=mpesa.
+                string phone = "254723939232";
+                var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
