@@ -72,5 +72,11 @@ namespace HIMS.API.Controllers.Login
             var result = await _stkService.RegisterUrls();
             return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done" };
         }
+        [HttpGet("check-payment")]
+        public async Task<ApiResponse> CheckPayment(string MerchantRequestID, string CheckoutRequestID)
+        {
+            var result = new TMpesaResponse() { Amount = 1, MerchantRequestId = MerchantRequestID, CheckoutRequestId = CheckoutRequestID,state="SUCCESS" };
+            return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done", Data = result };
+        }
     }
 }

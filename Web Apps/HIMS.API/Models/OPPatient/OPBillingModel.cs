@@ -49,7 +49,6 @@ namespace HIMS.API.Models.OPPatient
         public long? CashCounterId { get; set; }
         public long? CreatedBy { get; set; }
         public int BillNo { get; set; }
-        public string MobileNo { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }
         public List<Packcagechargesmodel?> Packcagecharges { get; set; }
