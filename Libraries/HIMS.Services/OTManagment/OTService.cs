@@ -7,7 +7,9 @@ using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Net;
 using System.Transactions;
+
 
 namespace HIMS.Services.IPPatient
 {
@@ -65,6 +67,9 @@ namespace HIMS.Services.IPPatient
             para[0] = new SqlParameter("@Keyword", Keyword);
             return sql.FetchListBySP<OTRequestDetailsListSearchDto>("ps_Rtrv_PatientOTRequestListSearch", para);
         }
+
+
+
         public virtual async Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
