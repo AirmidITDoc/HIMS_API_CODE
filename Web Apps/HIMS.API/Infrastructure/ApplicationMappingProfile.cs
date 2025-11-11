@@ -801,6 +801,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<Bill, OPBillIngLabModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
+            //Admininstation 
+            CreateMap< TWhatsAppSmsOutgoing, WhatsAppModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

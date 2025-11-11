@@ -42,14 +42,14 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
         }
-        public List<pathologistdoctorDto> SearchPatient(string Keyword)
+       
+        public List<pathologistdoctorDto> SearchPatient()
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[1];
-            para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<pathologistdoctorDto>("Retrieve_PathologistDoctorMasterForCombo", para);
+            SqlParameter[] para = Array.Empty<SqlParameter>(); 
+            var data = sql.FetchListBySP<pathologistdoctorDto>("Retrieve_PathologistDoctorMasterForCombo", para);
+            return data;
         }
-
 
         public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {

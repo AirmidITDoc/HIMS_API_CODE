@@ -455,6 +455,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMaterialConsumptionHeader> TMaterialConsumptionHeaders { get; set; } = null!;
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
         public virtual DbSet<TMlcinformation> TMlcinformations { get; set; } = null!;
+        public virtual DbSet<TMpesaResponse> TMpesaResponses { get; set; } = null!;
         public virtual DbSet<TMrdAdmFile> TMrdAdmFiles { get; set; } = null!;
         public virtual DbSet<TMrdcasePaperIssueReturn> TMrdcasePaperIssueReturns { get; set; } = null!;
         public virtual DbSet<TMrpAdjustment> TMrpAdjustments { get; set; } = null!;
@@ -521,7 +522,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TSalesReturnDetail> TSalesReturnDetails { get; set; } = null!;
         public virtual DbSet<TSalesReturnHeader> TSalesReturnHeaders { get; set; } = null!;
         public virtual DbSet<TSmsOutgoing> TSmsOutgoings { get; set; } = null!;
-        public virtual DbSet<TSmsoutGoing1> TSmsoutGoings1 { get; set; } = null!;
         public virtual DbSet<TStockAdjustment> TStockAdjustments { get; set; } = null!;
         public virtual DbSet<TStockLedger> TStockLedgers { get; set; } = null!;
         public virtual DbSet<TStockUpdate> TStockUpdates { get; set; } = null!;
@@ -562,7 +562,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -13135,6 +13135,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportingTime).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TMpesaResponse>(entity =>
+            {
+                entity.ToTable("T_MpesaResponses");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.CheckoutRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("CheckoutRequestID");
+
+                entity.Property(e => e.MerchantRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("MerchantRequestID");
+
+                entity.Property(e => e.MpesaReceiptNumber).HasMaxLength(255);
+
+                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+
+                entity.Property(e => e.ResponseOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultDesc).HasMaxLength(255);
+
+                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TMrdAdmFile>(entity =>
             {
                 entity.ToTable("T_MRD_AdmFile");
@@ -15466,29 +15493,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("SMSurl");
             });
 
-            modelBuilder.Entity<TSmsoutGoing1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_SMSOutGoing");
-
-                entity.Property(e => e.MobileNumber).HasMaxLength(50);
-
-                entity.Property(e => e.Smsdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SMSDate");
-
-                entity.Property(e => e.SmsoutGoingId).HasColumnName("SMSOutGoingID");
-
-                entity.Property(e => e.Smsstring)
-                    .HasMaxLength(700)
-                    .HasColumnName("SMSString");
-
-                entity.Property(e => e.Smsurl)
-                    .HasMaxLength(1000)
-                    .HasColumnName("smsurl");
-            });
-
             modelBuilder.Entity<TStockAdjustment>(entity =>
             {
                 entity.HasKey(e => e.StockAdgId);
@@ -15605,11 +15609,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.SmsoutGoingId).HasColumnName("SMSOutGoingID");
 
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
                 entity.Property(e => e.FilePath).HasMaxLength(500);
 
                 entity.Property(e => e.LastTry).HasColumnType("datetime");
 
                 entity.Property(e => e.MobileNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.Smsdate)
                     .HasColumnType("datetime")
