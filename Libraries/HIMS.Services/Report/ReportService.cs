@@ -171,14 +171,25 @@ namespace HIMS.Services.Report
                 case "LabRegistrationListReport":
                     {
 
-                        model.RepoertName = "Appointment List";
-                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name" };
-                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabregistrationDetailList.html");
+                        //model.RepoertName = "Lab Registration List";
+                        //string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name" };
+                        //string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabregistrationDetailList.html");
+                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //var html = GetHTMLView("ps_Rtrv_LabRegisterDetailReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport" + vDate, Orientation.Portrait);
+                        //break;
+
+                        model.RepoertName = "Lab Registration List";
+                        string[] headerList = { "Sr.No", "UHID", "Date","Patient Name", "Age", "Gender", "DoctorName", "NetAmount", "ConcessionAmt", "PaidAmt", "BalPayAmt" };
+                        string[] colList = { "RegNo", "RegTime", "PatientName", "Age", "GenderName", "DoctorName", "NetPayableAmt", "ConcessionAmt", "PaidAmt", "BalanceAmt", };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("ps_Rtrv_LabRegisterDetailReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport" + vDate, Orientation.Portrait);
+                        var html = GetHTMLView("ps_LabPatientRegistrationList", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport", Orientation.Landscape);
                         break;
+
+
                     }
                 #endregion
 
@@ -364,6 +375,22 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPaymentReceipt", "OPPaymentReceipt" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: LabPaymentReceipt ::
+                case "LabPaymentReceipt":
+                    {
+                        string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LABPaymentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_rptLabPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabPaymentReceipt", "LabPaymentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -4106,6 +4133,78 @@ namespace HIMS.Services.Report
                     break;
 
                 case "OPPaymentReceipt":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                            html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ChequeDate}}", dt.GetColValue("ChequeDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+                            html = html.Replace("{{ChequeBankName}}", dt.GetColValue("BankName"));
+                            html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{CardDate}}", dt.GetColValue("CardDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo"));
+                            html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName"));
+                            html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo"));
+                            html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
+                            html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
+                            html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{BillDate}}", dt.GetColValue("BillDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
+                            html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                            html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
+                            html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | HH:mm tt"));
+
+                            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+
+                            html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDoctorName"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                            html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                            html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().To2DecimalPlace());
+                            html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().To2DecimalPlace());
+
+
+                            html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkcardflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
+
+                            string finalamt = conversion(dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace().ToString());
+                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+                        }
+
+
+
+
+                    }
+                    break;
+
+                case "LabPaymentReceipt":
                     {
 
 
@@ -8207,6 +8306,67 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                //lab list
+                case "LabRegistrationListReport":
+                    {
+                        // Build table headers
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                       .Append(hr.ConvertToString())
+                                       .Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        // Group data by AdmittedDoctorName
+                        var groupedData = dt.AsEnumerable()
+                                            .GroupBy(row => row["DoctorName"].ConvertToString())
+                                            .ToList();
+
+                        // Loop through each doctor group
+                        foreach (var group in groupedData)
+                        {
+                            string doctorName = group.Key;
+                            int count = 0;
+                            int j = 0;
+
+                            // Doctor Header Row
+                            items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                 .Append("<td colspan=\"4\" style=\"border:1px solid #000; font-weight:bold; padding:3px; height:10px; text-align:left; vertical-align:middle;\">")
+                                 .Append(doctorName)
+                                 .Append("</td></tr>");
+
+                            // Data Rows for each patient under that doctor
+                            foreach (var dr in group)
+                            {
+                                j++;
+                                count++;
+
+                                items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                     .Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">")
+                                     .Append(j)
+                                     .Append("</td>");
+
+                                foreach (var colName in colList)
+                                {
+                                    items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 6px;\">")
+                                         .Append(dr[colName].ConvertToString())
+                                         .Append("</td>");
+                                }
+
+                                items.Append("</tr>");
+                            }
+
+                            // Total Count Row for this doctor
+                            items.Append("<tr style='border:1px solid black; color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
+                                 .Append("<td colspan='12' style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
+                                 .Append("<td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                                 .Append(count)
+                                 .Append("</td></tr>");
+                        }
+                    }
+                    break;
 
                 case "IpPaymentReceipt":
                     {
