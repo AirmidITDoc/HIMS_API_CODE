@@ -19,7 +19,7 @@ namespace HIMS.Services.Administration
             try
             {
                 DatabaseHelper odal = new();
-                string[] rEntity = { "MobileNumber", "smsString", "isSent", "smsType", "smsFlag", "smsDate", "tranNo", "patientType", "templateId", "smSurl", "filePath", "smsOutGoingID" };
+                string[] rEntity = { "MobileNumber","SourceType","Smsstring", "IsSent", "Smstype", "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl", "FilePath", "CreatedBy","SmsoutGoingId" };
 
                 var lentity = ObjWhatsApp.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -27,7 +27,7 @@ namespace HIMS.Services.Administration
                     if (!rEntity.Contains(rProperty))
                         lentity.Remove(rProperty);
                 }
-                string vSmsoutGoingId = odal.ExecuteNonQuery("ps_insert_WhatsAppSMS", CommandType.StoredProcedure, "smsOutGoingID", lentity);
+                string vSmsoutGoingId = odal.ExecuteNonQuery("ps_insert_WhatsAppSMS", CommandType.StoredProcedure, "SmsoutGoingId", lentity);
                 ObjWhatsApp.SmsoutGoingId = Convert.ToInt32(vSmsoutGoingId);
 
             }

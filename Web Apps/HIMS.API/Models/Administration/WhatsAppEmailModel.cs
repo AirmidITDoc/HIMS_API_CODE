@@ -6,17 +6,18 @@ namespace HIMS.API.Models.Administration
     public class WhatsAppModel
     {
         public string MobileNumber { get; set; }
-        public string SMSString { get; set; }
+        public string Smsstring { get; set; }
         public bool IsSent { get; set; }
-        public string SMSType { get; set; }
-        public string SMSFlag { get; set; }
-        public DateTime SMSDate { get; set; }
-        public int TranNo { get; set; }
-        public int PatientType { get; set; }
+        public string? Smstype { get; set; }
+        public string? Smsflag { get; set; }
+        public DateTime? Smsdate { get; set; }
+        public long? TranNo { get; set; }
         public int TemplateId { get; set; }
-        public string SMSurl { get; set; }
-        public string FilePath { get; set; }
-        public int? SMSOutGoingID { get; set; }
+        public string? Smsurl { get; set; }
+        public string? FilePath { get; set; }
+        public byte? SourceType { get; set; }
+        public long? CreatedBy { get; set; }
+        public long SmsoutGoingId { get; set; }
     }
 
 

@@ -28,13 +28,9 @@ namespace HIMS.API.Controllers.Administration
         {
             TWhatsAppSmsOutgoing model = obj.MapTo<TWhatsAppSmsOutgoing>();
 
-            if (obj.SMSOutGoingID == 0)
-
+          if (obj.SmsoutGoingId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedOn = DateTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedOn = DateTime.Now;
                 await _whatsAppEmailService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
