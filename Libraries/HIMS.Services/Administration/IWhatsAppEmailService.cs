@@ -6,7 +6,7 @@ namespace HIMS.Services.Administration
 {
     public partial interface IWhatsAppEmailService
     {
-        Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, int UserId, string Username);
+        Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, int UserId, string Username); //ReportRequestModel model, 
 
     }
 }

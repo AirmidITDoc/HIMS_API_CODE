@@ -30,6 +30,8 @@ namespace HIMS.API.Controllers.Administration
 
           if (obj.SmsoutGoingId == 0)
             {
+
+             
                 model.CreatedBy = CurrentUserId;
                 await _whatsAppEmailService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
