@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Login
         [HttpGet("check-payment")]
         public async Task<ApiResponse> CheckPayment(string MerchantRequestID, string CheckoutRequestID)
         {
-            var result = new TMpesaResponse() { Amount = 1, MerchantRequestId = MerchantRequestID, CheckoutRequestId = CheckoutRequestID, state = "SUCCESS" };
+            var result = new TMpesaResponse() { Amount = 1, MerchantRequestId = MerchantRequestID, CheckoutRequestId = CheckoutRequestID };
             return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done", Data = result };
         }
     }
