@@ -329,6 +329,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<PharTotalSalesV> PharTotalSalesVs { get; set; } = null!;
         public virtual DbSet<ProcedureMaster> ProcedureMasters { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultIpwithAge> PsLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
+        public virtual DbSet<PsLvwRtrvPathologyResultLabwithAge> PsLvwRtrvPathologyResultLabwithAges { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultOpwithAge> PsLvwRtrvPathologyResultOpwithAges { get; set; } = null!;
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
@@ -485,6 +486,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtReservationCheckIn> TOtReservationCheckIns { get; set; } = null!;
         public virtual DbSet<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtReservationHeader> TOtReservationHeaders { get; set; } = null!;
         public virtual DbSet<TOtReservationSurgeryDetail> TOtReservationSurgeryDetails { get; set; } = null!;
@@ -562,7 +564,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6968,6 +6970,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CompShortName).HasMaxLength(100);
 
                 entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MItemDrugTypeMaster>(entity =>
@@ -9401,6 +9407,51 @@ namespace HIMS.Data.Models
                 entity.HasNoKey();
 
                 entity.ToView("ps_lvwRtrv_PathologyResultIPWithAge");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<PsLvwRtrvPathologyResultLabwithAge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_lvwRtrv_PathologyResultLABWithAge");
 
                 entity.Property(e => e.AgeType).HasMaxLength(10);
 
@@ -14076,6 +14127,56 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.TOtReservationAttendingDetails)
                     .HasForeignKey(d => d.OtreservationId)
                     .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
+            });
+
+            modelBuilder.Entity<TOtReservationCheckIn>(entity =>
+            {
+                entity.HasKey(e => e.OtcheckInId);
+
+                entity.ToTable("T_OT_ReservationCheckIn");
+
+                entity.Property(e => e.OtcheckInId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("OTCheckInId");
+
+                entity.Property(e => e.CreatedBy).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EquipmentCarried).HasMaxLength(255);
+
+                entity.Property(e => e.ModeOfTransfer)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MovingType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.OtcheckInNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("OTCheckInNo");
+
+                entity.Property(e => e.OtmovementDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTMovementDate");
+
+                entity.Property(e => e.OtmovementTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTMovementTime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.PurPoseOfMovement).HasMaxLength(255);
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TOtReservationDiagnosis>(entity =>

@@ -15,6 +15,5 @@ namespace HIMS.Data.Models
         public string? MpesaReceiptNumber { get; set; }
         public string? PhoneNumber { get; set; }
         public DateTime? ResponseOn { get; set; }
-        public string state { get; set; }
     }
 }

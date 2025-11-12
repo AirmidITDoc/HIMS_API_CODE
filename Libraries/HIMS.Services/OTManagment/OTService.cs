@@ -240,14 +240,14 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] Entity = { "ReservationDate", "ReservationTime", "OpIpType", "OpstartTime", "OpendTime", "Duration", "OttableId", "DepartmentId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDate", "ModifiedDate", "ModifiedBy", "OtrequestId" };
+            string[] Entity = { "OldOTReservationId", "OpIpId", "SurgeryDate", "CreatedBy", "Reason", "NewOTReservationId" };
             var entity = ObjTOtReservation.ToDictionary();
-            foreach (var rProperty in Entity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
-
-            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTBooking_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
 
