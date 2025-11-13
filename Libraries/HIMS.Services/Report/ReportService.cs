@@ -126,7 +126,7 @@ namespace HIMS.Services.Report
         }
 
 
-        public async Task<string> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
+        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
@@ -2351,8 +2351,9 @@ namespace HIMS.Services.Report
 
 
             }
-            string byteFile = Convert.ToBase64String(tuple.Item1);
-            return byteFile;
+            return tuple;
+            //string byteFile = Convert.ToBase64String(tuple.Item1);
+            //return byteFile;
 
         }
         public string SetFonts(string html, string PdfFontPath)
