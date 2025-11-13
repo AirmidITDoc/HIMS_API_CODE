@@ -38,5 +38,4 @@ namespace HIMS.API.Models.Marketing
 
         }
     }
-
 }

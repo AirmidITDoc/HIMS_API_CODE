@@ -191,6 +191,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IConsRefDoctorService, ConsRefDoctorService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IBarcodeConfigService, BarcodeConfigService>();
+            services.AddScoped<IWhatsAppEmailService, WhatsAppEmailService>();
             services.AddScoped<IConfigService, ConfigService>();
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));

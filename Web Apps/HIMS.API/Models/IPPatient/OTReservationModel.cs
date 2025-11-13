@@ -58,7 +58,7 @@ namespace HIMS.API.Models.IPPatient
         {
             public long OldOTReservationId { get; set; }
             public long? OpIpId { get; set; }
-            public DateTime? Opdate { get; set; }
+            public DateTime? SurgeryDate { get; set; }
             public int? CreatedBy { get; set; }
             public string? Reason { get; set; }
             public long NewOTReservationId { get; set; }

@@ -329,6 +329,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<PharTotalSalesV> PharTotalSalesVs { get; set; } = null!;
         public virtual DbSet<ProcedureMaster> ProcedureMasters { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultIpwithAge> PsLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
+        public virtual DbSet<PsLvwRtrvPathologyResultLabwithAge> PsLvwRtrvPathologyResultLabwithAges { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultOpwithAge> PsLvwRtrvPathologyResultOpwithAges { get; set; } = null!;
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
@@ -455,6 +456,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMaterialConsumptionHeader> TMaterialConsumptionHeaders { get; set; } = null!;
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
         public virtual DbSet<TMlcinformation> TMlcinformations { get; set; } = null!;
+        public virtual DbSet<TMpesaResponse> TMpesaResponses { get; set; } = null!;
         public virtual DbSet<TMrdAdmFile> TMrdAdmFiles { get; set; } = null!;
         public virtual DbSet<TMrdcasePaperIssueReturn> TMrdcasePaperIssueReturns { get; set; } = null!;
         public virtual DbSet<TMrpAdjustment> TMrpAdjustments { get; set; } = null!;
@@ -484,6 +486,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtReservationCheckIn> TOtReservationCheckIns { get; set; } = null!;
         public virtual DbSet<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtReservationHeader> TOtReservationHeaders { get; set; } = null!;
         public virtual DbSet<TOtReservationSurgeryDetail> TOtReservationSurgeryDetails { get; set; } = null!;
@@ -521,7 +524,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TSalesReturnDetail> TSalesReturnDetails { get; set; } = null!;
         public virtual DbSet<TSalesReturnHeader> TSalesReturnHeaders { get; set; } = null!;
         public virtual DbSet<TSmsOutgoing> TSmsOutgoings { get; set; } = null!;
-        public virtual DbSet<TSmsoutGoing1> TSmsoutGoings1 { get; set; } = null!;
         public virtual DbSet<TStockAdjustment> TStockAdjustments { get; set; } = null!;
         public virtual DbSet<TStockLedger> TStockLedgers { get; set; } = null!;
         public virtual DbSet<TStockUpdate> TStockUpdates { get; set; } = null!;
@@ -6968,6 +6970,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CompShortName).HasMaxLength(100);
 
                 entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MItemDrugTypeMaster>(entity =>
@@ -9401,6 +9407,51 @@ namespace HIMS.Data.Models
                 entity.HasNoKey();
 
                 entity.ToView("ps_lvwRtrv_PathologyResultIPWithAge");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<PsLvwRtrvPathologyResultLabwithAge>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_lvwRtrv_PathologyResultLABWithAge");
 
                 entity.Property(e => e.AgeType).HasMaxLength(10);
 
@@ -13135,6 +13186,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportingTime).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TMpesaResponse>(entity =>
+            {
+                entity.ToTable("T_MpesaResponses");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.CheckoutRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("CheckoutRequestID");
+
+                entity.Property(e => e.MerchantRequestId)
+                    .HasMaxLength(255)
+                    .HasColumnName("MerchantRequestID");
+
+                entity.Property(e => e.MpesaReceiptNumber).HasMaxLength(255);
+
+                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+
+                entity.Property(e => e.ResponseOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultDesc).HasMaxLength(255);
+
+                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TMrdAdmFile>(entity =>
             {
                 entity.ToTable("T_MRD_AdmFile");
@@ -14049,6 +14127,56 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.TOtReservationAttendingDetails)
                     .HasForeignKey(d => d.OtreservationId)
                     .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
+            });
+
+            modelBuilder.Entity<TOtReservationCheckIn>(entity =>
+            {
+                entity.HasKey(e => e.OtcheckInId);
+
+                entity.ToTable("T_OT_ReservationCheckIn");
+
+                entity.Property(e => e.OtcheckInId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("OTCheckInId");
+
+                entity.Property(e => e.CreatedBy).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EquipmentCarried).HasMaxLength(255);
+
+                entity.Property(e => e.ModeOfTransfer)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedBy).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MovingType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.OtcheckInNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("OTCheckInNo");
+
+                entity.Property(e => e.OtmovementDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTMovementDate");
+
+                entity.Property(e => e.OtmovementTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTMovementTime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.PurPoseOfMovement).HasMaxLength(255);
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TOtReservationDiagnosis>(entity =>
@@ -15466,29 +15594,6 @@ namespace HIMS.Data.Models
                     .HasColumnName("SMSurl");
             });
 
-            modelBuilder.Entity<TSmsoutGoing1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_SMSOutGoing");
-
-                entity.Property(e => e.MobileNumber).HasMaxLength(50);
-
-                entity.Property(e => e.Smsdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SMSDate");
-
-                entity.Property(e => e.SmsoutGoingId).HasColumnName("SMSOutGoingID");
-
-                entity.Property(e => e.Smsstring)
-                    .HasMaxLength(700)
-                    .HasColumnName("SMSString");
-
-                entity.Property(e => e.Smsurl)
-                    .HasMaxLength(1000)
-                    .HasColumnName("smsurl");
-            });
-
             modelBuilder.Entity<TStockAdjustment>(entity =>
             {
                 entity.HasKey(e => e.StockAdgId);
@@ -15605,11 +15710,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.SmsoutGoingId).HasColumnName("SMSOutGoingID");
 
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
                 entity.Property(e => e.FilePath).HasMaxLength(500);
 
                 entity.Property(e => e.LastTry).HasColumnType("datetime");
 
                 entity.Property(e => e.MobileNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.Smsdate)
                     .HasColumnType("datetime")

@@ -76,6 +76,7 @@ namespace HIMS.Services.Common
                 // Pathology Result Entry
                 case "PathologyResultEntryOP": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge"; break;
                 case "PathologyResultEntryIP": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge"; break;
+                //case "PathologyResultEntryLAB": sp_Name = "ps_Rtrv_PathologyResultList_ForLABAge"; break;
 
                 case "PathologyResultEntryOPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge_Test"; break;
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;

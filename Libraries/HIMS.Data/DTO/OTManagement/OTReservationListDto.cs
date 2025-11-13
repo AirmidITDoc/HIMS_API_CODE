@@ -56,20 +56,33 @@ namespace HIMS.Data.DTO.OTManagement
 
     }
 
+    //public class OTRequestDetailsListSearchDto
+    //{
+    //    public long OTRequestId { get; set; }
+    //    public string? OTRequestDateTime { get; set; }
+    //    public string? PatientName { get; set; }
+    //    public string? MobileNo { get; set; }
+    //    public string? RegNo { get; set; }
+    //    public string? GenderName { get; set; }
+    //    public long? ReservationOTRequestId { get; set; }
+    //    public string FormattedText { get { return this.PatientName + " | " + this.MobileNo + " | " + this.RegNo; } }
+    //    public long? OTReservationId { get; set; }
+    //    public long? OPIPType { get; set; }
+    //    public long OPIPID { get; set; }
+
+    //}
     public class OTRequestDetailsListSearchDto
     {
         public long OTRequestId { get; set; }
-        public string? OTRequestDateTime { get; set; }
-        public string? PatientName { get; set; }
-        public string? MobileNo { get; set; }
-        public string? RegNo { get; set; }
-        public string? GenderName { get; set; }
-        public long? ReservationOTRequestId { get; set; }
-        public string FormattedText { get { return this.PatientName + " | " + this.MobileNo + " | " + this.RegNo; } }
-        public long? OTReservationId { get; set; }
-        public long? OPIPType { get; set; }
+        public string OTRequestDateTime { get; set; }
+        public string PatientName { get; set; }
+        public string MobileNo { get; set; }
+        public string GenderName { get; set; }
+        public long ReservationOTRequestId { get; set; }
+        public long OTReservationId { get; set; }
+        public string OPIPType { get; set; }
         public long OPIPID { get; set; }
-
+        public string RegNo { get; set; }
     }
     public class requestAttendentListDto
     {

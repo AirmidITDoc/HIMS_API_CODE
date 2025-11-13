@@ -7,7 +7,9 @@ using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Net;
 using System.Transactions;
+
 
 namespace HIMS.Services.IPPatient
 {
@@ -65,6 +67,9 @@ namespace HIMS.Services.IPPatient
             para[0] = new SqlParameter("@Keyword", Keyword);
             return sql.FetchListBySP<OTRequestDetailsListSearchDto>("ps_Rtrv_PatientOTRequestListSearch", para);
         }
+
+
+
         public virtual async Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -235,14 +240,14 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] Entity = { "ReservationDate", "ReservationTime", "OpIpType", "OpstartTime", "OpendTime", "Duration", "OttableId", "DepartmentId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "CreatedDate", "ModifiedDate", "ModifiedBy", "OtrequestId" };
+            string[] Entity = { "OldOTReservationId", "OpIpId", "SurgeryDate", "CreatedBy", "Reason", "NewOTReservationId" };
             var entity = ObjTOtReservation.ToDictionary();
-            foreach (var rProperty in Entity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
-
-            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTBooking_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
 

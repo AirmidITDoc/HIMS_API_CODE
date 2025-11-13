@@ -232,6 +232,7 @@ namespace HIMS.API.Controllers.Report
                 //case "OPDoctorWiseNewOldPatientReport":
                 case "OPRefundReceipt":
                 case "OPPaymentReceipt":
+                case "LabPaymentReceipt":
                 case "AppointmentReceipt":
                 case "AppointmentReceiptWithoutHeader":
                 case "OpBillReceipt":
