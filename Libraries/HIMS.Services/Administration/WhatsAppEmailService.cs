@@ -15,13 +15,17 @@ namespace HIMS.Services.Administration
     public class WhatsAppEmailService : IWhatsAppEmailService
     {
         private readonly HIMSDbContext _context;
-        private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
         public readonly IReportService _reportServices;
-        public WhatsAppEmailService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility, IReportService reportServices)
+        private static readonly string[] AllowedFields =
+       {
+            "MobileNumber", "SourceType", "Smsstring", "IsSent", "Smstype","FilePath",
+            "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl",
+            "CreatedBy", "SmsoutGoingId"
+        };
+        public WhatsAppEmailService(HIMSDbContext HIMSDbContext, IPdfUtility pdfUtility, IReportService reportServices)
         {
             _context = HIMSDbContext;
-            _hostingEnvironment = hostingEnvironment;
             _pdfUtility = pdfUtility;
             _reportServices = reportServices;
         }
@@ -48,18 +52,13 @@ namespace HIMS.Services.Administration
                     var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
                     FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, "Test123", model.StorageBaseUrl, "Bill", "Bill_" + Id);
                 }
-
-                DatabaseHelper odal = new();
-                string[] rEntity = { "MobileNumber", "SourceType", "Smsstring", "IsSent", "Smstype", "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl", "CreatedBy", "SmsoutGoingId" };
                 ObjWhatsApp.FilePath = FilePath;
-                var lentity = ObjWhatsApp.ToDictionary();
-                foreach (var rProperty in lentity.Keys.ToList())
-                {
-                    if (!rEntity.Contains(rProperty))
-                        lentity.Remove(rProperty);
-                }
-                string vSmsoutGoingId = odal.ExecuteNonQuery("ps_insert_WhatsAppSMS", CommandType.StoredProcedure, "SmsoutGoingId", lentity);
-                ObjWhatsApp.SmsoutGoingId = Convert.ToInt32(vSmsoutGoingId);
+                var entityData = ObjWhatsApp.ToDictionary().Where(kvp => AllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+                using var dbHelper = new DatabaseHelper();
+                var resultId = dbHelper.ExecuteNonQuery("ps_insert_WhatsAppSMS", CommandType.StoredProcedure, "SmsoutGoingId", entityData);
+
+                ObjWhatsApp.SmsoutGoingId = Convert.ToInt32(resultId);
 
             }
             catch (Exception ex)
