@@ -99,10 +99,10 @@ namespace HIMS.API.Controllers.OPPatient
                 model.ModifiedDate = DateTime.Now;
                 await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
                 /// set condition based on payment type=mpesa.
-                string phone = "254723939232";
-                var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
-                var Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.BillNo, MPesaResponse = Data });
+                //string phone = "254723939232";
+                //var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
+                //var Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
+                //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.BillNo, MPesaResponse = Data });
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
