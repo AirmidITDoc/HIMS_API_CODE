@@ -46,11 +46,11 @@ namespace HIMS.Services.Administration
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
                     };
                     var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
-                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, "Test123", model.StorageBaseUrl, "Bill", Id + ".pdf");
+                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, "Test123", model.StorageBaseUrl, "Bill", "Bill_" + Id);
                 }
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "MobileNumber", "SourceType", "Smsstring", "IsSent", "Smstype", "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl", "FilePath", "CreatedBy", "SmsoutGoingId" };
+                string[] rEntity = { "MobileNumber", "SourceType", "Smsstring", "IsSent", "Smstype", "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl", "CreatedBy", "SmsoutGoingId" };
                 ObjWhatsApp.FilePath = FilePath;
                 var lentity = ObjWhatsApp.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
