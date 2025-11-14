@@ -574,6 +574,24 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+                    #region :: CommonTemplateReport::
+                case "CommonTemplateReport":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "TemplateReportNew2.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CommonTemplate", "CommonTemplate", Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+
                 #region :: OPPrescription ::
                 case "OPPrescription":
                     {
@@ -4271,9 +4289,6 @@ namespace HIMS.Services.Report
 
                         }
 
-
-
-
                     }
                     break;
                 case "OpBillReceipt":
@@ -4310,6 +4325,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
 
                         double T_NetAmount = 0;
                         foreach (DataRow dr in dt.Rows)
@@ -4884,6 +4900,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
 
+                        html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+
+                        //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
+                        //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
+
+                        html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "visible" : "none");
+
+
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
 
@@ -4999,6 +5025,13 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
+
+
+                        html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+
+                        html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkReferDrName}}", dt.GetColValue("ReferDrName").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
@@ -7924,7 +7957,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{UseName}}", dt.GetColValue("UseName"));
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
                         html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
+                        html = html.Replace("{{BillRefAmt}}", dt.GetColValue("BillRefAmt"));
 
+
+                        
 
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkAdvflag}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -9451,7 +9487,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
                         //html = html.Replace("{{DepartmentName}}", dt.Rows[0]["DepartmentName"].ConvertToString());
                         //html = html.Replace("{{PatientType}}", dt.Rows[0]["PatientType"].ConvertToString());
-                        //html = html.Replace("{{RefDocName}}", dt.Rows[0]["RefDocName"].ConvertToString());
+                        html = html.Replace("{{RefDoctorName}}", dt.Rows[0]["RefDoctorName"].ConvertToString());
                         //html = html.Replace("{{CompanyName}}", dt.Rows[0]["CompanyName"].ConvertToString());
                         //html = html.Replace("{{Path_DoctorName}}", dt.Rows[0]["Path_DoctorName"].ConvertToString());
                         html = html.Replace("{{Education}}", dt.GetColValue("Education").ConvertToString());
@@ -9632,7 +9668,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
                         //html = html.Replace("{{DepartmentName}}", dt.Rows[0]["DepartmentName"].ConvertToString());
                         //html = html.Replace("{{PatientType}}", dt.Rows[0]["PatientType"].ConvertToString());
-                        //html = html.Replace("{{RefDocName}}", dt.Rows[0]["RefDocName"].ConvertToString());
+                        //html = html.Replace("{{RefDoctorName}}", dt.Rows[0]["RefDocName"].ConvertToString());
                         //html = html.Replace("{{CompanyName}}", dt.Rows[0]["CompanyName"].ConvertToString());
                         //html = html.Replace("{{Path_DoctorName}}", dt.Rows[0]["Path_DoctorName"].ConvertToString());
                         html = html.Replace("{{Education}}", dt.GetColValue("Education").ConvertToString());
