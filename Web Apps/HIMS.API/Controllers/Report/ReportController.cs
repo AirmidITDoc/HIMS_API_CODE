@@ -432,7 +432,7 @@ namespace HIMS.API.Controllers.Report
 
                 //Labrequest Detail
                 case "LabRegistrationListReport":
-                    
+                case "CommonTemplateReport":
 
                 #endregion
 
