@@ -381,11 +381,18 @@ namespace HIMS.API.Controllers.Common
                 "MenuMaster" => (await _MenuMaster.GetAll(x => x.UpId == 10)).ToList().ToDropDown(nameof(MenuMaster.Id), nameof(MenuMaster.LinkName)),
                 "Qualification" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorQualification")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "InstitueName" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "QulificationInstitueName")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "ModeOfTransfer" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ModeOfTransfer")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "AnesthesiaType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "AnesthesiaType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "BloodGroupTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "BloodGroupTypes")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+
 
                 "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+               
+
 
 
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),

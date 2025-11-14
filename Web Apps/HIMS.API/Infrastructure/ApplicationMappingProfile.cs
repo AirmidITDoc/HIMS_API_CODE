@@ -719,6 +719,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtReservationDiagnosis, ReservationDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabPatientRegistration, TLabPatientRegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemCompanyMaster, ItemCompanyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservationCheckInOut, ReservationCheckInOutModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

@@ -71,6 +71,15 @@ namespace HIMS.Data.DTO.Administration
         public bool IsActive { get; set; }
        
         }
+    public class patientTemplateRetriveComboDto
+    { 
+        public long OtrequestId { get; set; }
+        public long DoctorTypeId { get; set; }
+        public long DoctorType { get; set; }
+        public string? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
 
     }
+  
+}
 

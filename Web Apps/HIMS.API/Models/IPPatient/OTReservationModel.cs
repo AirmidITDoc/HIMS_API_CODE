@@ -64,6 +64,30 @@ namespace HIMS.API.Models.IPPatient
             public long NewOTReservationId { get; set; }
 
         }
+        public  class ReservationCheckInOutModel
+        {
+            public long OtcheckInId { get; set; }
+            public long? OtreservationId { get; set; }
+            public DateTime? OtcheckInDate { get; set; }
+            public string? OtcheckInTime { get; set; }
+            public string? OtcheckInNo { get; set; }
+            public byte? Opipid { get; set; }
+            public bool? Opiptype { get; set; }
+            public long? FromDepartment { get; set; }
+            public long? ToDepartment { get; set; }
+            public string? MovingType { get; set; }
+            public string? ModeOfTransfer { get; set; }
+            public long? AuthorisedBy { get; set; }
+            public long? Accompanied { get; set; }
+            public string? EquipmentCarried { get; set; }
+            public string? Remark { get; set; }
+            public string? PurPoseOfMovement { get; set; }
+            public byte? CheckInOut { get; set; }
+            public string? CheckOutTime { get; set; }
+            public long? CheckOutFromDepartment { get; set; }
+            public long? CheckOutToDepartment { get; set; }
+           
+        }
     }
 
 }
