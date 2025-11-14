@@ -15,11 +15,12 @@ namespace HIMS.API.Controllers.Administration
     public class WhatsAppEmailController : BaseController
     {
         private readonly IWhatsAppEmailService _whatsAppEmailService;
+        public readonly IConfiguration _configuration;
 
-        public WhatsAppEmailController(IWhatsAppEmailService repository)
+        public WhatsAppEmailController(IWhatsAppEmailService repository, IConfiguration configuration)
         {
             _whatsAppEmailService = repository;
-
+            _configuration = configuration;
         }
 
         [HttpPost("Insert")]
@@ -28,12 +29,10 @@ namespace HIMS.API.Controllers.Administration
         {
             TWhatsAppSmsOutgoing model = obj.MapTo<TWhatsAppSmsOutgoing>();
 
-          if (obj.SmsoutGoingId == 0)
+            if (obj.SmsoutGoingId == 0)
             {
-
-             
                 model.CreatedBy = CurrentUserId;
-                await _whatsAppEmailService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _whatsAppEmailService.InsertAsync(model, _configuration, obj.BillId, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

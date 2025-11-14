@@ -100,8 +100,10 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MVehicleMaster> _MVehicleMaster;
         private readonly IGenericService<MDriverMaster> _MDriverMaster;
         private readonly IGenericService<MOttypeMaster> _MOttypeMaster;
+        private readonly IGenericService<MItemCompanyMaster> _MItemCompanyMaster;
 
 
+        
 
 
 
@@ -149,7 +151,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MMarketingHospitalMaster> IMMarketingHospitalMaster,
                               IGenericService<MVehicleMaster> MVehicleMaster,
                               IGenericService<MDriverMaster> MDriverMaster,
-                              IGenericService<MOttypeMaster> MOttypeMaster
+                              IGenericService<MOttypeMaster> MOttypeMaster,
+                              IGenericService<MItemCompanyMaster> MItemCompanyMaster
+
 
 
 
@@ -245,9 +249,11 @@ namespace HIMS.API.Controllers.Common
             _MVehicleMaster = MVehicleMaster;
             _MDriverMaster = MDriverMaster;
             _MOttypeMaster = MOttypeMaster;
+            _MItemCompanyMaster = MItemCompanyMaster;
 
 
 
+            
 
 
 
@@ -383,9 +389,10 @@ namespace HIMS.API.Controllers.Common
 
 
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-
-
                 "CampMaster" => (await _MCampMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MCampMaster.CampId), nameof(MCampMaster.CampName)),
+
+
+                "ItemCompanyMaster" => (await _MItemCompanyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemCompanyMaster.CompanyId), nameof(MItemCompanyMaster.CompanyName)),
                 //OT MANAGMENT DROPDOWN//
 
                 "SiteDescription" => (await _MOtSiteDescriptionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSiteDescriptionMaster.SiteDescId), nameof(MOtSiteDescriptionMaster.SiteDescriptionName)),

@@ -126,7 +126,7 @@ namespace HIMS.Services.Report
         }
 
 
-        public async Task<string> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
+        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
@@ -2369,8 +2369,9 @@ namespace HIMS.Services.Report
 
 
             }
-            string byteFile = Convert.ToBase64String(tuple.Item1);
-            return byteFile;
+            return tuple;
+            //string byteFile = Convert.ToBase64String(tuple.Item1);
+            //return byteFile;
 
         }
         public string SetFonts(string html, string PdfFontPath)
@@ -4420,7 +4421,7 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Price"].ConvertToDouble().ToString("F2")).Append("</td>");
@@ -6948,7 +6949,7 @@ namespace HIMS.Services.Report
                             previousLabel = dr["GroupName"].ConvertToString();
 
 
-                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"border: 1px solid #eee; text-align: center; padding: 2px;\">").Append(j).Append("</td>");
+                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"border: 1px solid #eee; text-align: center; padding: 2px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToString()).Append("</td>");
@@ -6983,7 +6984,7 @@ namespace HIMS.Services.Report
 
                         }
 
-
+                      
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -7211,7 +7212,7 @@ namespace HIMS.Services.Report
 
                             i++; j++;
 
-                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
+                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //   items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
@@ -7806,7 +7807,7 @@ namespace HIMS.Services.Report
                         int i = 0, j = 0;
                         String[] GroupName;
                         object GroupName1 = "";
-                        Boolean chkcommflag = false, chkpaidflag = false, chkbalflag = false, chkdiscflag = false, chkAdvflag = false, chkadminchargeflag = false;
+                        Boolean chkcommflag = false, chkpaidflag = false, chkbalflag = false, chkdiscflag = false, chkAdvflag = false, chkadminchargeflag = false, chkRefundflag = false;
                         double T_NetAmount = 0, TotalNetPayAmt = 0, Tot_Advamt = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0;
 
                         string previousLabel = "";
@@ -11528,6 +11529,10 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["ConversionFactor"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BatchNo"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BatchExpDate"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["CGSTPer"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["CGSTAmt"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["SGSTPer"].ConvertToDouble()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["SGSTAmt"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["Qty"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["UnitMRP"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
@@ -11566,6 +11571,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{HTotalAmount}}", dt.GetColValue("T_HTotalAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CGSTAmt}}", dt.GetColValue("CGSTAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{SGSTAmt}}", dt.GetColValue("SGSTAmt").ConvertToDouble().ToString("F2"));
+
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));

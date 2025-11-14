@@ -18,6 +18,7 @@ namespace HIMS.API.Models.Administration
         public byte? SourceType { get; set; }
         public long? CreatedBy { get; set; }
         public long SmsoutGoingId { get; set; }
+        public int BillId { get; set; }
     }
 
 

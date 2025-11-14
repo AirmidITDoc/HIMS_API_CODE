@@ -442,8 +442,8 @@ namespace HIMS.API.Controllers.Report
             }
             model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = await _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
-            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+            var byteFile = await _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
         }
 
         [HttpPost("NewViewReport")]
