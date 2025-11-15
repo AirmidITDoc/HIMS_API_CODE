@@ -198,7 +198,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Add API
         [HttpPost("OtReservationCheckInOut")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
@@ -209,7 +209,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _repository2.Add(model, CurrentUserId, CurrentUserName);
+                await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -218,7 +218,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Edit API
         [HttpPut("OtReservationCheckInOut")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
@@ -229,13 +229,10 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
-
-
-
 
         [HttpPost("Cancel")]
         [Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]

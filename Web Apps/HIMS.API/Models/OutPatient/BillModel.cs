@@ -7,7 +7,7 @@ namespace HIMS.API.Models.OutPatient
     public class BillsModel
     {
         public long? BillNo { get; set; }
-        public long? OPDIPDID { get; set; }
+        public long? OpdIpdId { get; set; }
         public long? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? Ipdno { get; set; }
@@ -28,7 +28,7 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
         public DateTime? BillDate { get; set; }
-        public byte? OPDIPDType { get; set; }
+        public byte? OpdIpdType { get; set; }
         public long? AddedBy { get; set; }
         public decimal? TotalAdvanceAmount { get; set; }
         public string? BillTime { get; set; }

@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertCreditSP(BillingModel obj)
         {
 
