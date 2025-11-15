@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
