@@ -498,7 +498,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
 
-            string[] rEntity2 = { "AdmissionID" };
+            string[] rEntity2 = { "AdmissionId" };
             var entity2 = ObjAddmission.ToDictionary();
             foreach (var rProperty in entity2.Keys.ToList())
             {
@@ -507,7 +507,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_update_T_AdmissionforIPBilling", CommandType.StoredProcedure, entity2);
 
-            string[] pEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "TDSAmount", "WFAmount", "UnitId" };
+            string[] pEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
             var entity1 = Objpayment.ToDictionary();
             foreach (var rProperty in entity1.Keys.ToList())
             {
@@ -530,7 +530,7 @@ namespace HIMS.Services.Common
             foreach (var item in ObjadvanceDetailList)
             {
 
-                string[] ADetailEntity = { "AdvanceDetailID", "UsedAmount", "BalanceAmount" };
+                string[] ADetailEntity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount" };
                 var AdvanceDetailEntity = item.ToDictionary();
                 foreach (var rProperty in AdvanceDetailEntity.Keys.ToList())
                 {
@@ -541,7 +541,7 @@ namespace HIMS.Services.Common
 
             }
 
-            string[] AHeaderEntity = { "AdvanceId", "AdvanceUsedAmount" };
+            string[] AHeaderEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
             var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
             foreach (var rProperty in AdvanceHeaderEntity.Keys.ToList())
             {
@@ -681,7 +681,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Cal_DiscAmount_OPBill", CommandType.StoredProcedure, AddEntity);
 
-            string[] rEntity2 = { "AdmissionID"};
+            string[] rEntity2 = { "AdmissionId" };
             var entity2 = ObjAddmission.ToDictionary();
             foreach (var rProperty in entity2.Keys.ToList())
             {
@@ -705,7 +705,7 @@ namespace HIMS.Services.Common
             foreach (var item in ObjadvanceDetailList)
             {
 
-                string[] ADetailEntity = { "AdvanceDetailID", "UsedAmount", "BalanceAmount" };
+                string[] ADetailEntity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount" };
                 var AdvanceDetailEntity = item.ToDictionary();
                 foreach (var rProperty in AdvanceDetailEntity.Keys.ToList())
                 {
@@ -716,7 +716,7 @@ namespace HIMS.Services.Common
 
             }
 
-            string[] AHeaderEntity = { "AdvanceId", "AdvanceUsedAmount" };
+            string[] AHeaderEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
             var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
             foreach (var rProperty in AdvanceHeaderEntity.Keys.ToList())
             {

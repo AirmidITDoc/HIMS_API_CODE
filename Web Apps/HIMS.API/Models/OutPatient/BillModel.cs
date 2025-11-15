@@ -104,7 +104,7 @@ namespace HIMS.API.Models.OutPatient
 
     public class AddmissionModel
     {
-        public long? AdmissionID { get; set; }
+        public long? AdmissionId { get; set; }
 
 
     }
@@ -147,8 +147,8 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TDSAmount { get; set; }
-        public decimal? WFAmount { get; set; }
+        public double? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? UnitId { get; set; }
 
     }
@@ -175,7 +175,7 @@ namespace HIMS.API.Models.OutPatient
 
     public class AdvancesDetailModel
     {
-        public long? AdvanceDetailID { get; set; }
+        public long? AdvanceDetailId { get; set; }
         public decimal? UsedAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
     }
