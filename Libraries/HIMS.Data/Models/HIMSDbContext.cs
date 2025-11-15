@@ -480,13 +480,25 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
+        public virtual DbSet<TOtAnesthesiaPreOpdiagnosis> TOtAnesthesiaPreOpdiagnoses { get; set; } = null!;
+        public virtual DbSet<TOtAnesthesiaRecord> TOtAnesthesiaRecords { get; set; } = null!;
+        public virtual DbSet<TOtInOperationAttendingDetail> TOtInOperationAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtInOperationDiagnosis> TOtInOperationDiagnoses { get; set; } = null!;
+        public virtual DbSet<TOtInOperationHeader> TOtInOperationHeaders { get; set; } = null!;
+        public virtual DbSet<TOtInOperationPostOperDiagnosis> TOtInOperationPostOperDiagnoses { get; set; } = null!;
+        public virtual DbSet<TOtInOperationSurgeryDetail> TOtInOperationSurgeryDetails { get; set; } = null!;
+        public virtual DbSet<TOtPreOperationAttendingDetail> TOtPreOperationAttendingDetails { get; set; } = null!;
+        public virtual DbSet<TOtPreOperationCathlabDiagnosis> TOtPreOperationCathlabDiagnoses { get; set; } = null!;
+        public virtual DbSet<TOtPreOperationDiagnosis> TOtPreOperationDiagnoses { get; set; } = null!;
+        public virtual DbSet<TOtPreOperationHeader> TOtPreOperationHeaders { get; set; } = null!;
+        public virtual DbSet<TOtPreOperationSurgeryDetail> TOtPreOperationSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtRequestAttendingDetail> TOtRequestAttendingDetails { get; set; } = null!;
         public virtual DbSet<TOtRequestDiagnosis> TOtRequestDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtRequestHeader> TOtRequestHeaders { get; set; } = null!;
         public virtual DbSet<TOtRequestSurgeryDetail> TOtRequestSurgeryDetails { get; set; } = null!;
         public virtual DbSet<TOtReservation> TOtReservations { get; set; } = null!;
         public virtual DbSet<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; } = null!;
-        public virtual DbSet<TOtReservationCheckIn> TOtReservationCheckIns { get; set; } = null!;
+        public virtual DbSet<TOtReservationCheckInOut> TOtReservationCheckInOuts { get; set; } = null!;
         public virtual DbSet<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtReservationHeader> TOtReservationHeaders { get; set; } = null!;
         public virtual DbSet<TOtReservationSurgeryDetail> TOtReservationSurgeryDetails { get; set; } = null!;
@@ -13942,6 +13954,369 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
+            modelBuilder.Entity<TOtAnesthesiaPreOpdiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtanesthesiaPreOpdiagnosisId);
+
+                entity.ToTable("T_OT_AnesthesiaPreOPDiagnosis");
+
+                entity.Property(e => e.OtanesthesiaPreOpdiagnosisId).HasColumnName("OTAnesthesiaPreOPDiagnosisId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Anesthesia)
+                    .WithMany(p => p.TOtAnesthesiaPreOpdiagnoses)
+                    .HasForeignKey(d => d.AnesthesiaId)
+                    .HasConstraintName("FK_T_OT_AnesthesiaPreOPDiagnosis_T_OT_AnesthesiaRecord");
+            });
+
+            modelBuilder.Entity<TOtAnesthesiaRecord>(entity =>
+            {
+                entity.HasKey(e => e.AnesthesiaId);
+
+                entity.ToTable("T_OT_AnesthesiaRecord");
+
+                entity.Property(e => e.AnesthesiaDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaNo).HasMaxLength(50);
+
+                entity.Property(e => e.AnesthesiaNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.AnesthesiaStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.RecoveryEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TOtInOperationAttendingDetail>(entity =>
+            {
+                entity.HasKey(e => e.OtinOperationAttendingDetId);
+
+                entity.ToTable("T_OT_InOperationAttendingDetails");
+
+                entity.Property(e => e.OtinOperationAttendingDetId).HasColumnName("OTInOperationAttendingDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtinOperationId).HasColumnName("OTInOperationId");
+
+                entity.HasOne(d => d.OtinOperation)
+                    .WithMany(p => p.TOtInOperationAttendingDetails)
+                    .HasForeignKey(d => d.OtinOperationId)
+                    .HasConstraintName("FK_T_OT_InOperationAttendingDetails_T_OT_InOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtInOperationDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtinOperationDiagnosisDetId);
+
+                entity.ToTable("T_OT_InOperationDiagnosis");
+
+                entity.Property(e => e.OtinOperationDiagnosisDetId).HasColumnName("OTInOperationDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtinOperationId).HasColumnName("OTInOperationId");
+
+                entity.HasOne(d => d.OtinOperation)
+                    .WithMany(p => p.TOtInOperationDiagnoses)
+                    .HasForeignKey(d => d.OtinOperationId)
+                    .HasConstraintName("FK_T_OT_InOperationDiagnosis_T_OT_InOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtInOperationHeader>(entity =>
+            {
+                entity.HasKey(e => e.OtinOperationId)
+                    .HasName("PK_T_OT");
+
+                entity.ToTable("T_OT_InOperationHeader");
+
+                entity.Property(e => e.OtinOperationId).HasColumnName("OTInOperationId");
+
+                entity.Property(e => e.BloodLoss).HasMaxLength(50);
+
+                entity.Property(e => e.ClosureNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.ConditionOfPatientNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OperativeFindingsNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OtinOperationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTInOperationDate");
+
+                entity.Property(e => e.OtinOperationNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("OTInOperationNo");
+
+                entity.Property(e => e.OtinOperationTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTInOperationTime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.Ottable).HasColumnName("OTTable");
+
+                entity.Property(e => e.Pacrequired).HasColumnName("PACRequired");
+
+                entity.Property(e => e.PostOperativeNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.StepsOfProc).HasMaxLength(255);
+
+                entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterInDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterInTime).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterOutData).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterOutTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ToTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TOtInOperationPostOperDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtinOperationPostOperDiagnosisDetId);
+
+                entity.ToTable("T_OT_InOperationPostOperDiagnosis");
+
+                entity.Property(e => e.OtinOperationPostOperDiagnosisDetId).HasColumnName("OTInOperationPostOperDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtinOperationId).HasColumnName("OTInOperationId");
+
+                entity.HasOne(d => d.OtinOperation)
+                    .WithMany(p => p.TOtInOperationPostOperDiagnoses)
+                    .HasForeignKey(d => d.OtinOperationId)
+                    .HasConstraintName("FK_T_OT_InOperationPostOperDiagnosis_T_OT_InOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtInOperationSurgeryDetail>(entity =>
+            {
+                entity.HasKey(e => e.OtinOperationSurgeryDetId);
+
+                entity.ToTable("T_OT_InOperationSurgeryDetails");
+
+                entity.Property(e => e.OtinOperationSurgeryDetId).HasColumnName("OTInOperationSurgeryDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtinOperationId).HasColumnName("OTInOperationId");
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.HasOne(d => d.OtinOperation)
+                    .WithMany(p => p.TOtInOperationSurgeryDetails)
+                    .HasForeignKey(d => d.OtinOperationId)
+                    .HasConstraintName("FK_T_OT_InOperationSurgeryDetails_T_OT_InOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtPreOperationAttendingDetail>(entity =>
+            {
+                entity.HasKey(e => e.OtpreOperationAttendingDetId)
+                    .HasName("PK_T_OT_PreOperation_AttendingDetails");
+
+                entity.ToTable("T_OT_PreOperationAttendingDetails");
+
+                entity.Property(e => e.OtpreOperationAttendingDetId).HasColumnName("OTPreOperationAttendingDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.HasOne(d => d.OtpreOperation)
+                    .WithMany(p => p.TOtPreOperationAttendingDetails)
+                    .HasForeignKey(d => d.OtpreOperationId)
+                    .HasConstraintName("FK_T_OT_PreOperationAttendingDetails_T_OT_PreOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtPreOperationCathlabDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtpreOperationCathLabDiagnosisDetId);
+
+                entity.ToTable("T_OT_PreOperationCathlabDiagnosis");
+
+                entity.Property(e => e.OtpreOperationCathLabDiagnosisDetId).HasColumnName("OTPreOperationCathLabDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.HasOne(d => d.OtpreOperation)
+                    .WithMany(p => p.TOtPreOperationCathlabDiagnoses)
+                    .HasForeignKey(d => d.OtpreOperationId)
+                    .HasConstraintName("FK_T_OT_PreOperationCathlabDiagnosis_T_OT_PreOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtPreOperationDiagnosis>(entity =>
+            {
+                entity.HasKey(e => e.OtpreOperationDiagnosisDetId);
+
+                entity.ToTable("T_OT_PreOperationDiagnosis");
+
+                entity.Property(e => e.OtpreOperationDiagnosisDetId).HasColumnName("OTPreOperationDiagnosisDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.HasOne(d => d.OtpreOperation)
+                    .WithMany(p => p.TOtPreOperationDiagnoses)
+                    .HasForeignKey(d => d.OtpreOperationId)
+                    .HasConstraintName("FK_T_OT_PreOperationDiagnosis_T_OT_PreOperationHeader");
+            });
+
+            modelBuilder.Entity<TOtPreOperationHeader>(entity =>
+            {
+                entity.HasKey(e => e.OtpreOperationId);
+
+                entity.ToTable("T_OT_PreOperationHeader");
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OtpreOperationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTPreOperationDate");
+
+                entity.Property(e => e.OtpreOperationNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("OTPreOperationNo");
+
+                entity.Property(e => e.OtpreOperationTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTPreOperationTime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.Ottable).HasColumnName("OTTable");
+
+                entity.Property(e => e.Pacrequired).HasColumnName("PACRequired");
+
+                entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ToTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TOtPreOperationSurgeryDetail>(entity =>
+            {
+                entity.HasKey(e => e.OtpreOperationSurgeryDetId);
+
+                entity.ToTable("T_OT_PreOperationSurgeryDetails");
+
+                entity.Property(e => e.OtpreOperationSurgeryDetId).HasColumnName("OTPreOperationSurgeryDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.HasOne(d => d.OtpreOperation)
+                    .WithMany(p => p.TOtPreOperationSurgeryDetails)
+                    .HasForeignKey(d => d.OtpreOperationId)
+                    .HasConstraintName("FK_T_OT_PreOperationSurgeryDetails_T_OT_PreOperationHeader");
+            });
+
             modelBuilder.Entity<TOtRequestAttendingDetail>(entity =>
             {
                 entity.HasKey(e => e.OtrequestAttendingDetId)
@@ -14129,17 +14504,16 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_T_OT_ReservationAttendingDetails_T_OT_ReservationHeader");
             });
 
-            modelBuilder.Entity<TOtReservationCheckIn>(entity =>
+            modelBuilder.Entity<TOtReservationCheckInOut>(entity =>
             {
-                entity.HasKey(e => e.OtcheckInId);
+                entity.HasKey(e => e.OtcheckInId)
+                    .HasName("PK_T_OT_ReservationCheckIn");
 
-                entity.ToTable("T_OT_ReservationCheckIn");
+                entity.ToTable("T_OT_ReservationCheckInOut");
 
-                entity.Property(e => e.OtcheckInId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTCheckInId");
+                entity.Property(e => e.OtcheckInId).HasColumnName("OTCheckInId");
 
-                entity.Property(e => e.CreatedBy).HasColumnType("datetime");
+                entity.Property(e => e.CheckOutTime).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -14149,8 +14523,6 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ModifiedBy).HasColumnType("datetime");
-
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MovingType)
@@ -14159,18 +14531,20 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OtcheckInDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTCheckInDate");
+
                 entity.Property(e => e.OtcheckInNo)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("OTCheckInNo");
 
-                entity.Property(e => e.OtmovementDate)
+                entity.Property(e => e.OtcheckInTime)
                     .HasColumnType("datetime")
-                    .HasColumnName("OTMovementDate");
-
-                entity.Property(e => e.OtmovementTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("OTMovementTime");
+                    .HasColumnName("OTCheckInTime");
 
                 entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
 
@@ -14247,6 +14621,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Ottable).HasColumnName("OTTable");
 
                 entity.Property(e => e.Pacrequired).HasColumnName("PACRequired");
+
+                entity.Property(e => e.Reason).HasMaxLength(255);
 
                 entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
             });

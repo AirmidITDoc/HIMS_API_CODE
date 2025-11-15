@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -25,13 +26,17 @@ namespace HIMS.API.Controllers.IPPatient
         private readonly IOTService _OTService;
         private readonly IGenericService<TOtReservationHeader> _repository;
         private readonly IGenericService<TOtReservationDiagnosis> _repository1;
+        private readonly IGenericService<TOtReservationCheckInOut> _repository2;
 
 
-        public OTReservationController(IOTService repository, IGenericService<TOtReservationHeader> repository1, IGenericService<TOtReservationDiagnosis> repository2)
+
+        public OTReservationController(IOTService repository, IGenericService<TOtReservationHeader> repository1, IGenericService<TOtReservationDiagnosis> repository2, IGenericService<TOtReservationCheckInOut> repository3)
         {
             _OTService = repository;
             _repository = repository1;
             _repository1 = repository2;
+            _repository2 = repository3;
+
 
 
         }
@@ -171,9 +176,6 @@ namespace HIMS.API.Controllers.IPPatient
                     v.ModifiedDate = DateTime.Now;
                     v.OtreservationDiagnosisDetId = 0;
                 }
-
-
-
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
@@ -181,52 +183,56 @@ namespace HIMS.API.Controllers.IPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        //List API Get By Id
+        [HttpGet("Getcheckinout/{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Getcheckinout(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository2.GetById(x => x.OtcheckInId == id);
+            return data.ToSingleResponse<TOtReservationCheckInOut, ReservationCheckInOutModel>("TOtReservationCheckInOut");
+        }
 
+        //Add API
+        [HttpPost("OtReservationCheckInOut")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(ReservationCheckInOutModel obj)
+        {
+            TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
+            //model.IsActive = true;
+            if (obj.OtcheckInId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository2.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
 
-
-
-        //[HttpPost("Insert")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertEDMX(OTReservationModel obj)
-        //{
-        //    TOtReservation model = obj.MapTo<TOtReservation>();
-        //    if (obj.OtreservationId == 0)
-        //    {
-        //        model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
-        //        model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
-
-        //        model.CreatedBy = CurrentUserId;
-        //        model.CreatedDate = DateTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
-
-        //        await _OTService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
-
-        //[HttpPut("Edit/{id:int}")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(OTReservationModel obj)
-        //{
-        //    TOtReservation model = obj.MapTo<TOtReservation>();
-        //    if (obj.OtreservationId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
-        //        model.ReservationTime = Convert.ToDateTime(obj.ReservationTime);
-
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
-
-
-        //        await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
+        //Edit API
+        [HttpPut("OtReservationCheckInOut")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ReservationCheckInOutModel obj)
+        {
+            TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
+            //model.IsActive = true;
+            if (obj.OtcheckInId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
 
 
 

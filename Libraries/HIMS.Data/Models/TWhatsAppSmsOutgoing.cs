@@ -27,4 +27,3 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedOn { get; set; }
     }
 }
-
