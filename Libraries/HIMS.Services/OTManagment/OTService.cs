@@ -250,7 +250,66 @@ namespace HIMS.Services.IPPatient
             string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
+        public virtual async Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
+            {
+                var lastSeqNoStr = await _context.TOtReservationCheckInOuts
+                    .OrderByDescending(x => x.OtcheckInNo)
+                    .Select(x => x.OtcheckInNo)
+                    .FirstOrDefaultAsync();
+
+                int lastSeqNo = 0;
+                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+                    lastSeqNo = parsed;
+
+                // Increment the sequence number
+                int newSeqNo = lastSeqNo + 1;
+                objTOtReservationCheckInOut.OtcheckInNo = newSeqNo.ToString();
+
+
+                objTOtReservationCheckInOut.CreatedBy = UserId;
+                objTOtReservationCheckInOut.CreatedDate = DateTime.Now;
+
+                _context.TOtReservationCheckInOuts.Add(objTOtReservationCheckInOut);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            {
+                // Attach entity
+                _context.Attach(objTOtReservationCheckInOut);
+                _context.Entry(objTOtReservationCheckInOut).State = EntityState.Modified;
+
+                // Prevent overwriting of important fields
+                _context.Entry(objTOtReservationCheckInOut).Property(x => x.CreatedBy).IsModified = false;
+                _context.Entry(objTOtReservationCheckInOut).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(objTOtReservationCheckInOut).Property(x => x.OtcheckInNo).IsModified = false;
+
+                // Update modified fields
+                objTOtReservationCheckInOut.ModifiedBy = UserId;
+                objTOtReservationCheckInOut.ModifiedDate = DateTime.Now;
+
+                // Ignore any additional columns if specified
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objTOtReservationCheckInOut).Property(column).IsModified = false;
+                    }
+                }
+              
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
 
     }
 }

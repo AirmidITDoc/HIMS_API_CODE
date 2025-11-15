@@ -19,6 +19,9 @@ namespace HIMS.Services
         Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username);
         Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? references);
         Task<List<ReservationDiagnosisListDto>> GetDiagnosisListAsync(string descriptionType);
+        Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username);
+        Task UpdateAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username, string[]? references);
+
 
 
 

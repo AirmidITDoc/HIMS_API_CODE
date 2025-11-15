@@ -70,8 +70,8 @@ namespace HIMS.API.Models.IPPatient
             public long? OtreservationId { get; set; }
             public DateTime? OtcheckInDate { get; set; }
             public string? OtcheckInTime { get; set; }
-            public string? OtcheckInNo { get; set; }
-            public byte? Opipid { get; set; }
+            //public string? OtcheckInNo { get; set; }
+            public long? Opipid { get; set; }
             public bool? Opiptype { get; set; }
             public long? FromDepartment { get; set; }
             public long? ToDepartment { get; set; }

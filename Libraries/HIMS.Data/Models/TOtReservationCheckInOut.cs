@@ -10,7 +10,7 @@ namespace HIMS.Data.Models
         public DateTime? OtcheckInDate { get; set; }
         public DateTime? OtcheckInTime { get; set; }
         public string? OtcheckInNo { get; set; }
-        public byte? Opipid { get; set; }
+        public long? Opipid { get; set; }
         public bool? Opiptype { get; set; }
         public long? FromDepartment { get; set; }
         public long? ToDepartment { get; set; }
