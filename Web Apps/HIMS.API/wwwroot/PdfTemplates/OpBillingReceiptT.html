@@ -9,8 +9,8 @@
             <title>Document</title>
         </head>
 
-        <body>
-            <div class="main-content-wrapper">
+        <body >
+            <div class="main-content-wrapper" style="font-weight:bold">
                 <div class="invoice-box" style="font-size: 10px; line-height: 24px; font-family: "Lucida Console", monospace; color: #101828;">
                     <table style="width: 110px;line-height: inherit;text-align: left;">
                         <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #d4c3c3;">
@@ -31,37 +31,37 @@
                                             <b>OPD BILL/RECEIPT</b>
                                         </td>
                                         <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 10px; text-align: right;">
-                                            Print Date : {{CurrentDate}}
-                                        </td>
+                                            Print Date : <b>{{CurrentDate}}</b>
+</td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
-                        <tr class="bill-info-row">
+                        <tr class="bill-info-row" style="font-weight:bold">
                             <td style="padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
                                     <tr>
-                                        <td style="padding: 2px; width: 30%;">
+                                        <td style="padding: 2px; width: 30%; font-weight: bold">
                                             <span><b>UHID :</b> </span>
-                                            <span>{{RegNo}}</span>
-                                        </td>
-                                        <td style="padding: 2px; width: 30%;">
+                                            <span><b>{{RegNo}}</b></span>
+</td>
+                                        <td style="padding: 2px; width: 30%; font-weight: bold">
                                             <span><b>Bill No :</b> </span>
-                                            <span>{{BillNo}}</span>
+                                            <span><b>{{BillNo}}</b></span>
                                         </td>
-                                        <td style="padding: 2px; width: 40%;">
+                                        <td style="padding: 2px; width: 40%; font-weight: bold">
                                             <span><b>Token No :</b> </span>
-                                            <span>{{TokenNo}}</span>
+                                            <span><b>{{TokenNo}}</b></span>
                                         </td>
                                     </tr>
-                                    <table style="width: 100%; font-size: 14px;">
+                                    <table style="width: 100%; font-size: 14px; font-weight: bold">
                                         <tr>
                                             <td style="padding: 2px; width: 70%;">
                                                 <b>Patient Name:</b> {{PatientName}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 2px;">
+                                            <td style="padding: 2px; font-weight: bold">
                                                 <b>Doctor Name:</b> {{ConsultantDocName}}
                                             </td>
                                         </tr>
