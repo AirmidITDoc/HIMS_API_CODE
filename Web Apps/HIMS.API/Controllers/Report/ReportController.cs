@@ -244,7 +244,11 @@ namespace HIMS.API.Controllers.Report
                 case "OPCasePaper":
                 //case "OPDSpineCasePaper":
                 case "OPPrescription":
+                case "OPPrescriptionA5":
+                    
                 case "OPPrescriptionwithoutHeader":
+                case "OPPrescriptionwithoutHeaderA5":
+                    
                 case "CertificateInformationReport":
                 case "Certificate":
                 case "EmergencyPrint":

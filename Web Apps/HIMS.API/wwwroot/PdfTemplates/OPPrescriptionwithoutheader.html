@@ -10,23 +10,23 @@
     <style>
         body{
             margin-top: 4cm;
-            margin-bottom: 6cm;
+            margin-bottom: 3cm;
         }
 
         {{LoadFont}}
 
     </style>
 </head>
-
+<!--style="height:1430px"-->
 
 <body>
-    <div class="main-content-wrapper" style="height:1430px">
+    <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 22px;line-height: 24px; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
-                <tr>
+                <!--<tr>
                     <td>
                     </td>
-                </tr>
+                </tr>-->
 
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
@@ -43,7 +43,11 @@
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+                            <colgroup>
+                                <col style="width:50%;">
+                                <col style="width:50%;">
 
+                            </colgroup>
                             <tr>
 
                                 <td style="padding: 2px;">
@@ -71,13 +75,13 @@
                                 <tr style="border-bottom: 1px solid #d4c3c3; border-top: 1px solid #d4c3c3;">
                                     <td style="text-align: left; padding-top: 10px; padding-bottom: 10px; font-size: 22px; padding-left: 2px; " colspan="5"><span style="font-weight: bold; margin-left: 4px; display:{{chkHeightflag}}">Height : </span>{{Height}} <span style="margin-left: 4px; display:{{chkHeightflag}}">|</span> <span style="font-weight: bold; margin-left: 10px;display:{{chkWeightflag}}">Weight : </span> {{Weight}} <span style="margin-left: 5px;display:{{chkWeightflag}}">|</span> <span style="font-weight:bold;margin-left:10px;display:{{chkBMIflag}}">BMI : </span>{{BMI}} <span style="margin-left:5px;display:{{chkBMIflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBSLflag}}">BSL : </span>{{BSL}}  <span style="margin-left: 5px; display:{{chkBSLflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkSpO2flag}}">SPO2 : </span> {{SpO2}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBMIflag}}">BP : </span> {{BP}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPulseflag}}">Pulse : </span> {{Pulse}} <span style="margin-left: 5px; display:{{chkPulseflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkTempflag}}">Temp : </span> {{Temp}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkBloodGroupflag}}">BloodGroup : </span> {{BloodGroup}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkAllergyflag}}">Allergy : </span> {{Allergy}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkBloodGroupflag}}">BloodGroup : </span> {{BloodGroup}} </td>
                                 </tr>
-                                <tr>
+                                <tr style="display:{{chkChiefComplaint}}">
                                     <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
                                         <span style="font-weight:bold;">Complaints : </span>
                                         <span>{{ChiefComplaint}}</span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr style="display:{{chkDiagnosis}}">
                                     <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
                                         <span style="font-weight:bold;">Dignosis : </span>
                                         <span>{{Diagnosis}}</span>
