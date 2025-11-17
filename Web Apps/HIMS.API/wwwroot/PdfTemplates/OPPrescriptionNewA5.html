@@ -36,11 +36,11 @@
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;font-size:20px;">
-                            <colgroup>
+                            <!--<colgroup>
                                 <col style="width:50%;">
                                 <col style="width:50%;">
 
-                            </colgroup>
+                            </colgroup>-->
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">OPD | Time : </span>
@@ -84,7 +84,7 @@
                                             <span>{{Diagnosis}}</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:{{chkExamination}}">
                                         <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
                                             <span style="font-weight:bold;">Examination : </span>
                                             <span>{{Examination}}</span>
@@ -127,7 +127,7 @@
                                 <br>
 
 
-                                <tr style="display:{{chkChiefComplaint}}">
+                                <tr style="display:{{chkReferDrName}}">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 150px; ">
                                         <span style="font-weight: bold;">Refer To: </span>
                                         <span>{{SecondRefDoctorName}}</span>
