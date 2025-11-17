@@ -42,6 +42,8 @@ namespace HIMS.API.Models.Inventory
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
         public string? Instruction { get; set; }
+        public string? Content { get; set; }
+        public bool IsValidContent { get; set; }
         //  public DateTime? IsCreatedBy { get; set; }
         // public DateTime? IsUpdatedBy { get; set; }
         public List<AssignItemToStoreModel> MAssignItemToStores { get; set; }

@@ -198,7 +198,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Add API
         [HttpPost("OtReservationCheckInOut")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
@@ -218,7 +218,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Edit API
         [HttpPut("OtReservationCheckInOut")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();

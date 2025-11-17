@@ -36,6 +36,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; } = null!;
         public virtual DbSet<CompanyTypeMaster> CompanyTypeMasters { get; set; } = null!;
         public virtual DbSet<ConfigSetting> ConfigSettings { get; set; } = null!;
+        public virtual DbSet<ConsentMaster> ConsentMasters { get; set; } = null!;
         public virtual DbSet<DbGenderMaster> DbGenderMasters { get; set; } = null!;
         public virtual DbSet<DbPrefixMaster> DbPrefixMasters { get; set; } = null!;
         public virtual DbSet<DbPurposeMaster> DbPurposeMasters { get; set; } = null!;
@@ -321,6 +322,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<OpsmsqueryTempleteSm> OpsmsqueryTempleteSms { get; set; } = null!;
         public virtual DbSet<Otcharge> Otcharges { get; set; } = null!;
         public virtual DbSet<Otdetail> Otdetails { get; set; } = null!;
+        public virtual DbSet<PartsOfSurgeryMaster> PartsOfSurgeryMasters { get; set; } = null!;
         public virtual DbSet<PatientTransport> PatientTransports { get; set; } = null!;
         public virtual DbSet<PatientTypeMaster> PatientTypeMasters { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
@@ -1408,6 +1410,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.RegPrefix).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<ConsentMaster>(entity =>
+            {
+                entity.HasKey(e => e.ConsentId);
+
+                entity.ToTable("ConsentMaster");
+
+                entity.Property(e => e.ConsentId).ValueGeneratedNever();
+
+                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ConsentName).HasMaxLength(500);
+
+                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DbGenderMaster>(entity =>
@@ -7039,6 +7058,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Cgst).HasColumnName("CGST");
 
+                entity.Property(e => e.Content).IsUnicode(false);
+
                 entity.Property(e => e.ConversionFactor).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -9148,6 +9169,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TheaterName).HasMaxLength(50);
 
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<PartsOfSurgeryMaster>(entity =>
+            {
+                entity.HasKey(e => e.PartsOfSurgeryId);
+
+                entity.ToTable("PartsOfSurgery_Master");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ImgOfSurgeryPart).HasMaxLength(500);
+
+                entity.Property(e => e.NameOfSurgeryPart).HasMaxLength(500);
             });
 
             modelBuilder.Entity<PatientTransport>(entity =>

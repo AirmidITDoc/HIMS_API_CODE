@@ -53,6 +53,9 @@ namespace HIMS.Data.DTO.OTManagement
         public string? GenderName { get; set; }
         public long? OTRequestId { get; set; }
         public long? OTCheckInId { get; set; }
+        public byte? CheckInOut { get; set; }
+
+        
 
 
 

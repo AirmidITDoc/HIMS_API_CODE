@@ -55,6 +55,8 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public string? Content { get; set; }
+        public bool IsValidContent { get; set; }
 
         public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }
     }
