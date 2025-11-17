@@ -113,6 +113,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IMedicalRecordService, MedicalRecordService>();
             services.AddScoped<INursingNoteService, NursingNoteService>();
             services.AddScoped<IDoctorShareProcessService, DoctorShareProcessService>();
+            services.AddScoped<IAdminTaskService, AdminTaskService>();
+
 
 
 

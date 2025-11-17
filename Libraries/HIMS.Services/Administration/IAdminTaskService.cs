@@ -11,7 +11,10 @@ namespace HIMS.Services.Administration
 {
     public partial interface IAdminTaskService
     {
+        Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName);
         void Update(Admission ObjAdmission, int UserId, string Username);
+
+
 
     }
 }
