@@ -21,9 +21,9 @@
                     <td colspan="6"
                         style="vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 16px; font-weight: bold;">
                         <!--<span>
-                            <img src="{{BaseUrl}}/PdfTemplates/jss-hospitals.jpeg" alt="logo" width="180">
+                <img src="{{BaseUrl}}/PdfTemplates/jss-hospitals.jpeg" alt="logo" width="180">
 
-                        </span>-->
+            </span>-->
                         <span style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
                             {{StoreName}}
                         </span>
@@ -126,13 +126,13 @@
                         HSN
                     </td>
                     <!--<td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 7%;">
-        MFR
-    </td>-->
+            MFR
+        </td>-->
                     <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">
                         Product Name
                     </td>
                     <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">
-                        Pack
+                        Qty
                     </td>
                     <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
                         Batch No.
@@ -152,9 +152,7 @@
                     <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
                         SGSTAmt
                     </td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
-                        Qty
-                    </td>
+
                     <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">
                         MRP
                     </td>
@@ -164,69 +162,69 @@
                 </tr>
                 {{Items}}
 
-            <tr>
-                <td colspan="6" style="border: 1px solid black;vertical-align: top;
+                <tr>
+                    <td colspan="6" style="border: 1px solid black;vertical-align: top;
                 padding: 0 10px 10px;">
-                    <div style="font-weight: 400;">Terms & Conditions</div>
-                    <ul style="margin: 5px 0 0 0;
+                        <div style="font-weight: 400;">Terms & Conditions</div>
+                        <ul style="margin: 5px 0 0 0;
                     font-size: 10px;
                     padding-left: 17px;
                     font-weight: 400;">
-                        <pre>{{TermsAndCondition}}</pre>
-                    </ul>
-                </td>
-                <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
-    </td> -->
-                <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                padding: 0 10px 10px;width: 300px;font-size:14px;">
-                    <div style="display:flex;align-items: center;">
-                        <span style="width:90px;display:inline-block;">Sub Total</span>
-                        <span style="margin:0 5px">:</span>
-                        <span>₹ {{HTotalAmount}}</span>
-                    </div>
-                    <div style="display:flex;align-items: center;">
-                        <span style="width:90px;display:inline-block;">Discount</span>
-                        <span style="margin:0 5px">:</span>
-                        <span>₹ {{DiscAmount}}</span>
-                    </div>
-                    <div style="display:flex;align-items: center;">
-                        <span style="width:90px;display:inline-block;">Total GST</span>
-                        <span style="margin:0 5px">:</span>
-                        <span>
-                            ₹ {{TotalGST}}
-                        </span>
-                    </div>
-                    <div style="display:flex;align-items: center;">
-                        <span style="width:90px;display:inline-block;">Round off</span>
-                        <span style="margin:0 5px">:</span>
-                        <span>₹ {{RoundOff}}</span>
-                    </div>
-                    <div style="display:flex;align-items: center;font-size: 14px;font-weight: bold">
-                        <span style="display:inline-block;">Grand Total</span>
-                        <span style="margin:0 5px">:</span>
-                        <span>₹ {{PaidAmount}}</span>
-                    </div>
-                </td>
-            </tr>
-                <!-- <tr>
+                            <pre>{{TermsAndCondition}}</pre>
+                        </ul>
+                    </td>
+                    <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
+        </td> -->
                     <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                    padding: 5px 10px;">
-                        <div style="font-size: 15px;font-weight: bold">
-                            Your Saved Amount: {{DiscAmount}}
+                padding: 0 10px 10px;width: 300px;font-size:14px;">
+                        <div style="display:flex;align-items: center;">
+                            <span style="width:90px;display:inline-block;">Sub Total</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{HTotalAmount}}</span>
+                        </div>
+                        <div style="display:flex;align-items: center;">
+                            <span style="width:90px;display:inline-block;">Discount</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{DiscAmount}}</span>
+                        </div>
+                        <div style="display:flex;align-items: center;">
+                            <span style="width:90px;display:inline-block;">Total GST</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>
+                                ₹ {{TotalGST}}
+                            </span>
+                        </div>
+                        <div style="display:flex;align-items: center;">
+                            <span style="width:90px;display:inline-block;">Round off</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{RoundOff}}</span>
+                        </div>
+                        <div style="display:flex;align-items: center;font-size: 14px;font-weight: bold">
+                            <span style="display:inline-block;">Grand Total</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>₹ {{PaidAmount}}</span>
                         </div>
                     </td>
-                    <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
-                    padding: 5px 10px;text-align: center;">
-
-                        <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
-                    </td>
-                </tr> -->
+                </tr>
                 <!-- <tr>
-                    <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                    padding: 5px 10px;">
-                        Total Invoice Value in words:
-                    </td>
-                </tr> -->
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            <div style="font-size: 15px;font-weight: bold">
+                Your Saved Amount: {{DiscAmount}}
+            </div>
+        </td>
+        <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
+        padding: 5px 10px;text-align: center;">
+
+            <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
+        </td>
+    </tr> -->
+                <!-- <tr>
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            Total Invoice Value in words:
+        </td>
+    </tr> -->
                 <tr style="font-size: 14px;">
                     <td colspan="3">
                         Billed By: {{UserName}}
@@ -241,6 +239,16 @@
                         Medicines once sold will not be taken back or exchanged
                     </td>
                 </tr>
+                <tr style="font-size: 14px;">
+                    <td colspan="12" style="text-align: right;">
+                        <span style="display:inline-block; text-align:center;">
+                            SHWETSHANT AUSHADHAHALAY<br>
+                            <span style="display:block;">PHARMASIST</span>
+                        </span>
+                    </td>
+                </tr>
+
+
             </tbody>
         </table>
 
