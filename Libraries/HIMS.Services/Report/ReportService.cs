@@ -4943,6 +4943,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
+
 
                         //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
                         //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
@@ -5052,6 +5054,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
                         //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
@@ -5158,6 +5161,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
 
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
@@ -5271,6 +5275,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
 
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
