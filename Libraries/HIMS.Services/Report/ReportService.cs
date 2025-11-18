@@ -620,7 +620,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "OPPrescription ";
 
                         string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNewA5.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNew.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
@@ -628,7 +628,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescriptionA5", "OPPrescriptionA5" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "OPPrescriptionA5", "OPPrescriptionA5" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -662,36 +662,20 @@ namespace HIMS.Services.Report
                         model.RepoertName = "OPPrescriptionwithoutHeader ";
 
                         string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionwithoutheaderA5.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionwithoutheader.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescriptionwithoutHeaderA5", "OPPrescriptionwithoutHeaderA5" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "OPPrescriptionwithoutHeaderA5", "OPPrescriptionwithoutHeaderA5" + vDate, Orientation.Portrait);
 
                         break;
                     }
                 #endregion
 
-                #region :: CertificateInformationReport ::
-                case "CertificateInformationReport":
-                    {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CertificateInformationPrint.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CertificateInformation", "CertificateInformation" + vDate, Orientation.Portrait);
-                        break;
-
-                    }
-                #endregion
+                
 
                 #region :: Certificate ::
                 case "Certificate":
@@ -4823,39 +4807,11 @@ namespace HIMS.Services.Report
                         string previousLabel = "";
                         String Label = "", Label1 = "", Label2 = "";
 
-                        //foreach (DataRow dr in Bills.Rows)
-                        //{
-                        //    i++;
-
-                        //    items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:15;\"><td style=\"border-left: 1px solid black;border-bottom:1px solid #000;vertical-align: top;padding: 0;height: 20px;text-align:center;\">").Append(i).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;padding:3px;border-bottom:1px solid #000;height:10px;text-align:left;vertical-align:middle;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;padding:3px;border-bottom:1px solid #000;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
-
-                        //}
-
-
-
-
+                      
 
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            //if (i == 1 || Label != previousLabel)
-                            //{
-                            //    j = 1;
-                            //    Label = dr["DrugName"].ConvertToString();
-                            //    Label1 = dr["GenericName"].ConvertToString();
-                            //    Label2 = dr["OldClassName"].ConvertToString();
-
-                            //    items.Append("<tr style=\"font-size:22px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"2\" style=\";padding:6px;height:10px;text-align:left;font-weight:bold;vertical-align:middle;padding-left:60px;\">").Append(Label2).Append("-----").Append(Label).Append("</td><td  style=\"padding:6px;height:10px;text-align:left;vertical-align:middle\">").Append(Label1).Append("</td></tr>");
-                            //}
-                            //previousLabel = dr["DrugName"].ConvertToString();
-
-                            //if (Label == previousLabel)
-                            //{
-
-                            //    i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
                             items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
                             items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
@@ -4863,7 +4819,7 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
                             items.Append("</tr>");
-                            if (dr["ItemGenericName"].ConvertToString() != null)
+                            if (dr["ItemGenericName"].ConvertToString() != "")
                             {
                                 items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
@@ -4943,6 +4899,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
+
 
                         //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
                         //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
@@ -4977,7 +4935,7 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
                             items.Append("</tr>");
-                            if (dr["ItemGenericName"].ConvertToString() != null)
+                            if (dr["ItemGenericName"].ConvertToString() != "")
                             {
                                 items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
@@ -5052,6 +5010,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
                         //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
@@ -5087,7 +5046,7 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
                             items.Append("</tr>");
-                            if (dr["ItemGenericName"].ConvertToString() != null)
+                            if (dr["ItemGenericName"].ConvertToString() != "")
                             {
                                 items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
@@ -5158,6 +5117,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
 
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
@@ -5199,7 +5159,7 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
                             items.Append("</tr>");
-                            if (dr["ItemGenericName"].ConvertToString() != null)
+                            if (dr["ItemGenericName"].ConvertToString() != "")
                             {
                                 items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
@@ -5271,6 +5231,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
 
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
