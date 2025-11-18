@@ -23,6 +23,12 @@ namespace HIMS.Services.Administration
             "Smsflag", "Smsdate", "TranNo", "TemplateId", "Smsurl",
             "CreatedBy", "SmsoutGoingId"
         };
+        private static readonly string[] EmailAllowedFields =
+      {
+            "FromEmail", "FromName", "ToEmail", "Cc", "Bcc","MailSubject",
+            "MailBody", "Status", "Retry", "AttachmentName", "AttachmentLink","TranNo",
+            "EmailType", "Id"
+        };
         public WhatsAppEmailService(HIMSDbContext HIMSDbContext, IPdfUtility pdfUtility, IReportService reportServices)
         {
             _context = HIMSDbContext;
@@ -30,7 +36,7 @@ namespace HIMS.Services.Administration
             _reportServices = reportServices;
         }
 
-        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, int Id, int UserId, string Username) //ReportRequestModel model,
+        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -65,6 +71,45 @@ namespace HIMS.Services.Administration
             {
                 TWhatsAppSmsOutgoing? objWhatsAppSMS = await _context.TWhatsAppSmsOutgoings.FindAsync(ObjWhatsApp.SmsoutGoingId);
                 _context.TWhatsAppSmsOutgoings.Remove(objWhatsAppSMS);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public virtual async Task InsertEmailAsync(TMailOutgoing ObjEmail, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
+        {
+            var tuple = new Tuple<byte[], string>(null, string.Empty);
+            string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+            try
+            {
+                string FilePath = "";
+                if (ObjEmail.EmailType == "OPBill")
+                {
+                    ReportRequestModel model = new()
+                    {
+                        Mode = "OpBillReceipt",
+                        SearchFields = new()
+                    {
+                        new() { FieldName = "BillNo", FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
+                    },
+                        BaseUrl = Convert.ToString(_configuration["BaseUrl"]),
+                        StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
+                    };
+                    var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, "Test123", model.StorageBaseUrl, "Bill", "Bill_" + Id);
+                }
+                ObjEmail.AttachmentName = FilePath;
+                var entityData = ObjEmail.ToDictionary().Where(kvp => EmailAllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+                using var dbHelper = new DatabaseHelper();
+                var resultId = dbHelper.ExecuteNonQuery("ps_insert_Mail_Outgoing_1", CommandType.StoredProcedure, "Id", entityData);
+
+                ObjEmail.Id = Convert.ToInt32(resultId);
+
+            }
+            catch (Exception ex)
+            {
+                TMailOutgoing? objWhatsAppSMS = await _context.TMailOutgoings.FindAsync(ObjEmail.Id);
+                _context.TMailOutgoings.Remove(objWhatsAppSMS);
                 await _context.SaveChangesAsync();
             }
         }
