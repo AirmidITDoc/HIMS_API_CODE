@@ -38,5 +38,21 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.", model.SmsoutGoingId);
         }
+
+        [HttpPost("EmailInsert")]
+        //[Permission(PageCode = "WhatsApp", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> EmailInsert(EmailModel obj)
+        {
+            TMailOutgoing model = obj.MapTo<TMailOutgoing>();
+
+            if (obj.Id == 0)
+            {
+                //model.CreatedBy = CurrentUserId;
+                await _whatsAppEmailService.InsertEmailAsync(model, _configuration, obj.TranNo, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.", model.Id);
+        }
     }
 }

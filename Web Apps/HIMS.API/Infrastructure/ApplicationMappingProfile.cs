@@ -806,6 +806,7 @@ namespace HIMS.API.Infrastructure
 
             //Admininstation 
             CreateMap< TWhatsAppSmsOutgoing, WhatsAppModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMailOutgoing, EmailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
