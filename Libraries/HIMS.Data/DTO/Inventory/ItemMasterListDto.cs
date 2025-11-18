@@ -1,4 +1,5 @@
-﻿namespace HIMS.Data.DTO.Inventory
+﻿
+namespace HIMS.Data.DTO.Inventory
 {
     public class ItemMasterListDto
     {
@@ -45,9 +46,11 @@
         public long DrugType { get; set; }
         public string DrugTypeName { get; set; }
         public long ItemCompnayId { get; set; }
-
         public string ManufName { get; set; }
         public string UserName { get; set; }
+        public string? Content { get; set; }
+        public bool IsValidContent { get; set; }
+
 
 
     }

@@ -195,7 +195,7 @@ namespace HIMS.Services.Inventory
         {
             DatabaseHelper odal = new();
 
-            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "TariffId", "DiscountAmount", "DiscountPercentage" };
+            string[] detailEntity = { "ServiceDetailId", "ServiceId", "ClassId", "ClassRate", "TariffId", "DiscountAmount", "DiscountPercentage", "Service" };
             var sEntity = ObjServiceDetail.ToDictionary();
 
             foreach (var rProperty in detailEntity)
