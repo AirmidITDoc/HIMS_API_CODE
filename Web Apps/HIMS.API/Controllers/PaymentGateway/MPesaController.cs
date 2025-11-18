@@ -8,6 +8,7 @@ using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
 using HIMS.Core.Infrastructure;
 using HIMS.Core.Utilities;
+using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
@@ -26,14 +27,16 @@ namespace HIMS.API.Controllers.Login
     //[Route("api/payment")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
-    public class MPesaController : ControllerBase
+    public class MPesaController : BaseController
     {
         private readonly MpesaStkService _stkService;
         private readonly IConfiguration _config;
-        public MPesaController(MpesaStkService service, IConfiguration config)
+        private readonly IGenericService<TMpesaResponse> _mPesaService;
+        public MPesaController(MpesaStkService service, IConfiguration config, IGenericService<TMpesaResponse> genericService)
         {
             _stkService = service;
             _config = config;
+            _mPesaService = genericService;
         }
         [HttpPost("validation")]
         public IActionResult Validate([FromBody] JsonElement payload)
@@ -47,7 +50,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("confirmation")]
-        public IActionResult Confirm([FromBody] JsonElement payload)
+        public async Task<IActionResult> ConfirmAsync([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
@@ -55,16 +58,33 @@ namespace HIMS.API.Controllers.Login
             string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
             System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
             var obj = JsonConvert.DeserializeObject<MpesaCallbackRoot>(payload.ToString());
-            var result = MPesaResponse.MapMpesaToTestA(obj);
-            return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = result });
+            var exist = (await _mPesaService.GetAll(x => x.CheckoutRequestId == obj.Body.stkCallback.CheckoutRequestID && x.MerchantRequestId == obj.Body.stkCallback.MerchantRequestID)).FirstOrDefault();
+            if ((exist?.Id ?? 0) > 0)
+            {
+                var result = MPesaResponse.MapMpesaToTestA(obj);
+                exist.ResponseOn = DateTime.Now;
+                exist.ResultCode = result.ResultCode;
+                exist.MpesaReceiptNumber = result.MpesaReceiptNumber;
+                exist.ResultDesc = result.ResultDesc;
+                await _mPesaService.Update(exist, 0, "", Array.Empty<string>());
+                return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = result });
+            }
+            else
+            {
+                return Ok(new { ResultCode = 0, ResultDesc = "Failed." });
+            }
         }
 
         [HttpPost("pay")]
-        public async Task<ApiResponse> Pay(string phone, decimal amount, string reference)
+        public async Task<ApiResponse> Pay([FromBody] PaymentRequestDto objRequest)
         {
             //var result = await _stkService.RegisterUrls();
-            var result = await _stkService.StkPushAsync(phone, amount, _config["MPesa:ConfirmationUrl"], reference);
-            return new ApiResponse() { StatusCode = 200, Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result), StatusText = "Ok", Message = "Payment Done" };
+            string reference = Guid.NewGuid().ToString().Replace("-", "");
+            var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, _config["MPesa:ConfirmationUrl"], reference);
+            var data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
+            data.ReferenceNo = reference;
+            await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = DateTime.Now }, CurrentUserId, CurrentUserName);
+            return new ApiResponse() { StatusCode = 200, Data = data, StatusText = "Ok", Message = "Payment Done" };
         }
         [HttpPost("register-urls")]
         public async Task<ApiResponse> RegisterUrl()
@@ -75,7 +95,7 @@ namespace HIMS.API.Controllers.Login
         [HttpGet("check-payment")]
         public async Task<ApiResponse> CheckPayment(string MerchantRequestID, string CheckoutRequestID)
         {
-            var result = new TMpesaResponse() { Amount = 1, MerchantRequestId = MerchantRequestID, CheckoutRequestId = CheckoutRequestID };
+            var result = (await _mPesaService.GetAll(x => x.CheckoutRequestId == CheckoutRequestID && x.MerchantRequestId == MerchantRequestID))?.FirstOrDefault() ?? new TMpesaResponse();
             return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done", Data = result };
         }
     }
