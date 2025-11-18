@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Administration
             if (obj.SmsoutGoingId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                await _whatsAppEmailService.InsertAsync(model, _configuration, obj.BillId, CurrentUserId, CurrentUserName);
+                await _whatsAppEmailService.InsertAsync(model, _configuration, obj.TranNo, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

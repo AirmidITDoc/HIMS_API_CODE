@@ -30,7 +30,7 @@ namespace HIMS.Services.Administration
             _reportServices = reportServices;
         }
 
-        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, int Id, int UserId, string Username) //ReportRequestModel model,
+        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");

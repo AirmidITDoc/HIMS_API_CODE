@@ -11,14 +11,13 @@ namespace HIMS.API.Models.Administration
         public string? Smstype { get; set; }
         public string? Smsflag { get; set; }
         public DateTime? Smsdate { get; set; }
-        public long? TranNo { get; set; }
+        public long TranNo { get; set; }
         public int TemplateId { get; set; }
         public string? Smsurl { get; set; }
         public string? FilePath { get; set; }
         public byte? SourceType { get; set; }
         public long? CreatedBy { get; set; }
         public long SmsoutGoingId { get; set; }
-        public int BillId { get; set; }
     }
 
 
