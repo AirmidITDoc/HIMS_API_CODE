@@ -303,7 +303,7 @@ namespace HIMS.Services.Common
 
             DatabaseHelper odal = new();
             string[] rEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo",
-                "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName","CardDate","AdvanceUsedAmount","AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledBy","IsCancelledDate","OPDIPDType","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","TDSAmount","UnitId","Wfamount"};
+                "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName","CardDate","AdvanceUsedAmount","AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledBy","IsCancelledDate","OPDIPDType","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","Tdsamount","UnitId","Wfamount"};
             var entity = objPayment.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -315,7 +315,7 @@ namespace HIMS.Services.Common
             objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
 
-            string[] rDetailEntity = { "BillNo", "balanceAmt"};
+            string[] rDetailEntity = { "BillNo", "BalanceAmt" };
 
             var BillEntity = ObjBill.ToDictionary();
             foreach (var rProperty in BillEntity.Keys.ToList())
