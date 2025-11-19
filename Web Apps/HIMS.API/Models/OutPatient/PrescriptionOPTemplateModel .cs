@@ -8,8 +8,10 @@ namespace HIMS.API.Models.OutPatient
         public string? PresTemplateName { get; set; }
         public bool? IsActive { get; set; }
         public byte? OpIpType { get; set; }
+        public string? TemplateCategory { get; set; }
         public long? IsAddBy { get; set; }
         public long? IsUpdatedBy { get; set; }
+        public int? CreatedBy { get; set; }
         //public List<PresTemplateDModel> MPresTemplateDs { get; set; }
     }
     public class PrescriptionOPTemplateModelValidator : AbstractValidator<PrescriptionOPTemplateModel>
