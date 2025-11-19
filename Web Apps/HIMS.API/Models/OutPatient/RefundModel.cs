@@ -10,8 +10,8 @@ namespace HIMS.API.Models.OutPatient
         public string? RefundTime { get; set; }
         public long? BillId { get; set; }
         public long? AdvanceId { get; set; }
-        public bool? OPDIPDType { get; set; }
-        public long? OPDIPDID { get; set; }
+        public byte? OpdIpdType { get; set; }
+        public long? OpdIpdId { get; set; }
         public decimal? RefundAmount { get; set; }
         public string? Remark { get; set; }
         public long? TransactionId { get; set; }
@@ -64,7 +64,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class AdvDetailModel
     {
-        public long? AdvanceDetailID { get; set; }
+        public long? AdvanceDetailId { get; set; }
         public decimal? BalanceAmount { get; set; }
         public decimal? RefundAmount { get; set; }
     }
@@ -108,8 +108,8 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TDSAmount { get; set; }
-        public decimal? WFAmount { get; set; }
+        public double? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? UnitId { get; set; }
 
     }

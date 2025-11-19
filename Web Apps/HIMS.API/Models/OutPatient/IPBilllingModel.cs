@@ -5,7 +5,7 @@ namespace HIMS.API.Models.OutPatient
 
     public class AddChargeuModel
     {
-        public long? ChargesID { get; set; }
+        public long? ChargesId { get; set; }
 
 
     }
@@ -20,7 +20,7 @@ namespace HIMS.API.Models.OutPatient
     public class IPBilllingModel
     {
         public long? BillNo { get; set; }
-        public long? OPDIPDID { get; set; }
+        public long? OpdIpdId { get; set; }
         public long? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? Ipdno { get; set; }
@@ -41,7 +41,7 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
         public DateTime? BillDate { get; set; }
-        public byte? OPDIPDType { get; set; }
+        public byte? OpdIpdType { get; set; }
         public long? AddedBy { get; set; }
         public decimal? TotalAdvanceAmount { get; set; }
         public string? BillTime { get; set; }
@@ -118,8 +118,8 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TDSAmount { get; set; }
-        public decimal? WFAmount { get; set; }
+        public double? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? UnitId { get; set; }
 
 
