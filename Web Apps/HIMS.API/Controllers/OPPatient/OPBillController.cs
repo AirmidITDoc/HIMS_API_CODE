@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.Pathology;
 using HIMS.API.Models.PaymentGateway;
 using HIMS.API.PaymentGateway;
 using HIMS.Core;
@@ -16,6 +17,7 @@ using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -109,7 +111,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
         }
 
-        [HttpPost("OPCreditBillingInsert")]
+         [HttpPost("OPCreditBillingInsert")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
         {
@@ -131,6 +133,62 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.BillNo);
         }
+
+        [HttpPost("AppointmentBillingInsert")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> AppBillInsert(AppBillingMainModels obj)
+        {
+            Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
+            //VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+
+
+            Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
+            Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
+            List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+
+        
+            if (obj.AppRegistrationBills.RegId == 0)
+            {
+                Regmodel.CreatedDate = DateTime.Now;
+                Regmodel.CreatedBy = CurrentUserId;
+                Regmodel.ModifiedDate = DateTime.Now;
+                Regmodel.ModifiedBy = CurrentUserId;
+                await _oPBillingService.AppBillInsert(Regmodel, billmodel, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", billmodel.BillNo);
+        }
+
+        [HttpPost("AppointmentCreditBillingInsert")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> OPAppointCreditBillingInsert(AppBillingMainModels obj)
+        {
+            Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
+
+            Bill model = obj.AppOPBillIngModels.MapTo<Bill>();
+            Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
+
+            List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+
+            if (obj.AppOPBillIngModels.BillNo == 0)
+            {
+                model.BillDate = Convert.ToDateTime(obj.AppOPBillIngModels.BillDate);
+                model.BillTime = Convert.ToDateTime(obj.AppOPBillIngModels.BillTime);
+                model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _oPBillingService.InsertAppointmentCreditBillAsyncSP(Regmodel,model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.BillNo);
+        }
+
+
+       
 
 
     }

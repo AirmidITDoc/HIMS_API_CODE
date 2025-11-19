@@ -25,6 +25,7 @@ using static HIMS.API.Models.Inventory.Masters.OTBookingRequestModel;
 using static HIMS.API.Models.Inventory.Masters.ReportConfigModelModelValidator;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
+using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 namespace HIMS.API.Infrastructure
 {
@@ -426,7 +427,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<VisitDetail, VisitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, RegistrationSaveModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, RegistrationModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Registration, AppRegistrationBill1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
+            
             CreateMap<TBedTransferDetail, BedTransferModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bedmaster, BedMasterTofreebedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bedmaster, BedMasterUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -444,11 +448,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<AddCharge, classWiseRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, ClassRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddCharge, TariffwiseClassRatechangeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
 
 
 
@@ -542,14 +541,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<AdvanceHeader, TPHAdvanceHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-
-
-
-
-
-
-
-
+            //AppointmentBillModel?
+            CreateMap<Bill, AppOPBillIngModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<VisitDetail, AppVisitDetailModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Payment, OPPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<Bill, DoctorSharePerCalculationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
