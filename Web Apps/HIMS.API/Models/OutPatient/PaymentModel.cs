@@ -36,7 +36,7 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TDSAmount { get; set; }
+        public double? Tdsamount { get; set; }
         public decimal? UnitId { get; set; }
         public decimal? Wfamount { get; set; }
 
@@ -56,7 +56,7 @@ namespace HIMS.API.Models.OutPatient
     public class BillModel
     {
         public long? BillNo { get; set; }
-        public decimal? balanceAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
 
     }
     public class BillModelValidator : AbstractValidator<BillModel>
@@ -69,7 +69,7 @@ namespace HIMS.API.Models.OutPatient
 
     public class AdvanceDetailsModel
     {
-        public long? AdvanceDetailID { get; set; }
+        public long? AdvanceDetailId { get; set; }
         public decimal? UsedAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
     }

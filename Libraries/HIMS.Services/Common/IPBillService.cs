@@ -725,29 +725,75 @@ namespace HIMS.Services.Common
 
 
 
+        //public virtual void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+
+        //    string[] AEntity = {  "BillNo","ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
+        //        "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+        //        "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+        //        "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","IsInclusionExclusion","UnitId",
+        //        "WardId","BedId","DoctorName","CompanyServiceName","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","BillNoNavigation"};
+
+        //    var yentity = ObjAddCharge.ToDictionary();
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        yentity.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
+
+        //    string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
+        //    var entity = ObjBill.ToDictionary();
+        //    foreach (var rProperty in rEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+        //    string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
+        //    ObjBill.BillNo = Convert.ToInt32(vBillNo);
+        //    //    ObjBillDetails.BillNo = Convert.ToInt32(vBillNo);
+        //    Objpayment.BillNo = Convert.ToInt32(vBillNo);
+
+        //    foreach (var item in ObjBillDetails)
+        //    {
+        //        item.BillNo = Convert.ToInt32(vBillNo);
+        //        string[] BillEntity = { "BillDetailId", "BillNoNavigation" };
+        //        var Bentity = item.ToDictionary();
+        //        foreach (var rProperty in BillEntity)
+        //        {
+        //            Bentity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
+        //    }
+        //    string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+        //    var entity1 = Objpayment.ToDictionary();
+        //    foreach (var rProperty in pEntity)
+        //    {
+        //        entity1.Remove(rProperty);
+        //    }
+        //    odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
+        //}
         public virtual void IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
 
-            string[] AEntity = {  "BillNo","ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
-                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
-                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","TariffId","ServiceCode","IsInclusionExclusion","UnitId",
-                "WardId","BedId","DoctorName","CompanyServiceName","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","BillNoNavigation"};
+            string[] AEntity = { "ChargesId" };
 
             var yentity = ObjAddCharge.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in yentity.Keys.ToList())
             {
-                yentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    yentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
-            string[] rEntity = { "IsCancelled", "PbillNo", "AdvanceUsedAmount", "IsBillCheck", "IsBillShrHold", "ChTotalAmt", "ChConcessionAmt", "ChNetPayAmt", "CreatedDate", "ModifiedBy", "ModifiedDate", "BillPrefix", "BillMonth", "BillYear", "PrintBillNo", "AddCharges", "RefundAmount", "BillDetails" };
+            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy" };
             var entity = ObjBill.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_CashCounter_1", CommandType.StoredProcedure, "BillNo", entity);
             ObjBill.BillNo = Convert.ToInt32(vBillNo);
@@ -757,19 +803,21 @@ namespace HIMS.Services.Common
             foreach (var item in ObjBillDetails)
             {
                 item.BillNo = Convert.ToInt32(vBillNo);
-                string[] BillEntity = { "BillDetailId", "BillNoNavigation" };
+                string[] BillEntity = { "BillNo", "ChargesId" };
                 var Bentity = item.ToDictionary();
-                foreach (var rProperty in BillEntity)
+                foreach (var rProperty in Bentity.Keys.ToList())
                 {
-                    Bentity.Remove(rProperty);
+                    if (!BillEntity.Contains(rProperty))
+                        Bentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
-            string[] pEntity = { "PaymentId", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] PEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
             var entity1 = Objpayment.ToDictionary();
-            foreach (var rProperty in pEntity)
+            foreach (var rProperty in entity1.Keys.ToList())
             {
-                entity1.Remove(rProperty);
+                if (!PEntity.Contains(rProperty))
+                    entity1.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
         }
