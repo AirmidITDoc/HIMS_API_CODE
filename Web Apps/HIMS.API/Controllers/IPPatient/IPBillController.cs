@@ -134,7 +134,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("PaymentSettelment")]
-        [Permission(PageCode = "Payment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
             Payment model = obj.Payment.MapTo<Payment>();
