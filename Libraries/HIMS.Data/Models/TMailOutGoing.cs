@@ -22,5 +22,6 @@ namespace HIMS.Data.Models
         public DateTime? LastTry { get; set; }
         public string? LastResponse { get; set; }
         public int? Retry { get; set; }
+        public DateTime? LastSendingTry { get; set; }
     }
 }
