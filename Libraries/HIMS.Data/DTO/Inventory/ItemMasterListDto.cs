@@ -50,6 +50,7 @@ namespace HIMS.Data.DTO.Inventory
         public string UserName { get; set; }
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
+        public string? DoseName { get; set; }
 
 
 
