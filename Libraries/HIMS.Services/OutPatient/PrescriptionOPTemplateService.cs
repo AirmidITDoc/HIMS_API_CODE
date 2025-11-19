@@ -22,11 +22,12 @@ namespace HIMS.Services.OutPatient
             };
             odal.ExecuteNonQuery("Delete_M_PresTempl_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
 
-            string[] rEntity = { "IsUpdatedBy", "CreatedBy", "ModifiedBy", "ModifiedDate", "CreatedDate", };
+            string[] rEntity = { "PresId", "PresTemplateName", "IsActive", "OpIpType", "TemplateCategory", "IsAddBy", "IsUpdatedBy", "CreatedBy" };
             var entity = ObjMPresTemplateH.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string VPresId = odal.ExecuteNonQuery("insert_M_PresTemplateH_1", CommandType.StoredProcedure, "PresId", entity);
             ObjMPresTemplateH.PresId = Convert.ToInt32(VPresId);
@@ -36,11 +37,12 @@ namespace HIMS.Services.OutPatient
             {
                 item.PresId = Convert.ToInt32(VPresId);
 
-                string[] Entity = { "PresDetId" };
+                string[] Entity = { "PresId", "Date", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi" };
                 var Dentity = item.ToDictionary();
-                foreach (var rProperty in Entity)
+                foreach (var rProperty in Dentity.Keys.ToList())
                 {
-                    Dentity.Remove(rProperty);
+                    if (!Entity.Contains(rProperty))
+                        Dentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
 
