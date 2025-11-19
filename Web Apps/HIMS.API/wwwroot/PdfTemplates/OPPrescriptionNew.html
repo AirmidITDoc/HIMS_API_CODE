@@ -14,13 +14,15 @@
     </style>
 </head>
 
-
+<!--style="height:1430px"-->
 
 <body>
-    <div class="main-content-wrapper" style="height:1430px">
+    <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 22px;line-height: 24px; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
-                {{NewHeader}}
+                <tr class="top-header-row">
+                    {{NewHeader}}
+                </tr>
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -52,7 +54,7 @@
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Patient Name : </span>
                                     <span>{{PatientName}}(<span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D / {{GenderName}}</span>)</span>
-                                </td>                  
+                                </td>
 
                             </tr>
 
@@ -80,7 +82,7 @@
                                             <span>{{Diagnosis}}</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:{{chkExamination}}">
                                         <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
                                             <span style="font-weight:bold;">Examination : </span>
                                             <span>{{Examination}}</span>
@@ -93,46 +95,41 @@
                                 </td>
                                 <tr>
                                     <table style="width: 100%; border-collapse: collapse;">
-                                        <tbody>
-                                        <td style="padding: 6px;">
-                                        <tr style="font-weight:bold;border-top: 1px solid #000;">
-                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
-                                            </td>
-                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
-                                                Medicine
-                                            </td>
-                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
-                                                Dosage
-                                            </td>
-                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Instruction</td>
-                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Qty</td>
+                                       
+                                            <tr style="font-weight:bold;border-top: 1px solid #000;">
+                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
+                                                </td>
+                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
+                                                    Medicine
+                                                </td>
+                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
+                                                    Dosage
+                                                </td>
+                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Instruction</td>
+                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Qty</td>
 
-                                        </tr>
-                                        {{Items}}
-                                        </tbody>
+                                            </tr>
+                                            {{Items}}
+                                                                           
+                                       
                                     </table>
                                 </tr>
-                                <tr style="display: {{chkRequestList}}; margin-bottom: 40px;">
+                                <tr style="display:{{chkRequestList}}">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 150px;">
                                         <span style="font-weight: bold;">Advice Test List: </span>
                                         <span>{{RequestList}}</span>
                                     </td>
                                 </tr>
-
-
-                                <br>
-                                <br>
-
-
+                                </br>
+                                </br>
                                 <tr style="display:{{chkReferDrName}}">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 150px; ">
                                         <span style="font-weight: bold;">Refer To: </span>
                                         <span>{{SecondRefDoctorName}}</span>
                                     </td>
                                 </tr>
-
-                                <br>
-                                <br>
+                                </br>
+                                </br>
 
                                 <tr style="display:{{chkChiefAdvice}}">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 150px; ">
@@ -140,9 +137,8 @@
                                         <span>{{Advice}}</span>
                                     </td>
                                 </tr>
-
-                                <br>
-                                <br>
+                                </br>
+                                </br>
 
                                 <tr style="margin-bottom: 20px;">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 40px;">
@@ -151,12 +147,12 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+
                                 <tr>
                                     <table style="width: 100%;text-align: left;">
                                         <td>
-                                            <footer style="margin-left: 75%; font-size: 19px;">
-                                                <span style="margin-left:75%">
+                                            <footer style="margin-left: 65%; font-size: 19px;">
+                                                <span style="margin-left:65%">
                                                     <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
                                                 </span>
                                                 <div style="font-weight:bold;">{{PathResultDr1}}</div>
@@ -165,11 +161,7 @@
                                             </footer>
                                         </td>
                                     </table>
-                                    <!--<table style="width: 100%;text-align: center;">
-            <footer>
-            <tr><td style="border-top: 1px solid #000;" colspan="4">Powered by AirMid EMR https://airmidtechinnovations.com </td></tr>
-            </footer>
-        </table>-->
+
                                 </tr>
                             </table>
                         </div>
