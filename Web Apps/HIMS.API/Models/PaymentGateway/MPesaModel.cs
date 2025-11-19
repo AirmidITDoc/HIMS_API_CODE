@@ -1,5 +1,12 @@
-﻿namespace HIMS.API.Models.PaymentGateway
+﻿using HIMS.Data.Models;
+
+namespace HIMS.API.Models.PaymentGateway
 {
+    public class PaymentRequestDto
+    {
+        public string phone { get; set; }
+        public decimal amount { get; set; }
+    }
     public class MpesaCallbackRoot
     {
         public MpesaBody Body { get; set; }
@@ -36,25 +43,25 @@
         public string ResponseCode { get; set; }
         public string ResponseDescription { get; set; }
         public string CustomerMessage { get; set; }
-
+        public string ReferenceNo { get; set; }
     }
-    public class TestA
-    {
-        public long Id { get; set; }
-        public string MerchantRequestID { get; set; }
-        public string CheckoutRequestID { get; set; }
-        public int ResultCode { get; set; }
-        public string ResultDesc { get; set; }
-        public decimal Amount { get; set; }
-        public string MpesaReceiptNumber { get; set; }
-        public DateTime TransactionDate { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime ResponseOn { get; set; }
-    }
+    //public class TestA
+    //{
+    //    public long Id { get; set; }
+    //    public string MerchantRequestID { get; set; }
+    //    public string CheckoutRequestID { get; set; }
+    //    public int ResultCode { get; set; }
+    //    public string ResultDesc { get; set; }
+    //    public decimal Amount { get; set; }
+    //    public string MpesaReceiptNumber { get; set; }
+    //    public DateTime TransactionDate { get; set; }
+    //    public string PhoneNumber { get; set; }
+    //    public DateTime ResponseOn { get; set; }
+    //}
 
     public class MPesaResponse
     {
-        public static TestA MapMpesaToTestA(MpesaCallbackRoot callback)
+        public static TMpesaResponse MapMpesaToTestA(MpesaCallbackRoot callback)
         {
             var stk = callback?.Body?.stkCallback;
             if (stk == null)
@@ -108,11 +115,11 @@
                 );
             }
 
-            return new TestA
+            return new TMpesaResponse
             {
                 Id = 0, // you will set or auto-generate this
-                MerchantRequestID = stk.MerchantRequestID,
-                CheckoutRequestID = stk.CheckoutRequestID,
+                MerchantRequestId = stk.MerchantRequestID,
+                CheckoutRequestId = stk.CheckoutRequestID,
                 ResultCode = stk.ResultCode,
                 ResultDesc = stk.ResultDesc,
                 Amount = amount,

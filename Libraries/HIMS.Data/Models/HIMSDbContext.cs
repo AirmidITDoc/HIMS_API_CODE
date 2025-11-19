@@ -232,6 +232,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MItemWiseSupplierRate> MItemWiseSupplierRates { get; set; } = null!;
         public virtual DbSet<MLoginAccessConfig> MLoginAccessConfigs { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateIpageWise> MLvwRetrievePathologyResultUpdateIpageWises { get; set; } = null!;
+        public virtual DbSet<MLvwRetrievePathologyResultUpdateLabageWise> MLvwRetrievePathologyResultUpdateLabageWises { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateOpageWise> MLvwRetrievePathologyResultUpdateOpageWises { get; set; } = null!;
         public virtual DbSet<MLvwRtrvPathologyResultIpwithAge> MLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
         public virtual DbSet<MLvwRtrvPathologyResultIpwithAgeMachineUpload> MLvwRtrvPathologyResultIpwithAgeMachineUploads { get; set; } = null!;
@@ -578,7 +579,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1761,6 +1762,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SmtpRequiredAuthentication)
                     .HasColumnName("SMTP_Required_Authentication")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.SmtpSsl).HasColumnName("SMTP_SSL");
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(50)
@@ -7193,6 +7196,66 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TechniqueName).HasMaxLength(200);
 
                 entity.Property(e => e.TestName).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<MLvwRetrievePathologyResultUpdateLabageWise>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("m_lvw_Retrieve_PathologyResultUpdate_LABAgeWise");
+
+                entity.Property(e => e.AgeYear).HasMaxLength(5);
+
+                entity.Property(e => e.CategoryName).HasMaxLength(50);
+
+                entity.Property(e => e.ConsultantDocName).HasMaxLength(101);
+
+                entity.Property(e => e.FootNote).HasMaxLength(400);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MachineName).HasMaxLength(200);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(50);
+
+                entity.Property(e => e.Opdno)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("OPDNo");
+
+                entity.Property(e => e.ParaBoldFlag).HasMaxLength(1);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
+                entity.Property(e => e.PathResultDrName).HasMaxLength(101);
+
+                entity.Property(e => e.PatientName).HasMaxLength(403);
+
+                entity.Property(e => e.PisNumeric).HasColumnName("PIsNumeric");
+
+                entity.Property(e => e.PrintParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.PrintTestName).HasMaxLength(200);
+
+                entity.Property(e => e.RegNo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.SubTestNamePrint).HasMaxLength(200);
+
+                entity.Property(e => e.TechniqueName).HasMaxLength(200);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.VisitDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VisitTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MLvwRetrievePathologyResultUpdateOpageWise>(entity =>
@@ -13061,6 +13124,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.LastResponse).HasMaxLength(200);
 
+                entity.Property(e => e.LastSendingTry).HasColumnType("datetime");
+
                 entity.Property(e => e.LastTry).HasColumnType("datetime");
 
                 entity.Property(e => e.MailBody).HasMaxLength(4000);
@@ -13235,8 +13300,6 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<TMpesaResponse>(entity =>
             {
                 entity.ToTable("T_MpesaResponses");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Amount).HasColumnType("money");
 
