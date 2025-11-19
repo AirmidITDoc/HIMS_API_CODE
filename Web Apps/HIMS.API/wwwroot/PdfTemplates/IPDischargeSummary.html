@@ -9,19 +9,19 @@
         body {
             margin-top: 4cm;
             margin-bottom: 6cm;
-/*            margin-left:30px;*/
+            margin-left:80px;
         }
     </style>
 </head>
 
 <body>
-    <div class="main-content-wrapper" style="margin-left:70px;">
+    <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 {{NewHeader}}
                 <tr class="title-date-row">
                     <td>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 95%; border-collapse: collapse;">
                             <tr style="font-size: 18px;font-weight:bold;">
                                 <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:left;" colspan="2">
                                     <b>
@@ -261,10 +261,7 @@
 
 
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
+   
 
 </body>
 
@@ -379,11 +376,11 @@
 </table>-->
 <!--</body>-->
 <body>
-    <table style="width: 100%; border-collapse: collapse; margin-left: 70px;">
+    <table style="width: 100%; border-collapse: collapse; font-weight: bold; border: 1px solid #000; ">
      
         <tr style="display:{{chkSurgeryPrescriptionflag}}">
             <td style="padding: 6px;">
-                <table style="width: 100%; border-collapse: collapse;">
+                <table style="width: 97%; border-collapse: collapse;">
                     <tr>
                         <td colspan="3" style="font-weight: bold; font-size: 24px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial;">
                             Prescription Details
@@ -391,11 +388,11 @@
                     </tr>
 
                     <tr style="font-weight: bold; font-size: 18px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial;">
-                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 4px;">Sr.No</td>
-                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 4px;">Drug</td>
-                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 4px;">Dose</td>
-                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 4px;">Dose Name</td>
-                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 4px;">Total Days</td>
+                        <td style="border: 1px solid #000; text-align: center; padding: 4px;">Sr.No</td>
+                        <td style="border: 1px solid #000; text-align: center; padding: 4px;">Drug</td>
+                        <td style="border: 1px solid #000; text-align: center; padding: 4px;">Dose</td>
+                        <td style="border: 1px solid #000; text-align: center; padding: 4px;">Dose Name</td>
+                        <td style="border: 1px solid #000; text-align: center; padding: 4px;">Total Days</td>
                     </tr>
 
                     {{Items}}
@@ -403,7 +400,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr style="margin-top:10px;">
             <td>
                 <span style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #eee; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial;">
                     Note: Don't Stop any Medication Without Doctor Consultation...
