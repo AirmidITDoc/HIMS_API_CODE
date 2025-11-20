@@ -447,6 +447,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
+        public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistration> TLabPatientRegistrations { get; set; } = null!;
         public virtual DbSet<TLabTestRequest> TLabTestRequests { get; set; } = null!;
         public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
@@ -12974,6 +12975,41 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VatAmount).HasColumnType("money");
             });
 
+            modelBuilder.Entity<TLabPatientRegisteredMaster>(entity =>
+            {
+                entity.HasKey(e => e.LabPatRegId);
+
+                entity.ToTable("T_LabPatientRegisteredMaster");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(5);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(5);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(5);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.LabRequestNo).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(11);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RegDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RegTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TLabPatientRegistration>(entity =>
             {
                 entity.HasKey(e => e.LabPatientId);
@@ -14936,6 +14972,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
+
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
@@ -14949,6 +14987,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Opipnumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("OPIPNumber");
 
                 entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
 
@@ -14966,9 +15008,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PathTime).HasColumnType("datetime");
 
+                entity.Property(e => e.PatientName).HasMaxLength(255);
+
                 entity.Property(e => e.RefDoctorId)
                     .HasColumnName("RefDoctorID")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RegNo).HasMaxLength(50);
 
                 entity.Property(e => e.ReportDate).HasColumnType("datetime");
 

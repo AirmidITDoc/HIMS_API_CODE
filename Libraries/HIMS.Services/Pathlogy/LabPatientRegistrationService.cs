@@ -370,12 +370,12 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public List<VisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
+        public List<TLabPatientRegistration> SearchlabRegistration(string Keyword)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+            return sql.FetchListBySP<TLabPatientRegistration>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
 
         //public virtual async Task<List<TLabPatientRegistration>> SearchlabRegistration(string str)

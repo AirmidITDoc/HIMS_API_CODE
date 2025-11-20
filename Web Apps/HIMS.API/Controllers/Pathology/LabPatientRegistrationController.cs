@@ -142,22 +142,30 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-        [HttpGet("Labauto-complete")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        [HttpGet("search-patient-1")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchPatientNew(string Keyword)
         {
-            var data = await _ILabPatientRegistrationService.SearchlabRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Lab Registration Data.", data.Select(x => new
-            {
-                Text = x.FirstName + " " + x.LastName  + " | " + x.MobileNo,
-                Value = x.LabPatientId,
-                MobileNo = x.MobileNo,
-                AgeYear = x.AgeYear,
-                AgeMonth = x.AgeMonth,
-                AgeDay = x.AgeDay,
-                PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
-            }));
+            var data = _ILabPatientRegistrationService.SearchlabRegistration(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
         }
+
+        //[HttpGet("Labauto-complete")]
+        ////[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        //{
+        //    var data = await _ILabPatientRegistrationService.SearchlabRegistration(Keyword);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Lab Registration Data.", data.Select(x => new
+        //    {
+        //        Text = x.FirstName + " " + x.LastName + " | " + x.MobileNo,
+        //        Value = x.LabPatientId,
+        //        MobileNo = x.MobileNo,
+        //        AgeYear = x.AgeYear,
+        //        AgeMonth = x.AgeMonth,
+        //        AgeDay = x.AgeDay,
+        //        PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
+        //    }));
+        //}
 
     }
 }
