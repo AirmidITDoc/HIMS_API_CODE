@@ -98,6 +98,7 @@ namespace HIMS.API.Models.Pathology
         public long? RefDocId { get; set; }
         public int? CreatedBy { get; set; }
         public long LabPatientId { get; set; }
+        public long LabPatRegId { get; set; }
 
 
     }
