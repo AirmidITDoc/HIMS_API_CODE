@@ -139,21 +139,20 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> AppBillInsert(AppBillingMainModels obj)
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
-            //VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+            VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
 
 
             Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-
-        
+            
             if (obj.AppRegistrationBills.RegId == 0)
             {
                 Regmodel.CreatedDate = DateTime.Now;
                 Regmodel.CreatedBy = CurrentUserId;
                 Regmodel.ModifiedDate = DateTime.Now;
                 Regmodel.ModifiedBy = CurrentUserId;
-                await _oPBillingService.AppBillInsert(Regmodel, billmodel, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _oPBillingService.AppBillInsert(Regmodel, objVisitDetail, billmodel, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -170,6 +169,21 @@ namespace HIMS.API.Controllers.OPPatient
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
 
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+            VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+          
+            if (obj.AppRegistrationBills.RegId == 0)
+            {
+                Regmodel.RegTime = Convert.ToDateTime(obj.AppRegistrationBills.RegTime);
+                Regmodel.AddedBy = CurrentUserId;
+
+                if (obj.Visit.VisitId == 0)
+                {
+                    objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
+                    objVisitDetail.AddedBy = CurrentUserId;
+                    objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+               
+            }
 
             if (obj.AppOPBillIngModels.BillNo == 0)
             {
@@ -180,7 +194,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _oPBillingService.InsertAppointmentCreditBillAsyncSP(Regmodel,model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAppointmentCreditBillAsyncSP(Regmodel, objVisitDetail, model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
