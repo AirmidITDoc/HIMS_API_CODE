@@ -128,6 +128,15 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOPrtrvDignosisList", result);
         }
 
+        [HttpGet("GetTemplatePrescriptionList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetPrescriptionDiagnosisList(string TemplateCategory)
+        {
+            var result = await _OPDPrescriptionService.GetPrescriptionDignosisListAsync(TemplateCategory);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPrescriptionDiagnosis List", result);
+        }
+
+
         [HttpPost("OPPrescriptionTemplateList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionTemplateDetailsList(GridRequestModel objGrid)

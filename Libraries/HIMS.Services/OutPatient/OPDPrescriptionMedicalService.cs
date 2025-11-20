@@ -208,6 +208,30 @@ namespace HIMS.Services.OutPatient
 
             return data;
         }
+        public virtual async Task<List<PrescriptionDignosisListDto>> GetPrescriptionDignosisListAsync(string TemplateCategory)
+        {
+            var query = _context.MPresTemplateHs.AsQueryable();
+
+            if (!string.IsNullOrEmpty(TemplateCategory))
+            {
+                string lowered = TemplateCategory.ToLower();
+                query = query.Where(d => d.TemplateCategory != null && d.TemplateCategory.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.PresId)
+                .Select(d => new PrescriptionDignosisListDto
+                {
+                    PresId = d.PresId,
+                    TemplateCategory = d.TemplateCategory,
+                    PresTemplateName = d.PresTemplateName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
+
 
 
 

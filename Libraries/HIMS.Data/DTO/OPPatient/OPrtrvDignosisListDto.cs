@@ -18,6 +18,12 @@
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
     }
+    public class PrescriptionDignosisListDto
+    {
+        public string? TemplateCategory { get; set; }
+        public string? PresTemplateName { get; set; }
+        public long PresId { get; set; }
+    }
 
 
 }
