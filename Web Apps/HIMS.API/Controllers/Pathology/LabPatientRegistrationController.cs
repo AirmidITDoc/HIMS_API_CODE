@@ -151,7 +151,6 @@ namespace HIMS.API.Controllers.Pathology
             {
                 Text = x.FirstName + " " + x.LastName  + " | " + x.MobileNo,
                 Value = x.LabPatientId,
-                //RegNo = x.RegNo,
                 MobileNo = x.MobileNo,
                 AgeYear = x.AgeYear,
                 AgeMonth = x.AgeMonth,

@@ -6,6 +6,7 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -369,35 +370,43 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-      
-
-        public virtual async Task<List<TLabPatientRegistration>> SearchlabRegistration(string str)
+        public List<VisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
         {
-
-            return await this._context.TLabPatientRegistrations
-                .Where(x =>
-                    (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
-                    x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
-                    //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
-                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
-                )
-                .Take(25)
-                .Select(x => new TLabPatientRegistration
-                {
-                    FirstName = x.FirstName,
-                    LabPatientId = x.LabPatientId,
-                    LastName = x.LastName,
-                    MiddleName = x.MiddleName,
-                    MobileNo = x.MobileNo,
-                    AgeYear = x.AgeYear,
-                    AgeMonth = x.AgeMonth,
-                    AgeDay = x.AgeDay,
-                    DateofBirth = x.DateofBirth
-                })
-               .OrderByDescending(x => x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
-               .ThenBy(x => x.FirstName).ToListAsync();
-
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
+
+        //public virtual async Task<List<TLabPatientRegistration>> SearchlabRegistration(string str)
+        //{
+
+
+
+        //    return await this._context.TLabPatientRegistrations
+        //        .Where(x =>
+        //            (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+        //            x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
+        //            //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+        //            x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
+        //        )
+        //        .Take(25)
+        //        .Select(x => new TLabPatientRegistration
+        //        {
+        //            FirstName = x.FirstName,
+        //            LabPatientId = x.LabPatientId,
+        //            LastName = x.LastName,
+        //            MiddleName = x.MiddleName,
+        //            MobileNo = x.MobileNo,
+        //            AgeYear = x.AgeYear,
+        //            AgeMonth = x.AgeMonth,
+        //            AgeDay = x.AgeDay,
+        //            DateofBirth = x.DateofBirth
+        //        })
+        //       .OrderByDescending(x => x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
+        //       .ThenBy(x => x.FirstName).ToListAsync();
+
+        //}
 
         public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
