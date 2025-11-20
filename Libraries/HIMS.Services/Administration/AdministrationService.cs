@@ -6,6 +6,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.Administration
 {
@@ -132,6 +133,36 @@ namespace HIMS.Services.Administration
                 odal.ExecuteNonQuery("Insert_ServiceBedCharges", CommandType.StoredProcedure, entity);
 
             }
+        }
+        //public virtual async Task InsertAsync(MAutoServiceList ObjMAutoServiceList, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.MAutoServiceLists.Add(ObjMAutoServiceList);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public async Task InsertListAsync(List<MAutoServiceList> objList, int userId, string username)
+        {
+            // 1. DELETE ALL OLD RECORDS
+            var oldRecords = await _context.MAutoServiceLists.ToListAsync();
+            _context.MAutoServiceLists.RemoveRange(oldRecords);
+
+            // 2. INSERT NEW RECORDS
+            foreach (var item in objList)
+            {
+                item.SysId = 0;                 
+                item.ServiceId = item.ServiceId; 
+                item.CreatedBy = userId;
+                item.CreatedDate = DateTime.Now;
+                item.ModifiedBy = userId;
+                item.ModifiedDate = DateTime.Now;
+
+                _context.MAutoServiceLists.Add(item);
+            }
+            await _context.SaveChangesAsync();
         }
 
     }
