@@ -81,8 +81,12 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryOPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForOPAge_Test"; break;
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;
 
+
+                // Check IP admission
+                case "GetBillDetails": sp_Name = "ps_getBillDetails"; break;
+
                 //////System Configuration
-               
+
                 case "NewSysConfig": sp_Name = "m_SS_ConfigSettingParam"; break;
 
                 //Pharmacy Sales return
