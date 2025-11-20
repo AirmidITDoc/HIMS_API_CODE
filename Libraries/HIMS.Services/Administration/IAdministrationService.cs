@@ -20,6 +20,9 @@ namespace HIMS.Services.Administration
 
         //Task DoctorShareInsertAsync(AddCharge ObjAddCharge, int UserId, string Username, DateTime FromDate, DateTime ToDate);
         void Insert(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
+        Task InsertListAsync(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
+
+
 
 
 
