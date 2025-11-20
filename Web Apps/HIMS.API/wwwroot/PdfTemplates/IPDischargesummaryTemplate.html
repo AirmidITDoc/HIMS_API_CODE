@@ -22,7 +22,7 @@
                                     <td>
                                         <table style="width: 100%; border-collapse: collapse;">
                                             <tr style="font-size: 20px;font-weight:bold;">
-                                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:left;" colspan="2">
+                                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;">
                                                     <b>
                                                         {{IsNormalOrDeath}} DISCHARGE SUMMARY
                                                     </b>
@@ -114,7 +114,7 @@
 
                             <tr style="margin-top: 12px;">
                                 <td colspan="6">
-                                    <div style="margin-left:30px;">
+                                    <div style="margin-left:80px;">
                                         <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
 
                                             {{TemplateDescriptionHtml}}
@@ -140,7 +140,7 @@
 
 <html>
 <body>
-    <table style="width: 100%; border-collapse: collapse; margin-left: 30px;">
+    <table style="width: 100%; border-collapse: collapse; margin-left: 80px;">
         <tr style="display:{{chkSurgeryPrescriptionflag}}">
             <td style="padding: 6px;">
                 <table style="width: 100%; border-collapse: collapse;">
@@ -171,7 +171,7 @@
         <br />
         <tr><td><sapn style="font-size: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial; font-weight: bold;">Emergency Contact</sapn></td></tr>
         <tr>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 18px;margin-left:30px;">
+            <table style="width: 100%; margin-top: 50px; font-size: 18px;margin-left:80px;">
                 <tr style="border-bottom: 1px solid #d4c3c3; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;">
                     <td style="padding: 2px;">
                         <span style="font-weight:bold;">Prepared By</span>
@@ -190,50 +190,10 @@
                         <span>{{DoctorName}}</span>
                     </td>
                 </tr>
-                <!--<tr style="padding: 6px; text-align: center;font-weight:bold;">-->
-                <!--<td>{{DischargeTime}}</td>-->
-                <!--<td>
-
-                        <span>{{AddedBy}}</span>
-                    </td>
-                    <td>
-
-
-                        <span>{{DoctorName}}</span>
-                    </td>
-                </tr>-->
-                <!--<tr><td><span style="font-size: 20px; font-weight: bold; text-align: right;">{{DoctorName}}</span></td></tr>
-                <br />
-                <tr><td><sapn style="font-size: 20px; text-align: right;">Doctor Signature</sapn></td></tr>-->
-                <!--<td> Discharge Time</td>-->
-                <!--<td>
-
-                    <span>Preapered By</span>
-                </td>-->
-                <!--<tr style="padding: 6px; text-align: center;">
-                    <td>
-
-                        <span>Doctor Signature</span>
-                    </td>
-                </tr>
-                <tr><td><sapn style="font-size:20px;font-weight:bold;">Preapered By</sapn></td></tr>-->
+              
             </table>
         </tr>
     </table>
-
-    <!--<table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
-        <tr>
-            <footer style="margin-left: 70%; font-size: 19px;">
-
-            <td style="padding: 6px; text-align: right;">
-                <b>
-                    Print
-                    Date : {{CurrentDate}}
-                </b>
-            </td>
-            </footer>
-        </tr>
-    </table>-->
 </body>
 
 </html>
