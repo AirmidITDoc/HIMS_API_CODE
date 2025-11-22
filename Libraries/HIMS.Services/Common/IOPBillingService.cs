@@ -9,10 +9,10 @@ namespace HIMS.Services.Common
         Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
         //Task InsertAsyncSP1(Bill objBill,int CurrentUserId, string CurrentUserName);
 
-        Task AppBillInsert(Registration objRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
+        Task AppBillInsert(Registration objRegistration, VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
        
-        Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
+        Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, VisitDetail objVisitDetail,  Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
 
         Task InsertCreditBillAsyncSP(Bill objBill, int currentUserId, string currentUserName);

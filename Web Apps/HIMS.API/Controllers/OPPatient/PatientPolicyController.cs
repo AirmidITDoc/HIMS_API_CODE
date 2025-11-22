@@ -17,50 +17,85 @@ namespace HIMS.API.Controllers.OPPatient
     [ApiVersion("1")]
     public class PatientPolicyController : BaseController
     {
-        private readonly IGenericService<MItemTypeMaster> _repository;
-        public PatientPolicyController(IGenericService<MItemTypeMaster> repository)
+        private readonly IGenericService<TPatientPolicyInformation> _repository;
+        public PatientPolicyController(IGenericService<TPatientPolicyInformation> repository)
         {
             _repository = repository;
         }
 
-        ////List API
-        //[HttpPost]
-        //[Route("[action]")]
+        //List API
+        [HttpPost]
+        [Route("[action]")]
         //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
-        //public async Task<IActionResult> List(GridRequestModel objGrid)
-        //{
-        //    IPagedList<TPatientPolicyInformation> PatientPolicyList = await _repository.GetAllPagedAsync(objGrid);
-        //    return Ok(PatientPolicyList.ToGridResponse(objGrid, "Item Type List"));
-        //}
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TPatientPolicyInformation> PatientPolicyList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(PatientPolicyList.ToGridResponse(objGrid, "Item Type List"));
+        }
 
-        ////List API Get By Id
-        //[HttpGet("{id?}")]
+        //List API Get By Id
+        [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> Get(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-        //    }
-        //    var data = await _repository.GetById(x => x.PatientPolicyId == id);
-        //    return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("ItemType List");
-        //}
-        ////Add API
-        //[HttpPost]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.PatientPolicyId == id);
+            return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("ItemType List");
+        }
+        //Add API
+        [HttpPost]
         //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Post(PatientPolicyModel obj)
-        //{
-        //    TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
-        //    //model.IsActive = true;
-        //    if (obj.PatientPolicyId == 0)
-        //    {
-        //        model.CreatedBy = CurrentUserId;
-        //        model.CreatedDate = DateTime.Now;
-        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
+        public async Task<ApiResponse> Post(PatientPolicyModel obj)
+        {
+            TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
+            model.IsActive = true;
+            if (obj.PatientPolicyId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                await _repository.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        //Edit API
+        [HttpPut("{id:int}")]
+        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ItemTypeModel obj)
+        {
+            TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
+            model.IsActive = true;
+            if (obj.ItemTypeId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
+        //Delete API
+        [HttpDelete]
+        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            TPatientPolicyInformation model = await _repository.GetById(x => x.PatientPolicyId == Id);
+            if ((model?.PatientPolicyId ?? 0) > 0)
+            {
+                model.IsActive = model.IsActive == true ? false : true;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
     }
 }

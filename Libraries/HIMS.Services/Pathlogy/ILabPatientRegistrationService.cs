@@ -22,7 +22,9 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
         Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
-        Task<List<TLabPatientRegistration>> SearchlabRegistration(string str);
+        //Task<List<TLabPatientRegistration>> SearchlabRegistration(string str);
+
+        List<TLabPatientRegistration> SearchlabRegistration(string Keyword);
 
 
     }
