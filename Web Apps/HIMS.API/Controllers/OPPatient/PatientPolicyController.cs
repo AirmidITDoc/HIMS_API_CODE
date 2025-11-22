@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TPatientPolicyInformation> PatientPolicyList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientPolicyList.ToGridResponse(objGrid, "Item Type List"));
+            return Ok(PatientPolicyList.ToGridResponse(objGrid, "PatientPolicyInformation List"));
         }
 
         //List API Get By Id
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.PatientPolicyId == id);
-            return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("ItemType List");
+            return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("PatientPolicyInformation");
         }
         //Add API
         [HttpPost]
