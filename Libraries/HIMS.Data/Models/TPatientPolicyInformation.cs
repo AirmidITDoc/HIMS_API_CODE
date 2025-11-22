@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public DateTime? PolicyValidateDate { get; set; }
         public decimal? ApprovedAmount { get; set; }
         public string? Comments { get; set; }
+        public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

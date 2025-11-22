@@ -25,6 +25,8 @@ namespace HIMS.Services.OutPatient
         Task UpdateAsyncGeneric(TPrescription ObjTPrescription, int UserId, string Username);
         //Task<List<OPrtrvDignosisListDto>> GetOPrtrvDignosisList(string DescriptionType);
         Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string DescriptionType);
+        Task<List<PrescriptionDignosisListDto>> GetPrescriptionDignosisListAsync(string DescriptionType);
+
 
 
 

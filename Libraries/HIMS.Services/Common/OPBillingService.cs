@@ -533,7 +533,7 @@ namespace HIMS.Services.Common
             }
         }
 
-        public virtual async Task AppBillInsert(Registration objRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
+        public virtual async Task AppBillInsert(Registration objRegistration, VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
 
            
@@ -548,11 +548,11 @@ namespace HIMS.Services.Common
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
-                objBill.OpdIpdId = objRegistration.RegId;
+                objBill.OpdIpdId = objVisitDetail.VisitId;
 
-                //objVisitDetail.RegId = objRegistration.RegId;
-                //_context.VisitDetails.Add(objVisitDetail);
-                //await _context.SaveChangesAsync();
+                objVisitDetail.RegId = objRegistration.RegId;
+                _context.VisitDetails.Add(objVisitDetail);
+                await _context.SaveChangesAsync();
 
 
                 DatabaseHelper odal = new();
@@ -693,7 +693,7 @@ namespace HIMS.Services.Common
                 }
             }
 
-        public virtual async Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int currentUserId, string currentUserName)
+        public virtual async Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int currentUserId, string currentUserName)
         {
             try
             {
@@ -708,9 +708,9 @@ namespace HIMS.Services.Common
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 objBill.OpdIpdId = objRegistration.RegId;
 
-                //objVisitDetail.RegId = objRegistration.RegId;
-                //_context.VisitDetails.Add(objVisitDetail);
-                //await _context.SaveChangesAsync();
+                objVisitDetail.RegId = objRegistration.RegId;
+                _context.VisitDetails.Add(objVisitDetail);
+                await _context.SaveChangesAsync();
 
 
                 DatabaseHelper odal = new();

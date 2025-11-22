@@ -135,56 +135,54 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
+     
         [HttpPost("AutoServiceListInsert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(List<AutoServiceModel> objList)
         {
             if (objList == null || !objList.Any())
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-            foreach (var obj in objList)
+            var entityList = objList.Select(obj =>
             {
-                MAutoServiceList model = obj.MapTo<MAutoServiceList>();
+                var model = obj.MapTo<MAutoServiceList>();
 
-                if (obj.SysId == 0)
-                {
-                    model.CreatedBy = CurrentUserId;
-                    model.CreatedDate = DateTime.Now;
-                    model.ModifiedBy = CurrentUserId;
-                    model.ModifiedDate = DateTime.Now;
+                model.SysId = 0;  // FORCE INSERT
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
 
-                    await _repository1.Add(model, CurrentUserId, CurrentUserName);
-                }
-                else
-                {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
-                }
-            }
+                return model;
+            }).ToList();
+
+            await _IAdministrationService.InsertListAsync(entityList, CurrentUserId, CurrentUserName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
 
-        [HttpPut("AutoServiceListUpdate")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(List<AutoServiceModel> objList)
-        {
-            if (objList == null || !objList.Any())
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-            foreach (var obj in objList)
-            {
-                if (obj.SysId == 0)
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
 
-                MAutoServiceList model = obj.MapTo<MAutoServiceList>();
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+        //[HttpPut("AutoServiceListUpdate")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edit(List<AutoServiceModel> objList)
+        //{
+        //    if (objList == null || !objList.Any())
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-                await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
+        //    foreach (var obj in objList)
+        //    {
+        //        if (obj.SysId == 0)
+        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
-        }
+        //        MAutoServiceList model = obj.MapTo<MAutoServiceList>();
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = DateTime.Now;
+
+        //        await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+        //    }
+
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
+        //}
 
 
     }

@@ -6,6 +6,8 @@ using HIMS.API.Models.Administration;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Administration
@@ -16,9 +18,13 @@ namespace HIMS.API.Controllers.Administration
     public class TemplateDescriptionConfigController : BaseController
     {
         private readonly IGenericService<MReportTemplateConfig> _repository;
-        public TemplateDescriptionConfigController(IGenericService<MReportTemplateConfig> repository)
+        private readonly ITemplateDescriptionConfigService _ITemplateDescriptionConfigService;
+
+        public TemplateDescriptionConfigController(IGenericService<MReportTemplateConfig> repository, ITemplateDescriptionConfigService repository1)
         {
             _repository = repository;
+            _ITemplateDescriptionConfigService = repository1;
+
         }
 
         //List API
@@ -87,5 +93,13 @@ namespace HIMS.API.Controllers.Administration
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
+        [HttpGet("GetDischargeTemplateList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDischargeTemplateList(string CategoryName)
+        {
+            var result = await _ITemplateDescriptionConfigService.GetDischargeTemplateListAsync(CategoryName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetDischargeTemplate List", result);
+        }
+
     }
 }
