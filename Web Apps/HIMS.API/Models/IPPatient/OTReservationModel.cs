@@ -56,10 +56,10 @@ namespace HIMS.API.Models.IPPatient
         }
         public class OTBookingPostPoneModel
         {
-            public long OldOTReservationId { get; set; }
-            public long? OpIpId { get; set; }
+            public long OtreservationId { get; set; }
+            public long? Opipid { get; set; }
             public DateTime? SurgeryDate { get; set; }
-            public int? CreatedBy { get; set; }
+            public int? Createdby { get; set; }
             public string? Reason { get; set; }
             public long NewOTReservationId { get; set; }
 

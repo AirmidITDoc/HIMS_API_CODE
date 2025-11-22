@@ -253,12 +253,12 @@ namespace HIMS.API.Controllers.IPPatient
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
         public ApiResponse Insert(OTBookingPostPoneModel obj)
         {
-            TOtReservation model = obj.MapTo<TOtReservation>();
+            TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
             if (obj.NewOTReservationId == 0)
             {
-                //model.ReservationDate = Convert.ToDateTime(obj.ReservationDate);
+                //model.OtreservationDate = Convert.ToDateTime(obj.OtreservationDate);
                 model.CreatedDate = DateTime.Now;
-                model.CreatedBy = CurrentUserId;
+                model.Createdby = CurrentUserId;
                 _OTService.InsertSP(model, CurrentUserId, CurrentUserName);
             }
             else
