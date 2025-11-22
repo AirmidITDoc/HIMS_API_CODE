@@ -26,8 +26,6 @@
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                            </tr>
                             <tr style="font-size: 20px">
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>OP PRESCRIPTION</b></td>
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
@@ -38,30 +36,22 @@
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;font-size:20px;">
-
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">OPD | Time : </span>
                                     <span>{{PDate}}</span>
-                                    <!--<span>{{VisitTime}}</span>-->
                                 </td>
-
-
                             </tr>
-
                             <tr>
-
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Patient Name : </span>
                                     <span>{{PatientName}}(<span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D / {{GenderName}}</span>)</span>
                                 </td>
-
                             </tr>
-
                         </table>
                     </td>
                 </tr>
-                <hr />
+                <hr/>
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <div>
@@ -88,6 +78,7 @@
                                             <span>{{Examination}}</span>
                                         </td>
                                     </tr>
+                                </thead>
                                 <td style="padding: 6px; font-size: 20px;">
                                     <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
                                         ℞
@@ -95,9 +86,9 @@
                                 </td>
                                 <tr>
                                     <table style="width: 100%; border-collapse: collapse;">
-                                       
-                                            <tr style="font-weight:bold;border-top: 1px solid #000;">
+                                        <tr style="font-weight:bold;border-top: 1px solid #000;">
                                                 <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
+
                                                 </td>
                                                 <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
                                                     Medicine
@@ -107,8 +98,7 @@
                                                 </td>
                                                 <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Instruction</td>
                                                 <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Qty</td>
-
-                                            </tr>
+                                        </tr>
                                             {{Items}}
                                                                            
                                        
