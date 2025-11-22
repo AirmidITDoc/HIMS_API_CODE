@@ -66,11 +66,11 @@ namespace HIMS.API.Controllers.OPPatient
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ItemTypeModel obj)
+        public async Task<ApiResponse> Edit(PatientPolicyModel obj)
         {
             TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
             model.IsActive = true;
-            if (obj.ItemTypeId == 0)
+            if (obj.PatientPolicyId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
