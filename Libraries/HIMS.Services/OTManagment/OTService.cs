@@ -236,20 +236,46 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
         }
+        //public virtual void InsertSP(TOtReservation ObjTOtReservation, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] Entity = { "OldOTReservationId", "OpIpId", "SurgeryDate", "CreatedBy", "Reason", "NewOTReservationId" };
+        //    var entity = ObjTOtReservation.ToDictionary();
+        //    foreach (var rProperty in entity.Keys.ToList())
+        //    {
+        //        if (!Entity.Contains(rProperty))
+        //            entity.Remove(rProperty);
+        //    }
+        //    string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+        //    ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
+        //}
         public virtual void InsertSP(TOtReservation ObjTOtReservation, int UserId, string UserName)
         {
-
             DatabaseHelper odal = new();
-            string[] Entity = { "OldOTReservationId", "OpIpId", "SurgeryDate", "CreatedBy", "Reason", "NewOTReservationId" };
+
+            string[] Entity = { "OpIpId", "SurgeryDate", "CreatedBy", "Reason" };
+
             var entity = ObjTOtReservation.ToDictionary();
+
+            // Keep only allowed columns
             foreach (var rProperty in entity.Keys.ToList())
             {
                 if (!Entity.Contains(rProperty))
                     entity.Remove(rProperty);
             }
-            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+
+            entity["OldOTReservationId"] = 0; // REQUIRED
+            entity["NewOTReservationId"] = 0; // REQUIRED
+            entity["CreatedBy"] = UserId;
+
+            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "NewOTReservationId", entity);
+
+
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
+
+
         public virtual async Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
