@@ -1622,14 +1622,20 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplatewithPatientheader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model,htmlHeaderFilePath);
-
+                      
+                       
                         string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath1 = _pdfUtility.GetHeader(htmlHeaderFilePath1);
 
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                     
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, colList);
+
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
+
+                       
                         html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
+
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
 
@@ -1645,12 +1651,22 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDiscsumTempPatientheaderwithoutHeader.html");
+                        string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath1 = _pdfUtility.GetHeader(htmlHeaderFilePath1);
+
+
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, colList);
+
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+
+
                         html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplateWithoutHeader", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
+
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDisSummTemppatientWithoutHeader", "IpDisSummTemppatientWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -3642,7 +3658,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
-
+                        
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
                         html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
@@ -3677,6 +3693,10 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryTemplatewithPatientHeader":
                     {
                         int i = 0;
+
+
+                        //html = html.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
+
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -3775,6 +3795,7 @@ namespace HIMS.Services.Report
                 case "IpDischargeSummaryTemplateWithoutHeader":
                     {
                         int i = 0;
+
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
