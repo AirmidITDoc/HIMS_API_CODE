@@ -10,6 +10,8 @@ namespace HIMS.API.Models.Pharmacy
         public double? Cgst { get; set; }
         public double? Sgst { get; set; }
         public double? Igst { get; set; }
+        public string? ConversionFactor { get; set; }
+
     }
 
     public class POHeaderAganistGRNModel
