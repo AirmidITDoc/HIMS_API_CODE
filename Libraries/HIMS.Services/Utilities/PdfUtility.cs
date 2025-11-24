@@ -1,23 +1,25 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
 using HIMS.Services.Report;
+using HIMS.Services.Utilities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Reflection.PortableExecutable;
+using System.Text;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
-using HIMS.Data.DTO.Administration;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Services.Administration;
-using HIMS.Services.Utilities;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.SqlClient;
-using System.Globalization;
-using System.Text;
+
 
 
 namespace HIMS.Services.Utilities
@@ -27,13 +29,20 @@ namespace HIMS.Services.Utilities
         private readonly Data.Models.HIMSDbContext _context;
         private static IConverter converter = new SynchronizedConverter(new PdfTools());
         public readonly IConfiguration _configuration;
-       
-        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration )
+        //private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+        //public readonly IPdfUtility _pdfUtility;
+
+
+        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration
+            //Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility
+            )
         {
             _context = HIMSDbContext;
             converter = _converter;
             _configuration = configuration;
-           
+            //_hostingEnvironment = (Microsoft.AspNetCore.Hosting.IHostingEnvironment?)hostingEnvironment;
+            //_pdfUtility = pdfUtility;
+
         }
 
         //public string GetHeader(string filePath, string basePath, long HospitalId = 0)
@@ -87,13 +96,14 @@ namespace HIMS.Services.Utilities
         public string GetPatientHeader(ReportRequestModel model,string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
-            //HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
-            //var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-
+           
             var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
 
 
-            //var html = GetHTMLView("rptListofRegistration");
+            //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+            //htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
+
+            htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
 
             htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
             htmlHeader = htmlHeader.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
@@ -118,6 +128,8 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
             htmlHeader = htmlHeader.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
             htmlHeader = htmlHeader.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
 
             //RS
             //string logoFileName = (objHospital?.Header ?? "").ConvertToString();
