@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TPatientPolicyInformation> PatientPolicyList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientPolicyList.ToGridResponse(objGrid, "Item Type List"));
+            return Ok(PatientPolicyList.ToGridResponse(objGrid, "PatientPolicyInformation List"));
         }
 
         //List API Get By Id
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.PatientPolicyId == id);
-            return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("ItemType List");
+            return data.ToSingleResponse<TPatientPolicyInformation, PatientPolicyModel>("PatientPolicyInformation");
         }
         //Add API
         [HttpPost]
@@ -66,11 +66,11 @@ namespace HIMS.API.Controllers.OPPatient
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ItemTypeModel obj)
+        public async Task<ApiResponse> Edit(PatientPolicyModel obj)
         {
             TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
             model.IsActive = true;
-            if (obj.ItemTypeId == 0)
+            if (obj.PatientPolicyId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

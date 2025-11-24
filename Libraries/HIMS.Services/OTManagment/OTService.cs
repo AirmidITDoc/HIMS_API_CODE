@@ -236,20 +236,28 @@ namespace HIMS.Services.IPPatient
             }
             odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
         }
-        public virtual void InsertSP(TOtReservation ObjTOtReservation, int UserId, string UserName)
-        {
+     
 
+        public virtual void InsertSP(TOtReservationHeader ObjTOtReservation, int UserId, string UserName)
+        {
             DatabaseHelper odal = new();
-            string[] Entity = { "OldOTReservationId", "OpIpId", "SurgeryDate", "CreatedBy", "Reason", "NewOTReservationId" };
+
+            string[] Entity = { "Opipid", "SurgeryDate", "Createdby", "Reason", "OtreservationId" };
+
             var entity = ObjTOtReservation.ToDictionary();
+
             foreach (var rProperty in entity.Keys.ToList())
             {
                 if (!Entity.Contains(rProperty))
                     entity.Remove(rProperty);
             }
-            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "EmgId", entity);
+            string VOtreservationId = odal.ExecuteNonQuery("ps_insert_T_OTReservation_PostPone", CommandType.StoredProcedure, "NewOTReservationId", entity);
+
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
+      
+
+
         public virtual async Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

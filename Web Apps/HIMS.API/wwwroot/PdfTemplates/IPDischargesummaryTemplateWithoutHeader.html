@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+  body {
+      margin-top: 4cm;
+      margin-bottom: 3cm;
+  }
+
+    </style>
 </head>
 
 <body>
@@ -17,18 +24,18 @@
                     <td style="padding: 6px;">
                         <table style="width: 101%; border-collapse: collapse;">
                             <tr style="font-size: 18px;font-weight:bold;">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px;  text-align: center;">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: center;">
                                     <b>
                                         {{IsNormalOrDeath}} DISCHARGE SUMMARY
                                     </b>
                                 </td>
 
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: right;">
                                     <b>
                                         Print
                                         Date : {{CurrentDate}}
                                     </b>
-                                </td>
+                                </td>-->
 
                             </tr>
                         </table>
@@ -134,7 +141,7 @@
 
 <html>
 <body>
-    <table style="width: 101%; border-collapse: collapse; margin-left: 80px;">
+    <table style="width: 90%; border-collapse: collapse; margin-left: 80px;">
         <tr style="display:{{chkSurgeryPrescriptionflag}}">
             <td style="padding: 6px;">
                 <table style="width: 100%; border-collapse: collapse; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">

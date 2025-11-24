@@ -9,6 +9,7 @@ namespace HIMS.Data.Models
         public long? CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public string? TemplateName { get; set; }
+        public string? TemplateHeader { get; set; }
         public string? TemplateDescription { get; set; }
         public bool? IsTemplateWithHeader { get; set; }
         public bool? IsTemplateHeaderWithImage { get; set; }

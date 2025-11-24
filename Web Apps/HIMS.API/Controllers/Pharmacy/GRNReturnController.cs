@@ -57,6 +57,13 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemListBysupplierNameDto> List1 = await _gRNReturnService.ItemListBysupplierNameAsync(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "ItemListBYSupplierName"));
         }
+        [HttpPost("getGRNReturnWithoutGRNBySupplierID")]
+        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> GRNReturnWithoutGRNBySupplierIDList(GridRequestModel objGrid)
+        {
+            IPagedList<GRNReturnWithoutGRNBySupplierIdDto> List1 = await _gRNReturnService.GRNReturnWithoutGRNBySupplierIDAsync(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "getGRNReturnWithoutGRNBySupplierID List"));
+        }
 
 
         //[HttpPost("Insert")]
