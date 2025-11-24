@@ -1,11 +1,24 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.Models;
+using HIMS.Services.Report;
 using Microsoft.Extensions.Configuration;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
 using System;
+using System.Data;
 using System.Reflection.PortableExecutable;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Services.Administration;
+using HIMS.Services.Utilities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
+using System.Globalization;
+using System.Text;
+
 
 namespace HIMS.Services.Utilities
 {
@@ -14,12 +27,13 @@ namespace HIMS.Services.Utilities
         private readonly Data.Models.HIMSDbContext _context;
         private static IConverter converter = new SynchronizedConverter(new PdfTools());
         public readonly IConfiguration _configuration;
-
-        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration)
+       
+        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration )
         {
             _context = HIMSDbContext;
             converter = _converter;
             _configuration = configuration;
+           
         }
 
         //public string GetHeader(string filePath, string basePath, long HospitalId = 0)
@@ -69,6 +83,74 @@ namespace HIMS.Services.Utilities
 
 
         }
+
+        public string GetPatientHeader(ReportRequestModel model,string filePath)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+            //HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            //var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+
+            var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
+
+
+            //var html = GetHTMLView("rptListofRegistration");
+
+            htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+            htmlHeader = htmlHeader.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+            htmlHeader = htmlHeader.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+            htmlHeader = htmlHeader.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+            htmlHeader = htmlHeader.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+            htmlHeader = htmlHeader.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+            htmlHeader = htmlHeader.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+            htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+            htmlHeader = htmlHeader.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+            htmlHeader = htmlHeader.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+            htmlHeader = htmlHeader.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+            htmlHeader = htmlHeader.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+            htmlHeader = htmlHeader.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+            htmlHeader = htmlHeader.Replace("{{BedName}}", dt.GetColValue("BedName"));
+            htmlHeader = htmlHeader.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+            htmlHeader = htmlHeader.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+            htmlHeader = htmlHeader.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+            htmlHeader = htmlHeader.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+            htmlHeader = htmlHeader.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+            htmlHeader = htmlHeader.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+            htmlHeader = htmlHeader.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+            htmlHeader = htmlHeader.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+            //RS
+            //string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+
+            //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            //htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
+
+
+            return htmlHeader;
+            
+        }
+
+        private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)
+        {
+            Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            DatabaseHelper odal = new();
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = property.Value.ToString()
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            return odal.FetchDataTableBySP(sp_Name, para);
+        }
+
         //public string GetHeader(int Id, int Type = 1)
         //{
         //    if (Type == 1)

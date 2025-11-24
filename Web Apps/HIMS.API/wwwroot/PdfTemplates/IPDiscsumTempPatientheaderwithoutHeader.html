@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin-top: 4cm;
+            margin-bottom: 3cm;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-content-wrapper" style="padding-left:20px;">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                <!-- {{NewHeader}}-->
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 101%; border-collapse: collapse;">
+                            <tr style="font-size: 18px;font-weight:bold;">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: center;">
+                                    <b>
+                                        {{IsNormalOrDeath}} DISCHARGE SUMMARY
+                                    </b>
+                                </td>
+
+                                <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: right;">
+                                    <b>
+                                        Print
+                                        Date : {{CurrentDate}}
+                                    </b>
+                                </td>-->
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
+                            {{PatientHeader}}
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <tr style="margin-top: 12px;">
+                <td colspan="6">
+                    <div style="margin-left:70px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+
+                            {{TemplateDescriptionHtml}}
+
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <br />
+
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+
+
+<html>
+<body>
+    <table style="width: 90%; border-collapse: collapse; margin-left: 80px;">
+        <tr style="display:{{chkSurgeryPrescriptionflag}}">
+            <td style="padding: 6px;">
+                <table style="width: 100%; border-collapse: collapse; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">
+                    <!-- <thead style="font-size: 14px; font-weight: bold; font-size: 24px;">-->
+                    <tr><td colspan="3" style="font-weight: bold; font-size: 24px; padding: 6px; margin-left: 70px;">Prescription Details :</td></tr>
+                    <tr style="font-weight: bold; font-size: 24px; margin-left: 20px;" font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial;">
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            Drug
+                        </td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">
+                            Dose
+                        </td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px; ">DoseName</td>
+                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">  Total Days</td>
+
+                    </tr>
+                    {{Items}}
+                    <!--</thead>-->
+
+                </table>
+            </td>
+        </tr>
+
+
+        <tr><td><span style="font-size: 20px; font-weight: bold; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">Note:-Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
+        <br />
+        <tr><td><sapn style="font-size: 20px; font-weight: bold; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica,Arial;">Emergency Contact</sapn></td></tr>
+        <tr>
+            <table style="width: 100%;  margin-top: 50px; font-size: 18px;margin-left:80px">
+                <tr style="border-bottom: 1px solid #d4c3c3; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;">
+                    <td style="padding: 2px;">
+                        <span style="font-weight:bold;">Prepared By</span>
+                        <br />
+                        <span>{{AddedBy}}</span>
+                    </td>
+                    <td style="padding: 2px;">
+                        <span style="font-weight: bold;">RMO Doctor</span>
+                        <br />
+                        <span>{{DischargeDoctor2}}</span>
+                    </td>
+
+                    <td style="padding: 2px;">
+                        <span style="font-weight:bold;">Doctor Signature</span>
+                        <br />
+                        <span>{{DoctorName}}</span>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+    </table>
+
+
+</body>
+
+</html>
