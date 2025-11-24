@@ -352,7 +352,7 @@ namespace HIMS.Services.Pathlogy
                         if (!rPaymentEntity.Contains(rProperty))
                             entity2.Remove(rProperty);
                     }
-                    entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+                    entity2["OPDIPDType"] = 4; // Ensure objpayment has OPDIPDType
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
