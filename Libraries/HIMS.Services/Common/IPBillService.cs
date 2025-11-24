@@ -5,6 +5,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System.Data;
+using System.Security.Principal;
 using System.Transactions;
 
 namespace HIMS.Services.Common
@@ -31,7 +32,7 @@ namespace HIMS.Services.Common
         }
         public virtual async Task<IPagedList<ServiceClassdetailListDto>> ServiceClassdetailList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<ServiceClassdetailListDto>(model, "ps_Rtrv_ServiceClassdetail");
+            return await DatabaseHelper.GetGridDataBySp<ServiceClassdetailListDto>(model, "ps_rtrv_BillChargeDetailsList");
         }
         public virtual async Task InsertBillAsyncSP(Bill objBill, int CurrentUserId, string CurrentUserName)
         {
@@ -207,6 +208,11 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<PackagedetListDto>(model, "ps_m_Rtrv_Packagedet_List");
         }
+        public virtual async Task<IPagedList<BillChargeDetailsListDto>> BillChargeDetailsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BillChargeDetailsListDto>(model, "ps_rtrv_BillChargeDetailsList");
+        }
+
 
         public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int UserId, string Username)
         {
@@ -942,6 +948,35 @@ namespace HIMS.Services.Common
             }
 
             string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+
+        }
+        public virtual void UpdateBill(AddCharge ObjaddCharge,Bill ObjBill, int UserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
+                "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt",
+                "HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
+            var entity = ObjaddCharge.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+
+            string[] BEntity = {  "BillNo", "TotalAmt",  "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt"};
+            var bentity = ObjBill.ToDictionary();
+
+            foreach (var rProperty in bentity.Keys.ToList())
+            {
+                if (!BEntity.Contains(rProperty))
+                    bentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_BillAmountDetails", CommandType.StoredProcedure, bentity);
 
         }
         //public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)

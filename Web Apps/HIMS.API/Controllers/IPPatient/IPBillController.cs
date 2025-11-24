@@ -110,6 +110,14 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(PackageDetailsList.ToGridResponse(objGrid, "PackageDetails List"));
         }
 
+        [HttpPost("BillChargeDetailsList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> BillChargeDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<BillChargeDetailsListDto> BillChargeDetailsList = await _IPBillService.BillChargeDetailsList(objGrid);
+            return Ok(BillChargeDetailsList.ToGridResponse(objGrid, "BillChargeDetails List"));
+        }
+
 
 
         [HttpPost("AddChargeInsert")]
@@ -356,6 +364,26 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
+
+        [HttpPost("BillUpdate")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public ApiResponse BillUpdate(BillUpdate obj)
+        {
+            AddCharge model = obj.IPAddChargesBill.MapTo<AddCharge>();
+
+            Bill objBill = obj.BillUpdates.MapTo<Bill>();
+                if (obj.IPAddChargesBill.ChargesId == 0)
+                {
+
+                  model.AddedBy = CurrentUserId;
+
+                _IPBillService.UpdateBill(model, objBill, CurrentUserId, CurrentUserName);
+                }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
+
 
 
 
