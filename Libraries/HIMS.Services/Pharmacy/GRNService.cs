@@ -195,22 +195,58 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-        public virtual async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        //public virtual async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Delete details table realted records
+        //        var lst = await _context.TGrndetails.Where(x => x.Grnid == objGRN.Grnid).ToListAsync();
+        //        _context.TGrndetails.RemoveRange(lst);
+
+        //        // Update header & detail table records
+        //        _context.TGrnheaders.Update(objGRN);
+        //        _context.Entry(objGRN).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public async Task UpdateAsync(TGrnheader objGRN, List<MItemMaster> objItems, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+
+            // Delete GRN details
+            var oldDetails = await _context.TGrndetails
+                .Where(x => x.Grnid == objGRN.Grnid)
+                .ToListAsync();
+            _context.TGrndetails.RemoveRange(oldDetails);
+
+            // Update GRN header
+            _context.TGrnheaders.Update(objGRN);
+            await _context.SaveChangesAsync();
+
+            // Update Item Master correctly
+            foreach (var item in objItems)
             {
-                // Delete details table realted records
-                var lst = await _context.TGrndetails.Where(x => x.Grnid == objGRN.Grnid).ToListAsync();
-                _context.TGrndetails.RemoveRange(lst);
+                var dbItem = await _context.MItemMasters
+                    .FirstOrDefaultAsync(x => x.ItemId == item.ItemId);
 
-                // Update header & detail table records
-                _context.TGrnheaders.Update(objGRN);
-                _context.Entry(objGRN).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                if (dbItem != null)
+                {
+                    dbItem.Hsncode = item.Hsncode;
+                    dbItem.ConversionFactor = item.ConversionFactor;
+                    dbItem.Cgst = item.Cgst;
+                    dbItem.Sgst = item.Sgst;
+                    dbItem.Igst = item.Igst;
+                }
             }
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
+
 
         //public virtual async Task InsertWithPOAsync(TGrnheader objGRN, List<MItemMaster> objItems, List<TPurchaseDetail> objPurDetails, List<TPurchaseHeader> objPurHeaders, int UserId, string Username)
         //{
@@ -285,6 +321,7 @@ namespace HIMS.Services.Pharmacy
 
                 // Mark only the required fields as modified
                 _context.Entry(objItem).Property(x => x.Hsncode).IsModified = true;
+                _context.Entry(objItem).Property(x => x.ConversionFactor).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Cgst).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Sgst).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Igst).IsModified = true;
@@ -397,6 +434,7 @@ namespace HIMS.Services.Pharmacy
 
                 // Mark only the required fields as modified
                 _context.Entry(objItem).Property(x => x.Hsncode).IsModified = true;
+                _context.Entry(objItem).Property(x => x.ConversionFactor).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Cgst).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Sgst).IsModified = true;
                 _context.Entry(objItem).Property(x => x.Igst).IsModified = true;
