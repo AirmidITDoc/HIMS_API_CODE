@@ -1615,6 +1615,47 @@ namespace HIMS.Services.Report
                 #endregion
 
 
+                #region :: IpDischargeSummaryTemplatewithPatientHeader ::
+                case "IpDischargeSummaryTemplatewithPatientHeader":
+                    {
+
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplatewithPatientheader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model,htmlHeaderFilePath);
+
+                        string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath1 = _pdfUtility.GetHeader(htmlHeaderFilePath1);
+
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
+
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: IpDischargeSummaryTemplatepatientWithoutHeader ::
+                case "IpDischargeSummaryTemplatepatientWithoutHeader":
+                    {
+
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDiscsumTempPatientheaderwithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplateWithoutHeader", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
                 #region :: IpDischargeReceipt ::
                 case "IpDischargeReceipt":
                     {
@@ -3631,7 +3672,206 @@ namespace HIMS.Services.Report
                         }
                     }
                     break;
+
+
+                case "IpDischargeSummaryTemplatewithPatientHeader":
+                    {
+                        int i = 0;
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{History}}", dt.GetColValue("History"));
+                        html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{ClinicalFinding}}", dt.GetColValue("ClinicalFinding"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{OpertiveNotes}}", dt.GetColValue("OpertiveNotes"));
+                        html = html.Replace("{{TreatmentGiven}}", dt.GetColValue("TreatmentGiven"));
+                        html = html.Replace("{{Investigation}}", dt.GetColValue("Investigation"));
+
+                        html = html.Replace("{{p}}", dt.GetColValue("History"));
+                        html = html.Replace("{{R}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{SPO2}}", dt.GetColValue("ClinicalFinding"));
+                        html = html.Replace("{{RS}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{PA}}", dt.GetColValue("OpertiveNotes"));
+                        html = html.Replace("{{CVS}}", dt.GetColValue("TreatmentGiven"));
+                        html = html.Replace("{{CNS}}", dt.GetColValue("Investigation"));
+
+                        html = html.Replace("{{DischargeTypeName}}", dt.GetColValue("DischargeTypeName"));
+                        html = html.Replace("{{TreatmentAdvisedAfterDischarge}}", dt.GetColValue("TreatmentAdvisedAfterDischarge"));
+
+                        html = html.Replace("{{ClinicalConditionOnAdmisssion}}", dt.GetColValue("ClinicalConditionOnAdmisssion"));
+
+                        html = html.Replace("{{OtherConDrOpinions}}", dt.GetColValue("OtherConDrOpinions"));
+
+                        html = html.Replace("{{PainManagementTechnique}}", dt.GetColValue("PainManagementTechnique"));
+                        html = html.Replace("{{LifeStyle}}", dt.GetColValue("LifeStyle"));
+
+                        html = html.Replace("{{WarningSymptoms}}", dt.GetColValue("WarningSymptoms"));
+                        html = html.Replace("{{ConditionAtTheTimeOfDischarge}}", dt.GetColValue("ConditionAtTheTimeOfDischarge"));
+
+
+                        html = html.Replace("{{IsNormalOrDeath}}", dt.GetColValue("IsNormalOrDeath"));
+
+                        html = html.Replace("{{DoctorAssistantName}}", dt.GetColValue("DoctorAssistantName"));
+                        html = html.Replace("{{PreOthNumber}}", dt.GetColValue("PreOthNumber"));
+                        html = html.Replace("{{SurgeryProcDone}}", dt.GetColValue("SurgeryProcDone"));
+                        html = html.Replace("{{ICD10CODE}}", dt.GetColValue("ICD10CODE"));
+                        html = html.Replace("{{Radiology}}", dt.GetColValue("Radiology"));
+
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+                        html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+
+                        //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
+                        string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
+                        html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
+
+                        //border: 1px solid #d4c3c3;
+
+                        foreach (DataRow dr in dt2.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\" text-align: center; padding: 6px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, sans-serif;font-size: 24px;\"><td style=\"border-left: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ItemName"].ConvertToString())/*.Append("<br>").Append(dr["ItemGenericName"].ConvertToString())*/.Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["DoseNameInEnglish"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;  text-align: center; padding: 6px;\">").Append(dr["Days"].ConvertToString()).Append("</td></tr>");
+
+
+                            items.Append("<tr style=\"text-align: center; padding: 6px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size: 24px;\"><td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+
+                            //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("(").Append(dr["DoseNameInMarathi"].ConvertToString()).Append(")").Append("</td>");
+                            items.Append("<td style=\"border-right: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td></tr>");
+
+
+                        }
+                    }
+                    break;
                 case "IpDischargeSummaryTemplateWithoutHeader":
+                    {
+                        int i = 0;
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{History}}", dt.GetColValue("History"));
+                        html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{ClinicalFinding}}", dt.GetColValue("ClinicalFinding"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{OpertiveNotes}}", dt.GetColValue("OpertiveNotes"));
+                        html = html.Replace("{{TreatmentGiven}}", dt.GetColValue("TreatmentGiven"));
+                        html = html.Replace("{{Investigation}}", dt.GetColValue("Investigation"));
+
+                        html = html.Replace("{{p}}", dt.GetColValue("History"));
+                        html = html.Replace("{{R}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{SPO2}}", dt.GetColValue("ClinicalFinding"));
+                        html = html.Replace("{{RS}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{PA}}", dt.GetColValue("OpertiveNotes"));
+                        html = html.Replace("{{CVS}}", dt.GetColValue("TreatmentGiven"));
+                        html = html.Replace("{{CNS}}", dt.GetColValue("Investigation"));
+
+                        html = html.Replace("{{DischargeTypeName}}", dt.GetColValue("DischargeTypeName"));
+                        html = html.Replace("{{TreatmentAdvisedAfterDischarge}}", dt.GetColValue("TreatmentAdvisedAfterDischarge"));
+
+                        html = html.Replace("{{ClinicalConditionOnAdmisssion}}", dt.GetColValue("ClinicalConditionOnAdmisssion"));
+
+                        html = html.Replace("{{OtherConDrOpinions}}", dt.GetColValue("OtherConDrOpinions"));
+
+                        html = html.Replace("{{PainManagementTechnique}}", dt.GetColValue("PainManagementTechnique"));
+                        html = html.Replace("{{LifeStyle}}", dt.GetColValue("LifeStyle"));
+
+                        html = html.Replace("{{WarningSymptoms}}", dt.GetColValue("WarningSymptoms"));
+                        html = html.Replace("{{ConditionAtTheTimeOfDischarge}}", dt.GetColValue("ConditionAtTheTimeOfDischarge"));
+
+
+                        html = html.Replace("{{IsNormalOrDeath}}", dt.GetColValue("IsNormalOrDeath"));
+
+                        html = html.Replace("{{DoctorAssistantName}}", dt.GetColValue("DoctorAssistantName"));
+                        html = html.Replace("{{PreOthNumber}}", dt.GetColValue("PreOthNumber"));
+                        html = html.Replace("{{SurgeryProcDone}}", dt.GetColValue("SurgeryProcDone"));
+                        html = html.Replace("{{ICD10CODE}}", dt.GetColValue("ICD10CODE"));
+                        html = html.Replace("{{Radiology}}", dt.GetColValue("Radiology"));
+
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+                        html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
+                        html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+
+                        //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
+                        string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
+                        html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
+
+                        //border: 1px solid #d4c3c3;
+
+                        foreach (DataRow dr in dt2.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\" text-align: center; padding: 6px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, sans-serif;font-size: 24px;\"><td style=\"border-left: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ItemName"].ConvertToString())/*.Append("<br>").Append(dr["ItemGenericName"].ConvertToString())*/.Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["DoseNameInEnglish"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;  text-align: center; padding: 6px;\">").Append(dr["Days"].ConvertToString()).Append("</td></tr>");
+
+
+                            items.Append("<tr style=\"text-align: center; padding: 6px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size: 24px;\"><td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td>");
+
+                            //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("(").Append(dr["DoseNameInMarathi"].ConvertToString()).Append(")").Append("</td>");
+                            items.Append("<td style=\"border-right: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("</td></tr>");
+
+
+                        }
+                    }
+                    break;
+
+                case "IpDischargeSummaryTemplatepatientWithoutHeader":
                     {
                         int i = 0;
 

@@ -372,6 +372,8 @@ namespace HIMS.API.Controllers.Report
                 case "IpDischargeSummaryReportWithoutHeader":
                 case "IpDischargeSummaryTemplate":
                 case "IpDischargeSummaryTemplateWithoutHeader":
+                case "IpDischargeSummaryTemplatewithPatientHeader":
+                case "IpDischargeSummaryTemplatepatientWithoutHeader":
 
                 case "IPDRefrancefDoctorwise":
                 case "IPDCurrentrefDoctorAdmissionList":
