@@ -3381,6 +3381,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
 
+                      
+
                         //border: 1px solid #d4c3c3;
 
                         foreach (DataRow dr in dt2.Rows)
