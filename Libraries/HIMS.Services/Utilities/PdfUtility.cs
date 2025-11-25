@@ -99,10 +99,6 @@ namespace HIMS.Services.Utilities
            
             var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
 
-
-            //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
-            //htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
-
             htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
 
             htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -141,6 +137,17 @@ namespace HIMS.Services.Utilities
 
             return htmlHeader;
             
+        }
+
+        public string GetHeaderfromtemplate(ReportRequestModel model, string filePath)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+
+            var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
+
+            htmlHeader = htmlHeader.Replace("{{HospitalHeader}}", dt.GetColValue("HospitalHeader"));
+
+            return htmlHeader;
         }
 
         private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)

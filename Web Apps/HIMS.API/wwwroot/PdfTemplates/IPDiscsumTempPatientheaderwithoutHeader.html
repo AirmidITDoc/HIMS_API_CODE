@@ -19,35 +19,33 @@
         <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
 
-
-
-                <tr class="bill-info-row">
-                    <td style="padding: 6px;">
-
-                        <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
-                            {{PatientHeader}}
-
-                        </table>
-                    </td>
-                </tr>
-
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 101%; border-collapse: collapse;">
                             <tr style="font-size: 18px;font-weight:bold;">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: center;">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding-top: 135px; text-align: center;">
                                     <b>
                                         {{IsNormalOrDeath}} DISCHARGE SUMMARY
                                     </b>
                                 </td>
 
                                 <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: right;">
-                        <b>
-                            Print
-                            Date : {{CurrentDate}}
-                        </b>
-                    </td>-->
+            <b>
+                Print
+                Date : {{CurrentDate}}
+            </b>
+        </td>-->
 
+                            </tr>
+
+                            <tr class="bill-info-row">
+                                <td style="padding: 6px;">
+
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
+                                        {{PatientHeader}}
+
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </td>
