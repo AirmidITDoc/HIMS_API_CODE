@@ -1636,7 +1636,7 @@ namespace HIMS.Services.Report
                        
                         html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
 
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
