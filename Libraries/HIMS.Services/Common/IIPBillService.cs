@@ -20,6 +20,8 @@ namespace HIMS.Services.Common
         Task<IPagedList<IPPackageDetailsListDto>> IPPackageDetailsListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageDetailsListDto>> Addpackagelist(GridRequestModel objGrid);
         Task<IPagedList<PackagedetListDto>> Retrivepackagedetaillist(GridRequestModel objGrid);
+        Task<IPagedList<BillChargeDetailsListDto>> BillChargeDetailsList(GridRequestModel objGrid);
+
 
 
         Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
@@ -40,6 +42,8 @@ namespace HIMS.Services.Common
         void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 
         void IPbillSp(Bill ObjBill, int UserId, string Username);
+        void UpdateBill(AddCharge objAddCharge,Bill ObjBill, int UserId, string Username);
+
 
     }
 }
