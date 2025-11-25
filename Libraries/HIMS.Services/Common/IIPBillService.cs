@@ -42,7 +42,7 @@ namespace HIMS.Services.Common
         void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 
         void IPbillSp(Bill ObjBill, int UserId, string Username);
-        void UpdateBill(AddCharge objAddCharge,Bill ObjBill, int UserId, string Username);
+        void UpdateBill(List<AddCharge> objAddCharge,Bill ObjBill, int UserId, string Username);
 
 
     }

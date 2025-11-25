@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 namespace HIMS.Services.Administration
 {
     public  class TemplateDescriptionConfigService:ITemplateDescriptionConfigService
@@ -14,6 +17,10 @@ namespace HIMS.Services.Administration
         public TemplateDescriptionConfigService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<TemplateByCategoryListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TemplateByCategoryListDto>(model, "rtrv_TemlateByCategoryList");
         }
         public virtual async Task<List<GetDischargeTemplateListDto>> GetDischargeTemplateListAsync(string CategoryName)
         {

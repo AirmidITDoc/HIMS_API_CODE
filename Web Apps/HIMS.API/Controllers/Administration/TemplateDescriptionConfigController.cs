@@ -3,8 +3,10 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.OutPatient;
@@ -25,6 +27,13 @@ namespace HIMS.API.Controllers.Administration
             _repository = repository;
             _ITemplateDescriptionConfigService = repository1;
 
+        }
+        [HttpPost("TemlateByCategoryList")]
+        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListTemplate(GridRequestModel objGrid)
+        {
+            IPagedList<TemplateByCategoryListDto> TemlateByCategoryList = await _ITemplateDescriptionConfigService.GetListAsync(objGrid);
+            return Ok(TemlateByCategoryList.ToGridResponse(objGrid, "TemlateByCategory List"));
         }
 
         //List API
