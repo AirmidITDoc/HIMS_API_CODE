@@ -13352,6 +13352,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MpesaReceiptNumber).HasMaxLength(255);
 
+                entity.Property(e => e.Opdipdid).HasColumnName("OPDIPDID");
+
                 entity.Property(e => e.PhoneNumber).HasMaxLength(20);
 
                 entity.Property(e => e.ResponseOn).HasColumnType("datetime");

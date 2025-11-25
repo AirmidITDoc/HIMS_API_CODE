@@ -25,5 +25,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsRadiology { get; set; }
         public long? IsPackage { get; set; }
         public long? BillNo { get; set; }
+        public bool? IsInclusionExclusion { get; set; }
+
     }
 }
