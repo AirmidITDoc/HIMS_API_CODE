@@ -21,4 +21,9 @@ namespace HIMS.API.Models.Masters
 
         }
     }
+    public class ResetBedModel
+    {
+        //public long BedId { get; set; }
+       
+    }
 }

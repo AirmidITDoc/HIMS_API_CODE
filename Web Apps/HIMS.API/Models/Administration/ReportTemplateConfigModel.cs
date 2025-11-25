@@ -13,6 +13,8 @@ namespace HIMS.API.Models.Administration
         public string? TemplateDescription { get; set; }
         public bool? IsTemplateWithHeader { get; set; }
         public bool? IsTemplateHeaderWithImage { get; set; }
+        public string? HospitalHeader { get; set; }
+
 
     }
 

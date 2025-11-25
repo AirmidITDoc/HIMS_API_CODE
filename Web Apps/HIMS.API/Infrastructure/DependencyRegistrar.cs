@@ -115,6 +115,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoctorShareProcessService, DoctorShareProcessService>();
             services.AddScoped<IAdminTaskService, AdminTaskService>();
             services.AddScoped<ITemplateDescriptionConfigService, TemplateDescriptionConfigService>();
+            services.AddScoped<IBedMasterService, BedMasterService>();
+
 
 
 

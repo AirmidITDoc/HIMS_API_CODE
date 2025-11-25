@@ -950,22 +950,27 @@ namespace HIMS.Services.Common
             string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
 
         }
-        public virtual void UpdateBill(AddCharge ObjaddCharge,Bill ObjBill, int UserId, string UserName)
+        public virtual void UpdateBill(List<AddCharge> ObjaddCharge,Bill ObjBill, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
+                 string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
                 "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt",
                 "HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
-            var entity = ObjaddCharge.ToDictionary();
+            foreach (var item in ObjaddCharge)
+            { 
 
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!AEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
+                var entity = item.ToDictionary();
+            
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+
+                string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
             }
-
-            string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+            // -------------------- BILL UPDATE ------------------------
 
             string[] BEntity = {  "BillNo", "TotalAmt",  "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt"};
             var bentity = ObjBill.ToDictionary();
@@ -979,6 +984,8 @@ namespace HIMS.Services.Common
             odal.ExecuteNonQuery("ps_BillAmountDetails", CommandType.StoredProcedure, bentity);
 
         }
+     
+
         //public virtual async Task UpdateRefund(Refund OBJRefund, int UserId, string UserName)
         //{
         //    //throw new NotImplementedException();
