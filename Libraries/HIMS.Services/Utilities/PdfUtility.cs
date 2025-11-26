@@ -126,15 +126,6 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
 
-
-            //RS
-            //string logoFileName = (objHospital?.Header ?? "").ConvertToString();
-
-            //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
-
-            //htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
-
-
             return htmlHeader;
             
         }
@@ -145,7 +136,28 @@ namespace HIMS.Services.Utilities
 
             var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
 
-            htmlHeader = htmlHeader.Replace("{{HospitalHeader}}", dt.GetColValue("HospitalHeader"));
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            MReportTemplateConfig objDisconfig = _context.MReportTemplateConfigs.Find(Convert.ToInt64(1));
+
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+
+            //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("HospitalHeader"));
+
+            htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+            htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+            htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+            htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+            htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+            htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+            htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+
 
             return htmlHeader;
         }

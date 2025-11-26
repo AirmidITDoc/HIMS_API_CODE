@@ -301,7 +301,9 @@ namespace HIMS.API.Controllers.Report
                 case "CanteenRequestprint":
                 case "DoctorNoteandNursingNoteReport":
 
-
+                    //OT
+                //case "OTOprativereport":
+                ////case "DoctorNoteandNursingNoteReport":
 
 
 
