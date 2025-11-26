@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Utility;
 using HIMS.Core;
@@ -276,6 +277,26 @@ namespace HIMS.API.Controllers.OPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PrescriptionTemplateModels obj)
+        {
+            MPresTemplateH model = obj.MapTo<MPresTemplateH>();
+            if (obj.PresId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+             
+                model.IsActive = true;
+                await _PrescriptionOPTemplateService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

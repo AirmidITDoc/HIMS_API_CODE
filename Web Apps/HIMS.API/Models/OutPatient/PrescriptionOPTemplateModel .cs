@@ -25,7 +25,7 @@ namespace HIMS.API.Models.OutPatient
     public class PresTemplateDModel
     {
         public long? PresId { get; set; }
-        public string? Date { get; set; }
+        public DateTime? Date { get; set; }
         public long? ClassId { get; set; }
         public long? GenericId { get; set; }
         public long? DrugId { get; set; }
@@ -53,5 +53,16 @@ namespace HIMS.API.Models.OutPatient
         public List<PresTemplateDModel> PresTemplate { get; set; }
 
     }
-
+    public class PrescriptionTemplateModels
+    {
+        public long PresId { get; set; }
+        public string? PresTemplateName { get; set; }
+        public bool? IsActive { get; set; }
+        public byte? OpIpType { get; set; }
+        public string? TemplateCategory { get; set; }
+        public long? IsAddBy { get; set; }
+        public long? IsUpdatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public List<PresTemplateDModel> MPresTemplateDs { get; set; }
+    }
 }

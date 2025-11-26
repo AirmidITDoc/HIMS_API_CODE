@@ -20,14 +20,9 @@ namespace HIMS.API.Controllers.OTManagement
     {
 
         private readonly IOTPreOperationService _IOTPreOperationService;
-
-
         public OTPreOperationController(IOTPreOperationService repository)
         {
             _IOTPreOperationService = repository;
-
-
-
         }
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]

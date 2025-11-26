@@ -1,7 +1,9 @@
 ﻿using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.OutPatient
 {
@@ -46,6 +48,34 @@ namespace HIMS.Services.OutPatient
                 }
                 odal.ExecuteNonQuery("insert_M_PresTemplateD_1", CommandType.StoredProcedure, Dentity);
 
+            }
+        }
+        public virtual async Task UpdateAsync(MPresTemplateH ObjMPresTemplateH, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(ObjMPresTemplateH);
+                _context.Entry(ObjMPresTemplateH).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(ObjMPresTemplateH).Property(column).IsModified = false;
+                    }
+                }
+                // Delete details table realted records
+                var lst = await _context.MPresTemplateDs.Where(x => x.PresId == ObjMPresTemplateH.PresId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MPresTemplateDs.RemoveRange(lst);
+                }
+
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
             }
         }
 
