@@ -69,7 +69,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-      
+
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
     }

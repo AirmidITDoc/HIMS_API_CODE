@@ -76,6 +76,12 @@ namespace HIMS.API.Models.OutPatient
         public decimal? PatientAmt { get; set; }
         public double? SpeTaxPer { get; set; }
         public decimal? SpeTaxAmt { get; set; }
+        public long? ConcessionReasonId { get; set; }
+        public string? DiscComments { get; set; }
+        public long? ModifiedBy { get; set; }
+
+
+
     }
     public class BillUpdate
     {

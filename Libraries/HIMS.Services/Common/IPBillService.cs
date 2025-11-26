@@ -309,7 +309,7 @@ namespace HIMS.Services.Common
 
             DatabaseHelper odal = new();
             string[] rEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo",
-                "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName","CardDate","AdvanceUsedAmount","AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledBy","IsCancelledDate","OPDIPDType","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","Tdsamount","UnitId","Wfamount"};
+                "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName","CardDate","AdvanceUsedAmount","AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledBy","IsCancelledDate","OPDIPDType","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","Tdsamount","UnitId","Wfamount","CompanyId"};
             var entity = objPayment.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -954,7 +954,7 @@ namespace HIMS.Services.Common
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ChargesDate", "OpdIpdId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId" };
+            string[] AEntity = { "ChargesDate", "OpdIpdId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId"};
             foreach (var item in ObjaddCharge)
             {
 
@@ -970,7 +970,7 @@ namespace HIMS.Services.Common
             }
             // -------------------- BILL UPDATE ------------------------
 
-            string[] BEntity = { "BillNo", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "CompanyAmt", "PatientAmt", "SpeTaxPer", "SpeTaxAmt" };
+            string[] BEntity = { "BillNo", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "CompanyAmt", "PatientAmt", "SpeTaxPer", "SpeTaxAmt", "ConcessionReasonId", "DiscComments", "ModifiedBy" };
             var bentity = ObjBill.ToDictionary();
 
             foreach (var rProperty in bentity.Keys.ToList())
