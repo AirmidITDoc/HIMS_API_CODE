@@ -39,6 +39,7 @@ namespace HIMS.API.Models.OutPatient
         public decimal? Wfamount { get; set; }
         public int? OPDIPDType { get; set; }
         public long PaymentId { get; set; }
+        public long? CompanyId { get; set; }
 
 
         //public List<BilModel> Bill { get; set; }

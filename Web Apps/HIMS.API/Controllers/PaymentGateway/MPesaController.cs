@@ -6,6 +6,8 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.PaymentGateway;
 using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Core.Utilities;
 using HIMS.Data;
@@ -32,6 +34,7 @@ namespace HIMS.API.Controllers.Login
         private readonly MpesaStkService _stkService;
         private readonly IConfiguration _config;
         private readonly IGenericService<TMpesaResponse> _mPesaService;
+
         public MPesaController(MpesaStkService service, IConfiguration config, IGenericService<TMpesaResponse> genericService)
         {
             _stkService = service;
@@ -48,6 +51,16 @@ namespace HIMS.API.Controllers.Login
             System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
             return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
+        //List API
+        [HttpPost]
+        [Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TMpesaResponse> pesaResponseList = await _mPesaService.GetAllPagedAsync(objGrid);
+            return Ok(pesaResponseList.ToGridResponse(objGrid, "pesaResponse List"));
+        }
+
 
         [HttpPost("confirmation")]
         public async Task<IActionResult> ConfirmAsync([FromBody] JsonElement payload)

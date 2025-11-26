@@ -365,24 +365,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
-        //[HttpPost("BillUpdate")]
-        ////[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        //public ApiResponse BillUpdate(BillUpdate obj)
-        //{
-        //    List<AddCharge> model = obj.IPAddChargesBill.MapTo<List<AddCharge>>();
-
-        //    Bill objBill = obj.BillUpdates.MapTo<Bill>();
-        //        if (obj.IPAddChargesBill.ChargesId == 0)
-        //        {
-
-        //          model.AddedBy = CurrentUserId;
-
-        //        _IPBillService.UpdateBill(model, objBill, CurrentUserId, CurrentUserName);
-        //        }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
-        //}
+       
         [HttpPost("BillUpdate")]
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse BillUpdate(BillUpdate obj)
@@ -390,7 +373,7 @@ namespace HIMS.API.Controllers.IPPatient
             List<AddCharge> model = obj.IPAddChargesBill.MapTo<List<AddCharge>>();
 
             Bill objBill = obj.BillUpdates.MapTo<Bill>();
-            if (model != null && model.Any() && model.First().ChargesId == 0)
+            if (model != null && model.Any() && model.First().ChargesId > 0)
             {
                 foreach (var item in model)
                 {
@@ -399,7 +382,7 @@ namespace HIMS.API.Controllers.IPPatient
 
                 _IPBillService.UpdateBill(model, objBill, CurrentUserId, CurrentUserName);
 
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
 
             }
             else
