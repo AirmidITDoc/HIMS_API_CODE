@@ -516,6 +516,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPatientDetail> TPatientDetails { get; set; } = null!;
         public virtual DbSet<TPatientFeedback> TPatientFeedbacks { get; set; } = null!;
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
+        public virtual DbSet<TPayment> TPayments { get; set; } = null!;
         public virtual DbSet<TPaymentCanteen> TPaymentCanteens { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
         public virtual DbSet<TPhRefund> TPhRefunds { get; set; } = null!;
@@ -8127,6 +8128,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Instruction).HasMaxLength(200);
 
                 entity.Property(e => e.Remark).HasMaxLength(200);
+
+                entity.HasOne(d => d.Pres)
+                    .WithMany(p => p.MPresTemplateDs)
+                    .HasForeignKey(d => d.PresId)
+                    .HasConstraintName("FK_M_PresTemplateD_M_PresTemplateH");
             });
 
             modelBuilder.Entity<MPresTemplateH>(entity =>
@@ -15108,6 +15114,49 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PolicyNo).HasMaxLength(50);
 
                 entity.Property(e => e.PolicyValidateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TPayment>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId);
+
+                entity.ToTable("T_Payment");
+
+                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
+
+                entity.Property(e => e.BankName).HasMaxLength(100);
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(50);
+
+                entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PayAmount).HasColumnType("money");
+
+                entity.Property(e => e.PayMode).HasMaxLength(20);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.TranMode).HasMaxLength(30);
+
+                entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPaymentCanteen>(entity =>
