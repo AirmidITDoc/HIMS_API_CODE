@@ -10,6 +10,8 @@ namespace HIMS.Services
     public partial interface IOTPreOperationService
     {
         Task InsertAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username);
+        Task UpdateAsync(TOtPreOperationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? references);
+
 
     }
 }

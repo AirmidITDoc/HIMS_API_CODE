@@ -46,37 +46,59 @@ namespace HIMS.Services
                 scope.Complete();
             }
         }
-        //public virtual async Task InsertAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        public virtual async Task UpdateAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
 
-        //    {
-        //        // Get last sequence number
-        //        var lastSeqNoStr = await _context.TOtPreOperationHeaders
-        //            .OrderByDescending(x => x.OtpreOperationNo)
-        //            .Select(x => x.OtpreOperationNo)
-        //            .FirstOrDefaultAsync();
+            {
+                long OtpreOperationId = ObjTOtPreOperationHeader.OtpreOperationId;
 
-        //        int lastSeqNo = 0;
-        //        if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-        //            lastSeqNo = parsed;
+                // ✅ Delete related details first
+                var lstAttend = await _context.TOtPreOperationAttendingDetails
+                    .Where(x => x.OtpreOperationId == OtpreOperationId)
+                    .ToListAsync();
+                if (lstAttend.Any())
+                    _context.TOtPreOperationAttendingDetails.RemoveRange(lstAttend);
 
-        //        // Assign new sequence number
-        //        int newSeqNo = lastSeqNo + 1;
-        //        ObjTOtPreOperationHeader.OtpreOperationNo = newSeqNo.ToString();
+                var lstSurgery = await _context.TOtPreOperationCathlabDiagnoses
+                    .Where(x => x.OtpreOperationId == OtpreOperationId)
+                    .ToListAsync();
+                if (lstSurgery.Any())
+                    _context.TOtPreOperationCathlabDiagnoses.RemoveRange(lstSurgery);
 
-        //        // Audit fields
-        //        ObjTOtPreOperationHeader.Createdby = UserId;
-        //        ObjTOtPreOperationHeader.CreatedDate = DateTime.Now;
+                var lstDiagnosis = await _context.TOtPreOperationDiagnoses
+                    .Where(x => x.OtpreOperationId == OtpreOperationId)
+                    .ToListAsync();
+                if (lstDiagnosis.Any())
+                    _context.TOtPreOperationDiagnoses.RemoveRange(lstDiagnosis);
 
-        //        // Insert
-        //        _context.TOtPreOperationHeaders.Add(ObjTOtPreOperationHeader);
-        //        await _context.SaveChangesAsync();
+                // ✅ Save deletion first
+                await _context.SaveChangesAsync();
 
-        //        scope.Complete();
-        //    }
-        //}
+                // ✅ Then attach and update header
+                _context.Attach(ObjTOtPreOperationHeader);
+                _context.Entry(ObjTOtPreOperationHeader).State = EntityState.Modified;
+
+                _context.Entry(ObjTOtPreOperationHeader).Property(x => x.Createdby).IsModified = false;
+                _context.Entry(ObjTOtPreOperationHeader).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(ObjTOtPreOperationHeader).Property(x => x.OtpreOperationNo).IsModified = false;
+
+                ObjTOtPreOperationHeader.ModifiedBy = UserId;
+                ObjTOtPreOperationHeader.ModifiedDate = DateTime.Now;
+
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                        _context.Entry(ObjTOtPreOperationHeader).Property(column).IsModified = false;
+                }
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
+
+
 
     }
 }
