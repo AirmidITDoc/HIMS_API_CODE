@@ -48,9 +48,8 @@ namespace HIMS.API.Models.OutPatient
     }
     public class IPAddChargesBillModel
     {
-
+        public long? BillNo { get; set; }
         public DateTime? ChargesDate { get; set; }
-        public long? OpdIpdId { get; set; }
         public double? Price { get; set; }
         public double? Qty { get; set; }
         public double? TotalAmt { get; set; }

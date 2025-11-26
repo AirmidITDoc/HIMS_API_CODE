@@ -954,7 +954,7 @@ namespace HIMS.Services.Common
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "ChargesDate", "OpdIpdId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId"};
+            string[] AEntity = { "BillNo", "ChargesDate", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId"};
             foreach (var item in ObjaddCharge)
             {
 
