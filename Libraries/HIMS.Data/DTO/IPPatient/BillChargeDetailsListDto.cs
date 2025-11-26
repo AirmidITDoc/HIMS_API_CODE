@@ -26,6 +26,9 @@ namespace HIMS.Data.DTO.IPPatient
         public long? IsPackage { get; set; }
         public long? BillNo { get; set; }
         public bool? IsInclusionExclusion { get; set; }
+        public long ChargesId { get; set; }
+        public DateTime? ChargesDate { get; set; }
+        public DateTime? ChargesTime { get; set; }
 
     }
 }
