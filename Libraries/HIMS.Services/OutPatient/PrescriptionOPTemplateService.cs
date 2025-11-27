@@ -50,6 +50,16 @@ namespace HIMS.Services.OutPatient
 
             }
         }
+        public virtual async Task InsertAsync(MPresTemplateH ObjMPresTemplateH, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MPresTemplateHs.Add(ObjMPresTemplateH);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
         public virtual async Task UpdateAsync(MPresTemplateH ObjMPresTemplateH, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

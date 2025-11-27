@@ -548,11 +548,14 @@ namespace HIMS.Services.Common
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
-                objBill.OpdIpdId = objVisitDetail.VisitId;
+                //objBill.OpdIpdId = objVisitDetail.VisitId;
 
                 objVisitDetail.RegId = objRegistration.RegId;
                 _context.VisitDetails.Add(objVisitDetail);
+
                 await _context.SaveChangesAsync();
+                objBill.OpdIpdId = objVisitDetail.VisitId;
+
 
 
                 DatabaseHelper odal = new();
@@ -665,7 +668,7 @@ namespace HIMS.Services.Common
 
                         }
 
-                        string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
+                        string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "CompanyId" };
                         Payment objPay = new();
                         objPay = objPayment;
                         objPay.BillNo = objBill.BillNo;
