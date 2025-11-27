@@ -6,6 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OTManagement;
+using HIMS.Data.DTO.OPPatient;
 
 
 namespace HIMS.Services
@@ -17,6 +22,61 @@ namespace HIMS.Services
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<perOperationsurgeryListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<perOperationsurgeryListDto>(model, "rtrv_perOperationsurgeryList");
+        }
+        public virtual async Task<IPagedList<PreOperationAttendentListDto>> preOperationAttendentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PreOperationAttendentListDto>(model, "rtrv_preOperationAttendentList");
+        }
+        public virtual async Task<List<OtpreOperationDiagnosisListDto>> PreOperationDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtPreOperationDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtpreOperationDiagnosisDetId)
+                .Select(d => new OtpreOperationDiagnosisListDto
+                {
+                    OtpreOperationDiagnosisDetId = d.OtpreOperationDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
+        //public virtual async Task<List<OtpreOperationDiagnosisListDto>> PreOperationDiagnosisListAsync(string DescriptionType)
+        //{
+        //    var query = _context.TOtPreOperationDiagnoses.AsQueryable();
+
+        //    if (!string.IsNullOrEmpty(DescriptionType))
+        //    {
+        //        string lowered = DescriptionType.ToLower();
+        //        query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+        //    }
+
+        //    var data = await query
+        //        .OrderBy(d => d.OtpreOperationDiagnosisDetId)
+        //        .Select(d => new OtpreOperationDiagnosisListDto
+        //        {
+        //            OtpreOperationDiagnosisDetId = d.OtpreOperationDiagnosisDetId,
+        //            DescriptionType = d.DescriptionType,
+        //            DescriptionName = d.DescriptionName
+        //        })
+        //        .Take(50)
+        //        .ToListAsync();
+
+        //    return data;
+        //}
+
         public virtual async Task InsertAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
