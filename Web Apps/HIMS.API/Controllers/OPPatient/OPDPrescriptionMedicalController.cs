@@ -258,6 +258,27 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  update successfully.");
         }
 
+        [HttpPost("NewOPTemplateInsert")]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PrescriptionTemplateModels obj)
+        {
+            MPresTemplateH model = obj.MapTo<MPresTemplateH>();
+            if (obj.PresId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.IsActive = true;
+                await _PrescriptionOPTemplateService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
+
 
 
         [HttpPost("OPTemplateInsert")]
@@ -280,8 +301,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-        [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [HttpPut("OPTemplateUpdate/{id:int}")]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PrescriptionTemplateModels obj)
         {
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
