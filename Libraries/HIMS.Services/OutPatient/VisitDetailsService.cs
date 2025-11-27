@@ -263,7 +263,8 @@ namespace HIMS.Services.OutPatient
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ClassId", ClassId);
             para[2] = new SqlParameter("@SrvcName", ServiceName);
-            return sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
+            List<ServiceMasterDTO> lstServiceList = sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
+            return lstServiceList;
         }
         public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
         {
