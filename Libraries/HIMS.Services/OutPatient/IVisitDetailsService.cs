@@ -30,13 +30,7 @@ namespace HIMS.Services.OutPatient
         List<VisitDetailsListSearchDto> SearchPatient(string Keyword);
         Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int UserId, string Username);
         Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
-
-
-
-
-
-
-
+        List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName);
 
     }
 }

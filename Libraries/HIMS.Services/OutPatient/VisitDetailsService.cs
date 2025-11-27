@@ -256,6 +256,15 @@ namespace HIMS.Services.OutPatient
             return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientVisitedListSearch", para);
         }
 
+        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@TariffId", TariffId);
+            para[1] = new SqlParameter("@ClassId", ClassId);
+            para[2] = new SqlParameter("@SrvcName", ServiceName);
+            return sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
+        }
         public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DeptDoctorListDoT>(model, "ps_getDepartmentWiseDoctorList");

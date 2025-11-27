@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.VariantTypes;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -221,6 +222,14 @@ namespace HIMS.API.Controllers.OPPatient
                 x.IsInclusionOrExclusion,
                 x.IsPathOutSource
             }));
+        }
+
+        [HttpGet("search-GetServiceListwithTraiff")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        {
+            var data = _visitDetailsService.SearchGetServiceListwithTraiff(TariffId, ClassId, ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
         }
 
         //Edit EditVital
