@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,5 +43,12 @@ namespace HIMS.Data.DTO.OTManagement
 
 
 
+    }
+    public  class OtPreOperationCathlabDiagnosisListDto
+    {
+        public long OtpreOperationCathLabDiagnosisDetId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+       
     }
 }

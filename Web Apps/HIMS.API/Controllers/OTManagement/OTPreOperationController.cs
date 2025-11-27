@@ -49,13 +49,13 @@ namespace HIMS.API.Controllers.OTManagement
             var result = await _IOTPreOperationService.PreOperationDiagnosisListAsync(DescriptionType);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPreOperationDiagnosis List", result);
         }
-        //[HttpGet("GetPreOperationCathlabDiagnosisList")]
-        ////[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> PreOperationCathlabDiagnosisList(string DescriptionType)
-        //{
-        //    var result = await _IOTPreOperationService.PreOperationCathlabDiagnosisListAsync(DescriptionType);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPreOperationCathlabDiagnosis List", result);
-        //}
+        [HttpGet("GetPreOperationCathlabDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> PreOperationCathlabDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTPreOperationService.PreOperationCathlabDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPreOperationCathlabDiagnosis List", result);
+        }
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]

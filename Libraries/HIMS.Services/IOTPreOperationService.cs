@@ -18,7 +18,7 @@ namespace HIMS.Services
         Task<IPagedList<perOperationsurgeryListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PreOperationAttendentListDto>> preOperationAttendentListAsync(GridRequestModel objGrid);
         Task<List<OtpreOperationDiagnosisListDto>> PreOperationDiagnosisListAsync(string descriptionType);
-        //Task<List<OtpreOperationDiagnosisListDto>> PreOperationDiagnosisListAsync(string descriptionType);
+        Task<List<OtPreOperationCathlabDiagnosisListDto>> PreOperationCathlabDiagnosisListAsync(string descriptionType);
 
 
 

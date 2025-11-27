@@ -53,29 +53,29 @@ namespace HIMS.Services
 
             return data;
         }
-        //public virtual async Task<List<OtpreOperationDiagnosisListDto>> PreOperationDiagnosisListAsync(string DescriptionType)
-        //{
-        //    var query = _context.TOtPreOperationDiagnoses.AsQueryable();
+        public virtual async Task<List<OtPreOperationCathlabDiagnosisListDto>> PreOperationCathlabDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtPreOperationCathlabDiagnoses.AsQueryable();
 
-        //    if (!string.IsNullOrEmpty(DescriptionType))
-        //    {
-        //        string lowered = DescriptionType.ToLower();
-        //        query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
-        //    }
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
 
-        //    var data = await query
-        //        .OrderBy(d => d.OtpreOperationDiagnosisDetId)
-        //        .Select(d => new OtpreOperationDiagnosisListDto
-        //        {
-        //            OtpreOperationDiagnosisDetId = d.OtpreOperationDiagnosisDetId,
-        //            DescriptionType = d.DescriptionType,
-        //            DescriptionName = d.DescriptionName
-        //        })
-        //        .Take(50)
-        //        .ToListAsync();
+            var data = await query
+                .OrderBy(d => d.OtpreOperationCathLabDiagnosisDetId)
+                .Select(d => new OtPreOperationCathlabDiagnosisListDto
+                {
+                    OtpreOperationCathLabDiagnosisDetId = d.OtpreOperationCathLabDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
 
-        //    return data;
-        //}
+            return data;
+        }
 
         public virtual async Task InsertAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username)
         {
