@@ -24,10 +24,45 @@ namespace HIMS.API.Controllers.OTManagement
     {
 
         private readonly IOTPreOperationService _IOTPreOperationService;
-        public OTPreOperationController(IOTPreOperationService repository)
+        private readonly IGenericService<TOtPreOperationHeader> _repository;
+        private readonly IGenericService<TOtPreOperationCathlabDiagnosis> _repository1;
+        private readonly IGenericService<TOtPreOperationSurgeryDetail> _repository2;
+        public OTPreOperationController(IOTPreOperationService repository, IGenericService <TOtPreOperationHeader> repository1, IGenericService<TOtPreOperationCathlabDiagnosis> repository2,
+            IGenericService<TOtPreOperationSurgeryDetail> repository3)
         {
             _IOTPreOperationService = repository;
+            _repository = repository1;
+            _repository1 = repository2;
+            _repository2 = repository3;
         }
+        //List API
+        [HttpPost("OtPreOperationHeaderList")]
+        //[Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> otList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtPreOperationHeader> OtPreOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(OtPreOperationHeaderList.ToGridResponse(objGrid, "OtPreOperationHeader List"));
+        }
+        //List API
+        [HttpPost("OtPreOperationCathlabDiagnosisList")]
+        //[Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> CathlabDiagnosisList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtPreOperationCathlabDiagnosis> OtPreOperationCathlabDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(OtPreOperationCathlabDiagnosisList.ToGridResponse(objGrid, "OtPreOperationCathlabDiagnosis List"));
+        }
+        [HttpPost("OtPreOperationSurgeryDetailList")]
+        //[Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> OtPreOperationSurgeryDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtPreOperationSurgeryDetail> OtPreOperationSurgeryDetailList = await _repository2.GetAllPagedAsync(objGrid);
+            return Ok(OtPreOperationSurgeryDetailList.ToGridResponse(objGrid, "OtPreOperationSurgeryDetail List"));
+        }
+
+
         [HttpPost("perOperationsurgeryList")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
