@@ -10,7 +10,7 @@
 <div>
     <body>
         <div class="main-content-wrapper">
-            <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Tahoma, Calibri; color: #101828;">
+            <div class="invoice-box" style="font-size: 14px; line-height: 22px; font-family: Tahoma, Calibri; color: #101828;">
                 <table style="width: 100%;line-height: inherit;text-align: left;">
                     <tr class="top-header-row">
                         {{NewHeader}}
@@ -19,12 +19,12 @@
                         <td>
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr style="font-size: 16px">
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 3px; ">
                                         <b>
                                             IP Estimated Bill
                                         </b>
                                     </td>
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 3px; text-align: right;">
                                         <b>
                                             Print
                                             Date : {{CurrentDate}}
@@ -100,13 +100,13 @@
 
                                 <tr>
 
-                                    <td style="padding: 2px;">
+                                    <!--<td style="padding: 2px;">
                                         <span style="font-weight: bold;">Patient Type:</span>
                                         <span>{{PatientType}}</span>
-                                    </td>
-                                    <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                    </td>-->
+                                    <!--<td style="padding-left:10px; display:{{chkCompanyNameflag}}">
                                         <b>Company Name :</b> {{CompanyName}}
-                                    </td>
+                                    </td>-->
                                 </tr>
 
                             </table>
@@ -144,58 +144,52 @@
 
                                                 <tr>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">Total Bill Amount</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px;">Total Bill Amount</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{TotalBillAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;">  {{TotalBillAmount}}</td>
                                                 </tr>
                                                 <tr style="display:{{chkadminflag}}">
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;">Admin Charges</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px;">Admin Charges</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{TaxAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;">  {{TaxAmount}}</td>
                                                 </tr>
 
 
                                                 <tr style="display:{{chkdiscflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 3px;">Concession Amount</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{ConcessionAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;">  {{ConcessionAmount}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Net Amount</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 3px;">Net Amount</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{T_NetAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;font-weight:bold;"> {{T_NetAmount}}</td>
                                                 </tr>
 
 
                                                 <tr style="display:{{chkpaidflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Paid Amount </td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 3px;">Paid Amount </td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{PaidAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;font-weight:bold;"> {{PaidAmount}}</td>
                                                 </tr>
 
                                                 <tr style="display:{{chkAftBalflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Balance Amount -After Advance Used</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 3px;">Balance Amount -After Advance Used</td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{balafteradvuseAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;"> {{balafteradvuseAmount}}</td>
 
                                                 </tr>
                                                 <tr style="display:{{chkBalflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Balance Amount </td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: px;">Balance Amount </td>
 
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BalancewdudcAmt}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 3px; text-align: right;"> {{BalancewdudcAmt}}</td>
                                                 </tr>
 
 
                                             </table>
                                         </td>
                                     </tr>
-                                    <!--<tr style="margin-top: 12px;">
-                                        <td colspan="6"
-                                            style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 22px; font-weight: bold;">
-                                            Total  Amount in words :- {{finalamt}}
-                                        </td>
-                                    </tr>-->
                                     <div>
                                         <div>
 
@@ -223,12 +217,6 @@
 
                 <tr>
                     <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
-
-                        <!--<tr style="margin-top: 12px;">
-                        <tr>
-                            <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn�t require signature</td>
-                        </tr>
-                        <tr></tr>-->
                         <tr style="padding: 6px; text-align: right;">
                             <td>
 

@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>IP Settlement Receipt</title>
+</head>
+
+<body style="font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #000; background: #fff; margin: 0; padding: 20px;">
+
+    <div style="width:900px; margin:0 auto; padding:18px; box-sizing:border-box;">
+        <tr class="top-header-row">
+            {{NewHeader}}
+        </tr>
+
+        <div style="text-align:center; font-size:20px; font-weight:bold; margin:6px 0;">
+            IP SETTLEMENT RECEIPT
+        </div>
+        <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
+
+
+        <table style="width:100%; border-collapse:collapse; font-size:18px; margin-bottom:12px;">
+            <tr>
+                <td style="padding:6px 8px; width:18%; font-weight:bold;">Receipt No</td>
+                <td style="padding:6px 8px; width:32%;">: {{ReceiptNo}}</td>
+
+                <td style="padding:6px 8px; width:12%; font-weight:bold; text-align:right;">Date</td>
+                <td style="padding:6px 8px; width:32%; text-align:left;">: {{CurrentDate}}</td>
+            </tr>
+
+            <tr>
+                <td style="padding:6px 8px; font-weight:bold;">MR. No</td>
+                <td style="padding:6px 8px;">: {{MRNo}}</td>
+
+                <td style="padding:6px 8px; text-align:right; font-weight:bold;">IPD No.</td>
+                <td style="padding:6px 8px;">: {{IPDNo}}</td>
+            </tr>
+
+            <tr>
+                <td style="padding:6px 8px; font-weight:bold;">Patient Name</td>
+                <td style="padding:6px 8px;">: {{PatientName}}</td>
+            </tr>
+
+        </table>
+        <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
+        <table style="width:100%; border-collapse:collapse; font-size:18px; margin-bottom:12px;"
+        <tr>
+            <td style="padding:6px 8px; font-weight:bold;">Bill No</td>
+            <td style="padding:6px 8px;">: {{PBillNo}}</td>
+
+            <td style="padding:6px 8px; text-align:right; font-weight:bold;">Bill Date</td>
+            <td style="padding:6px 8px;">: {{BillDate}}</td>
+
+            <td style="padding:6px 8px; text-align:right; font-weight:bold;">Bill Amount</td>
+            <td style="padding:6px 8px;">: {{TotalAmt}}</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td></td>
+
+             <td style="padding:6px 8px; text-align:right; font-weight:bold;">Paid Amount</td>
+             <td style="padding:6px 8px;">: {{PaidAmount}}</td>
+        </tr>
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td></td>
+
+             <td style="padding:6px 8px; text-align:right; font-weight:bold;">Bal Amount</td>
+             <td style="padding:6px 8px;">: {{BalanceAmt}}</td>
+        </tr>
+     </table>
+        <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
+
+
+        <table style="width:100%; border-collapse:collapse; font-size:18px; margin-top:6px;">
+            <tr>
+                <td style="padding:8px 6px; width:22%; font-weight:bold;">Paid Amount</td>
+                <td style="padding:8px 6px; width:28%;">: {{PaidAmount}}</td>
+               
+            </tr>
+
+            <tr>
+                <td style="padding:8px 6px; font-weight:bold;">Amt in Words</td>
+                <td style="padding:8px 6px;">: {{finalamt}}</td>
+
+            </tr>
+
+            <tr style="display: {{chkCashPayAmountflag}};" >
+                <td style="padding:8px 6px; font-weight:bold;">Cash Pay</td>
+                <td style="padding:8px 6px;">: {{CashPayAmount}}</td>
+            </tr>
+
+            <tr style="display: {{chkCardPayAmountflag}};">
+                <td style="padding:8px 6px; font-weight:bold;">Card Pay</td>
+                <td style="padding:8px 6px;">: {{CardPayAmount}}</td>
+
+            </tr>
+            <tr style="display: {{chkChequePayAmountflag}};">
+                <td style="padding:8px 6px; font-weight:bold;">Cheque Pay</td>
+                <td style="padding:8px 6px;">: {{ChequePayAmount}}</td>
+
+            </tr>
+
+            <tr style="display: {{chkOnlinePayAmountflag}};">
+                <td style="padding:8px 6px; font-weight:bold;">Online Pay</td>
+                <td style="padding:8px 6px;">: {{OnlinePayAmount}}</td>
+                <td style="padding:8px 6px; font-weight:bold;">Card No.</td>
+                <td style="padding:8px 6px;">: {{CardNo}}</td>
+                <!--<td style="padding:8px 6px; font-weight:bold;">Bank</td>
+            <td style="padding:8px 6px;">: {{CardNo}}</td>-->
+
+            </tr>
+
+
+
+            <tr style="display: {{chkAdvanceUsedAmountflag}};">
+                <td style="padding:8px 6px; font-weight:bold;">Advance Used</td>
+                <td style="padding:8px 6px;">: {{AdvanceUsedAmount}}</td>
+            </tr>
+
+            <tr>
+                <td style="padding:8px 6px; font-weight:bold;">Remark</td>
+                <td style="padding:8px 6px;">: {{Remark}}</td>
+            </tr>
+        </table>
+
+        <!-- SIGNATURE -->
+        <div style="width:100%; margin-top:30px;">
+            <div></div>
+            <div style="float:right; text-align:center; font-size:18px; margin-top:6px; margin-right:30px;">
+                {{UserName}}<br><b>Cashier</b>
+            </div>
+        </div>
+
+        <div style="clear:both;"></div>
+
+    </div>
+
+</body>
+</html>
