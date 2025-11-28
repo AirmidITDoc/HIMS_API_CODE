@@ -4,7 +4,7 @@ namespace HIMS.API.Models.Administration
 {
     public class AdmissionModell
     {
-        public long AdmissionID { get; set; }
+        public long AdmissionId { get; set; }
         public DateTime AdmissionDate { get; set; }
         public string AdmissionTime { get; set; }
         public string? Ipdno { get; set; }

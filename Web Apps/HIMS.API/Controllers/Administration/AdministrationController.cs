@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Administration
         public ApiResponse Update(AdmissionModell obj)
         {
             Admission model = obj.MapTo<Admission>();
-            if (obj.AdmissionID == 0)
+            if (obj.AdmissionId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

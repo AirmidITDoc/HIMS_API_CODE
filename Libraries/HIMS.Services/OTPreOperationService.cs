@@ -132,6 +132,13 @@ namespace HIMS.Services
                     .ToListAsync();
                 if (lstDiagnosis.Any())
                     _context.TOtPreOperationDiagnoses.RemoveRange(lstDiagnosis);
+                // ✅ NEW — Delete Surgery Detail table
+                var lstSurgeryDetail = await _context.TOtPreOperationSurgeryDetails
+                    .Where(x => x.OtpreOperationId == OtpreOperationId)
+                    .ToListAsync();
+                if (lstSurgeryDetail.Any())
+                    _context.TOtPreOperationSurgeryDetails.RemoveRange(lstSurgeryDetail);
+
 
                 // ✅ Save deletion first
                 await _context.SaveChangesAsync();

@@ -39,21 +39,20 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        //[HttpPut("UpdateAdmissiondatetime{id:int}")]
-        ////[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        //public ApiResponse Update(AdmissionModell obj)
-        //{
-        //    Admission model = obj.MapTo<Admission>();
-        //    if (obj.AdmissionID == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
+        [HttpPut("UpdateAdmissiondatetime{id:int}")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public ApiResponse Update(AdmissionModell obj)
+        {
+            Admission model = obj.MapTo<Admission>();
+            if (obj.AdmissionId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
 
-        //        _IAdminTaskService.Update(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-
+                _IAdminTaskService.Update(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
 
     }
 }
