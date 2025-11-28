@@ -2,11 +2,15 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.Inventory;
+using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
@@ -17,9 +21,13 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     public class BedMasterController : BaseController
     {
         private readonly IGenericService<Bedmaster> _repository;
-        public BedMasterController(IGenericService<Bedmaster> repository)
+        private readonly IBedMasterService _IBedMasterService;
+
+        public BedMasterController(IBedMasterService repository, IGenericService<Bedmaster> repository1)
         {
-            _repository = repository;
+            _IBedMasterService = repository;
+            _repository = repository1;
+
         }
 
         //List API
@@ -96,6 +104,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+        [HttpPut("Edit")]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(ResetBedModel obj)
+        {
+            Bedmaster model = obj.MapTo<Bedmaster>();
+          
+            await _IBedMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
+            
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
 }

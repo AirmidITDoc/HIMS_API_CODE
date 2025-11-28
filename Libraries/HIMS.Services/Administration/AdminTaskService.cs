@@ -39,7 +39,7 @@ namespace HIMS.Services.Administration
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "AdmissionID", "AdmissionDate", "AdmissionTime"};
+            string[] AEntity = { "AdmissionId", "AdmissionDate", "AdmissionTime", "Ipdno" };
             var Rentity = ObjAdmission.ToDictionary();
             foreach (var rProperty in Rentity.Keys.ToList())
             {

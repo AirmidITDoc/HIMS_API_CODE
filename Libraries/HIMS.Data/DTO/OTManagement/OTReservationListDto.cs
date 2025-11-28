@@ -54,8 +54,12 @@ namespace HIMS.Data.DTO.OTManagement
         public long? OTRequestId { get; set; }
         public long? OTCheckInId { get; set; }
         public byte? CheckInOut { get; set; }
+        public long OTPreOperationId { get; set; }
+        public long OTInOperationId { get; set; }
+        public long AnesthesiaId { get; set; }
 
-        
+
+
 
 
 

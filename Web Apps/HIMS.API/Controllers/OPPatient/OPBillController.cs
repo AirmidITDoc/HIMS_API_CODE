@@ -159,6 +159,35 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", billmodel.BillNo);
         }
 
+        [HttpPost("AppointmentBillingRegisteredInsert")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> AppBillRegisteredInsert(RegistredAppBillingMainModels obj)
+        {
+            //Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
+            VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+
+
+            Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
+            Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
+            List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+
+            if (obj.Visit.RegId != 0)
+            {
+                objVisitDetail.AddedBy = CurrentUserId;
+
+                if (obj.Visit.VisitId == 0)
+                {
+                    objVisitDetail.VisitTime = Convert.ToDateTime(obj.Visit.VisitTime);
+                    objVisitDetail.AddedBy = CurrentUserId;
+                    objVisitDetail.UpdatedBy = CurrentUserId;
+                }
+                await _oPBillingService.RegisteredAppBillInsert(objVisitDetail, billmodel, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", billmodel.BillNo);
+        }
+
         [HttpPost("AppointmentCreditBillingInsert")]
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPAppointCreditBillingInsert(AppBillingMainModels obj)

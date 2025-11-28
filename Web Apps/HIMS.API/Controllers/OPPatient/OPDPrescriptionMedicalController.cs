@@ -2,12 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
@@ -28,12 +30,14 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IGenericService<MOpcasepaperDignosisMaster> _Dignos;
         private readonly IGenericService<MExaminationMaster> _Examination;
         private readonly IGenericService<MComplaintMaster> _MComplaintMaster;
+        private readonly IGenericService<MPresTemplateH> _MPresTemplateH;
+
         private readonly HIMSDbContext _context;
         private readonly INotificationUtility _notificationUtility;
         private readonly IVisitDetailsService _visitDetailsService;
         public OPDPrescriptionMedicalController(IOPDPrescriptionMedicalService repository, IPrescriptionOPTemplateService repository1, IGenericService<ServiceMaster> ServiceMasterrepository,
             IGenericService<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasterrepository, IGenericService<MExaminationMaster> MExaminationMasterrepository
-            , IGenericService<MComplaintMaster> MComplaintMasterrepository, HIMSDbContext HIMSDbContext, INotificationUtility notificationUtility, IVisitDetailsService visitDetailsService)
+            , IGenericService<MComplaintMaster> MComplaintMasterrepository, HIMSDbContext HIMSDbContext, INotificationUtility notificationUtility, IVisitDetailsService visitDetailsService, IGenericService<MPresTemplateH> MPresTemplateH)
         {
             _OPDPrescriptionService = repository;
             _PrescriptionOPTemplateService = repository1;
@@ -44,6 +48,8 @@ namespace HIMS.API.Controllers.OPPatient
             _context = HIMSDbContext;
             _notificationUtility = notificationUtility;
             _visitDetailsService = visitDetailsService;
+            _MPresTemplateH = MPresTemplateH;
+
         }
         [HttpPost("GetVisitList")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
@@ -52,6 +58,17 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<GetVisitInfoListDto> GetVisitList = await _OPDPrescriptionService.GetListAsync(objGrid);
             return Ok(GetVisitList.ToGridResponse(objGrid, "GetVisitList "));
         }
+
+        //List API
+        [HttpPost]
+        [Route("PresTemplateList")]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        public async Task<IActionResult> PresTemplateList(GridRequestModel objGrid)
+        {
+            IPagedList<MPresTemplateH> PresTemplateList = await _MPresTemplateH.GetAllPagedAsync(objGrid);
+            return Ok(PresTemplateList.ToGridResponse(objGrid, "PresTemplateList"));
+        }
+
         [HttpPost("OPRequestListFromEMR")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
@@ -257,6 +274,46 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  update successfully.");
         }
 
+        [HttpPost("NewOPTemplateInsert")]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PrescriptionTemplateModels obj)
+        {
+            MPresTemplateH model = obj.MapTo<MPresTemplateH>();
+            if (obj.PresId == 0)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.IsActive = true;
+                await _PrescriptionOPTemplateService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        //Delete API
+        [HttpDelete("OPTemplateDelete")]
+
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            MPresTemplateH model = await _MPresTemplateH.GetById(x => x.PresId == Id);
+            if ((model?.PresId ?? 0) > 0)
+            {
+                model.IsActive = model.IsActive == true ? false : true;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
+                await _MPresTemplateH.SoftDelete(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        }
+
+
+
+
 
 
         [HttpPost("OPTemplateInsert")]
@@ -276,6 +333,26 @@ namespace HIMS.API.Controllers.OPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+
+        [HttpPut("OPTemplateUpdate/{id:int}")]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(PrescriptionTemplateModels obj)
+        {
+            MPresTemplateH model = obj.MapTo<MPresTemplateH>();
+            if (obj.PresId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+             
+                model.IsActive = true;
+                await _PrescriptionOPTemplateService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

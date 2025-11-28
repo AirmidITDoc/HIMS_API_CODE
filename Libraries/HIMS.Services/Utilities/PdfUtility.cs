@@ -99,10 +99,6 @@ namespace HIMS.Services.Utilities
            
             var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
 
-
-            //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
-            //htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
-
             htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
 
             htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -130,17 +126,40 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{DischargeSummaryTime}}", dt.GetColValue("DischargeSummaryTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
 
+            return htmlHeader;
+            
+        }
 
-            //RS
-            //string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+        public string GetHeaderfromtemplate(ReportRequestModel model, string filePath)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+
+            var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
+
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            MReportTemplateConfig objDisconfig = _context.MReportTemplateConfigs.Find(Convert.ToInt64(1));
+
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
 
             //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
 
-            //htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
+            var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("HospitalHeader"));
+
+            htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+            htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+            htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+            htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+            htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+            htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+            htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
 
 
             return htmlHeader;
-            
         }
 
         private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)

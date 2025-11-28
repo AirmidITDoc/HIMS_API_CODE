@@ -4,8 +4,6 @@ namespace HIMS.API.Models.OutPatient
 {
     public class PaymentsModel
     {
-
-
         public long PaymentId { get; set; }
         public long? BillNo { get; set; }
         public DateTime? PaymentDate { get; set; }
@@ -39,6 +37,8 @@ namespace HIMS.API.Models.OutPatient
         public double? Tdsamount { get; set; }
         public decimal? UnitId { get; set; }
         public decimal? Wfamount { get; set; }
+        public long? CompanyId { get; set; }
+
 
 
 

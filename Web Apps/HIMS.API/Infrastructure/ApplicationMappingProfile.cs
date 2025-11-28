@@ -629,6 +629,17 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDoctorPayoutProcessHeader, DoctorPayoutProcessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDoctorPayoutProcessDetail, DoctorPayoutProcessDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDriverMaster, DriverModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Bedmaster, ResetBedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtPreOperationHeader, OTPreOperationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtPreOperationAttendingDetail, TOtPreOperationAttendingDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtPreOperationCathlabDiagnosis, TOtPreOperationCathlabDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtPreOperationDiagnosis, TOtPreOperationDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtPreOperationSurgeryDetail, TOtPreOperationSurgeryDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPresTemplateH, PrescriptionTemplateModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+
 
 
 

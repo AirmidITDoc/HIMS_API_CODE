@@ -19,5 +19,7 @@ namespace HIMS.Data.Models
         public string? Instruction { get; set; }
         public string? Remark { get; set; }
         public bool? IsEnglishOrIsMarathi { get; set; }
+
+        public virtual MPresTemplateH? Pres { get; set; }
     }
 }

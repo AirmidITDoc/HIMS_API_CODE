@@ -11,7 +11,8 @@ namespace HIMS.Services.Common
 
         Task AppBillInsert(Registration objRegistration, VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
-       
+        Task RegisteredAppBillInsert( VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
+
         Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, VisitDetail objVisitDetail,  Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
 

@@ -6,6 +6,9 @@ namespace HIMS.API.Models.PaymentGateway
     {
         public string phone { get; set; }
         public decimal amount { get; set; }
+        public long? Opdipdid { get; set; }
+
+
     }
     public class MpesaCallbackRoot
     {
