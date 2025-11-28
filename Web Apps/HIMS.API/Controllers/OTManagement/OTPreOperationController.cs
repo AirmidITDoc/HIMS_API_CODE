@@ -4,11 +4,15 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.OTManagement;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.DTO.OTManagement;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -24,6 +28,35 @@ namespace HIMS.API.Controllers.OTManagement
         {
             _IOTPreOperationService = repository;
         }
+        [HttpPost("perOperationsurgeryList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<perOperationsurgeryListDto> perOperationsurgeryList = await _IOTPreOperationService.GetListAsync(objGrid);
+            return Ok(perOperationsurgeryList.ToGridResponse(objGrid, "perOperationsurgery List"));
+        }
+        [HttpPost("preOperationAttendentList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<PreOperationAttendentListDto> preOperationAttendentList = await _IOTPreOperationService.preOperationAttendentListAsync(objGrid);
+            return Ok(preOperationAttendentList.ToGridResponse(objGrid, "preOperationAttendent List"));
+        }
+        [HttpGet("GetPreOperationDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> PreOperationDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTPreOperationService.PreOperationDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPreOperationDiagnosis List", result);
+        }
+        [HttpGet("GetPreOperationCathlabDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> PreOperationCathlabDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTPreOperationService.PreOperationCathlabDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetPreOperationCathlabDiagnosis List", result);
+        }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OTPreOperationModel obj)
