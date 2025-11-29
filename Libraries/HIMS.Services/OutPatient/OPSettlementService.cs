@@ -20,7 +20,7 @@ namespace HIMS.Services.OutPatient
         {
             return await DatabaseHelper.GetGridDataBySp<OPBillListSettlementListDto>(objGrid, "ps_Rtrv_OP_Bill_List_Settlement");
         }
-        public virtual async Task InsertAsyncSP(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Payment objpayment, Bill objBill, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
 
         {
             DatabaseHelper odal = new();
@@ -53,6 +53,20 @@ namespace HIMS.Services.OutPatient
             }
 
             odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+
+            foreach (var item in ObjTPayment)
+            {
+                string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy"};
+                var pentity = item.ToDictionary();
+                foreach (var rProperty in pentity.Keys.ToList())
+                {
+                    if (!PEntity.Contains(rProperty))
+                        pentity.Remove(rProperty);
+                }
+                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                item.PaymentId = Convert.ToInt32(VPaymentId);
+            }
 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 

@@ -26,6 +26,8 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Payment model = obj.OPCreditPayment.MapTo<Payment>();
             Bill BillUpdateModel = obj.BillUpdate.MapTo<Bill>();
+            List<TPayment> ObjTPayment = obj.TPayment.MapTo<List<TPayment>>();
+
             if (obj.OPCreditPayment.PaymentId == 0)
             {
                 model.PaymentDate = Convert.ToDateTime(obj.OPCreditPayment.PaymentDate);
@@ -36,7 +38,7 @@ namespace HIMS.API.Controllers.OPPatient
                 BillUpdateModel.CreatedDate = DateTime.Now;
                 BillUpdateModel.ModifiedBy = CurrentUserId;
                 BillUpdateModel.ModifiedDate = DateTime.Now;
-                await _OPSettlementService.InsertAsyncSP(model, BillUpdateModel, CurrentUserId, CurrentUserName);
+                await _OPSettlementService.InsertAsyncSP(model, BillUpdateModel, ObjTPayment, CurrentUserId, CurrentUserName);
 
             }
             else

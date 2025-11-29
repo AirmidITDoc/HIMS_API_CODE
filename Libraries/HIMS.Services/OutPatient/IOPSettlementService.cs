@@ -7,7 +7,7 @@ namespace HIMS.Services.OutPatient
     public partial interface IOPSettlementService
     {
         Task InsertSettlementMultiple(List<Payment> objpayment, List<Bill> objBill, int CurrentUserId, string CurrentUserName);
-        Task InsertAsyncSP(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(Payment objpayment, Bill objBill, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName);
 
         //Task UpdateAsync(Bill objBill, int CurrentUserId, string CurrentUserName);
