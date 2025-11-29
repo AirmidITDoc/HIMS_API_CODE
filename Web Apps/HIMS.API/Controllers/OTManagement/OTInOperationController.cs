@@ -4,9 +4,12 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services;
+using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -18,9 +21,44 @@ namespace HIMS.API.Controllers.OTManagement
     public class OTInOperationController : BaseController
     {
         private readonly IOTInOperationService _IOTInOperationService;
-        public OTInOperationController(IOTInOperationService repository)
+        private readonly IGenericService<TOtInOperationHeader> _repository;
+        private readonly IGenericService<TOtInOperationDiagnosis> _repository1;
+        private readonly IGenericService<TOtInOperationPostOperDiagnosis> _repository2;
+
+
+
+        public OTInOperationController(IOTInOperationService repository, IGenericService<TOtInOperationHeader> repository1, IGenericService<TOtInOperationDiagnosis> repository2, IGenericService<TOtInOperationPostOperDiagnosis> repository3)
         {
             _IOTInOperationService = repository;
+            _repository = repository1;
+            _repository1 = repository2;
+            _repository2 = repository3;
+
+        }
+
+        //List API
+        [HttpPost("OTInOperationHeaderList")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TOtInOperationHeader> OTInOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(OTInOperationHeaderList.ToGridResponse(objGrid, "OTInOperationHeader List"));
+        }
+        //List API
+        [HttpPost("OTInOperationDiagnosisList")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<TOtInOperationDiagnosis> OTInOperationDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
+            return Ok(OTInOperationDiagnosisList.ToGridResponse(objGrid, "OTInOperationDiagnosis List"));
+        }
+        //List API
+        [HttpPost("OTInOperationPostOperDiagnosisList")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> OTList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtInOperationPostOperDiagnosis> OTInOperationPostOperDiagnosisList = await _repository2.GetAllPagedAsync(objGrid);
+            return Ok(OTInOperationPostOperDiagnosisList.ToGridResponse(objGrid, "OTInOperationPostOperDiagnosis List"));
         }
 
         [HttpPost("Insert")]
