@@ -163,7 +163,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TGrndetail, UpdateGrnReturnQty>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtAnesthesiaRecord, OTAnesthesiaModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtAnesthesiaPreOpdiagnosis, TOtAnesthesiaPreOpdiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            //CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
