@@ -118,6 +118,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBedMasterService, BedMasterService>();
             services.AddScoped<IOTPreOperationService, OTPreOperationService>();
             services.AddScoped<IOTAnesthesiaService, OTAnesthesiaService>();
+            services.AddScoped<IOTInOperationService, OTInOperationService>();
+
 
 
 

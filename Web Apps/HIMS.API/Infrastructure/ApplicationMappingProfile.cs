@@ -802,6 +802,15 @@ namespace HIMS.API.Infrastructure
             //Admininstation 
             CreateMap< TWhatsAppSmsOutgoing, WhatsAppModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMailOutgoing, EmailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            // OTManagment//
+            CreateMap<TOtInOperationHeader, OTInOperationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtInOperationAttendingDetail, OtInOperationAttendingDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtInOperationDiagnosis, OtInOperationDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtInOperationPostOperDiagnosis, OtInOperationPostOperDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtInOperationSurgeryDetail, OtInOperationSurgeryDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
 
 
 

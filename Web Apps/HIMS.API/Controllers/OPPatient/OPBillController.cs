@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.OPPatient
             Bill model = obj.MapTo<Bill>();
             Payment objPayment = obj.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
-
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
             if (obj.BillNo == 0)
             {
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
-                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
                 /// set condition based on payment type=mpesa.
                 //string phone = "254723939232";
                 //var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
@@ -140,8 +140,6 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-
-
             Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
