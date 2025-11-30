@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "WhatsApp", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> Posts(WhatsAppModel obj)
         {
             TWhatsAppSmsOutgoing model = obj.MapTo<TWhatsAppSmsOutgoing>();
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("EmailInsert")]
-        //[Permission(PageCode = "WhatsApp", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> EmailInsert(EmailModel obj)
         {
             TMailOutgoing model = obj.MapTo<TMailOutgoing>();

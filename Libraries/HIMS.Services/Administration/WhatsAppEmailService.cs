@@ -95,7 +95,7 @@ namespace HIMS.Services.Administration
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
                     };
                     var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
-                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, "Test123", model.StorageBaseUrl, "Bill", "Bill_" + Id);
+                    FilePath = _pdfUtility.GenerateWithoutPasswordProtectedPdf(byteFile.Item1, model.StorageBaseUrl, "Bill", "Bill_" + Id);
                 }
                 ObjEmail.AttachmentName = FilePath;
                 var entityData = ObjEmail.ToDictionary().Where(kvp => EmailAllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
