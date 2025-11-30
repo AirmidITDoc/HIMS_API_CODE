@@ -16,6 +16,7 @@ namespace HIMS.Data.Models
         public string? AttachmentName { get; set; }
         public string? AttachmentLink { get; set; }
         public long? TranNo { get; set; }
+        public long? PatientId { get; set; }
         public string? EmailType { get; set; }
         public DateTime? EmailDate { get; set; }
         public int? Status { get; set; }
@@ -23,5 +24,9 @@ namespace HIMS.Data.Models
         public string? LastResponse { get; set; }
         public int? Retry { get; set; }
         public DateTime? LastSendingTry { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 }

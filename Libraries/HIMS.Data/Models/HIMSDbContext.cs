@@ -453,7 +453,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
         public virtual DbSet<TLoginStoreDetail> TLoginStoreDetails { get; set; } = null!;
         public virtual DbSet<TLoginUnitDetail> TLoginUnitDetails { get; set; } = null!;
-        public virtual DbSet<TMailOutGoing1> TMailOutGoings1 { get; set; } = null!;
         public virtual DbSet<TMailOutgoing> TMailOutgoings { get; set; } = null!;
         public virtual DbSet<TMarketingDailyVisitInformation> TMarketingDailyVisitInformations { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; } = null!;
@@ -582,7 +581,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -13122,27 +13121,6 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_T_LoginUnitDetails_LoginManager");
             });
 
-            modelBuilder.Entity<TMailOutGoing1>(entity =>
-            {
-                entity.HasKey(e => e.MailId);
-
-                entity.ToTable("T_MailOutGoing");
-
-                entity.Property(e => e.Attachment).HasMaxLength(500);
-
-                entity.Property(e => e.MailDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MailDescription).HasColumnType("text");
-
-                entity.Property(e => e.MailFrom).HasMaxLength(500);
-
-                entity.Property(e => e.MailTime).HasColumnType("datetime");
-
-                entity.Property(e => e.MailTo).HasMaxLength(500);
-
-                entity.Property(e => e.Subject).HasMaxLength(500);
-            });
-
             modelBuilder.Entity<TMailOutgoing>(entity =>
             {
                 entity.ToTable("T_Mail_Outgoing");
@@ -13158,6 +13136,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Cc)
                     .HasMaxLength(250)
                     .HasColumnName("CC");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.EmailDate).HasColumnType("datetime");
 
@@ -13176,6 +13156,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MailBody).HasMaxLength(4000);
 
                 entity.Property(e => e.MailSubject).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ToEmail).HasMaxLength(250);
             });

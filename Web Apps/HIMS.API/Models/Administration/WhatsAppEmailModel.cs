@@ -17,6 +17,7 @@ namespace HIMS.API.Models.Administration
         public string? FilePath { get; set; }
         public byte? SourceType { get; set; }
         public long? CreatedBy { get; set; }
+        public long? PatientId { get; set; }
         public long SmsoutGoingId { get; set; }
     }
 
@@ -27,8 +28,6 @@ namespace HIMS.API.Models.Administration
         {
             RuleFor(x => x.SmsoutGoingId).NotNull().NotEmpty().WithMessage("Id is required");
             RuleFor(x => x.MobileNumber).NotNull().NotEmpty().WithMessage("Mobile Number is required");
-
-
         }
     }
     public class EmailModel
@@ -40,14 +39,13 @@ namespace HIMS.API.Models.Administration
         public string? Bcc { get; set; }
         public string? MailSubject { get; set; }
         public string? MailBody { get; set; }
-        public int? Status { get; set; }
-        public int? Retry { get; set; }
         public string? AttachmentName { get; set; }
         public string? AttachmentLink { get; set; }
         public int Id { get; set; }
         public long TranNo { get; set; }
         public string? EmailType { get; set; }
-
+        public long? PatientId { get; set; }
+        public long? CreatedBy { get; set; }
     }
 
     public class EmailModelValidator : AbstractValidator<TMailOutgoing>
