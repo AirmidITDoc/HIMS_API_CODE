@@ -65,6 +65,8 @@
         public bool? IsConvertRequestForIp { get; set; }
         public long EMRReady { get; set; }
         public long TokenNo { get; set; }
+        public long? GenderId { get; set; }
+
 
 
 

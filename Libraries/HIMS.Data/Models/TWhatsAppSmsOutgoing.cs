@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public string? Smstype { get; set; }
         public string? Smsflag { get; set; }
         public DateTime? Smsdate { get; set; }
+        public long? PatientId { get; set; }
         public long? TranNo { get; set; }
         public long? TemplateId { get; set; }
         public string? Smsurl { get; set; }

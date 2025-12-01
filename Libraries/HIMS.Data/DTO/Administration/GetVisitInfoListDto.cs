@@ -42,6 +42,8 @@
         public string? DoseNameOption3 { get; set; }
         public string? DaysOption3 { get; set; }
         public string? OPDNo { get; set; }
+        public string? Allergy { get; set; }
+
 
     }
 }

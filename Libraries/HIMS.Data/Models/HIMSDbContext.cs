@@ -50,7 +50,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<DynamicExecuteSchedule> DynamicExecuteSchedules { get; set; } = null!;
         public virtual DbSet<DynamicExecuteScheduleLog> DynamicExecuteScheduleLogs { get; set; } = null!;
         public virtual DbSet<EmailConfiguration> EmailConfigurations { get; set; } = null!;
-        public virtual DbSet<EmailNotificationDatum> EmailNotificationData { get; set; } = null!;
         public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; } = null!;
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
@@ -453,7 +452,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
         public virtual DbSet<TLoginStoreDetail> TLoginStoreDetails { get; set; } = null!;
         public virtual DbSet<TLoginUnitDetail> TLoginUnitDetails { get; set; } = null!;
-        public virtual DbSet<TMailOutGoing1> TMailOutGoings1 { get; set; } = null!;
         public virtual DbSet<TMailOutgoing> TMailOutgoings { get; set; } = null!;
         public virtual DbSet<TMarketingDailyVisitInformation> TMarketingDailyVisitInformations { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; } = null!;
@@ -1772,23 +1770,6 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("User_Name");
-            });
-
-            modelBuilder.Entity<EmailNotificationDatum>(entity =>
-            {
-                entity.ToTable("Email_Notification_Data");
-
-                entity.Property(e => e.AttachmentPath).HasMaxLength(1000);
-
-                entity.Property(e => e.EmailCc)
-                    .HasMaxLength(100)
-                    .HasColumnName("EmailCC");
-
-                entity.Property(e => e.SendDate).HasColumnType("smalldatetime");
-
-                entity.Property(e => e.Subject).HasMaxLength(100);
-
-                entity.Property(e => e.ToAddress).HasMaxLength(100);
             });
 
             modelBuilder.Entity<EmployeeMaster>(entity =>
@@ -13122,27 +13103,6 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_T_LoginUnitDetails_LoginManager");
             });
 
-            modelBuilder.Entity<TMailOutGoing1>(entity =>
-            {
-                entity.HasKey(e => e.MailId);
-
-                entity.ToTable("T_MailOutGoing");
-
-                entity.Property(e => e.Attachment).HasMaxLength(500);
-
-                entity.Property(e => e.MailDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MailDescription).HasColumnType("text");
-
-                entity.Property(e => e.MailFrom).HasMaxLength(500);
-
-                entity.Property(e => e.MailTime).HasColumnType("datetime");
-
-                entity.Property(e => e.MailTo).HasMaxLength(500);
-
-                entity.Property(e => e.Subject).HasMaxLength(500);
-            });
-
             modelBuilder.Entity<TMailOutgoing>(entity =>
             {
                 entity.ToTable("T_Mail_Outgoing");
@@ -13158,6 +13118,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Cc)
                     .HasMaxLength(250)
                     .HasColumnName("CC");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.EmailDate).HasColumnType("datetime");
 
@@ -13176,6 +13138,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MailBody).HasMaxLength(4000);
 
                 entity.Property(e => e.MailSubject).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ToEmail).HasMaxLength(250);
             });
@@ -15136,7 +15100,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OnlineTranNo).HasMaxLength(50);
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(55);
 
                 entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
 
@@ -15152,9 +15116,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
-                entity.Property(e => e.TranMode).HasMaxLength(30);
+                entity.Property(e => e.TranMode).HasMaxLength(55);
 
                 entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
 
                 entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });

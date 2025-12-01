@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Payment model = obj.OPCreditPayment.MapTo<Payment>();
             Bill BillUpdateModel = obj.BillUpdate.MapTo<Bill>();
-            List<TPayment> ObjTPayment = obj.TPayment.MapTo<List<TPayment>>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
             if (obj.OPCreditPayment.PaymentId == 0)
             {
