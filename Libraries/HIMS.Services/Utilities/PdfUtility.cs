@@ -288,6 +288,40 @@ namespace HIMS.Services.Utilities
             File.WriteAllBytes(NewFileName, encryptedBytes);
             return NewFileName;
         }
+        public string GenerateWithoutPasswordProtectedPdf(byte[] bytes, string storageBasePath, string FolderName, string FileName)
+        {
+            byte[] encryptedBytes;
+
+            using (var inputStream = new MemoryStream(bytes))
+            using (var outputStream = new MemoryStream())
+            {
+                PdfDocument pdfDoc = PdfReader.Open(inputStream, PdfDocumentOpenMode.Modify);
+
+                //pdfDoc.SecuritySettings.UserPassword = null;        // PDF open password
+                //pdfDoc.SecuritySettings.OwnerPassword = null;       // Owner password
+
+                pdfDoc.SecuritySettings.PermitPrint = true;
+                pdfDoc.SecuritySettings.PermitModifyDocument = true;
+                pdfDoc.SecuritySettings.PermitExtractContent = true;
+
+                pdfDoc.Save(outputStream);
+                encryptedBytes = outputStream.ToArray();
+            }
+
+            // Step 3: Save encrypted PDF to disk
+            string DestinationPath = string.Empty; //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            File.WriteAllBytes(NewFileName, encryptedBytes);
+            return NewFileName;
+        }
+
+
         public Tuple<byte[], string> GeneratePdfFromHtmlA5(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A5) // Default to A5 size
         {
             var doc = new HtmlToPdfDocument()
