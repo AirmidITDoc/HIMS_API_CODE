@@ -11,6 +11,7 @@ using HIMS.Data.Models;
 using HIMS.Services;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Data.DTO.OTManagement;
 
 
 namespace HIMS.API.Controllers.OTManagement
@@ -24,9 +25,6 @@ namespace HIMS.API.Controllers.OTManagement
         private readonly IGenericService<TOtInOperationHeader> _repository;
         private readonly IGenericService<TOtInOperationDiagnosis> _repository1;
         private readonly IGenericService<TOtInOperationPostOperDiagnosis> _repository2;
-
-
-
         public OTInOperationController(IOTInOperationService repository, IGenericService<TOtInOperationHeader> repository1, IGenericService<TOtInOperationDiagnosis> repository2, IGenericService<TOtInOperationPostOperDiagnosis> repository3)
         {
             _IOTInOperationService = repository;
@@ -34,6 +32,20 @@ namespace HIMS.API.Controllers.OTManagement
             _repository1 = repository2;
             _repository2 = repository3;
 
+        }
+        [HttpPost("InOperationAttendingDetailsList")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
+            return Ok(InOperationAttendingDetailsList.ToGridResponse(objGrid, "InOperationAttendingDetails List"));
+        }
+        [HttpPost("InOperationSurgeryDetailsList")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<IActionResult> InOperationSurgeryDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<InOperationSurgeryDetailsDto> InOperationSurgeryDetailsList = await _IOTInOperationService.InOperationSurgeryDetailsAsync(objGrid);
+            return Ok(InOperationSurgeryDetailsList.ToGridResponse(objGrid, "InOperationSurgeryDetails List"));
         }
 
         //List API

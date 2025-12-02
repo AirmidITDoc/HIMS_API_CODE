@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OTManagement;
 
 
 namespace HIMS.Services
@@ -17,6 +20,18 @@ namespace HIMS.Services
         public OTInOperationService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<OtRequestListDto>> GetListAsyncot(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OtRequestListDto>(model, "ps_Rtrv_OT_RequestList");
+        }
+        public virtual async Task<IPagedList<InOperationAttendingDetailsListDto>> InOperationAttengingDetailsAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<InOperationAttendingDetailsListDto>(model, "rtrv_InOperationSurgeryDetailsList");
+        }
+        public virtual async Task<IPagedList<InOperationSurgeryDetailsDto>> InOperationSurgeryDetailsAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<InOperationSurgeryDetailsDto>(model, "rtrv_InOperationSurgeryDetailsList");
         }
         public virtual async Task InsertAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username)
         {
