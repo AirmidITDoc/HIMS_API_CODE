@@ -2,7 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Transaction;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
@@ -49,7 +51,7 @@ namespace HIMS.API.Controllers.Transaction
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SmsConfig added successfully.", model);
         }
-        [HttpPost("UPDATESP")]
+        [HttpPost("UPDATE")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Edit(smsConfigModel obj)
         {
@@ -58,11 +60,27 @@ namespace HIMS.API.Controllers.Transaction
             {
                 //model.AppDate = Convert.ToDateTime(obj.AppDate);
 
-                await _IsmsConfigService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _IsmsConfigService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SmsConfig Updated successfully.", model);
+        }
+        [HttpPut("EmailConfiguration/{id:int}")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(EmailConfigurationModel obj)
+        {
+            EmailConfiguration model = obj.MapTo<EmailConfiguration>();
+            if (obj.Id == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+               
+                model.IsActive = true;
+                await _IsmsConfigService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("EmailsendoutList")]

@@ -23,4 +23,19 @@ namespace HIMS.API.Models.Transaction
 
         }
     }
+    public  class EmailConfigurationModel
+    {
+        public int Id { get; set; }
+        public string? DisplayName { get; set; }
+        public string? EmailAddress { get; set; }
+        public string? MailServerSmtp { get; set; }
+        public short? SmtpPort { get; set; }
+        public int? ServerTimeout { get; set; }
+        public bool? SmtpRequiredAuthentication { get; set; }
+        public bool? RequiredSquiredPasswordAuthentication { get; set; }
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
+        public bool? IsActive { get; set; }
+        public bool? SmtpSsl { get; set; }
+    }
 }

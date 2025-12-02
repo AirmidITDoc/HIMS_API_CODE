@@ -798,6 +798,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtRequestDiagnosis, TOtRequestDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Bill, OPBillIngLabModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<EmailConfiguration, EmailConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
