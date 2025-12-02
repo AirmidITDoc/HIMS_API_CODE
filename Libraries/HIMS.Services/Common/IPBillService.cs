@@ -210,7 +210,7 @@ namespace HIMS.Services.Common
         }
         public virtual async Task<IPagedList<BillChargeDetailsListDto>> BillChargeDetailsList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BillChargeDetailsListDto>(model, "ps_rtrv_BillChargeDetailsList");
+            return await DatabaseHelper.GetGridDataBySp<BillChargeDetailsListDto>(model, "ps_rtrv_BillEditDetailsList");
         }
 
 
