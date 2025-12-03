@@ -26,6 +26,8 @@ namespace HIMS.Services.Pathlogy
 
         List<TLabPatientRegistration> SearchlabRegistration(string Keyword);
 
+        Task<List<TLabPatientRegistration>> SearchLabRegistration(string str);
+
 
     }
 }
