@@ -33,13 +33,13 @@ namespace HIMS.API.Controllers.OTManagement
             _repository2 = repository3;
 
         }
-        [HttpPost("InOperationAttendingDetailsList")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
-        public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
-        {
-            IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
-            return Ok(InOperationAttendingDetailsList.ToGridResponse(objGrid, "InOperationAttendingDetails List"));
-        }
+        //[HttpPost("InOperationAttendingDetailsList")]
+        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        //public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
+        //    return Ok(InOperationAttendingDetailsList.ToGridResponse(objGrid, "InOperationAttendingDetails List"));
+        //}
         [HttpPost("InOperationSurgeryDetailsList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
         public async Task<IActionResult> InOperationSurgeryDetailsList(GridRequestModel objGrid)
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         //List API
-        [HttpPost("OTInOperationHeaderList")]
+        [HttpGet("OTInOperationHeaderList")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {

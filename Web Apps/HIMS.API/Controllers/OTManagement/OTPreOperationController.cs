@@ -27,16 +27,20 @@ namespace HIMS.API.Controllers.OTManagement
         private readonly IGenericService<TOtPreOperationHeader> _repository;
         private readonly IGenericService<TOtPreOperationCathlabDiagnosis> _repository1;
         private readonly IGenericService<TOtPreOperationSurgeryDetail> _repository2;
+        private readonly IGenericService<TOtPreOperationDiagnosis> _repository3;
+
         public OTPreOperationController(IOTPreOperationService repository, IGenericService <TOtPreOperationHeader> repository1, IGenericService<TOtPreOperationCathlabDiagnosis> repository2,
-            IGenericService<TOtPreOperationSurgeryDetail> repository3)
+            IGenericService<TOtPreOperationSurgeryDetail> repository3, IGenericService<TOtPreOperationDiagnosis> repository4)
         {
             _IOTPreOperationService = repository;
             _repository = repository1;
             _repository1 = repository2;
             _repository2 = repository3;
+            _repository3 = repository4;
+
         }
         //List API
-        [HttpPost("OtPreOperationHeaderList")]
+        [HttpGet("OtPreOperationHeaderList")]
         //[Route("[action]")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> otList(GridRequestModel objGrid)
@@ -61,6 +65,16 @@ namespace HIMS.API.Controllers.OTManagement
             IPagedList<TOtPreOperationSurgeryDetail> OtPreOperationSurgeryDetailList = await _repository2.GetAllPagedAsync(objGrid);
             return Ok(OtPreOperationSurgeryDetailList.ToGridResponse(objGrid, "OtPreOperationSurgeryDetail List"));
         }
+
+        [HttpPost("OtPreOperationDiagnosisList")]
+        //[Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> PreOperationDiagnosisList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtPreOperationDiagnosis> PreOperationDiagnosisList = await _repository3.GetAllPagedAsync(objGrid);
+            return Ok(PreOperationDiagnosisList.ToGridResponse(objGrid, "OtPreOperationDiagnosisList"));
+        }
+
 
 
         [HttpPost("perOperationsurgeryList")]
