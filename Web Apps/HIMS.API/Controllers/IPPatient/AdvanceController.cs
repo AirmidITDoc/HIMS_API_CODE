@@ -134,6 +134,8 @@ namespace HIMS.API.Controllers.IPPatient
             List<AdvRefundDetail> AdvDetailmodel = obj.AdvDetailRefund.MapTo<List<AdvRefundDetail>>();
             List<AdvanceDetail> objAdvanceDetail = obj.AdveDetailupdate.MapTo<List<AdvanceDetail>>();
             Payment objpayment = obj.payment.MapTo<Payment>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
 
 
             if (obj.Refund.RefundId == 0)
@@ -142,7 +144,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
                 model.AddedBy = CurrentUserId;
 
-                _IAdvanceService.IPInsertSP(model, AdvanceHeadermodel, AdvDetailmodel, objAdvanceDetail, objpayment ,CurrentUserId, CurrentUserName);
+                _IAdvanceService.IPInsertSP(model, AdvanceHeadermodel, AdvDetailmodel, objAdvanceDetail, objpayment, ObjTPayment ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
