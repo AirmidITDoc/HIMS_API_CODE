@@ -27,7 +27,7 @@ namespace HIMS.Services
         }
         public virtual async Task<IPagedList<InOperationAttendingDetailsListDto>> InOperationAttengingDetailsAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<InOperationAttendingDetailsListDto>(model, "rtrv_InOperationSurgeryDetailsList");
+            return await DatabaseHelper.GetGridDataBySp<InOperationAttendingDetailsListDto>(model, "rtrv_InOperationAttendingDetailsList");
         }
         public virtual async Task<IPagedList<InOperationSurgeryDetailsDto>> InOperationSurgeryDetailsAsync(GridRequestModel model)
         {
