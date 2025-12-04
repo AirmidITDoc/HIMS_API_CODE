@@ -74,6 +74,9 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
+            //htmlHeader = htmlHeader.Replace("{{Header}}", objHospital?.Header ?? "");
+
+
             //RS
             string logoFileName = (objHospital?.Header ?? "").ConvertToString();
 
