@@ -16,6 +16,10 @@ namespace HIMS.Services
         Task UpdateAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username, string[]? references);
         Task<IPagedList<InOperationAttendingDetailsListDto>> InOperationAttengingDetailsAsync(GridRequestModel objGrid);
         Task<IPagedList<InOperationSurgeryDetailsDto>> InOperationSurgeryDetailsAsync(GridRequestModel objGrid);
+        Task<List<TOtInOperationPostOperDiagnosisDto>> InOperationPostOperDiagnosisListAsync(string descriptionType);
+        Task<List<TOtInOperationDiagnosisDto>> InOperationDiagnosisListAsync(string descriptionType);
+
+
 
 
 

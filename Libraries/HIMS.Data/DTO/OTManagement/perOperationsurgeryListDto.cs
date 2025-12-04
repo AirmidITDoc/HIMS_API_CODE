@@ -51,4 +51,26 @@ namespace HIMS.Data.DTO.OTManagement
         public string? DescriptionType { get; set; }
        
     }
+    public class TOtInOperationPostOperDiagnosisDto
+    {
+        public long OtinOperationPostOperDiagnosisDetId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+
+    }
+    public class TOtInOperationDiagnosisDto
+    {
+        public long OtinOperationDiagnosisDetId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+
+
+
+    }
+    public class TOtAnesthesiaPreOpdiagnosisDto
+    {
+        public long OtanesthesiaPreOpdiagnosisId { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+    }
 }
