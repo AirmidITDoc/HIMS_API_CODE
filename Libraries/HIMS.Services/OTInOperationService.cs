@@ -33,6 +33,52 @@ namespace HIMS.Services
         {
             return await DatabaseHelper.GetGridDataBySp<InOperationSurgeryDetailsDto>(model, "rtrv_InOperationSurgeryDetailsList");
         }
+        public virtual async Task<List<TOtInOperationPostOperDiagnosisDto>> InOperationPostOperDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtInOperationPostOperDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtinOperationPostOperDiagnosisDetId)
+                .Select(d => new TOtInOperationPostOperDiagnosisDto
+                {
+                    OtinOperationPostOperDiagnosisDetId = d.OtinOperationPostOperDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
+        public virtual async Task<List<TOtInOperationDiagnosisDto>> InOperationDiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtInOperationDiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtinOperationDiagnosisDetId)
+                .Select(d => new TOtInOperationDiagnosisDto
+                {
+                    OtinOperationDiagnosisDetId = d.OtinOperationDiagnosisDetId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
+        }
         public virtual async Task InsertAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

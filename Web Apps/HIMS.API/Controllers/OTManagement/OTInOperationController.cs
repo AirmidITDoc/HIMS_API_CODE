@@ -45,13 +45,21 @@ namespace HIMS.API.Controllers.OTManagement
             var data = await _repository.GetById(x => x.OtinOperationId == id);
             return data.ToSingleResponse<TOtInOperationHeader, OTInOperationHeaderModel>("TOtPreOperationHeader");
         }
-        //[HttpPost("InOperationAttendingDetailsList")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
-        //public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
-        //    return Ok(InOperationAttendingDetailsList.ToGridResponse(objGrid, "InOperationAttendingDetails List"));
-        //}
+        [HttpGet("GetOtInOperationPostOperDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetOtInOperationPostOperDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTInOperationService.InOperationPostOperDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOtInOperationPostOperDiagnosis List", result);
+        }
+        [HttpGet("GetOtInOperationDiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetOtInOperationDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTInOperationService.InOperationDiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOtInOperationDiagnosis List", result);
+        }
+       
         [HttpPost("InOperationSurgeryDetailsList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
         public async Task<IActionResult> InOperationSurgeryDetailsList(GridRequestModel objGrid)

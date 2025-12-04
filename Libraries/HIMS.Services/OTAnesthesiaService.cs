@@ -1,4 +1,5 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Data.DTO.OTManagement;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,29 @@ namespace HIMS.Services
 
                 scope.Complete();
             }
+        }
+        public virtual async Task<List<TOtAnesthesiaPreOpdiagnosisDto>> OtAnesthesiaPreOpdiagnosisListAsync(string DescriptionType)
+        {
+            var query = _context.TOtAnesthesiaPreOpdiagnoses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(DescriptionType))
+            {
+                string lowered = DescriptionType.ToLower();
+                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+            }
+
+            var data = await query
+                .OrderBy(d => d.OtanesthesiaPreOpdiagnosisId)
+                .Select(d => new TOtAnesthesiaPreOpdiagnosisDto
+                {
+                    OtanesthesiaPreOpdiagnosisId = d.OtanesthesiaPreOpdiagnosisId,
+                    DescriptionType = d.DescriptionType,
+                    DescriptionName = d.DescriptionName
+                })
+                .Take(50)
+                .ToListAsync();
+
+            return data;
         }
         public virtual async Task UpdateAsync(TOtAnesthesiaRecord ObjTOtAnesthesiaRecord, int UserId, string Username, string[]? ignoreColumns = null)
         {

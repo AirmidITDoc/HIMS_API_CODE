@@ -37,6 +37,14 @@ namespace HIMS.API.Controllers.OTManagement
             IPagedList<TOtAnesthesiaRecord> OtAnesthesiaRecordList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(OtAnesthesiaRecordList.ToGridResponse(objGrid, "OtAnesthesiaRecord List"));
         }
+        [HttpGet("GetOtAnesthesiaPreOpdiagnosisList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetOtInOperationDiagnosisList(string DescriptionType)
+        {
+            var result = await _IOTAnesthesiaService.OtAnesthesiaPreOpdiagnosisListAsync(DescriptionType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetOtAnesthesiaPreOpdiagnosis List", result);
+        }
+
 
 
         [HttpPost("Insert")]
