@@ -39,6 +39,16 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
 
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+
+            var data1 = await _repository.GetById(x => x.AnesthesiaId == id);
+            return data1.ToSingleResponse<TOtAnesthesiaRecord, OTAnesthesiaModel>("OTAnesthesiaModel");
+        }
+
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OTAnesthesiaModel obj)
