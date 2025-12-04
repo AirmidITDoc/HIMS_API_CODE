@@ -20,6 +20,8 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? IsCancelledDate { get; set; }
         public long RefundId { get; set; }
         public long UnitId { get; set; }
+        public long? CashCounterId { get; set; }
+
 
 
     }

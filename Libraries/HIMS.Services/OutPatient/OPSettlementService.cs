@@ -73,7 +73,7 @@ namespace HIMS.Services.OutPatient
         }
 
 
-        public virtual async Task InsertSettlementMultiple(List<Payment> objpayment, List<Bill> objBill, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertSettlementMultiple(List<Payment> objpayment, List<Bill> objBill, List<TPayment> ObjTPayment ,int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
             // Insert In Payment 
@@ -107,10 +107,24 @@ namespace HIMS.Services.OutPatient
                 }
                 odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
                 await _context.LogProcedureExecution(rAdmissentity1, nameof(Bill), items.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            }
+                foreach (var item in ObjTPayment)
+                {
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+                    var pentity = item.ToDictionary();
+                    foreach (var rProperty in pentity.Keys.ToList())
+                    {
+                        if (!PEntity.Contains(rProperty))
+                            pentity.Remove(rProperty);
+                    }
+                    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                    item.PaymentId = Convert.ToInt32(VPaymentId);
+                }
 
 
             }
-        }
+        
         public virtual async Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

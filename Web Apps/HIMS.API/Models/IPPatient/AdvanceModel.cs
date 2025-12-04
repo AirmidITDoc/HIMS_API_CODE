@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OPPatient;
 
 
 namespace HIMS.API.Models.IPPatient
@@ -112,6 +113,8 @@ namespace HIMS.API.Models.IPPatient
         public AdvanceModel Advance { get; set; }
         public AdvanceDetailModel AdvanceDetail { get; set; }
         public AdvancePayment AdvancePayment { get; set; }
+        public List<TPaymentModel> TPayments { get; set; }
+
     }
 
     public class UpdateAdvanceModel
@@ -165,6 +168,8 @@ namespace HIMS.API.Models.IPPatient
         public UpdateAdvanceModel Advance { get; set; }
         public AdvanceDetailModel2 AdvanceDetail { get; set; }
         public AdvancePayment AdvancePayment { get; set; }
+        public List<TPaymentModel> TPayments { get; set; }
+
     }
     public class UpdateCancel
     {

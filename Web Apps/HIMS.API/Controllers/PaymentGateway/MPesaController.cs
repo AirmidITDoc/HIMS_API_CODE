@@ -93,12 +93,13 @@ namespace HIMS.API.Controllers.Login
         {
             //var result = await _stkService.RegisterUrls();
             string reference = Guid.NewGuid().ToString().Replace("-", "");
-            var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, _config["MPesa:ConfirmationUrl"], reference);
+            var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, objRequest.Opdipdid ?? 0 , _config["MPesa:ConfirmationUrl"], reference);
             var data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
             data.ReferenceNo = reference;
-            await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = DateTime.Now }, CurrentUserId, CurrentUserName);
+            await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, Opdipdid = objRequest.Opdipdid, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = DateTime.Now }, CurrentUserId, CurrentUserName);
             return new ApiResponse() { StatusCode = 200, Data = data, StatusText = "Ok", Message = "Payment Done" };
         }
+
         [HttpPost("register-urls")]
         public async Task<ApiResponse> RegisterUrl()
         {
