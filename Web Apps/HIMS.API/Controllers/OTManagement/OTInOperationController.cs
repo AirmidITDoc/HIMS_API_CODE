@@ -33,6 +33,18 @@ namespace HIMS.API.Controllers.OTManagement
             _repository2 = repository3;
 
         }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.OtinOperationId == id);
+            return data.ToSingleResponse<TOtInOperationHeader, OTInOperationHeaderModel>("TOtPreOperationHeader");
+        }
         //[HttpPost("InOperationAttendingDetailsList")]
         ////[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
         //public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
@@ -49,7 +61,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         //List API
-        [HttpGet("OTInOperationHeaderList")]
+        [HttpPost("OTInOperationHeaderList")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
