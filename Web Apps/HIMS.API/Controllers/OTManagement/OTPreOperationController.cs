@@ -13,6 +13,8 @@ using HIMS.Services;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OTManagement;
+using HIMS.API.Models.Masters;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -27,23 +29,40 @@ namespace HIMS.API.Controllers.OTManagement
         private readonly IGenericService<TOtPreOperationHeader> _repository;
         private readonly IGenericService<TOtPreOperationCathlabDiagnosis> _repository1;
         private readonly IGenericService<TOtPreOperationSurgeryDetail> _repository2;
+        private readonly IGenericService<TOtPreOperationDiagnosis> _repository3;
+
         public OTPreOperationController(IOTPreOperationService repository, IGenericService <TOtPreOperationHeader> repository1, IGenericService<TOtPreOperationCathlabDiagnosis> repository2,
-            IGenericService<TOtPreOperationSurgeryDetail> repository3)
+            IGenericService<TOtPreOperationSurgeryDetail> repository3, IGenericService<TOtPreOperationDiagnosis> repository4)
         {
             _IOTPreOperationService = repository;
             _repository = repository1;
             _repository1 = repository2;
             _repository2 = repository3;
+            _repository3 = repository4;
+
         }
-        //List API
-        [HttpPost("OtPreOperationHeaderList")]
-        //[Route("[action]")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> otList(GridRequestModel objGrid)
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
         {
-            IPagedList<TOtPreOperationHeader> OtPreOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(OtPreOperationHeaderList.ToGridResponse(objGrid, "OtPreOperationHeader List"));
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.OtpreOperationId == id);
+            return data.ToSingleResponse<TOtPreOperationHeader, PreOperationHeaderModel>("TOtPreOperationHeader");
         }
+
+        ////List API
+        //[HttpGet("OtPreOperationHeaderList")]
+        ////[Route("[action]")]
+        ////[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> otList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<TOtPreOperationHeader> OtPreOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
+        //    return Ok(OtPreOperationHeaderList.ToGridResponse(objGrid, "OtPreOperationHeader List"));
+        //}
         //List API
         [HttpPost("OtPreOperationCathlabDiagnosisList")]
         //[Route("[action]")]
@@ -61,6 +80,16 @@ namespace HIMS.API.Controllers.OTManagement
             IPagedList<TOtPreOperationSurgeryDetail> OtPreOperationSurgeryDetailList = await _repository2.GetAllPagedAsync(objGrid);
             return Ok(OtPreOperationSurgeryDetailList.ToGridResponse(objGrid, "OtPreOperationSurgeryDetail List"));
         }
+
+        [HttpPost("OtPreOperationDiagnosisList")]
+        //[Route("[action]")]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> PreOperationDiagnosisList(GridRequestModel objGrid)
+        {
+            IPagedList<TOtPreOperationDiagnosis> PreOperationDiagnosisList = await _repository3.GetAllPagedAsync(objGrid);
+            return Ok(PreOperationDiagnosisList.ToGridResponse(objGrid, "OtPreOperationDiagnosisList"));
+        }
+
 
 
         [HttpPost("perOperationsurgeryList")]

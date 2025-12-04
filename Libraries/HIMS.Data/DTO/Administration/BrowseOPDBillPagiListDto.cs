@@ -13,7 +13,6 @@
         public string DoctorName { get; set; }
         public string RefDoctorName { get; set; }
         public string HospitalName { get; set; }
-        public long PatientType { get; set; }
         public string TariffName { get; set; }
         public string CompanyName { get; set; }
         public string DepartmentName { get; set; }
@@ -37,6 +36,10 @@
         public long BillNo { get; set; }
         public long CompanyId { get; set; }
         public long PaymentId { get; set; }
+        public string? Opdno { get; set; }
+        public string? PatientType { get; set; }
+
+
 
     }
 }

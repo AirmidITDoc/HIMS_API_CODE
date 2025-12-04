@@ -91,7 +91,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th style=" text-align: left;" colspan="5">
+                    <th style=" text-align: left;">
                         <h4 style="margin: 1px 0px;font-size: 22px;" ">
                             Bill Information
                         </h4>
@@ -123,7 +123,7 @@
                 <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
 
                 <tr>
-                    <th style=" text-align: left;" colspan="5">
+                    <th style=" text-align: left;" >
                         <h4 style="margin: 1px 0px;font-size: 22px;">
                             Payment Information
                         </h4>
@@ -166,7 +166,6 @@
                             <span>{{BankName}}</span>
                         </td>
                     </tr>
-
                     <tr style="display: {{chkOnlineAmountflag}};">
                         <td style="padding: 2px;">
                             <span>Online Pay:</span>
@@ -176,8 +175,13 @@
                             <span>Card No:</span>
                             <span>{{CardNo}}</span>
                         </td>
-
                     </tr>
+                    <tr style="display: {{chkCompanyflag}}">
+                        <td style="padding: 2px; white-space: nowrap;">
+                            <span>Company Name: {{CompanyName}}</span>
+                        </td>
+                    </tr>
+
                 </table>
                 <br/>
                 <br/>

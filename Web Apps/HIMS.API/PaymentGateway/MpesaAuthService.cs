@@ -101,7 +101,7 @@ namespace HIMS.API.PaymentGateway
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> StkPushAsync(string phoneNumber, decimal amount, string callbackUrl, string reference)
+        public async Task<string> StkPushAsync(string phoneNumber, decimal amount,long Opdipdid, string callbackUrl, string reference)
         {
             string token = await _authService.GetAccessTokenAsync();
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
