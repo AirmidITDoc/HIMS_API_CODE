@@ -13,6 +13,8 @@ using HIMS.Services;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OTManagement;
+using HIMS.API.Models.Masters;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -39,15 +41,28 @@ namespace HIMS.API.Controllers.OTManagement
             _repository3 = repository4;
 
         }
-        //List API
-        [HttpGet("OtPreOperationHeaderList")]
-        //[Route("[action]")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> otList(GridRequestModel objGrid)
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
         {
-            IPagedList<TOtPreOperationHeader> OtPreOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(OtPreOperationHeaderList.ToGridResponse(objGrid, "OtPreOperationHeader List"));
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.OtpreOperationId == id);
+            return data.ToSingleResponse<TOtPreOperationHeader, PreOperationHeaderModel>("TOtPreOperationHeader");
         }
+
+        ////List API
+        //[HttpGet("OtPreOperationHeaderList")]
+        ////[Route("[action]")]
+        ////[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> otList(GridRequestModel objGrid)
+        //{
+        //    IPagedList<TOtPreOperationHeader> OtPreOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
+        //    return Ok(OtPreOperationHeaderList.ToGridResponse(objGrid, "OtPreOperationHeader List"));
+        //}
         //List API
         [HttpPost("OtPreOperationCathlabDiagnosisList")]
         //[Route("[action]")]
