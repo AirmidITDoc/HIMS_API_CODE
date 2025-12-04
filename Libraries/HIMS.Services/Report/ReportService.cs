@@ -4524,6 +4524,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | HH:mm tt"));
 
                             html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
                             html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("DoctorName"));
                             html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
@@ -4549,6 +4550,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
+                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
+
 
 
 
@@ -8969,9 +8972,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BankName}}", dt.GetColValue("BankName"));
                         html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo"));
                         html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName"));
-
-
-
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
                         html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
@@ -8990,7 +8991,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBalanceAmtflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCardPayAmountflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCashPayAmountflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
+                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
 
 
 
