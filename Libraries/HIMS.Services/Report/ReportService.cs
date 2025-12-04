@@ -9061,6 +9061,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
+
                         html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
 
                         html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");

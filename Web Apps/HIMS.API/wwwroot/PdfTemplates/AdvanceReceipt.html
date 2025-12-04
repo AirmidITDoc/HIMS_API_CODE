@@ -129,9 +129,11 @@
                                     <span>₹ {{PayTMPayAmount}}</span>
                                 </td>
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="4">
-                                    <span>Card No:</span>
-                                    <span>{{CardNo}}</span>
+                                    <div style="display: {{chkPayTMTxnFlag}};">PayTM Tran No: {{PayTMTranNo}}</div>
+                                    <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
                                 </td>
+
+
                             </tr>
 
                         </table>
