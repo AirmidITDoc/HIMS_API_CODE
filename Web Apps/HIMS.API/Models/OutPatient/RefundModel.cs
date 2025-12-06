@@ -22,6 +22,8 @@ namespace HIMS.API.Models.OutPatient
         public DateTime? IsCancelledDate { get; set; }
         public long? RefundId { get; set; }
         public long? UnitId { get; set; }
+        public long? CashCounterId { get; set; }
+
 
     }
     public class RefundModelValidator : AbstractValidator<RefundModel>
