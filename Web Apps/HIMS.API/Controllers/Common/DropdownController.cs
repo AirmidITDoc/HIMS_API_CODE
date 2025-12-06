@@ -384,7 +384,9 @@ namespace HIMS.API.Controllers.Common
                 "ModeOfTransfer" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ModeOfTransfer")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "AnesthesiaType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "AnesthesiaType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "BloodGroupTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "BloodGroupTypes")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-                "paymentMode" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PaymentMode_Types")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "CommonpaymentMode" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PaymentMode_Types")).ToList().ToDropDown(nameof(MConstant.Value), nameof(MConstant.Name)),
+                "ConsentType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ConsentType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
 
 
 

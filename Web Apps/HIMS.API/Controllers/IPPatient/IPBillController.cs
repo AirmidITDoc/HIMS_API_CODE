@@ -142,7 +142,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("PaymentSettelment")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
             Payment model = obj.Payment.MapTo<Payment>();
@@ -163,7 +163,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PaymentId);
         }
         [HttpPost("IPBilllwithCashCounterInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse Insertsp(BillingModel obj)
         {
 
@@ -196,7 +196,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertCreditSP(BillingModel obj)
         {
 
