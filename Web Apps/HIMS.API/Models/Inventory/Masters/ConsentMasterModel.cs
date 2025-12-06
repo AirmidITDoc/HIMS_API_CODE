@@ -9,6 +9,8 @@ namespace HIMS.API.Models.Inventory.Masters
         public long? DepartmentId { get; set; }
         public string? ConsentName { get; set; }
         public string? ConsentDesc { get; set; }
+        public long? ConsentType { get; set; }
+
 
 
     }

@@ -1,39 +1,40 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory.Masters;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core;
 using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.Api.Models.Common;
+using HIMS.API.Models.Masters;
+using HIMS.API.Models.Nursing;
 
-namespace HIMS.API.Controllers.Masters.OTMaster
+namespace HIMS.API.Controllers.NursingStation
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class ConsentMasterController : BaseController
+    public class TransactionConsentMasterController : BaseController
     {
-        private readonly IGenericService<MConsentMaster> _repository;
+        private readonly IGenericService<TConsentMaster> _repository;
 
-        public ConsentMasterController(IGenericService<MConsentMaster> repository)
+        public TransactionConsentMasterController(IGenericService<TConsentMaster> repository)
         {
             _repository = repository;
         }
+
+        //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MConsentMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MOttableMasterList.ToGridResponse(objGrid, "MConsentMaster List"));
+            IPagedList<TConsentMaster> TConsentMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(TConsentMasterList.ToGridResponse(objGrid, "TConsentMaster List"));
         }
-
         [HttpGet("{id?}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -41,56 +42,52 @@ namespace HIMS.API.Controllers.Masters.OTMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository.GetById(x => x.ConsentId == id);
-            return data.ToSingleResponse<MConsentMaster, ConsentMasterModel>("MConsentMaster");
+            return data.ToSingleResponse<TConsentMaster, TransactionConsentMasterModel>("TConsentMaster");
         }
-        //Insert API
         [HttpPost]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(ConsentMasterModel obj)
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(TransactionConsentMasterModel obj)
         {
-            MConsentMaster model = obj.MapTo<MConsentMaster>();
+            TConsentMaster model = obj.MapTo<TConsentMaster>();
             model.IsActive = true;
             if (obj.ConsentId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = DateTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = DateTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(ConsentMasterModel obj)
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(TransactionConsentMasterModel obj)
         {
-            MConsentMaster model = obj.MapTo<MConsentMaster>();
+            TConsentMaster model = obj.MapTo<TConsentMaster>();
             model.IsActive = true;
             if (obj.ConsentId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-
-
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "BankMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
-            MConsentMaster? model = await _repository.GetById(x => x.ConsentId == Id);
+            TConsentMaster model = await _repository.GetById(x => x.ConsentId == Id);
             if ((model?.ConsentId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
@@ -99,6 +96,5 @@ namespace HIMS.API.Controllers.Masters.OTMaster
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
     }
 }
