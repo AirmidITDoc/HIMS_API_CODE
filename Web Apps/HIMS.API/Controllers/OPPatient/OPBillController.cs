@@ -83,13 +83,14 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillingInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();
             Payment objPayment = obj.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
             List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
 
             if (obj.BillNo == 0)
             {
@@ -136,7 +137,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppointmentBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppBillInsert(AppBillingMainModels obj)
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
@@ -188,7 +189,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppointmentCreditBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPAppointCreditBillingInsert(AppBillingMainModels obj)
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();

@@ -71,13 +71,15 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("IPRefundOfBILLInsert")]
-        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
             List<AddCharge> objAddCharge = obj.AddCharges.MapTo<List<AddCharge>>();
             Payment objPayment = obj.Payment.MapTo<Payment>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
@@ -91,7 +93,7 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                _IRefundOfBillService.InsertIP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+                _IRefundOfBillService.InsertIP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -100,13 +102,15 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("InsertOPRefundOfBill")]
-        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         public ApiResponse Insert(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
             List<AddCharge> objAddCharge = obj.AddCharges.MapTo<List<AddCharge>>();
             Payment objPayment = obj.Payment.MapTo<Payment>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (obj.Refund.RefundId == 0)
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
@@ -120,7 +124,7 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                _IRefundOfBillService.InsertOP(model, objTRefundDetail, objAddCharge, objPayment, CurrentUserId, CurrentUserName);
+                _IRefundOfBillService.InsertOP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

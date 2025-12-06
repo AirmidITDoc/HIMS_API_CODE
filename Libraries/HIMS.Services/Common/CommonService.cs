@@ -153,6 +153,8 @@ namespace HIMS.Services.Common
                 case "MarketingTodayVisitPersonWiseCount": sp_Name = "ps_Marketing_App_TodayVisitPersonWiseCount"; break;
                 case "ItemSupplierDetails": sp_Name = "ps_Rtrv_LastThreeSupplierInfo"; break;
                 case "ConstantType": sp_Name = "m_rtrv_ConstantType_Wise_List"; break;
+                case "paymentMode": sp_Name = "ps_rtrv_paymentModelist  "; break;
+
 
 
 

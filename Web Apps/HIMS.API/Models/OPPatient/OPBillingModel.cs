@@ -269,6 +269,9 @@ namespace HIMS.API.Models.OPPatient
         public byte? IsSelfOrcompany { get; set; }
         public string? TranMode { get; set; }
         public long? CreatedBy { get; set; }
+        public string? TransactionLabel { get; set; }
+
+
     }
 
 

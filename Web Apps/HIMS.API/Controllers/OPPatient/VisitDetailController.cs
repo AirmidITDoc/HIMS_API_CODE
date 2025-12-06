@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.OPPatient
             _IConsRefDoctorService = repository2;
         }
         [HttpPost("AppVisitList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);

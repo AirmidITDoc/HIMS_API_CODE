@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Payment model = obj.OPCreditPayment.MapTo<Payment>();
             Bill BillUpdateModel = obj.BillUpdate.MapTo<Bill>();
-            List<TPayment> ObjTPayment = obj.TPayment.MapTo<List<TPayment>>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
             if (obj.OPCreditPayment.PaymentId == 0)
             {
@@ -53,11 +53,13 @@ namespace HIMS.API.Controllers.OPPatient
         {
             List<Payment> model = obj.OPCreditPayment.MapTo<List<Payment>>();
             List<Bill> BillUpdateModel = obj.BillUpdate.MapTo<List<Bill>>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (model.Count > 0)
 
             {
 
-                await _OPSettlementService.InsertSettlementMultiple(model, BillUpdateModel, CurrentUserId, CurrentUserName);
+                await _OPSettlementService.InsertSettlementMultiple(model, BillUpdateModel, ObjTPayment ,CurrentUserId, CurrentUserName);
 
             }
             else

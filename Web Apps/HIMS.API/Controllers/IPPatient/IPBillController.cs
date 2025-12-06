@@ -142,19 +142,21 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("PaymentSettelment")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelPayment obj)
         {
             Payment model = obj.Payment.MapTo<Payment>();
             Bill objBillModel = obj.Billupdate.MapTo<Bill>();
             List<AdvanceDetail> objAdvanceDetail = obj.AdvanceDetailupdate.MapTo<List<AdvanceDetail>>();
             AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderupdate.MapTo<AdvanceHeader>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (obj.Payment.PaymentId == 0)
             {
                 model.PaymentDate = Convert.ToDateTime(obj.Payment.PaymentDate);
                 model.PaymentTime = Convert.ToDateTime(obj.Payment.PaymentTime);
                 model.AddBy = CurrentUserId;
-                await _IPBillService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                await _IPBillService.paymentAsyncSP(model, objBillModel, objAdvanceDetail, objAdvanceHeader, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -173,6 +175,8 @@ namespace HIMS.API.Controllers.IPPatient
             Bill BillModel = obj.Bills.MapTo<Bill>();
             List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
             AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (obj.Bill.BillNo == 0)
             {
                 Model.BillDate = Convert.ToDateTime(obj.Bill.BillDate);
@@ -184,7 +188,7 @@ namespace HIMS.API.Controllers.IPPatient
                 Model.CreatedDate = DateTime.Now;
                 Model.ModifiedBy = CurrentUserId;
                 Model.ModifiedDate = DateTime.Now;
-                _IPBillService.IPbillSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                _IPBillService.IPbillSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -192,7 +196,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBilllCreditInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertCreditSP(BillingModel obj)
         {
 
@@ -221,13 +225,15 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
             Bill Model = obj.IPBillling.MapTo<Bill>();
             List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
             Payment paymentModel = obj.payments.MapTo<Payment>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
 
             if (obj.IPBillling.BillNo == 0)
             {
@@ -240,7 +246,7 @@ namespace HIMS.API.Controllers.IPPatient
                 Model.CreatedDate = DateTime.Now;
                 Model.ModifiedBy = CurrentUserId;
                 Model.ModifiedDate = DateTime.Now;
-                _IPBillService.IPInterimBillCashCounterSp(AddChargeModel, Model, BillDetailModel, paymentModel, CurrentUserId, CurrentUserName);
+                _IPBillService.IPInterimBillCashCounterSp(AddChargeModel, Model, BillDetailModel, paymentModel ,ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

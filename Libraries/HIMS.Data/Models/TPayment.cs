@@ -26,6 +26,7 @@ namespace HIMS.Data.Models
         public long? RefundId { get; set; }
         public long? CashCounterId { get; set; }
         public long? TransactionType { get; set; }
+        public string? TransactionLabel { get; set; }
         public byte? IsSelfOrcompany { get; set; }
         public string? TranMode { get; set; }
         public bool? IsCancelled { get; set; }

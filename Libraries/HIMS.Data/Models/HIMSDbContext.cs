@@ -581,7 +581,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -8589,9 +8589,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExpDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Fax)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Fax).HasMaxLength(20);
 
                 entity.Property(e => e.Gstno)
                     .HasMaxLength(20)
@@ -8601,9 +8599,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.LicNo).HasMaxLength(50);
 
-                entity.Property(e => e.Mobile)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Mobile).HasMaxLength(20);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -8611,9 +8607,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PanNo).HasMaxLength(20);
 
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Phone).HasMaxLength(20);
 
                 entity.Property(e => e.PinCode).HasMaxLength(20);
 
@@ -15118,7 +15112,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OnlineTranNo).HasMaxLength(50);
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(55);
 
                 entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
 
@@ -15134,9 +15128,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
-                entity.Property(e => e.TranMode).HasMaxLength(30);
+                entity.Property(e => e.TranMode).HasMaxLength(55);
 
                 entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
 
                 entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });

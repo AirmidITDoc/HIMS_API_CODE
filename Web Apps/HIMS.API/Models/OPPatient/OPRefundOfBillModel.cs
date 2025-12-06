@@ -20,6 +20,8 @@ namespace HIMS.API.Models.OPPatient
         public DateTime? IsCancelledDate { get; set; }
         public long RefundId { get; set; }
         public long UnitId { get; set; }
+        public long? CashCounterId { get; set; }
+
 
 
     }
@@ -126,6 +128,8 @@ namespace HIMS.API.Models.OPPatient
         public List<TRefundDetailModel> TRefundDetails { get; set; }
         public List<AddChargesModell> AddCharges { get; set; }
         public PaymentModell Payment { get; set; }
+        public List<TPaymentModel> TPayments { get; set; }
+
     }
 }
 
