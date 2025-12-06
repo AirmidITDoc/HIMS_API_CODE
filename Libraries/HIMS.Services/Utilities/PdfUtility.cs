@@ -74,23 +74,18 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
+
+            var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
             //RS
-            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+            //string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+            //string logoFileName = logo.ConvertToString();
 
-            var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+            //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
 
-            htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
-
+            //htmlHeader = htmlHeader.Replace("{{Header}}", HospitalLogo);
 
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
-
-
-            //return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
-            //return htmlHeader.Replace("{{BaseUrl}}", _configuration.GetValue<string>("BaseUrl").Trim('/'));
-
-
-
-
         }
 
         public string GetPatientHeader(ReportRequestModel model,string filePath)
