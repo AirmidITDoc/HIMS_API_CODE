@@ -67,7 +67,7 @@
                                     <span style="font-weight:bold;"><b>Doctor Name:</b></span>
                                     <span>{{DoctorName}}</span>
                                 </td>
-                               
+
                             </tr>
                             <tr>
 
@@ -97,13 +97,13 @@
 
                                         <tbody style="font-size: 16px;">
                                             <!--<tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
-                                                    Bill Amount :
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{NetPayableAmt}}
-                                                </td>
-                                            </tr>-->
+                                    <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px;">
+                                        Bill Amount :
+                                    </td>
+                                    <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
+                                        {{NetPayableAmt}}
+                                    </td>
+                                </tr>-->
                                             <tr>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
                                                     Refund Amount :
@@ -138,7 +138,78 @@
                         </table>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 16px; border: 1px solid #d4c3c3;">
+                            <tr>
+                                <th style="border: 1px solid #d4c3c3; text-align: center; padding: 8px;" colspan="5">
+                                    <h4 style="margin: 0; font-size: 16px;">
+                                        Payment Information
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr style="display: {{chkcashflag}};font-weight:bold;">
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="5">
+                                    <span>Cash Pay:</span>
+                                    <span>₹ {{CashPayAmount}}</span>
+                                </td>
+                            </tr>
 
+
+                            <tr style="display: {{chkcardflag}};font-weight:bold;">
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <span>Card Pay:</span>
+                                    <span>₹ {{CardPayAmount}}</span>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <span>Card No:</span>
+                                    <span>{{CardNo}}</span>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="3">
+                                    <span>Card Bank Name:</span>
+                                    <span>{{CardBankName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr style="display: {{chkchequeflag}};font-weight:bold;">
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <span>Cheque Pay:</span>
+                                    <span>₹ {{ChequePayAmount}}</span>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <span>Cheque No:</span>
+                                    <span>{{ChequeNo}}</span>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="3">
+                                    <span>Bank Name:</span>
+                                    <span>{{BankName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr style="display: {{chkOnlineAmountflag}};font-weight:bold;">
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <span>Online Pay:</span>
+                                    <span>₹ {{OnlineAmount}}</span>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="3">
+                                    <div style="display: {{chkPayTMTxnFlag}};">PayTM Tran No: {{PayTMTranNo}}</div>
+                                    <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                    <div style="display: {{chkNEFTBankFlag}};">Bank Name: {{NEFTBankMaster}}</div>
+                                </td>
+                            </tr>
+
+
+                            <!--<tr style="display: {{chkCompanyflag}}">
+                    <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="5">
+                        <span>Company Name: {{PaymentCompanyName}}</span>
+                    </td>
+                </tr>-->
+
+                        </table>
+                    </td>
+                </tr>
 
             </table>
         </div>
