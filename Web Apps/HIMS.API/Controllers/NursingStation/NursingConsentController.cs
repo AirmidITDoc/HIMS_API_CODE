@@ -37,6 +37,8 @@ namespace HIMS.API.Controllers.NursingStation
                 x.ConsentId,
                 x.ConsentName,
                 x.ConsentDesc,
+                x.ConsentType,
+
 
             }));
         }

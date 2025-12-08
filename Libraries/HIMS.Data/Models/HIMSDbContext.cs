@@ -36,7 +36,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; } = null!;
         public virtual DbSet<CompanyTypeMaster> CompanyTypeMasters { get; set; } = null!;
         public virtual DbSet<ConfigSetting> ConfigSettings { get; set; } = null!;
-        public virtual DbSet<ConsentMaster> ConsentMasters { get; set; } = null!;
         public virtual DbSet<DbGenderMaster> DbGenderMasters { get; set; } = null!;
         public virtual DbSet<DbPrefixMaster> DbPrefixMasters { get; set; } = null!;
         public virtual DbSet<DbPurposeMaster> DbPurposeMasters { get; set; } = null!;
@@ -399,6 +398,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCompanyDetail> TCompanyDetails { get; set; } = null!;
         public virtual DbSet<TCompanyHeader> TCompanyHeaders { get; set; } = null!;
         public virtual DbSet<TConsentInformation> TConsentInformations { get; set; } = null!;
+        public virtual DbSet<TConsentMaster> TConsentMasters { get; set; } = null!;
         public virtual DbSet<TCurrentStk> TCurrentStks { get; set; } = null!;
         public virtual DbSet<TCurrentStkWithDaily> TCurrentStkWithDailies { get; set; } = null!;
         public virtual DbSet<TCurrentStock> TCurrentStocks { get; set; } = null!;
@@ -1413,23 +1413,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
                 entity.Property(e => e.RegPrefix).HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<ConsentMaster>(entity =>
-            {
-                entity.HasKey(e => e.ConsentId);
-
-                entity.ToTable("ConsentMaster");
-
-                entity.Property(e => e.ConsentId).ValueGeneratedNever();
-
-                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ConsentName).HasMaxLength(500);
-
-                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DbGenderMaster>(entity =>
@@ -11315,6 +11298,28 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+            });
+
+            modelBuilder.Entity<TConsentMaster>(entity =>
+            {
+                entity.HasKey(e => e.ConsentId)
+                    .HasName("PK_ConsentMaster");
+
+                entity.ToTable("T_ConsentMaster");
+
+                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ConsentName).HasMaxLength(500);
+
+                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 

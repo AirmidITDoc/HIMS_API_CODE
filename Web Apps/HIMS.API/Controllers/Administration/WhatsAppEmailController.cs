@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Administration
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.", model.SmsoutGoingId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.SmsoutGoingId);
         }
 
         [HttpPost("EmailInsert")]
@@ -47,12 +47,12 @@ namespace HIMS.API.Controllers.Administration
 
             if (obj.Id == 0)
             {
-                //model.CreatedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 await _whatsAppEmailService.InsertEmailAsync(model, _configuration, obj.TranNo, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record  added successfully.", model.Id);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.Id);
         }
     }
 }

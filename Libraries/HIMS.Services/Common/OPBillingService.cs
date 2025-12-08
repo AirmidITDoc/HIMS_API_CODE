@@ -331,6 +331,7 @@ namespace HIMS.Services.Common
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
+
                     foreach (var item in ObjTPayment)
                     {
                         string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
@@ -349,8 +350,6 @@ namespace HIMS.Services.Common
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                         item.PaymentId = Convert.ToInt32(VPaymentId);
                     }
-
-
                     scope.Complete();
                 }
 
