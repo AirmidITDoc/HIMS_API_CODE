@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.OTManagement
         public async Task<ApiResponse> Get(int id)
         {
 
-            var data1 = await _repository.GetById(x => x.AnesthesiaId == id);
+            var data1 = await _repository.GetById(x => x.OtreservationId == id);
             return data1.ToSingleResponse<TOtAnesthesiaRecord, OTAnesthesiaModel>("OTAnesthesiaModel");
         }
 
