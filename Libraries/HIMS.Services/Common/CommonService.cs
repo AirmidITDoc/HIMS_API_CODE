@@ -146,6 +146,7 @@ namespace HIMS.Services.Common
                 case "Mobile_WardWiseBedOccupancy": sp_Name = "ps_MobileApp_WardWiseBedOccupancy"; break;
                 case "Mobile_OPIPBillingList": sp_Name = "ps_APP_BILL_OP_IP_LIST"; break;
                 case "Mobile_OPIPBillDetails": sp_Name = "ps_APP_VIEW_BILL_DET"; break;
+                case "Mobile_ViewPathologytestDet": sp_Name = "ps_APP_VIEW_PathologyTest_DET"; break;
 
 
                 // Marketing Mobile App API
@@ -155,9 +156,7 @@ namespace HIMS.Services.Common
                 case "MarketingTodayVisitPersonWiseCount": sp_Name = "ps_Marketing_App_TodayVisitPersonWiseCount"; break;
                 case "ItemSupplierDetails": sp_Name = "ps_Rtrv_LastThreeSupplierInfo"; break;
                 case "ConstantType": sp_Name = "m_rtrv_ConstantType_Wise_List"; break;
-                case "paymentMode": sp_Name = "ps_rtrv_paymentModelist  "; break;
-
-
+                case "paymentMode": sp_Name = "ps_rtrv_paymentModelist"; break;
 
 
 
