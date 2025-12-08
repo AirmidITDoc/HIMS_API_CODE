@@ -4549,6 +4549,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                            html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
                             html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
 
@@ -9206,6 +9208,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("PaymentCompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
 
@@ -12208,7 +12212,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{TermsAndCondition}}", dt.GetColValue("TermsAndCondition"));
                         html = html.Replace("{{SalesNo}}", dt.GetColValue("SalesNo"));
                         // html = html.Replace("{{Date}}", Bills.GetColValue("Date"));
-                        html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/M/yyyy hh:mm tt"));
+                        html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
                         html = html.Replace("{{DL_NO}}", dt.GetColValue("DL_NO"));
