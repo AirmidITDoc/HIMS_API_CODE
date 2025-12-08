@@ -4552,7 +4552,9 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
                             html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
-                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
+                            html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("NEFTBankMaster").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
 
 
 
@@ -9002,7 +9004,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBalanceAmtflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCardPayAmountflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCashPayAmountflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
+                        html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("NEFTBankMaster").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
 
 
 
@@ -9065,10 +9071,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
-
+                        html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("NEFTBankMaster").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
 
-                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
                         string finalamt = conversion(dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace().ToString());
@@ -9194,7 +9200,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{PaymentCompanyName}}", dt.GetColValue("PaymentCompanyName"));
-
+                        html = html.Replace("{{OnlineAmount}}", dt.GetColValue("OnlineAmount").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{BankName}}", dt.GetColValue("BankName"));
+                        html = html.Replace("{{CardDate}}", dt.GetColValue("CardDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo"));
+                        html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName"));
+                        html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+                        html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo"));
+                        html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
+                        html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster"));
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("F2"));
@@ -9212,6 +9226,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("PaymentCompanyName").ConvertToDouble() != ' ' ? "table-row " : "none");
+                        html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("NEFTBankMaster").ConvertToString() != "" ? "visible" : "none");
 
                         html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
