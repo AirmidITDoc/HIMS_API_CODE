@@ -233,7 +233,7 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "RefundDate", "RefundTime", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId" };
+            string[] rEntity = { "RefundDate", "RefundTime", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId" };
             var entity = Objrefund.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {

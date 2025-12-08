@@ -36,7 +36,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; } = null!;
         public virtual DbSet<CompanyTypeMaster> CompanyTypeMasters { get; set; } = null!;
         public virtual DbSet<ConfigSetting> ConfigSettings { get; set; } = null!;
-        public virtual DbSet<ConsentMaster> ConsentMasters { get; set; } = null!;
         public virtual DbSet<DbGenderMaster> DbGenderMasters { get; set; } = null!;
         public virtual DbSet<DbPrefixMaster> DbPrefixMasters { get; set; } = null!;
         public virtual DbSet<DbPurposeMaster> DbPurposeMasters { get; set; } = null!;
@@ -50,6 +49,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<DynamicExecuteSchedule> DynamicExecuteSchedules { get; set; } = null!;
         public virtual DbSet<DynamicExecuteScheduleLog> DynamicExecuteScheduleLogs { get; set; } = null!;
         public virtual DbSet<EmailConfiguration> EmailConfigurations { get; set; } = null!;
+        public virtual DbSet<EmailNotificationDatum> EmailNotificationData { get; set; } = null!;
         public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; } = null!;
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
@@ -398,6 +398,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCompanyDetail> TCompanyDetails { get; set; } = null!;
         public virtual DbSet<TCompanyHeader> TCompanyHeaders { get; set; } = null!;
         public virtual DbSet<TConsentInformation> TConsentInformations { get; set; } = null!;
+        public virtual DbSet<TConsentMaster> TConsentMasters { get; set; } = null!;
         public virtual DbSet<TCurrentStk> TCurrentStks { get; set; } = null!;
         public virtual DbSet<TCurrentStkWithDaily> TCurrentStkWithDailies { get; set; } = null!;
         public virtual DbSet<TCurrentStock> TCurrentStocks { get; set; } = null!;
@@ -580,7 +581,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1414,23 +1415,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RegPrefix).HasMaxLength(20);
             });
 
-            modelBuilder.Entity<ConsentMaster>(entity =>
-            {
-                entity.HasKey(e => e.ConsentId);
-
-                entity.ToTable("ConsentMaster");
-
-                entity.Property(e => e.ConsentId).ValueGeneratedNever();
-
-                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ConsentName).HasMaxLength(500);
-
-                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<DbGenderMaster>(entity =>
             {
                 entity.HasKey(e => e.GenderId)
@@ -1770,6 +1754,23 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("User_Name");
+            });
+
+            modelBuilder.Entity<EmailNotificationDatum>(entity =>
+            {
+                entity.ToTable("Email_Notification_Data");
+
+                entity.Property(e => e.AttachmentPath).HasMaxLength(1000);
+
+                entity.Property(e => e.EmailCc)
+                    .HasMaxLength(100)
+                    .HasColumnName("EmailCC");
+
+                entity.Property(e => e.SendDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Subject).HasMaxLength(100);
+
+                entity.Property(e => e.ToAddress).HasMaxLength(100);
             });
 
             modelBuilder.Entity<EmployeeMaster>(entity =>
@@ -8571,9 +8572,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExpDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Fax)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Fax).HasMaxLength(20);
 
                 entity.Property(e => e.Gstno)
                     .HasMaxLength(20)
@@ -8583,9 +8582,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.LicNo).HasMaxLength(50);
 
-                entity.Property(e => e.Mobile)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Mobile).HasMaxLength(20);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -8593,9 +8590,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PanNo).HasMaxLength(20);
 
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Phone).HasMaxLength(20);
 
                 entity.Property(e => e.PinCode).HasMaxLength(20);
 
@@ -11303,6 +11298,28 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+            });
+
+            modelBuilder.Entity<TConsentMaster>(entity =>
+            {
+                entity.HasKey(e => e.ConsentId)
+                    .HasName("PK_ConsentMaster");
+
+                entity.ToTable("T_ConsentMaster");
+
+                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ConsentName).HasMaxLength(500);
+
+                entity.Property(e => e.ConsentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 

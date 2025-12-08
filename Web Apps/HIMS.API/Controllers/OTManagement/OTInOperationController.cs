@@ -49,15 +49,15 @@ namespace HIMS.API.Controllers.OTManagement
             var data = await _repository.GetById(x => x.OtinOperationId == id);
             return data.ToSingleResponse<TOtInOperationHeader, OTInOperationHeaderModel>("TOtPreOperationHeader");
         }
-        
-        //List API
         [HttpPost("InOperationAttendingDetailsList")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
         {
-            IPagedList<TOtInOperationAttendingDetail> InOperationAttendingDetailsList = await _repository3.GetAllPagedAsync(objGrid);
+            IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
             return Ok(InOperationAttendingDetailsList.ToGridResponse(objGrid, "InOperationAttendingDetails List"));
         }
+
+
 
         [HttpGet("GetOtInOperationPostOperDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]

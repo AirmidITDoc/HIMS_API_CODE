@@ -7,6 +7,7 @@ namespace HIMS.Data.Models
     {
         public long ConsentId { get; set; }
         public long? DepartmentId { get; set; }
+        public long? ConsentType { get; set; }
         public string? ConsentName { get; set; }
         public string? ConsentDesc { get; set; }
         public bool? IsActive { get; set; }

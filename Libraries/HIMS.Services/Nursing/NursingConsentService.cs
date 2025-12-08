@@ -31,6 +31,8 @@ namespace HIMS.Services.Nursing
                           ConsentId = s.ConsentId,
                           ConsentName = s.ConsentName,
                           ConsentDesc = s.ConsentDesc,
+                          ConsentType = s.ConsentType,
+
 
                       };
             return await qry.Take(50).ToListAsync();
