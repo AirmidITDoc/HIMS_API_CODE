@@ -61,7 +61,6 @@ namespace HIMS.API.Controllers.Login
             return Ok(pesaResponseList.ToGridResponse(objGrid, "pesaResponse List"));
         }
 
-
         [HttpPost("confirmation")]
         public async Task<IActionResult> ConfirmAsync([FromBody] JsonElement payload)
         {
