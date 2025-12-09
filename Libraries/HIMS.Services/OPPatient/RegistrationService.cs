@@ -32,7 +32,8 @@ namespace HIMS.Services.OPPatient
                     (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
                     x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
                     x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
-                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
+                    x.MobileNo.ToLower().Contains(str) 
+                                                                                // Keep full Contains() for MobileNo
                 )
                 .Take(25)
                 .Select(x => new RegistrationAutoCompleteDto
@@ -47,7 +48,11 @@ namespace HIMS.Services.OPPatient
                     AgeYear = x.AgeYear,
                     AgeMonth = x.AgeMonth,
                     AgeDay = x.AgeDay,
-                    DateofBirth = x.DateofBirth
+                    DateofBirth = x.DateofBirth,
+                    EmailId =  x.EmailId,
+                    RegId =x.RegId,
+                    AadharCardNo= x.AadharCardNo
+
                 })
                .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
                .ThenBy(x => x.FirstName).ToListAsync();

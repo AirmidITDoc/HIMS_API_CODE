@@ -85,7 +85,10 @@
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? MobileNo { get; set; }
-
+        public string? EmailId { get; set; }
+        public long RegId { get; set; }
         public DateTime? DateofBirth { get; set; }
+        public string? AadharCardNo { get; set; }
+
     }
 }
