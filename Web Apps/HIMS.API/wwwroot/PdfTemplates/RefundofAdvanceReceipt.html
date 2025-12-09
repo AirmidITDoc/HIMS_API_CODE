@@ -156,7 +156,7 @@
                                     </h4>
                                 </th>
                             </tr>
-                            <tr style="display: {{chkcashflag}};">
+                            <tr style="display: {{chkcashflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="5">
                                     <span>Cash Pay:</span>
                                     <span>₹ {{CashPayAmount}}</span>
@@ -164,7 +164,7 @@
                             </tr>
 
 
-                            <tr style="display: {{chkcardflag}};">
+                            <tr style="display: {{chkcardflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Card Pay:</span>
                                     <span>₹ {{CardPayAmount}}</span>
@@ -179,7 +179,7 @@
                                 </td>
                             </tr>
 
-                            <tr style="display: {{chkchequeflag}};">
+                            <tr style="display: {{chkchequeflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Cheque Pay:</span>
                                     <span>₹ {{ChequePayAmount}}</span>
@@ -194,23 +194,26 @@
                                 </td>
                             </tr>
 
-                            <tr style="display: {{chkOnlineAmountflag}};">
+                            <tr style="display: {{chkOnlineAmountflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Online Pay:</span>
                                     <span>₹ {{OnlineAmount}}</span>
                                 </td>
-                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="4">
-                                    <span>Card No:</span>
-                                    <span>{{CardNo}}</span>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="3">
+                                    <div style="display: {{chkPayTMTxnFlag}};">PayTM Tran No: {{PayTMTranNo}}</div>
+                                    <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
+                                </td>
+                                <td style="padding: 2px; border: 1px solid #d4c3c3;">
+                                <div style="display: {{chkNEFTBankFlag}};">Bank Name: {{NEFTBankMaster}}</div>   
                                 </td>
                             </tr>
 
 
-                            <tr style="display: {{chkCompanyflag}}">
+                            <!--<tr style="display: {{chkCompanyflag}}">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="5">
                                     <span>Company Name: {{PaymentCompanyName}}</span>
                                 </td>
-                            </tr>
+                            </tr>-->
 
                         </table>
                     </td>

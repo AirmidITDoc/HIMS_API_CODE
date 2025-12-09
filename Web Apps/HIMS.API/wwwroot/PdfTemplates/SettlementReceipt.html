@@ -183,9 +183,12 @@
                             <span>Online Pay:</span>
                             <span>₹ {{OnlinePayAmount}}</span>
                         </td>
+                        <td style="padding: 2px;" colspan="3">
+                            <div style="display: {{chkPayTMTxnFlag}};">PayTM Tran No: {{PayTMTranNo}}</div>
+                            <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
+                        </td>
                         <td style="padding: 2px;">
-                            <span>Card No:</span>
-                            <span>{{CardNo}}</span>
+                            <div style="display: {{chkNEFTBankFlag}};">Bank Name: {{NEFTBankMaster}}</div>
                         </td>
                     </tr>
                     <tr style="display: {{chkCompanyflag}}">
