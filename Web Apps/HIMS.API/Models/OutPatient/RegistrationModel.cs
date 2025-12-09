@@ -119,4 +119,14 @@ namespace HIMS.API.Models.OutPatient
         public string? RegNo { get; set; }
 
     }
+    public class RegistrationUpdate
+    {
+        public long RegId { get; set; }
+        public string? AadharCardNo { get; set; }
+        public string? MobileNo { get; set; }
+        public string? EmailId { get; set; }
+
+
+
+    }
 }

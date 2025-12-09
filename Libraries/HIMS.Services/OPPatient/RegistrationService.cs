@@ -107,6 +107,23 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task RegUpdateAsync(Registration ObjRegistration, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "RegId", "AadharCardNo", "MobileNo", "EmailId" };
+            var Rentity = ObjRegistration.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_RegistrationUpdate", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+        }
+
 
     }
 }

@@ -124,6 +124,21 @@ namespace HIMS.API.Controllers.OPPatient
                 PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
         }
+        [HttpPut("UpdateReg{id:int}")]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> BilldatetimeUpdate(RegistrationUpdate obj)
+        {
+            Registration model = obj.MapTo<Registration>();
+            if (obj.RegId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                await _IRegistrationService.RegUpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
         // Create  by Ashutosh 12 Jun 2025
         [HttpGet("get-file")]
         public ApiResponse DownloadFiles(string FileName)

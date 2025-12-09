@@ -167,6 +167,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtPreOperationHeader, PreOperationHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtInOperationHeader, OTInOperationHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TConsentMaster, TransactionConsentMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Registration, RegistrationUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

@@ -12,6 +12,8 @@ namespace HIMS.Services.OPPatient
 
         Task UpdateAsync(Registration objRegistration, int UserId, string Username);
         Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str);
+        Task RegUpdateAsync(Registration ObjRegistration, int CurrentUserId, string CurrentUserName);
+
     }
 }
 

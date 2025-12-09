@@ -9685,6 +9685,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
 
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.EmgAadharCardNo).HasMaxLength(20);
 
                 entity.Property(e => e.EmgContactPersonName).HasMaxLength(50);
