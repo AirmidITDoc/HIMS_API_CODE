@@ -581,7 +581,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -15689,6 +15689,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
+
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
@@ -15698,6 +15700,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Opipnumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("OPIPNumber");
 
                 entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
 
@@ -15709,6 +15715,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.PatientName).HasMaxLength(255);
+
                 entity.Property(e => e.RadDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RadTestId).HasColumnName("RadTestID");
@@ -15716,6 +15724,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RadTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefDoctorId).HasColumnName("RefDoctorID");
+
+                entity.Property(e => e.RegNo).HasMaxLength(50);
 
                 entity.Property(e => e.ReportDate).HasColumnType("datetime");
 
