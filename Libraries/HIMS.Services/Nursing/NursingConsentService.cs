@@ -22,10 +22,11 @@ namespace HIMS.Services.Nursing
         }
 
 
-        public virtual async Task<List<MConsentMaster>> GetConsent(int DeptId)
+        public virtual async Task<List<MConsentMaster>> GetConsent(int DeptId, string? consentType)
         {
             var qry = from s in _context.MConsentMasters
               .Where(x => (x.DepartmentId == DeptId))
+
                       select new MConsentMaster()
                       {
                           ConsentId = s.ConsentId,
@@ -40,6 +41,29 @@ namespace HIMS.Services.Nursing
 
 
         }
+        //public virtual async Task<List<MConsentMaster>> GetConsent(int deptId, string? consentType)
+        //{
+        //    var qry = _context.MConsentMasters
+        //        .Where(x => x.DepartmentId == deptId);
+
+        //    if (!string.IsNullOrEmpty(consentType))
+        //    {
+        //        qry = qry.Where(x => x.ConsentType == consentType);
+        //    }
+
+        //    return await qry
+        //        .Select(s => new MConsentMaster
+        //        {
+        //            ConsentId = s.ConsentId,
+        //            ConsentName = s.ConsentName,
+        //            ConsentDesc = s.ConsentDesc,
+        //            //ConsentType = s.ConsentType
+        //        })
+        //        .Take(50)
+        //        .ToListAsync();
+        //}
+
+
 
 
 

@@ -43,6 +43,10 @@
         public string? DaysOption3 { get; set; }
         public string? OPDNo { get; set; }
         public string? Allergy { get; set; }
+        public string? Bmi { get; set; }
+        public string? BloodGroup { get; set; }
+
+
 
 
     }

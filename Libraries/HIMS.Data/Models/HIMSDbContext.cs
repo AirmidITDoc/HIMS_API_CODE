@@ -14555,6 +14555,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.SeqNo).HasMaxLength(50);
 
+                entity.Property(e => e.SurgeryDuration).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
 
                 entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
@@ -14773,6 +14775,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.SurgeryDuration).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
 
@@ -15689,6 +15693,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
+
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
@@ -15698,6 +15704,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
                 entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.Opipnumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("OPIPNumber");
 
                 entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
 
@@ -15709,6 +15719,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.PatientName).HasMaxLength(255);
+
                 entity.Property(e => e.RadDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RadTestId).HasColumnName("RadTestID");
@@ -15716,6 +15728,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RadTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefDoctorId).HasColumnName("RefDoctorID");
+
+                entity.Property(e => e.RegNo).HasMaxLength(50);
 
                 entity.Property(e => e.ReportDate).HasColumnType("datetime");
 

@@ -46,5 +46,9 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public long? IsVerifyId { get; set; }
+        public string? RegNo { get; set; }
+        public string? PatientName { get; set; }
+        public string? Opipnumber { get; set; }
+        public string? DoctorName { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         }
         [HttpPost("GetVisitList")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<GetVisitInfoListDto> GetVisitList = await _OPDPrescriptionService.GetListAsync(objGrid);
