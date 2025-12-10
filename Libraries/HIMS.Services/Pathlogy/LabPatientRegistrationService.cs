@@ -129,7 +129,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsPrinted = false,
                                 IsSampleCollection = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -150,7 +156,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsCancelled = 0,
                                 IsPrinted = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -235,7 +247,8 @@ namespace HIMS.Services.Pathlogy
 
 
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId",
+                    "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
                 var bentity = objBill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -286,7 +299,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsPrinted = false,
                                 IsSampleCollection = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -307,7 +326,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsCancelled = 0,
                                 IsPrinted = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
