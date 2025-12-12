@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Pathology
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+            TPayment ObjTPayment = obj.TPayments.MapTo<TPayment>();
 
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
@@ -115,7 +115,7 @@ namespace HIMS.API.Controllers.Pathology
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+            TPayment ObjTPayment = obj.TPayments.MapTo<TPayment>();
 
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {

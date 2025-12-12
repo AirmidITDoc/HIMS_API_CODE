@@ -19,8 +19,8 @@ namespace HIMS.Services.Pathlogy
 
         Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
         Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? references);
-        Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
-        Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge,TPayment ObjTPayment, int CurrentUserId, string CurrentUserName);
+        Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, TPayment ObjTPayment, int CurrentUserId, string CurrentUserName);
 
         //Task<List<TLabPatientRegistration>> SearchlabRegistration(string str);
 
