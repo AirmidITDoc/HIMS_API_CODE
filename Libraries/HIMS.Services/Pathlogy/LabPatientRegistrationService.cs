@@ -498,7 +498,7 @@ namespace HIMS.Services.Pathlogy
 
         //}
 
-        public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -516,13 +516,6 @@ namespace HIMS.Services.Pathlogy
                         _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
                     }
                 }
-                //Delete details table realted records
-                var lst = await _context.TLabTestRequests.Where(x => x.LabPatientId == ObjTLabPatientRegistration.LabPatientId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLabTestRequests.RemoveRange(lst);
-                }
-
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }

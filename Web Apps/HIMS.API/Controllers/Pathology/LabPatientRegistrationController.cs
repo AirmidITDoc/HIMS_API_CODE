@@ -135,10 +135,10 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(LabPatientRegistrationModel obj)
+        public async Task<ApiResponse> Edit(LabPatientRegistrationMasterModels obj)
         {
-            TLabPatientRegistration model = obj.MapTo<TLabPatientRegistration>();
-            if (obj.LabPatientId == 0)
+            TLabPatientRegisteredMaster model = obj.MapTo<TLabPatientRegisteredMaster>();
+            if (obj.LabPatRegId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

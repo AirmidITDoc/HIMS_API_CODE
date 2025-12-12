@@ -45,6 +45,8 @@ namespace HIMS.Data.DTO.Pathology
         //public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
         public string? companyName { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
 
 
 

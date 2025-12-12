@@ -5,7 +5,7 @@
 
         public long LabPatRegId { get; set; }
         public DateTime? RegDate { get; set; }
-        public DateTime? RegTime { get; set; }
+        public string? RegTime { get; set; }
         public long? UnitId { get; set; }
         public string? LabRequestNo { get; set; }
         public long? PrefixId { get; set; }
