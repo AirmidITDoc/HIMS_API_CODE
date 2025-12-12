@@ -32,8 +32,6 @@ namespace HIMS.Data.DTO.Pathology
         public long DiscAmount { get; set; }
         public long NetAmount { get; set; }
         public long PaidAmount { get; set; }
-
-
         public string? PBillNo { get; set; }
         public long IsCancelled { get; set; }
         public decimal PaidAmt { get; set; }
@@ -46,6 +44,8 @@ namespace HIMS.Data.DTO.Pathology
        
         //public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
+        public string? companyName { get; set; }
+
 
 
     }
