@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.Pathology;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -49,6 +50,14 @@ namespace HIMS.API.Controllers.Pathology
         {
             var data = await _repository1.GetById(x => x.LabPatRegId == id);
             return data.ToSingleResponse<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>("TLabPatientRegisteredMaster");
+        }
+
+
+        [HttpPost("PrevLabDoctorVisitList")]
+        public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
+        {
+            IPagedList<PrevDrVisistListDto> Oplist = await _ILabPatientRegistrationService.GeOPPreviousDrVisitListAsync(objGrid);
+            return Ok(Oplist.ToGridResponse(objGrid, "OP Prev Lab Dr Visit List"));
         }
 
         [HttpPost("List")]
