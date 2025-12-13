@@ -101,9 +101,11 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MDriverMaster> _MDriverMaster;
         private readonly IGenericService<MOttypeMaster> _MOttypeMaster;
         private readonly IGenericService<MItemCompanyMaster> _MItemCompanyMaster;
+        private readonly IGenericService<MExpensesCategoryMaster> _MExpensesCategoryMaster;
 
 
-        
+
+
 
 
 
@@ -152,7 +154,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MVehicleMaster> MVehicleMaster,
                               IGenericService<MDriverMaster> MDriverMaster,
                               IGenericService<MOttypeMaster> MOttypeMaster,
-                              IGenericService<MItemCompanyMaster> MItemCompanyMaster
+                              IGenericService<MItemCompanyMaster> MItemCompanyMaster,
+                              IGenericService<MExpensesCategoryMaster> MExpensesCategoryMaster
+
 
 
 
@@ -250,10 +254,12 @@ namespace HIMS.API.Controllers.Common
             _MDriverMaster = MDriverMaster;
             _MOttypeMaster = MOttypeMaster;
             _MItemCompanyMaster = MItemCompanyMaster;
+            _MExpensesCategoryMaster = MExpensesCategoryMaster;
 
 
 
-            
+
+
 
 
 
@@ -422,6 +428,8 @@ namespace HIMS.API.Controllers.Common
                 "Driver" => (await _MDriverMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDriverMaster.DriverId), nameof(MDriverMaster.DriverName)),
 
                 "DailyExpHeade" => (await _IMExpHeade.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesHeadMaster.ExpHedId), nameof(MExpensesHeadMaster.HeadName)),
+                "MExpensesCategory" => (await _MExpensesCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExpensesCategoryMaster.ExpCatId), nameof(MExpensesCategoryMaster.CategoryName)),
+
                 "LogSource" => CommonExtensions.ToSelectListItems(typeof(EnmSalesApprovalStartMeterType)),
 
                 // Marketing Application API

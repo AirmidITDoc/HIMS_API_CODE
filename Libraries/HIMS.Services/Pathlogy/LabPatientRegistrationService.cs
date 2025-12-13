@@ -35,6 +35,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabPatientRegistrationListDto>(model, "ps_LabPatientRegistrationList");
         }
+        public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
+        }
 
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {
@@ -199,7 +203,7 @@ namespace HIMS.Services.Pathlogy
                         foreach (var item in ObjTPayment)
                         {
                             string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
-                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+                              "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
                             TPayment objTPay = new();
                             objTPay = item;
@@ -215,6 +219,8 @@ namespace HIMS.Services.Pathlogy
                             item.PaymentId = Convert.ToInt32(VPaymentId);
                         }
                     }
+
+
 
                         //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
                         //Payment objPay = new();
@@ -233,8 +239,7 @@ namespace HIMS.Services.Pathlogy
                         scope.Complete();
                     }
                 }
-            
-
+                
 
             catch (Exception ex)
             {
@@ -402,7 +407,8 @@ namespace HIMS.Services.Pathlogy
 
                     foreach (var item in ObjTPayment)
                     {
-                        string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
                         TPayment objTPay = new();
@@ -417,8 +423,8 @@ namespace HIMS.Services.Pathlogy
                         }
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                         item.PaymentId = Convert.ToInt32(VPaymentId);
-                    }
 
+                    }
                     scope.Complete();
                 }
             }
@@ -433,12 +439,12 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public List<TLabPatientRegistration> SearchlabRegistration(string Keyword)
+        public List<LabVisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<TLabPatientRegistration>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+            return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
 
         public virtual async Task<List<TLabPatientRegistration>> SearchLabRegistration(string str)
@@ -499,7 +505,7 @@ namespace HIMS.Services.Pathlogy
 
         //}
 
-        public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -517,13 +523,6 @@ namespace HIMS.Services.Pathlogy
                         _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
                     }
                 }
-                //Delete details table realted records
-                var lst = await _context.TLabTestRequests.Where(x => x.LabPatientId == ObjTLabPatientRegistration.LabPatientId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLabTestRequests.RemoveRange(lst);
-                }
-
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }
