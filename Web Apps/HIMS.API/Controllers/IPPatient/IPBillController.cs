@@ -162,6 +162,25 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PaymentId);
         }
+        [HttpPost("PaymentMultipleSettelment")]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertMultiple(ModelPaymentMultiple obj)
+        {
+            List<Payment> model = obj.Payment.MapTo<List<Payment>>();
+            List<Bill> objBillModel = obj.Billupdate.MapTo<List<Bill>>();
+            //List<AdvanceDetail> objAdvanceDetail = obj.AdvanceDetailupdate.MapTo<List<AdvanceDetail>>();
+            //AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderupdate.MapTo<AdvanceHeader>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
+            if (model.Count > 0)
+            { 
+
+                await _IPBillService.paymentMultipleAsyncSP(model, objBillModel, ObjTPayment, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.FirstOrDefault()?.PaymentId);
+        }
         [HttpPost("IPBilllwithCashCounterInsert")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse Insertsp(BillingModel obj)

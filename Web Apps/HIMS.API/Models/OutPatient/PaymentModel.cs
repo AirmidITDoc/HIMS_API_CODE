@@ -109,4 +109,14 @@ namespace HIMS.API.Models.OutPatient
 
 
     }
+    public class ModelPaymentMultiple
+    {
+        public List<PaymentsModel> Payment { get; set; }
+        public List<BillModel> Billupdate { get; set; }
+        public List<TPaymentModel> TPayments { get; set; }
+
+
+
+    }
 }
+

@@ -8,6 +8,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Inventory.Masters;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Login;
+using HIMS.API.Models.Management;
 using HIMS.API.Models.Marketing;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
@@ -96,6 +97,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<MOttableMaster, OtTableModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtSurgeryMaster, SurgeryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabPatientRegistration, LabRegistrationModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MExpensesCategoryMaster, ExpensesCategoryMasterMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
 
 
             CreateMap<DbPrefixMaster, PrefixModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

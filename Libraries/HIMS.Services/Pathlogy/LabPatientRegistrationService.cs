@@ -61,14 +61,14 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
 
             try
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId" };
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId"};
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -200,7 +200,28 @@ namespace HIMS.Services.Pathlogy
                             }
 
                         }
+                        foreach (var item in ObjTPayment)
+                        {
+                            string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                              "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                            TPayment objTPay = new();
+                            objTPay = item;
+                            objTPay.BillNo = objBill.BillNo;
+
+                            var pentity = item.ToDictionary();
+                            foreach (var rProperty in pentity.Keys.ToList())
+                            {
+                                if (!PEntity.Contains(rProperty))
+                                    pentity.Remove(rProperty);
+                            }
+                            string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                            item.PaymentId = Convert.ToInt32(VPaymentId);
+                        }
                     }
+
+
+
                         //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
                         //Payment objPay = new();
                         //objPay = objPayment;
@@ -218,8 +239,7 @@ namespace HIMS.Services.Pathlogy
                         scope.Complete();
                     }
                 }
-            
-
+                
 
             catch (Exception ex)
             {
@@ -229,14 +249,14 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserNameint)
         {
 
             try
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId" };
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId" };
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -385,6 +405,26 @@ namespace HIMS.Services.Pathlogy
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
+                    foreach (var item in ObjTPayment)
+                    {
+
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                        TPayment objTPay = new();
+                        objTPay = item;
+                        objTPay.BillNo = objBill.BillNo;
+
+                        var pentity = item.ToDictionary();
+                        foreach (var rProperty in pentity.Keys.ToList())
+                        {
+                            if (!PEntity.Contains(rProperty))
+                                pentity.Remove(rProperty);
+                        }
+                        string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                        item.PaymentId = Convert.ToInt32(VPaymentId);
+
+                    }
                     scope.Complete();
                 }
             }
@@ -465,7 +505,7 @@ namespace HIMS.Services.Pathlogy
 
         //}
 
-        public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -483,13 +523,6 @@ namespace HIMS.Services.Pathlogy
                         _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
                     }
                 }
-                //Delete details table realted records
-                var lst = await _context.TLabTestRequests.Where(x => x.LabPatientId == ObjTLabPatientRegistration.LabPatientId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLabTestRequests.RemoveRange(lst);
-                }
-
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }

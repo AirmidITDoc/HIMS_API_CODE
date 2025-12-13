@@ -26,11 +26,15 @@ namespace HIMS.API.Controllers.Pathology
     {
         private readonly ILabPatientRegistrationService _ILabPatientRegistrationService;
         private readonly IGenericService<TLabPatientRegistration> _repository;
+        private readonly IGenericService<TLabPatientRegisteredMaster> _repository1;
 
-        public LabPatientRegistrationController(ILabPatientRegistrationService repository, IGenericService<TLabPatientRegistration> repository1)
+
+        public LabPatientRegistrationController(ILabPatientRegistrationService repository, IGenericService<TLabPatientRegistration> repository1, IGenericService<TLabPatientRegisteredMaster> repository2)
         {
             _ILabPatientRegistrationService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+
 
         }
         [HttpGet("{id?}")]
@@ -39,6 +43,13 @@ namespace HIMS.API.Controllers.Pathology
         {
             var data = await _repository.GetById(x => x.LabPatientId == id);
             return data.ToSingleResponse<TLabPatientRegistration, TLabPatientRegistrationModel>("LabPatientRegistration");
+        }
+        [HttpGet("GetLabPatientRegisteredMaster")]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetLab(int id)
+        {
+            var data = await _repository1.GetById(x => x.LabPatRegId == id);
+            return data.ToSingleResponse<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>("TLabPatientRegisteredMaster");
         }
 
 
@@ -91,13 +102,15 @@ namespace HIMS.API.Controllers.Pathology
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
                 model.CreatedDate = DateTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _ILabPatientRegistrationService.InsertAsyncSP(model, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _ILabPatientRegistrationService.InsertAsyncSP(model, model2, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -111,8 +124,7 @@ namespace HIMS.API.Controllers.Pathology
             Bill model2 = obj.OPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.OPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.OPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-
-
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
@@ -120,7 +132,7 @@ namespace HIMS.API.Controllers.Pathology
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _ILabPatientRegistrationService.InsertPaidBillAsync(model, model2, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _ILabPatientRegistrationService.InsertPaidBillAsync(model, model2, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -132,10 +144,10 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(LabPatientRegistrationModel obj)
+        public async Task<ApiResponse> Edit(LabPatientRegistrationMasterModels obj)
         {
-            TLabPatientRegistration model = obj.MapTo<TLabPatientRegistration>();
-            if (obj.LabPatientId == 0)
+            TLabPatientRegisteredMaster model = obj.MapTo<TLabPatientRegisteredMaster>();
+            if (obj.LabPatRegId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {

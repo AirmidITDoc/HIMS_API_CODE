@@ -21,7 +21,8 @@ namespace HIMS.Data.Models
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
-        public string? Address { get; set; }
+        public string Address { get; set; } = null!;
+        public long? AdharCardNo { get; set; }
         public long? CityId { get; set; }
         public long? StateId { get; set; }
         public long? CountryId { get; set; }
@@ -31,6 +32,9 @@ namespace HIMS.Data.Models
         public long? DepartmentId { get; set; }
         public long? DoctorId { get; set; }
         public long? RefDocId { get; set; }
+        public long? CompanyId { get; set; }
+        public long? SubCompanyId { get; set; }
+        public long? CampId { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
