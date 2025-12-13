@@ -215,6 +215,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDriverMaster> MDriverMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
+        public virtual DbSet<MExpensesCategoryMaster> MExpensesCategoryMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
@@ -6875,6 +6876,21 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_ExaminationMaster");
 
                 entity.Property(e => e.ExaminationDescr).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<MExpensesCategoryMaster>(entity =>
+            {
+                entity.HasKey(e => e.ExpCatId);
+
+                entity.ToTable("M_ExpensesCategoryMaster");
+
+                entity.Property(e => e.CategoryName)
+                    .HasMaxLength(100)
+                    .IsFixedLength();
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MExpensesHeadMaster>(entity =>

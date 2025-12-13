@@ -166,7 +166,7 @@ namespace HIMS.API.Models.Pathology
     {
         public LabPatientRegistrationModel LabPatientRegistration {  get; set; }
         public OPBillIngLabModel OPBillIngModels { get; set; }
-        public TPaymentModel TPayments { get; set; }
+        public List<TPaymentModel> TPayments { get; set; }
 
 
     }

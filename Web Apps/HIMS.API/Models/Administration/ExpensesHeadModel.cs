@@ -9,9 +9,9 @@ namespace HIMS.API.Models.Administration
         public string? HeadName { get; set; }
 
     }
-    public class PatientTypeModelValidator : AbstractValidator<PatientTypeModel>
+    public class ExpensesHeadModelValidator : AbstractValidator<ExpensesHeadModel>
     {
-        public PatientTypeModelValidator()
+        public ExpensesHeadModelValidator()
         {
             //RuleFor(x => x.HeadName).NotNull().NotEmpty().WithMessage("HeadName  is required");
         }

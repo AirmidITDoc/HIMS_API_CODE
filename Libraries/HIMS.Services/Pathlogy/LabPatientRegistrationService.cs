@@ -57,7 +57,7 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, TPayment ObjTPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -196,24 +196,27 @@ namespace HIMS.Services.Pathlogy
                             }
 
                         }
-                        
+                        foreach (var item in ObjTPayment)
+                        {
                             string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
-                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+                              "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
                             TPayment objTPay = new();
-                            objTPay = ObjTPayment;
+                            objTPay = item;
                             objTPay.BillNo = objBill.BillNo;
 
-                            var pentity = ObjTPayment.ToDictionary();
+                            var pentity = item.ToDictionary();
                             foreach (var rProperty in pentity.Keys.ToList())
                             {
                                 if (!PEntity.Contains(rProperty))
                                     pentity.Remove(rProperty);
                             }
                             string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
-                            ObjTPayment.PaymentId = Convert.ToInt32(VPaymentId);
-                        
+                            item.PaymentId = Convert.ToInt32(VPaymentId);
+                        }
                     }
+
+
 
                         //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
                         //Payment objPay = new();
@@ -232,9 +235,7 @@ namespace HIMS.Services.Pathlogy
                         scope.Complete();
                     }
                 }
-
-            
-
+                
 
             catch (Exception ex)
             {
@@ -244,7 +245,7 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, TPayment ObjTPayment, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserNameint)
         {
 
             try
@@ -400,24 +401,26 @@ namespace HIMS.Services.Pathlogy
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
-                    
-                        string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                    foreach (var item in ObjTPayment)
+                    {
+
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
                         TPayment objTPay = new();
-                        objTPay = ObjTPayment;
+                        objTPay = item;
                         objTPay.BillNo = objBill.BillNo;
 
-                        var pentity = ObjTPayment.ToDictionary();
+                        var pentity = item.ToDictionary();
                         foreach (var rProperty in pentity.Keys.ToList())
                         {
                             if (!PEntity.Contains(rProperty))
                                 pentity.Remove(rProperty);
                         }
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
-                        ObjTPayment.PaymentId = Convert.ToInt32(VPaymentId);
-                    
+                        item.PaymentId = Convert.ToInt32(VPaymentId);
 
+                    }
                     scope.Complete();
                 }
             }
