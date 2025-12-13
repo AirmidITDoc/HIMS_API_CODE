@@ -78,6 +78,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? AgeDay { get; set; }
         public long? UnitId { get; set; }
         public long? hospitalId { get; set; }
+        public long LabPatRegId { get; set; }
 
     }
 }

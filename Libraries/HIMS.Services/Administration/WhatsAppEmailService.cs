@@ -52,17 +52,20 @@ namespace HIMS.Services.Administration
             string currentYear = DateTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
 
+            // Need to pass Pdf Generation type
+            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjWhatsApp.Smstype).Select(r => new { mBillType = r.Type, mPdfModeName = r.PdfModeName, mFieldName = r.FieldName }).FirstOrDefaultAsync();
+
             try
             {
                 string FilePath = "";
-                if (ObjWhatsApp.Smstype == "OPBill")
+                if (ObjWhatsApp.Smstype == mType.mBillType)
                 {
                     ReportRequestModel model = new()
                     {
-                        Mode = "OpBillReceipt",
+                        Mode = mType.mPdfModeName,
                         SearchFields = new()
                     {
-                        new() { FieldName = "BillNo", FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
+                        new() { FieldName = mType.mFieldName, FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
                     },
                         BaseUrl = Convert.ToString(_configuration["BaseUrl"]),
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
@@ -101,19 +104,21 @@ namespace HIMS.Services.Administration
             // Current year (4-digit)
             string currentYear = DateTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
-
-
+            
+            // Need to pass Pdf Generation type
+            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjEmail.EmailType).Select(r=> new { mBillType=r.Type, mPdfModeName =r.PdfModeName , mFieldName =r.FieldName }).FirstOrDefaultAsync();
+            
             try
             {
                 string FilePath = "";
-                if (ObjEmail.EmailType == "OPBill")
+                if (ObjEmail.EmailType == mType.mBillType)
                 {
                     ReportRequestModel model = new()
                     {
-                        Mode = "OpBillReceipt",
+                        Mode = mType.mPdfModeName,
                         SearchFields = new()
                     {
-                        new() { FieldName = "BillNo", FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
+                        new() { FieldName = mType.mFieldName, FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
                     },
                         BaseUrl = Convert.ToString(_configuration["BaseUrl"]),
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
