@@ -15335,6 +15335,51 @@ namespace HIMS.Data.Models
                     .HasColumnName("WFAmount");
             });
 
+            modelBuilder.Entity<TPaymentPharmacy>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId);
+
+                entity.ToTable("t_paymentPharmacy");
+
+                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
+
+                entity.Property(e => e.BankName).HasMaxLength(100);
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(55);
+
+                entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PayAmount).HasColumnType("money");
+
+                entity.Property(e => e.PayMode).HasMaxLength(20);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.TranMode).HasMaxLength(55);
+
+                entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
+
+                entity.Property(e => e.ValidationDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TPhColHadOvToAcc>(entity =>
             {
                 entity.HasKey(e => e.TranId);

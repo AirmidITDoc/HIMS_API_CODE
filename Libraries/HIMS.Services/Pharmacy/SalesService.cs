@@ -3,6 +3,7 @@ using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Pharmacy;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -19,157 +20,7 @@ namespace HIMS.Services.Users
         {
             _context = HIMSDbContext;
         }
-        //public virtual async Task InsertAsync(TSalesHeader objSales, PaymentPharmacy objPayment, int UserId, string Username)
-        //{
-        //    objSales.RoundOff = objSales.PaidAmount - objSales.NetAmount;
-        //    _context.TSalesHeaders.Add(objSales);
-        //    await _context.SaveChangesAsync();
-        //    DatabaseHelper odal = new();
-        //    SqlParameter[] para = new SqlParameter[2];
-        //    para[0] = new SqlParameter("@SalesId", objSales.SalesId);
-        //    para[1] = new SqlParameter("@StoreId", objSales.StoreId);
-        //    odal.ExecuteScalar("UpdateBillNo", CommandType.StoredProcedure, para);
-        //    foreach (var objItem in objSales.TSalesDetails)
-        //    {
-        //        TCurrentStock objStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.StockId == objItem.StkId && x.StoreId == objSales.StoreId && x.ItemId == objItem.ItemId);
-        //        if (objStock != null)
-        //        {
-        //            objStock.IssueQty += (float)objItem.Qty;
-        //            objStock.BalanceQty += (float)objItem.Qty;
-        //            _context.Entry(objStock).State = EntityState.Modified;
-        //            await _context.SaveChangesAsync();
-        //        }
-        //    }
-        //    var config = (await _context.ConfigSettings.ToListAsync()).FirstOrDefault();
-        //    var StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objSales.StoreId);
-        //    if (config != null)
-        //    {
-        //        using var transaction = _context.Database.BeginTransaction();
-
-        //        try
-        //        {
-        //            transaction.CreateSavepoint("insert_Payment_Pharmacy_New_1");
-        //            if (objSales.OpIpType == 0 || objSales.OpIpType == 1 || objSales.OpIpType == 3)
-        //            {
-        //                objPayment.CashCounterId = objSales.OpIpType == 0 ? config.OpdReceiptCounterId : (objSales.OpIpType == 1 ? config.IpdReceiptCounterId : StoreInfo.PharSalRecCountId);
-        //                var objCashCounter = await _context.CashCounters.FirstOrDefaultAsync(x => x.CashCounterId == objPayment.CashCounterId);
-        //                objPayment.ReceiptNo = (objCashCounter != null ? Convert.ToInt64(objCashCounter.BillNo) + 1 : 1).ToString();
-        //                objPayment.BillNo = objSales.SalesId;
-        //                _context.Payments.Add(objPayment);
-        //                objCashCounter.BillNo = objPayment.ReceiptNo;
-        //                _context.Entry(objCashCounter).State = EntityState.Modified;
-        //                await _context.SaveChangesAsync(UserId, Username);
-        //            }
-        //            else if (objSales.OpIpType == 4)
-        //            {
-        //                PaymentPharmacy objPharmacy = await _context.PaymentPharmacies.FirstOrDefaultAsync(x => x.BillNo == objSales.SalesId);
-        //                if ((objPharmacy?.PaymentId ?? 0) > 0)
-        //                {
-        //                    objPharmacy.StrId = objSales.StoreId;
-        //                    _context.Entry(objPharmacy).State = EntityState.Modified;
-        //                    await _context.SaveChangesAsync(UserId, Username);
-        //                }
-        //            }
-
-        //            transaction.Commit();
-        //        }
-        //        catch (Exception)
-        //        {
-        //            transaction.RollbackToSavepoint("insert_Payment_Pharmacy_New_1");
-        //        }
-        //    }
-
-        //    if (objSales.OpIpType == 0)
-        //    {
-
-        //    }
-        //}
-
-
-
-
-
-
-        // done by Ashu Date : 20-May-2025
-
-        //public virtual async Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, Payment ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
-        //{
-
-        //    // //Add header table records
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo",  "UpdatedBy", "IsCancelled", "TSalesDetails" };
-        //    var entity = ObjSalesHeader.ToDictionary();
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
-        //    string SalesId = odal.ExecuteNonQuery("m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", entity);
-        //    ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
-        //    ObjPayment.BillNo = Convert.ToInt32(SalesId);
-
-        //    // Add details table records
-        //    foreach (var item in ObjSalesHeader.TSalesDetails)
-        //    {
-        //        item.SalesId = ObjSalesHeader.SalesId;
-        //    }
-        //    _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
-        //    await _context.SaveChangesAsync(UserId, Username);
-
-        //    foreach (var item in ObjTCurrentStock)
-        //    {
-
-        //        string[] Entity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
-        //        var Ientity = item.ToDictionary();
-        //        foreach (var rProperty in Entity)
-        //        {
-        //            Ientity.Remove(rProperty);
-        //        }
-        //        odal.ExecuteNonQuery("m_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, Ientity);
-        //    }
-        //    var SalesIdObj = new
-        //    {
-        //        SalesId = Convert.ToInt32(SalesId)
-        //    };
-        //    odal.ExecuteNonQuery("m_Cal_DiscAmount_Sales", CommandType.StoredProcedure, SalesIdObj.ToDictionary());
-
-        //    var SalessIdObj = new
-        //    {
-        //        SalesId = Convert.ToInt32(SalesId)
-        //    };
-        //    odal.ExecuteNonQuery("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, SalesIdObj.ToDictionary());
-
-
-        //    string[] PEntity = { "Tdsamount", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode" };
-        //    var Sentity = ObjPayment.ToDictionary();
-        //    foreach (var rProperty in PEntity)
-        //    {
-        //        Sentity.Remove(rProperty);
-        //    }
-        //    Sentity["OPDIPDType"] = 3;
-        //    string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
-        //    ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
-
-
-        //    string[] TEntity = { "IppreId","IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark",
-        //        "IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty" ,"Ipmed"};
-        //    var Nentity = ObjPrescription.ToDictionary();
-        //    foreach (var rProperty in TEntity)
-        //    {
-        //        Nentity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, Nentity);
-
-        //    string[] DEntity = { "Date","Time", "SalesNo", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount",
-        //        "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId",
-        //        "IsSellted", "IsPrint", "UnitId", "AddedBy", "UpdatedBy" ,"ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId",
-        //        "IsCancelled","IsPrescription","WardId","BedId","ExtMobileNo","ExtAddress"};
-        //    var Hentity = ObjDraftHeader.ToDictionary();
-        //    foreach (var rProperty in DEntity)
-        //    {
-        //        Hentity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, Hentity);
-        //}
+      
 
         // Added by vimal on 05/09/2025
         public virtual async Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
@@ -250,7 +101,7 @@ namespace HIMS.Services.Users
                 throw;
             }
         }
-        public virtual async Task InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
             // Open transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -340,6 +191,26 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
                 await _context.LogProcedureExecution(Hentity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // 4️⃣ Insert Payment
+                foreach (var item in ObjTPaymentPharmacy)
+                {
+                    string[] Entity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                   
+                    TPaymentPharmacy objTPay = new();
+                    objTPay = item;
+                    objTPay.BillNo = ObjPayment.BillNo;
+
+                    var pentity = item.ToDictionary();
+                    foreach (var rProperty in pentity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            pentity.Remove(rProperty);
+                    }
+                    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                    item.PaymentId = Convert.ToInt32(VPaymentId);
+                }
 
 
                 //Commit if all good
@@ -560,7 +431,7 @@ namespace HIMS.Services.Users
 
 
         //shilpa//26/05/2025
-        public virtual void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        public virtual void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy,List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
@@ -595,11 +466,31 @@ namespace HIMS.Services.Users
                 Entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
+            foreach (var item in ObjTPaymentPharmacy)
+            {
+                string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+
+                //TPaymentPharmacy objTPay = new();
+                //objTPay = item;
+                //objTPay.BillNo = ObjPayment.BillNo;
+
+                var pentity = item.ToDictionary();
+                foreach (var rProperty in pentity.Keys.ToList())
+                {
+                    if (!SEntity.Contains(rProperty))
+                        pentity.Remove(rProperty);
+                }
+                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                item.PaymentId = Convert.ToInt32(VPaymentId);
+            }
+
 
         }
 
 
-        public virtual void UpdateS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
+        public virtual void UpdateS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy,  int UserId, string Username)
         {
 
             // //Add header table records
@@ -631,6 +522,28 @@ namespace HIMS.Services.Users
                 PPEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, PPEntity);
+            //foreach (var item in ObjTPaymentPharmacy)
+            //{
+
+            //    string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+            //                               "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+
+            //    //TPaymentPharmacy objTPay = new();
+            //    //objTPay = item;
+            //    //objTPay.BillNo = ObjPayment.BillNo;
+
+            //    var pentity = item.ToDictionary();
+            //    foreach (var rProperty in pentity.Keys.ToList())
+            //    {
+            //        if (!SEntity.Contains(rProperty))
+            //            pentity.Remove(rProperty);
+            //    }
+            //    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+            //    item.PaymentId = Convert.ToInt32(VPaymentId);
+
+            //}
+
 
         }
         public virtual void InsertR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, int UserId, string Username)
@@ -688,7 +601,7 @@ namespace HIMS.Services.Users
             }
             odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
         }
-        public virtual void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, int UserId, string Username)
+        public virtual void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
@@ -739,6 +652,28 @@ namespace HIMS.Services.Users
                     Nentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_T_PHAdvanceHeader_1", CommandType.StoredProcedure, Nentity);
+
+            foreach (var item in ObjTPaymentPharmacy)
+            {
+                string[] Entity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+
+                //TPaymentPharmacy objTPay = new();
+                //objTPay = item;
+                //objTPay.BillNo = ObjPayment.BillNo;
+
+                var pentity = item.ToDictionary();
+                foreach (var rProperty in pentity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        pentity.Remove(rProperty);
+                }
+                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                item.PaymentId = Convert.ToInt32(VPaymentId);
+            }
+
+
 
         }
 
