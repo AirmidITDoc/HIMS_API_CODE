@@ -9,5 +9,6 @@ namespace HIMS.Data.Models
         public string? Type { get; set; }
         public string? PdfModeName { get; set; }
         public string? FieldName { get; set; }
+        public bool? PasswordProtectedPdf { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace HIMS.Services.Administration
             string UserPassword = first4 + currentYear;
 
             // Need to pass Pdf Generation type
-            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjWhatsApp.Smstype).Select(r => new { mBillType = r.Type, mPdfModeName = r.PdfModeName, mFieldName = r.FieldName }).FirstOrDefaultAsync();
+            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjWhatsApp.Smstype).Select(r => new { mBillType = r.Type, mPdfModeName = r.PdfModeName, mFieldName = r.FieldName, mPasswordProtectedPdf = r.PasswordProtectedPdf }).FirstOrDefaultAsync();
 
             try
             {
@@ -71,7 +71,15 @@ namespace HIMS.Services.Administration
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
                     };
                     var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
-                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, UserPassword, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_"+Id+vDate);
+
+                    if (mType.mPasswordProtectedPdf == true)
+                    {
+                        FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, UserPassword, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
+                    }
+                    else
+                    {
+                        FilePath = _pdfUtility.GenerateWithoutPasswordProtectedPdf(byteFile.Item1, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
+                    }
                 }
                 ObjWhatsApp.FilePath = FilePath;
                 var entityData = ObjWhatsApp.ToDictionary().Where(kvp => AllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -106,7 +114,7 @@ namespace HIMS.Services.Administration
             string UserPassword = first4 + currentYear;
             
             // Need to pass Pdf Generation type
-            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjEmail.EmailType).Select(r=> new { mBillType=r.Type, mPdfModeName =r.PdfModeName , mFieldName =r.FieldName }).FirstOrDefaultAsync();
+            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjEmail.EmailType).Select(r=> new { mBillType=r.Type, mPdfModeName =r.PdfModeName , mFieldName =r.FieldName , mPasswordProtectedPdf = r.PasswordProtectedPdf }).FirstOrDefaultAsync();
             
             try
             {
@@ -124,7 +132,13 @@ namespace HIMS.Services.Administration
                         StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
                     };
                     var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
-                    FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, UserPassword, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
+
+                    if (mType.mPasswordProtectedPdf == true) {
+                        FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, UserPassword, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
+                    }
+                    else {
+                        FilePath = _pdfUtility.GenerateWithoutPasswordProtectedPdf(byteFile.Item1, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
+                    }
                 }
                 ObjEmail.AttachmentName = FilePath;
                 var entityData = ObjEmail.ToDictionary().Where(kvp => EmailAllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

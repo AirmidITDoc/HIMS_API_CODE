@@ -519,6 +519,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
         public virtual DbSet<TPayment> TPayments { get; set; } = null!;
         public virtual DbSet<TPaymentCanteen> TPaymentCanteens { get; set; } = null!;
+        public virtual DbSet<TPaymentPharmacy> TPaymentPharmacies { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
         public virtual DbSet<TPhRefund> TPhRefunds { get; set; } = null!;
         public virtual DbSet<TPhSm> TPhSms { get; set; } = null!;
@@ -15247,6 +15248,91 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TPaymentPharmacy>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId);
+
+                entity.ToTable("T_PaymentPharmacy");
+
+                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
+
+                entity.Property(e => e.BankName).HasMaxLength(100);
+
+                entity.Property(e => e.CardBankName).HasMaxLength(100);
+
+                entity.Property(e => e.CardDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CardNo).HasMaxLength(50);
+
+                entity.Property(e => e.CardPayAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashPayAmount).HasColumnType("money");
+
+                entity.Property(e => e.ChequeDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ChequeNo).HasMaxLength(50);
+
+                entity.Property(e => e.ChequePayAmount).HasColumnType("money");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NeftbankMaster)
+                    .HasMaxLength(100)
+                    .HasColumnName("NEFTBankMaster");
+
+                entity.Property(e => e.Neftdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("NEFTDate");
+
+                entity.Property(e => e.Neftno)
+                    .HasMaxLength(20)
+                    .HasColumnName("NEFTNo");
+
+                entity.Property(e => e.NeftpayAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("NEFTPayAmount");
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PayTmamount)
+                    .HasColumnType("money")
+                    .HasColumnName("PayTMAmount");
+
+                entity.Property(e => e.PayTmdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PayTMDate");
+
+                entity.Property(e => e.PayTmtranNo)
+                    .HasMaxLength(20)
+                    .HasColumnName("PayTMTranNo");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.Remark).HasMaxLength(500);
+
+                entity.Property(e => e.Tdsamount)
+                    .HasColumnType("money")
+                    .HasColumnName("TDSAmount");
+
+                entity.Property(e => e.TranMode).HasMaxLength(30);
+
+                entity.Property(e => e.Wfamount)
+                    .HasColumnType("money")
+                    .HasColumnName("WFAmount");
             });
 
             modelBuilder.Entity<TPhColHadOvToAcc>(entity =>
