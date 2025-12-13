@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.Pathology;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -41,7 +42,12 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-       
+        [HttpPost("PrevLabDoctorVisitList")]
+        public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
+        {
+            IPagedList<PrevDrVisistListDto> Oplist = await _ILabPatientRegistrationService.GeOPPreviousDrVisitListAsync(objGrid);
+            return Ok(Oplist.ToGridResponse(objGrid, "OP Prev Lab Dr Visit List"));
+        }
 
         [HttpPost("List")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]

@@ -35,6 +35,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabPatientRegistrationListDto>(model, "ps_LabPatientRegistrationList");
         }
+        public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
+        }
 
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {
@@ -395,12 +399,12 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public List<TLabPatientRegistration> SearchlabRegistration(string Keyword)
+        public List<LabVisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<TLabPatientRegistration>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+            return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
 
         public virtual async Task<List<TLabPatientRegistration>> SearchLabRegistration(string str)

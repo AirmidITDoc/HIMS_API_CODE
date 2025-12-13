@@ -25,8 +25,8 @@ namespace HIMS.Services.Pathlogy
         //Task<List<TLabPatientRegistration>> SearchlabRegistration(string str);
 
         List<TLabPatientRegistration> SearchlabRegistration(string Keyword);
-
-        Task<List<TLabPatientRegistration>> SearchLabRegistration(string str);
+        Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
+        Task<List<LabVisitDetailsListSearchDto>> SearchLabRegistration(string str);
 
 
     }
