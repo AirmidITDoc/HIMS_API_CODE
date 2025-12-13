@@ -21,7 +21,7 @@ namespace HIMS.Services.Transaction
 
         public virtual async Task<IPagedList<EmailSendoutListDto>> GetEmailSconfig(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<EmailSendoutListDto>(model, "ps_Rtrv_T_Emailoutlist");
+            return await DatabaseHelper.GetGridDataBySp<EmailSendoutListDto>(model, "ps_Rtrv_T_EmailOutgoinglist");
         }
 
         public virtual async Task<IPagedList<SMSConfigListDto>> GetSMSconfig(GridRequestModel model)
@@ -34,20 +34,6 @@ namespace HIMS.Services.Transaction
             return await DatabaseHelper.GetGridDataBySp<WhatsAppsendOutListDto>(model, "ps_Rtrv_T_Whatsappoutlist");
         }
 
-        //public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
-        //{
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "  " };
-        //    var entity = objSsSmsConfig.ToDictionary();
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
-
-        //    odal.ExecuteNonQuery("PS_M_insert_SMS_Config", CommandType.StoredProcedure, entity);
-
-        //    await _context.SaveChangesAsync(UserId, Username);
-        //}
         public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
         {
             DatabaseHelper odal = new();
@@ -122,19 +108,6 @@ namespace HIMS.Services.Transaction
             await _context.SaveChangesAsync();
             scope.Complete();
         }
-
-        //public virtual async Task UpdateAsync(EmailConfiguration ObjEmailConfiguration, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-        //    {
-        //        // 1. Attach entity
-        //        _context.Attach(ObjEmailConfiguration);
-        //        _context.Entry(ObjEmailConfiguration).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-        //        scope.Complete();
-        //    }
-        //}
 
     }
 
