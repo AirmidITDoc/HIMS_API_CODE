@@ -100,6 +100,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MExpensesCategoryMaster, ExpensesCategoryMasterMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPaymentPharmacy, TPaymentpharModelS>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

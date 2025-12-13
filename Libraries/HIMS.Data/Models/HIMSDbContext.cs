@@ -362,6 +362,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<ServiceMaster> ServiceMasters { get; set; } = null!;
         public virtual DbSet<ServiceWiseCompanyCode> ServiceWiseCompanyCodes { get; set; } = null!;
         public virtual DbSet<SmsoutGoing> SmsoutGoings { get; set; } = null!;
+        public virtual DbSet<SmspdfConfig> SmspdfConfigs { get; set; } = null!;
         public virtual DbSet<Sonography> Sonographies { get; set; } = null!;
         public virtual DbSet<SsConfigInitiateDischarge> SsConfigInitiateDischarges { get; set; } = null!;
         public virtual DbSet<SsGstperConfig> SsGstperConfigs { get; set; } = null!;
@@ -518,6 +519,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
         public virtual DbSet<TPayment> TPayments { get; set; } = null!;
         public virtual DbSet<TPaymentCanteen> TPaymentCanteens { get; set; } = null!;
+        public virtual DbSet<TPaymentPharmacy> TPaymentPharmacies { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
         public virtual DbSet<TPhRefund> TPhRefunds { get; set; } = null!;
         public virtual DbSet<TPhSm> TPhSms { get; set; } = null!;
@@ -10359,6 +10361,21 @@ namespace HIMS.Data.Models
                     .HasColumnName("smsurl");
             });
 
+            modelBuilder.Entity<SmspdfConfig>(entity =>
+            {
+                entity.HasKey(e => e.Smsid);
+
+                entity.ToTable("SMSPdfConfig");
+
+                entity.Property(e => e.Smsid).HasColumnName("SMSId");
+
+                entity.Property(e => e.FieldName).HasMaxLength(50);
+
+                entity.Property(e => e.PdfModeName).HasMaxLength(255);
+
+                entity.Property(e => e.Type).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Sonography>(entity =>
             {
                 entity.ToTable("Sonography");
@@ -15231,6 +15248,51 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TPaymentPharmacy>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId);
+
+                entity.ToTable("t_paymentPharmacy");
+
+                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
+
+                entity.Property(e => e.BankName).HasMaxLength(100);
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(55);
+
+                entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PayAmount).HasColumnType("money");
+
+                entity.Property(e => e.PayMode).HasMaxLength(20);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.TranMode).HasMaxLength(55);
+
+                entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
+
+                entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPhColHadOvToAcc>(entity =>
