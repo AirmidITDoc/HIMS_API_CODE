@@ -38,6 +38,10 @@
         public long PaymentId { get; set; }
         public string? Opdno { get; set; }
         public string? PatientType { get; set; }
+        public string? AadharCardNo { get; set; }
+        public string? EmailId { get; set; }
+
+
 
 
 

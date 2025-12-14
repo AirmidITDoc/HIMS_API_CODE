@@ -28,20 +28,40 @@ namespace HIMS.API.Controllers.NursingStation
             _NursingConsentService = repository;
 
         }
+        //[HttpGet("GetMConsentMasterList")]
+        //public async Task<ApiResponse> GetMConsentMaster(int DeptId)
+        //{
+        //    var resultList = await _NursingConsentService.GetConsent(DeptId);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentMasterList.", resultList.Select(x => new
+        //    {
+        //        x.ConsentId,
+        //        x.ConsentName,
+        //        x.ConsentDesc,
+        //        x.ConsentType,
+
+
+        //    }));
+        //}
         [HttpGet("GetMConsentMasterList")]
-        public async Task<ApiResponse> GetMConsentMaster(int DeptId)
+        public async Task<ApiResponse> GetMConsentMaster(int deptId, string? consentType)
         {
-            var resultList = await _NursingConsentService.GetConsent(DeptId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ConsentMasterList.", resultList.Select(x => new
+            var resultList = await _NursingConsentService.GetConsent(deptId, consentType);
+
+            var responseData = resultList.Select(x => new
             {
                 x.ConsentId,
                 x.ConsentName,
                 x.ConsentDesc,
-                x.ConsentType,
+                x.ConsentType
+            });
 
-
-            }));
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "ConsentMasterList.",
+                responseData
+            );
         }
+
 
         [HttpGet("DeptConsentList")]
         //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]

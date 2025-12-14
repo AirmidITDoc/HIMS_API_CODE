@@ -32,8 +32,6 @@ namespace HIMS.Data.DTO.Pathology
         public long DiscAmount { get; set; }
         public long NetAmount { get; set; }
         public long PaidAmount { get; set; }
-
-
         public string? PBillNo { get; set; }
         public long IsCancelled { get; set; }
         public decimal PaidAmt { get; set; }
@@ -46,7 +44,41 @@ namespace HIMS.Data.DTO.Pathology
        
         //public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
+        public string? companyName { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        public double? ConcessionAmt { get; set; }
 
+    }
+
+    public class LabVisitDetailsListSearchDto
+    {
+        public string? FirstName { get; set; }
+        public string? RegNo { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public long VisitId { get; set; }
+        public long? RegId { get; set; }
+        public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.MobileNo + " | " + this.RegNo; } }
+        public string? MobileNo { get; set; }
+        public long? PatientTypeId { get; set; }
+        public long? ConsultantDocId { get; set; }
+        public long? RefDocId { get; set; }
+        public string? OPDNo { get; set; }
+        public long? TariffId { get; set; }
+        public long? ClassId { get; set; }
+        public string? TariffName { get; set; }
+        public long? CompanyId { get; set; }
+        public string? CompanyName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? RefDoctorName { get; set; }
+        public string? DoctorName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public long? UnitId { get; set; }
+        public long? hospitalId { get; set; }
+        public long LabPatRegId { get; set; }
 
     }
 }

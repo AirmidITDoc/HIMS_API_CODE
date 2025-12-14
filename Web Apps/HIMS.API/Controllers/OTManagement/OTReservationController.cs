@@ -235,10 +235,10 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("Cancel")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(OTReservationCancel obj)
         {
-            TOtReservation model = obj.MapTo<TOtReservation>();
+            TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
             if (obj.OtreservationId != 0)
             {
                 model.OtreservationId = obj.OtreservationId;

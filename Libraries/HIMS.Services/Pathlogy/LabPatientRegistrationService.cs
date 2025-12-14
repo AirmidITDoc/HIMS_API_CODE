@@ -35,6 +35,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabPatientRegistrationListDto>(model, "ps_LabPatientRegistrationList");
         }
+        public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
+        }
 
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {
@@ -57,14 +61,14 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
 
             try
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId" };
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId"};
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -129,7 +133,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsPrinted = false,
                                 IsSampleCollection = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -150,7 +160,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsCancelled = 0,
                                 IsPrinted = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -184,7 +200,28 @@ namespace HIMS.Services.Pathlogy
                             }
 
                         }
+                        foreach (var item in ObjTPayment)
+                        {
+                            string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                              "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                            TPayment objTPay = new();
+                            objTPay = item;
+                            objTPay.BillNo = objBill.BillNo;
+
+                            var pentity = item.ToDictionary();
+                            foreach (var rProperty in pentity.Keys.ToList())
+                            {
+                                if (!PEntity.Contains(rProperty))
+                                    pentity.Remove(rProperty);
+                            }
+                            string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                            item.PaymentId = Convert.ToInt32(VPaymentId);
+                        }
                     }
+
+
+
                         //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
                         //Payment objPay = new();
                         //objPay = objPayment;
@@ -202,8 +239,7 @@ namespace HIMS.Services.Pathlogy
                         scope.Complete();
                     }
                 }
-            
-
+                
 
             catch (Exception ex)
             {
@@ -213,14 +249,14 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserNameint)
         {
 
             try
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId" };
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId" };
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -235,7 +271,8 @@ namespace HIMS.Services.Pathlogy
 
 
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId",
+                    "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
                 var bentity = objBill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -286,7 +323,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsPrinted = false,
                                 IsSampleCollection = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -307,7 +350,13 @@ namespace HIMS.Services.Pathlogy
                                 IsCompleted = false,
                                 IsCancelled = 0,
                                 IsPrinted = false,
-                                TestType = false
+                                TestType = false,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = DateTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -356,6 +405,26 @@ namespace HIMS.Services.Pathlogy
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
+                    foreach (var item in ObjTPayment)
+                    {
+
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                        TPayment objTPay = new();
+                        objTPay = item;
+                        objTPay.BillNo = objBill.BillNo;
+
+                        var pentity = item.ToDictionary();
+                        foreach (var rProperty in pentity.Keys.ToList())
+                        {
+                            if (!PEntity.Contains(rProperty))
+                                pentity.Remove(rProperty);
+                        }
+                        string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                        item.PaymentId = Convert.ToInt32(VPaymentId);
+
+                    }
                     scope.Complete();
                 }
             }
@@ -370,12 +439,12 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public List<TLabPatientRegistration> SearchlabRegistration(string Keyword)
+        public List<LabVisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<TLabPatientRegistration>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+            return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
 
         public virtual async Task<List<TLabPatientRegistration>> SearchLabRegistration(string str)
@@ -436,7 +505,7 @@ namespace HIMS.Services.Pathlogy
 
         //}
 
-        public virtual async Task UpdateAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -454,13 +523,6 @@ namespace HIMS.Services.Pathlogy
                         _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
                     }
                 }
-                //Delete details table realted records
-                var lst = await _context.TLabTestRequests.Where(x => x.LabPatientId == ObjTLabPatientRegistration.LabPatientId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLabTestRequests.RemoveRange(lst);
-                }
-
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }

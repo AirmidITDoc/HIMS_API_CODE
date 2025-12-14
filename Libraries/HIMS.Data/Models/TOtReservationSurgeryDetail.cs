@@ -12,7 +12,7 @@ namespace HIMS.Data.Models
         public string? SurgeryPart { get; set; }
         public DateTime? SurgeryFromTime { get; set; }
         public DateTime? SurgeryEndTime { get; set; }
-        public int? SurgeryDuration { get; set; }
+        public decimal? SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }

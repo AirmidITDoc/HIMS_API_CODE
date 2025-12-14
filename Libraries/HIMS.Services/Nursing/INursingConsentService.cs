@@ -10,7 +10,7 @@ namespace HIMS.Services.Nursing
         void Insert(TConsentInformation ObjTConsentInformation, int UserId, string Username);
         void Update(TConsentInformation ObjTConsentInformation, int UserId, string Username);
         Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel objGrid);
-        Task<List<MConsentMaster>> GetConsent(int DeptId);
+        Task<List<MConsentMaster>> GetConsent(int deptId, string? consentType);
 
 
 

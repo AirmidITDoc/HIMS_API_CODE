@@ -19,7 +19,7 @@ namespace HIMS.API.Models.Pharmacy
         public long PurchaseId { get; set; }
         public long? PurDetId { get; set; }
         public double? PobalQty { get; set; }
-        public bool? IsClosed { get; set; }
+        public bool? Isclosed { get; set; }
     }
 
     public class POAganistGRNModel

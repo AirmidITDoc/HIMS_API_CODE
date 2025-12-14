@@ -95,6 +95,8 @@ namespace HIMS.API.Models.Pharmacy
         public List<SaleModel> Saless { get; set; }
         public List<AdvanceDetailModel3> AdvanceDetail { get; set; }
         public TPHAdvanceHeaderModel AdvanceHeader { get; set; }
+        public List<TPaymentpharModelS> TPayments { get; set; }
+
         //public SalesDraftHeaderModel SalesDraft { get; set; }
 
     }

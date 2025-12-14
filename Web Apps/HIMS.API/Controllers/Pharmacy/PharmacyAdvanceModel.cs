@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Controllers.Pharmacy;
+using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -111,6 +112,8 @@ public class PharAdvanceModel
     public PharmacyAdvanceModel PharmacyAdvance { get; set; }
     public PharmacyAdvanceDetailsModel PharmacyAdvanceDetails { get; set; }
     public PaymentPharmacyModel PaymentPharmacy { get; set; }
+    public List<TPaymentpharModelS> TPayments { get; set; }
+
 
 }
 public class PharmacyHeaderUpdate
@@ -118,6 +121,8 @@ public class PharmacyHeaderUpdate
     public PharmacyHeaderUpdateModel PharmacyHeader { get; set; }
     public PharmacyAdvanceDetailsModel PharmacyAdvanceDetails { get; set; }
     public PaymentPharmacyModel PaymentPharmacy { get; set; }
+    //public List<TPaymentpharModelS> TPayments { get; set; }
+
 
 }
 

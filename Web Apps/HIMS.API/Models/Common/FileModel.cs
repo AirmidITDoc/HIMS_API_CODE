@@ -42,6 +42,8 @@ namespace HIMS.API.Models.Common
         [Description("Hospital\\Logo")]
         Logo = 7,
         [Description("User\\Signature")]
-        User_Signature = 8
+        User_Signature = 8,
+        [Description("LabPatient\\Files")]
+        LabPatient_Files = 9
     }
 }

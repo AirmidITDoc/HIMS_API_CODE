@@ -224,15 +224,16 @@ namespace HIMS.Services.IPPatient
                 scope.Complete();
             }
         }
-        public virtual void Cancel(TOtReservation objTOtReservation, int UserId, string Username)
+        public virtual void Cancel(TOtReservationHeader objTOtReservation, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rDetailEntity = { "ReservationDate", "ReservationTime", "OpIpId", "OpIpType", "Opdate", "OpstartTime", "OpendTime", "Duration", "OttableId", "SurgeonId", "SurgeonId1", "AnestheticsDr", "AnestheticsDr1", "SurgeryId", "AnesthTypeId", "Instruction", "OttypeId", "UnBooking", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelledDateTime", "IsCancelled", "DepartmentId", "OtrequestId" };
+            string[] rDetailEntity = { "OtreservationId", "Reason", "IsCancelledBy" };
             var CAdvanceEntity = objTOtReservation.ToDictionary();
-            foreach (var rProperty in rDetailEntity)
+            foreach (var rProperty in CAdvanceEntity.Keys.ToList())
             {
-                CAdvanceEntity.Remove(rProperty);
+                if (!rDetailEntity.Contains(rProperty))
+                    CAdvanceEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_Cancel_T_OTBooking", CommandType.StoredProcedure, CAdvanceEntity);
         }

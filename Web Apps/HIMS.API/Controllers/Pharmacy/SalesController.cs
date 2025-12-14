@@ -213,6 +213,8 @@ namespace HIMS.API.Controllers.Pharmacy
             PaymentPharmacy modelPayment = obj.Payment.MapTo<PaymentPharmacy>();
             TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
             TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
             string stockmsg = "";
             foreach (var item in model.TSalesDetails)
             {
@@ -231,7 +233,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Date = Convert.ToDateTime(obj.Sales.Date);
                 model.Time = Convert.ToDateTime(obj.Sales.Time);
                 model.AddedBy = CurrentUserId;
-                await _ISalesService.InsertSalesSaveWithPayment(model, CurrentStock, modelPayment, modelPrescription, modelDraftHeader, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertSalesSaveWithPayment(model, CurrentStock, modelPayment, modelPrescription, modelDraftHeader, TPayments ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -316,12 +318,14 @@ namespace HIMS.API.Controllers.Pharmacy
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
             if (obj.PharmacyAdvance.AdvanceId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);
                 model.AddedBy = CurrentUserId;
-                _ISalesService.InsertS(model, model1, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -334,6 +338,7 @@ namespace HIMS.API.Controllers.Pharmacy
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+
 
 
             if (obj.PharmacyHeader.AdvanceId != 0)
@@ -369,18 +374,20 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PaymentSettlement")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse Insert(PharmacyModel obj)
         {
             List<PaymentPharmacy> model = obj.Payment.MapTo<List<PaymentPharmacy>>();
             List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
             List<AdvanceDetail> model2 = obj.AdvanceDetail.MapTo<List<AdvanceDetail>>();
             AdvanceHeader model3 = obj.AdvanceHeader.MapTo<AdvanceHeader>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
 
             if (model.Count > 0)
             {
-                _ISalesService.Insert(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.Insert(model, model1, model2, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

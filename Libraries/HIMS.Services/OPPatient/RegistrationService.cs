@@ -32,7 +32,8 @@ namespace HIMS.Services.OPPatient
                     (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
                     x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
                     x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
-                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
+                    x.MobileNo.ToLower().Contains(str) 
+                                                                                // Keep full Contains() for MobileNo
                 )
                 .Take(25)
                 .Select(x => new RegistrationAutoCompleteDto
@@ -47,7 +48,11 @@ namespace HIMS.Services.OPPatient
                     AgeYear = x.AgeYear,
                     AgeMonth = x.AgeMonth,
                     AgeDay = x.AgeDay,
-                    DateofBirth = x.DateofBirth
+                    DateofBirth = x.DateofBirth,
+                    EmailId =  x.EmailId,
+                    RegId =x.RegId,
+                    AadharCardNo= x.AadharCardNo
+
                 })
                .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
                .ThenBy(x => x.FirstName).ToListAsync();
@@ -107,6 +112,23 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task RegUpdateAsync(Registration ObjRegistration, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "RegId", "AadharCardNo", "MobileNo", "EmailId" };
+            var Rentity = ObjRegistration.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_RegistrationUpdate", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+        }
+
 
     }
 }
