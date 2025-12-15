@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();

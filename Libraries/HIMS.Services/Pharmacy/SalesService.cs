@@ -470,6 +470,7 @@ namespace HIMS.Services.Users
                     Entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
+
             foreach (var item in ObjTPaymentPharmacy)
             {
                 item.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
@@ -560,32 +561,35 @@ namespace HIMS.Services.Users
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "CashCounterId", "IsRefundFlag", "RefundNo" };
+            string[] rEntity = { "RefundDate", "RefundTime", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StrId", "RefundId" };
             var entity = ObjTPhRefund.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string VRefundId = odal.ExecuteNonQuery("PS_insert_T_PhAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
             ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
             ObjPaymentPharmacy.RefundId = Convert.ToInt32(VRefundId);
 
-            string[] AEntity = { "Date", "RefId", "OpdIpdType", "OpdIpdId", "AdvanceAmount", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StoreId", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] AEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
             var Aentity = ObjTPhadvanceHeader.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in Aentity.Keys.ToList())
             {
-                Aentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_PhAdvanceHeader_1", CommandType.StoredProcedure, Aentity);
 
             foreach (var item in ObjTPhadvRefundDetail)
             {
 
-                string[] DEntity = { "AdvRefId" };
+                string[] DEntity = { "AdvDetailId", "RefundDate", "RefundTime", "AdvRefundAmt"};
                 var Dentity = item.ToDictionary();
-                foreach (var rProperty in DEntity)
+                foreach (var rProperty in Dentity.Keys.ToList())
                 {
-                    Dentity.Remove(rProperty);
+                    if (!DEntity.Contains(rProperty))
+                        Dentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_insert_T_PHAdvRefundDetail_1", CommandType.StoredProcedure, Dentity);
             }
@@ -593,30 +597,33 @@ namespace HIMS.Services.Users
             foreach (var item in ObjTPhadvanceDetail)
             {
 
-                string[] PEntity = { "Date", "Time", "AdvanceId", "AdvanceNo", "RefId", "TransactionId", "OpdIpdId", "OpdIpdType", "AdvanceAmount", "UsedAmount", "ReasonOfAdvanceId", "AddedBy", "IsCancelled", "IsCancelledby", "IsCancelledDate", "Reason", "StoreId", "UnitId", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] PEntity = { "AdvanceDetailId", "BalanceAmount", "RefundAmount" };
                 var Pentity = item.ToDictionary();
-                foreach (var rProperty in PEntity)
+                foreach (var rProperty in Pentity.Keys.ToList())
                 {
-                    Pentity.Remove(rProperty);
+                    if (!PEntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
             }
-
-            string[] PHEntity = { "PaymentId", "CashCounterId", "IsSelfOrcompany", "CompanyId", "StrId", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] PHEntity = { "BillNo", "ReceiptNo",  "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName", "CardDate", "AdvanceUsedAmount",
+                                  "AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledDate","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","UnitId","TdsAmount","WfAmount","OPDIPDType"};
             var Phentity = ObjPaymentPharmacy.ToDictionary();
-            foreach (var rProperty in PHEntity)
+            foreach (var rProperty in Phentity.Keys.ToList())
             {
-                Phentity.Remove(rProperty);
+                if (!PHEntity.Contains(rProperty))
+                    Phentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
 
             foreach (var item in ObjTPaymentPharmacy)
             {
-                //item.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
+                item.RefundId = Convert.ToInt32(VRefundId);
 
 
                 string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
 
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
