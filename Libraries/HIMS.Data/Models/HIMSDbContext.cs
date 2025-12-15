@@ -49,7 +49,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<DynamicExecuteSchedule> DynamicExecuteSchedules { get; set; } = null!;
         public virtual DbSet<DynamicExecuteScheduleLog> DynamicExecuteScheduleLogs { get; set; } = null!;
         public virtual DbSet<EmailConfiguration> EmailConfigurations { get; set; } = null!;
-        public virtual DbSet<EmailNotificationDatum> EmailNotificationData { get; set; } = null!;
         public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; } = null!;
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
@@ -584,7 +583,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1757,23 +1756,6 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("User_Name");
-            });
-
-            modelBuilder.Entity<EmailNotificationDatum>(entity =>
-            {
-                entity.ToTable("Email_Notification_Data");
-
-                entity.Property(e => e.AttachmentPath).HasMaxLength(1000);
-
-                entity.Property(e => e.EmailCc)
-                    .HasMaxLength(100)
-                    .HasColumnName("EmailCC");
-
-                entity.Property(e => e.SendDate).HasColumnType("smalldatetime");
-
-                entity.Property(e => e.Subject).HasMaxLength(100);
-
-                entity.Property(e => e.ToAddress).HasMaxLength(100);
             });
 
             modelBuilder.Entity<EmployeeMaster>(entity =>
@@ -15248,91 +15230,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
-            });
-
-            modelBuilder.Entity<TPaymentPharmacy>(entity =>
-            {
-                entity.HasKey(e => e.PaymentId);
-
-                entity.ToTable("T_PaymentPharmacy");
-
-                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
-
-                entity.Property(e => e.BankName).HasMaxLength(100);
-
-                entity.Property(e => e.CardBankName).HasMaxLength(100);
-
-                entity.Property(e => e.CardDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CardNo).HasMaxLength(50);
-
-                entity.Property(e => e.CardPayAmount).HasColumnType("money");
-
-                entity.Property(e => e.CashPayAmount).HasColumnType("money");
-
-                entity.Property(e => e.ChequeDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ChequeNo).HasMaxLength(50);
-
-                entity.Property(e => e.ChequePayAmount).HasColumnType("money");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.NeftbankMaster)
-                    .HasMaxLength(100)
-                    .HasColumnName("NEFTBankMaster");
-
-                entity.Property(e => e.Neftdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("NEFTDate");
-
-                entity.Property(e => e.Neftno)
-                    .HasMaxLength(20)
-                    .HasColumnName("NEFTNo");
-
-                entity.Property(e => e.NeftpayAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("NEFTPayAmount");
-
-                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
-
-                entity.Property(e => e.PayTmamount)
-                    .HasColumnType("money")
-                    .HasColumnName("PayTMAmount");
-
-                entity.Property(e => e.PayTmdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PayTMDate");
-
-                entity.Property(e => e.PayTmtranNo)
-                    .HasMaxLength(20)
-                    .HasColumnName("PayTMTranNo");
-
-                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
-
-                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
-
-                entity.Property(e => e.Remark).HasMaxLength(500);
-
-                entity.Property(e => e.Tdsamount)
-                    .HasColumnType("money")
-                    .HasColumnName("TDSAmount");
-
-                entity.Property(e => e.TranMode).HasMaxLength(30);
-
-                entity.Property(e => e.Wfamount)
-                    .HasColumnType("money")
-                    .HasColumnName("WFAmount");
             });
 
             modelBuilder.Entity<TPaymentPharmacy>(entity =>
