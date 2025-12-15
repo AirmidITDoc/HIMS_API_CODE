@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Pharmacy;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -100,6 +101,8 @@ namespace HIMS.API.Controllers.Pharmacy
         public List<PHAdvRefundDetailModel> PHAdvRefundDetail { get; set; }
         public List<PHAdvanceDetailBalAmountModel> PHAdvanceDetailBalAmount { get; set; }
         public PharmacyPaymentModel PharPayment { get; set; }
+        public List<TPaymentpharModelS> TPayments { get; set; }
+
     }
 
 }

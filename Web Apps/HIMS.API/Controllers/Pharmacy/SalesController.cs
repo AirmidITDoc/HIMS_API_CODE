@@ -338,13 +338,15 @@ namespace HIMS.API.Controllers.Pharmacy
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
 
 
             if (obj.PharmacyHeader.AdvanceId != 0)
             {
                 model.AddedBy = CurrentUserId;
-                _ISalesService.UpdateS(model, model1, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.UpdateS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -353,7 +355,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //shilpa 27/05/2025//
 
         [HttpPost("PharmacyRefundInsert")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(PharRefundModel obj)
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
@@ -361,11 +363,13 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TPhadvRefundDetail> model3 = obj.PHAdvRefundDetail.MapTo<List<TPhadvRefundDetail>>();
             List<TPhadvanceDetail> model4 = obj.PHAdvanceDetailBalAmount.MapTo<List<TPhadvanceDetail>>();
             PaymentPharmacy model5 = obj.PharPayment.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
             if (obj.PharmacyRefund.RefundId == 0)
             {
                 model.AddBy = CurrentUserId;
-                _ISalesService.InsertR(model, model1, model3, model4, model5, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertR(model, model1, model3, model4, model5, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

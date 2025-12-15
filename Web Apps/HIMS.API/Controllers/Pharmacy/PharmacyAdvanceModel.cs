@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Pharmacy
         public long? AdvanceId { get; set; }
         public long? RefundId { get; set; }
         public long? TransactionType { get; set; }
-        public long? OPDIPDType { get; set; }
+        public byte? Opdipdtype { get; set; }
         public string? Remark { get; set; }
         public long? AddBy { get; set; }
         public bool? IsCancelled { get; set; }
@@ -91,8 +91,8 @@ namespace HIMS.API.Controllers.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TdsAmount { get; set; }
-        public decimal? WfAmount { get; set; }
+        public decimal? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
 
 
     }
@@ -121,7 +121,7 @@ public class PharmacyHeaderUpdate
     public PharmacyHeaderUpdateModel PharmacyHeader { get; set; }
     public PharmacyAdvanceDetailsModel PharmacyAdvanceDetails { get; set; }
     public PaymentPharmacyModel PaymentPharmacy { get; set; }
-    //public List<TPaymentpharModelS> TPayments { get; set; }
+    public List<TPaymentpharModelS> TPayments { get; set; }
 
 
 }

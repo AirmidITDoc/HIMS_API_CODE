@@ -150,7 +150,7 @@ namespace HIMS.API.Models.Pharmacy
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public int? OPDIPDType { get; set; }
+        public int? Opdipdtype { get; set; }
         public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
@@ -158,8 +158,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public DateTime? PayTmdate { get; set; }
-        public decimal? TdsAmount { get; set; }
-        public decimal? WFAmount { get; set; }
+        public decimal? Tdsamount { get; set; }
+        public decimal? Wfamount { get; set; }
         public long? UnitId { get; set; }
 
     }
@@ -182,5 +182,7 @@ namespace HIMS.API.Models.Pharmacy
         public List<CurrentStockModels> CurrentStock { get; set; }
         public List<SalesDetailsModel> SalesDetail { get; set; }
         public PaymentModels? Payment { get; set; }
+        public List<TPaymentpharModelS> TPayments { get; set; }
+
     }
 }

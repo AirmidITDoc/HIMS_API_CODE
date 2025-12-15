@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationInsert")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -90,7 +90,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationUpdate")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
