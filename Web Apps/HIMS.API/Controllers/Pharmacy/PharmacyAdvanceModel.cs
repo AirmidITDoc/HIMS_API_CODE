@@ -121,7 +121,7 @@ public class PharmacyHeaderUpdate
     public PharmacyHeaderUpdateModel PharmacyHeader { get; set; }
     public PharmacyAdvanceDetailsModel PharmacyAdvanceDetails { get; set; }
     public PaymentPharmacyModel PaymentPharmacy { get; set; }
-    //public List<TPaymentpharModelS> TPayments { get; set; }
+    public List<TPaymentpharModelS> TPayments { get; set; }
 
 
 }

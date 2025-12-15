@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
@@ -85,12 +85,14 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
             PaymentPharmacy model4 = obj.Payment.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                _ISalesReturnService.InsertSP(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
+                _ISalesReturnService.InsertSP(model, model1, model2, model3, model4, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -312,7 +312,7 @@ namespace HIMS.API.Controllers.Pharmacy
         //shilpa 26/05/2025//
 
         [HttpPost("PharmacyAdvanceInsert")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse Insert(PharAdvanceModel obj)
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
@@ -332,19 +332,21 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model1.AdvanceDetailId);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse Update(PharmacyHeaderUpdate obj)
         {
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
 
 
             if (obj.PharmacyHeader.AdvanceId != 0)
             {
                 model.AddedBy = CurrentUserId;
-                _ISalesService.UpdateS(model, model1, model3, CurrentUserId, CurrentUserName);
+                _ISalesService.UpdateS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -361,11 +363,13 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TPhadvRefundDetail> model3 = obj.PHAdvRefundDetail.MapTo<List<TPhadvRefundDetail>>();
             List<TPhadvanceDetail> model4 = obj.PHAdvanceDetailBalAmount.MapTo<List<TPhadvanceDetail>>();
             PaymentPharmacy model5 = obj.PharPayment.MapTo<PaymentPharmacy>();
+            List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
+
 
             if (obj.PharmacyRefund.RefundId == 0)
             {
                 model.AddBy = CurrentUserId;
-                _ISalesService.InsertR(model, model1, model3, model4, model5, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertR(model, model1, model3, model4, model5, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

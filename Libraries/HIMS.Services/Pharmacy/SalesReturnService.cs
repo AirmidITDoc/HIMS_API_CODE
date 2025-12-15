@@ -45,7 +45,7 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, int UserId, string Username)
+        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
@@ -126,6 +126,24 @@ namespace HIMS.Services.Pharmacy
             }
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+            foreach (var item in ObjTPaymentPharmacy)
+            {
+                //item.AdvanceId = Convert.ToInt32(VAdvanceDetailID);
+
+
+                string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                var pentity = item.ToDictionary();
+                foreach (var rProperty in pentity.Keys.ToList())
+                {
+                    if (!SEntity.Contains(rProperty))
+                        pentity.Remove(rProperty);
+                }
+                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                item.PaymentId = Convert.ToInt32(VPaymentId);
+
+            }
 
         }
         //Changes Done By Ashutosh 19 May 2025 
