@@ -40,7 +40,7 @@ namespace HIMS.API.Models.Pharmacy
     }
     public class SalesReturnDetailsModel
     {
-        public long SalesReturnID { get; set; }
+        public long SalesReturnId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }

@@ -66,7 +66,7 @@ namespace HIMS.Services.Pharmacy
             {
                 item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
-                string[] TEntity = { "SalesReturnID", "ItemId", "BatchNo", "BatchExpDate","UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount","PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate","UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount","PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
                 var Aentity = item.ToDictionary();
                 foreach (var rProperty in Aentity.Keys.ToList())
                 {
@@ -131,6 +131,7 @@ namespace HIMS.Services.Pharmacy
             }
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+
             foreach (var item in ObjTPaymentPharmacy)
             {
                 item.RefundId = Convert.ToInt32(vSalesReturnId);

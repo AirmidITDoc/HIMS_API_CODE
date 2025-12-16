@@ -606,15 +606,15 @@ namespace HIMS.Services.Users
                 }
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
             }
-            string[] PHEntity = { "BillNo", "ReceiptNo",  "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo","CardBankName", "CardDate", "AdvanceUsedAmount",
-                                  "AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledDate","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","UnitId","TdsAmount","WfAmount","OPDIPDType"};
-            var Phentity = ObjPaymentPharmacy.ToDictionary();
-            foreach (var rProperty in Phentity.Keys.ToList())
+            string[] PHEntity = { "BillNo", "UnitId", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType",
+                "Opdipdtype", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
+            var Entity = ObjPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in Entity.Keys.ToList())
             {
                 if (!PHEntity.Contains(rProperty))
-                    Phentity.Remove(rProperty);
+                    Entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Phentity);
+            odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
 
             foreach (var item in ObjTPaymentPharmacy)
             {
