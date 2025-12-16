@@ -36,7 +36,7 @@ namespace HIMS.Data.DTO.Administration
         public long? PathTestServiceId { get; set; }
         public long? GenderId { get; set; }
         public long? IsVerifyid { get; set; }
-        public DateTime? IsVerifyedDate { get; set; }
+        public string? IsVerifyedDate { get; set; }
         public long? OutSourceId { get; set; }
         public string? OutSourceLabName { get; set; }
         public DateTime? OutSourceSampleSentDateTime { get; set; }
@@ -48,6 +48,8 @@ namespace HIMS.Data.DTO.Administration
         public DateTime? OutSourceModifiedDateTime { get; set; }
         public bool? IsPathOutSource { get; set; }
         public bool? IsRadOutSource { get; set; }
+        public string VerifiedUserName { get; set; }
+
     }
     //public class pathologistdoctorDto
     //{

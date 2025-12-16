@@ -17,6 +17,10 @@ namespace HIMS.Services.Transaction
         Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsync(EmailConfiguration ObjEmailConfiguration, int UserId, string Username);
+        Task InsertAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username);
+        Task UpdateAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username);
+
+
 
 
     }

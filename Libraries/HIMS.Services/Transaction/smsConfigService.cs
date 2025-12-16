@@ -108,6 +108,28 @@ namespace HIMS.Services.Transaction
             await _context.SaveChangesAsync();
             scope.Complete();
         }
+        public virtual async Task InsertAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.SmspdfConfigs.Add(ObjSmspdfConfig);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+             // Attach entity
+            _context.Attach(ObjSmspdfConfig);
+            var entry = _context.Entry(ObjSmspdfConfig);
+
+            // Mark entity as modified
+            entry.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
 
     }
 
