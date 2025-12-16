@@ -39,17 +39,13 @@ namespace HIMS.Services.Administration
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             {
-                // Get last SequenceNo (string type)
-                var lastSeqNoStr = await _context.TExpenses
-                    .OrderByDescending(x => x.SequenceNo)
-                    .Select(x => x.SequenceNo)
-                    .FirstOrDefaultAsync();
+             
+                int lastVoucherNo = _context.TExpenses.Where(x => !string.IsNullOrWhiteSpace(x.VoucharNo)).AsEnumerable() 
+                    .Where(x => x.VoucharNo.All(char.IsDigit))
+                    .Select(x => int.Parse(x.VoucharNo)).DefaultIfEmpty(0).Max();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+                ObjTExpense.VoucharNo = (lastVoucherNo + 1).ToString();
 
-                ObjTExpense.SequenceNo = (lastSeqNo + 1).ToString();
 
                 _context.TExpenses.Add(ObjTExpense);
                 await _context.SaveChangesAsync();
