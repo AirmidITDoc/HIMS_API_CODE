@@ -410,10 +410,16 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIndentHeader, IndentHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIndentDetail, IndentDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceWiseCompanyCode, ServiceWiseCompanyCodeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMailOutgoing, TMailOutgoingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<SmspdfConfig, SmspdfConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
 
+
+
+            
 
 
 

@@ -1,155 +1,115 @@
-<div>
-    <div>
-        <!DOCTYPE html>
-        <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Receipt</title>
+</head>
 
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-        </head>
+<body style="margin:0; padding:6px; font-family:monospace; font-size:9px; color:#101828;">
 
-        <body >
-            <div class="main-content-wrapper" style="font-weight:bold">
-                <div class="invoice-box" style="font-size: 10px; line-height: 24px; font-family: "Lucida Console", monospace; color: #101828;">
-                    <table style="width: 110px;line-height: inherit;text-align: left;">
-                        <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #d4c3c3;">
-                            {{NewHeaderThermal}}
-                        </table>
-                        <tr class="title-date-row">
-                            <td style="padding: 6px;">
-                                <table style="width: 100%; border-collapse: collapse; font-size:14px; text-align: center;">
-                                    <!--<tr>
-                        <td colspan="2" style="border-bottom: 1px solid #d4c3c3; padding: 0px; text-align: center;">
-                            <b>SHIV SANTOSHI HOSPITAL</b><br>
-                            188, Budhwar Peth, Bank Of Maharashtra, Near Hotel Ambassadar<br>
-                            Pune Road, Solapur - 413002  | Phone No: 0217-2623937
-                        </td>
-                    </tr>-->
-                                    <tr style="font-size: 14px; text-align: left;">
-                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 10px;">
-                                            <b>OPD BILL/RECEIPT</b>
-                                        </td>
-                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 10px; text-align: right;">
-                                            Print Date : <b>{{CurrentDate}}</b>
-</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="bill-info-row" style="font-weight:bold">
-                            <td style="padding: 6px;">
-                                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                                    <tr>
-                                        <td style="padding: 2px; width: 30%; font-weight: bold">
-                                            <span><b>UHID :</b> </span>
-                                            <span><b>{{RegNo}}</b></span>
-</td>
-                                        <td style="padding: 2px; width: 30%; font-weight: bold">
-                                            <span><b>Bill No :</b> </span>
-                                            <span><b>{{BillNo}}</b></span>
-                                        </td>
-                                        <td style="padding: 2px; width: 40%; font-weight: bold">
-                                            <span><b>Token No :</b> </span>
-                                            <span><b>{{TokenNo}}</b></span>
-                                        </td>
-                                    </tr>
-                                    <table style="width: 100%; font-size: 14px; font-weight: bold">
-                                        <tr>
-                                            <td style="padding: 2px; width: 70%;">
-                                                <b>Patient Name:</b> {{PatientName}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding: 2px; font-weight: bold">
-                                                <b>Doctor Name:</b> {{ConsultantDocName}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="bill-table-row">
-                            <td style="padding: 6px;">
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <thead style="font-size:14px">
-                                        <tr>
-                                            <th style="border-bottom: 1px dotted #aaa; padding: 2px; text-align: left;">Sr.No </th>
-                                            <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: left;">Service Name </th>
-                                            <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
-                                            <!--<th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Rate</th>
-                            <th style="border-bottom: 1px dotted #aaa; padding: 4px; text-align: right;">Value</th>-->
-                                        </tr>
-                                    </thead>
-                                    {{Items}}
-                                    <tr style="margin-top: 10px;">
-                                        <td colspan="8">
-                                            <table style="width: 100%; border-collapse: collapse;font-weight:bold;font-size:14px;">
-                                                <tr>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;"> Bill Amt : </td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;">{{TotalBillAmount}}</td>
-                                                </tr>
-                                                <tr style="display:{{chkdiscflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 2px;">Disc Amt</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;">Reason - ({{DiscComments}})</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;">{{ConcessionAmt}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border-bottom: 1px solid #eee; padding: 2px;">Net Amt :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;">{{NetPayableAmt}}</td>
-                                                </tr>
-                                                <tr style="display:{{chkpaidflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 2px;">Paid Amt : </td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;">{{PaymentMode}}</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;">{{PaidAmount}}</td>
-                                                </tr>
-                                                <tr style="display:{{chkbalflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 2px;">Bal Amt :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;">{{BalanceAmt}}</td>
-                                                </tr>
+    <div class="main-content-wrapper" style="width:100%;">
 
-                                                <tr style="display:{{chkRefundflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 2px;">Refund Info:</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px;">{{RefundInfo}}</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 2px; text-align: right;"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr class="payment-info-row">
-                                    <td style="padding: 6px;">
-                                        <table style="width: 100%; border-collapse: collapse;font-size:14px">
-                                            <tr>
-                                                <td style="padding: 6px; text-align: left;" colspan="2">
-                                                    <b><span>{{finalamt}}</span></b> <br>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px; text-align: right;">
-                                                    <span>{{AddedByName}}</span><br>
-                                                    <b><span>Generated By</span></b>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+        <div class="invoice-box" style="width:100%; line-height:18px;">
 
-                            </table>
-                        </tr>
-                    </table>
-                    </table>
-                </div>
-            </div>
-        </body>
-    </html>
-</div>
-</div>
+
+            <table style="width:100%; border-collapse:collapse;">
+                {{NewHeaderThermal}}
+            </table>
+
+
+            <table style="width:100%; border-collapse:collapse;">
+                <tr>
+                    <td style="border-bottom:1px solid #d4c3c3; padding:4px; font-size:14px; font-weight:bold;">
+                        OPD BILL/RECEIPT
+                    </td>
+                    <td style="border-bottom:1px solid #d4c3c3; padding:4px; font-size:14px; text-align:right;">
+                        Print Date : <b>{{CurrentDate}}</b>
+                    </td>
+                </tr>
+            </table>
+
+
+            <table style="width:100%; border-collapse:collapse; font-size:14px; font-weight:bold;">
+                <tr>
+                    <td style="padding:2px;">UHID : {{RegNo}}</td>
+                    <td style="padding:2px;">Bill No : {{BillNo}}</td>
+                    <td style="padding:2px;">Token No : {{TokenNo}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="padding:2px;">Patient Name : {{PatientName}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="padding:2px;">Doctor Name : {{ConsultantDocName}}</td>
+                </tr>
+            </table>
+
+            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                <thead>
+                    <tr>
+                        <th style="border-bottom:1px dotted #aaa; text-align:left;">Sr.No</th>
+                        <th style="border-bottom:1px dotted #aaa; text-align:left;">Service Name</th>
+                        <th style="border-bottom:1px dotted #aaa; text-align:right;">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{Items}}
+                </tbody>
+            </table>
+
+
+            <table style="width:100%; border-collapse:collapse; font-size:14px; font-weight:bold;">
+                <tr>
+                    <td>Bill Amt :</td>
+                    <td></td>
+                    <td style="text-align:right;">{{TotalBillAmount}}</td>
+                </tr>
+
+                <tr style="display:{{chkdiscflag}}">
+                    <td>Disc Amt :</td>
+                    <td>({{DiscComments}})</td>
+                    <td style="text-align:right;">{{ConcessionAmt}}</td>
+                </tr>
+
+                <tr>
+                    <td>Net Amt :</td>
+                    <td></td>
+                    <td style="text-align:right;">{{NetPayableAmt}}</td>
+                </tr>
+
+                <tr style="display:{{chkpaidflag}}">
+                    <td>Paid Amt :</td>
+                    <td>{{PaymentMode}}</td>
+                    <td style="text-align:right;">{{PaidAmount}}</td>
+                </tr>
+
+                <tr style="display:{{chkbalflag}}">
+                    <td>Bal Amt :</td>
+                    <td></td>
+                    <td style="text-align:right;">{{BalanceAmt}}</td>
+                </tr>
+
+                <tr style="display:{{chkRefundflag}}">
+                    <td>Refund Info :</td>
+                    <td colspan="2">{{RefundInfo}}</td>
+                </tr>
+            </table>
+            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                <tr>
+                    <td style="padding-top:6px;">
+                        <b>{{finalamt}}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:right; padding-top:10px;">
+                        {{AddedByName}}<br>
+                        <b>Generated By</b>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+</body>
+</html>

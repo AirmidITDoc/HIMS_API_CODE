@@ -24,6 +24,12 @@ namespace HIMS.API.Models.Pharmacy
         public long? StoreId { get; set; }
         public string? Narration { get; set; }
         public bool? IsPurBill { get; set; }
+        //public string? MobileNo { get; set; }
+        //public string? PatientName { get; set; }
+        //public string? Address { get; set; }
+        //public long? DoctorId { get; set; }
+        //public string? DoctorName { get; set; }
+        //public long? ReturnType { get; set; }
 
 
 
@@ -40,7 +46,7 @@ namespace HIMS.API.Models.Pharmacy
     }
     public class SalesReturnDetailsModel
     {
-        public long SalesReturnID { get; set; }
+        public long SalesReturnId { get; set; }
         public long? ItemId { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }

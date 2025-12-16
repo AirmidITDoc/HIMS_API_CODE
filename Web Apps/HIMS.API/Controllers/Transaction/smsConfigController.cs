@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.Transaction;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -21,10 +22,44 @@ namespace HIMS.API.Controllers.Transaction
     {
         private readonly IsmsConfigService _IsmsConfigService;
         private readonly IGenericService<SmsoutGoing> _repository;
-        public smsConfigController(IsmsConfigService repository, IGenericService<SmsoutGoing> repository1)
+        private readonly IGenericService<TMailOutgoing> _repository1;
+        private readonly IGenericService<TWhatsAppSmsOutgoing> _repository2;
+        private readonly IGenericService<SmspdfConfig> _repository3;
+
+
+
+        public smsConfigController(IsmsConfigService repository, IGenericService<SmsoutGoing> repository1, IGenericService<TMailOutgoing> repository2, IGenericService<TWhatsAppSmsOutgoing> repository3, IGenericService<SmspdfConfig> repository4)
         {
             _IsmsConfigService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+            _repository2 = repository3;
+            _repository3 = repository4;
+        }
+
+        [HttpGet("TMailOutgoing/{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository1.GetById(x => x.TranNo == id) 
+;
+            return data.ToSingleResponse<TMailOutgoing, TMailOutgoingModel>("TMailOutgoing");
+        }
+        [HttpGet("TWhatsAppSmsOutgoing/{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Gets(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository2.GetById(x => x.TranNo == id)
+;
+            return data.ToSingleResponse<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>("TWhatsAppSmsOutgoing");
         }
 
         [HttpPost("SMSendoutList")]
@@ -81,6 +116,40 @@ namespace HIMS.API.Controllers.Transaction
 
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        //Add API
+        [HttpPost("SmspdfConfig")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(SmspdfConfigModel obj)
+        {
+            SmspdfConfig model = obj.MapTo<SmspdfConfig>();
+            if (obj.Smsid == 0)
+            {
+                //model.CreatedBy = CurrentUserId;
+                //model.CreatedDate = DateTime.Now;
+                await _IsmsConfigService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
+        //Edit API
+        [HttpPut("SmspdfConfig")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(SmspdfConfigModel obj)
+        {
+            SmspdfConfig model = obj.MapTo<SmspdfConfig>();
+            //model.IsActive = true;
+            if (obj.Smsid == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                //model.ModifiedBy = CurrentUserId;
+                //model.ModifiedDate = DateTime.Now;
+
+                await _IsmsConfigService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
 
         [HttpPost("EmailOutgoingList")]
