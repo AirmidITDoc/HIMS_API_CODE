@@ -359,6 +359,9 @@ namespace HIMS.API.Controllers.Common
                 "GstCalcType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_CALC_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Anesthesiatypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ANESTHESIA_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
+                "Messagetypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MessageType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+
 
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),
                 "Purpose" => (await _IMDoPurposeMaster.GetAll(x => (x.IsActive ?? 0) == 1)).ToList().ToDropDown(nameof(DbPurposeMaster.PurposeId), nameof(DbPurposeMaster.PurposeName)),
