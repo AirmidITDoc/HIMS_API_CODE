@@ -34,12 +34,6 @@ namespace HIMS.Data.Models
         public bool? IsPurBill { get; set; }
         public bool? IsBillCheck { get; set; }
         public string? Narration { get; set; }
-        public string? MobileNo { get; set; }
-        public string? PatientName { get; set; }
-        public string? Address { get; set; }
-        public long? DoctorId { get; set; }
-        public string? DoctorName { get; set; }
-        public long? ReturnType { get; set; }
 
         public virtual ICollection<TSalesReturnDetail> TSalesReturnDetails { get; set; }
     }

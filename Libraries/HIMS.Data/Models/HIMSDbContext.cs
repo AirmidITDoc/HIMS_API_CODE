@@ -16183,8 +16183,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_SalesReturnHeader");
 
-                entity.Property(e => e.Address).HasMaxLength(255);
-
                 entity.Property(e => e.BalanceAmount).HasColumnType("money");
 
                 entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
@@ -16192,10 +16190,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.DiscAmount).HasColumnType("money");
-
-                entity.Property(e => e.DoctorName).HasMaxLength(255);
-
-                entity.Property(e => e.MobileNo).HasMaxLength(20);
 
                 entity.Property(e => e.Narration).HasMaxLength(500);
 
@@ -16206,8 +16200,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.PaidAmount).HasColumnType("money");
-
-                entity.Property(e => e.PatientName).HasMaxLength(255);
 
                 entity.Property(e => e.SalesId).HasColumnName("SalesID");
 

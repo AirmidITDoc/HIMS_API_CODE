@@ -5,7 +5,7 @@ namespace HIMS.Data.Models
 {
     public partial class View2
     {
-        public long AdmissionId { get; set; }
+        public long? AdmissionId { get; set; }
         public DateTime? AdmissionDate { get; set; }
         public DateTime? AdmissionTime { get; set; }
         public string? FirstName { get; set; }
@@ -28,7 +28,7 @@ namespace HIMS.Data.Models
         public string? TariffName { get; set; }
         public string? DepartmentName { get; set; }
         public string? RelativeName { get; set; }
-        public long RegId { get; set; }
+        public long? RegId { get; set; }
         public DateTime? SurgeryDate { get; set; }
         public int? Duration { get; set; }
         public DateTime? FromTime { get; set; }
@@ -49,14 +49,15 @@ namespace HIMS.Data.Models
         public string? Expr9 { get; set; }
         public long? Expr10 { get; set; }
         public string? Expr11 { get; set; }
-        public long OtpreOperationId { get; set; }
+        public long? OtpreOperationId { get; set; }
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
         public string? Expr12 { get; set; }
         public string? Expr13 { get; set; }
-        public long VisitId { get; set; }
+        public long? VisitId { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
         public long? DocNameId { get; set; }
+        public long? Expr14 { get; set; }
     }
 }
