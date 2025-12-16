@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Transaction
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpPost("EmailsendoutList")]
+        [HttpPost("EmailOutgoingList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> emailList(GridRequestModel objGrid)
         {

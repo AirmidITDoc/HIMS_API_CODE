@@ -115,6 +115,34 @@ namespace HIMS.API.Models.Pharmacy
             RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
         }
     }
+    public class TPaymentpharModelS
+    {
+        public long PaymentId { get; set; }
+        public long? UnitId { get; set; }
+        public long? BillNo { get; set; }
+        public byte? Opdipdtype { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentTime { get; set; }
+        public decimal? PayAmount { get; set; }
+        public string? TranNo { get; set; }
+        public string? BankName { get; set; }
+        public DateTime? ValidationDate { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+        public string? Comments { get; set; }
+        public string? PayMode { get; set; }
+        public string? OnlineTranNo { get; set; }
+        public string? OnlineTranResponse { get; set; }
+        public long? CompanyId { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+        public long? CashCounterId { get; set; }
+        public long? TransactionType { get; set; }
+        public byte? IsSelfOrcompany { get; set; }
+        public string? TranMode { get; set; }
+        public long? CreatedBy { get; set; }
+        public string? TransactionLabel { get; set; }
+
+    }
 
     public class IPPrescriptionsModel
     {
@@ -151,6 +179,8 @@ namespace HIMS.API.Models.Pharmacy
         public PaymentpharModelSS Payment { get; set; }
         public IPPrescriptionsModel Prescription { get; set; }
         public SalesDraftHeaderModel SalesDraft { get; set; }
+        public List<TPaymentpharModelS> TPayments { get; set; }
+
 
     }
     public class SalesSaveWithCreditModel

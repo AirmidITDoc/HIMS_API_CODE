@@ -296,7 +296,7 @@ namespace HIMS.API.Controllers.Common
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
-                    FirstName = x.FirstName + " " + x.LastName // Concatenate FirstName and LastName
+                    FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName // Concatenate FirstName and LastName
                 })
                 .ToList().ToDropDown("DoctorId", "FirstName"),
 
@@ -304,7 +304,7 @@ namespace HIMS.API.Controllers.Common
                 .Select(x => new
                 {
                     DoctorId = x.DoctorId,
-                    FirstName = x.FirstName + " " + x.LastName // Concatenate FirstName and LastName
+                    FirstName = x.FirstName + " " + x.MiddleName+ " "+ x.LastName // Concatenate FirstName and LastName
                 })
                 .ToList()
                 .ToDropDown("DoctorId", "FirstName"), // Use the concatenated FullName for the dropdown
@@ -358,6 +358,9 @@ namespace HIMS.API.Controllers.Common
                 "SupplierMaster" => (await _IMSupplierMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSupplierMaster.SupplierId), nameof(MSupplierMaster.SupplierName), nameof(MSupplierMaster.Gstno)),
                 "GstCalcType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_CALC_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Anesthesiatypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ANESTHESIA_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+                "Messagetypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MessageType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
 
 
                 "CashCounter" => (await _IMCashcounterService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(CashCounter.CashCounterId), nameof(CashCounter.CashCounterName)),

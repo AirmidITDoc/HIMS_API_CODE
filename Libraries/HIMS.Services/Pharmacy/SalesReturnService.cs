@@ -44,17 +44,18 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
         }
-        //Changes Done By Ashutosh 19 May 2025 
-        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, int UserId, string Username)
+        //Changes Done By shilpa 12 dec 2025 
+        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
         {
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnNo", "CashCounterId", "UpdatedBy", "IsBillCheck", "TSalesReturnDetails" };
+            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
-            foreach (var rProperty in Entity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
             ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
@@ -65,22 +66,24 @@ namespace HIMS.Services.Pharmacy
             {
                 item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
-                string[] TEntity = { "Mrp", "Mrptotal", "SalesReturn", "SalesReturnDetId" };
+                string[] TEntity = { "SalesReturnID", "ItemId", "BatchNo", "BatchExpDate","UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount","PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
                 var Aentity = item.ToDictionary();
-                foreach (var rProperty in TEntity)
+                foreach (var rProperty in Aentity.Keys.ToList())
                 {
-                    Aentity.Remove(rProperty);
+                    if (!TEntity.Contains(rProperty))
+                        Aentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
             }
 
             foreach (var item in ObjTCurrentStock)
             {
-                string[] REntity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
+                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId"};
                 var Pentity = item.ToDictionary();
-                foreach (var rProperty in REntity)
+                foreach (var rProperty in Pentity.Keys.ToList())
                 {
-                    Pentity.Remove(rProperty);
+                    if (!REntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
 
@@ -88,11 +91,12 @@ namespace HIMS.Services.Pharmacy
 
             foreach (var item in ObjTSalesDetail)
             {
-                string[] REntity = { "SalesId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRateWf", "PurTotAmt", "Cgstper", "IssDeptQty", "Sgstper", "Cgstamt", "Sgstamt", "Igstper", "Igstamt", "IsPurRate", "StkId", "Mrp", "MrpTotal", "Sales" };
+                string[] REntity = { "SalesDetId", "ReturnQty" };
                 var Pentity = item.ToDictionary();
-                foreach (var rProperty in REntity)
+                foreach (var rProperty in Pentity.Keys.ToList())
                 {
-                    Pentity.Remove(rProperty);
+                    if (!REntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
 
@@ -118,14 +122,33 @@ namespace HIMS.Services.Pharmacy
             };
             odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
-            string[] PEntity = { "StrId", "ReceiptNo", "IsSelfOrcompany", "CashCounterId", "CompanyId", "ChCashPayAmount", "ChChequePayAmount", "ChCardPayAmount", "ChAdvanceUsedAmount", "ChNeftpayAmount", "ChPayTmamount", "TranMode", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
             var Sentity = ObjPayment.ToDictionary();
-            foreach (var rProperty in PEntity)
+            foreach (var rProperty in Sentity.Keys.ToList())
             {
-                Sentity.Remove(rProperty);
+                if (!PEntity.Contains(rProperty))
+                    Sentity.Remove(rProperty);
             }
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+            foreach (var item in ObjTPaymentPharmacy)
+            {
+                item.RefundId = Convert.ToInt32(vSalesReturnId);
+
+
+                string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                var pentity = item.ToDictionary();
+                foreach (var rProperty in pentity.Keys.ToList())
+                {
+                    if (!SEntity.Contains(rProperty))
+                        pentity.Remove(rProperty);
+                }
+                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                item.PaymentId = Convert.ToInt32(VPaymentId);
+
+            }
 
         }
         //Changes Done By Ashutosh 19 May 2025 

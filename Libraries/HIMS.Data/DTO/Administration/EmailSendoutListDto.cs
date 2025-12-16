@@ -8,15 +8,28 @@ namespace HIMS.Data.DTO.Administration
 {
     public class EmailSendoutListDto
     {
-        public long? Id { get; set; }
-        public int? NotificationType { get; set; }
-        public DateTime? SendDate { get; set; }
-        public string? ToAddress { get; set; }
-        public string? Subject { get; set; }
-        public string? EmailBody { get; set; }
-        public string? EmailCC { get; set; }
-
-        public int? IsSendMail { get; set; }
-        public string? AttachmentPath { get; set; }
+        public long Id { get; set; }
+        public string? FromEmail { get; set; }
+        public string? FromName { get; set; }
+        public string? ToEmail { get; set; }
+        public string? Cc { get; set; }
+        public string? Bcc { get; set; }
+        public string? MailSubject { get; set; }
+        public string? MailBody { get; set; }
+        public string? AttachmentName { get; set; }
+        public string? AttachmentLink { get; set; }
+        public long? TranNo { get; set; }
+        public long? PatientId { get; set; }
+        public string? EmailType { get; set; }
+        public DateTime? EmailDate { get; set; }
+        public int? Status { get; set; }
+        public DateTime? LastTry { get; set; }
+        public string? LastResponse { get; set; }
+        public int? Retry { get; set; }
+        public DateTime? LastSendingTry { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 }
