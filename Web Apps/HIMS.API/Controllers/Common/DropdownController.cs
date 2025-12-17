@@ -11,7 +11,7 @@ using Microsoft.VisualBasic;
 namespace HIMS.API.Controllers.Common
 {
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiControllerMessagetypes
+    [ApiControllerMessagetypes]
     [ApiVersion("1")]
     public class DropdownController : BaseController
     {
@@ -450,5 +450,9 @@ namespace HIMS.API.Controllers.Common
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");
         }
+    }
+
+    internal class ApiControllerMessagetypesAttribute : Attribute
+    {
     }
 }
