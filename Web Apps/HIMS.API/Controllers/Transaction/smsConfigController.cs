@@ -35,11 +35,8 @@ namespace HIMS.API.Controllers.Transaction
             _repository1 = repository2;
             _repository2 = repository3;
             _repository3 = repository4;
-
-
-
-
         }
+
         [HttpGet("TMailOutgoing/{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -126,36 +123,34 @@ namespace HIMS.API.Controllers.Transaction
         public async Task<ApiResponse> Post(SmspdfConfigModel obj)
         {
             SmspdfConfig model = obj.MapTo<SmspdfConfig>();
-            //model.IsActive = true;
             if (obj.Smsid == 0)
             {
                 //model.CreatedBy = CurrentUserId;
                 //model.CreatedDate = DateTime.Now;
-                await _repository3.Add(model, CurrentUserId, CurrentUserName);
+                await _IsmsConfigService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
-        ////Edit API
-        //[HttpPut("{id:int}")]
-        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(SmspdfConfigModel obj)
-        //{
-        //    SmspdfConfig model = obj.MapTo<SmspdfConfig>();
-        //    //model.IsActive = true;
-        //    if (obj.Smsid == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        //model.ModifiedBy = CurrentUserId;
-        //        //model.ModifiedDate = DateTime.Now;
-        //        await _repository3.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+        //Edit API
+        [HttpPut("SmspdfConfig")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(SmspdfConfigModel obj)
+        {
+            SmspdfConfig model = obj.MapTo<SmspdfConfig>();
+            //model.IsActive = true;
+            if (obj.Smsid == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                //model.ModifiedBy = CurrentUserId;
+                //model.ModifiedDate = DateTime.Now;
 
-        //        await _repository3.Update(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
-        //}
+                await _IsmsConfigService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
 
         [HttpPost("EmailOutgoingList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]

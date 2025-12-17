@@ -11,7 +11,7 @@ using Microsoft.VisualBasic;
 namespace HIMS.API.Controllers.Common
 {
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
+    [ApiControllerMessagetypes
     [ApiVersion("1")]
     public class DropdownController : BaseController
     {
@@ -360,6 +360,9 @@ namespace HIMS.API.Controllers.Common
                 "Anesthesiatypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ANESTHESIA_TYPES")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 "Messagetypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MessageType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+
+                "Returntypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "RETURN_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
 

@@ -574,6 +574,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
         public virtual DbSet<View1> View1s { get; set; } = null!;
+        public virtual DbSet<View2> View2s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
@@ -16903,6 +16904,97 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.TranMode).HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<View2>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_2");
+
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AdmissionId).HasColumnName("AdmissionID");
+
+                entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.DocNameId).HasColumnName("DocNameID");
+
+                entity.Property(e => e.DoctorType).HasMaxLength(100);
+
+                entity.Property(e => e.Expr1).HasMaxLength(50);
+
+                entity.Property(e => e.Expr11).HasMaxLength(50);
+
+                entity.Property(e => e.Expr12).HasMaxLength(500);
+
+                entity.Property(e => e.Expr13).HasMaxLength(50);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.Expr4).HasMaxLength(50);
+
+                entity.Property(e => e.Expr5).HasMaxLength(50);
+
+                entity.Property(e => e.Expr7).HasMaxLength(50);
+
+                entity.Property(e => e.Expr8).HasMaxLength(50);
+
+                entity.Property(e => e.Expr9).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.FromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.OtpreOperationId).HasColumnName("OTPreOperationId");
+
+                entity.Property(e => e.PatientType).HasMaxLength(100);
+
+                entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
+
+                entity.Property(e => e.RelativeName).HasMaxLength(100);
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
+
+                entity.Property(e => e.ToTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<ViewDoctorshare>(entity =>
