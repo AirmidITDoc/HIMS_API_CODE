@@ -117,7 +117,16 @@ namespace HIMS.Services.Report
         {
             return await this._context.MModeOfPayments.Where(x => (x.ModeOfPayment).ToLower().Contains(str)).Take(25).ToListAsync();
         }
+        public virtual async Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str)
+        {
+            return await this._context.MExpensesHeadMasters.Where(x => (x.HeadName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
 
+
+        public virtual async Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str)
+        {
+            return await this._context.MExpensesCategoryMasters.Where(x => (x.CategoryName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
 
 
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
@@ -11518,9 +11527,25 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedName}}", dt.GetColValue("AddedName"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
 
+                        html = html.Replace("{{UTRNo}}", dt.GetColValue("UTRNo"));
+                        html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
+                        html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+
+
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount"));
+                        html = html.Replace("{{OnlineAmount}}", dt.GetColValue("OnlineAmount"));
+
+
 
                         html = html.Replace("{{ExpDate}}", dt.GetColValue("ExpTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
+                        html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkcardflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
 
 

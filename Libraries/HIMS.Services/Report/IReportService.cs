@@ -27,6 +27,10 @@ namespace HIMS.Services.Report
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
         Task<List<MModeOfPayment>> SearchMModeOfPayment(string str);
+        Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str);
+
+        Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);
+
 
         Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
         DataTable GetReportDataBySp(ReportConfigDto model);

@@ -40,53 +40,97 @@
                                 </tr>
 
                                 <tr class="bill-info-row">
-                                    <td style="padding: 6px;">
+                                    <td style="padding: 6px; border-bottom: 1px solid #d4c3c3">
 
                                         <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
-
-
                                             <tr>
                                                 <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Person Name :</span>
-                                                    <span>{{PersonName}}</span>
+                                                    <span style="font-weight:bold;">ID :</span>
+                                                    <span>{{ExpID}}</span>
                                                 </td>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Date|Time:</span>
                                                     <span> {{ExpDate}}</span>
                                                 </td>
 
-                                            </tr>
-
-                                            <tr>
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Amount :</span>
-                                                    <span>{{ExpAmount}}</span>
-                                                </td>
-
-                                                <td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">Payment Type :</span>
-                                                    <span>{{ExpType}}</span>
-                                                </td>
 
                                             </tr>
                                             <tr>
-
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Person Name :</span>
+                                                    <span>{{PersonName}}</span>
+                                                </td>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Voucher No :</span>
                                                     <span>{{VoucharNo}}</span>
                                                 </td>
 
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Expenses Name : </span>
+                                                    <span> {{HeadName}}</span>
+                                                </td>
+
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Category Name : </span>
+                                                    <span> {{CategoryName}}</span>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">Description :</span>
                                                     <span>{{Narration}}</span>
                                                 </td>
-
                                             </tr>
 
 
                                         </table>
                                     </td>
                                 </tr>
+                                <tr style="border-bottom: 1px solid #d4c3c3";>
+                                    <th style=" text-align: left;">
+                                        <h4 style="margin: 1px 0px;font-size: 20px;">
+                                            Payment Info:-
+                                        </h4>
+                                    </th>
+                                </tr>
+                                <table style="width:100%; border-collapse:collapse; font-size:20px; margin-top:6px;">
+                                    <tr style="display: {{chkcashflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Cash Pay:</b></span>
+                                            <span>₹ {{CashPayAmount}}</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr style="display: {{chkchequeflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Cheque Pay:</b></span>
+                                            <span>₹ {{ChequePayAmount}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>UTR No:</b></span>
+                                            <span>{{ChequeNo}}</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr style="display: {{chkOnlineAmountflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Online Pay:</b></span>
+                                            <span>₹ {{OnlineAmount}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>UTR No:</b></span>
+                                            <span>{{PayTMTranNo}}</span>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
                             </table>
                         </div>
                     </div>

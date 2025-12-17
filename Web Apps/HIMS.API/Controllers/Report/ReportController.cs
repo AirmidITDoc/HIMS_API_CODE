@@ -191,6 +191,23 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemMaster Data.", data.Select(x => new { Text = x.ItemName, Value = x.ItemId }));
         }
 
+
+        [HttpGet("Expensesheadmaster/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetExpensesheadmasterAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMExpensesHeadMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Searchmexpensesheadmaster Data.", data.Select(x => new { Text = x.HeadName, Value = x.ExpHedId }));
+        }
+
+        [HttpGet("MExpensesCategoryMaster/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMExpensesCategoryMasterAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMExpensesCategoryMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMExpensesCategoryMaster Data.", data.Select(x => new { Text = x.CategoryName, Value = x.ExpCatId }));
+        }
+
         [HttpGet("MModeOfPaymentList/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetMModeofpaymentListAutoComplete(string Keyword)
