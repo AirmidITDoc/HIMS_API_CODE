@@ -11530,6 +11530,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{UTRNo}}", dt.GetColValue("UTRNo"));
                         html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
                         html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName"));
+
 
 
                         html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
