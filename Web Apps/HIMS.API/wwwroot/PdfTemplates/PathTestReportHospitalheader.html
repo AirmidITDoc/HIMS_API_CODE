@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
+    <!--<style>
         body {
             margin-top: 4cm;
-            margin-bottom: 6cm;
+            margin-bottom: 3cm;
         }
-    </style>
+    </style>-->
 </head>
 
 <body>
@@ -19,90 +19,74 @@
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 <tr class="top-header-row">
 
-                                    <!--{{ImgHeader}}-->
-                                    <!--{{NewHeader}}-->
+                    <!--{{ImgHeader}}-->
+                    <!--{{NewHeader}}-->
                 </tr>
                 <tr class="title-date-row">
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 18px; font-weight: bold;">
-                                <td style="padding: 2px; padding-bottom:5px;text-align:left;font-size:22px;"><b>Laboratory Report</b></td>
-                                <td style="padding: 2px; padding-bottom:5px;text-align:right;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
+                                <td style="padding: 2px; padding-bottom:5px;text-align:left;font-size:22px;padding-top:135px"><b>Laboratory Report</b></td>
+                                <td style="padding: 2px; padding-bottom: 5px; text-align: right; font-size: 22px; padding-top: 135px" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr class="bill-info-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 19px; border: solid 1px black">
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">UHID No:</span>
-                                    <span>{{RegNo}}</span>
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Sample Collection Date:</span>
-                                    <span>{{PathTime}}</span>
-                                </td>
-                            </tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:19px; border-top:1px solid black; border-bottom:1px solid black;">
                             <tr>
 
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Patient Name:</span>
-                                    <span>{{PatientName}}</span>
+                                <td style="width:75%; padding:2px; vertical-align:top;">
+                                    <table style="width:100%; border-collapse:collapse; font-size:19px;">
+                                        <tr>
+                                            <td style="padding:2px;">
+                                                <b>UHID No:</b> {{RegNo}}
+                                            </td>
+                                            <td style="padding:2px;">
+                                                <b>Collection on:</b> {{PathTime}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="padding:2px;">
+                                                <b>Patient Name:</b> {{PatientName}}
+                                            </td>
+                                            <td style="padding:2px;">
+                                                <b>Report on:</b> {{ReportTime}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="padding:2px;">
+                                                <b>Age|Gender:</b> {{AgeYear}}Y | {{GenderName}}
+                                            </td>
+                                            <td style="padding:2px;">
+                                                <b>OP/IP No:</b> {{IPDNo}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="padding:2px;">
+                                                <b>Doctor Name:</b> {{DoctorName}}
+                                            </td>
+                                            <td style="padding:2px;">
+                                                <b>Ref. Doctor Name:</b>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Report Date:</span>
-                                    <span>{{ReportTime}}</span>
+                                <td style="width:25%; text-align:center; vertical-align:middle;">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Fairmidtechinnovations.com"
+                                         alt="QR Code"
+                                         style="max-width:100px; display:block; margin:0 auto 5px;">
                                 </td>
+
                             </tr>
-
-                            <tr>
-
-
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Age|Gender:</span>
-                                    <span> {{AgeYear}}Y|{{GenderName}}</span>
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">OP/IP No :</span>
-                                    <span>{{IPDNo}}</span>
-                                </td>
-
-
-                            </tr>
-
-
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Doctor Name:</span>
-                                    <span>{{DoctorName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Ref.Doctor Name:</span>
-                                    <span></span>
-                                </td>
-                            </tr>
-                            <!--<tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Ward Name :</span>
-                                    <span>{{RoomName}}</span>
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Bed No: </span>
-                                    <span>{{BedName}}</span>
-                                </td>
-
-                            </tr>-->
-
                         </table>
                     </td>
                 </tr>
-                <tr><td></td></tr>
+
 
                 <tr class="bill-table-row">
                     <td style="padding: 6px;">
@@ -110,13 +94,13 @@
                             <!-- // <thead style="font-size: 14px;">-->
                             <tr>
 
-                                <td style="border-left: 1px solid #d4c3c3; border-top: 1px solid #d4c3c3; border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;font-size:18px;">
+                                <td style="border-left: 1px solid #000; border-top: 1px solid #000; border-bottom: 1px solid #000; text-align: left; padding: 6px; font-weight: bold; font-size: 18px; ">
                                     INVESTIGATION
                                 </td>
-                                <td style="border-bottom: 1px solid #d4c3c3; border-top: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold; font-size: 18px;padding-left:200px;width:300px;" ">
+                                <td style="border-bottom: 1px solid #000; border-top: 1px solid #000; text-align: left; padding: 6px; font-weight: bold; font-size: 18px; padding-left: 200px; width: 300px; " ">
                                     PATIENTS VALUE
                                 </td>
-                                <td style="border-bottom: 1px solid #d4c3c3; border-top: 1px solid #d4c3c3; border-right: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold; font-size: 18px; ">NORMALRANGE</td>
+                                <td style="border-bottom: 1px solid #000; border-top: 1px solid #000; border-right: 1px solid #000; text-align: left; padding: 6px; font-weight: bold; font-size: 18px; ">NORMALRANGE</td>
 
                                 {{Items}}
                                 <!-- // </thead>-->
