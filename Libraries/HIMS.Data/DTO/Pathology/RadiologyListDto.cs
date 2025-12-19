@@ -43,6 +43,8 @@
         public DateTime? OutSourceCreatedDateTime { get; set; }
         public long? OutSourceModifiedby { get; set; }
         public DateTime? OutSourceModifiedDateTime { get; set; }
+        public string VerifiedUserName { get; set; }
+
 
     }
 

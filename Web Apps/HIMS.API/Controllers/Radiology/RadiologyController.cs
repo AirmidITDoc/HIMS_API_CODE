@@ -73,7 +73,6 @@ namespace HIMS.API.Controllers.Radiology
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
             if (obj.RadReportId != 0)
             {
-                model.IsVerified = true;
                 model.IsVerifySign = true;
                 model.IsVerifyedDate = DateTime.Now.Date;
 

@@ -22,11 +22,11 @@ namespace HIMS.Services.Radiology
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
         }
-        public virtual void RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
+        public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsVerifyId" };
+            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsVerifyId", "RegNo", "PatientName", "Opipnumber", "DoctorName" };
             var Dentity = ObjTRadiologyReportHeader.ToDictionary();
             foreach (var rProperty in REntity)
             {
@@ -65,7 +65,7 @@ namespace HIMS.Services.Radiology
                 // Update header table records
                 TRadiologyReportHeader objPur = await _context.TRadiologyReportHeaders.FindAsync(ObjTRadiologyReportHeader.RadReportId);
                 objPur.IsVerifyId = ObjTRadiologyReportHeader.IsVerifyId;
-                objPur.IsVerified = ObjTRadiologyReportHeader.IsVerified;
+             //   objPur.IsVerified = ObjTRadiologyReportHeader.IsVerified;
                 objPur.IsVerifySign = ObjTRadiologyReportHeader.IsVerifySign;
                 objPur.IsVerifyedDate = ObjTRadiologyReportHeader.IsVerifyedDate;
                 _context.TRadiologyReportHeaders.Update(objPur);
