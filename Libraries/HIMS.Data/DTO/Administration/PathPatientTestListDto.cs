@@ -28,10 +28,10 @@
         public string? MobileNo { get; set; }
         public bool? IsRadOutSource { get; set; }
         public bool? IsPathOutSource { get; set; }
-
-
-
-
+        public DateTime? ReportDate { get; set; }
+        public DateTime? ReportTime { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
 
     }
 }
