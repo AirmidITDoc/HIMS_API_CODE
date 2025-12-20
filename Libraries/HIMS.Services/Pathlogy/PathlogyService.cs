@@ -81,7 +81,7 @@ namespace HIMS.Services.Pathlogy
 
             }
 
-            string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId" };
+            string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
             var Hentity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in Hentity.Keys.ToList())
             {
@@ -145,7 +145,7 @@ namespace HIMS.Services.Pathlogy
             odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, "PathologyTemplate", ObjTPathologyReportTemplateDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
-            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId" };
+            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
             var PathHeaderentity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in PathHeaderentity.Keys.ToList())
             {

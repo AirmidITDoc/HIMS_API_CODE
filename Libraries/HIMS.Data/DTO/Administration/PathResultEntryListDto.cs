@@ -49,21 +49,12 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsPathOutSource { get; set; }
         public bool? IsRadOutSource { get; set; }
         public string VerifiedUserName { get; set; }
+        public DateTime? ReportDate { get; set; }
+        public DateTime? ReportTime { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
 
     }
-    //public class pathologistdoctorDto
-    //{
-    //    public long? DoctorId { get; set; }
-    //    public string? DoctorName { get; set; }
-    //    public long? IsRefDoc { get; set; }
-    //    public long? IsConsultant { get; set; }
-    //    public long? DoctorTypeId { get; set; }
-    //    public bool? IsActive { get; set; }
-    //    public string? DepartmentName { get; set; }
-    //    public long? DepartmentId { get; set; }
-
-
-        //}
         public class pathologistdoctorDto
         {
         public long DoctorId { get; set; }

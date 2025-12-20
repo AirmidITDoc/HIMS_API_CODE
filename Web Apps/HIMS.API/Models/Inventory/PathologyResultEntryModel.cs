@@ -58,6 +58,7 @@ namespace HIMS.API.Models.Inventory
         public string? SuggestionNotes { get; set; }
         public long? AdmVisitDoctorId { get; set; }
         public long? RefDoctorId { get; set; }
+        public long AddedBy { get; set; }   
     }
     public class TPathologyReportHeaderModelValidator : AbstractValidator<TPathologyReportHeaderModel>
     {
