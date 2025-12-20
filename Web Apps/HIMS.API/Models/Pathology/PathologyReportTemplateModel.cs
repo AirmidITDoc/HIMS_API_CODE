@@ -38,6 +38,7 @@ namespace HIMS.API.Models.Pathology
         public string? SuggestionNotes { get; set; }
         public long? AdmVisitDoctorID { get; set; }
         public long? RefDoctorID { get; set; }
+        public long AddedBy { get; set; }
 
     }
     public class PathologyReportHeadermodelValidator : AbstractValidator<PathologyReportHeadermodel>
