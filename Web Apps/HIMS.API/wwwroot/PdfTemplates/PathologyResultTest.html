@@ -1,115 +1,141 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <!--<style>
-        body {
-            margin-top: 4cm;
-            margin-bottom: 6cm;
-        }
+
+            body {
+
+                margin-top: 4cm;
+
+                margin-bottom: 6cm;
+
+            }
     </style>-->
 </head>
-
 <body>
     <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-
             <table style="width: 100%;line-height: inherit;text-align: left;">
                 <tr class="top-header-row">
                     <!--{{ImgHeader}}-->
                     {{NewHeader}}
-
                 </tr>
                 <tr class="title-date-row">
                     <td>
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 18px; font-weight: bold;">
-                                <td style="padding: 2px; padding-bottom:5px;text-align:left;font-size:22px;"><b>Laboratory Report</b></td>
-                                <td style="padding: 2px; padding-bottom:5px;text-align:right;font-size:22px;" colspan="2"><b>Print Date :{{CurrentDate}}</b></td>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom:8px;">
+                            <tr>
+                                <td style="padding:6px 4px; text-align:left; font-size:26px;font-weight:700;color:#0B4F6C;">
+                                    Laboratory Report
+                                </td>
+                                <td style="padding:6px 4px; text-align:right;font-size:16px;font-weight:600;color:#344054;">
+
+                                    Print Date : {{CurrentDate}}
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr class="bill-info-row">
-                    <td style="padding:6px;">
-                        <table style="width:100%; border-collapse:collapse; font-size:19px; border-top:1px solid black; border-bottom:1px solid black;">
+                    <td style="padding:10px 8px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:17px;background:#F8FAFC; border:1px solid #D0D5DD;border-radius:6px;">
                             <tr>
-
-                                <td style="width:75%; padding:2px; vertical-align:top;">
-                                    <table style="width:100%; border-collapse:collapse; font-size:19px;">
+                                <td style="width:75%; padding:8px; vertical-align:top;">
+                                    <table style="width:100%; border-collapse:collapse;">
                                         <tr>
-                                            <td style="padding:2px;">
-                                                <b>UHID No:</b> {{RegNo}}
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">UHID No:</span>
+                                                <b style="color:#101828;"> {{RegNo}}</b>
                                             </td>
-                                            <td style="padding:2px;">
-                                                <b>Collection on:</b> {{PathTime}}
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Collection on:</span>
+                                                <b style="color:#101828;"> {{PathTime}}</b>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td style="padding:2px;">
-                                                <b>Patient Name:</b> {{PatientName}}
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Patient Name:</span>
+                                                <b style="color:#101828;"> {{PatientName}}</b>
                                             </td>
-                                            <td style="padding:2px;">
-                                                <b>Report on:</b> {{ReportTime}}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="padding:2px;">
-                                                <b>Age|Gender:</b> {{AgeYear}}Y | {{GenderName}}
-                                            </td>
-                                            <td style="padding:2px;">
-                                                <b>OP/IP No:</b> {{IPDNo}}
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Report on:</span>
+                                                <b style="color:#101828;"> {{ReportTime}}</b>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td style="padding:2px;">
-                                                <b>Doctor Name:</b> {{DoctorName}}
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Age | Gender:</span>
+                                                <b style="color:#101828;">
+
+                                                    {{AgeYear}}Y | {{GenderName}}
+                                                </b>
                                             </td>
-                                            <td style="padding:2px;">
-                                                <b>Ref. Doctor Name:</b>
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">OP / IP No:</span>
+                                                <b style="color:#101828;"> {{IPDNo}}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Doctor Name:</span>
+                                                <b style="color:#101828;"> {{DoctorName}}</b>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <span style="color:#667085;">Ref. Doctor Name:</span>
+                                                <b style="color:#101828;"> {{RefDoctorName}}</b>
+
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
-                                <td style="width:25%; text-align:center; vertical-align:middle;">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Fairmidtechinnovations.com"
+
+                                <td style="width:25%;text-align:center;vertical-align:middle;background:#FFFFFF; border-left:1px  #D0D5DD;">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Fairmidtechinnovations.com%22%22
                                          alt="QR Code"
-                                         style="max-width:100px; display:block; margin:0 auto 5px;">
+                                         style="max-width:95px; display:block;margin:0 auto 6px;">
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
+
                 <tr>
                     <td style="padding:0;">
-                        <div style=" width:100%;height:2px;margin:5px 0;"></div>
+                        <div style="width:100%;
+
+                    height:3px;
+
+                    background:linear-gradient(to right,#0B4F6C,#5BC0EB);
+
+                    margin:10px 0;">
+                        </div>
                     </td>
                 </tr>
 
                 <table style="width: 100%; border-collapse: collapse;">
                     <tr>
                         <td style="border-left:1px solid #000;border-top:1px solid #000;border-bottom:1px solid #000;text-align:left;padding:6px;font-weight:bold;font-size:18px;">
+
                             INVESTIGATION
                         </td>
                         <td style="border-top:1px solid #000;border-bottom:1px solid #000; text-align:left;padding:6px;font-weight:bold;font-size:18px;padding-left:200px;width:300px;">
+
                             PATIENTS VALUE
                         </td>
                         <td style="border-right:1px solid #000;border-top:1px solid #000;border-bottom:1px solid #000;text-align:left;padding:6px;font-weight:bold;font-size:18px;">
+
                             NORMAL RANGE
                         </td>
                     </tr>
 
                     {{Items}}
                 </table>
-
-
 
             </table>
         </div>
@@ -122,7 +148,7 @@
     <table style="width: 100%; line-height: inherit; text-align: left; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
         <tr>
             <span style="margin-left:70%">
-                <img src="{{Signature}}"  width="200" height="100" style="display:{{chkSignature}}">
+                <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
             </span>
             <footer style="margin-left: 70%; font-size: 19px;">
                 <div style="font-weight:bold;">{{PathResultDr1}}</div>
@@ -131,10 +157,10 @@
                 <div style="font-weight:bold;">{{MahRegNo}}</div>
             </footer>
         </tr>
-
         <!--<tr>
-            {{Imgfooter}}
+
+                    {{Imgfooter}}
         </tr>-->
     </table>
-
 </html>
+
