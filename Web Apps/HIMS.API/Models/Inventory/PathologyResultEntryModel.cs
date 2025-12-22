@@ -14,6 +14,8 @@ namespace HIMS.API.Models.Inventory
         public string? NormalRange { get; set; }
         public long? PrintOrder { get; set; }
         public long? PisNumeric { get; set; }
+        public long? Opdipdid { get; set; }
+        public long? Opdipdtype { get; set; }
         public string? CategoryName { get; set; }
         public string? TestName { get; set; }
         public string? SubTestName { get; set; }
