@@ -14353,8 +14353,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_OperativeNotes");
 
-                entity.Property(e => e.OperativeNotesId).ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
