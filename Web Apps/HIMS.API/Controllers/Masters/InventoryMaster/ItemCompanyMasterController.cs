@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Data;
 using HIMS.Api.Controllers;
 using Asp.Versioning;
-using HIMS.API.Models.Inventory.Masters;
 
 namespace HIMS.API.Controllers.Masters.InventoryMaster
 {

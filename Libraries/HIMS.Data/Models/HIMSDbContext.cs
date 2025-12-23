@@ -491,6 +491,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOtInOperationHeader> TOtInOperationHeaders { get; set; } = null!;
         public virtual DbSet<TOtInOperationPostOperDiagnosis> TOtInOperationPostOperDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtInOperationSurgeryDetail> TOtInOperationSurgeryDetails { get; set; } = null!;
+        public virtual DbSet<TOtOperativeNote> TOtOperativeNotes { get; set; } = null!;
         public virtual DbSet<TOtPreOperationAttendingDetail> TOtPreOperationAttendingDetails { get; set; } = null!;
         public virtual DbSet<TOtPreOperationCathlabDiagnosis> TOtPreOperationCathlabDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtPreOperationDiagnosis> TOtPreOperationDiagnoses { get; set; } = null!;
@@ -575,6 +576,12 @@ namespace HIMS.Data.Models
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
         public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<View2> View2s { get; set; } = null!;
+        public virtual DbSet<View3> View3s { get; set; } = null!;
+        public virtual DbSet<View4> View4s { get; set; } = null!;
+        public virtual DbSet<View5> View5s { get; set; } = null!;
+        public virtual DbSet<View6> View6s { get; set; } = null!;
+        public virtual DbSet<View7> View7s { get; set; } = null!;
+        public virtual DbSet<View8> View8s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
@@ -584,7 +591,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -9506,6 +9513,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AgeType).HasMaxLength(10);
 
+                entity.Property(e => e.CategoryName).HasMaxLength(50);
+
                 entity.Property(e => e.Formula).HasMaxLength(100);
 
                 entity.Property(e => e.MaxValue).HasMaxLength(50);
@@ -9526,7 +9535,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ParameterShortName).HasMaxLength(100);
 
+                entity.Property(e => e.PathReportId).HasColumnName("PathReportID");
+
                 entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.PrintParameterName).HasMaxLength(100);
 
                 entity.Property(e => e.ResultValue).HasMaxLength(500);
 
@@ -9551,6 +9564,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AgeType).HasMaxLength(10);
 
+                entity.Property(e => e.CategoryName).HasMaxLength(50);
+
                 entity.Property(e => e.Formula).HasMaxLength(100);
 
                 entity.Property(e => e.MaxValue).HasMaxLength(50);
@@ -9571,7 +9586,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ParameterShortName).HasMaxLength(100);
 
+                entity.Property(e => e.PathReportId).HasColumnName("PathReportID");
+
                 entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.PrintParameterName).HasMaxLength(100);
 
                 entity.Property(e => e.ResultValue).HasMaxLength(500);
 
@@ -9596,13 +9615,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AgeType).HasMaxLength(10);
 
+                entity.Property(e => e.CategoryName).HasMaxLength(50);
+
                 entity.Property(e => e.Formula).HasMaxLength(100);
 
                 entity.Property(e => e.MaxValue).HasMaxLength(50);
 
                 entity.Property(e => e.MinValue).HasMaxLength(50);
 
-                entity.Property(e => e.NormalRange).HasMaxLength(155);
+                entity.Property(e => e.NormalRange).HasMaxLength(154);
 
                 entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
 
@@ -9616,7 +9637,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ParameterShortName).HasMaxLength(100);
 
+                entity.Property(e => e.PathReportId).HasColumnName("PathReportID");
+
                 entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.PrintParameterName).HasMaxLength(100);
 
                 entity.Property(e => e.ResultValue).HasMaxLength(500);
 
@@ -14322,6 +14347,27 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_T_OT_InOperationSurgeryDetails_T_OT_InOperationHeader");
             });
 
+            modelBuilder.Entity<TOtOperativeNote>(entity =>
+            {
+                entity.HasKey(e => e.OperativeNotesId);
+
+                entity.ToTable("T_OT_OperativeNotes");
+
+                entity.Property(e => e.OperativeNotesId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+            });
+
             modelBuilder.Entity<TOtPreOperationAttendingDetail>(entity =>
             {
                 entity.HasKey(e => e.OtpreOperationAttendingDetId)
@@ -15235,9 +15281,10 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TPaymentPharmacy>(entity =>
             {
-                entity.HasKey(e => e.PaymentId);
+                entity.HasKey(e => e.PaymentId)
+                    .HasName("PK_t_paymentPharmacy");
 
-                entity.ToTable("t_paymentPharmacy");
+                entity.ToTable("T_PaymentPharmacy");
 
                 entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
 
@@ -16183,6 +16230,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_SalesReturnHeader");
 
+                entity.Property(e => e.Address).HasMaxLength(255);
+
                 entity.Property(e => e.BalanceAmount).HasColumnType("money");
 
                 entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
@@ -16190,6 +16239,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
 
                 entity.Property(e => e.Narration).HasMaxLength(500);
 
@@ -16200,6 +16253,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.PaidAmount).HasColumnType("money");
+
+                entity.Property(e => e.PatientName).HasMaxLength(255);
 
                 entity.Property(e => e.SalesId).HasColumnName("SalesID");
 
@@ -16995,6 +17050,541 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TariffName).HasMaxLength(100);
 
                 entity.Property(e => e.ToTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<View3>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_3");
+
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.CheckOutTime).HasColumnType("datetime");
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.Expr1).HasMaxLength(50);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(100);
+
+                entity.Property(e => e.ModeOfTransfer)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MovingType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.OtcheckInDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTCheckInDate");
+
+                entity.Property(e => e.OtcheckInNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("OTCheckInNo");
+
+                entity.Property(e => e.OtcheckInTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTCheckInTime");
+
+                entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.PurPoseOfMovement).HasMaxLength(255);
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<View4>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_4");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.AnesthesiaDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaNo).HasMaxLength(50);
+
+                entity.Property(e => e.AnesthesiaStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaTime).HasColumnType("datetime");
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.Expr1).HasMaxLength(50);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.PatientType).HasMaxLength(100);
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.RecoveryEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RegDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RegId).HasColumnName("RegID");
+
+                entity.Property(e => e.RegTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<View5>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_5");
+
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.AnesthesiaDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaNo).HasMaxLength(50);
+
+                entity.Property(e => e.AnesthesiaNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.AnesthesiaStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AnesthesiaStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.Expr1).HasMaxLength(50);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.PatientType).HasMaxLength(100);
+
+                entity.Property(e => e.RecoveryEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecoveryStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.RegId).HasColumnName("RegID");
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<View6>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_6");
+
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.DoctorType).HasMaxLength(100);
+
+                entity.Property(e => e.Expr1).HasMaxLength(100);
+
+                entity.Property(e => e.Expr10).HasMaxLength(100);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.Expr3).HasMaxLength(50);
+
+                entity.Property(e => e.Expr4).HasMaxLength(100);
+
+                entity.Property(e => e.Expr5).HasMaxLength(50);
+
+                entity.Property(e => e.Expr6).HasMaxLength(50);
+
+                entity.Property(e => e.Expr7).HasMaxLength(500);
+
+                entity.Property(e => e.Expr8).HasMaxLength(50);
+
+                entity.Property(e => e.Expr9).HasMaxLength(100);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.PatientType).HasMaxLength(100);
+
+                entity.Property(e => e.PatientTypeId).HasColumnName("PatientTypeID");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryCategoryName).HasMaxLength(50);
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<View7>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_7");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.BloodLoss).HasMaxLength(50);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.ClosureNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.ConditionOfPatientNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.DocNameId).HasColumnName("DocNameID");
+
+                entity.Property(e => e.DoctorType).HasMaxLength(100);
+
+                entity.Property(e => e.Expr1).HasMaxLength(500);
+
+                entity.Property(e => e.Expr10).HasMaxLength(50);
+
+                entity.Property(e => e.Expr11).HasMaxLength(500);
+
+                entity.Property(e => e.Expr12).HasMaxLength(50);
+
+                entity.Property(e => e.Expr13).HasMaxLength(100);
+
+                entity.Property(e => e.Expr14).HasMaxLength(100);
+
+                entity.Property(e => e.Expr16).HasMaxLength(100);
+
+                entity.Property(e => e.Expr17).HasMaxLength(50);
+
+                entity.Property(e => e.Expr18).HasMaxLength(50);
+
+                entity.Property(e => e.Expr3).HasMaxLength(100);
+
+                entity.Property(e => e.Expr4).HasMaxLength(50);
+
+                entity.Property(e => e.Expr5).HasMaxLength(50);
+
+                entity.Property(e => e.Expr6).HasMaxLength(50);
+
+                entity.Property(e => e.Expr8).HasMaxLength(100);
+
+                entity.Property(e => e.Expr9).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.OperativeFindingsNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.PostOperativeNotes).HasMaxLength(2000);
+
+                entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryCategoryName).HasMaxLength(50);
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
+
+                entity.Property(e => e.TheaterInDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterInTime).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterOutData).HasColumnType("datetime");
+
+                entity.Property(e => e.TheaterOutTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<View8>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_8");
+
+                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
+
+                entity.Property(e => e.BedName).HasMaxLength(100);
+
+                entity.Property(e => e.BloodGroup).HasMaxLength(50);
+
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(500);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.Diagnosis).HasMaxLength(255);
+
+                entity.Property(e => e.DoctorType).HasMaxLength(100);
+
+                entity.Property(e => e.EstimateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Expr1).HasMaxLength(50);
+
+                entity.Property(e => e.Expr10).HasMaxLength(100);
+
+                entity.Property(e => e.Expr11).HasMaxLength(50);
+
+                entity.Property(e => e.Expr12).HasMaxLength(50);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.Expr3).HasMaxLength(100);
+
+                entity.Property(e => e.Expr4).HasMaxLength(50);
+
+                entity.Property(e => e.Expr5).HasMaxLength(50);
+
+                entity.Property(e => e.Expr6).HasMaxLength(100);
+
+                entity.Property(e => e.Expr7).HasMaxLength(50);
+
+                entity.Property(e => e.Expr8).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.Ipdno)
+                    .HasMaxLength(50)
+                    .HasColumnName("IPDNo");
+
+                entity.Property(e => e.IsPrimary)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.LocationName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.OttableName)
+                    .HasMaxLength(100)
+                    .HasColumnName("OTTableName");
+
+                entity.Property(e => e.Pacrequired).HasColumnName("PACRequired");
+
+                entity.Property(e => e.PatientType).HasMaxLength(100);
+
+                entity.Property(e => e.PrefixId).HasColumnName("PrefixID");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.RegId).HasColumnName("RegID");
+
+                entity.Property(e => e.RoomName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryCategoryName).HasMaxLength(50);
+
+                entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryDuration).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryFromTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SurgeryName).HasMaxLength(100);
+
+                entity.Property(e => e.SurgeryPart).HasMaxLength(50);
+
+                entity.Property(e => e.TariffName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<ViewDoctorshare>(entity =>

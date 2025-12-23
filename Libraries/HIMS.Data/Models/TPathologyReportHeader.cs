@@ -10,8 +10,14 @@ namespace HIMS.Data.Models
         public DateTime? PathTime { get; set; }
         public long? OpdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
+        public string? RegNo { get; set; }
+        public string? PatientName { get; set; }
+        public string? Opipnumber { get; set; }
+        public string? DoctorName { get; set; }
         public DateTime? ReportDate { get; set; }
         public DateTime? ReportTime { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
         public long? PathTestId { get; set; }
         public long? PathResultDr1 { get; set; }
         public long? PathResultDr2 { get; set; }
@@ -43,15 +49,9 @@ namespace HIMS.Data.Models
         public long? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string? RegNo { get; set; }
-        public string? PatientName { get; set; }
-        public string? Opipnumber { get; set; }
-        public string? DoctorName { get; set; }
     }
 }

@@ -35,5 +35,7 @@ namespace HIMS.Data.Models
         public long? ParaIsNumeric { get; set; }
         public string ParaBoldFlag { get; set; } = null!;
         public long? CategoryId { get; set; }
+        public string? PrintParameterName { get; set; }
+        public string? CategoryName { get; set; }
     }
 }

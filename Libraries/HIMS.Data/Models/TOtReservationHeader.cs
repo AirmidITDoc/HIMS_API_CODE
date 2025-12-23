@@ -32,6 +32,9 @@ namespace HIMS.Data.Models
         public bool? ClearanceMedical { get; set; }
         public bool? ClearanceFinancial { get; set; }
         public bool? Infective { get; set; }
+        public string? Reason { get; set; }
+        public bool? IsAnaesthetistPaid { get; set; }
+        public bool? IsMaterialReplacement { get; set; }
         public long? Createdby { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
@@ -39,7 +42,6 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
-        public string? Reason { get; set; }
 
         public virtual ICollection<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; }
         public virtual ICollection<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; }

@@ -140,8 +140,6 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-
-
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientRegistrationMasterModels obj)

@@ -2,7 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -11,7 +11,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Inventory.Masters.ConfigurationModelValidator;
+using static HIMS.API.Models.Masters.ConfigurationModelValidator;
 
 namespace HIMS.API.Controllers.Administration
 {
