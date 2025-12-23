@@ -2,16 +2,16 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
-using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core;
 using HIMS.Data;
 using HIMS.Data.Models;
-using HIMS.Services;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.Data.DTO.OTManagement;
+using HIMS.Services.OTManagment;
 
 
 namespace HIMS.API.Controllers.OTManagement

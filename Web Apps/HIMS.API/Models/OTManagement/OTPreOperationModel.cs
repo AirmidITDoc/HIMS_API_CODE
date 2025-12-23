@@ -1,4 +1,4 @@
-﻿using HIMS.API.Models.Inventory.Masters;
+﻿using HIMS.API.Models.Inventory;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.OTManagement

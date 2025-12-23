@@ -8,19 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace HIMS.Services
+namespace HIMS.Services.OTManagment
 {
     public class OTAnesthesiaService : IOTAnesthesiaService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public OTAnesthesiaService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }
-    
+
         public virtual async Task InsertAsync(TOtAnesthesiaRecord ObjTOtAnesthesiaRecord, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.TOtAnesthesiaRecords.Add(ObjTOtAnesthesiaRecord);
                 await _context.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace HIMS.Services
         }
         public virtual async Task UpdateAsync(TOtAnesthesiaRecord ObjTOtAnesthesiaRecord, int UserId, string Username, string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // 1. Attach the entity without marking everything as modified
                 _context.Attach(ObjTOtAnesthesiaRecord);

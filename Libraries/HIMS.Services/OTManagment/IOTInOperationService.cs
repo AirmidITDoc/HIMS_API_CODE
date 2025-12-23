@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services
+namespace HIMS.Services.OTManagment
 {
     public partial interface IOTInOperationService
-    { 
-         Task InsertAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username);
+    {
+        Task InsertAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username);
         Task UpdateAsync(TOtInOperationHeader ObjTOtInOperationHeader, int UserId, string Username, string[]? references);
         Task<IPagedList<InOperationAttendingDetailsListDto>> InOperationAttengingDetailsAsync(GridRequestModel objGrid);
         Task<IPagedList<InOperationSurgeryDetailsDto>> InOperationSurgeryDetailsAsync(GridRequestModel objGrid);

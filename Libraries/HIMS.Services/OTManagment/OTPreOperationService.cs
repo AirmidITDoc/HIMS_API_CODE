@@ -13,11 +13,11 @@ using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.DTO.OPPatient;
 
 
-namespace HIMS.Services
+namespace HIMS.Services.OTManagment
 {
-    public class OTPreOperationService: IOTPreOperationService
+    public class OTPreOperationService : IOTPreOperationService
     {
-        private readonly Data.Models.HIMSDbContext _context;
+        private readonly HIMSDbContext _context;
         public OTPreOperationService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
@@ -79,7 +79,7 @@ namespace HIMS.Services
 
         public virtual async Task InsertAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             {
                 var lastSeqNoStr = await _context.TOtPreOperationHeaders
@@ -108,7 +108,7 @@ namespace HIMS.Services
         }
         public virtual async Task UpdateAsync(TOtPreOperationHeader ObjTOtPreOperationHeader, int UserId, string Username, string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
 
             {

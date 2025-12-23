@@ -6,7 +6,6 @@ using HIMS.API.Utility;
 using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
-using HIMS.Services;
 using HIMS.Services.Administration;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;

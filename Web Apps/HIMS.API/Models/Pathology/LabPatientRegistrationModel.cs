@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.Pathology

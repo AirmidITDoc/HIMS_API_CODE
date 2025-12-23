@@ -9,10 +9,10 @@ using System.Transactions;
 
 namespace HIMS.Services.OTManagment
 {
-    public class OTOperativeNotes : IOTOperativeNotes
+    public class OTOperativeNotesService : IOTOperativeNotes
     {
         private readonly HIMSDbContext _context;
-        public OTOperativeNotes(HIMSDbContext HIMSDbContext)
+        public OTOperativeNotesService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
         }

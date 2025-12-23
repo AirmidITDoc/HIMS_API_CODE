@@ -3,6 +3,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
+using HIMS.Services.OTManagment;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

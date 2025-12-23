@@ -9,7 +9,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
-using HIMS.Services;
+using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 

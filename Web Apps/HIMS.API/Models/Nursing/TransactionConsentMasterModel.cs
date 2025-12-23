@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using HIMS.API.Models.Inventory.Masters;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Nursing
 {

@@ -3,7 +3,7 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 
-namespace HIMS.Services
+namespace HIMS.Services.OTManagment
 {
     public partial interface IOTService
     {

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.Services
+namespace HIMS.Services.OTManagment
 {
     public partial interface IOTPreOperationService
     {
