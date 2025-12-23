@@ -404,6 +404,12 @@ namespace HIMS.API.Controllers.Report
                 case "IPDDischargewithmarkstatus":
                 case "IpMLCCasePaperPrint":
 
+
+                // OT
+
+                case "OTAnaesthesiaRecord":
+               
+
                 //PATHOLOGY 
                 case "PathologyReportWithHeader":
                 case "PathologyReportWithOutHeader":
