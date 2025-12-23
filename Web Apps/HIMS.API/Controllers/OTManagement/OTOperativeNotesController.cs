@@ -9,6 +9,8 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OTManagement;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -58,6 +60,18 @@ namespace HIMS.API.Controllers.OTManagement
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
+
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "TOtOperativeNote", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.OperativeNotesId == id);
+            return data.ToSingleResponse<TOtOperativeNote, OTOperativeNotesModel>("AreaMaster");
         }
     }
 }
