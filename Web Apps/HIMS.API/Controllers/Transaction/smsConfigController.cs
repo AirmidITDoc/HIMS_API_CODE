@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Transaction;
 using HIMS.Core;
@@ -45,9 +46,14 @@ namespace HIMS.API.Controllers.Transaction
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository1.GetById(x => x.TranNo == id) 
-;
+            var data = await _repository1.GetById(x => x.TranNo == id)
+;           if (data == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+            }
             return data.ToSingleResponse<TMailOutgoing, TMailOutgoingModel>("TMailOutgoing");
+
+
         }
         [HttpGet("TWhatsAppSmsOutgoing/{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
@@ -58,7 +64,10 @@ namespace HIMS.API.Controllers.Transaction
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
             var data = await _repository2.GetById(x => x.TranNo == id)
-;
+;       if (data == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+            }
             return data.ToSingleResponse<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>("TWhatsAppSmsOutgoing");
         }
 
