@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.OTManagement
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.OperativeNotesId == id);
+            var data = await _repository.GetById(x => x.OtreservationId == id);
             return data.ToSingleResponse<TOtOperativeNote, OTOperativeNotesModel>("AreaMaster");
         }
     }
