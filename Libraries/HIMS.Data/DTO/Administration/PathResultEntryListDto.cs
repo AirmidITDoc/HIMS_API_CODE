@@ -49,8 +49,9 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsPathOutSource { get; set; }
         public bool? IsRadOutSource { get; set; }
         public string VerifiedUserName { get; set; }
-        //public DateTime? ReportDate { get; set; }
+        public DateTime? ReportDate { get; set; }
         public string? ReportTime { get; set; }
+        public string ReportCompletedUser { get; set; }
         public long AddedBy { get; set; }
         public long UpdatedBy { get; set; }
 
