@@ -170,6 +170,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPSettlementService, OPSettlementService>();
             services.AddScoped<IOPBillShilpaService, OPBillShilpaService>();
             services.AddScoped<ILabPatientRegistrationService, LabPatientRegistrationService>();
+            services.AddScoped<ILabBrowseListService, LabBrowseListService>();
+
 
 
 

@@ -468,6 +468,7 @@ namespace HIMS.API.Controllers.Report
                 case "OTRequest":
                 case "OTReservationReport":
                 case "SupplierPaymentReciept":
+                case "OTReservation":
 
                 //Labrequest Detail
                 case "LabRegistrationListReport":
