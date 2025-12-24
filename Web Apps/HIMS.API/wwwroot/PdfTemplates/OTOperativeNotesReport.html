@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operative Notes</title>
+</head>
+
+<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri, Arial, sans-serif; color:#101828;">
+    <div style="padding:16px;">
+
+        <!-- ================= HEADER ================= -->
+        <table width="98%">
+
+            {{NewHeader}}
+            <tr>
+                <td style="border-bottom: 2px solid #000; font-size: 18px; text-align:left;">
+                    <b>Operative Notes</b>
+                </td>
+                <td style="border-bottom:2px solid #000; font-size:13px; text-align:right;">
+                    <b>Print Date :</b> {{CurrentDate}}
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+
+        <!-- ================= PATIENT INFORMATION ================= -->
+        <table width="98%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+
+            <tr style="background:#f9fafb;">
+                <td><b>Reg No :</b> {{RegNo}}</td>
+                <td><b>IPD No :</b> {{IPDNo}}</td>
+                <td><b>DOA | Time :</b> {{AdmissionTime}}</td>
+            </tr>
+
+            <tr style="background:#f2f4f7;">
+                <td colspan="3"><b>Patient Name :</b> {{PatientName}}</td>
+            </tr>
+
+            <tr style="background:#f9fafb;">
+                <td><b>Doctor Name :</b> {{DoctorName}}</td>
+                <td colspan="2"><b>Department :</b> {{DepartmentName}}</td>
+            </tr>
+
+        </table>
+
+        <br><br>
+
+        <!-- ================= OPERATIVE NOTES ================= -->
+        <table width="98%" border="1" cellspacing="0" cellpadding="10" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td><b>Operative Notes</b></td>
+            </tr>
+            <tr>
+                <td style="min-height:250px; vertical-align:top;">
+
+                    {{OperativeNotes}}
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- ================= FOOTER ================= -->
+        <table width="100%" style="text-align:center;">
+            <tr>
+                <td>____________________<br>Prepared By</td>
+                <td>____________________<br>Doctor</td>
+                <td>____________________<br>Signature</td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
+

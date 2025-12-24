@@ -63,7 +63,7 @@ namespace HIMS.API.Models.Masters
         public string? SurgeryPart { get; set; }
         public string? SurgeryFromTime { get; set; }
         public string? SurgeryEndTime { get; set; }
-        public double? SurgeryDuration { get; set; }
+        public float? SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
@@ -90,6 +90,8 @@ namespace HIMS.API.Models.Masters
         public bool? EquipmentsRequired { get; set; }
         public bool? ClearanceMedical { get; set; }
         public bool? ClearanceFinancial { get; set; }
+        public bool? IsAnaesthetistPaid { get; set; }
+        public bool? IsMaterialReplacement { get; set; }
         public bool? Infective { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }

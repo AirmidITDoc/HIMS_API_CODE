@@ -12346,19 +12346,19 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
-                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                        html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
+                        html = html.Replace("{{OperativeNotesId}}", dt.GetColValue("OperativeNotesId"));
+                        html = html.Replace("{{OTReservationId}}", dt.GetColValue("OTReservationId"));
+                        html = html.Replace("{{OPIPID}}", dt.GetColValue("OPIPID"));
+                        html = html.Replace("{{OPIPType}}", dt.GetColValue("OPIPType"));
+                        html = html.Replace("{{OperativeNotes}}", dt.GetColValue("OperativeNotes"));
+                        html = html.Replace("{{Createdby}}", dt.GetColValue("Createdby"));
 
-                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                        html = html.Replace("{{Surgeryname}}", dt.GetColValue("Surgeryname"));
-                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                        html = html.Replace("{{AnathesDrName1}}", dt.GetColValue("AnathesDrName1"));
-                        html = html.Replace("{{AnathesDrName2}}", dt.GetColValue("AnathesDrName2"));
-                        html = html.Replace("{{SurgeonName2}}", dt.GetColValue("SurgeonName2"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{ModifiedDate}}", dt.GetColValue("ModifiedDate"));
+                        html = html.Replace("{{ModifiedDate}}", dt.GetColValue("ModifiedDate"));
+                        html = html.Replace("{{IsCancelledDateTime}}", dt.GetColValue("IsCancelledDateTime"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
                         html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
                         html = html.Replace("{{AnaesthesiaType}}", dt.GetColValue("AnaesthesiaType"));
@@ -12366,27 +12366,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
 
 
-
-
-                        html = html.Replace("{{SurgeryType}}", dt.GetColValue("SurgeryType"));
-                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
-                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                        html = html.Replace("{{OPDIPDNO}}", dt.GetColValue("OPDIPDNO"));
-                        html = html.Replace("{{OTdepartment}}", dt.GetColValue("OTdepartment"));
-                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{Instruction}}", dt.GetColValue("Instruction"));
-                        html = html.Replace("{{SiteDescriptionName}}", dt.GetColValue("SiteDescriptionName"));
-
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-                        html = html.Replace("{{OTRequestTime}}", dt.GetColValue("OTRequestTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
 
 
-                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-                        html = html.Replace("{{chkInstructionflag}}", dt.GetColValue("Instruction").ConvertToString() != "" ? "table-row" : "none");
+                      
+
+
 
 
                         return html;

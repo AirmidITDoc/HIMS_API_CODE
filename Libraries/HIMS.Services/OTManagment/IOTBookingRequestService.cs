@@ -12,10 +12,9 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<OtRequestSurgeryDetailListDto>> GetListAsyncs(GridRequestModel objGrid);
         Task<IPagedList<OtRequestListDto>> GetListAsyncot(GridRequestModel objGrid);
         Task<IPagedList<OtRequestAttendingDetailListDto>> GetListAsyncor(GridRequestModel objGrid);
-        void Cancel(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username);
+        void Cancel(TOtRequestHeader ObjTOtRequestHeader, int currentUserId, string currentUserName);
         Task InsertAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username);
         Task UpdateAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username, string[]? references);
         Task<List<TOtRequestDiagnosisListDto>> GetDiagnosisListAsync(string descriptionType);
-
     }
 }
