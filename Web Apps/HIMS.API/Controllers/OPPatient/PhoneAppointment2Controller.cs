@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -63,8 +64,8 @@ namespace HIMS.API.Controllers.OPPatient
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
             {
-                model.AppDate = DateTime.Now.Date;
-                model.AppTime = DateTime.Now;
+                model.AppDate = AppTime.Now.Date;
+                model.AppTime = AppTime.Now;
 
                 model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
                 model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
@@ -83,8 +84,8 @@ namespace HIMS.API.Controllers.OPPatient
             TPhoneAppointment model = obj.MapTo<TPhoneAppointment>();
             if (obj.PhoneAppId == 0)
             {
-                model.AppDate = DateTime.Now.Date;
-                model.AppTime = DateTime.Now;
+                model.AppDate = AppTime.Now.Date;
+                model.AppTime = AppTime.Now;
 
                 model.PhAppDate = Convert.ToDateTime(obj.PhAppDate);
                 model.PhAppTime = Convert.ToDateTime(obj.PhAppTime);
@@ -93,9 +94,9 @@ namespace HIMS.API.Controllers.OPPatient
                 model.EndTime = Convert.ToDateTime(obj.EndTime);
 
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IPhoneAppointment2Service.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -131,7 +132,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.PhoneAppId = Id;
                 model.IsCancelled = true;
                 model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = DateTime.Now;
+                model.IsCancelledDate = AppTime.Now;
                 await _IPhoneAppointment2Service.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else

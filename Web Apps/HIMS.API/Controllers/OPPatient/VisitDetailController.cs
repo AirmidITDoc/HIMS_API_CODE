@@ -8,6 +8,7 @@ using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -186,7 +187,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.VisitId = obj.VisitId;
                 model.IsCancelled = true;
                 model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = DateTime.Now;
+                model.IsCancelledDate = AppTime.Now;
                 await _visitDetailsService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -302,7 +303,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ConStartTime = DateTime.Now;
+                model.ConStartTime = AppTime.Now;
                 await _visitDetailsService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -317,8 +318,8 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ConEndTime = DateTime.Now;
-                model.CheckOutTime = DateTime.Now;
+                model.ConEndTime = AppTime.Now;
+                model.CheckOutTime = AppTime.Now;
                 await _visitDetailsService.UpdateAsyncv(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

@@ -34,7 +34,7 @@
 
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -94,7 +94,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -173,7 +173,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -232,7 +232,7 @@
 
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -304,7 +304,7 @@
 
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -377,7 +377,7 @@
 
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -435,7 +435,7 @@
 
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -495,7 +495,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -578,7 +578,7 @@
 
 //            string html = File.ReadAllText(htmlFilePath);
 
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
 
 //            //Boolean chkpaidflag = false, chkbalflag = false, chkremarkflag = false;
@@ -828,7 +828,7 @@
 //            var Bills = GetDataTableProc("rptOP_IP_BillSummaryReport", para);
 //            string html = File.ReadAllText(htmlFilePath);
 
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
 
 //            StringBuilder items = new StringBuilder("");
@@ -961,7 +961,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1000,7 +1000,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1043,7 +1043,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1102,7 +1102,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1144,7 +1144,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1185,7 +1185,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1234,7 +1234,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1282,7 +1282,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1339,7 +1339,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1426,7 +1426,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1487,7 +1487,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1546,7 +1546,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1605,7 +1605,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1683,7 +1683,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -1721,7 +1721,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
 //            StringBuilder items = new StringBuilder("");
@@ -1803,7 +1803,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1878,7 +1878,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -1957,7 +1957,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
 //            double T_Count = 0, Dcount = 0;
@@ -2029,7 +2029,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2118,7 +2118,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -2163,7 +2163,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2252,7 +2252,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -2296,7 +2296,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -2340,7 +2340,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0;
@@ -2378,7 +2378,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2470,7 +2470,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2519,7 +2519,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2570,7 +2570,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2617,7 +2617,7 @@
 //            var Bills = GetDataTableProc("rptCurrentAdmittedListReportwithCharges", para);
 //            string html = File.ReadAllText(htmlFilePath);
 
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 //            //html = html.Replace("{{NewHeader}}" );
 
 //            StringBuilder items = new StringBuilder("");
@@ -2715,7 +2715,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2797,7 +2797,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2878,7 +2878,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -2961,7 +2961,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;
@@ -3013,7 +3013,7 @@
 //            string html = File.ReadAllText(htmlFilePath);
 
 //            html = html.Replace("{{NewHeader}}", htmlHeader);
-//            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+//            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 //            StringBuilder items = new StringBuilder("");
 //            int i = 0, j = 0;

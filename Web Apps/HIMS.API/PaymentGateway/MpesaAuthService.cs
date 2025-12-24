@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Validations;
+﻿using HIMS.Core.Infrastructure;
+using Microsoft.OpenApi.Validations;
 
 namespace HIMS.API.PaymentGateway
 {
@@ -77,7 +78,7 @@ namespace HIMS.API.PaymentGateway
         {
             string token = await _authService.GetAccessTokenAsync();
 
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string timestamp = AppTime.Now.ToString("yyyyMMddHHmmss");
             string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}"));
 
             var payload = new
@@ -104,7 +105,7 @@ namespace HIMS.API.PaymentGateway
         public async Task<string> StkPushAsync(string phoneNumber, decimal amount,long Opdipdid, string callbackUrl, string reference)
         {
             string token = await _authService.GetAccessTokenAsync();
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string timestamp = AppTime.Now.ToString("yyyyMMddHHmmss");
             string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}"));
 
             var payload = new

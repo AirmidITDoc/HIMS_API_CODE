@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -53,7 +54,7 @@ namespace HIMS.API.Controllers.OPPatient
             if (obj.CertificateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _oPBillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -72,7 +73,7 @@ namespace HIMS.API.Controllers.OPPatient
             else
             {
 
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _oPBillingService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }

@@ -1,3 +1,4 @@
+using HIMS.Core.Infrastructure;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
@@ -39,7 +40,7 @@ namespace HIMS.Api.Models.Login
             MemoryStream ms = new();
 
             baseMap.Save(ms, ImageFormat.Png);
-            return new CaptchaResult { CaptchaCode = captchaCode, CaptchaByteData = ms.ToArray(), Timestamp = DateTime.Now };
+            return new CaptchaResult { CaptchaCode = captchaCode, CaptchaByteData = ms.ToArray(), Timestamp = AppTime.Now };
         }
         private static Color GetRandomLightColor(Random rand)
         {

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -73,12 +74,12 @@ namespace HIMS.API.Controllers.Pharmacy
 
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
                 //model.PurchaseTime = Convert.ToDateTime(obj.PurchaseTime);
-                model.PurchaseTime = DateTime.Now;
+                model.PurchaseTime = AppTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IPurchaseService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -96,10 +97,10 @@ namespace HIMS.API.Controllers.Pharmacy
             else
             {
                 model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
-                model.PurchaseTime = DateTime.Now;
+                model.PurchaseTime = AppTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IPurchaseService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.PurchaseId);
@@ -113,7 +114,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PurchaseId != 0)
             {
                 model.IsVerified = true;
-                model.VerifiedDateTime = DateTime.Now.Date;
+                model.VerifiedDateTime = AppTime.Now.Date;
 
                 await _IPurchaseService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }

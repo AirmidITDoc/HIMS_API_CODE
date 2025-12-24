@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
@@ -169,8 +170,8 @@ namespace HIMS.Services.Inventory
 
         //    // Update audit fields
         //    existing.ModifiedBy = UserId;
-        //    existing.ModifiedDate = DateTime.Now;
-        //    existing.IsUpdatedBy = DateTime.Now;
+        //    existing.ModifiedDate = AppTime.Now;
+        //    existing.IsUpdatedBy = AppTime.Now;
 
         //    await _context.SaveChangesAsync();
 
@@ -376,10 +377,10 @@ namespace HIMS.Services.Inventory
                      //IsLASA = cs.IsLasa,
                      //IsH1Drug = cs.IsH1Drug,
                      GrnRetQty = cs.GrnRetQty,
-                     //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, DateTime.Now),
-                     ExpDays = EF.Functions.DateDiffDay(DateTime.Now ,cs.BatchExpDate),
-                     DaysFlag = (EF.Functions.DateDiffDay(DateTime.Now, cs.BatchExpDate) < 30) ? 1
-                               : (EF.Functions.DateDiffDay(DateTime.Now, cs.BatchExpDate) > 50) ? 2
+                     //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
+                     ExpDays = EF.Functions.DateDiffDay(AppTime.Now ,cs.BatchExpDate),
+                     DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
+                               : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
                                : 3,
                      DrugTypeName = im.DrugTypeName
                  });

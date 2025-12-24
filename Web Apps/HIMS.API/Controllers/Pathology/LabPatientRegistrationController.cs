@@ -16,6 +16,7 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.API.Models.OutPatient;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -83,9 +84,9 @@ namespace HIMS.API.Controllers.Pathology
             TLabPatientRegistration model = obj.MapTo<TLabPatientRegistration>();
             if (obj.LabPatientId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _ILabPatientRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -106,9 +107,9 @@ namespace HIMS.API.Controllers.Pathology
 
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _ILabPatientRegistrationService.InsertAsyncSP(model, model2, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
             }
@@ -128,9 +129,9 @@ namespace HIMS.API.Controllers.Pathology
 
             if (obj.LabPatientRegistration.LabPatientId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _ILabPatientRegistrationService.InsertPaidBillAsync(model, model2, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
             }
@@ -149,7 +150,7 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _ILabPatientRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 

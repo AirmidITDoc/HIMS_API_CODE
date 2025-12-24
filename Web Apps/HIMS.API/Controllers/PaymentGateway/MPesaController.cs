@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Login
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
             System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
             return Ok(new { ResultCode = 0, ResultDesc = "Success" });
         }
@@ -67,14 +67,14 @@ namespace HIMS.API.Controllers.Login
             string path = "C:\\PaymentDataLogs\\";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
             System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
             var obj = JsonConvert.DeserializeObject<MpesaCallbackRoot>(payload.ToString());
             var exist = (await _mPesaService.GetAll(x => x.CheckoutRequestId == obj.Body.stkCallback.CheckoutRequestID && x.MerchantRequestId == obj.Body.stkCallback.MerchantRequestID)).FirstOrDefault();
             if ((exist?.Id ?? 0) > 0)
             {
                 var result = MPesaResponse.MapMpesaToTestA(obj);
-                exist.ResponseOn = DateTime.Now;
+                exist.ResponseOn = AppTime.Now;
                 exist.ResultCode = result.ResultCode;
                 exist.MpesaReceiptNumber = result.MpesaReceiptNumber;
                 exist.ResultDesc = result.ResultDesc;
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Login
             var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, objRequest.Opdipdid ?? 0 , _config["MPesa:ConfirmationUrl"], reference);
             var data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
             data.ReferenceNo = reference;
-            await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, Opdipdid = objRequest.Opdipdid, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = DateTime.Now }, CurrentUserId, CurrentUserName);
+            await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, Opdipdid = objRequest.Opdipdid, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = AppTime.Now }, CurrentUserId, CurrentUserName);
             return new ApiResponse() { StatusCode = 200, Data = data, StatusText = "Ok", Message = "Payment Done" };
         }
 

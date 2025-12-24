@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -90,8 +91,8 @@ namespace HIMS.API.Controllers.Pharmacy
             List<MItemMaster> objItems = obj.GrnItems.MapTo<List<MItemMaster>>();
             if (obj.Grn.Grnid == 0)
             {
-                //model.Grndate = DateTime.Now.Date;
-                //model.Grntime = DateTime.Now;
+                //model.Grndate = AppTime.Now.Date;
+                //model.Grntime = AppTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
                 await _IGRNService.InsertAsync(model, objItems, CurrentUserId, CurrentUserName);
@@ -111,8 +112,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                //model.Grndate = DateTime.Now.Date;
-                //model.Grntime = DateTime.Now;
+                //model.Grndate = AppTime.Now.Date;
+                //model.Grntime = AppTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateAsync(model, objItems, CurrentUserId, CurrentUserName);
             }
@@ -129,8 +130,8 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TPurchaseHeader> objPurHeaders = obj.GrnPOHeaders?.MapTo<List<TPurchaseHeader>>();
             if (obj.Grn.Grnid == 0)
             {
-                model.Grndate = DateTime.Now.Date;
-                model.Grntime = DateTime.Now;
+                model.Grndate = AppTime.Now.Date;
+                model.Grntime = AppTime.Now;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
                 await _IGRNService.InsertWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
@@ -152,8 +153,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.Grndate = DateTime.Now.Date;
-                model.Grntime = DateTime.Now;
+                model.Grndate = AppTime.Now.Date;
+                model.Grntime = AppTime.Now;
                 model.UpdatedBy = CurrentUserId;
                 await _IGRNService.UpdateWithPOAsync(model, objItems, objPurDetails, objPurHeaders, CurrentUserId, CurrentUserName);
             }
@@ -253,9 +254,9 @@ namespace HIMS.API.Controllers.Pharmacy
         //        //paymentModel.PaymentTime = Convert.ToDateTime(obj.payments.PaymentTime);
         //        //Model.AddedBy = CurrentUserId;
         //        //Model.CreatedBy = CurrentUserId;
-        //        //Model.CreatedDate = DateTime.Now;
+        //        //Model.CreatedDate = AppTime.Now;
         //        //Model.ModifiedBy = CurrentUserId;
-        //        //Model.ModifiedDate = DateTime.Now;
+        //        //Model.ModifiedDate = AppTime.Now;
         //        await _IGRNService.InsertSp(Model, CurrentUserId, CurrentUserName);
         //    }
         //    else

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
@@ -71,12 +72,12 @@ namespace HIMS.API.Controllers.Inventory
             MItemMaster model = obj.MapTo<MItemMaster>();
             if (obj.ItemId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
-                model.IsCreatedBy = DateTime.Now;
+                model.IsCreatedBy = AppTime.Now;
                 await _ItemMasterServices.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -95,9 +96,9 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.IsUpdatedBy = DateTime.Now;
+                model.IsUpdatedBy = AppTime.Now;
                 model.ItemTime = Convert.ToDateTime(obj.ItemTime);
                 await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
@@ -115,7 +116,7 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

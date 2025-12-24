@@ -11,6 +11,7 @@ using HIMS.API.Models.OTManagement;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -34,9 +35,9 @@ namespace HIMS.API.Controllers.OTManagement
             TOtOperativeNote model = obj.MapTo<TOtOperativeNote>();
             if (obj.OperativeNotesId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.Createdby = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IOTOperativeNotes.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -55,7 +56,7 @@ namespace HIMS.API.Controllers.OTManagement
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
             }

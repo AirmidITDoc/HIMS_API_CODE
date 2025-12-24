@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Extensions;
@@ -156,9 +157,9 @@ namespace HIMS.Services.Administration
                 item.SysId = 0;                 
                 item.ServiceId = item.ServiceId; 
                 item.CreatedBy = userId;
-                item.CreatedDate = DateTime.Now;
+                item.CreatedDate = AppTime.Now;
                 item.ModifiedBy = userId;
-                item.ModifiedDate = DateTime.Now;
+                item.ModifiedDate = AppTime.Now;
 
                 _context.MAutoServiceLists.Add(item);
             }

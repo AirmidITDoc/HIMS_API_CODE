@@ -45,7 +45,7 @@ namespace HIMS.Services.Notification
                 foreach (var obj in lst)
                 {
                     obj.IsRead = true;
-                    obj.ReadDate = DateTime.Now;
+                    obj.ReadDate = AppTime.Now;
                     // Update header & detail table records
                     _context.NotificationMasters.Update(obj);
                     _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

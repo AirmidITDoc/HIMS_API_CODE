@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pathology;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -75,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             if (obj.TemplateId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -95,7 +96,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TemplateName updated successfully.");
@@ -111,7 +112,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TemplateName deleted successfully.");
             }

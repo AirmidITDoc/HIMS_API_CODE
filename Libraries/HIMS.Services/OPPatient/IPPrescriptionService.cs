@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
@@ -61,10 +62,10 @@ namespace HIMS.Services.OPPatient
                 await _context.SaveChangesAsync();
 
                 // Add TokenNumber table records
-                List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+                List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == AppTime.Now).ToListAsync();
                 foreach (var item in objVisit)
                 {
-                    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == AppTime.Now);
                     if (objToken != null)
                     {
                         objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;

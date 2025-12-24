@@ -6,6 +6,7 @@ using HIMS.API.Models.Administration;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -65,7 +66,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
@@ -148,9 +149,9 @@ namespace HIMS.API.Controllers.Administration
 
                 model.SysId = 0;  // FORCE INSERT
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 return model;
             }).ToList();
@@ -176,7 +177,7 @@ namespace HIMS.API.Controllers.Administration
 
         //        MAutoServiceList model = obj.MapTo<MAutoServiceList>();
         //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
+        //        model.ModifiedDate = AppTime.Now;
 
         //        await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
         //    }

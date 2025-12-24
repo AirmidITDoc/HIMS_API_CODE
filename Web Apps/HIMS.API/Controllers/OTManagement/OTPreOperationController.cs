@@ -15,6 +15,7 @@ using HIMS.Data.DTO.OTManagement;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Services.OTManagment;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -131,31 +132,31 @@ namespace HIMS.API.Controllers.OTManagement
                 foreach (var q in model.TOtPreOperationAttendingDetails)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TOtPreOperationCathlabDiagnoses)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TOtPreOperationDiagnoses)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TOtPreOperationSurgeryDetails)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
 
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.Createdby = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IOTPreOperationService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -177,10 +178,10 @@ namespace HIMS.API.Controllers.OTManagement
                     if (q.OtpreOperationAttendingDetId == 0)
                     {
                         q.Createdby = CurrentUserId;
-                        q.CreatedDate = DateTime.Now;
+                        q.CreatedDate = AppTime.Now;
                     }
                     q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = DateTime.Now;
+                    q.ModifiedDate = AppTime.Now;
                     q.OtpreOperationAttendingDetId = 0;
                 }
 
@@ -189,10 +190,10 @@ namespace HIMS.API.Controllers.OTManagement
                     if (v.OtpreOperationCathLabDiagnosisDetId == 0)
                     {
                         v.Createdby = CurrentUserId;
-                        v.CreatedDate = DateTime.Now;
+                        v.CreatedDate = AppTime.Now;
                     }
                     v.ModifiedBy = CurrentUserId;
-                    v.ModifiedDate = DateTime.Now;
+                    v.ModifiedDate = AppTime.Now;
                     v.OtpreOperationCathLabDiagnosisDetId = 0;
                 }
                 foreach (var v in model.TOtPreOperationDiagnoses)
@@ -200,10 +201,10 @@ namespace HIMS.API.Controllers.OTManagement
                     if (v.OtpreOperationDiagnosisDetId == 0)
                     {
                         v.Createdby = CurrentUserId;
-                        v.CreatedDate = DateTime.Now;
+                        v.CreatedDate = AppTime.Now;
                     }
                     v.ModifiedBy = CurrentUserId;
-                    v.ModifiedDate = DateTime.Now;
+                    v.ModifiedDate = AppTime.Now;
                     v.OtpreOperationDiagnosisDetId = 0;
                 }
                 foreach (var v in model.TOtPreOperationSurgeryDetails)
@@ -211,13 +212,13 @@ namespace HIMS.API.Controllers.OTManagement
                     if (v.OtpreOperationSurgeryDetId == 0)
                     {
                         v.Createdby = CurrentUserId;
-                        v.CreatedDate = DateTime.Now;
+                        v.CreatedDate = AppTime.Now;
                     }
                     v.ModifiedBy = CurrentUserId;
-                    v.ModifiedDate = DateTime.Now;
+                    v.ModifiedDate = AppTime.Now;
                     v.OtpreOperationSurgeryDetId = 0;
                 }
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IOTPreOperationService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
 

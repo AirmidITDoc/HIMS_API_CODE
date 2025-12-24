@@ -6,6 +6,7 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -230,34 +231,34 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 foreach (var q in model.MDoctorQualificationDetails)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var v in model.MDoctorExperienceDetails)
                 {
                     v.CreatedBy = CurrentUserId;
-                    v.CreatedDate = DateTime.Now;
+                    v.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var p in model.MDoctorScheduleDetails)
                 {
                     p.CreatedBy = CurrentUserId;
-                    p.CreatedDate = DateTime.Now;
+                    p.CreatedDate = AppTime.Now;
                 }
                 foreach (var x in model.MDoctorChargesDetails)
                 {
                     x.CreatedBy = CurrentUserId;
-                    x.CreatedDate = DateTime.Now;
+                    x.CreatedDate = AppTime.Now;
                 }
                 foreach (var y in model.MDoctorLeaveDetails)
                 {
                     y.CreatedBy = CurrentUserId;
-                    y.CreatedDate = DateTime.Now;
+                    y.CreatedDate = AppTime.Now;
                 }
                 foreach (var z in model.MDoctorSignPageDetails)
                 {
                     z.CreatedBy = CurrentUserId;
-                    z.CreatedDate = DateTime.Now;
+                    z.CreatedDate = AppTime.Now;
                 }
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth.Value.ToLocalTime());
                 if (model.RegDate.HasValue)
@@ -303,10 +304,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (q.DocQualfiId == 0)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
                 }
                 q.ModifiedBy = CurrentUserId;
-                q.ModifiedDate = DateTime.Now;
+                q.ModifiedDate = AppTime.Now;
                 q.DocQualfiId = 0;
             }
 
@@ -315,10 +316,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (v.DocExpId == 0)
                 {
                     v.CreatedBy = CurrentUserId;
-                    v.CreatedDate = DateTime.Now;
+                    v.CreatedDate = AppTime.Now;
                 }
                 v.ModifiedBy = CurrentUserId;
-                v.ModifiedDate = DateTime.Now;
+                v.ModifiedDate = AppTime.Now;
                 v.DocExpId = 0;
             }
 
@@ -327,10 +328,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (p.DocSchedId == 0)
                 {
                     p.CreatedBy = CurrentUserId;
-                    p.CreatedDate = DateTime.Now;
+                    p.CreatedDate = AppTime.Now;
                 }
                 p.ModifiedBy = CurrentUserId;
-                p.ModifiedDate = DateTime.Now;
+                p.ModifiedDate = AppTime.Now;
                 p.DocSchedId = 0;
             }
 
@@ -339,10 +340,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (x.DocChargeId == 0)
                 {
                     x.CreatedBy = CurrentUserId;
-                    x.CreatedDate = DateTime.Now;
+                    x.CreatedDate = AppTime.Now;
                 }
                 x.ModifiedBy = CurrentUserId;
-                x.ModifiedDate = DateTime.Now;
+                x.ModifiedDate = AppTime.Now;
                 x.DocChargeId = 0;
             }
             foreach (var y in model.MDoctorLeaveDetails)
@@ -350,10 +351,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (y.DocLeaveId == 0)
                 {
                     y.CreatedBy = CurrentUserId;
-                    y.CreatedDate = DateTime.Now;
+                    y.CreatedDate = AppTime.Now;
                 }
                 y.ModifiedBy = CurrentUserId;
-                y.ModifiedDate = DateTime.Now;
+                y.ModifiedDate = AppTime.Now;
                 y.DocLeaveId = 0;
             }
             foreach (var z in model.MDoctorSignPageDetails)
@@ -361,10 +362,10 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 if (z.DocSignId == 0)
                 {
                     z.CreatedBy = CurrentUserId;
-                    z.CreatedDate = DateTime.Now;
+                    z.CreatedDate = AppTime.Now;
                 }
                 z.ModifiedBy = CurrentUserId;
-                z.ModifiedDate = DateTime.Now;
+                z.ModifiedDate = AppTime.Now;
                 z.DocSignId = 0;
             }
             await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
@@ -380,7 +381,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

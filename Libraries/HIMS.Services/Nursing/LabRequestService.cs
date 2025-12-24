@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -49,8 +50,8 @@ namespace HIMS.Services.Nursing
                 // Cancel fields
                 ObjLab.IsCancelled = true;
                 ObjLab.IsCancelledBy = CurrentUserId;
-                ObjLab.IsCancelledDate = DateTime.Now.Date;
-                ObjLab.IsCancelledTime = DateTime.Now;
+                ObjLab.IsCancelledDate = AppTime.Now.Date;
+                ObjLab.IsCancelledTime = AppTime.Now;
 
                 _context.THlabRequests.Update(ObjLab);
                 _context.Entry(ObjLab).State = EntityState.Modified;

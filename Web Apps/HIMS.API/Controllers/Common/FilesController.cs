@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Common
                         IsDelete = false,
                         RefId = item.RefId,
                         RefType = (long)item.RefType,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = AppTime.Now
                     });
                 }
             }
@@ -120,7 +120,7 @@ namespace HIMS.API.Controllers.Common
                     IsDelete = false,
                     RefId = objSignature.RefId,
                     RefType = (long)objSignature.RefType,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = AppTime.Now
                 };
                 await _FileService.Add(obj, CurrentUserId, CurrentUserName);
             }

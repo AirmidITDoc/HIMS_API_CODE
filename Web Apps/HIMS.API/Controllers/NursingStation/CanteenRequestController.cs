@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -66,8 +67,8 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.Date = Convert.ToDateTime(obj.Date);
                 model.Time = Convert.ToDateTime(obj.Time);
-                model.CreatedDate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
                 await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);

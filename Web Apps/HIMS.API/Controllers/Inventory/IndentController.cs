@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -57,11 +58,11 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.IndentDate = Convert.ToDateTime(obj.IndentDate);
                 model.IndentTime = Convert.ToDateTime(obj.IndentTime);
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.Addedby = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
 
                 await _IIndentService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -83,7 +84,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.IndentDate = Convert.ToDateTime(obj.IndentDate);
                 model.IndentTime = Convert.ToDateTime(obj.IndentTime);
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
 
                 await _IIndentService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
@@ -99,7 +100,7 @@ namespace HIMS.API.Controllers.Inventory
             if (obj.IndentId != 0)
             {
                 model.IsInchargeVerify = true;
-                model.IsInchargeVerifyDate = DateTime.Now.Date;
+                model.IsInchargeVerifyDate = AppTime.Now.Date;
                 await _IIndentService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -119,7 +120,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.Isclosed = true;
                 model.IsCancelledBy = CurrentUserId;
                 model.Isdeleted = true;
-                model.IsCancelledDateTime = DateTime.Now;
+                model.IsCancelledDateTime = AppTime.Now;
                 await _IIndentService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else

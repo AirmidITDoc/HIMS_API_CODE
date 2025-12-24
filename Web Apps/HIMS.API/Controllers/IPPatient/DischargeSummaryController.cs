@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -222,7 +223,7 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IDischargeSummaryService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }

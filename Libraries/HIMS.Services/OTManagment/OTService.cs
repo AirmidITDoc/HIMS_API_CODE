@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
@@ -91,7 +92,7 @@ namespace HIMS.Services.IPPatient
 
 
                 ObjTOtReservationHeader.Createdby = UserId;
-                ObjTOtReservationHeader.CreatedDate = DateTime.Now;
+                ObjTOtReservationHeader.CreatedDate = AppTime.Now;
 
                 _context.TOtReservationHeaders.Add(ObjTOtReservationHeader);
                 await _context.SaveChangesAsync();
@@ -115,7 +116,7 @@ namespace HIMS.Services.IPPatient
 
         //        // Update modified fields
         //        ObjTOtReservationHeader.ModifiedBy = UserId;
-        //        ObjTOtReservationHeader.ModifiedDate = DateTime.Now;
+        //        ObjTOtReservationHeader.ModifiedDate = AppTime.Now;
 
         //        // Ignore any additional columns if specified
         //        if (ignoreColumns?.Length > 0)
@@ -184,7 +185,7 @@ namespace HIMS.Services.IPPatient
                 _context.Entry(ObjTOtReservationHeader).Property(x => x.OtreservationNo).IsModified = false;
 
                 ObjTOtReservationHeader.ModifiedBy = UserId;
-                ObjTOtReservationHeader.ModifiedDate = DateTime.Now;
+                ObjTOtReservationHeader.ModifiedDate = AppTime.Now;
 
                 if (ignoreColumns?.Length > 0)
                 {
@@ -298,7 +299,7 @@ namespace HIMS.Services.IPPatient
 
 
                 objTOtReservationCheckInOut.CreatedBy = UserId;
-                objTOtReservationCheckInOut.CreatedDate = DateTime.Now;
+                objTOtReservationCheckInOut.CreatedDate = AppTime.Now;
 
                 _context.TOtReservationCheckInOuts.Add(objTOtReservationCheckInOut);
                 await _context.SaveChangesAsync();
@@ -322,7 +323,7 @@ namespace HIMS.Services.IPPatient
 
                 // Update modified fields
                 objTOtReservationCheckInOut.ModifiedBy = UserId;
-                objTOtReservationCheckInOut.ModifiedDate = DateTime.Now;
+                objTOtReservationCheckInOut.ModifiedDate = AppTime.Now;
 
                 // Ignore any additional columns if specified
                 if (ignoreColumns?.Length > 0)

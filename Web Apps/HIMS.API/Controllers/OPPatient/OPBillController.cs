@@ -9,6 +9,7 @@ using HIMS.API.Models.PaymentGateway;
 using HIMS.API.PaymentGateway;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -98,9 +99,9 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
                 /// set condition based on payment type=mpesa.
                 //string phone = "254723939232";
@@ -126,9 +127,9 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillTime = Convert.ToDateTime(obj.BillTime);
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IOPCreditBillService.InsertAsyncSP(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else
@@ -148,9 +149,9 @@ namespace HIMS.API.Controllers.OPPatient
             
             if (obj.AppRegistrationBills.RegId == 0)
             {
-                Regmodel.CreatedDate = DateTime.Now;
+                Regmodel.CreatedDate = AppTime.Now;
                 Regmodel.CreatedBy = CurrentUserId;
-                Regmodel.ModifiedDate = DateTime.Now;
+                Regmodel.ModifiedDate = AppTime.Now;
                 Regmodel.ModifiedBy = CurrentUserId;
                 await _oPBillingService.AppBillInsert(Regmodel, objVisitDetail, billmodel, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
@@ -220,9 +221,9 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillTime = Convert.ToDateTime(obj.AppOPBillIngModels.BillTime);
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _oPBillingService.InsertAppointmentCreditBillAsyncSP(Regmodel, objVisitDetail, model, objPayment, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
             else

@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
@@ -266,7 +267,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -292,7 +293,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -527,7 +528,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = currentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -553,7 +554,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = currentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -659,7 +660,7 @@ namespace HIMS.Services.Common
                                     Opipnumber = objBill.Ipdno,
                                     DoctorName = objBill.DoctorName,
                                     CreatedBy = CurrentUserId,
-                                    CreatedDate = DateTime.Now
+                                    CreatedDate = AppTime.Now
                                 };
 
                                 _context.TPathologyReportHeaders.Add(objPatho);
@@ -685,7 +686,7 @@ namespace HIMS.Services.Common
                                     Opipnumber = objBill.Ipdno,
                                     DoctorName = objBill.DoctorName,
                                     CreatedBy = CurrentUserId,
-                                    CreatedDate = DateTime.Now
+                                    CreatedDate = AppTime.Now
                                 };
 
                                 _context.TRadiologyReportHeaders.Add(objRadio);
@@ -834,7 +835,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = currentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -860,7 +861,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = currentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -998,7 +999,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
 
                             };
 
@@ -1025,7 +1026,7 @@ namespace HIMS.Services.Common
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
