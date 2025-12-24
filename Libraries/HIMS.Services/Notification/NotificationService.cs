@@ -1,4 +1,5 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Infrastructure;
+using HIMS.Data;
 using HIMS.Data.Models;
 using System.Transactions;
 
@@ -24,7 +25,7 @@ namespace HIMS.Services.Notification
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 obj.IsRead = true;
-                obj.ReadDate = DateTime.Now;
+                obj.ReadDate = AppTime.Now;
                 // Update header & detail table records
                 _context.NotificationMasters.Update(obj);
                 _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

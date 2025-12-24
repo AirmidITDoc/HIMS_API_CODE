@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using HIMS.API.Extensions;
 using HIMS.API.Hubs;
 using HIMS.API.Infrastructure;
+using HIMS.Core.Infrastructure;
 using HIMS.Core.Utilities;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +25,11 @@ builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
+var timeOptions = builder.Configuration
+    .GetSection("TimeSettings")
+    .Get<TimeOptions>();
+
+AppTime.Configure(timeOptions);
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
 ////Changes by Ashu 28 May 2025
