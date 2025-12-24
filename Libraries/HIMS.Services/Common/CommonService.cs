@@ -82,6 +82,8 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryIPCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAge_Test"; break;
                 case "PathologyResultEntryLabCompleted": sp_Name = "ps_Rtrv_PathologyResultList_ForLABAge_Test"; break;
 
+                //
+                case "OPBillPrint": sp_Name = "ps_rptBillPrint"; break;
 
                 // Check IP admission
                 case "GetBillDetails": sp_Name = "ps_getBillDetails"; break;
