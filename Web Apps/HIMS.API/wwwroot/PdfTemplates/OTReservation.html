@@ -12,13 +12,20 @@
         <table width="100%">
             {{NewHeader}}
             <tr>
-                <td style="border-bottom:2px solid #000; font-size:18px;">
-                    <b>OT Reservation Report</b>
-                </td>
-                <td style="border-bottom:2px solid #000; text-align:right; font-size:13px;">
-                    <b>Print Date :</b> {{PrintDate}}
+                <td colspan="2" style="border-bottom:2px solid #000;">
+                    <table width="100%">
+                        <tr>
+                            <td style="font-size:18px;">
+                                <b>OT Reservation Report</b>
+                            </td>
+                            <td style="text-align:right; font-size:13px;">
+                                <b>Print Date :</b> {{PrintDate}}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
+
         </table>
 
         <br>
@@ -27,8 +34,8 @@
         <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
 
             <tr style="background:#f9fafb;">
-                <td><b>Reg No :</b> {{RegNo}}</td>
-                <td><b>IPD No :</b> {{IPDNo}}</td>
+                <td><b>UHIDNo :</b> {{RegNo}}</td>
+                <td><b>OPD/IPD No :</b> {{IPDNo}}</td>
                 <td><b>DOA | Time :</b> {{AdmissionDate}} {{AdmissionTime}}</td>
             </tr>
 
@@ -139,14 +146,7 @@
 
         <br><br>
 
-        <!-- ================= FOOTER ================= -->
-        <table width="100%" style="text-align:center;">
-            <tr>
-                <td>____________________<br>Prepared By</td>
-                <td>____________________<br>Surgeon</td>
-                <td>____________________<br>Signature</td>
-            </tr>
-        </table>
+       
 
     </div>
 </body>
