@@ -9,7 +9,6 @@ namespace HIMS.Services.OTManagment
 {
     public partial interface IOTOperativeNotes
     {
-        Task InsertAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username);
-        Task UpdateAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username, string[]? references);
+        Task InsertAsync(TOtOperativeNote ObjTOtOperativeNotes, int UserId, string Username);
     }
 }

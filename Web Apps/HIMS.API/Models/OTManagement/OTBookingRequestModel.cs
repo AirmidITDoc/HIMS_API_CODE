@@ -37,7 +37,7 @@ namespace HIMS.API.Models.OTManagement
         }
         public class OTBookingRequestCancel
         {
-            public long OtbookingId { get; set; }
+            public long OtrequestId { get; set; }
             public string? Reason { get; set; }
             public long IsCancelledBy { get; set; }
 
@@ -94,7 +94,7 @@ namespace HIMS.API.Models.OTManagement
         public string? SurgeryPart { get; set; }
         public string? SurgeryFromTime { get; set; }
         public string? SurgeryEndTime { get; set; }
-        public int? SurgeryDuration { get; set; }
+        public float? SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }

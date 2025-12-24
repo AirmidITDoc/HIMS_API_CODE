@@ -16,8 +16,8 @@ namespace HIMS.Data.DTO.OTManagement
         public string? SurgeryName { get; set; }
         public string? SurgeryPart { get; set; }
         public DateTime? SurgeryFromTime { get; set; }
-        public DateTime? SurgeryEndTime { get; set; }
-        public long? SurgeryDuration { get; set; }
+        public string? SurgeryEndTime { get; set; }
+        public double? SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
@@ -67,6 +67,7 @@ namespace HIMS.Data.DTO.OTManagement
         public string? RoomName { get; set; }
         public DateTime? AdmissionDate { get; set; }
         public DateTime? VisitDate { get; set; }
+        public bool? IsCancelled { get; set; }
 
 
     }

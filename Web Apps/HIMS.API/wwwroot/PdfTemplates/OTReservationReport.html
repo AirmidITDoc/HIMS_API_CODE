@@ -25,21 +25,20 @@
                                 <tr class="top-header-row">
                                     {{NewHeader}}
                                 </tr>
-                                <tr class="title-date-row">
-                                    <td>
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr style="font-size: 26px;font-weight:bold;">
-                                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;" colspan="2">
-                                                    <b>
-                                                        OT Reservation Report
-                                                    </b>
+                                <tr>
+                                    <td style="padding:8px 4px;">
+                                        <table style="width:98%;border-collapse:collapse;">
+                                            <tr style="font-size:18px;">
+                                                <td style="border-bottom:2px solid #000;padding-bottom:10px;">
+                                                    <b>OT Reservation Report</b>
                                                 </td>
-
+                                                <td style="border-bottom:2px solid #000;padding-bottom:10px;text-align:right;font-size:13px;">
+                                                    <b>Print Date :</b> {{PrintDate}}
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
-
                                 <tr class="bill-info-row">
                                     <td style="padding: 6px;">
 
@@ -141,43 +140,13 @@
 
                                             </tr>
                                             <tr>
-
-                                                <!--<td style="padding: 2px;">
-                                                    <span style="font-weight:bold;">AnesthetishType :</span>
-                                                    <span>{{AnaesthesiaType}}</span>
-                                                </td>-->
                                                 <td style="padding: 2px;">
                                                     <span style="font-weight:bold;">OT Table :</span>
                                                     <span>{{OTTableName}} </span>
                                                 </td>
                                             </tr>
-
-                                            <!--<tr>
-
-
-        <td style="padding: 2px;">
-            <span style="font-weight:bold;">Procedure:</span>
-            <span>{{ProcedureName}} </span>
-        </td>
-        <td style="padding: 2px;">
-            <span style="font-weight:bold;">Tran Time: </span>
-            <span>{{TranTime}}</span>
-        </td>
-    </tr>
-
-    <tr>
-
-
-
-        <td style="padding: 2px;">
-            <span style="font-weight:bold;">LocationName: </span>
-            <span>{{LocationName}}</span>
-        </td>
-    </tr>-->
                                             <tr>
-
-
-                                        </table>
+                                     </table>
                                     </td>
                                 </tr>
                             </table>
@@ -227,11 +196,6 @@
 <html>
 <body>
     <table style="width: 100%; border-collapse: collapse;">
-
-        <!--<tr><td><span colspan="3" style="font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee; padding: 6px;">Note: Don't Stop any Medication Without Doctor Consultation...</span></td></tr>
-        <tr><td><span colspan="3" style="font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee; padding: 6px;">Emeregency Contact Number :</span></td></tr>
-        <br />-->
-
         <tr>
             <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial;">
                 <tr></tr>
@@ -253,31 +217,12 @@
 
                         <span style="font-weight: bold;  text-align: right; float: right; ">Doctor Signature</span>
                         <br />
-
-
-                        <!-- <span style="text-align: right; float: right;">{{DoctorName}}</span>-->
                     </td>
-
                 </tr>
-
-
             </table>
         </tr>
     </table>
 
-    <table style="width: 100%;line-height: inherit;text-align: left;margin-top:20px;">
-        <tr>
-            <footer style="margin-left: 70%; font-size: 19px;">
-
-            <td style="padding: 6px; text-align: right;">
-                <b>
-                    Print
-                    Date : {{CurrentDate}}
-                </b>
-            </td>
-            </footer>
-        </tr>
-    </table>
 
 </body>
 

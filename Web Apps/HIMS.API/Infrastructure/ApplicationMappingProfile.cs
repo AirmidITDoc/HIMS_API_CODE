@@ -83,7 +83,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MReportConfig, ReportConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MReportConfigDetail, ReportConfigDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtReservationHeader, OTReservationCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TOtbookingRequest, OTBookingRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtRequestHeader, OTBookingRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtReservationHeader, OTBookingPostPoneModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyResultUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -177,14 +177,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TConsentMaster, TransactionConsentMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<Registration, RegistrationUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-
-
-
-
-
-
-
+            CreateMap<TOtOperativeNote, OTOperativeNotesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<MSupplierMaster, SupplierModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -746,6 +739,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TLabPatientRegistration, TLabPatientRegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemCompanyMaster, ItemCompanyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtReservationCheckInOut, ReservationCheckInOutModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtReservationHeader, UpdateOTReservationHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             CreateMap<MAreaMaster, AreaMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

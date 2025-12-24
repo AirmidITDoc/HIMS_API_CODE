@@ -88,6 +88,16 @@ namespace HIMS.API.Models.IPPatient
             public long? CheckOutToDepartment { get; set; }
            
         }
+
+
+        public class UpdateOTReservationHeaderModel
+        {
+            public long OtreservationId { get; set; }
+            public bool? IsAnaesthetistPaid { get; set; }
+            public bool? IsMaterialReplacement { get; set; }
+            
+
+        }
     }
 
 }

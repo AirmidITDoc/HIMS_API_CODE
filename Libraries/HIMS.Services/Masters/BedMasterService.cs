@@ -1,4 +1,7 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Master;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using System;
@@ -34,5 +37,10 @@ namespace HIMS.Services.Masters
 
         }
 
+
+        public virtual async Task<IPagedList<BedmasterListDto>> GetBedListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BedmasterListDto>(model, "ps_rtrv_GetBedMasterList");
+        }
     }
 }

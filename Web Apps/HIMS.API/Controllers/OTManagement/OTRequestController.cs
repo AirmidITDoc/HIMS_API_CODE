@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.OtrequestId);
         }
        
 
@@ -205,18 +205,18 @@ namespace HIMS.API.Controllers.IPPatient
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.OtrequestId);
         }
 
         [HttpPost("Cancel")]
-        [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
+    //    [Permission(PageCode = "OTRequest", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(OTBookingRequestCancel obj)
         {
-            TOtbookingRequest model = obj.MapTo<TOtbookingRequest>();
+            TOtRequestHeader model = obj.MapTo<TOtRequestHeader>();
 
-            if (obj.OtbookingId != 0)
+            if (obj.OtrequestId != 0)
             {
-                model.OtbookingId = obj.OtbookingId;
+                model.OtrequestId = obj.OtrequestId;
                 _OTBookingRequestService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else

@@ -7,6 +7,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Master;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Inventory;
@@ -38,6 +39,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         {
             IPagedList<Bedmaster> BedmasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(BedmasterList.ToGridResponse(objGrid, "Bed Master List"));
+        }
+        //List API
+        [HttpPost("BedList")]
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<BedmasterListDto> Servicelist = await _IBedMasterService.GetBedListListAsync(objGrid);
+            return Ok(Servicelist.ToGridResponse(objGrid, " Bed List "));
         }
 
         //List API Get By Id
