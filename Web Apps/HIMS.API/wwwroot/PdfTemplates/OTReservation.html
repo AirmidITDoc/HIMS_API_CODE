@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OT Pre-Operation Report</title>
+</head>
+
+<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri, Arial, sans-serif; color:#101828;">
+    <div style="padding:16px;">
+
+        <!-- ================= HEADER ================= -->
+        <table width="100%">
+            {{NewHeader}}
+            <tr>
+                <td style="border-bottom:2px solid #000; font-size:18px;">
+                    <b>OT Reservation Report</b>
+                </td>
+                <td style="border-bottom:2px solid #000; text-align:right; font-size:13px;">
+                    <b>Print Date :</b> {{PrintDate}}
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <!-- ================= 1. PATIENT INFORMATION ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+
+            <tr style="background:#f9fafb;">
+                <td><b>Reg No :</b> {{RegNo}}</td>
+                <td><b>IPD No :</b> {{IPDNo}}</td>
+                <td><b>DOA | Time :</b> {{AdmissionDate}} {{AdmissionTime}}</td>
+            </tr>
+
+            <tr style="background:#f2f4f7;">
+                <td><b>Patient Name :</b> {{FirstName}} {{LastName}}</td>
+                <td><b>Patient Type :</b> {{PatientType}}</td>
+                <td><b>Age | Gender :</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D | {{GenderName}}</td>
+            </tr>
+
+            <tr style="background:#f9fafb;">
+                <td><b>Doctor Name :</b> {{DoctorName}}</td>
+                <td><b>Department :</b> {{DepartmentName}}</td>
+                <td><b>Mobile No :</b> {{MobileNo}}</td>
+            </tr>
+            <tr style="background:#f2f4f7;">
+                <td colspan="3"> <b>Company :</b> {{CompanyName}}</tdcolspan="3">
+
+            </tr>
+
+        </table>
+
+        <br><br>
+
+        <!-- ================= 2. DETAILS (4 COLUMNS) ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="4"><b>Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Blood Group</b><br>{{BloodGroup}}</td>
+                <td><b>Category Type</b><br>{{CategoryType}}</td>
+                <td><b>Theater</b><br>{{OTTableName}}</td>
+                <td><b>Location</b><br>{{LocationName}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Estimate Time</b><br>{{EstimateTime}}</td>
+                <td><b>Surgery Date</b><br>{{SurgeryDate}}</td>
+                <td><b>Reservation Type</b><br>{{ReservationType}}</td>
+                <td><b>PAC Required</b><br>{{PACRequired}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Equipments</b><br>{{EquipmentsRequired}}</td>
+                <td><b>Infective</b><br>{{Infective}}</td>
+                <td><b>Medical Clearance</b><br>{{ClearanceMedical}}</td>
+                <td><b>Diagnosis</b><br>{{DescriptionName}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="4"><b>Remarks :</b> {{Comments}}</td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- ================= 3. SURGERY DETAILS (4 COLUMNS | 2 ROWS) ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="4"><b>Surgery Details</b></td>
+            </tr>
+            <!--
+
+            <tr>
+                <td><b>Surgery Type</b><br>{{SurgeryCategoryName}}</td>
+                <td><b>Surgery Name</b><br>{{SurgeryName}}</td>
+                <td><b>Part</b><br>{{SurgeryPart}}</td>
+                <td><b>Is Primary</b><br>{{IsPrimary}}</td>
+            </tr>
+
+            <tr>
+                <td><b>From Time</b><br>{{SurgeryFromTime}}</td>
+                <td><b>To Time</b><br>{{SurgeryEndTime}}</td>
+                <td><b>Duration</b><br>{{SurgeryDuration}}</td>
+                <td><b>Anesthesia</b><br>{{AnesthetistName}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="4"><b>Surgeon :</b> {{SurgeonName}}</td>
+            </tr> -->
+            {{SurgeryRows}}
+
+        </table>
+
+        <br><br>
+
+        <!-- ================= 4. ATTENDANT DETAILS ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="3"><b>Attendant Details</b></td>
+            </tr>
+
+            <tr style="background:#f9fafb; font-weight:bold;">
+                <td>Resource Type</td>
+                <td>Doctor Type</td>
+                <td>Doctor Name</td>
+            </tr>
+            <!--
+            <tr>
+                <td>Doctor</td>
+                <td>{{DoctorType}}</td>
+                <td>{{AttendedName}}</td>
+            </tr> -->
+            {{AttendantRows}}
+
+        </table>
+
+        <br><br>
+
+        <!-- ================= FOOTER ================= -->
+        <table width="100%" style="text-align:center;">
+            <tr>
+                <td>____________________<br>Prepared By</td>
+                <td>____________________<br>Surgeon</td>
+                <td>____________________<br>Signature</td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
