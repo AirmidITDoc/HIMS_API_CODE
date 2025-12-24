@@ -67,6 +67,7 @@ namespace HIMS.Data.DTO.OTManagement
         public string? RoomName { get; set; }
         public DateTime? AdmissionDate { get; set; }
         public DateTime? VisitDate { get; set; }
+        public bool? IsCancelled { get; set; }
 
 
     }
