@@ -57,7 +57,8 @@ namespace HIMS.Data.DTO.OTManagement
         public long OTPreOperationId { get; set; }
         public long OTInOperationId { get; set; }
         public long AnesthesiaId { get; set; }
-
+        public bool? IsAnaesthetistPaid { get; set; }
+        public bool? IsMaterialReplacement { get; set; }
 
 
 
