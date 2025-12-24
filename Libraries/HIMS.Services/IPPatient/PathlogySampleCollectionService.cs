@@ -70,5 +70,21 @@ namespace HIMS.Services.IPPatient
             }
         }
 
+        public virtual async Task UpdateAsync(TPathologyReportHeader objTPathologyReportHeader, int UserId, string Username)
+        {
+                DatabaseHelper odal = new();
+                string[] AEntity = {  "SampleNo", "SampleCollectionTime" };
+                var entity = objTPathologyReportHeader.ToDictionary();
+
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_samplecollectionDatetime", CommandType.StoredProcedure, entity);
+              //  await _context.LogProcedureExecution(entity, "SampleCollection", objTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, Username);
+            
+        }
+
     }
 }

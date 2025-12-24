@@ -450,6 +450,8 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TRadiologyReportHeader, TRadiologyReportModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathlogySampleCollectionsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPathologyReportHeader, PathologyUpdateDateTimeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<TMrpAdjustment, MRPAdjustmentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
