@@ -412,6 +412,8 @@ namespace HIMS.API.Controllers.Report
                 case "OTInOperationReport":
                 case "OTPreOperationReport":
                 case "OTRequestReport":
+                case "OTOperativeNotesReport":
+
 
                 //PATHOLOGY 
                 case "PathologyReportWithHeader":

@@ -2475,7 +2475,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTReservationReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptRtrv_OTReservation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OTReservation", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTReservationReport", "OTReservationReport" + vDate, Orientation.Portrait);
@@ -2564,6 +2564,22 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTRequestReport", "OTRequestReport" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region ::OTOperativeNotesReport ::
+                case "OTOperativeNotesReport":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTOperativeNotesReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rpt_OT_OperativeNotes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTOperativeNotesReport", "OTOperativeNotesReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -12319,6 +12335,63 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "OTOperativeNotesReport":
+                    {
+                        string html1 = File.ReadAllText(htmlFilePath);
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0;
+                        //html = html.Replace("{{MaterialConsumptionId}}", Bills.GetColValue("MaterialConsumptionId"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
+
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{Surgeryname}}", dt.GetColValue("Surgeryname"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{AnathesDrName1}}", dt.GetColValue("AnathesDrName1"));
+                        html = html.Replace("{{AnathesDrName2}}", dt.GetColValue("AnathesDrName2"));
+                        html = html.Replace("{{SurgeonName2}}", dt.GetColValue("SurgeonName2"));
+                        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
+                        html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
+                        html = html.Replace("{{AnaesthesiaType}}", dt.GetColValue("AnaesthesiaType"));
+                        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
+                        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
+
+
+
+
+                        html = html.Replace("{{SurgeryType}}", dt.GetColValue("SurgeryType"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{OPDIPDNO}}", dt.GetColValue("OPDIPDNO"));
+                        html = html.Replace("{{OTdepartment}}", dt.GetColValue("OTdepartment"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{Instruction}}", dt.GetColValue("Instruction"));
+                        html = html.Replace("{{SiteDescriptionName}}", dt.GetColValue("SiteDescriptionName"));
+
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{OTRequestTime}}", dt.GetColValue("OTRequestTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+
+
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+                        html = html.Replace("{{chkInstructionflag}}", dt.GetColValue("Instruction").ConvertToString() != "" ? "table-row" : "none");
+
+
+                        return html;
+                    }
+                    break;
 
 
                 case "OTReservationReport":
@@ -12379,6 +12452,8 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+
+                    
 
                 case "OTOprativereport":
                     {

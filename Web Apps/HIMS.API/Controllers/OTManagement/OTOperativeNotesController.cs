@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.OTManagement
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.OperativeNotesId);
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.OTManagement
 
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.",model.OperativeNotesId);
         }
 
         [HttpGet("{id?}")]
