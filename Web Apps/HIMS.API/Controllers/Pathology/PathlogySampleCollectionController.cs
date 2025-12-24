@@ -2,7 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -70,6 +72,24 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Sample Collection updated successfully.");
+        }
+
+
+
+        [HttpPost("UpdateSamplecollectionDatetime")]
+     //   [Permission(PageCode = "PathologyReport", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(PathologyUpdateDateTimeModel obj)
+        {
+            TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
+            if (obj.SampleNo != 0)
+            {
+                
+
+                await _IPathlogySampleCollectionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 
@@ -20,6 +21,10 @@ namespace HIMS.Services.Pathlogy
         Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         Task VerifyAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         List<pathologistdoctorDto> SearchPatient();
+
+        List<PathServicewiseTemplateListDto> GetServicewisetemplate(int ServiceId);
+        //Task<IPagedList<PathServicewiseTemplateListDto>> GetServicewisetemplate(GridRequestModel objGrid);
+
 
 
 

@@ -42,18 +42,18 @@ namespace HIMS.Services.OTManagment
 
 
 
-        public virtual void Cancel(TOtbookingRequest OBJOtbookingRequest, int UserId, string Username)
+        public virtual void Cancel(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] BEntity = { "OtbookingDate", "OtbookingTime", "OpIpId", "OpIpType", "OtrequestDate", "OtrequestTime", "OtrequestId", "SurgeryCategoryId", "DepartmentId", "CategoryId", "SiteDescId", "SurgeryId", "SurgeonId", "SurgeryTypeId", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledDateTime" };
-            var TEntity = OBJOtbookingRequest.ToDictionary();
+            string[] BEntity = { "OtrequestDate", "OtrequestTime", "OtrequestNo", "Opipid", "Opiptype", "BloodGroup", "CategoryType", "Ottable", "SurgeryDate", "EstimateTime", "Diagnosis", "Comments", "RequestType", "Pacrequired", "EquipmentsRequired", "ClearanceMedical", "ClearanceFinancial", "Infective", "CreatedBy", "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledDateTime", "TOtRequestAttendingDetails", "TOtRequestDiagnoses", "TOtRequestSurgeryDetails" };
+            var TEntity = ObjTOtRequestHeader.ToDictionary();
             foreach (var rProperty in BEntity)
             {
                 TEntity.Remove(rProperty);
             }
 
-            odal.ExecuteNonQuery("PS_Cancel_T_OTBooking_Request", CommandType.StoredProcedure, TEntity);
+            odal.ExecuteNonQuery("ps_Cancel_T_Ot_RequestHeader", CommandType.StoredProcedure, TEntity);
         }
 
         public virtual async Task InsertAsync(TOtRequestHeader ObjTOtRequestHeader, int UserId, string Username)

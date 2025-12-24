@@ -108,4 +108,10 @@ namespace HIMS.API.Models.Inventory
         public DateTime? IsVerifyedDate { get; set; }
     }
 
+    public class PathologyUpdateDateTimeModel
+    {
+        public long SampleNo { get; set; }
+        public string? SampleCollectionTime { get; set; }
+    }
+
 }

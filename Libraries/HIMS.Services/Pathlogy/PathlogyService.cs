@@ -1,15 +1,16 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
-using Microsoft.Data.SqlClient;
 
 
 namespace HIMS.Services.Pathlogy
@@ -214,5 +215,23 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
+
+
+        List<PathServicewiseTemplateListDto> IPathlogyService.GetServicewisetemplate(int ServiceId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+
+            para[0] = new SqlParameter("@ServiceId", ServiceId);
+
+            List<PathServicewiseTemplateListDto> lstServiceList = sql.FetchListBySP<PathServicewiseTemplateListDto>("rtrv_patientTemplateRetriveCombo", para);
+            return lstServiceList;
+        }
+
+
+        //public async Task<List<DoctorMaster>> GetDoctorsByDepartment(int DeptId)
+        //{
+        //    return await _context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).Where(y => y.IsConsultant.Value && y.MDoctorDepartmentDets.Any(z => z.DepartmentId == DeptId)).ToListAsync();
+        //}
     }
 }

@@ -14587,6 +14587,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Pacrequired).HasColumnName("PACRequired");
 
+                entity.Property(e => e.Reason).HasMaxLength(500);
+
                 entity.Property(e => e.SurgeryDate).HasColumnType("datetime");
             });
 
@@ -14819,15 +14821,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsPrimary)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtreservationId).HasColumnName("OTReservationId");
-
-                entity.Property(e => e.SurgeryDuration).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.SurgeryEndTime).HasColumnType("datetime");
 
