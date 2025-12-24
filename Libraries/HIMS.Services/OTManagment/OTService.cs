@@ -257,7 +257,25 @@ namespace HIMS.Services.IPPatient
 
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
-      
+
+        public virtual void UpdateSP(TOtReservationHeader ObjTOtReservation, int UserId, string UserName)
+        {
+            
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "OtrequestId", "Opipid", "Opiptype", "BloodGroup","OtreservationDate","OtreservationNo","OtreservationTime", "CategoryType", "Ottable", "SurgeryDate", "EstimateTime", "Diagnosis",
+                "Comments", "ReservationType", "Pacrequired", "EquipmentsRequired", "ClearanceMedical", "ClearanceFinancial", "Infective", "Reason", "Createdby",
+                "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "TOtReservationAttendingDetails", "TOtReservationDiagnoses", "TOtReservationSurgeryDetails" };
+
+            var entity = ObjTOtReservation.ToDictionary();
+            foreach (var rProperty in rEntity)
+            {
+                entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_OT_ReservationHeader", CommandType.StoredProcedure, entity);
+        }
+
+
 
 
         public virtual async Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username)
