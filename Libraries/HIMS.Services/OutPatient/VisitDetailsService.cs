@@ -256,13 +256,15 @@ namespace HIMS.Services.OutPatient
             return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientVisitedListSearch", para);
         }
 
-        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
+        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string SrvcName )
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[3];
+           
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ClassId", ClassId);
-            para[2] = new SqlParameter("@SrvcName", ServiceName);
+            para[2] = new SqlParameter("@SrvcName", SrvcName);
+
             List<ServiceMasterDTO> lstServiceList = sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
             return lstServiceList;
         }
@@ -405,7 +407,7 @@ namespace HIMS.Services.OutPatient
                            GroupId = s.GroupId,
                            ServiceShortDesc = s.ServiceShortDesc,
                            ServiceName = s.ServiceName,
-                           ClassRate = d.ClassRate ?? 0,
+                           //ClassRate = d.ClassRate ?? 0,
                            TariffId = d.TariffId ?? 0,
                            ClassId = d.ClassId ?? 0,
                            IsEditable = s.IsEditable,

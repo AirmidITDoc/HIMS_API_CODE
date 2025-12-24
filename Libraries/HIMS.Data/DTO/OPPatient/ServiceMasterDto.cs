@@ -14,6 +14,8 @@ namespace HIMS.Data.DTO.OPPatient
         public long ServiceId { get; set; }
         public string? ServiceName { get; set; }
         public decimal ClassRate { get; set; }
+        public decimal Price { get; set; }
+
         public long TariffId { get; set; }
         public long ClassId { get; set; }
         public string? CompanyCode { get; set; }
