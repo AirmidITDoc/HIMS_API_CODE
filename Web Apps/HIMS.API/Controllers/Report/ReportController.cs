@@ -408,7 +408,12 @@ namespace HIMS.API.Controllers.Report
                 // OT
 
                 case "OTAnaesthesiaRecord":
-               
+                case "OTCheckInOutPatientWise":
+                case "OTInOperationReport":
+                case "OTPreOperationReport":
+                case "OTRequestReport":
+                case "OTOperativeNotesReport":
+
 
                 //PATHOLOGY 
                 case "PathologyReportWithHeader":

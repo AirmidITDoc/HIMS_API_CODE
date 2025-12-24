@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.IPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.OtreservationId);
         }
 
         [HttpPut("Edit/{id:int}")]
@@ -180,7 +180,7 @@ namespace HIMS.API.Controllers.IPPatient
                 await _OTService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "Createdby", "CreatedDate" });
 
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.OtreservationId);
         }
         //List API Get By Id
         [HttpGet("Getcheckinout/{id?}")]
@@ -263,6 +263,23 @@ namespace HIMS.API.Controllers.IPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        [HttpPost("UpdateOTReservationHeader")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        public ApiResponse UpdateSP(UpdateOTReservationHeaderModel obj)
+        {
+            TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
+            if (obj.OtreservationId != 0)
+            {
+                ////model.OtreservationDate = Convert.ToDateTime(obj.OtreservationDate);
+                //model.CreatedDate = DateTime.Now;
+                //model.Createdby = CurrentUserId;
+                _OTService.UpdateSP(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
         }
 
     }
