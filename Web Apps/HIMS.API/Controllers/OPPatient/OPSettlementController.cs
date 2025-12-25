@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OutPatient;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,9 @@ namespace HIMS.API.Controllers.OPPatient
 
                 model.AddBy = CurrentUserId;
                 BillUpdateModel.CreatedBy = CurrentUserId;
-                BillUpdateModel.CreatedDate = DateTime.Now;
+                BillUpdateModel.CreatedDate = AppTime.Now;
                 BillUpdateModel.ModifiedBy = CurrentUserId;
-                BillUpdateModel.ModifiedDate = DateTime.Now;
+                BillUpdateModel.ModifiedDate = AppTime.Now;
                 await _OPSettlementService.InsertAsyncSP(model, BillUpdateModel, ObjTPayment, CurrentUserId, CurrentUserName);
 
             }

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
                 model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IPaymentModeService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }

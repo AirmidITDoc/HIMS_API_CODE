@@ -16,6 +16,7 @@ namespace HIMS.API.Models.Nursing
         public string? ConsentName { get; set; }
         public long? ConsentDepartment { get; set; }
         public string? ConsentDescription { get; set; }
+        public string? TransactionLabel { get; set; }
     }
     public class TransactionConsentMasterModelValidator : AbstractValidator<TransactionConsentMasterModel>
     {

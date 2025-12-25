@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
@@ -42,9 +43,9 @@ namespace HIMS.API.Controllers.Administration
 
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 await _Texpenseservice.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -63,7 +64,7 @@ namespace HIMS.API.Controllers.Administration
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 await _Texpenseservice.UpdateExpensesAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }

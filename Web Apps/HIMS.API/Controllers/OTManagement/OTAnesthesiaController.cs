@@ -10,6 +10,7 @@ using HIMS.Core;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
 using HIMS.Services.OTManagment;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.OTManagement
 {
@@ -67,12 +68,12 @@ namespace HIMS.API.Controllers.OTManagement
                 foreach (var q in model.TOtAnesthesiaPreOpdiagnoses)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IOTAnesthesiaService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -95,10 +96,10 @@ namespace HIMS.API.Controllers.OTManagement
                     if (q.OtanesthesiaPreOpdiagnosisId == 0)
                     {
                         q.Createdby = CurrentUserId;
-                        q.CreatedDate = DateTime.Now;
+                        q.CreatedDate = AppTime.Now;
                     }
                     q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = DateTime.Now;
+                    q.ModifiedDate = AppTime.Now;
                     q.OtanesthesiaPreOpdiagnosisId = 0;
                 }
 

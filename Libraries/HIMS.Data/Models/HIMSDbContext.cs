@@ -25,6 +25,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<AllOutStanding> AllOutStandings { get; set; } = null!;
         public virtual DbSet<AllOutStandingPatientWise> AllOutStandingPatientWises { get; set; } = null!;
         public virtual DbSet<AllOutStandingPatientWiseLedger> AllOutStandingPatientWiseLedgers { get; set; } = null!;
+        public virtual DbSet<AppSetting> AppSettings { get; set; } = null!;
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public virtual DbSet<BarcodeConfigMaster> BarcodeConfigMasters { get; set; } = null!;
         public virtual DbSet<Bedmaster> Bedmasters { get; set; } = null!;
@@ -584,7 +585,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -982,6 +983,17 @@ namespace HIMS.Data.Models
                     .HasColumnName("PType");
 
                 entity.Property(e => e.TotalAmt).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<AppSetting>(entity =>
+            {
+                entity.HasKey(e => e.SettingKey);
+
+                entity.ToTable("App_Settings");
+
+                entity.Property(e => e.SettingKey).HasMaxLength(100);
+
+                entity.Property(e => e.SettingValue).HasMaxLength(100);
             });
 
             modelBuilder.Entity<AuditLog>(entity =>
@@ -11362,6 +11374,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TCurrentStk>(entity =>

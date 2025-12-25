@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
@@ -243,11 +244,11 @@ namespace HIMS.Services.Utilities
                 DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
-            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             if (File.Exists(NewFileName))
-                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }
@@ -277,9 +278,9 @@ namespace HIMS.Services.Utilities
                 DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
-            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             File.WriteAllBytes(NewFileName, encryptedBytes);
             return NewFileName;
         }
@@ -309,9 +310,9 @@ namespace HIMS.Services.Utilities
                 DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
-            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             File.WriteAllBytes(NewFileName, encryptedBytes);
             return NewFileName;
         }
@@ -356,7 +357,7 @@ namespace HIMS.Services.Utilities
 
             // Determine and create storage path
             string DestinationPath = string.IsNullOrWhiteSpace(storageBasePath) ? "" : storageBasePath;
-            string dateFolder = DateTime.Now.ToString("ddMMyyyy");
+            string dateFolder = AppTime.Now.ToString("ddMMyyyy");
             string fullFolderPath = Path.Combine(DestinationPath, FolderName, dateFolder);
 
             if (!Directory.Exists(fullFolderPath))
@@ -417,7 +418,7 @@ namespace HIMS.Services.Utilities
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
 
-            string datedFolderPath = Path.Combine(DestinationPath, FolderName, DateTime.Now.ToString("ddMMyyyy"));
+            string datedFolderPath = Path.Combine(DestinationPath, FolderName, AppTime.Now.ToString("ddMMyyyy"));
             if (!Directory.Exists(datedFolderPath))
                 Directory.CreateDirectory(datedFolderPath);
 
@@ -475,11 +476,11 @@ namespace HIMS.Services.Utilities
                 DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy")))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy"));
-            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             if (File.Exists(NewFileName))
-                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + DateTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
             System.IO.File.WriteAllBytes(NewFileName, bytes);
             return new Tuple<byte[], string>(bytes, NewFileName);
         }

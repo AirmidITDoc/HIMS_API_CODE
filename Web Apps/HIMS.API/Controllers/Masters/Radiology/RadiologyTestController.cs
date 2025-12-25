@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
@@ -67,7 +68,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
         //    MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
         //    if (obj.TestId == 0)
         //    {
-        //        model.CreatedDate = DateTime.Now;
+        //        model.CreatedDate = AppTime.Now;
         //        model.Addedby = CurrentUserId;
         //        model.IsActive = true;
         //        await _RadiologyTestService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
@@ -83,7 +84,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
             if (obj.TestId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 model.Addedby = CurrentUserId;
@@ -103,7 +104,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.Updatedby = CurrentUserId;
                 model.IsActive = true;
                 await _RadiologyTestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
@@ -123,7 +124,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

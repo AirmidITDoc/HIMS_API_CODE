@@ -7,6 +7,7 @@ using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OTManagement;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
@@ -127,24 +128,24 @@ namespace HIMS.API.Controllers.IPPatient
                 foreach (var q in model.TOtRequestAttendingDetails)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TOtRequestDiagnoses)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TOtRequestSurgeryDetails)
                 {
                     q.Createdby = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -170,10 +171,10 @@ namespace HIMS.API.Controllers.IPPatient
                     if (q.OtrequestAttendingDetId == 0)
                     {
                         q.CreatedBy = CurrentUserId;
-                        q.CreatedDate = DateTime.Now;
+                        q.CreatedDate = AppTime.Now;
                     }
                     q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = DateTime.Now;
+                    q.ModifiedDate = AppTime.Now;
                     q.OtrequestAttendingDetId = 0;
                 }
 
@@ -182,10 +183,10 @@ namespace HIMS.API.Controllers.IPPatient
                     if (v.OtrequestDiagnosisDetId == 0)
                     {
                         v.Createdby = CurrentUserId;
-                        v.CreatedDate = DateTime.Now;
+                        v.CreatedDate = AppTime.Now;
                     }
                     v.ModifiedBy = CurrentUserId;
-                    v.ModifiedDate = DateTime.Now;
+                    v.ModifiedDate = AppTime.Now;
                     v.OtrequestDiagnosisDetId = 0;
                 }
 
@@ -194,13 +195,13 @@ namespace HIMS.API.Controllers.IPPatient
                     if (p.OtrequestSurgeryDetId == 0)
                     {
                         p.Createdby = CurrentUserId;
-                        p.CreatedDate = DateTime.Now;
+                        p.CreatedDate = AppTime.Now;
                     }
                     p.ModifiedBy = CurrentUserId;
-                    p.ModifiedDate = DateTime.Now;
+                    p.ModifiedDate = AppTime.Now;
                     p.OtrequestSurgeryDetId = 0;
                 }
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _OTBookingRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 

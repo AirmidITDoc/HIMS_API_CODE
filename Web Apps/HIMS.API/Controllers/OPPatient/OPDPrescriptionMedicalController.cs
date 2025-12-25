@@ -7,6 +7,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
@@ -250,7 +251,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.PrecriptionId = obj.PrecriptionId;
                 model.ModifiedBy = CurrentUserId;
-                model.Date = DateTime.Now;
+                model.Date = AppTime.Now;
                 await _OPDPrescriptionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -266,7 +267,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.PrecriptionId = obj.PrecriptionId;
                 model.ModifiedBy = CurrentUserId;
-                model.Date = DateTime.Now;
+                model.Date = AppTime.Now;
                 await _OPDPrescriptionService.UpdateAsyncGeneric(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -281,9 +282,9 @@ namespace HIMS.API.Controllers.OPPatient
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
             if (obj.PresId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
                 await _PrescriptionOPTemplateService.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -303,7 +304,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _MPresTemplateH.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
@@ -345,7 +346,7 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
              
                 model.IsActive = true;

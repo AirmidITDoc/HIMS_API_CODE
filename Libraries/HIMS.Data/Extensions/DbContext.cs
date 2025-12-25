@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Logging;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -39,7 +40,7 @@ namespace HIMS.Data.Models
         }
         private async Task AuditChanges(int UserId, string Username, bool IsDelete)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = AppTime.Now;
 
             var entityEntries = ChangeTracker.Entries()
                 .Where(x => x.State == EntityState.Added ||
@@ -65,7 +66,7 @@ namespace HIMS.Data.Models
         {
             AuditLog objAdd = new()
             {
-                CreatedOn = DateTime.Now,
+                CreatedOn = AppTime.Now,
                 ActionId = IsDelete ? (int)LogAction.Delete : (int)LogAction.Add,
                 ActionById = UserId,
                 ActionByName = Username,
@@ -85,7 +86,7 @@ namespace HIMS.Data.Models
 
             AuditLog objAdd = new()
             {
-                CreatedOn = DateTime.Now,
+                CreatedOn = AppTime.Now,
                 ActionId = (int)logAction,
                 ActionById = userId,
                 ActionByName = username,

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OTManagement;
+using HIMS.Core.Infrastructure;
 
 
 namespace HIMS.Services.OTManagment
@@ -100,7 +101,7 @@ namespace HIMS.Services.OTManagment
 
 
                 ObjTOtInOperationHeader.CreatedBy = UserId;
-                ObjTOtInOperationHeader.CreatedDate = DateTime.Now;
+                ObjTOtInOperationHeader.CreatedDate = AppTime.Now;
 
                 _context.TOtInOperationHeaders.Add(ObjTOtInOperationHeader);
                 await _context.SaveChangesAsync();
@@ -153,7 +154,7 @@ namespace HIMS.Services.OTManagment
                 _context.Entry(ObjTOtInOperationHeader).Property(x => x.OtinOperationNo).IsModified = false;
 
                 ObjTOtInOperationHeader.ModifiedBy = UserId;
-                ObjTOtInOperationHeader.ModifiedDate = DateTime.Now;
+                ObjTOtInOperationHeader.ModifiedDate = AppTime.Now;
 
                 if (ignoreColumns?.Length > 0)
                 {

@@ -6,6 +6,7 @@ using HIMS.API.Models.OutPatient;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -58,7 +59,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 model.DateofBirth = Convert.ToDateTime(obj.DateofBirth);
                 model.AddedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 await _IRegistrationService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
@@ -78,7 +79,7 @@ namespace HIMS.API.Controllers.OPPatient
             Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
-                //model.CreatedDate = DateTime.Now;
+                //model.CreatedDate = AppTime.Now;
                 //model.CreatedBy = CurrentUserId;
                 model.AddedBy = CurrentUserId;
                 //model.IsActive = true;
@@ -101,7 +102,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 model.UpdatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
