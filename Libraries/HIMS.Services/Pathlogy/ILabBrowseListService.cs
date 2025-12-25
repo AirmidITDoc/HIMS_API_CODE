@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Services.OTManagment;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace HIMS.Services.Pathlogy
 {
     public partial interface ILabBrowseListService
     {
-        Task<IPagedList<BrowseLABBillListDto>> GetLabListListAsync(GridRequestModel objGrid);
+        Task<IPagedList<LabBrowsListDto>> GetLabListListAsync(GridRequestModel objGrid);
     }
 }

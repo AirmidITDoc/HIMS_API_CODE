@@ -1,5 +1,8 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
 using System;
 using System.Collections.Generic;
@@ -11,11 +14,17 @@ namespace HIMS.Services.Pathlogy
 {
     public class LabBrowseListService : ILabBrowseListService
     {
-        public async Task<IPagedList<BrowseLABBillListDto>> GetLabListListAsync(GridRequestModel model)
+        private readonly Data.Models.HIMSDbContext _context;
+        public LabBrowseListService(HIMSDbContext HIMSDbContext)
         {
-            return await DatabaseHelper
-                .GetGridDataBySp<BrowseLABBillListDto>(model, "ps_Rtrv_BrowseLABBill_Pagi");
+            _context = HIMSDbContext;
         }
+       
+        public virtual async Task<IPagedList<LabBrowsListDto>> GetLabListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabBrowsListDto>(model, "ps_Rtrv_BrowseLABBill_Pagi");
+        }
+
     }
 
 }

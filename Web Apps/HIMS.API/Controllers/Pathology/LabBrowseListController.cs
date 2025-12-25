@@ -3,6 +3,8 @@ using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
 using HIMS.Services.Pathlogy;
@@ -23,13 +25,13 @@ namespace HIMS.API.Controllers.Pathology
             _ILabBrowseList = ILabBrowseList;
         }
 
-        //List API
+      
         [HttpPost("LabBillList")]
-        //[Permission(PageCode = "TOtOperativeNote", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<Services.OTManagment.BrowseLABBillListDto> Servicelist = await _ILabBrowseList.GetLabListListAsync(objGrid);
-            return Ok(Servicelist.ToGridResponse(objGrid, " Lab List "));
+            IPagedList<LabBrowsListDto> LabBillList = await _ILabBrowseList.GetLabListListAsync(objGrid);
+            return Ok(LabBillList.ToGridResponse(objGrid, "LabBill List"));
         }
 
     }
