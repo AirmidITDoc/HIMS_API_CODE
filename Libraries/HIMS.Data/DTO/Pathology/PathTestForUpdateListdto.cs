@@ -13,6 +13,8 @@
         public string? ParaMultipleRange { get; set; }
         public string? UnitName { get; set; }
 
+        public string? TestName { get; set; }
+
         public bool? IsActive { get; set; }
 
 

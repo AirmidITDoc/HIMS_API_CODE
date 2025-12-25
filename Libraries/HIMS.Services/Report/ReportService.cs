@@ -6974,6 +6974,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName").ToUpper());
                             html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2").ToUpper());
                             html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname").ToUpper());
+                            html = html.Replace("{{SubTpaCompanyName}}", dt.GetColValue("SubTpaCompanyName").ToUpper());
+
 
 
                             //html = html.Replace("{{chkMLCflag}}", dt.GetColValue("IsMLC").ToBool() == true ? "table-row " : "none");
