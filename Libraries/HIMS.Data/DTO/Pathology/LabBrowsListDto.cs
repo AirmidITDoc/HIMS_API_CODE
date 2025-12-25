@@ -22,23 +22,29 @@ namespace HIMS.Data.DTO.Pathology
         public string? TariffName { get; set; }
         public string? CompanyName { get; set; }
         public string? DepartmentName { get; set; }
-        //public decimal? TotalAmt { get; set; }
-        //public decimal? ConcessionAmt { get; set; }
-        //public decimal? NetPayableAmt { get; set; }
-        //public long? OPD_IPD_ID { get; set; }
-        //public long? IsCancelled { get; set; }
-        public byte? OpdIpdType { get; set; }
-        //public decimal? PaidAmt { get; set; }
-        //public decimal? BalanceAmt { get; set; }
-        //public decimal? CashPay { get; set; }
-        //public decimal? ChequePay { get; set; }
-        //public decimal? CardPay { get; set; }
-        //public decimal? AdvUsedPay { get; set; }
-        //public decimal? OnlinePay { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public double? ConcessionAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        
+       public string? OPD_IPD_ID { get; set; }
+        
+      //public byte? IsCancelled { get; set; }
+       // public long? OPD_IPD_Type { get; set; }
+
+
+        public string? PaidAmt { get; set; }
+        
+        public decimal? BalanceAmt { get; set; }
+        public decimal? CashPay { get; set; }
+        public decimal? ChequePay { get; set; }
+        public decimal? CardPay { get; set; }
+        public decimal? AdvUsedPay { get; set; }
+        public decimal? OnlinePay { get; set; }
         public string? OPDNo { get; set; }
-        //public decimal? PayCount { get; set; }
-        //public decimal? RefundAmount { get; set; }
-        //public decimal? RefundCount { get; set; }
+        public string? PayCount { get; set; }
+        
+        public decimal? RefundAmount { get; set; }
+        public string? RefundCount { get; set; }
         public string? CashCounterName { get; set; }
         public string? BillNo { get; set; }
         public long? CompanyId { get; set; }
