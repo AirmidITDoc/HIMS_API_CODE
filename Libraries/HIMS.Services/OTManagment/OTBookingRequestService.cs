@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
@@ -76,7 +77,7 @@ namespace HIMS.Services.OTManagment
 
 
                 ObjTOtRequestHeader.CreatedBy = UserId;
-                ObjTOtRequestHeader.CreatedDate = DateTime.Now;
+                ObjTOtRequestHeader.CreatedDate = AppTime.Now;
 
                 _context.TOtRequestHeaders.Add(ObjTOtRequestHeader);
                 await _context.SaveChangesAsync();
@@ -102,7 +103,7 @@ namespace HIMS.Services.OTManagment
 
                 // Update modified fields
                 ObjTOtRequestHeader.ModifiedBy = UserId;
-                ObjTOtRequestHeader.ModifiedDate = DateTime.Now;
+                ObjTOtRequestHeader.ModifiedDate = AppTime.Now;
 
                 // Ignore any additional columns if specified
                 if (ignoreColumns?.Length > 0)

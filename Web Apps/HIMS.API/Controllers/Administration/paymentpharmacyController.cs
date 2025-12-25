@@ -7,6 +7,7 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
@@ -87,7 +88,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 model.PaymentTime = Convert.ToDateTime(obj.PaymentTime);
                 model.PaymentDate = Convert.ToDateTime(obj.PaymentDate);
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _paymentpharmacyService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }

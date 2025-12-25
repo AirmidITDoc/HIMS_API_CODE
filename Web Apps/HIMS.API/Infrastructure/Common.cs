@@ -139,7 +139,7 @@ namespace HIMS.API.Infrastructure
         {
             MemoryCacheEntryOptions cacheExpirationOptions = new()
             {
-                AbsoluteExpiration = DateTime.Now.AddHours(8),
+                AbsoluteExpiration = AppTime.Now.AddHours(8),
                 Priority = CacheItemPriority.Normal
             };
             cache.Set(cacheKey, resObject, cacheExpirationOptions);

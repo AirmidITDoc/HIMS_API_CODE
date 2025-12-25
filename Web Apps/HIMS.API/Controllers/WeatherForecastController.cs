@@ -1,3 +1,4 @@
+using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers
@@ -23,7 +24,7 @@ namespace HIMS.API.Controllers
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
-                Date = DateTime.Now.AddDays(index),
+                Date = AppTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })

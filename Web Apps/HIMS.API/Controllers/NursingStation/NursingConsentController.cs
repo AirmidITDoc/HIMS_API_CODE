@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
@@ -80,7 +81,7 @@ namespace HIMS.API.Controllers.NursingStation
 
             if (obj.ConsentId == 0)
             {
-                Model.CreatedDatetime = DateTime.Now;
+                Model.CreatedDatetime = AppTime.Now;
                 Model.CreatedBy = CurrentUserId;
                 _NursingConsentService.Insert(Model, CurrentUserId, CurrentUserName);
             }
@@ -98,7 +99,7 @@ namespace HIMS.API.Controllers.NursingStation
 
             if (obj.ConsentId != 0)
             {
-                Model.ModifiedDateTime = DateTime.Now;
+                Model.ModifiedDateTime = AppTime.Now;
                 Model.ModifiedBy = CurrentUserId;
                 _NursingConsentService.Update(Model, CurrentUserId, CurrentUserName);
             }

@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
@@ -139,7 +140,7 @@ namespace HIMS.Services.Report
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
-            string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+            string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
 
             switch (model.Mode)
             {
@@ -2650,7 +2651,7 @@ namespace HIMS.Services.Report
         public string GetNewReportSetByProc(ReportConfigDto model)
         {
 
-            string vDate = DateTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+            string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
 
             string[] headerList = model.headerList;
             string[] colList = model.colList;
@@ -2704,7 +2705,7 @@ namespace HIMS.Services.Report
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
@@ -3256,7 +3257,7 @@ namespace HIMS.Services.Report
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
@@ -3529,7 +3530,7 @@ namespace HIMS.Services.Report
 
             string html = File.ReadAllText(htmlFilePath);
             //html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
@@ -4227,7 +4228,7 @@ namespace HIMS.Services.Report
 
         //    string html = File.ReadAllText(htmlFilePath);
         //    //html = html.Replace("{{HospitalHeader}}", htmlHeader);
-        //    html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+        //    html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
         //    html = html.Replace("{{RepoertName}}", model.RepoertName);
 
         //    DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
@@ -4417,7 +4418,7 @@ namespace HIMS.Services.Report
 
             string html = File.ReadAllText(htmlFilePath);
             //html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
@@ -4805,7 +4806,7 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
 
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //html = html.Replace("{{NewHeader}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
@@ -4892,7 +4893,7 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
 
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //html = html.Replace("{{NewHeaderThermal}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
@@ -4983,7 +4984,7 @@ namespace HIMS.Services.Report
 
 
                         //   string html = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //    html = html.Replace("{{NewHeader}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().To2DecimalPlace());
@@ -5735,7 +5736,7 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
 
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //html = html.Replace("{{NewHeader}}", htmlHeader);
                         //html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                        
@@ -7075,7 +7076,7 @@ namespace HIMS.Services.Report
                     {
 
                         string htmlHeade = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         int i = 0;
 
@@ -7152,7 +7153,7 @@ namespace HIMS.Services.Report
                         int j = 0;
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
@@ -7300,7 +7301,7 @@ namespace HIMS.Services.Report
                         int j = 0;
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
@@ -8077,7 +8078,7 @@ namespace HIMS.Services.Report
                         }
                         //Added by Ashu 30 May 2025
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -8263,7 +8264,7 @@ namespace HIMS.Services.Report
 
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -8574,7 +8575,7 @@ namespace HIMS.Services.Report
 
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -9417,7 +9418,7 @@ namespace HIMS.Services.Report
 
                         int i = 0;
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{RefundNo}}", dt.GetColValue("RefundNo"));
@@ -9494,7 +9495,7 @@ namespace HIMS.Services.Report
                     {
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
@@ -9588,7 +9589,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -9901,7 +9902,7 @@ namespace HIMS.Services.Report
                 case "Purchaseorder":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -9949,7 +9950,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{Todate}}", ToDate.ToString("dd/MM/yy"));
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
 
@@ -11240,7 +11241,7 @@ namespace HIMS.Services.Report
                         }
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -11317,7 +11318,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -11345,7 +11346,7 @@ namespace HIMS.Services.Report
                         }
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -11703,7 +11704,7 @@ namespace HIMS.Services.Report
 
 
                         string htmlHeader = "";
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
 
@@ -11910,7 +11911,7 @@ namespace HIMS.Services.Report
                 case "OTRequest":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -11991,7 +11992,7 @@ namespace HIMS.Services.Report
                         // -------------------------------
                         // 1 → 5
                         // -------------------------------
-                        html = html.Replace("{{PrintDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{OTReservationId}}", dt.GetColValue("OTReservationId"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{FirstName}}", dt.GetColValue("FirstName"));
@@ -12153,7 +12154,7 @@ namespace HIMS.Services.Report
                 case "OTAnaesthesiaRecord":
                     {
                         html = html.Replace("{{PrintDate}}",
-                            DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // ===== Patient Details =====
                         html = html.Replace("{{RegID}}", dt.GetColValue("RegID"));
@@ -12232,7 +12233,7 @@ namespace HIMS.Services.Report
                 case "OTCheckInOutPatientWise":
                     {
                         html = html.Replace("{{PrintDate}}",
-                            DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // Patient Identification
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));
@@ -12281,7 +12282,7 @@ namespace HIMS.Services.Report
                     {
                         // Print Date
                         html = html.Replace("{{PrintDate}}",
-                            DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // -------------------------------
                         // Patient Basic Details
@@ -12382,7 +12383,7 @@ namespace HIMS.Services.Report
                     {
                         // Print Date
                         html = html.Replace("{{PrintDate}}",
-                            DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // Patient Basic Details
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegId"));
@@ -12466,7 +12467,7 @@ namespace HIMS.Services.Report
 
                 case "OTRequestReport":
                     {
-                        html = html.Replace("{{PrintDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));
@@ -12518,7 +12519,7 @@ namespace HIMS.Services.Report
                 case "OTOperativeNotesReport":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -12562,7 +12563,7 @@ namespace HIMS.Services.Report
                 case "OTReservationReport":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -12623,7 +12624,7 @@ namespace HIMS.Services.Report
                 case "OTOprativereport":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -12686,7 +12687,7 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
 
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
                         StringBuilder item = new StringBuilder("");
                         int i = 0, j = 0;
@@ -12984,7 +12985,7 @@ namespace HIMS.Services.Report
 
 
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         StringBuilder item = new StringBuilder("");
                         int i = 0, j = 0;
                         double totalSales = 0, totalSalesReturn = 0;
@@ -13386,7 +13387,7 @@ namespace HIMS.Services.Report
                 case "PharamcyAdvanceReturnReceipt":
                     {
                         string html1 = File.ReadAllText(htmlFilePath);
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         StringBuilder item = new StringBuilder("");
                         int i = 0;
@@ -13575,7 +13576,7 @@ namespace HIMS.Services.Report
                         var dynamicVariable = new Dictionary<string, double>();
 
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         //html = html.Replace("{{NewHeader}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));

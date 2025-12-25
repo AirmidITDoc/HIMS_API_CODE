@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -34,16 +35,16 @@ namespace HIMS.API.Controllers.IPPatient
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
 
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 foreach (var q in model.TIpPrescriptions)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
                     q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = DateTime.Now;
+                    q.ModifiedDate = AppTime.Now;
 
                 }
                 await _MedicalRecordService.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -65,18 +66,18 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.RoundVisitTime = Convert.ToDateTime(obj.RoundVisitTime);
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 foreach (var q in model.TIpPrescriptions)
                 {
                     if (q.IppreId == 0)
                     {
                         q.CreatedBy = CurrentUserId;
-                        q.CreatedDate = DateTime.Now;
+                        q.CreatedDate = AppTime.Now;
                     }
                     q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = DateTime.Now;
+                    q.ModifiedDate = AppTime.Now;
                     q.IppreId = 0;
                 }
                 await _MedicalRecordService.UpdateAsync(model, CurrentUserId, CurrentUserName);

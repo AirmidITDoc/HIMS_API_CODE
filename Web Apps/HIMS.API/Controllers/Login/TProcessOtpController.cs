@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Login;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -34,9 +35,9 @@ namespace HIMS.API.Controllers.Login
             if (obj.MsgId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -55,7 +56,7 @@ namespace HIMS.API.Controllers.Login
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 await _ITprocessOtpService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }

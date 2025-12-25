@@ -6,6 +6,7 @@ using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -51,7 +52,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             ServiceMaster model = obj.MapTo<ServiceMaster>();
             if (obj.ServiceId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
@@ -70,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
@@ -86,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
@@ -133,7 +134,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 _BillingService.InsertS(model, CurrentUserId, CurrentUserName);
             }

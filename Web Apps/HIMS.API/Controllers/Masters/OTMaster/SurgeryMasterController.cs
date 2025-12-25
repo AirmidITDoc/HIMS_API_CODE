@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -74,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             model.IsActive = true;
             if (obj.SurgeryId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
@@ -95,7 +96,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             else
             {
 
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
 
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
@@ -114,7 +115,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

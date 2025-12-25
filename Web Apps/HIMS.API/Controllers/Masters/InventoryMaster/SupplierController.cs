@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
@@ -68,9 +69,9 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             MSupplierMaster model = obj.MapTo<MSupplierMaster>();
             if (obj.SupplierId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.AddedBy = CurrentUserId;
                 model.IsActive = true;
@@ -91,7 +92,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = CurrentUserId;
@@ -110,7 +111,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

@@ -135,7 +135,7 @@ namespace HIMS.API.Controllers.Transaction
             if (obj.Smsid == 0)
             {
                 //model.CreatedBy = CurrentUserId;
-                //model.CreatedDate = DateTime.Now;
+                //model.CreatedDate = AppTime.Now;
                 await _IsmsConfigService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -154,7 +154,7 @@ namespace HIMS.API.Controllers.Transaction
             else
             {
                 //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = DateTime.Now;
+                //model.ModifiedDate = AppTime.Now;
 
                 await _IsmsConfigService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }

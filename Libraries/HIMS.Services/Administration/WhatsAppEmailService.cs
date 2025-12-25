@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Report;
@@ -40,7 +41,7 @@ namespace HIMS.Services.Administration
         public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
-            string vDate = DateTime.Now.ToString("_ddMMyyyy_hhmmtt");
+            string vDate = AppTime.Now.ToString("_ddMMyyyy_hhmmtt");
 
             var reg = await _context.Registrations.Where(r => r.RegNo == ObjWhatsApp.PatientId.ToString()).Select(r => new { FirstName = r.FirstName, LastName = r.LastName }).FirstOrDefaultAsync();
             string firstName = Regex.Replace(reg?.FirstName ?? "", @"\s+", " ").Trim();
@@ -49,7 +50,7 @@ namespace HIMS.Services.Administration
             // Take first 4 characters safely
             string first4 = (firstName.Length >= 4 ? firstName.Substring(0, 4) : firstName).ToUpper();
             // Current year (4-digit)
-            string currentYear = DateTime.Now.Year.ToString();
+            string currentYear = AppTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
 
             // Need to pass Pdf Generation type
@@ -101,7 +102,7 @@ namespace HIMS.Services.Administration
         public virtual async Task InsertEmailAsync(TMailOutgoing ObjEmail, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
-            string vDate = DateTime.Now.ToString("_ddMMyyyy_hhmmtt");
+            string vDate = AppTime.Now.ToString("_ddMMyyyy_hhmmtt");
 
             var reg = await _context.Registrations.Where(r => r.RegNo == ObjEmail.PatientId.ToString()).Select(r => new { FirstName = r.FirstName , LastName = r.LastName}).FirstOrDefaultAsync();
             string firstName = Regex.Replace(reg?.FirstName ?? "", @"\s+", " ").Trim();
@@ -110,7 +111,7 @@ namespace HIMS.Services.Administration
             // Take first 4 characters safely
             string first4 = (firstName.Length >= 4 ? firstName.Substring(0, 4) : firstName).ToUpper();
             // Current year (4-digit)
-            string currentYear = DateTime.Now.Year.ToString();
+            string currentYear = AppTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
             
             // Need to pass Pdf Generation type

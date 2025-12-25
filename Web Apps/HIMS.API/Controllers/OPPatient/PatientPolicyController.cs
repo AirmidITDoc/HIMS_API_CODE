@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -55,7 +56,7 @@ namespace HIMS.API.Controllers.OPPatient
             if (obj.PatientPolicyId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -75,7 +76,7 @@ namespace HIMS.API.Controllers.OPPatient
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
@@ -90,7 +91,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

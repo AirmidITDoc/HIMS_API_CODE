@@ -11,6 +11,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Core.Infrastructure;
 
 
 namespace HIMS.Services.OTManagment
@@ -97,7 +98,7 @@ namespace HIMS.Services.OTManagment
 
                 // Audit fields
                 ObjTOtPreOperationHeader.Createdby = UserId;
-                ObjTOtPreOperationHeader.CreatedDate = DateTime.Now;
+                ObjTOtPreOperationHeader.CreatedDate = AppTime.Now;
 
                 // Insert
                 _context.TOtPreOperationHeaders.Add(ObjTOtPreOperationHeader);
@@ -152,7 +153,7 @@ namespace HIMS.Services.OTManagment
                 _context.Entry(ObjTOtPreOperationHeader).Property(x => x.OtpreOperationNo).IsModified = false;
 
                 ObjTOtPreOperationHeader.ModifiedBy = UserId;
-                ObjTOtPreOperationHeader.ModifiedDate = DateTime.Now;
+                ObjTOtPreOperationHeader.ModifiedDate = AppTime.Now;
 
                 if (ignoreColumns?.Length > 0)
                 {

@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
@@ -139,7 +140,7 @@ namespace HIMS.Services.Pathlogy
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -166,7 +167,7 @@ namespace HIMS.Services.Pathlogy
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);
@@ -329,7 +330,7 @@ namespace HIMS.Services.Pathlogy
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -356,7 +357,7 @@ namespace HIMS.Services.Pathlogy
                                 Opipnumber = objBill.Ipdno,
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
-                                CreatedDate = DateTime.Now
+                                CreatedDate = AppTime.Now
                             };
 
                             _context.TRadiologyReportHeaders.Add(objRadio);

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.OTManagement;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -65,7 +66,7 @@ namespace HIMS.API.Controllers.Emergency
             {
                 model.EmgDate = Convert.ToDateTime(obj.EmgDate);
                 //model.EmgTime = Convert.ToDateTime(obj.EmgTime);
-                //model.EmgTime = DateTime.Now;
+                //model.EmgTime = AppTime.Now;
 
                 model.CreatedBy = CurrentUserId;
                 _EmergencyService.InsertSP(model, CurrentUserId, CurrentUserName);
@@ -117,7 +118,7 @@ namespace HIMS.API.Controllers.Emergency
             if (obj.EmgHistoryId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedOn = DateTime.Now;
+                model.CreatedOn = AppTime.Now;
                 await _repository1.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -136,7 +137,7 @@ namespace HIMS.API.Controllers.Emergency
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedOn = DateTime.Now;
+                model.ModifiedOn = AppTime.Now;
                 await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedOn" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model.EmgId);
@@ -151,7 +152,7 @@ namespace HIMS.API.Controllers.Emergency
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ChargesDate = DateTime.Now;
+                model.ChargesDate = AppTime.Now;
                 _EmergencyService.Update(model, CurrentUserId, CurrentUserName, obj.EmgId, obj.NewAdmissionId);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

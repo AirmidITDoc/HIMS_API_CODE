@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -41,8 +42,8 @@ namespace HIMS.API.Controllers.OTManagement
             {
                 model.AddedBy = CurrentUserId;
                 model.CreatedBy = CurrentUserId;
-                model.Otdate = DateTime.Now;
-                model.CreatedDate = DateTime.Now;
+                model.Otdate = AppTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -62,8 +63,8 @@ namespace HIMS.API.Controllers.OTManagement
             {
                 model.UpdatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
-                model.Otdate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
+                model.Otdate = AppTime.Now;
+                model.ModifiedDate = AppTime.Now;
 
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }

@@ -1,4 +1,5 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Infrastructure;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -48,10 +49,10 @@ namespace HIMS.Services.OutPatient
                 await _context.SaveChangesAsync();
 
                 // Add TokenNumber table records
-                List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+                List<VisitDetail> objVisit = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == AppTime.Now).ToListAsync();
                 foreach (var item in objVisit)
                 {
-                    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                    TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == AppTime.Now);
                     if (objToken != null)
                     {
                         objToken.TokenNo = Convert.ToInt32(objToken.TokenNo ?? 0) + 1;
@@ -123,15 +124,15 @@ namespace HIMS.Services.OutPatient
                 await _context.SaveChangesAsync();
 
                 // Add TokenNumber table records
-                VisitDetail objVisit = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now);
-                TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                VisitDetail objVisit = await _context.VisitDetails.FirstOrDefaultAsync(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == AppTime.Now);
+                TTokenNumberWithDoctorWise objToken = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == AppTime.Now);
                 objToken.TokenNo = Convert.ToInt32(objToken.TokenNo) + 1;
 
                 // Add TokenNumber table records
-                List<VisitDetail> objVisitList = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == DateTime.Now).ToListAsync();
+                List<VisitDetail> objVisitList = await _context.VisitDetails.Where(x => x.VisitId == objVisitDetail.VisitId && x.VisitDate == AppTime.Now).ToListAsync();
                 foreach (var item in objVisitList)
                 {
-                    TTokenNumberWithDoctorWise objTokenData = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == DateTime.Now);
+                    TTokenNumberWithDoctorWise objTokenData = await _context.TTokenNumberWithDoctorWises.FirstOrDefaultAsync(x => x.VisitDate == AppTime.Now);
                     if (objTokenData != null)
                     {
                         objTokenData.TokenNo = Convert.ToInt32(objTokenData.TokenNo ?? 0) + 1;

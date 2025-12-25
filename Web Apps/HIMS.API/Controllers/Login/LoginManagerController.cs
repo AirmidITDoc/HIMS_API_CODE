@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -80,22 +81,22 @@ namespace HIMS.API.Controllers.Login
                 foreach (var q in model.TLoginAccessDetails)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var v in model.TLoginUnitDetails)
                 {
                     v.CreatedBy = CurrentUserId;
-                    v.CreatedDate = DateTime.Now;
+                    v.CreatedDate = AppTime.Now;
 
                 }
                 foreach (var p in model.TLoginStoreDetails)
                 {
                     p.CreatedBy = CurrentUserId;
-                    p.CreatedDate = DateTime.Now;
+                    p.CreatedDate = AppTime.Now;
                 }
                 model.AddedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.IsActive = true;
                 await _ILoginService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -122,10 +123,10 @@ namespace HIMS.API.Controllers.Login
                 if (q.LoginId == 0)
                 {
                     q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = DateTime.Now;
+                    q.CreatedDate = AppTime.Now;
                 }
                 q.ModifiedBy = CurrentUserId;
-                q.ModifiedDate = DateTime.Now;
+                q.ModifiedDate = AppTime.Now;
                 q.LoginId = 0;
             }
 
@@ -134,10 +135,10 @@ namespace HIMS.API.Controllers.Login
                 if (v.LoginId == 0)
                 {
                     v.CreatedBy = CurrentUserId;
-                    v.CreatedDate = DateTime.Now;
+                    v.CreatedDate = AppTime.Now;
                 }
                 v.ModifiedBy = CurrentUserId;
-                v.ModifiedDate = DateTime.Now;
+                v.ModifiedDate = AppTime.Now;
                 v.LoginId = 0;
             }
 
@@ -146,10 +147,10 @@ namespace HIMS.API.Controllers.Login
                 if (p.LoginId == 0)
                 {
                     p.CreatedBy = CurrentUserId;
-                    p.CreatedDate = DateTime.Now;
+                    p.CreatedDate = AppTime.Now;
                 }
                 p.ModifiedBy = CurrentUserId;
-                p.ModifiedDate = DateTime.Now;
+                p.ModifiedDate = AppTime.Now;
                 p.LoginId = 0;
             }
 
@@ -169,7 +170,7 @@ namespace HIMS.API.Controllers.Login
             {
                 model.UserId = obj.UserId;
                 model.ModifiedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _ILoginService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -194,7 +195,7 @@ namespace HIMS.API.Controllers.Login
                 //LastPasswordChangedDate = obj.LastPasswordChangedDate,
                 //LastLoginDate = obj.LastLoginDate,
                 ModifiedBy = CurrentUserId,
-                ModifiedDate = DateTime.Now
+                ModifiedDate = AppTime.Now
             };
 
             await _ILoginService.updatepassAsync(model, CurrentUserId, CurrentUserName);
@@ -209,7 +210,7 @@ namespace HIMS.API.Controllers.Login
         //    {
         //        model.UserId = obj.UserId;
         //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = DateTime.Now;
+        //        model.ModifiedDate = AppTime.Now;
         //        await _ILoginService.updatepassAsync(model, CurrentUserId, CurrentUserName);
         //    }
         //    else

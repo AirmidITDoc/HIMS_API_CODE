@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -55,7 +56,7 @@ namespace HIMS.API.Controllers.Administration
             if (obj.ReportId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedOn = DateTime.Now;
+                model.CreatedOn = AppTime.Now;
                 await _repository1.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -75,7 +76,7 @@ namespace HIMS.API.Controllers.Administration
             else
             {
                 model.UpdateBy = CurrentUserId;
-                model.UpdatedOn = DateTime.Now;
+                model.UpdatedOn = AppTime.Now;
                 await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "UpdateBy", "UpdatedOn" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -91,7 +92,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 model.IsActive = false;
                 model.UpdateBy = CurrentUserId;
-                model.UpdatedOn = DateTime.Now;
+                model.UpdatedOn = AppTime.Now;
                 await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
@@ -108,7 +109,7 @@ namespace HIMS.API.Controllers.Administration
             MReportConfig model = obj.MapTo<MReportConfig>();
             if (obj.ReportId == 0)
             {
-                model.CreatedOn = DateTime.Now;
+                model.CreatedOn = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
                 await _ReportConfigService.InsertAsyncm(model, CurrentUserId, CurrentUserName);
@@ -127,7 +128,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.UpdatedOn = DateTime.Now;
+                model.UpdatedOn = AppTime.Now;
                 model.UpdateBy = CurrentUserId;
                 model.IsActive = true;
                 await _ReportConfigService.UpdateAsyncm(model, CurrentUserId, CurrentUserName);

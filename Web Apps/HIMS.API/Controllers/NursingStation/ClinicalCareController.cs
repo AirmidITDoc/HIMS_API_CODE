@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
@@ -111,7 +112,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.VitalId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _ClinicalCareService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -129,7 +130,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -159,7 +160,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.Id == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository2.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -177,7 +178,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -209,7 +210,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.Id == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository3.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -227,7 +228,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository3.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -259,7 +260,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.PainAssessmentId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository4.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -277,7 +278,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository4.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -308,7 +309,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.PatWeightId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository5.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -326,7 +327,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository5.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

@@ -6,6 +6,7 @@ using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -132,7 +133,7 @@ namespace HIMS.API.Controllers.IPPatient
 
                 model.AddedBy = CurrentUserId;
                 model.ChargesTime = Convert.ToDateTime(obj.ChargesTime);
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 await _IPBillService.InsertAsync(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
             }
@@ -204,9 +205,9 @@ namespace HIMS.API.Controllers.IPPatient
                 paymentModel.PaymentTime = Convert.ToDateTime(obj.payment.PaymentTime);
                 Model.AddedBy = CurrentUserId;
                 Model.CreatedBy = CurrentUserId;
-                Model.CreatedDate = DateTime.Now;
+                Model.CreatedDate = AppTime.Now;
                 Model.ModifiedBy = CurrentUserId;
-                Model.ModifiedDate = DateTime.Now;
+                Model.ModifiedDate = AppTime.Now;
                 _IPBillService.IPbillSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, paymentModel, BillModel, objAdvanceDetail, objAdvanceHeader, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
@@ -232,9 +233,9 @@ namespace HIMS.API.Controllers.IPPatient
                 Model.BillTime = Convert.ToDateTime(obj.Bill.BillTime);
                 Model.AddedBy = CurrentUserId;
                 Model.CreatedBy = CurrentUserId;
-                Model.CreatedDate = DateTime.Now;
+                Model.CreatedDate = AppTime.Now;
                 Model.ModifiedBy = CurrentUserId;
-                Model.ModifiedDate = DateTime.Now;
+                Model.ModifiedDate = AppTime.Now;
                 _IPBillService.IPbillCreditSp(Model, BillDetailModel, AddChargeModel, AddmissionModel, BillModel, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
             }
             else
@@ -262,9 +263,9 @@ namespace HIMS.API.Controllers.IPPatient
                 paymentModel.PaymentTime = Convert.ToDateTime(obj.payments.PaymentTime);
                 Model.AddedBy = CurrentUserId;
                 Model.CreatedBy = CurrentUserId;
-                Model.CreatedDate = DateTime.Now;
+                Model.CreatedDate = AppTime.Now;
                 Model.ModifiedBy = CurrentUserId;
-                Model.ModifiedDate = DateTime.Now;
+                Model.ModifiedDate = AppTime.Now;
                 _IPBillService.IPInterimBillCashCounterSp(AddChargeModel, Model, BillDetailModel, paymentModel ,ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
@@ -339,7 +340,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
 
                 model.AddedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 _IPBillService.Update(model, CurrentUserId, CurrentUserName);
             }

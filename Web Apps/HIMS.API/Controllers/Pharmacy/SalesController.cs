@@ -32,8 +32,8 @@ namespace HIMS.API.Controllers.Pharmacy
         //    PaymentPharmacy objPayment = obj.Payment.MapTo<PaymentPharmacy>();
         //    if (obj.Sales.SalesId == 0)
         //    {
-        //        model.Date = DateTime.Now.Date;
-        //        model.Time = DateTime.Now;
+        //        model.Date = AppTime.Now.Date;
+        //        model.Time = AppTime.Now;
         //        model.AddedBy = CurrentUserId;
         //        model.UpdatedBy = 0;
         //        foreach (var objItem in model.TSalesDetails)

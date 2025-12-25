@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -29,7 +30,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -72,7 +73,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -156,7 +157,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
             StringBuilder items = new("");
@@ -239,7 +240,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -278,7 +279,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -319,7 +320,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -359,7 +360,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -400,7 +401,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -453,7 +454,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
 
             StringBuilder items = new("");
@@ -540,7 +541,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -578,7 +579,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -664,7 +665,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -714,7 +715,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -758,7 +759,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -800,7 +801,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -880,7 +881,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -948,7 +949,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -1022,7 +1023,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -1082,7 +1083,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1133,7 +1134,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0;
@@ -1178,7 +1179,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1251,7 +1252,7 @@ namespace HIMS.Services.Report.OPReports
         //    string html = File.ReadAllText(htmlFilePath);
 
         //    html = html.Replace("{{HospitalHeader}}", htmlHeader);
-        //    html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+        //    html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
         //    StringBuilder items = new StringBuilder("");
         //    int i = 0, j = 0;
@@ -1296,7 +1297,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1377,7 +1378,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1462,7 +1463,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1552,7 +1553,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;
@@ -1638,7 +1639,7 @@ namespace HIMS.Services.Report.OPReports
             string html = File.ReadAllText(htmlFilePath);
 
             html = html.Replace("{{NewHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             StringBuilder items = new("");
             int i = 0, j = 0;
             double T_Count = 0, Dcount = 0;
@@ -1728,7 +1729,7 @@ namespace HIMS.Services.Report.OPReports
 
 
             html = html.Replace("{{HospitalHeader}}", htmlHeader);
-            html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
             StringBuilder items = new("");
             int i = 0, j = 0;

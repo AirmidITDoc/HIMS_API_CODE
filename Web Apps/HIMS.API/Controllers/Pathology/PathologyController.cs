@@ -6,6 +6,7 @@ using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pathology;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -90,7 +91,7 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IPathlogyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -183,7 +184,7 @@ namespace HIMS.API.Controllers.Pathology
             if (obj.PathReportId != 0)
             {
                 model.IsVerifySign = true;
-                model.IsVerifyedDate = DateTime.Now.Date;
+                model.IsVerifyedDate = AppTime.Now.Date;
 
                 await _IPathlogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }

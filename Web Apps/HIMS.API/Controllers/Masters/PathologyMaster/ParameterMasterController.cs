@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -73,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.IsActive = true;
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _IParameterMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -94,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter updated successfully.");
@@ -108,7 +109,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.IsActive = false;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter deleted successfully.");
             }
@@ -127,7 +128,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.ParameterId = obj.ParameterId;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _IParameterMasterService.UpdateFormulaAsync(model, CurrentUserId, CurrentUserName);
             }
             else

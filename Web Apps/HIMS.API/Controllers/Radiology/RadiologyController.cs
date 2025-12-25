@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Radiology;
@@ -40,8 +41,8 @@ namespace HIMS.API.Controllers.Radiology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.RadDate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
+                model.RadDate = AppTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
             }
@@ -59,7 +60,7 @@ namespace HIMS.API.Controllers.Radiology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _RadilogyService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -74,7 +75,7 @@ namespace HIMS.API.Controllers.Radiology
             if (obj.RadReportId != 0)
             {
                 model.IsVerifySign = true;
-                model.IsVerifyedDate = DateTime.Now.Date;
+                model.IsVerifyedDate = AppTime.Now.Date;
 
                 await _RadilogyService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }

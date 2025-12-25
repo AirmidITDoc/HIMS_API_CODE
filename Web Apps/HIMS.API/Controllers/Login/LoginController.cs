@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Login
     //        string path = "C:\\PaymentDataLogs\\";
     //        if (!System.IO.Directory.Exists(path))
     //            System.IO.Directory.CreateDirectory(path);
-    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
     //        System.IO.File.AppendAllText(filename, JsonConvert.SerializeObject(callbackData));
 
     //        return Ok(new { ResultCode = 0, ResultDesc = "Success", Data = callbackData });
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Login
     //        string path = "C:\\PaymentDataLogs\\";
     //        if (!System.IO.Directory.Exists(path))
     //            System.IO.Directory.CreateDirectory(path);
-    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
     //        System.IO.File.AppendAllText(filename, "\n Validation =>" + payload.ToString());
     //        return Ok(new { ResultCode = 0, ResultDesc = "Success" });
     //    }
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Login
     //        string path = "C:\\PaymentDataLogs\\";
     //        if (!System.IO.Directory.Exists(path))
     //            System.IO.Directory.CreateDirectory(path);
-    //        string filename = path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + ".txt";
+    //        string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
     //        System.IO.File.AppendAllText(filename, "\n Confirmation =>" + payload.ToString());
     //        var obj = JsonConvert.DeserializeObject<MpesaCallbackRoot>(payload.ToString());
     //        var result = MPesaResponse.MapMpesaToTestA(obj);
@@ -88,11 +88,11 @@ namespace HIMS.API.Controllers.Login
         public async Task<ApiResponse> Authenticate([FromBody] AuthenticateModel model)
         {
             //string id = Guid.NewGuid().ToString();
-            //string secret = ApiKeyUtility.EncryptString(id + "|" + DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
+            //string secret = ApiKeyUtility.EncryptString(id + "|" + AppTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
             string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
             string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value ?? "";
             string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
-            if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= DateTime.Now)
+            if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= AppTime.Now)
             {
                 if (string.IsNullOrWhiteSpace(model.CaptchaCode))
                 {
@@ -117,7 +117,7 @@ namespace HIMS.API.Controllers.Login
                             }
                             else if (!string.IsNullOrWhiteSpace(user.UserToken) && user.UserId > 0)
                             {
-                                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+                                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
                                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
                             }
                             else
@@ -144,7 +144,7 @@ namespace HIMS.API.Controllers.Login
         {
 
             string[] decrypt = EncryptionUtility.DecryptText(model.Token, SecurityKeys.EnDeKey).Split('|');
-            if (Convert.ToDateTime(decrypt[2]).AddMinutes(10) >= DateTime.Now)
+            if (Convert.ToDateTime(decrypt[2]).AddMinutes(10) >= AppTime.Now)
             {
                 LoginManager user = await _userService.CheckLogin(decrypt[0], decrypt[1]);
                 if (user == null)
@@ -203,7 +203,7 @@ namespace HIMS.API.Controllers.Login
             const int height = 60;
             string captchaCode = Captcha.GenerateCaptchaCode();
             CaptchaResult result = Captcha.GenerateCaptchaImage(width, height, captchaCode);
-            string encrToken = EncryptionUtility.EncryptText(result.CaptchaCode + "|" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+            string encrToken = EncryptionUtility.EncryptText(result.CaptchaCode + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
             return new ApiResponse() { Data = new { Img = result.CaptchBase64Data, Token = encrToken, Expiry = Convert.ToDateTime(keys[1]) }, StatusCode = 200, StatusText = "OK" };
 
         }
@@ -221,7 +221,7 @@ namespace HIMS.API.Controllers.Login
             }
 
             string[] decrypt = EncryptionUtility.DecryptText(CaptchaToken, SecurityKeys.EnDeKey).Split('|');
-            return CaptchaCode == decrypt[0] && Convert.ToDateTime(decrypt[1]).AddMinutes(2) >= DateTime.Now;
+            return CaptchaCode == decrypt[0] && Convert.ToDateTime(decrypt[1]).AddMinutes(2) >= AppTime.Now;
         }
 
 

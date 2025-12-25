@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -53,9 +54,9 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.ConsentId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -74,7 +75,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -89,7 +90,7 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }

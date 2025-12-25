@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
@@ -149,7 +150,7 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.CreatedBy = CurrentUserId;
                 model.IsAddedBy = CurrentUserId;
-                model.CreatedDatetime = DateTime.Now;
+                model.CreatedDatetime = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -167,7 +168,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDatetime = DateTime.Now;
+                model.ModifiedDatetime = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDatetime" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model.AdmId);
@@ -181,7 +182,7 @@ namespace HIMS.API.Controllers.NursingStation
             if ((model?.DocNoteId ?? 0) > 0)
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDatetime = DateTime.Now;
+                model.ModifiedDatetime = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
@@ -196,7 +197,7 @@ namespace HIMS.API.Controllers.NursingStation
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
             if (obj.DoctNoteId == 0)
             {
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -216,7 +217,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
@@ -231,7 +232,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.DocHandId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -249,7 +250,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
@@ -263,7 +264,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.PatHandId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDatetime = DateTime.Now;
+                model.CreatedDatetime = AppTime.Now;
                 await _INursingNoteService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -281,7 +282,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDateTime = DateTime.Now;
+                model.ModifiedDateTime = AppTime.Now;
                 await _INursingNoteService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AdmId);
@@ -298,9 +299,9 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.CreatedBy = CurrentUserId;
                 model.AddedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository1.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -323,7 +324,7 @@ namespace HIMS.API.Controllers.NursingStation
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = CurrentUserId;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
@@ -338,7 +339,7 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.IsActive = model.IsActive != true;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
             }
@@ -354,7 +355,7 @@ namespace HIMS.API.Controllers.NursingStation
             if (obj.DocNoteTempId == 0)
             {
                 model.CreatedBy = CurrentUserId;
-                model.CreatedDate = DateTime.Now;
+                model.CreatedDate = AppTime.Now;
                 await _repository2.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -372,7 +373,7 @@ namespace HIMS.API.Controllers.NursingStation
             else
             {
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = DateTime.Now;
+                model.ModifiedDate = AppTime.Now;
                 await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
