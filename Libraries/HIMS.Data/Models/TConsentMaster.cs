@@ -16,6 +16,7 @@ namespace HIMS.Data.Models
         public string? ConsentName { get; set; }
         public long? ConsentDepartment { get; set; }
         public string? ConsentDescription { get; set; }
+        public string? TransactionLabel { get; set; }
         public bool? IsActive { get; set; }
         public long? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
