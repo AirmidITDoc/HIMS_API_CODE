@@ -38,38 +38,79 @@ namespace HIMS.API.Controllers.Transaction
             _repository3 = repository4;
         }
 
-        [HttpGet("TMailOutgoing/{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[HttpGet("TMailOutgoing/{id?}")]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> Get(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository1.GetById(x => x.TranNo == id);     
+        //    if (data == null)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+        //    }
+        //    return data.ToSingleResponse<TMailOutgoing, TMailOutgoingModel>("TMailOutgoing");
+
+
+        //}
+        [HttpGet("TMailOutgoing/{id:int}")]
         public async Task<ApiResponse> Get(int id)
         {
-            if (id == 0)
+            if (id <= 0)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,"Invalid TranNo.");
             }
-            var data = await _repository1.GetById(x => x.TranNo == id)
-;           if (data == null)
+
+            var data = await _repository1.GetAll(x => x.TranNo == id);
+
+            if (data == null || !data.Any())
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status404NotFound, "No data found." );
             }
-            return data.ToSingleResponse<TMailOutgoing, TMailOutgoingModel>("TMailOutgoing");
 
+            var result = data.Select(x => x.MapTo<TMailOutgoingModel>()) .ToList();
 
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "TMailOutgoing", result);
         }
-        [HttpGet("TWhatsAppSmsOutgoing/{id?}")]
+
+        [HttpGet("TWhatsAppSmsOutgoing/{id:int}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Gets(int id)
         {
-            if (id == 0)
+            if (id <= 0)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status400BadRequest,   "Invalid TranNo." );
             }
-            var data = await _repository2.GetById(x => x.TranNo == id)
-;       if (data == null)
+
+            // Get multiple records by TranNo
+            var data = await _repository2.GetAll(x => x.TranNo == id);
+
+            if (data == null || !data.Any())
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status404NotFound,  "No data found.");
             }
-            return data.ToSingleResponse<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>("TWhatsAppSmsOutgoing");
+
+            var result = data.Select(x => x.MapTo<TWhatsAppSmsOutgoingModel>()).ToList();
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "TWhatsAppSmsOutgoing", result );
         }
+
+        //[HttpGet("TWhatsAppSmsOutgoing/{id?}")]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> Gets(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository2.GetById(x => x.TranNo == id); if (data == null)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound, "No data found.");
+        //    }
+        //    return data.ToSingleResponse<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>("TWhatsAppSmsOutgoing");
+        //}
 
         [HttpPost("SMSendoutList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
