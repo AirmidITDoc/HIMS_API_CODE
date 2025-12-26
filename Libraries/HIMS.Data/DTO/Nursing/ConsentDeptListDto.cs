@@ -30,6 +30,10 @@
         public string TransactionLabel { get; set; }
         public DateTime ConsentDate { get; set; }
         public string ConsentTime { get; set; }
+        public bool? IsActive { get; set; }
+        public string? ConsentName { get; set; }
+
+
     }
 
 }
