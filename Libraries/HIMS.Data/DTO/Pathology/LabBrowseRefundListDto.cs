@@ -14,7 +14,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? RefundNo { get; set; }
         public string? PBillNo { get; set; }
         //public byte? OPD_IPD_Type { get; set; }
-        public long? OPD_IPD_ID { get; set; }
+        //public long? OPD_IPD_ID { get; set; }
         public string? RegNo { get; set; }
         public DateTime? RegDate { get; set; }
         public string? PatientName { get; set; }
