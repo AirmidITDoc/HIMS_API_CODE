@@ -24,7 +24,7 @@ namespace HIMS.Data.DTO.Pathology
         public long? CompanyId { get; set; }
 
         public string? PBillNo { get; set; }
-        public DateTime? BillDate { get; set; }
+        public string? BillDate { get; set; }
         public decimal? BillAmount { get; set; }
         public string? DiscAmount { get; set; }
         public decimal? NetAmount { get; set; }
