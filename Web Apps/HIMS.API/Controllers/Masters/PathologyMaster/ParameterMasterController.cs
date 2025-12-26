@@ -35,14 +35,14 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //     [Permission(PageCode = "PathUnitMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathParameterMaster> MPathParameterMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MPathParameterMasterList.ToGridResponse(objGrid, "MPathParameterMaster  List"));
         }
         [HttpPost("MPathParameterList")]
-        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<MPathParameterListDto> MPathParameterList = await _IParameterMasterService.MPathParameterList(objGrid);
@@ -50,14 +50,14 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("MPathParaRangeWithAgeMasterList")]
-        //[Permission(PageCode = "MPathParaRangeWithAgeMasterList", Permission = PagePermission.View)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> MPathParaRangeWithAgeMasterList(GridRequestModel objGrid)
         {
             IPagedList<MPathParaRangeWithAgeMasterListDto> MPathParaRangeWithAgeMasterList = await _IMPathParaRangeWithAgeMasterService.MPathParaRangeWithAgeMasterList(objGrid);
             return Ok(MPathParaRangeWithAgeMasterList.ToGridResponse(objGrid, "MPathParaRangeWithAgeMaster List"));
         }
         [HttpPost("MParameterDescriptiveMasterList")]
-        //[Permission(PageCode = "MParameterDescriptiveMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> MParameterDescriptiveMasterList(GridRequestModel objGrid)
         {
             IPagedList<MParameterDescriptiveMasterListDto> MParameterDescriptiveMasterList = await _IMParameterDescriptiveMasterService.GetListAsync1(objGrid);
@@ -75,6 +75,10 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 model.IsActive = true;
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
+                model.AddedBy = CurrentUserId;
+                model.UpdatedBy = 0;
+
+
                 await _IParameterMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -95,8 +99,10 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
+                model.UpdatedBy = CurrentUserId;
+                model.AddedBy = 0;
                 model.ModifiedDate = AppTime.Now;
-                await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IParameterMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate"});
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Parameter updated successfully.");
         }

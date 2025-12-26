@@ -12,8 +12,11 @@ namespace HIMS.API.Models.Masters
         public int? IsNumeric { get; set; }
         public bool? IsPrintDisSummary { get; set; }
         public string? MethodName { get; set; }
+        public string? ParaMultipleRange { get; set; }
         public string? Formula { get; set; }
         public string? IsBoldFlag { get; set; }
+        public string? ParaBoldFlag { get; set; }
+        public bool? IsBold { get; set; }
 
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
         public List<MPathParaRangeWithAgeMasterModel>? MPathParaRangeWithAgeMasters { get; set; }
@@ -36,6 +39,8 @@ namespace HIMS.API.Models.Masters
         public string? ParameterValues { get; set; }
         public bool? IsDefaultValue { get; set; }
         public string? DefaultValue { get; set; }
+        public long? AddedBy { get; set; }
+        public long? UpdatedBy { get; set; }
     }
     public class MParameterDescriptiveMasterModelValidator : AbstractValidator<MParameterDescriptiveMasterModel>
     {

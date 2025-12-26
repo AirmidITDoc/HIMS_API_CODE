@@ -10,6 +10,9 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing;
 using HIMS.Core.Infrastructure;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Services.Nursing;
+using HIMS.Data.DTO.Nursing;
 
 namespace HIMS.API.Controllers.NursingStation
 {
@@ -19,10 +22,22 @@ namespace HIMS.API.Controllers.NursingStation
     public class TransactionConsentMasterController : BaseController
     {
         private readonly IGenericService<TConsentMaster> _repository;
+        private readonly INursingConsentService _NursingConsentService;
 
-        public TransactionConsentMasterController(IGenericService<TConsentMaster> repository)
+
+        public TransactionConsentMasterController(INursingConsentService repository1, IGenericService<TConsentMaster> repository)
         {
+            _NursingConsentService = repository1;
             _repository = repository;
+
+        }
+
+        [HttpPost("TransactionConsentMasterList")]
+        //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<TransactionConsentMasterListDto> TransactionConsentMasterList = await _NursingConsentService.GetListTranAsync(objGrid);
+            return Ok(TransactionConsentMasterList.ToGridResponse(objGrid, "TransactionConsentMaster List"));
         }
 
         //List API
