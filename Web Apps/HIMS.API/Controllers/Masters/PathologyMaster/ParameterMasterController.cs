@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //Add API
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ParameterMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ParameterMasterModel obj)
         {
             MPathParameterMaster model = obj.MapTo<MPathParameterMaster>();
