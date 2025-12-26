@@ -8,7 +8,7 @@ namespace HIMS.Services.Masters
     {
         Task<IPagedList<MPathParameterListDto>> MPathParameterList(GridRequestModel objGrid);
         Task InsertAsync(MPathParameterMaster objPara, int UserId, string Username);
-        Task UpdateAsync(MPathParameterMaster objPara, int UserId, string Username);
+        Task UpdateAsync(MPathParameterMaster objPara, int UserId, string Username, string[]? references);
         Task CancelAsync(MPathParameterMaster objPara, int UserId, string Username);
         Task UpdateFormulaAsync(MPathParameterMaster objPara, int UserId, string Username);
     }
