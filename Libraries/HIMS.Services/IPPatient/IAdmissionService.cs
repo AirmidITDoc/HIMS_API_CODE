@@ -8,8 +8,8 @@ namespace HIMS.Services.IPPatient
     {
         Task<IPagedList<AdmissionListDto>> GetAdmissionListAsync(GridRequestModel objGrid);
         Task<IPagedList<AdmissionListDto>> GetAdmissionDischargeListAsync(GridRequestModel objGrid);
-        void InsertSP(Admission objAdmission, int CurrentUserId, string CurrentUserName);
-        void InsertRegSP(Registration ObjRegistration, Admission objAdmission, int CurrentUserId, string CurrentUserName);
+        void InsertSP(Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName);
+        void InsertRegSP(Registration ObjRegistration, Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName);
         Task UpdateAdmissionAsyncSP(Admission objAdmission, int currentUserId, string currentUserName);
         Task<List<PatientAdmittedListSearchDto>> PatientAdmittedListSearch(string Keyword);
         Task<List<PatientAdmittedListSearchDto>> PatientDischargeListSearch(string Keyword);

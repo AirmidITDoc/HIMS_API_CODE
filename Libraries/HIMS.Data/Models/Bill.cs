@@ -35,6 +35,7 @@ namespace HIMS.Data.Models
         public string? CompanyName { get; set; }
         public decimal? CompanyAmt { get; set; }
         public decimal? PatientAmt { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
         public long? TariffId { get; set; }
         public long? WardId { get; set; }
         public long? BedId { get; set; }

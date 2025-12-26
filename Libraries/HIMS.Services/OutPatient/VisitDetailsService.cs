@@ -126,7 +126,7 @@ namespace HIMS.Services.OutPatient
         //    };
         //    odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
         //}
-        public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
             // OLD CODE With SP
             DatabaseHelper odal = new();
@@ -153,6 +153,21 @@ namespace HIMS.Services.OutPatient
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
             await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+            string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
+            ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
+
+            var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
+            foreach (var rProperty in Patiententity.Keys.ToList())
+            {
+                if (!PatientPolicyEntity.Contains(rProperty))
+                    Patiententity.Remove(rProperty);
+            }
+            string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+            ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
+
+            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
             var tokenObj = new
             {
                 VisitId = Convert.ToInt32(VisitId)
@@ -161,7 +176,7 @@ namespace HIMS.Services.OutPatient
             await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
         }
 
-        public virtual async Task UpdateAsyncSP(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsyncSP(VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
@@ -187,9 +202,24 @@ namespace HIMS.Services.OutPatient
                     visitentity.Remove(rProperty);
             }
             string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
             await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+            string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
+           
+            ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
+            var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
+            foreach (var rProperty in Patiententity.Keys.ToList())
+            {
+                if (!PatientPolicyEntity.Contains(rProperty))
+                    Patiententity.Remove(rProperty);
+            }
+            string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+            ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
+            //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+
+
+            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {

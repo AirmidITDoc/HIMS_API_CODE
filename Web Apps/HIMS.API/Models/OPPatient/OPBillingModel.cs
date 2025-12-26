@@ -48,6 +48,8 @@ namespace HIMS.API.Models.OPPatient
         public string? DiscComments { get; set; }
         public long? CashCounterId { get; set; }
         public long? CreatedBy { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+
         public int BillNo { get; set; }
         public List<ChargesModel> AddCharges { get; set; }
         public List<BillDetailsModel> BillDetails { get; set; }

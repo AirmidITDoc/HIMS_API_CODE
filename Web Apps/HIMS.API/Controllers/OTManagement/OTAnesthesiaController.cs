@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.OTManagement
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.OTManagement
                 await _IOTAnesthesiaService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
 
     }
