@@ -48,7 +48,7 @@ namespace HIMS.Services.Inventory
 
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetail1s", "MPathTemplateDetails", "MPathTestDetailMasters" };
+            string[] rEntity = { "UpdatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetail1s", "MPathTemplateDetails", "MPathTestDetailMasters" };
             var entity = objTest.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -97,7 +97,7 @@ namespace HIMS.Services.Inventory
         {
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "AddedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTemplateDetail1s", "MPathTestDetailMasters" };
+            string[] rEntity = { "AddedBy", "CreatedBy", "CreatedDate", "ModifiedDate", "MPathTemplateDetails", "MPathTemplateDetail1s", "MPathTestDetailMasters" };
             var entity = objTest.ToDictionary();
             foreach (var rProperty in rEntity)
             {

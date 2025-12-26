@@ -113,7 +113,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             MPathParameterMaster model = await _repository.GetById(x => x.ParameterId == Id);
             if ((model?.ParameterId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

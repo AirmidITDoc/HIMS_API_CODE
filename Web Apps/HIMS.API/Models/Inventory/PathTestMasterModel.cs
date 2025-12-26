@@ -16,6 +16,11 @@ namespace HIMS.API.Models.Inventory
         public long? AddedBy { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
+        public bool? IsCategoryPrint { get; set; }
+        public bool? IsPrintTestName { get; set; }
+        public string? TestTime { get; set; }
+        public DateTime? TestDate { get; set; }
+        public int? CreatedBy { get; set; }
         public int TestId { get; set; }
 
     }
@@ -85,6 +90,11 @@ namespace HIMS.API.Models.Inventory
         public long? UpdatedBy { get; set; }
         public long? ServiceId { get; set; }
         public long? IsTemplateTest { get; set; }
+        public bool? IsCategoryPrint { get; set; }
+        public bool? IsPrintTestName { get; set; }
+        public string? TestTime { get; set; }
+        public DateTime? TestDate { get; set; }
+        public int? ModifiedBy { get; set; }
 
     }
 
