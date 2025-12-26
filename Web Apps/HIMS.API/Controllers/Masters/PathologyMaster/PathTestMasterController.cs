@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public ApiResponse Insert(TestMasterModel obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
 
         [HttpPut("Update/{id:int}")]
-        //[Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TestMaster", Permission = PagePermission.Add)]
         public ApiResponse Update(TestMasterUpdate obj)
         {
             MPathTestMaster model = obj.PathTest.MapTo<MPathTestMaster>();

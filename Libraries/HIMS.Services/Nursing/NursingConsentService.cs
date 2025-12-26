@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -105,5 +106,10 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<ConsentpatientInfoListDto>(model, "m_rtrv_ConsentpatientInformation_List");
         }
+        public virtual async Task<IPagedList<TransactionConsentMasterListDto>> GetListTranAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TransactionConsentMasterListDto>(model, "ps_rtrv_ConsentMasterList");
+        }
+
     }
 }

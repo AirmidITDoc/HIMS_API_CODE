@@ -25,6 +25,16 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<LabBrowsListDto>(model, "ps_Rtrv_BrowseLABBill_Pagi");
         }
 
+        public virtual async Task<IPagedList<LabBrowsePaymentListDto>> GetLabPaymentListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabBrowsePaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
+        }
+
+        public virtual async Task<IPagedList<LabBrowseRefundListDto>> GetLabRefundListListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabBrowseRefundListDto>(model, "ps_Rtrv_BrowseLABRefundBillList");
+        }
+
     }
 
 }

@@ -33,6 +33,21 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<LabBrowsListDto> LabBillList = await _ILabBrowseList.GetLabListListAsync(objGrid);
             return Ok(LabBillList.ToGridResponse(objGrid, "LabBill List"));
         }
+        [HttpPost("LabPaymentList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<LabBrowsePaymentListDto> LabBillList = await _ILabBrowseList.GetLabPaymentListListAsync(objGrid);
+            return Ok(LabBillList.ToGridResponse(objGrid, "Lab payment List"));
+        }
+
+        [HttpPost("LabRefundList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> RefundList(GridRequestModel objGrid)
+        {
+            IPagedList<LabBrowseRefundListDto> LabBillList = await _ILabBrowseList.GetLabRefundListListAsync(objGrid);
+            return Ok(LabBillList.ToGridResponse(objGrid, "Lab Refund List"));
+        }
 
     }
 }
