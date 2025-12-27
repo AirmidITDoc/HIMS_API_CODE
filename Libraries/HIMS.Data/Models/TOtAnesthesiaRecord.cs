@@ -31,6 +31,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual ICollection<TOtAnesthesiaPreOpdiagnosis> TOtAnesthesiaPreOpdiagnoses { get; set; }
     }
