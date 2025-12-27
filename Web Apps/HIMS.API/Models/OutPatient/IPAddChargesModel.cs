@@ -60,6 +60,7 @@ namespace HIMS.API.Models.OutPatient
         public string? ChargesTime { get; set; }
         public bool? IsInclusionExclusion { get; set; }
         public long ChargesId { get; set; }
+        public bool? IsApprovedByCamp { get; set; }
 
 
     }
@@ -78,7 +79,7 @@ namespace HIMS.API.Models.OutPatient
         public long? ConcessionReasonId { get; set; }
         public string? DiscComments { get; set; }
         public long? ModifiedBy { get; set; }
-
+      
 
 
     }
