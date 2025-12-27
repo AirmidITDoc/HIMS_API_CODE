@@ -104,31 +104,7 @@ namespace HIMS.API.Infrastructure
         }
         #endregion
 
-        #region  :: To Int & Decimal ::
-        public static int ToInt(this object a)
-        {
-            try
-            {
-                return Convert.ToInt32(a);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
-
-        public static decimal ToDecimal(this object a)
-        {
-            try
-            {
-                return Convert.ToDecimal(a);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
-        #endregion
+       
         #region  :: Cache Api for Get list of All message ::
 
         public static bool GetCache(IMemoryCache cache, string cacheKey, out object resObject)
