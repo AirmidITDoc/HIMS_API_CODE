@@ -12044,8 +12044,8 @@ namespace HIMS.Services.Report
                         // -------------------------------
                         // 21 → 25
                         // -------------------------------
-                        html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
-                        html = html.Replace("{{CategoryType}}", dt.GetColValue("CategoryType"));
+                        html = html.Replace("{{BloodGroup}}", dt.GetColValue("Name"));
+                        html = html.Replace("{{CategoryType}}", dt.GetColValue("ConstantType"));
                         html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
                         html = html.Replace("{{LocationName}}", dt.GetColValue("LocationName"));
                         html = html.Replace("{{EstimateTime}}", dt.GetColValue("EstimateTime"));

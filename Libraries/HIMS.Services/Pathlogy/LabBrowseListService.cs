@@ -27,7 +27,7 @@ namespace HIMS.Services.Pathlogy
 
         public virtual async Task<IPagedList<LabBrowsePaymentListDto>> GetLabPaymentListListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<LabBrowsePaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
+            return await DatabaseHelper.GetGridDataBySp<LabBrowsePaymentListDto>(model, "ps_Rtrv_BrowseLabPaymentList");
         }
 
         public virtual async Task<IPagedList<LabBrowseRefundListDto>> GetLabRefundListListAsync(GridRequestModel model)
