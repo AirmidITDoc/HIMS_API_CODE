@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -25,11 +26,6 @@ builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
-var timeOptions = builder.Configuration
-    .GetSection("TimeSettings")
-    .Get<TimeOptions>();
-
-AppTime.Configure(timeOptions);
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
 ////Changes by Ashu 28 May 2025
@@ -57,6 +53,17 @@ var connectionString = Configuration.GetValue<string>("CONNECTION_STRING");
 ConnectionStrings.SetConnectionString(connectionString);
 CommonExtensions.PreloadDinkToPdfDll();
 DependencyRegistrar.Register(builder.Services);
+
+using (var serviceProvider = builder.Services.BuildServiceProvider())
+using (var scope = serviceProvider.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<HIMSDbContext>();
+
+    var offsetMinutes = db.AppSettings
+        .FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
+
+    AppTime.Configure(offsetMinutes);
+}
 builder.Services.AddMvc(opt =>
 {
     opt.EnableEndpointRouting = false;
