@@ -2529,7 +2529,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTCheckInOutPatientWise.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("Rtrv_OT_ReservationCheckInOutReport_PatientWise", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("Rtrv_OT_ReservationCheckInOutReport_PatientWiseTest", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTCheckInOutPatientWise", "OTCheckInOutPatientWise" + vDate, Orientation.Portrait);
@@ -12245,50 +12245,89 @@ namespace HIMS.Services.Report
 
                 case "OTCheckInOutPatientWise":
                     {
+                     
                         html = html.Replace("{{PrintDate}}",
                             AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
-                        // Patient Identification
+                       
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));
+                     
                         html = html.Replace("{{OPDIPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+         
                         html = html.Replace("{{Gender}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
 
-                        // Admission Details
-                        html = html.Replace("{{DOA}}",
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+
+                       
+                        html = html.Replace("{{AdmissionDate}}",
                             dt.GetColValue("AdmissionDate").ConvertToDateString("dd-MM-yyyy"));
-                        html = html.Replace("{{DOATime}}",
+                        html = html.Replace("{{AdmissionTime}}",
                             dt.GetColValue("AdmissionTime").ConvertToDateString("hh:mm tt"));
 
-                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                        html = html.Replace("{{Ward}}", dt.GetColValue("RoomName"));
+
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
 
-                        // OT Check-In Details
                         html = html.Replace("{{OTCheckInDate}}",
                             dt.GetColValue("OTCheckInDate").ConvertToDateString("dd-MM-yyyy"));
                         html = html.Replace("{{OTCheckInTime}}",
                             dt.GetColValue("OTCheckInTime").ConvertToDateString("hh:mm tt"));
+
                         html = html.Replace("{{CheckOutTime}}",
                             dt.GetColValue("CheckOutTime").ConvertToDateString("hh:mm tt"));
+                        html = html.Replace("{{CheckOutDate}}",
+                            dt.GetColValue("CheckOutTime").ConvertToDateString("dd-MM-yyyy"));
 
-                        // Movement Details
                         html = html.Replace("{{MovingType}}", dt.GetColValue("MovingType"));
+                        html = html.Replace("{{ModeofMovement}}", dt.GetColValue("ModeofMovement"));
                         html = html.Replace("{{FromDepartment}}", dt.GetColValue("FromDepartment"));
                         html = html.Replace("{{ToDepartment}}", dt.GetColValue("ToDepartment"));
-                        html = html.Replace("{{ModeOfTransfer}}", dt.GetColValue("ModeOfTransfer"));
+                        html = html.Replace("{{CheckOutFromDepartment}}", dt.GetColValue("CheckOutFromDepartment"));
+                        html = html.Replace("{{CheckOutToDepartment}}", dt.GetColValue("CheckOutToDepartment"));
                         html = html.Replace("{{PurPoseOfMovement}}", dt.GetColValue("PurPoseOfMovement"));
 
-                        // Authorization
+                   
+                        html = html.Replace("{{EquipmentCarried}}", dt.GetColValue("EquipmentCarried"));
                         html = html.Replace("{{AuthorisedBy}}", dt.GetColValue("AuthorisedBy"));
                         html = html.Replace("{{Accompanied}}", dt.GetColValue("Accompanied"));
 
-                        // Remarks
+                  
                         html = html.Replace("{{Remark}}", dt.GetColValue("Remark"));
+
+                        if (dt.GetColValue("CheckInOut") == "0")
+                        {
+                            html = html.Replace("{{CheckOutSection}}", @"
+                        <table width='100%' border='1' cellspacing='0' cellpadding='6' style='border-collapse:collapse;'>
+                         <tr style='background:#e2e8f0;'>
+                             <td colspan='4'><b>OT Check-Out Details</b></td>
+                         </tr>
+                         <tr>
+                        <td><b>Check-Out Date</b><br>" +
+                                        dt.GetColValue("CheckOutTime").ConvertToDateString("dd-MM-yyyy") + @"</td>
+                        <td><b>Check-Out Time</b><br>" +
+                                        dt.GetColValue("CheckOutTime").ConvertToDateString("hh:mm tt") + @"</td>
+                        <td><b>Check-Out From Dept</b><br>" + dt.GetColValue("CheckOutFromDepartment") + @"</td>
+                        <td><b>Check-Out To Dept</b><br>" + dt.GetColValue("CheckOutToDepartment") + @"</td>
+                        </tr>
+                        </table>
+                        <br><br>");
+                        }
+                        else
+                        {
+                            html = html.Replace("{{CheckOutSection}}", "");
+                        }
+
 
                         return html;
                     }
                     break;
+
 
 
                 case "OTInOperationReport":
