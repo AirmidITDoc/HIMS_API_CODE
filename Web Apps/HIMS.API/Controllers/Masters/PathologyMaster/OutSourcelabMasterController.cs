@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -24,7 +25,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "MOutSourcelabMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOutSourcelabMaster> OutSourcelabList = await _repository.GetAllPagedAsync(objGrid);
@@ -32,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "MOutSourcelabMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -44,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MOutSourcelabMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(OutSourcelabMasterModel obj)
         {
             MOutSourcelabMaster model = obj.MapTo<MOutSourcelabMaster>();
@@ -63,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "MOutSourcelabMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OutSourcelabMasterModel obj)
         {
             MOutSourcelabMaster model = obj.MapTo<MOutSourcelabMaster>();
@@ -80,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathUnitMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MOutSourcelabMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOutSourcelabMaster model = await _repository.GetById(x => x.OutSourceId == Id);

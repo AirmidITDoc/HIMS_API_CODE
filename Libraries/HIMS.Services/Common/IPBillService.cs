@@ -284,25 +284,41 @@ namespace HIMS.Services.Common
                 scope.Complete();
             }
         }
-
         public virtual void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
-                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
-                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId",
-                "WardId","BedId","DoctorName","CompanyServiceName","ServiceCode","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = { "ChargesId", "IsCancelledBy" };
             var entity = ObjaddCharge.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("ps_Delete_IPAddcharges", CommandType.StoredProcedure, entity);
 
         }
+
+
+        //public virtual void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId",
+        //        "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
+        //        "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId","IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+        //        "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId",
+        //        "WardId","BedId","DoctorName","CompanyServiceName","ServiceCode","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+        //    var entity = ObjaddCharge.ToDictionary();
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+
+        //    odal.ExecuteNonQuery("ps_Delete_IPAddcharges", CommandType.StoredProcedure, entity);
+
+        //}
 
         public virtual async Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, List<TPayment> ObjTPayment, int UserId, string UserName)
         {
@@ -924,18 +940,36 @@ namespace HIMS.Services.Common
 
         }
 
+        //public virtual void InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
+        //        "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
+        //        "IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
+        //    var entity = ObjaddCharge.ToDictionary();
+
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        entity.Remove(rProperty);
+        //    }
+
+        //    string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+
+        //}
         public virtual void InsertIPDPackage(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {  "IsDoctorShareGenerated", "IsInterimBillFlag",  "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId",
-                "IsHospMrk","BillNoNavigation","BillNo","TariffId","UnitId","DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",};
+            string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
+         "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt",
+         "HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
             var entity = ObjaddCharge.ToDictionary();
 
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
 
             string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
