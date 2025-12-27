@@ -13,6 +13,8 @@ namespace HIMS.Services.OTManagment
         Task InsertAsync(TOtAnesthesiaRecord ObjTOtAnesthesiaRecord, int UserId, string Username);
         Task UpdateAsync(TOtAnesthesiaRecord ObjTOtAnesthesiaRecord, int UserId, string Username, string[]? references);
         Task<List<TOtAnesthesiaPreOpdiagnosisDto>> OtAnesthesiaPreOpdiagnosisListAsync(string descriptionType);
+        Task<TOtAnesthesiaRecord> GetById(int Id);
+
 
     }
 }

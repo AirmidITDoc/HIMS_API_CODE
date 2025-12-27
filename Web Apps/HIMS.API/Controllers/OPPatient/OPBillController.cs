@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPBillIngModel obj)
         {
             Bill model = obj.MapTo<Bill>();

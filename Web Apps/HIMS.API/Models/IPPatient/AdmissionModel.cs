@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -127,12 +128,16 @@ namespace HIMS.API.Models.IPPatient
     {
         public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel Admission { get; set; }
+        public PatientPolicyModels PatientPolicy { get; set; }
+
 
     }
     public class AdmissionRegistered
     {
         //public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel Admission { get; set; }
+        public PatientPolicyModels PatientPolicy { get; set; }
+
     }
     public class BedMaster
     {

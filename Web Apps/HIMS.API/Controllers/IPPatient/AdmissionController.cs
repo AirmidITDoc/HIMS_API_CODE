@@ -69,15 +69,17 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(AdmissionRegistered obj)
         {
             Admission model = obj.Admission.MapTo<Admission>();
+            TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
+
             if (model.RegId != 0)
             {
                 model.AdmissionTime = Convert.ToDateTime(model.AdmissionTime);
                 model.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertSP(model, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertSP(model, PatientPolicy, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -86,17 +88,19 @@ namespace HIMS.API.Controllers.IPPatient
 
         //UPDATE SHILPA 09-08-2025//
         [HttpPost("AdmissionRegInsertSP")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse Insert(NewAdmission obj)
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
             Admission objAdmission = obj.Admission.MapTo<Admission>();
+            TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
+
 
             if (objAdmission.AdmissionId == 0)
             {
                 objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
                 objAdmission.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertRegSP(model, objAdmission, CurrentUserId, CurrentUserName);
+                _IAdmissionService.InsertRegSP(model, objAdmission, PatientPolicy ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

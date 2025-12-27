@@ -79,6 +79,10 @@ namespace HIMS.Services.OTManagment
                 scope.Complete();
             }
         }
+        public virtual async Task<TOtAnesthesiaRecord> GetById(int Id)
+        {
+            return await this._context.TOtAnesthesiaRecords.Include(x => x.TOtAnesthesiaPreOpdiagnoses).FirstOrDefaultAsync(x => x.AnesthesiaId == Id);
+        }
     }
 
 }

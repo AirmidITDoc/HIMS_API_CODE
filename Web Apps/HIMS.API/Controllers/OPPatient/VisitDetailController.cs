@@ -135,6 +135,9 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Registration model = obj.Registration.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+            TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
+
+            
             if (obj.Registration.RegId == 0)
             {
                 model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
@@ -146,7 +149,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.InsertAsyncSP(model, objVisitDetail, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.InsertAsyncSP(model, objVisitDetail, PatientPolicy ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -160,6 +163,8 @@ namespace HIMS.API.Controllers.OPPatient
         {
             //Registration model = obj.AppReistrationUpdate.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
+            TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
+
             if (obj.Visit.RegId != 0)
             {
                 objVisitDetail.AddedBy = CurrentUserId;
@@ -170,7 +175,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.UpdateAsyncSP(objVisitDetail, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.UpdateAsyncSP(objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

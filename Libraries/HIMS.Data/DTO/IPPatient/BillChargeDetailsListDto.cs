@@ -28,6 +28,7 @@ namespace HIMS.Data.DTO.IPPatient
         public long ChargesId { get; set; }
         public DateTime? ChargesDate { get; set; }
         public DateTime? ChargesTime { get; set; }
+        public bool? IsApprovedByCamp { get; set; }
 
     }
 }

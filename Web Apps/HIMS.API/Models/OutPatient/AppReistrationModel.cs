@@ -160,17 +160,32 @@ namespace HIMS.API.Models.OutPatient
         public string? MedTourismOfficeWorkAddress { get; set; }
 
     }
+    public class PatientPolicyModels
+    {
+        public long? PatientPolicyId { get; set; }
+        public long? Opipid { get; set; }
+        public byte? Opiptype { get; set; }
+        public string? PolicyNo { get; set; }
+        public DateTime? PolicyValidateDate { get; set; }
+        public decimal? ApprovedAmount { get; set; }
+        public int? CreatedBy { get; set; }
+        public bool? IsActive { get; set; }
 
+    }
     public class AppointmentReqDtovisit
     {
         public AppReistrationModel Registration { get; set; }
         public AppVisitDetailModel Visit { get; set; }
+        public PatientPolicyModels PatientPolicy { get; set; }
+
 
     }
     public class AppointmentUpdate
     {
         //public AppReistrationUpdateModel AppReistrationUpdate { get; set; }
         public AppVisitDetailModel Visit { get; set; }
+        public PatientPolicyModels PatientPolicy { get; set; }
+
 
     }
     public class ConsulationStartEndProcess

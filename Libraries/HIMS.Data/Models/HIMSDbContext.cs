@@ -1091,6 +1091,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DoctorName).HasMaxLength(255);
 
+                entity.Property(e => e.GovtApprovedAmt).HasColumnType("money");
+
                 entity.Property(e => e.Ipdno)
                     .HasMaxLength(50)
                     .HasColumnName("IPDNo");
