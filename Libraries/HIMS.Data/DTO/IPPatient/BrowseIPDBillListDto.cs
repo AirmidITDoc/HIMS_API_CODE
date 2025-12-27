@@ -23,7 +23,7 @@
         public string? TariffName { get; set; }
         public string? CompanyName { get; set; }
         public string? UnitName { get; set; }
-        public double CompDiscAmt { get; set; }
+        public decimal CompDiscAmt { get; set; }
         public long TransactionType { get; set; }
         public double AdvanceAmount { get; set; }
         public double AdvanceUsedAmount { get; set; }
@@ -49,6 +49,7 @@
         public string? DepartmentName { get; set; }
         public string? CashCounterName { get; set; }
         public string? UserName { get; set; }
+
 
     }
 

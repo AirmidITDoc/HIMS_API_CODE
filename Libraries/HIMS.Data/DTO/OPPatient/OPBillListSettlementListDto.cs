@@ -31,6 +31,7 @@
         public string? PatientType { get; set; }
         public string? OPDNo { get; set; }
         public string? DepartmentName { get; set; }
+        public decimal? CompDiscAmt { get; set; }
 
 
     }
