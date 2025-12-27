@@ -45,6 +45,7 @@ namespace HIMS.Data.Models
         public bool? IsBillableCharity { get; set; }
         public long? SalesId { get; set; }
         public bool? IsGenerated { get; set; }
+        public bool? IsApprovedByCamp { get; set; }
         public int? WardId { get; set; }
         public int? BedId { get; set; }
         public string? ServiceCode { get; set; }
