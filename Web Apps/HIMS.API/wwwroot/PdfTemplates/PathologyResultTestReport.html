@@ -10,15 +10,10 @@
 
     <div style="flex:1; padding:10px; box-sizing:border-box;">
 
-        <!-- MAIN TABLE -->
-        <table style="width:100%; border-collapse:collapse; font-size:12px;">
-
-            <!-- HEADER -->
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">            
             <tr>
                 {{NewHeader}}
             </tr>
-
-            <!-- TITLE -->
             <tr>
                 <td>
                     <table style="width:100%; border-collapse:collapse;">
@@ -34,7 +29,7 @@
                 </td>
             </tr>
 
-            <!-- PATIENT DETAILS + QR/BARCODE -->
+         
             <tr>
                 <td style="padding-top:5px;">
                     <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
@@ -86,7 +81,7 @@
                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
                                      alt="QR Code"
                                      style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
-                               
+
                                 <!-- BARCODE -->
                                 <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
                                      alt="Barcode"
@@ -97,7 +92,7 @@
                 </td>
             </tr>
 
-            <!-- TEST TABLE HEADER -->
+    
             <tr>
                 <td>
                     <table style="width:100%; border-collapse:separate; border-spacing:0; margin-top:5px;">
@@ -122,8 +117,7 @@
 
         </table>
 
-        <!-- END OF REPORT -->
-        <table style="width:100%; margin-top:20px;">
+        <table style="width: 100%; margin-top: 20px; border-top: 1px solid #000;">
             <tr>
                 <td style="text-align:center; font-size:12px; font-weight:bold;">
                     **END OF REPORT**
@@ -131,7 +125,7 @@
             </tr>
         </table>
 
-        <!-- SIGNATURE -->
+ 
         <table style="width:100%; margin-top:20px;">
             <tr>
                 <td style="text-align:right;">
@@ -142,6 +136,10 @@
                 </td>
             </tr>
         </table>
+        <div style="font-family:Verdana, Arial, sans-serif; font-size:9px; text-align:center;">
+            Test Performed At MEDITEST DIAGNOSTIC SERVICE Ltd. Reproduction of Reports is not Permitted<br>
+            For any query related KENAS scope, Kindly contact to us: qualityassurance@meditestdiagnostic.com
+        </div>
 
     </div>
 

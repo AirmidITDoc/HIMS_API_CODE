@@ -18,7 +18,7 @@
                             <td style="padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr style="font-size: 18px">
-                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> OPD BILL/RECEIPT </b></td>
+                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> <!--OPD BILL/RECEIPT-->{{InvoiceType}} </b></td>
                                         <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                                     </tr>
                                 </table>
@@ -68,7 +68,7 @@
                                             <span><b>Patient Type :</b> </span>
                                             <span>{{PatientType}}</span>
                                         </td>
-                                        <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
+                                        <td style="padding:2px; display:{{chkCompanyNameflag}}">
                                             <b>Company Name :</b> {{CompanyName}}
                                         </td>
                                     </tr>
@@ -87,7 +87,15 @@
                                             <span>{{MobileNo}}</span>
                                         </td>
                                     </tr>
-
+                                    <tr>
+                                        <td style="padding:2px; display:{{chkPolicyNoflag}}">
+                                            <b>Policy No :</b> {{PolicyNo}}
+                                        </td>
+                                        <td style="padding:2px; display:{{chkApprovedAmountflag}}">
+                                            <b>Policy Limit :</b> {{ApprovedAmount}}
+                                        </td>
+                                       
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -135,16 +143,29 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{NetPayableAmt}}</td>
                                                 </tr>
+
+                                                <tr style="display:{{chkGovtApprovedAmtflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Gov. Amount :</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{GovtApprovedAmt}}</td>
+                                                </tr>
+
                                                 <tr style="display:{{chkpaidflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Paid Amount : </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;">{{PaymentMode}}</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{PaidAmount}}</td>
                                                 </tr>
-                                                <tr style="display:{{chkbalflag}}">
+                                                <tr style="display:{{chkBalanceafterGovflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{BalanceafterGov}}</td>
+                                                </tr>
+
+                                                <!--<tr style="display:{{chkbalflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{BalanceAmt}}</td>
-                                                </tr>
+                                                </tr>-->
 
                                                 <tr style="display:{{chkRefundflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Refund Info:</td>
