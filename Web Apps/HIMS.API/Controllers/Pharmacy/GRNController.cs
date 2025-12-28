@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(GRNUpdateList.ToGridResponse(objGrid, "GRNList"));
         }
         [HttpPost("GrnInvoiceNocheck")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<InvoiceNoChecListDto> InvoiceNoChecList = await _IGRNService.InvoiceNoChecList(objGrid);
@@ -57,14 +57,14 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Poheaderlist")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> List4(GridRequestModel objGrid)
         {
             IPagedList<DirectPOListDto> DirectPOList = await _IGRNService.GetListAsync(objGrid);
             return Ok(DirectPOList.ToGridResponse(objGrid, "DirectPOList "));
         }
         [HttpPost("Podetaillist")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+        //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PoDetailListDto> PoDetailList = await _IGRNService.GetListAsync1(objGrid);
