@@ -492,7 +492,6 @@ namespace HIMS.API.Controllers.IPPatient
             Bill Model = obj.MapTo<Bill>();
             if (obj.BillNo != 0)
             {
-
                 _IPBillService.IPbillSp(Model, CurrentUserId, CurrentUserName);
             }
             else
