@@ -784,7 +784,7 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
-            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy" };
+            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
