@@ -541,7 +541,9 @@ namespace HIMS.Services.Common
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
+            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", 
+                "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", 
+                "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -643,7 +645,9 @@ namespace HIMS.Services.Common
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
 
-            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy" };
+            string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", 
+                "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", 
+                "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -667,7 +671,8 @@ namespace HIMS.Services.Common
                 }
                 odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
             }
-            string[] PEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
+            string[] PEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", 
+                "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
             var entity1 = Objpayment.ToDictionary();
             foreach (var rProperty in entity1.Keys.ToList())
             {
@@ -874,7 +879,6 @@ namespace HIMS.Services.Common
         }
 
 
-
         public virtual void InsertSP(AddCharge ObjaddCharge, int UserId, string UserName)
         {
 
@@ -941,25 +945,21 @@ namespace HIMS.Services.Common
 
         }
 
-
-        public virtual void IPbillSp(Bill ObjBill, int UserId, string UserName)
+        public virtual void  IPbillSp(Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {
-
             DatabaseHelper odal = new();
+            string[] AEntity = { "BillNo", "ConcessionReasonId", "BalanceAmt", "NetPayableAmt", "CompDiscAmt", "ConcessionAmt", "CreatedBy" };
+            var Rentity = ObjBill.ToDictionary();
 
-            string[] AEntity = { "OpdIpdId", "TotalAmt", "PaidAmt","BillDate", "OpdIpdType", "IsCancelled",
-                                              "PbillNo","TotalAdvanceAmount","AdvanceUsedAmount","AddedBy","CashCounterId","BillTime","IsSettled",
-                                             "IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","IsBillCheck",
-                                              "RegNo","PatientName","Ipdno","AgeYear","AgeMonth","AgeDays","DoctorId","DoctorName","WardId","BedId","PatientType","CompanyName","CompanyAmt","PatientAmt","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate",
-                                              "SpeTaxPer","SpeTaxAmt","IsBillShrHold","DiscComments","ChTotalAmt","ChConcessionAmt","ChNetPayAmt","BillPrefix","BillMonth","BillYear","PrintBillNo","AddCharges","RefundAmount","BillDetails"};
-
-            var AddEntity = ObjBill.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                AddEntity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("m_Update_BillDiscountAfter_1", CommandType.StoredProcedure, AddEntity);
-        }
 
+            odal.ExecuteNonQuery("ps_Update_BillDiscountAfter_1", CommandType.StoredProcedure, Rentity);
+            //await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+        }
     }
 }

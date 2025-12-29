@@ -6,6 +6,6 @@
         public long? ParameterId { get; set; }
         public string? ParameterValues { get; set; }
         public bool? IsDefaultValue { get; set; }
-
+        public string? DefaultValue { get; set; }
     }
 }

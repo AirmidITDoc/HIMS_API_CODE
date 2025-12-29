@@ -53,7 +53,7 @@ namespace HIMS.Services.Common
             SqlParameter[] para = new SqlParameter[fields.Count];
             switch (model.Mode)
             {
-                //Ashu//
+                
                 case "OpeningItemDet": sp_Name = "m_Rtrv_OpeningItemDet"; break;
                 case "OpeningItemList": sp_Name = "m_Rtrv_OpeningItemList"; break;
                 case "GrnItemList": sp_Name = "Retrieve_GrnItemList"; break;
@@ -131,6 +131,20 @@ namespace HIMS.Services.Common
                 case "DashBedStatistics": sp_Name = "ps_Dash_Bed_statistics_1"; break;
                 case "DashAdmissionDateWiseCount": sp_Name = "ps_Dash_AdmissionCountLessthan15Day_1"; break;
                 case "DashDischargeDateWiseCount": sp_Name = "ps_Dash_DischargeCountLessthan15Day_1"; break;
+
+
+                // Pathology Dashboard  
+                case "PathologyTestCountDasboard": sp_Name = "ps_rpt_PathologyTestCountDasboard"; break;
+                case "PathologyTestCompletedDasboard": sp_Name = "ps_rpt_PathologyTestCompletedDasboard"; break;
+                case "PathologyTestCancelleDasboard": sp_Name = "ps_rpt_PathologyTestCancelleDasboard"; break;
+                case "PathologyTestPendingDasboard": sp_Name = "ps_rpt_PathologyTestPendingDasboard"; break;
+
+                // Radiology Dashboard 
+                case "RadiologyTestCountDasboard": sp_Name = "ps_rpt_RadiologyTestCount_Dashboard"; break;
+                case "RadiologyTestCompletedDasboard": sp_Name = "ps_rpt_RadiologyTest_Completed_Dashboard"; break;
+                case "RadiologyTestCancelleDasboard": sp_Name = "ps_rpt_RadiologyTestCancelle_Dashboard"; break;
+                case "RadiologyTestPendingDasboard": sp_Name = "ps_rpt_RadiologyTestPending_Dashboard"; break;
+
 
 
                 // Admin Task for Update dates and times

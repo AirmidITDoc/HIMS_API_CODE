@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.Inventory
@@ -17,7 +18,7 @@ namespace HIMS.Services.Inventory
         Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId);
         Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName);
         List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, String ItemName);
-
+        List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId);
 
     }
 }

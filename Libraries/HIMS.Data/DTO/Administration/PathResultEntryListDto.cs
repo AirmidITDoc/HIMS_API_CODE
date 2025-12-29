@@ -22,6 +22,8 @@ namespace HIMS.Data.DTO.Administration
         public long opdipdtype { get; set; }
         public string opdipdid { get; set; }
         public string? PatientType { get; set; }
+        public string? MobileNo { get; set; }
+        public string? AadharCardNo { get; set; }
         public string? PBillNo { get; set; }
         public string AgeYear { get; set; }
         public string? GenderName { get; set; }

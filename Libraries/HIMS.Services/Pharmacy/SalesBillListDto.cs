@@ -7,6 +7,8 @@
         public string Time { get; set; }
         public string SalesNo { get; set; }
         public string RegNo { get; set; }
+        public string? MobileNo { get; set; }
+        public string? AadharCardNo { get; set; }
         public string PatientName { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal VatAmount { get; set; }

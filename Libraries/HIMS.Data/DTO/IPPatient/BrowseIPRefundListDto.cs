@@ -12,6 +12,8 @@
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
         public decimal? RefundAmount { get; set; }
+        public string? MobileNo { get; set; }
+        public string? AadharCardNo { get; set; }
         public string? Remark { get; set; }
         public long PaymentId { get; set; }
         public string? ReceiptNo { get; set; }

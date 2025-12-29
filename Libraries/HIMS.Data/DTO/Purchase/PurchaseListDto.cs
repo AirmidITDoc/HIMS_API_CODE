@@ -32,5 +32,7 @@
         public String? Worrenty { get; set; }
 
         public String? Email { get; set; }
+        public String? Mobile { get; set; }
+        
     }
 }

@@ -169,8 +169,6 @@ namespace HIMS.API.Controllers.IPPatient
         {
             List<Payment> model = obj.Payment.MapTo<List<Payment>>();
             List<Bill> objBillModel = obj.Billupdate.MapTo<List<Bill>>();
-            //List<AdvanceDetail> objAdvanceDetail = obj.AdvanceDetailupdate.MapTo<List<AdvanceDetail>>();
-            //AdvanceHeader objAdvanceHeader = obj.AdvanceHeaderupdate.MapTo<AdvanceHeader>();
             List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
             if (model.Count > 0)
@@ -369,10 +367,6 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
-
-
-
-
         [HttpPost("InsertIPDPackageBill")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertIPDPackage(IPAddChargesModel obj)
@@ -418,8 +412,6 @@ namespace HIMS.API.Controllers.IPPatient
             }
         }
 
-       
-
 
         [HttpPost("AddBedServiceCharges")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
@@ -454,8 +446,6 @@ namespace HIMS.API.Controllers.IPPatient
                 ClassId = obj.ClassId,
                 OpdIpdId = obj.OpdIpdId,
                 TariffId = obj.TariffId
-
-
             };
             _IPBillService.InsertSPC(model, CurrentUserId, CurrentUserName, obj.NewClassId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
@@ -475,14 +465,10 @@ namespace HIMS.API.Controllers.IPPatient
                 ClassId = obj.ClassId,
                 OpdIpdId = obj.OpdIpdId,
                 TariffId = obj.TariffId
-
-
             };
             _IPBillService.InsertSPT(model, CurrentUserId, CurrentUserName, obj.NewClassId, obj.NewTariffId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
-
-
 
         [HttpPost("BillDiscountAfter")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
@@ -492,7 +478,6 @@ namespace HIMS.API.Controllers.IPPatient
             Bill Model = obj.MapTo<Bill>();
             if (obj.BillNo != 0)
             {
-
                 _IPBillService.IPbillSp(Model, CurrentUserId, CurrentUserName);
             }
             else

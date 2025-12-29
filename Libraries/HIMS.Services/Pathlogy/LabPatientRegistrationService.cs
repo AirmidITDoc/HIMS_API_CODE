@@ -69,7 +69,8 @@ namespace HIMS.Services.Pathlogy
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId"};
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", 
+                    "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId"};
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -84,7 +85,8 @@ namespace HIMS.Services.Pathlogy
 
 
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId",
+                    "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo","GovtApprovedAmt"};
                 var bentity = objBill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -177,7 +179,9 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", 
+                                    "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", 
+                                    "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
 
                                 foreach (var rProperty in Packagescharge.Keys.ToList())
@@ -257,7 +261,8 @@ namespace HIMS.Services.Pathlogy
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId" };
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", 
+                    "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId" };
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -273,7 +278,7 @@ namespace HIMS.Services.Pathlogy
 
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
                     "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId",
-                    "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo","GovtApprovedAmt"};
                 var bentity = objBill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -367,7 +372,9 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", 
+                                    "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", 
+                                    "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
 
                                 foreach (var rProperty in Packagescharge.Keys.ToList())
@@ -392,7 +399,8 @@ namespace HIMS.Services.Pathlogy
 
                         }
                     }
-                    string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "CompanyId" };
+                    string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", 
+                        "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "CompanyId" };
                     Payment objPay = new();
                     objPay = objPayment;
                     objPay.BillNo = objBill.BillNo;
