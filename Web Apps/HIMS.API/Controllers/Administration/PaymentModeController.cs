@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
+using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
@@ -24,7 +25,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PaymentModeModel obj)
         {
             Payment model = obj.MapTo<Payment>();

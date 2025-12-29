@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Utility;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
@@ -85,7 +86,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("LabRequestInsert")]
-        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPLabRequestModel obj)
         {
             THlabRequest model = obj.MapTo<THlabRequest>();
@@ -120,7 +121,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestCancel")]
-        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Delete)]
+
         public async Task<ApiResponse> Cancel(LabRequestCancel obj)
         {
             THlabRequest model = new();

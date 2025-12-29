@@ -95,37 +95,7 @@ namespace HIMS.Services.OutPatient
 
             }
         }
-        //public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
-        //{
-        //    // OLD CODE With SP
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
-        //    var entity = objRegistration.ToDictionary();
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
-        //    string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-        //    objRegistration.RegId = Convert.ToInt32(RegId);
-        //    objVisitDetail.RegId = Convert.ToInt32(RegId);
-        //    await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //    string[] rVisitEntity = { "Opdno", "IsMark", "Comments", "IsXray", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "CheckInTime", "CheckOutTime", "ConStartTime", "ConEndTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsConvertRequestForIp" };
-        //    var visitentity = objVisitDetail.ToDictionary();
-        //    foreach (var rProperty in rVisitEntity)
-        //    {
-        //        visitentity.Remove(rProperty);
-        //    }
-        //    string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-        //    objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-        //    await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //    var tokenObj = new
-        //    {
-        //        VisitId = Convert.ToInt32(VisitId)
-        //    };
-        //    odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-        //}
+       
         public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
             // OLD CODE With SP
@@ -181,19 +151,6 @@ namespace HIMS.Services.OutPatient
 
             // OLD CODE With SP
             DatabaseHelper odal = new();
-            //string[] rEntity = { "RegId", "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "UpdatedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress" };
-            //var entity = objRegistration.ToDictionary();
-            //foreach (var rProperty in entity.Keys.ToList())
-            //{
-            //    if (!rEntity.Contains(rProperty))
-            //        entity.Remove(rProperty);
-            //}
-            //odal.ExecuteNonQuery("ps_update_RegistrationForAppointment_1", CommandType.StoredProcedure, entity);
-            //objRegistration.RegId = Convert.ToInt32(objRegistration.RegId);
-            //objVisitDetail.RegId = Convert.ToInt32(objRegistration.RegId);
-            //await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
             string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
             var visitentity = objVisitDetail.ToDictionary();
             foreach (var rProperty in visitentity.Keys.ToList())
@@ -393,35 +350,7 @@ namespace HIMS.Services.OutPatient
 
         }
 
-        //public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
-        //{
-        //    var qry = from s in _context.ServiceMasters
-        //              join d in _context.ServiceDetails.Where(x => (x.TariffId == TariffId || TariffId == 0) && (x.ClassId == ClassId || ClassId == 0)) on s.ServiceId equals d.ServiceId
-        //              where s.IsActive.Value && (ServiceName == "" || s.ServiceName.Contains(ServiceName))
-        //              select new ServiceMasterDTO()
-        //              {
-        //                  ServiceId = s.ServiceId,
-        //                  GroupId = s.GroupId,
-        //                  ServiceShortDesc = s.ServiceShortDesc,
-        //                  ServiceName = s.ServiceName,
-        //                  ClassRate = d.ClassRate ?? 0,
-        //                  TariffId = d.TariffId ?? 0,
-        //                  ClassId = d.ClassId ?? 0,
-        //                  IsEditable = s.IsEditable,
-        //                  CreditedtoDoctor = s.CreditedtoDoctor,
-        //                  IsPathology = s.IsPathology,
-        //                  IsRadiology = s.IsRadiology,
-        //                  IsActive = s.IsActive,
-        //                  PrintOrder = s.PrintOrder,
-        //                  IsPackage = s.IsPackage,
-        //                  DoctorId = s.DoctorId,
-        //                  IsDocEditable = s.IsDocEditable
-        //              };
-        //    var sql = qry.Take(50).ToQueryString();
-        //    Console.WriteLine(sql);
-        //    return await qry.Take(50).ToListAsync();
-        //}
-
+       
 
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
@@ -552,7 +481,7 @@ namespace HIMS.Services.OutPatient
 
             odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
         }
-        public virtual async Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string UserName)
+        public virtual async Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -564,6 +493,8 @@ namespace HIMS.Services.OutPatient
                     Rentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_VisitDateTime", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
         }
 

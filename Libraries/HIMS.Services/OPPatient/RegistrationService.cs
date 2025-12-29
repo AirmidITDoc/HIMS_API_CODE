@@ -60,7 +60,7 @@ namespace HIMS.Services.OPPatient
         }
 
 
-        public virtual async Task InsertAsyncSP(Registration objRegistration, int UserId, string Username)
+        public virtual async Task InsertAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId" };
@@ -72,8 +72,8 @@ namespace HIMS.Services.OPPatient
             }
             string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             objRegistration.RegId = Convert.ToInt32(RegId);
-
-            await _context.SaveChangesAsync(UserId, Username);
+            await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
         }
         public virtual async Task InsertAsync(Registration objregistration, int UserId, string Username)
         {

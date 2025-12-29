@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         // Create  by Ashutosh 12 Jun 2025
         [HttpPost("InsertEDMX")]
-        //  [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RegistrationModel obj)
         {
 

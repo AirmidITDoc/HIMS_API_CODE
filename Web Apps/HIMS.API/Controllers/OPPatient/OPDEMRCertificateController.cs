@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -38,7 +39,7 @@ namespace HIMS.API.Controllers.OPPatient
             _radiorepository1 = pathrepository1;
         }
         [HttpPost("CertificateInformationList")]
-        //   [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CertificateInformationListDto> CertificateInformationList = await _oPBillingService.GetListAsync(objGrid);
@@ -46,7 +47,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //Add API
         [HttpPost("TCertificateInformationSave")]
-        //[Permission(PageCode = "TCertificateInformationSave", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(TCertificateInformationParamModel obj)
         {
             TCertificateInformation model = obj.MapTo<TCertificateInformation>();
@@ -64,7 +65,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPut("TCertificateInformationUpdate")]
-        //[Permission(PageCode = "TCertificateInformationUpdate", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(TCertificateInformationParamModel obj)
         {
             TCertificateInformation model = obj.MapTo<TCertificateInformation>();
@@ -83,7 +84,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpGet]
         [Route("get-CertificateMaster")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _radiorepository1.GetAll();

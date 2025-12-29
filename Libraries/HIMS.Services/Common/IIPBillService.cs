@@ -24,10 +24,10 @@ namespace HIMS.Services.Common
 
 
 
-        Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
-        void IPAddchargesdelete(AddCharge ObjaddCharge, int UserId, string Username);
+        Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName);
+        Task IPAddchargesdelete(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName);
         void IPbillSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, List<TPayment> ObjTPayment, int UserId, string Username);
-        void IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int UserId, string Username);
+        Task IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int CurrentUserId, string CurrentUserName);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         Task paymentMultipleAsyncSP(List<Payment> objPayment, List<Bill> ObjBill,  List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
 
@@ -43,8 +43,8 @@ namespace HIMS.Services.Common
         void InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
         void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 
-        void IPbillSp(Bill ObjBill, int UserId, string Username);
-        void UpdateBill(List<AddCharge> objAddCharge,Bill ObjBill, int UserId, string Username);
+        void IPbillSp(Bill ObjBill, int currentUserId, string currentUserName);
+        Task UpdateBill(List<AddCharge> objAddCharge,Bill ObjBill, int CurrentUserId, string CurrentUserName);
 
 
     }

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
@@ -44,21 +45,21 @@ namespace HIMS.API.Controllers.Common
             return Ok(IPDBillList.ToGridResponse(objGrid, "Browse IP Bill List "));
         }
         [HttpPost("BrowseIPPaymentList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPPaymentListDto> IPPaymentList = await _IPBillService.GetIPPaymentListAsync(objGrid);
             return Ok(IPPaymentList.ToGridResponse(objGrid, "Browse IP Payment List"));
         }
         [HttpPost("BrowseIPRefundlist")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPRefundListDto> IPRefundlist = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
             return Ok(IPRefundlist.ToGridResponse(objGrid, " Browse IP Refund list "));
         }
         [HttpPost("ServiceClassdetaillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
         public async Task<IActionResult> ServiceDetaillList(GridRequestModel objGrid)
         {
             IPagedList<ServiceClassdetailListDto> ServiceClassdetailList = await _IPBillService.ServiceClassdetailList(objGrid);
@@ -66,7 +67,8 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPut("UpdateRefund")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Billing", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Update(UpdateRefundModel obj)
         {
             Refund model = obj.MapTo<Refund>();
