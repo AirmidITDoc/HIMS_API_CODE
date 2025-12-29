@@ -10,6 +10,9 @@
         public string? PatientName { get; set; }
         public string? PatientAge { get; set; }
         public string? MobileNo { get; set; }
+
+        public string? AadharCardNo { get; set; }
+
         public string? AdmissionDate { get; set; }
         public long? RegId { get; set; }
         public string? DoctorName { get; set; }
@@ -49,6 +52,8 @@
         public string? PrintBillNo { get; set; }
         public string? UserName { get; set; }
         public long? PatientTypeId { get; set; }
+
+        
 
     }
 }

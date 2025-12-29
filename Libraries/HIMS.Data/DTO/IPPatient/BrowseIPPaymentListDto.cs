@@ -10,6 +10,12 @@
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
+
+        public string? MobileNo { get; set; }
+
+        public string? AadharCardNo { get; set; }
+        
+
         public decimal? NetPayableAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
         public string? Remark { get; set; }

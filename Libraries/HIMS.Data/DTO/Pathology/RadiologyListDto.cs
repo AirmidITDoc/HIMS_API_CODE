@@ -10,12 +10,17 @@
         public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? GenderName { get; set; }
+
+        public string? MobileNo { get; set; }
+
+        public string? AadharCardNo { get; set; }
         public string? ConsultantDoctor { get; set; }
         public string? VisitDate { get; set; }
         public string? VisitTime { get; set; }
         public string? TestName { get; set; }
         public long opdipdtype { get; set; }
         public string? PBillNo { get; set; }
+        public string? BillNo { get; set; }
         public string? ServiceName { get; set; }
         public bool? IsCompleted { get; set; }
         public bool? IsPrinted { get; set; }
