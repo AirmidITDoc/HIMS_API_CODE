@@ -8165,7 +8165,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
                         html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
                         html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments"));
-                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                        html = html.Replace("{{PolicyNoList}}", dt.GetColValue("PolicyNoList"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
@@ -8189,7 +8189,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkRefDocNameflag}}", dt.GetColValue("RefDocName").ConvertToString() != "" ? "visible" : "none");
 
                         html = html.Replace("{{chkDiscCommentsflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
-                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -8360,7 +8360,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
                         html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
                         html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments"));
-                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                        html = html.Replace("{{PolicyNoList}}", dt.GetColValue("PolicyNoList"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
@@ -8384,7 +8384,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ConcessionReason}}", dt.GetColValue("ConcessionReason").ConvertToString());
                         html = html.Replace("{{chkDiscCommentsflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
 
-                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -8690,7 +8690,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
                         html = html.Replace("{{BillRefAmt}}", dt.GetColValue("BillRefAmt"));
                         html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments"));
-                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                        html = html.Replace("{{PolicyNoList}}", dt.GetColValue("PolicyNoList"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
@@ -8720,7 +8720,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkDiscCommentsflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
 
                         html = html.Replace("{{ConcessionReason}}", dt.GetColValue("ConcessionReason").ConvertToString());
-                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
