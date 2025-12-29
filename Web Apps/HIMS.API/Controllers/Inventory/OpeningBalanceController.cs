@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Inventory
 
         // changes done by Subhash -- Date : 19 May 2025
         [HttpPost("OpeningBalanceSave")]
-        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.Add)]
         public ApiResponse OpeningBalAsyncSp(OpeningBalanceModel obj)
         {
             TOpeningTransactionHeader Model = obj.OpeningBal.MapTo<TOpeningTransactionHeader>();

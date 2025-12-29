@@ -518,7 +518,7 @@ namespace HIMS.Services.Pharmacy
                              && cs.BalanceQty > 0
                        select new BatchListDTO()
                        {
-                           BatchNo = cs.BatchNo,
+                           BatchNo = cs.BatchNo.ToUpper(),
                            BatchExpDate = cs.BatchExpDate,
                            UnitMRP = cs.UnitMrp,
                            UnitPurRate = cs.PurUnitRateWf,
