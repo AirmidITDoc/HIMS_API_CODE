@@ -12,7 +12,7 @@ namespace HIMS.Services.Masters
         //}
         public virtual async Task<IPagedList<MParameterDescriptiveMasterListDto>> GetListAsync1(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<MParameterDescriptiveMasterListDto>(model, "m_Rtrv_PathDescriptiveValues_1");
+            return await DatabaseHelper.GetGridDataBySp<MParameterDescriptiveMasterListDto>(model, "ps_Rtrv_PathDescriptiveValues_1");
         }
 
     }

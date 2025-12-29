@@ -8,8 +8,7 @@ namespace HIMS.API.Models.OutPatient
         public double? CompDiscAmt { get; set; }
         public double? BalanceAmt { get; set; }
         public long? ConcessionReasonId { get; set; }
-
-
+        public long CreatedBy { get; set; } 
 
     }
 }

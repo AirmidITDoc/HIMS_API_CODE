@@ -3,6 +3,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
@@ -297,6 +298,19 @@ namespace HIMS.Services.Inventory
                        });
             return await qry.Take(50).ToListAsync();
         }
+
+        public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[2] = new SqlParameter("@ItemId", ItemId);
+
+            List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
+            return lstServiceList;
+        }
+
         public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId)
         {
 

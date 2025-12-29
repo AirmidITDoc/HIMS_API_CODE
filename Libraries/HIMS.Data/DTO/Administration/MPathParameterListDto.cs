@@ -18,7 +18,7 @@
         public string MethodName { get; set; }
 
         public string UserName { get; set; }
-
+        public string? ParaMultipleRange { get; set; }
 
 
 

@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("OpeningBalanceList")]
-        //[Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpningBalance(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalListDto> List1 = await _IOpeningBalanceService.GetOpeningBalanceList(objGrid);
@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("OpeningBalnceItemDetailList")]
-        //    [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
+        [Permission(PageCode = "OpeningBalance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpeningBalItemDetail(GridRequestModel objGrid)
         {
             IPagedList<OpeningBalanaceItemDetailListDto> List1 = await _IOpeningBalanceService.GetOPningBalItemDetailList(objGrid);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Inventory
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.",Model.OpeningHid);
         }
     }
 }
