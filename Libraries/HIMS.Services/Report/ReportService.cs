@@ -12561,84 +12561,64 @@ namespace HIMS.Services.Report
 
                 case "OTPreOperationReport":
                     {
-                        // Print Date
-                        html = html.Replace("{{PrintDate}}",
-                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
-                        // Patient Basic Details
-                        html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegId"));
-                        html = html.Replace("{{OPDIPDNo}}", dt.GetColValue("IPDNo"));
-                        html = html.Replace("{{PatientName}}",
-                            $"{dt.GetColValue("PrefixName")} {dt.GetColValue("FirstName")} {dt.GetColValue("LastName")}");
-                        html = html.Replace("{{Gender}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{OPIPID}}", dt.GetColValue("OPIPID"));
+                        html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
-                        html = html.Replace("{{City}}", dt.GetColValue("City"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
-                        // Admission Details
-                        html = html.Replace("{{DOA}}",
-                            dt.GetColValue("AdmissionDate").ConvertToDateString("dd-MM-yyyy"));
-                        html = html.Replace("{{DOATime}}",
-                            dt.GetColValue("AdmissionTime").ConvertToDateString("hh:mm tt"));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionDate").ConvertToDateString("dd-MM-yyyy"));
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("hh:mm tt"));
+                    
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{PatientTypeID}}", dt.GetColValue("PatientTypeID"));
 
-                        // Ward / Bed / Company
-                        html = html.Replace("{{Ward}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{OPD_IPDNO}}", dt.GetColValue("OPD_IPDNO"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName"));
 
-                        // Surgery Details
                         html = html.Replace("{{SurgeryName}}", dt.GetColValue("SurgeryName"));
                         html = html.Replace("{{SurgeryCategoryName}}", dt.GetColValue("SurgeryCategoryName"));
-                        html = html.Replace("{{SiteDescriptionName}}", dt.GetColValue("SurgeryPart"));
+                        html = html.Replace("{{SurgeryPart}}", dt.GetColValue("SurgeryPart"));
                         html = html.Replace("{{IsPrimary}}", dt.GetColValue("IsPrimary"));
 
-                        // Surgeon Details (Expr4, Expr5, Expr6 = Mr. Nitin Patil)
-                        html = html.Replace("{{SurgeonName}}",
-                            $"{dt.GetColValue("Expr4")} {dt.GetColValue("Expr5")} {dt.GetColValue("Expr6")}");
-                        html = html.Replace("{{SurgeonPrefix}}", dt.GetColValue("Expr4"));
-                        html = html.Replace("{{SurgeonFirstName}}", dt.GetColValue("Expr5"));
-                        html = html.Replace("{{SurgeonLastName}}", dt.GetColValue("Expr6"));
-
-                        // Primary Doctor Details (PrefixName, FirstName, LastName = Dr. mukesh Gandhi)
-                        html = html.Replace("{{PrimaryDoctorName}}",
-                            $"{dt.GetColValue("PrefixName")} {dt.GetColValue("FirstName")} {dt.GetColValue("LastName")}");
-                        html = html.Replace("{{DoctorId}}", dt.GetColValue("DoctorId"));
-
-                        // Anesthetist Details (Expr1, Expr2, Expr3 = Dr. Shrishal Teli)
-                        html = html.Replace("{{AnesthetistName}}",
-                            $"{dt.GetColValue("Expr1")} {dt.GetColValue("Expr2")} {dt.GetColValue("Expr3")}");
-                        html = html.Replace("{{AnesthetistPrefix}}", dt.GetColValue("Expr1"));
-                        html = html.Replace("{{AnesthetistFirstName}}", dt.GetColValue("Expr2"));
-                        html = html.Replace("{{AnesthetistLastName}}", dt.GetColValue("Expr3"));
-
-                        // Doctor Type Details
-                        html = html.Replace("{{DoctorType}}", dt.GetColValue("DoctorType"));
-                        html = html.Replace("{{DoctorTypeId}}", dt.GetColValue("DoctorTypeId"));
-
-                        // Diagnosis Details
-                        html = html.Replace("{{DescriptionName}}", dt.GetColValue("DescriptionName"));
-                        html = html.Replace("{{DescriptionType}}", dt.GetColValue("DescriptionType"));
-                        html = html.Replace("{{Expr7}}", dt.GetColValue("Expr7"));
-                        html = html.Replace("{{Expr8}}", dt.GetColValue("Expr8"));
-
-                        // Surgery Timing
-                        html = html.Replace("{{SurgeryFromTime}}",
-                            dt.GetColValue("SurgeryFromTime").ConvertToDateString("dd-MM-yyyy hh:mm tt"));
-                        html = html.Replace("{{SurgeryEndTime}}",
-                            dt.GetColValue("SurgeryEndTime").ConvertToDateString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{SurgeryFromTime}}", dt.GetColValue("SurgeryFromTime").ConvertToDateString(" hh:mm tt"));
+                        html = html.Replace("{{SurgeryEndTime}}",dt.GetColValue("SurgeryEndTime").ConvertToDateString("hh:mm tt"));
                         html = html.Replace("{{SurgeryDuration}}", dt.GetColValue("SurgeryDuration"));
+                        html = html.Replace("{{SurgeryDate}}", dt.GetColValue("SurgeryDate").ConvertToDateString("dd-MM-yyyy"));
 
-                        // Additional Fields
-                        html = html.Replace("{{OPIPID}}", dt.GetColValue("OPIPID"));
-                        html = html.Replace("{{Expr9}}", dt.GetColValue("Expr9"));
-                        html = html.Replace("{{Expr10}}", dt.GetColValue("Expr10"));
-                        html = html.Replace("{{Expr11}}", dt.GetColValue("Expr11"));
-                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{FromTime}}",dt.GetColValue("FromTime").ConvertToDateString("hh:mm tt"));
+                        html = html.Replace("{{ToTime}}",dt.GetColValue("ToTime").ConvertToDateString("hh:mm tt"));
+                        html = html.Replace("{{Duration}}", dt.GetColValue("Duration"));
+
+                        html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
+                        html = html.Replace("{{AnesthetistName}}", dt.GetColValue("AnesthetistName"));
+                
+                        html = html.Replace("{{AttendingDoctorName}}", dt.GetColValue("AttendingDoctorName"));
+                   
+                        html = html.Replace("{{DoctorType}}", dt.GetColValue("DoctorType"));
+
+                        html = html.Replace("{{DiagnosisName}}", dt.GetColValue("DiagnosisName"));
+                        html = html.Replace("{{DiagnosisType}}", dt.GetColValue("DiagnosisType"));
+                        html = html.Replace("{{CathlabDiagnosisName}}", dt.GetColValue("CathlabDiagnosisName"));
+                        html = html.Replace("{{CathlabDiagnosisType}}", dt.GetColValue("CathlabDiagnosisType"));
+
+                        html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
+                        html = html.Replace("{{LocationName}}", dt.GetColValue("LocationName"));
+
+                        html = html.Replace("{{BloodArranged}}", dt.GetColValue("BloodArranged"));
+                        html = html.Replace("{{PACRequired}}", dt.GetColValue("PACRequired"));
+                        html = html.Replace("{{EquipmentsRequired}}", dt.GetColValue("EquipmentsRequired"));
+                        html = html.Replace("{{Infective}}", dt.GetColValue("Infective"));
+                        html = html.Replace("{{ClearanceMedical}}", dt.GetColValue("ClearanceMedical"));
 
                         return html;
                     }
@@ -12647,7 +12627,7 @@ namespace HIMS.Services.Report
 
                 case "OTRequestReport":
                     {
-                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));

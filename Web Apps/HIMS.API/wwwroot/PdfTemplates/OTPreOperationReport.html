@@ -1,220 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OT Pre-Operation Report</title>
 </head>
 
-<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#101828;">
-    <div class="main-content-wrapper" style="background:#ffffff;">
-        <div class="invoice-box"
-             style="width:100%; background:#ffffff; padding:16px; font-size:14px; line-height:24px; color:#101828;">
+<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri, Arial, sans-serif; color:#101828;">
+    <div style="padding:16px;">
 
-            <table style="width:100%; line-height:inherit; text-align:left;">
-                {{NewHeader}}
-
-                <!-- Title -->
-                <tr class="title-date-row">
-                    <td style="padding:8px 4px;">
-                        <table style="width:98%; border-collapse:collapse;">
-                            <tr style="font-size:18px;">
-                                <td style="border-bottom:2px solid #000000; padding-bottom:10px; color:#0b0b0b;">
-                                    <b>OT Pre-Operation Report</b>
-                                </td>
-                                <td style="border-bottom:2px solid #000000; padding-bottom:10px; text-align:right; font-size:13px; color:#0b0b0b;">
-                                    <b>Print Date :</b> {{PrintDate}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <!-- Patient Info -->
-                <tr class="bill-info-row">
-                    <td style="padding:10px 4px;">
-                        <table style="width:98%; border-collapse:collapse;">
-                            <tr style="background-color:#f2f4f7;">
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>UHID No :</b> {{UHIDNo}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>IPD No :</b> {{OPDIPDNo}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Patient Name :</b> {{PatientName}}
-                                </td>
-                            </tr>
-                            <tr style="background-color:#f9fafb;">
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Gender :</b> {{Gender}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Age :</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Mobile No :</b> {{MobileNo}}
-                                </td>
-                            </tr>
-                            <tr style="background-color:#f2f4f7;">
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>City :</b> {{City}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Patient Type :</b> {{PatientType}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Company :</b> {{CompanyName}}
-                                </td>
-                            </tr>
-                            <tr style="background-color:#f9fafb;">
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Ward | Bed :</b> {{Ward}} | {{BedName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>Tariff :</b> {{TariffName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>DOA :</b> {{DOA}}
-                                </td>
-                            </tr>
-                            <tr style="background-color:#f2f4f7;">
-                                <td style="padding:6px; border:1px solid #d1d5db;">
-                                    <b>DOA Time :</b> {{DOATime}}
-                                </td>
-                                <td colspan="2"></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="border-top:2px solid #000000; margin:12px 0;"></td>
-                </tr>
-
-                <!-- Surgery Details -->
-                <tr class="bill-info-row">
-                    <td style="padding:10px 4px;">
-                        <table style="width:98%; border-collapse:collapse;">
-                            <tr style="background-color:#e2e8f0;">
-                                <td colspan="2" style="padding:6px 4px; font-weight:bold; font-size:15px; border:1px solid #cbd5e1;">
-                                    Surgery Details
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgery Name :</b> {{SurgeryName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgery Category :</b> {{SurgeryCategoryName}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Site Description :</b> {{SiteDescriptionName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Is Primary :</b> {{IsPrimary}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgery From Time :</b> {{SurgeryFromTime}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgery End Time :</b> {{SurgeryEndTime}}
-                                </td>
-                            </tr>
-                            <tr style="background-color:#f9fafb;">
-                                <td colspan="2" style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgery Duration :</b> {{SurgeryDuration}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="border-top:2px solid #000000; margin:12px 0;"></td>
-                </tr>
-
-                <!-- Doctor Details -->
-                <tr class="bill-info-row">
-                    <td style="padding:10px 4px;">
-                        <table style="width:98%; border-collapse:collapse;">
-                            <tr style="background-color:#e2e8f0;">
-                                <td colspan="2" style="padding:6px 4px; font-weight:bold; font-size:15px; border:1px solid #cbd5e1;">
-                                    Doctor Details
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Primary Doctor :</b> {{PrimaryDoctorName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Doctor Type :</b> {{DoctorType}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Surgeon :</b> {{SurgeonName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Anesthetist :</b> {{AnesthetistName}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="border-top:2px solid #000000; margin:12px 0;"></td>
-                </tr>
-
-                <!-- Diagnosis Details -->
-                <tr class="bill-info-row">
-                    <td style="padding:10px 4px;">
-                        <table style="width:98%; border-collapse:collapse;">
-                            <tr style="background-color:#e2e8f0;">
-                                <td colspan="2" style="padding:6px 4px; font-weight:bold; font-size:15px; border:1px solid #cbd5e1;">
-                                    Diagnosis Details
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Description Name :</b> {{DescriptionName}}
-                                </td>
-                                <td style="padding:6px; border:1px solid #cbd5e1;">
-                                    <b>Description Type :</b> {{DescriptionType}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <!-- Footer -->
-                <tr>
-                    <table style="width:100%; border-collapse:collapse; margin-top:40px; text-align:center;">
+       
+        <table width="100%">
+            {{NewHeader}}
+            <tr>
+                <td colspan="2" style="border-bottom:2px solid #000;">
+                    <table width="100%">
                         <tr>
-                            <td>
-                                ____________________<br>
-                                <b>Prepared By</b>
+                            <td style="font-size:18px;">
+                                <b>OT Pre-Operation Report</b>
                             </td>
-                            <td>
-                                ____________________<br>
-                                <b>Surgeon</b>
-                            </td>
-                            <td>
-                                ____________________<br>
-                                <b>Signature</b>
+                            <td style="text-align:right; font-size:13px;">
+                                <b>Print Date :</b> {{PrintDate}}
                             </td>
                         </tr>
                     </table>
-                </tr>
+                </td>
+            </tr>
+        </table>
 
-            </table>
-        </div>
+        <br>
+
+       
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#f9fafb;">
+                <td><b>UHID No :</b> {{UHIDNo}}</td>
+                <td><b>OPD/IPD No :</b> {{OPD_IPDNO}}</td>
+                <td><b>Admission :</b> {{AdmissionDate}} {{AdmissionTime}}</td>
+            </tr>
+
+            <tr style="background:#f2f4f7;">
+                <td><b>Patient Name :</b> {{PatientName}}</td>
+                <td><b>Patient Type :</b> {{PatientType}}</td>
+                <td><b>Age | Gender :</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D | {{GenderName}}</td>
+            </tr>
+
+            <tr style="background:#f9fafb;">
+                <td><b>Mobile No :</b> {{MobileNo}}</td>
+                <td><b>Room :</b> {{RoomName}}</td>
+                <td><b>Bed :</b> {{BedName}}</td>
+            </tr>
+
+            <tr style="background:#f2f4f7;">
+                <td colspan="3"><b>Company :</b> {{CompanyName}} | <b>Tariff :</b> {{TariffName}}</td>
+            </tr>
+        </table>
+
+        <br><br>
+
+       
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="4"><b>Pre-Operation Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>OT Table</b><br>{{OTTableName}}</td>
+                <td><b>Location</b><br>{{LocationName}}</td>
+                <td><b>Blood Arranged</b><br>{{BloodArranged}}</td>
+                <td><b>PAC Required</b><br>{{PACRequired}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Equipments</b><br>{{EquipmentsRequired}}</td>
+                <td><b>Infective</b><br>{{Infective}}</td>
+                <td><b>Medical Clearance</b><br>{{ClearanceMedical}}</td>
+                <td><b>Diagnosis</b><br>{{DiagnosisName}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <b>Diagnosis Type :</b> {{DiagnosisType}}<br>
+                    <b>Cathlab Diagnosis :</b> {{CathlabDiagnosisName}} ({{CathlabDiagnosisType}})
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+
+       
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="4"><b>Surgery Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Surgery Category</b><br>{{SurgeryCategoryName}}</td>
+                <td><b>Surgery Name</b><br>{{SurgeryName}}</td>
+                <td><b>Surgery Part</b><br>{{SurgeryPart}}</td>
+                <td><b>Primary</b><br>{{IsPrimary}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Surgery Date</b><br>{{SurgeryDate}}</td>
+                <td><b>From Time</b><br>{{SurgeryFromTime}}</td>
+                <td><b>To Time</b><br>{{SurgeryEndTime}}</td>
+                <td><b>Duration</b><br>{{SurgeryDuration}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <b>Surgeon :</b> {{SurgeonName}} |
+                    <b>Anesthetist :</b> {{AnesthetistName}}
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+
+       
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="3"><b>Attending Details</b></td>
+            </tr>
+
+            <tr style="background:#f9fafb; font-weight:bold;">
+                <td>Resource Type</td>
+                <td>Doctor Type</td>
+                <td>Doctor Name</td>
+            </tr>
+
+            <tr>
+                <td>Doctor</td>
+                <td>{{DoctorType}}</td>
+                <td>{{AttendingDoctorName}}</td>
+            </tr>
+        </table>
+
     </div>
 </body>
 </html>
