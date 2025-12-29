@@ -1,129 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OT Pre-Operation Report</title>
 </head>
 
-<body>
-    <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-            <table style="width: 100%;line-height: inherit;text-align: left;">
+<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri, Arial, sans-serif; color:#101828;">
+    <div style="padding:16px;">
 
-                {{NewHeader}}
-                <tr class="title-date-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>UHID :</b></span>
-                                    <span>{{RegNo}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>OPIPID :</b></span>
-                                    <span>{{OPIPID}}</span>
+        <!-- ================= HEADER ================= -->
+        <table width="100%">
+            {{NewHeader}}
+            <tr>
+                <td colspan="2" style="border-bottom:2px solid #000;">
+                    <table width="100%">
+                        <tr>
+                            <td style="font-size:18px;">
+                                <b> Consent Report</b>
+                            </td>
+                            <td style="text-align:right; font-size:13px;">
+                                <b>Print Date :</b> {{CurrentDate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-                                </td>
-                              
+        </table>
+        <br>
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
 
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>OPD | Time:</b></span>
-                                    <span>{{ConsentTime}}</span>
-                                </td>
+            <tr style="background:#f9fafb;">
+                <td><b>UHID :</b> {{RegNo}}</td>
+                <td><b>OPD/IPD No :</b> {{OPIPID}}</td>
+                <td><b>DOA | Time :</b> {{AdmissionTime}}</td>
+            </tr>
 
+            <tr style="background:#f2f4f7;">
+                <td><b>Patient Name :</b> {{PatientName}}</td>
+                <td colspan="2"><b>Age | Gender :</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D | {{GenderName}}</td>
+            </tr>
 
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Patient Name:</b></span>
-                                    <span>{{PatientName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Department:</b></span>
-                                    <span>{{DepartmentName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Age | Sex:</b> </span>
-                                    <span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
-                                </td>
+            <tr style="background:#f9fafb;">
+                <td><b>Doctor Name :</b> {{DoctorName}}</td>
+                <td colspan="2"><b>Department :</b> {{DepartmentName}}</td>
 
-                            </tr>
-                            <tr>
+            </tr>
+        </table>
 
+        <br><br>
 
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Doctor Name:</b></span>
-                                    <span>{{DoctorName}}</span>
-                                </td>
-                                <!--<td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Department:</b></span>
-                                    <span>{{DepartmentName}}</span>
-                                </td>-->
-                                <!--<td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Ward|Bed NO :</b></span>
-                                    <span>{{WardName}}|{{BedNo}}</span>
-                                </td>-->
-
-                            </tr>
-                            <!--<tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Ref.Doctor Name :</b></span>
-                                    <span>{{RefDoctorName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Patient Type:</b></span>
-                                    <span>{{PatientType}}</span>
-
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight: bold;"><b>Company Name:</b></span>
-                                    <span>{{CompanyName}}</span>
-                                </td>
-
-                            </tr>-->
-                        </table>
-                        <table style="width: 100%; border-collapse: collapse;">
-
-                            <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px;text-align:center "><b> {{ConsentName}}</b></td>
-                            </tr>
-                        </table>
+        <table style="width:100%; border-collapse:collapse;">
+            <tbody>
+                <tr style="font-size:18px;">
+                    <td style="border-bottom:1px solid #d4c3c3; padding-bottom:16px; text-align:center;">
+                        <b>{{ConsentName}}</b>
+                    </td>
                 </tr>
 
-
-            </table>
-            </td>
-            </tr>
-
-
-
-
-            <tbody style="font-size: 14px;">
                 {{Items}}
-
-
             </tbody>
-            </thead>
-            </table>
-            </td>
-            </tr>
+        </table>
 
 
-            <!--<tr style="padding: 6px; text-align: right;">
-            <td>
-            <span>Prepared By</span>
-            </td>
-            </tr>-->
-            </table>
-            </tr>
-            </table>
-        </div>
+
     </div>
 </body>
 </html>
-
-
-

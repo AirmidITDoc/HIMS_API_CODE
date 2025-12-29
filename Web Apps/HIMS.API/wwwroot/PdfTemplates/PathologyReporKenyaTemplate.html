@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laboratory Report</title>
+</head>
+
+<body style="margin:0; height:100%; font-family:Verdana, Arial, sans-serif; color:#000; display:flex; flex-direction:column; min-height:100vh;">
+
+    <div style="flex:1; padding:10px; box-sizing:border-box;">
+
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <tr>
+                {{NewHeader}}
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="font-weight:bold; font-size:12px; text-align:left;">
+                                Laboratory Report
+                            </td>
+                            <td style="font-weight:bold; font-size:12px; text-align:right;">
+                                Print Date : {{CurrentDate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="padding-top:5px;">
+                    <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
+                        <tr>
+                            <td style="width:75%; vertical-align:top;">
+                                <table style="width:100%; border-collapse:collapse;" cellpadding="4">
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">UHID</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
+                                        <td style="font-size:9px; font-weight:normal;">REGISTERED ON</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">PATIENT NAME</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
+                                        <td style="font-size:9px; font-weight:normal;">COLLECTED ON</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{PathTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">AGE</td>
+                                        <td style="font-size:9px; font-weight:normal;">: {{AgeYear}}</td>
+                                        <td style="font-size:9px; font-weight:normal;">REPORTED ON</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">SEX</td>
+                                        <td style="font-size:9px; font-weight:normal;">: {{GenderName}}</td>
+                                        <td style="font-size:9px; font-weight:normal;">SAMPLE NO</td>
+                                        <td style="font-size:9px; font-weight:normal;">: {{SampleNo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">NATIONAL ID NO</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{ID}}</strong></td>
+                                        <td style="font-size:9px; font-weight:normal;">REFERRED BY</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{RefDoctorName}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:9px; font-weight:normal;">REPORT STATUS</td>
+                                        <td style="font-size:9px; font-weight:normal;">: <strong>FINAL</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                </table>
+                            </td>
+
+                            <td style="width:25%; text-align:center; vertical-align:top;">
+                                <!-- QR CODE -->
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+                                     alt="QR Code"
+                                     style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
+
+                                <!-- BARCODE -->
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
+                                     alt="Barcode"
+                                     style="width:150px; height:30px; display:block; margin:6px auto 0; image-rendering:crisp-edges;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center; font-size:20px; font-weight:bolder;">
+                    {{PrintTestName}}
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding:6px;">
+                    <div style="padding:5px; margin:5px; width:100%;">
+                        <div style="width:100%; margin-left:5px; height:auto;">
+                            <div innerHtml="{{PathTemplateDetailsResult}}"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <table style="width: 100%; margin-top: 20px; border-top: 1px solid #000;">
+            <tr>
+                <td style="text-align:center; font-size:12px; font-weight:bold;">
+                    **END OF REPORT**
+                </td>
+            </tr>
+        </table>
+
+
+        <table style="width:100%; margin-top:20px;">
+            <tr>
+                <td style="text-align:right;">
+                    <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}};" />
+                    <div style="font-size:12px; font-weight:bold;">{{PathResultDr1}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{Education}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{MahRegNo}}</div>
+                </td>
+            </tr>
+        </table>
+        <div style="font-family:Verdana, Arial, sans-serif; font-size:9px; text-align:center;">
+            Test Performed At MEDITEST DIAGNOSTIC SERVICE Ltd. Reproduction of Reports is not Permitted<br>
+            For any query related KENAS scope, Kindly contact to us: qualityassurance@meditestdiagnostic.com
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div style="border-top:1px solid #000; text-align:center; font-size:10px; font-weight:bold; padding:6px 10px; background:#fff;">
+        Meditest Diagnostic Services Ltd | Sclaters House | Parklands Road<br />
+        P. O. Box 66341 - 00800 | Nairobi | Kenya<br />
+        Tel: +254 734 205 430, +254 730 795 000, +254 786 434 046<br />
+        Email: info@meditestdiagnostic.com | Web: www.meditestdiagnostic.com
+    </div>
+
+</body>
+</html>

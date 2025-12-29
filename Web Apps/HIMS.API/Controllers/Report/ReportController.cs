@@ -406,13 +406,13 @@ namespace HIMS.API.Controllers.Report
 
 
                 // OT
-
                 case "OTAnaesthesiaRecord":
                 case "OTCheckInOutPatientWise":
                 case "OTInOperationReport":
                 case "OTPreOperationReport":
                 case "OTRequestReport":
                 case "OTOperativeNotesReport":
+                case "OTReservation":
 
 
                 //PATHOLOGY 
@@ -425,6 +425,8 @@ namespace HIMS.API.Controllers.Report
 
 
                 case "PathologyReporKenyatWithHeader":
+                case "PathologyReporKenyaTemplate":
+
 
                 //Radiology 
                 case "RadiologyTemplateReportWithHeader":
@@ -434,7 +436,6 @@ namespace HIMS.API.Controllers.Report
                 //Advance Page Printouts
                 case "IpAdvanceReceipt":
                 case "IpAdvanceStatement":
-
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
                 case "DischargSummary":
@@ -464,11 +465,11 @@ namespace HIMS.API.Controllers.Report
 
                 //Clinical Care
                 case "NursingVitalsReport":
-                //OT
-                case "OTRequest":
-                case "OTReservationReport":
+
+                //case "OTReservationReport":
+             //   case "OTRequest":
                 case "SupplierPaymentReciept":
-                case "OTReservation":
+           
 
                 //Labrequest Detail
                 case "LabRegistrationListReport":
