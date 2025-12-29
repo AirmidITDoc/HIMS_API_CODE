@@ -1,196 +1,105 @@
-<div>
-    <div>
-        <!DOCTYPE html>
-        <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OT Anaesthesia Record</title>
+</head>
 
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>OT Anaesthesia Record</title>
-        </head>
+<body style="margin:0; padding:0; background:#ffffff; font-family:Calibri, Arial, sans-serif; color:#101828;">
+    <div style="padding:16px;">
 
-        <body style="margin:0; padding:0; background:#ffffff; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#101828;">
-            <div class="main-content-wrapper" style="background:#ffffff;">
-                <div class="invoice-box"
-                     style="width:100%; background:#ffffff; padding:16px; font-size:14px; line-height:24px; color:#101828;">
-
-                    <table style="width:100%; line-height:inherit; text-align:left;">
-                        {{NewHeader}}
-
-                        <!-- Title -->
-                        <tr class="title-date-row">
-                            <td style="padding:8px 4px;">
-                                <table style="width:98%; border-collapse:collapse;">
-                                    <tr style="font-size:18px;">
-                                        <td style="border-bottom:2px solid #000000; padding-bottom:10px; color:#0b0b0b;">
-                                            <b>OT Anaesthesia Record</b>
-                                        </td>
-                                        <td style="border-bottom:2px solid #000000; padding-bottom:10px; text-align:right; font-size:13px; color:#0b0b0b;">
-                                            <b>Print Date :</b> {{PrintDate}}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- Patient Info -->
-                        <tr class="bill-info-row">
-                            <td style="padding:10px 4px;">
-                                <table style="width:98%; border-collapse:collapse;">
-                                    <tr style="background-color:#f2f4f7;">
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Reg ID :</b> {{RegID}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Patient Name :</b> {{PatientName}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Gender :</b> {{GenderName}}
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color:#f9fafb;">
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Age :</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Mobile No :</b> {{MobileNo}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>City :</b> {{City}}
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color:#f2f4f7;">
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Department :</b> {{DepartmentName}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Ward | Bed :</b> {{RoomName}} | {{BedName}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Tariff :</b> {{TariffName}}
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color:#f9fafb;">
-                                        <td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Admission Date :</b> {{AdmissionTime}}
-                                        </td>
-                                        <!--<td style="padding:6px; border:1px solid #d1d5db;">
-                                            <b>Admission Time :</b> {{AdmissionTime}}
-                                        </td>-->
-                                        <td></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
+        <!-- ================= HEADER ================= -->
+        <table width="100%">
+            {{NewHeader}}
+            <tr>
+                <td colspan="2" style="border-bottom:2px solid #000;">
+                    <table width="100%">
                         <tr>
-                            <td style="border-top:2px solid #000000; margin:12px 0;"></td>
-                        </tr>
-
-                        <!-- Anaesthesia Details -->
-                        <tr class="bill-info-row">
-                            <td style="padding:10px 4px;">
-                                <table style="width:98%; border-collapse:collapse;">
-                                    <tr style="background-color:#e2e8f0;">
-                                        <td colspan="2" style="padding:6px 4px; font-weight:bold; font-size:15px; border:1px solid #cbd5e1;">
-                                            Anaesthesia Details
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Anaesthesia No :</b> {{AnesthesiaNo}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Anaesthesia Type :</b> {{AnaesthesiaType}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Anaesthesia Date :</b> {{AnesthesiaDate}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Doctor :</b> {{Expr1}} {{Expr2}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Start Date :</b> {{AnesthesiaStartDate}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Start Time :</b> {{AnesthesiaStartTime}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>End Date :</b> {{AnesthesiaEndDate}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>End Time :</b> {{AnesthesiaEndTime}}
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color:#f9fafb;">
-                                        <td colspan="2" style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Pre-OP Diagnosis :</b> {{PreOPDiagonis}}
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color:#f2f4f7;">
-                                        <td colspan="2" style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Anaesthesia Notes :</b> {{AnesthesiaNotes}}
-                                        </td>
-                                    </tr>
-                                </table>
+                            <td style="font-size:18px;">
+                                <b>OT Anaesthesia Record</b>
+                            </td>
+                            <td style="text-align:right; font-size:13px;">
+                                <b>Print Date :</b> {{PrintDate}}
                             </td>
                         </tr>
-
-                        <tr>
-                            <td style="border-top:2px solid #000000; margin:12px 0;"></td>
-                        </tr>
-
-                        <!-- Recovery Details -->
-                        <tr class="bill-info-row">
-                            <td style="padding:10px 4px;">
-                                <table style="width:98%; border-collapse:collapse;">
-                                    <tr style="background-color:#e2e8f0;">
-                                        <td colspan="2" style="padding:6px 4px; font-weight:bold; font-size:15px; border:1px solid #cbd5e1;">
-                                            Recovery Details
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Recovery Start :</b> {{RecoveryStartDate}} | {{RecoveryStartTime}}
-                                        </td>
-                                        <td style="padding:6px; border:1px solid #cbd5e1;">
-                                            <b>Recovery End :</b> {{RecoveryEndDate}} | {{RecoveryEndTime}}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- Footer -->
-                        <tr>
-                            <table style="width:100%; border-collapse:collapse; margin-top:40px; text-align:center;">
-                                <tr>
-                                    <td>
-                                        ____________________<br>
-                                        <b>Prepared By</b>
-                                    </td>
-                                    <td>
-                                        ____________________<br>
-                                        <b>Doctor</b>
-                                    </td>
-                                    <td>
-                                        ____________________<br>
-                                        <b>Signature</b>
-                                    </td>
-                                </tr>
-                            </table>
-                        </tr>
-
                     </table>
-                </div>
-            </div>
-        </body>
-    </html>
-</div>
-</div>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <!-- ================= 1. PATIENT INFORMATION ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+
+            <tr style="background:#f9fafb;">
+                <td><b>UHID No :</b> {{RegNo}}</td>
+                <td><b>OPD/IPD No :</b> {{IPDNo}}</td>
+                <td><b>DOA| Time :</b> {{AdmissionDate}} {{AdmissionTime}}</td>
+
+            </tr>
+
+            <tr style="background:#f2f4f7;">
+                <td><b>Patient Name :</b> {{PatientName}}</td>
+                <td><b>Age |Gender:</b> {{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D | {{GenderName}}</td>
+                <td><b>Mobile No :</b> {{MobileNo}}</td>
+            </tr>
+
+            <tr style="background:#f9fafb;">
+                <td><b>Department :</b> {{DepartmentName}}</td>
+                <td><b>Ward / Bed :</b> {{RoomName}} / {{BedName}}</td>
+                <td><b>DoctorName :</b> {{DoctorName}}</td>
+              
+            </tr>
+            <tr style="background:#f2f4f7;">
+                <td colspan="3"><b>Tariff :</b> {{TariffName}}</td>
+            </tr>
+
+
+        </table>
+
+        <br><br>
+
+        <!-- ================= 2. ANAESTHESIA DETAILS ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="4"><b>Anaesthesia Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Anaesthesia No</b><br>{{AnesthesiaNo}}</td>
+                <td><b>Anaesthesia Type</b><br>{{AnaesthesiaType}}</td>
+                <td><b>Anaesthesia Date</b><br>{{AnesthesiaDate}}</td>
+                <td ><b>Pre-OP Diagnosis</b><br>{{PreOPDiagonis}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Start Date</b><br>{{AnesthesiaStartDate}}</td>
+                <td><b>Start Time</b><br>{{AnesthesiaStartTime}}</td>
+                <td><b>End Date</b><br>{{AnesthesiaEndDate}}</td>
+                <td><b>End Time</b><br>{{AnesthesiaEndTime}}</td>
+            </tr>
+
+          
+            <tr>
+                <td colspan="4"><b>Anaesthesia Notes</b><br>{{AnesthesiaNotes}}</td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- ================= 3. RECOVERY DETAILS ================= -->
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="2"><b>Recovery Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Recovery Start</b><br>{{RecoveryStartDate}} {{RecoveryStartTime}}</td>
+                <td><b>Recovery End</b><br>{{RecoveryEndDate}} {{RecoveryEndTime}}</td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
