@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Utility;
+using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
@@ -40,7 +41,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("InsertPrescription")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
@@ -87,7 +88,7 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
         }
         [HttpPost("PrescriptionCancel")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)
         {
             TIpPrescription model = new();
@@ -104,7 +105,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionReturnInsert")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
@@ -121,8 +122,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionReturnCancel")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
-
+        [Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescReturnCancel(PrescreturnCancelAsync obj)
         {
             TIpprescriptionReturnH model = new();

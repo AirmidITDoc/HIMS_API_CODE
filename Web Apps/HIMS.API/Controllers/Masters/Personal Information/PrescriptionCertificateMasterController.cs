@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -27,14 +28,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CertificateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCertificateMaster> CertificateMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(CertificateMasterList.ToGridResponse(objGrid, "CertificateMaster List"));
         }
         [HttpGet("{id?}")]
-        //   [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CertificateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
 
         [HttpPost]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CertificateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CertificateMasterModel obj)
         {
             MCertificateMaster model = obj.MapTo<MCertificateMaster>();
@@ -64,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CertificateMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CertificateMasterModel obj)
         {
             MCertificateMaster model = obj.MapTo<MCertificateMaster>();
@@ -81,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CertificateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCertificateMaster? model = await _repository.GetById(x => x.CertificateId == Id);
