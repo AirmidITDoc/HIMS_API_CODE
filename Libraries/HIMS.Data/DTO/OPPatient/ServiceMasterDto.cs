@@ -21,7 +21,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? CompanyCode { get; set; }
         public string? CompanyServicePrint { get; set; }
         public bool? IsInclusionOrExclusion { get; set; }
-        public string FormattedText { get { return this.ServiceName + " | Price : " + this.ClassRate.ToString("F2"); } }
+        public string FormattedText { get { return this.ServiceName + " | Price : " + this.Price.ToString("F2"); } }
 
     }
 }
