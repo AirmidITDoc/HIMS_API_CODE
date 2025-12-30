@@ -32,10 +32,10 @@ namespace HIMS.Services.Administration
             }
 
             odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
-            //await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution( Rentity, nameof(Bill), (int)ObjBill.BillNo, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
-        public virtual void Update(Admission ObjAdmission, int UserId, string UserName)
+        public virtual async Task  Update(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -48,7 +48,7 @@ namespace HIMS.Services.Administration
             }
 
             odal.ExecuteNonQuery("ps_Update_AdmissionDateTime", CommandType.StoredProcedure, Rentity);
-            //await _context.LogProcedureExecution(Rentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Rentity, nameof(Admission), (int)ObjAdmission.AdmissionId,Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
         }

@@ -10865,9 +10865,9 @@ namespace HIMS.Services.Report
                             {
                                 items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
                                      .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
-                                     .Append("<u>")
+                                     .Append("<span style=\"border-bottom:2px solid #000;\">")  
                                      .Append(dr["PrintTestName"].ConvertToString())
-                                     .Append("</u>")
+                                     .Append("</span>")
                                      .Append("</td></tr>");
                             }
 
@@ -10908,7 +10908,7 @@ namespace HIMS.Services.Report
 
                                 previousLabel = dr["PrintTestName"].ConvertToString();
 
-                                // ===== Parameter Name =====
+                                // ===== Parameter Name + Method Name =====
                                 items.Append("<tr style=\"font-family:Verdana, Arial, sans-serif; color:#000;\">");
 
                                 if (dr["IsBoldFlag"].ConvertToString() == "B")
@@ -10916,8 +10916,18 @@ namespace HIMS.Services.Report
                                 else
                                     items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">");
 
-                                items.Append(dr["PrintParameterName"].ConvertToString()).Append("</td>");
-                                items.Append(dr["MethodName"].ConvertToString()).Append("</td>");
+                                // Parameter Name
+                                items.Append(dr["PrintParameterName"].ConvertToString());
+
+                                // Method Name (small font, italic, on next line)
+                                if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
+                                {
+                                    items.Append("<br/><span style=\"font-size:10px;font-style:italic;color:#555;\">")
+                                         .Append(dr["MethodName"].ConvertToString())
+                                         .Append("</span>");
+                                }
+
+                                items.Append("</td>");
 
 
                                 // ===== Observed Value =====

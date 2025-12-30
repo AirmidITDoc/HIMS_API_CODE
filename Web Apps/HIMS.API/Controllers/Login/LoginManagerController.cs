@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -179,7 +179,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("Updatepassword")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
