@@ -10549,29 +10549,19 @@ namespace HIMS.Services.Report
                             // ===== Test Name Header =====
                             if (i == 1)
                             {
-                                items.Append("<tr style=\"font-size:12px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:bold;\">")
-                                     .Append("<td colspan=\"4\" style=\"padding:3px;text-align:center;\">")
+                                items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
+                                     .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                     .Append("<span style=\"border-bottom:2px solid #000;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
+                                     .Append("</span>")
                                      .Append("</td></tr>");
                             }
 
+                            // ===== Change of Test Name =====
                             if (previousLabel != "" && previousLabel != dr["PrintTestName"].ConvertToString())
                             {
-                                if (i > 3)
-                                    Suggestion = dt.Rows[i - 2]["SuggestionNote"].ConvertToString();
-                                else if (i < 2)
-                                    Suggestion = dt.Rows[i - 1]["SuggestionNote"].ConvertToString();
-
-                                if (Suggestion != "")
-                                {
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;font-weight:bold;padding:3px;\">Interpretation Remark :</td></tr>");
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;padding:3px;\">")
-                                         .Append(Suggestion)
-                                         .Append("</td></tr>");
-                                }
-
-                                items.Append("<tr style=\"font-size:12px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:bold;\">")
-                                     .Append("<td colspan=\"4\" style=\"padding:3px;text-align:center;\">")
+                                items.Append("<tr style=\"font-size:12px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
+                                     .Append("<td colspan=\"4\" style=\"padding:6px;text-align:center;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
                                      .Append("</td></tr>");
                             }
@@ -10587,7 +10577,7 @@ namespace HIMS.Services.Report
                                     previoussubLabel = dr["SubTestName"].ConvertToString();
 
                                     items.Append("<tr style=\"font-size:12px;font-weight:bold;\">")
-                                         .Append("<td colspan=\"4\" style=\"padding:3px;text-align:left;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append(previoussubLabel)
                                          .Append("</td></tr>");
                                 }
@@ -10597,70 +10587,66 @@ namespace HIMS.Services.Report
                                     previoussubLabel = dr["SubTestName"].ConvertToString();
 
                                     items.Append("<tr style=\"font-size:12px;font-weight:bold;\">")
-                                         .Append("<td colspan=\"4\" style=\"padding:3px;text-align:left;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append(previoussubLabel)
                                          .Append("</td></tr>");
                                 }
 
                                 previousLabel = dr["PrintTestName"].ConvertToString();
 
-                                // ===== Parameter Name =====
-                                items.Append("<tr style=\"font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;\">");
+                                // ===== Parameter Name + Method Name =====
+                                items.Append("<tr style=\"font-family:Verdana, Arial, sans-serif; color:#000;\">");
 
                                 if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:3px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:left;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">");
 
-                                items.Append(dr["PrintParameterName"].ConvertToString()).Append("</td>");
+                                // Parameter Name
+                                items.Append(dr["PrintParameterName"].ConvertToString());
+
+                                // Method Name (small font, italic, on next line)
+                                if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
+                                {
+                                    items.Append("<br/><span style=\"font-size:10px;font-style:italic;color:#555;\">")
+                                         .Append(dr["MethodName"].ConvertToString())
+                                         .Append("</span>");
+                                }
+
+                                items.Append("</td>");
+
 
                                 // ===== Observed Value =====
                                 if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:3px;text-align:center;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:center;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:center;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:center;\">");
 
                                 items.Append(dr["ResultValue"].ConvertToString()).Append("</td>");
 
                                 // ===== Reference Range =====
                                 if (dr["NormalRange"].ConvertToString() != " -   ")
                                 {
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">")
                                          .Append(dr["NormalRange"].ConvertToString())
                                          .Append("</td>");
                                 }
                                 else
                                 {
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\"></td>");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\"></td>");
                                 }
 
-                                // ===== Units (4th Column) =====
-                                items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">")
+                                // ===== Units =====
+                                items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">")
                                      .Append(dr["UnitNamePathTran"].ConvertToString())
                                      .Append("</td></tr>");
 
                                 previoussubLabel = dr["SubTestName"].ConvertToString();
                             }
 
-                            // ===== Last Row Suggestion =====
-                            if (i == dt.Rows.Count)
-                            {
-                                if (dt.Rows.Count == 1)
-                                    Suggestion = dt.Rows[0]["SuggestionNote"].ConvertToString();
-                                else
-                                    Suggestion = dt.Rows[i - 2]["SuggestionNote"].ConvertToString();
-
-                                if (Suggestion != "")
-                                {
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;font-weight:bold;padding:3px;\">Interpretation Remark :</td></tr>");
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;padding:3px;\">")
-                                         .Append(Suggestion)
-                                         .Append("</td></tr>");
-                                }
-                            }
-
                             previousLabel = dr["PrintTestName"].ConvertToString();
                         }
+
 
 
                         html = html.Replace("{{Items}}", items.ToString());
