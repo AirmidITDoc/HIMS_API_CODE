@@ -12568,7 +12568,7 @@ namespace HIMS.Services.Report
 
                 case "OTRequestReport":
                     {
-                        html = html.Replace("{{PrintDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
 
                         html = html.Replace("{{UHIDNo}}", dt.GetColValue("RegNo"));
