@@ -415,17 +415,18 @@ namespace HIMS.API.Controllers.Report
                 case "OTReservation":
 
 
-                //PATHOLOGY 
+                    //PATHOLOGY   PathologyReporKenyatWithHeader
+                    
                 case "PathologyReportWithHeader":
                 case "PathologyReportWithOutHeader":
-                case "PathologyReportWithImgHeader":
                 case "PathologyReportTemplateWithHeader":
                 case "PathologyReportTemplateWithOutHeader":
+
                 case "PathologyReportTemplateWithImgHeader":
+                case "PathologyReportWithImgHeader":
 
 
-                case "PathologyReporKenyatWithHeader":
-                case "PathologyReporKenyaTemplate":
+                //case "PathologyReporKenyatWithHeader":
 
 
                 //Radiology 

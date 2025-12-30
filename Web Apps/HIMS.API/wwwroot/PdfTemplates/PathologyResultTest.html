@@ -1,166 +1,172 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!--<style>
-
-            body {
-
-                margin-top: 4cm;
-
-                margin-bottom: 6cm;
-
-            }
-    </style>-->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laboratory Report</title>
 </head>
-<body>
-    <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-            <table style="width: 100%;line-height: inherit;text-align: left;">
-                <tr class="top-header-row">
-                    <!--{{ImgHeader}}-->
-                    {{NewHeader}}
-                </tr>
-                <tr class="title-date-row">
-                    <td>
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom:8px;">
-                            <tr>
-                                <td style="padding:6px 4px; text-align:left; font-size:26px;font-weight:700;color:#0B4F6C;">
-                                    Laboratory Report
-                                </td>
-                                <td style="padding:6px 4px; text-align:right;font-size:16px;font-weight:600;color:#344054;">
 
-                                    Print Date : {{CurrentDate}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr class="bill-info-row">
-                    <td style="padding:10px 8px;">
-                        <table style="width:100%;border-collapse:collapse;font-size:17px;background:#F8FAFC; border:1px solid #D0D5DD;border-radius:6px;">
-                            <tr>
-                                <td style="width:75%; padding:8px; vertical-align:top;">
-                                    <table style="width:100%; border-collapse:collapse;">
-                                        <tr>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">UHID No:</span>
-                                                <b style="color:#101828;"> {{RegNo}}</b>
-                                            </td>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Collection on:</span>
-                                                <b style="color:#101828;"> {{PathTime}}</b>
-                                            </td>
-                                        </tr>
+<body style="margin:0; height:100%; font-family:Verdana, Arial, sans-serif; color:#000; display:flex; flex-direction:column; min-height:100vh;">
 
-                                        <tr>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Patient Name:</span>
-                                                <b style="color:#101828;"> {{PatientName}}</b>
-                                            </td>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Report on:</span>
-                                                <b style="color:#101828;"> {{ReportTime}}</b>
-                                            </td>
-                                        </tr>
+    <div style="flex:1; padding:10px; box-sizing:border-box;">
 
-                                        <tr>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Age | Gender:</span>
-                                                <b style="color:#101828;">
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <tr>
+                {{NewHeader}}
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="font-weight:bold; font-size:12px; text-align:left;">
+                                Laboratory Report
+                            </td>
+                            <td style="font-weight:bold; font-size:12px; text-align:right;">
+                                Print Date : {{CurrentDate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-                                                    {{AgeYear}}Y | {{GenderName}}
-                                                </b>
-                                            </td>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">OP / IP No:</span>
-                                                <b style="color:#101828;"> {{IPDNo}}</b>
-                                            </td>
-                                        </tr>
 
-                                        <tr>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Doctor Name:</span>
-                                                <b style="color:#101828;"> {{DoctorName}}</b>
-                                            </td>
-                                            <td style="padding:6px;">
-                                                <span style="color:#667085;">Ref. Doctor Name:</span>
-                                                <b style="color:#101828;"> {{RefDoctorName}}</b>
+            <tr>
+                <td style="padding-top:5px;">
+                    <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
+                        <tr>
+                            <td style="width:75%; vertical-align:top;">
+                                <table style="width:100%; border-collapse:collapse;" cellpadding="4">
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">UHID</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REGISTERED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">PATIENT NAME</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">COLLECTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PathTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">AGE</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{AgeYear}}</td>
+                                        <td style="font-size:12px; font-weight:normal;">REPORTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">SEX</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{GenderName}}</td>
+                                        <td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">NATIONAL ID NO</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{AdharCardNo}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REFERRED BY</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RefDoctorName}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">REPORT STATUS</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>FINAL</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
 
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
+                                </table>
+                            </td>
 
-                                <td style="width:25%;text-align:center;vertical-align:middle;background:#FFFFFF; border-left:1px  #D0D5DD;">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Fairmidtechinnovations.com%22%22
-                                         alt="QR Code"
-                                         style="max-width:95px; display:block;margin:0 auto 6px;">
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                            <td style="width:25%; text-align:center; vertical-align:top;">
+                                <!-- QR CODE -->
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+                                     alt="QR Code"
+                                     style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
 
-                <tr>
-                    <td style="padding:0;">
-                        <div style="width:100%;
+                                <!-- BARCODE -->
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
+                                     alt="Barcode"
+                                     style="width:150px; height:30px; display:block; margin:6px auto 0; image-rendering:crisp-edges;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-                    height:3px;
 
-                    background:linear-gradient(to right,#0B4F6C,#5BC0EB);
+            <tr>
+                <td>
+                    <table style="width:100%; border-collapse:separate; border-spacing:0; margin-top:5px;">
+                        <tr>
+                            <td style="width: 25%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-top-left-radius: 30px; border-bottom-left-radius: 30px; background: #f0f0f0;">
+                                Test
+                            </td>
+                            <td style="width: 25%; padding: 6px; font-size: 12px; font-weight: bold; text-align: center; border-top: 1px solid #000; border-bottom: 1px solid #000; background: #f0f0f0; ">
+                                Observed Value
+                            </td>
+                            <td style="width: 30%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; background: #f0f0f0;">
+                                Biological Reference Interval
+                            </td>
+                            <td style="width: 20%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; border-right: 1px solid #000; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background: #f0f0f0;">
+                                Units
+                            </td>
+                        </tr>
+                        {{Items}}
+                    </table>
+                </td>
 
-                    margin:10px 0;">
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <td colspan="4" style="font-size:12px;font-weight:bold;padding:3px; font-weight:bold">
+                    Interpretation Remark :
+                </td>
+            </tr>
 
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                        <td style="border-left:1px solid #000;border-top:1px solid #000;border-bottom:1px solid #000;text-align:left;padding:6px;font-weight:bold;font-size:18px;">
+            <tr>
+                <td colspan="4" style="font-family: Verdana, Arial, sans-serif; font-size: 9px; padding: 3px; font-weight: bold">
+                    <ul style="margin:5px 0 0 0; padding-left:18px; font-weight:400;">
+                        <pre>{{SuggestionNote}}</pre>
+                       
+                    </ul>
+                </td>
+            </tr>
 
-                            INVESTIGATION
-                        </td>
-                        <td style="border-top:1px solid #000;border-bottom:1px solid #000; text-align:left;padding:6px;font-weight:bold;font-size:18px;padding-left:200px;width:300px;">
 
-                            PATIENTS VALUE
-                        </td>
-                        <td style="border-right:1px solid #000;border-top:1px solid #000;border-bottom:1px solid #000;text-align:left;padding:6px;font-weight:bold;font-size:18px;">
+            </tr>
 
-                            NORMAL RANGE
-                        </td>
-                    </tr>
+        </table>
 
-                    {{Items}}
-                </table>
+        <table style="width: 100%; margin-top: 20px; border-top: 1px solid #000;">
+            <tr>
+                <td style="text-align:center; font-size:12px; font-weight:bold;">
+                    **END OF REPORT**
+                </td>
+            </tr>
+        </table>
 
-            </table>
+
+        <table style="width:100%; margin-top:20px;">
+            <tr>
+                <td style="text-align:right;">
+                    <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}};" />
+                    <div style="font-size:12px; font-weight:bold;">{{PathResultDr1}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{Education}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{MahRegNo}}</div>
+                </td>
+            </tr>
+        </table>
+        <div style="font-family:Verdana, Arial, sans-serif; font-size:12px; text-align:center;">
+            Test Performed At MEDITEST DIAGNOSTIC SERVICE Ltd. Reproduction of Reports is not Permitted<br>
+            For any query related KENAS scope, Kindly contact to us: qualityassurance@meditestdiagnostic.com
         </div>
+
     </div>
-    <table style="width: 100%; line-height: inherit; text-align: left; padding-left: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
-        <tr>
-            <td style="text-align:center;font-size:22px;font-weight:bold;padding-top:20px;">**END OF REPORT**</td>
-        </tr>
-    </table>
-    <table style="width: 100%; line-height: inherit; text-align: left; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial">
-        <tr>
-            <span style="margin-left:70%">
-                <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
-            </span>
-            <footer style="margin-left: 70%; font-size: 19px;">
-                <div style="font-weight:bold;">{{PathResultDr1}}</div>
-                <!--<div style="font-weight:bold;">{{DoctorType}}</div>-->
-                <div style="font-weight:bold;">{{Education}}</div>
-                <div style="font-weight:bold;">{{MahRegNo}}</div>
-            </footer>
-        </tr>
-        <!--<tr>
 
-                    {{Imgfooter}}
-        </tr>-->
-    </table>
+    <!-- FOOTER -->
+    <div style="border-top:1px solid #000; text-align:center; font-size:10px; font-weight:bold; padding:6px 10px; background:#fff;">
+        Meditest Diagnostic Services Ltd | Sclaters House | Parklands Road<br />
+        P. O. Box 66341 - 00800 | Nairobi | Kenya<br />
+        Tel: +254 734 205 430, +254 730 795 000, +254 786 434 046<br />
+        Email: info@meditestdiagnostic.com | Web: www.meditestdiagnostic.com
+    </div>
+
+</body>
 </html>
-
