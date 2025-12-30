@@ -159,7 +159,7 @@
                             <tr style="display: {{chkcashflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="5">
                                     <span>Cash Pay:</span>
-                                    <span>₹ {{CashPayAmount}}</span>
+                                    <span>{{CurrSymbol}} {{CashPayAmount}}</span>
                                 </td>
                             </tr>
 
@@ -167,7 +167,7 @@
                             <tr style="display: {{chkcardflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Card Pay:</span>
-                                    <span>₹ {{CardPayAmount}}</span>
+                                    <span>{{CurrSymbol}} {{CardPayAmount}}</span>
                                 </td>
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Card No:</span>
@@ -182,7 +182,7 @@
                             <tr style="display: {{chkchequeflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Cheque Pay:</span>
-                                    <span>₹ {{ChequePayAmount}}</span>
+                                    <span>{{CurrSymbol}} {{ChequePayAmount}}</span>
                                 </td>
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Cheque No:</span>
@@ -197,7 +197,7 @@
                             <tr style="display: {{chkOnlineAmountflag}};font-weight:bold;">
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;">
                                     <span>Online Pay:</span>
-                                    <span>₹ {{OnlineAmount}}</span>
+                                    <span>{{CurrSymbol}} {{OnlineAmount}}</span>
                                 </td>
                                 <td style="padding: 2px; border: 1px solid #d4c3c3;" colspan="3">
                                     <div style="display: {{chkPayTMTxnFlag}};">PayTM Tran No: {{PayTMTranNo}}</div>

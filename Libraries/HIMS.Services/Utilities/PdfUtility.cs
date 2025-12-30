@@ -215,6 +215,7 @@ namespace HIMS.Services.Utilities
 
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
+            html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
             var doc = new HtmlToPdfDocument()
             {
