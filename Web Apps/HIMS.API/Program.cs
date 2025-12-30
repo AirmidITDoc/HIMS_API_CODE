@@ -59,8 +59,9 @@ using (var scope = serviceProvider.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<HIMSDbContext>();
 
-    var offsetMinutes = db.AppSettings
-        .FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
+    var offsetMinutes = db.AppSettings.FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
+    string CurrencySymbol = db.MSystemConfigs.FirstOrDefault(x => x.SystemName == "CurrencySymbol")?.SystemInputValue ?? "$";
+    CurrencyHelper.Configure(CurrencySymbol);
 
     AppTime.Configure(offsetMinutes);
 }

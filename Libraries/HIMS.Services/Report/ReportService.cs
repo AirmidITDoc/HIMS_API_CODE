@@ -12486,8 +12486,7 @@ namespace HIMS.Services.Report
 
                 case "OTAnaesthesiaRecord":
                     {
-                        html = html.Replace("{{PrintDate}}",
-                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // ===== Patient Details =====
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));

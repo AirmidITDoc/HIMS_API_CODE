@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("RoleMasterList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> RoleMasterList(GridRequestModel objGrid)
         {
             IPagedList<RoleMasterListDto> RoleMasterList = await _IAdministrationService.RoleMasterList(objGrid);
@@ -42,14 +42,14 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("PaymentModeList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PaymentModeDto> PaymentModeList = await _IAdministrationService.GetListAsync(objGrid);
             return Ok(PaymentModeList.ToGridResponse(objGrid, "PaymentMode App List"));
         }
         [HttpPost("BrowseIPAdvPayPharReceiptList1")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPAdvPayPharReceiptListDto> BrowseIPAdvPayPharReceiptList = await _IAdministrationService.BrowseIPAdvPayPharReceiptList(objGrid);
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IP_DISCHARGE_CANCELLATION")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(AdmissionsModel obj)
         {
             Admission Model = obj.MapTo<Admission>();
@@ -160,31 +160,6 @@ namespace HIMS.API.Controllers.Administration
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
-
-
-
-        //[HttpPut("AutoServiceListUpdate")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(List<AutoServiceModel> objList)
-        //{
-        //    if (objList == null || !objList.Any())
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-
-        //    foreach (var obj in objList)
-        //    {
-        //        if (obj.SysId == 0)
-        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params in list");
-
-        //        MAutoServiceList model = obj.MapTo<MAutoServiceList>();
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-
-        //        await _repository1.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-        //    }
-
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
-        //}
-
 
     }
 }

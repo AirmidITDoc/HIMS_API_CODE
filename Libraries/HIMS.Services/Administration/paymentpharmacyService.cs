@@ -97,20 +97,7 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("ps_Update_PharmSalesDate", CommandType.StoredProcedure, UEntity);
 
         }
-        //public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int UserId, string UserName)
-        //{
-        //    //throw new NotImplementedException();
-        //    DatabaseHelper odal = new();
-        //    string[] DetailEntity = { "BillNo", "ReceiptNo", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId",
-        //        "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate","CashCounterId","IsSelfOrcompany","NeftpayAmount","Neftno","NeftbankMaster","Neftdate","PayTmamount","PayTmtranNo","PayTmdate","StrId","TranMode","CompanyId"};
-        //    var UEntity = ObjPaymentPharmacy.ToDictionary();
-        //    foreach (var rProperty in DetailEntity)
-        //    {
-        //        UEntity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, UEntity);
-
-        //}
+      
         public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();

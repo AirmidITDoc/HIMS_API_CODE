@@ -12,9 +12,9 @@ namespace HIMS.Services.Administration
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
-        void Update(Admission ObjAdmission, int UserId, string Username);
+        Task Update(Admission ObjAdmission, int currentUserId, string CurrentUserName);
 
-        void PaymentUpdate(Payment ObjPayment, int UserId, string Username);
+        Task PaymentUpdate(Payment ObjPayment, int UserId, string Username);
 
         Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName);
 
