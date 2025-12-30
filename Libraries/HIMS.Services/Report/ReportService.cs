@@ -10667,29 +10667,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
                         html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
-
-
-                        //html = html.Replace("{{AdmissionTime}}", dt.Rows[0]["AdmissionTime"].ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{PaymentTime}}", dt.Rows[0]["PaymentTime"].ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
+                        html = html.Replace("{{AdharCardNo}}", dt.GetColValue("AdharCardNo").ConvertToString());
+                        html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo").ConvertToString());
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number").ConvertToString());
-
-                        //html = html.Replace("{{AdvanceAmount}}", dt.Rows[0]["AdvanceAmount"].ConvertToDouble().To2DecimalPlace());
-                        //html = html.Replace("{{Phone}}", dt.Rows[0]["Phone"].ConvertToString());
-
-
-                        //html = html.Replace("{{AgeMonth}}", dt.Rows[0]["AgeMonth"].ConvertToString());
-                        //html = html.Replace("{{AgeDay}}", dt.Rows[0]["AgeDay"].ConvertToString());
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName").ConvertToString());
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
-                        //html = html.Replace("{{DepartmentName}}", dt.Rows[0]["DepartmentName"].ConvertToString());
-                        //html = html.Replace("{{PatientType}}", dt.Rows[0]["PatientType"].ConvertToString());
+                       
                         html = html.Replace("{{RefDoctorName}}", dt.Rows[0]["RefDoctorName"].ConvertToString());
-                        //html = html.Replace("{{CompanyName}}", dt.Rows[0]["CompanyName"].ConvertToString());
-                        //html = html.Replace("{{Path_DoctorName}}", dt.Rows[0]["Path_DoctorName"].ConvertToString());
+                       
                         html = html.Replace("{{Education}}", dt.GetColValue("Education").ConvertToString());
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo").ConvertToString());
                         html = html.Replace("{{SuggestionNote}}", dt.GetColValue("SuggestionNote"));
