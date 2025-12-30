@@ -415,7 +415,7 @@ namespace HIMS.API.Controllers.Report
                 case "OTReservation":
 
 
-                    //PATHOLOGY   PathologyReporKenyatWithHeader
+                    //PATHOLOGY   
                     
                 case "PathologyReportWithHeader":
                 case "PathologyReportWithOutHeader":
