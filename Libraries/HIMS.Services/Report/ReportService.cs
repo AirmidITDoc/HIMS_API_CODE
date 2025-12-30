@@ -6452,6 +6452,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
                             html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
                             html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
 
                         }
@@ -7010,6 +7011,10 @@ namespace HIMS.Services.Report
 
                             html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
 
+                            html = html.Replace("{{chkSubTpaCompanyFlag}}", dt.GetColValue("SubTpaCompanyName").ConvertToString() != "" ? "table-row" : "none");
+                            html = html.Replace("{{chkCompanyNameFlag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "table-row" : "none");
+
+                            html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
 
                             return html;
@@ -10865,7 +10870,7 @@ namespace HIMS.Services.Report
                             {
                                 items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
                                      .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
-                                     .Append("<span style=\"border-bottom:2px solid #000;\">")  
+                                     .Append("<span style=\"border-bottom:2px solid #000;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
                                      .Append("</span>")
                                      .Append("</td></tr>");
@@ -10960,6 +10965,8 @@ namespace HIMS.Services.Report
 
                             previousLabel = dr["PrintTestName"].ConvertToString();
                         }
+
+
 
 
                         html = html.Replace("{{Items}}", items.ToString());
