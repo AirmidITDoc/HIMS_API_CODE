@@ -62,39 +62,40 @@ namespace HIMS.Services.Administration
 
         }
 
-        public virtual void Update(Admission ObjAdmission, int UserId, string UserName)
+        public virtual async Task  Update(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "RegId", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "IPDNo", "IsCancelled", "CompanyId", "TariffId",
-            "ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
-            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","ConvertId",
-            "IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt",
-            "HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = { "AdmissionId", "AdmissionDate", "AdmissionTime", "Ipdno"};
             var Rentity = ObjAdmission.ToDictionary();
-            foreach (var rProperty in AEntity)
+
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                Rentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("ps_Update_AdmissionDateTime", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
         }
 
-        public virtual void PaymentUpdate(Payment ObjPayment, int UserId, string Username)
+        public virtual async Task  PaymentUpdate(Payment ObjPayment, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = {"BillNo","ReceiptNo","CashPayAmount","ChequePayAmount","ChequeNo","BankName","ChequeDate","CardPayAmount", "CardNo",  "CardBankName",  "CardDate",  "AdvanceUsedAmount",  "AdvanceId",
-           "RefundId",  "TransactionType",  "Remark",  "AddBy",  "IsCancelled",  "IsCancelledBy",  "IsCancelledDate",  "OpdipdType",  "NeftpayAmount",  "Neftno",  "NeftbankMaster",  "Neftdate",  "PayTmamount",  "PayTmtranNo",  "PayTmdate",  "Tdsamount","TranMode",
-            "ReceiptNo","CashCounterId","IsSelfOrcompany","CompanyId","ChCashPayAmount","ChChequePayAmount","ChCardPayAmount","ChAdvanceUsedAmount","ChNeftpayAmount","ChPayTmamount","UnitId","Wfamount","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = {"PaymentId","PaymentDate", "PaymentTime" };
             var pentity = ObjPayment.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in pentity.Keys.ToList())
             {
-                pentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    pentity.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, pentity);
+            await _context.LogProcedureExecution(pentity, nameof(Payment), ObjPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
         }
 
@@ -135,16 +136,7 @@ namespace HIMS.Services.Administration
 
             }
         }
-        //public virtual async Task InsertAsync(MAutoServiceList ObjMAutoServiceList, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.MAutoServiceLists.Add(ObjMAutoServiceList);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
+      
         public async Task InsertListAsync(List<MAutoServiceList> objList, int userId, string username)
         {
             // 1. DELETE ALL OLD RECORDS

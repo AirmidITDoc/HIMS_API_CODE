@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("TemlateByCategoryList")]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListTemplate(GridRequestModel objGrid)
         {
             IPagedList<TemplateByCategoryListDto> TemlateByCategoryList = await _ITemplateDescriptionConfigService.GetListAsync(objGrid);
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportTemplateConfig> MReportTemplateConfigList = await _repository.GetAllPagedAsync(objGrid);
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Add API
         [HttpPost("Insert")]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Edit API
         [HttpPut("Update{id:int}")]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ReportTemplateConfigModel obj)
         {
             MReportTemplateConfig model = obj.MapTo<MReportTemplateConfig>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Administration
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MReportTemplateConfig? model = await _repository.GetById(x => x.TemplateId == Id);
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
         [HttpGet("GetDischargeTemplateList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDischargeTemplateList(string CategoryName)
         {
             var result = await _ITemplateDescriptionConfigService.GetDischargeTemplateListAsync(CategoryName);

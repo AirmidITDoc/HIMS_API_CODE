@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyModel obj)
         {
             PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
@@ -132,7 +132,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("PhBillGlobalDiscount")]
-        //  [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public ApiResponse InsertSP1(GlobalDiscountModels obj)
         {
 
