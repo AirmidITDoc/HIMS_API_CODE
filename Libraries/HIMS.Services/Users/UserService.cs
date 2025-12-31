@@ -15,6 +15,12 @@ namespace HIMS.Services.Users
         {
             return await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserName.ToLower() == UserName.ToLower() && x.Password == Password && x.IsActive == true);
         }
+        //public virtual async Task<LoginManager> CheckLogin(string UserName, string Password)
+        //{
+        //    var objUser= await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserName.ToLower() == UserName.ToLower() && x.Password == Password && x.IsActive == true);
+        //    objUser.TLoginStoreDetails = await  _context.TLoginStoreDetails.Where(x=>x.LoginId == objUser.UserId).ToListAsync();
+        //    return objUser;
+        //}
         public virtual async Task<LoginManager> GetById(int Id)
         {
             return await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserId == Id);

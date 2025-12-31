@@ -6452,6 +6452,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
                             html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
                             html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
 
                         }
@@ -7010,6 +7011,10 @@ namespace HIMS.Services.Report
 
                             html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
 
+                            html = html.Replace("{{chkSubTpaCompanyFlag}}", dt.GetColValue("SubTpaCompanyName").ConvertToString() != "" ? "table-row" : "none");
+                            html = html.Replace("{{chkCompanyNameFlag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "table-row" : "none");
+
+                            html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
 
                             return html;
@@ -10544,29 +10549,19 @@ namespace HIMS.Services.Report
                             // ===== Test Name Header =====
                             if (i == 1)
                             {
-                                items.Append("<tr style=\"font-size:12px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:bold;\">")
-                                     .Append("<td colspan=\"4\" style=\"padding:3px;text-align:center;\">")
+                                items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
+                                     .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                     .Append("<span style=\"border-bottom:2px solid #000;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
+                                     .Append("</span>")
                                      .Append("</td></tr>");
                             }
 
+                            // ===== Change of Test Name =====
                             if (previousLabel != "" && previousLabel != dr["PrintTestName"].ConvertToString())
                             {
-                                if (i > 3)
-                                    Suggestion = dt.Rows[i - 2]["SuggestionNote"].ConvertToString();
-                                else if (i < 2)
-                                    Suggestion = dt.Rows[i - 1]["SuggestionNote"].ConvertToString();
-
-                                if (Suggestion != "")
-                                {
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;font-weight:bold;padding:3px;\">Interpretation Remark :</td></tr>");
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;padding:3px;\">")
-                                         .Append(Suggestion)
-                                         .Append("</td></tr>");
-                                }
-
-                                items.Append("<tr style=\"font-size:12px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:bold;\">")
-                                     .Append("<td colspan=\"4\" style=\"padding:3px;text-align:center;\">")
+                                items.Append("<tr style=\"font-size:12px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
+                                     .Append("<td colspan=\"4\" style=\"padding:6px;text-align:center;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
                                      .Append("</td></tr>");
                             }
@@ -10582,7 +10577,7 @@ namespace HIMS.Services.Report
                                     previoussubLabel = dr["SubTestName"].ConvertToString();
 
                                     items.Append("<tr style=\"font-size:12px;font-weight:bold;\">")
-                                         .Append("<td colspan=\"4\" style=\"padding:3px;text-align:left;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append(previoussubLabel)
                                          .Append("</td></tr>");
                                 }
@@ -10592,70 +10587,66 @@ namespace HIMS.Services.Report
                                     previoussubLabel = dr["SubTestName"].ConvertToString();
 
                                     items.Append("<tr style=\"font-size:12px;font-weight:bold;\">")
-                                         .Append("<td colspan=\"4\" style=\"padding:3px;text-align:left;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append(previoussubLabel)
                                          .Append("</td></tr>");
                                 }
 
                                 previousLabel = dr["PrintTestName"].ConvertToString();
 
-                                // ===== Parameter Name =====
-                                items.Append("<tr style=\"font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;\">");
+                                // ===== Parameter Name + Method Name =====
+                                items.Append("<tr style=\"font-family:Verdana, Arial, sans-serif; color:#000;\">");
 
                                 if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:3px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:left;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">");
 
-                                items.Append(dr["PrintParameterName"].ConvertToString()).Append("</td>");
+                                // Parameter Name
+                                items.Append(dr["PrintParameterName"].ConvertToString());
+
+                                // Method Name (small font, italic, on next line)
+                                if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
+                                {
+                                    items.Append("<br/><span style=\"font-size:10px;font-style:italic;color:#555;\">")
+                                         .Append(dr["MethodName"].ConvertToString())
+                                         .Append("</span>");
+                                }
+
+                                items.Append("</td>");
+
 
                                 // ===== Observed Value =====
                                 if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:3px;text-align:center;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:center;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:center;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:center;\">");
 
                                 items.Append(dr["ResultValue"].ConvertToString()).Append("</td>");
 
                                 // ===== Reference Range =====
                                 if (dr["NormalRange"].ConvertToString() != " -   ")
                                 {
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">")
                                          .Append(dr["NormalRange"].ConvertToString())
                                          .Append("</td>");
                                 }
                                 else
                                 {
-                                    items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\"></td>");
+                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\"></td>");
                                 }
 
-                                // ===== Units (4th Column) =====
-                                items.Append("<td style=\"font-size:12px;padding:3px;text-align:left;\">")
+                                // ===== Units =====
+                                items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">")
                                      .Append(dr["UnitNamePathTran"].ConvertToString())
                                      .Append("</td></tr>");
 
                                 previoussubLabel = dr["SubTestName"].ConvertToString();
                             }
 
-                            // ===== Last Row Suggestion =====
-                            if (i == dt.Rows.Count)
-                            {
-                                if (dt.Rows.Count == 1)
-                                    Suggestion = dt.Rows[0]["SuggestionNote"].ConvertToString();
-                                else
-                                    Suggestion = dt.Rows[i - 2]["SuggestionNote"].ConvertToString();
-
-                                if (Suggestion != "")
-                                {
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;font-weight:bold;padding:3px;\">Interpretation Remark :</td></tr>");
-                                    items.Append("<tr><td colspan=\"4\" style=\"font-size:12px;padding:3px;\">")
-                                         .Append(Suggestion)
-                                         .Append("</td></tr>");
-                                }
-                            }
-
                             previousLabel = dr["PrintTestName"].ConvertToString();
                         }
+
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -10676,29 +10667,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
                         html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
-
-
-                        //html = html.Replace("{{AdmissionTime}}", dt.Rows[0]["AdmissionTime"].ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        //html = html.Replace("{{PaymentTime}}", dt.Rows[0]["PaymentTime"].ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
+                        html = html.Replace("{{AdharCardNo}}", dt.GetColValue("AdharCardNo").ConvertToString());
+                        html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo").ConvertToString());
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number").ConvertToString());
-
-                        //html = html.Replace("{{AdvanceAmount}}", dt.Rows[0]["AdvanceAmount"].ConvertToDouble().To2DecimalPlace());
-                        //html = html.Replace("{{Phone}}", dt.Rows[0]["Phone"].ConvertToString());
-
-
-                        //html = html.Replace("{{AgeMonth}}", dt.Rows[0]["AgeMonth"].ConvertToString());
-                        //html = html.Replace("{{AgeDay}}", dt.Rows[0]["AgeDay"].ConvertToString());
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName").ConvertToString());
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
-                        //html = html.Replace("{{DepartmentName}}", dt.Rows[0]["DepartmentName"].ConvertToString());
-                        //html = html.Replace("{{PatientType}}", dt.Rows[0]["PatientType"].ConvertToString());
+                       
                         html = html.Replace("{{RefDoctorName}}", dt.Rows[0]["RefDoctorName"].ConvertToString());
-                        //html = html.Replace("{{CompanyName}}", dt.Rows[0]["CompanyName"].ConvertToString());
-                        //html = html.Replace("{{Path_DoctorName}}", dt.Rows[0]["Path_DoctorName"].ConvertToString());
+                       
                         html = html.Replace("{{Education}}", dt.GetColValue("Education").ConvertToString());
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo").ConvertToString());
                         html = html.Replace("{{SuggestionNote}}", dt.GetColValue("SuggestionNote"));
@@ -10865,7 +10843,7 @@ namespace HIMS.Services.Report
                             {
                                 items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif; color:#000; font-weight:bold;\">")
                                      .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
-                                     .Append("<span style=\"border-bottom:2px solid #000;\">")  
+                                     .Append("<span style=\"border-bottom:2px solid #000;\">")
                                      .Append(dr["PrintTestName"].ConvertToString())
                                      .Append("</span>")
                                      .Append("</td></tr>");
@@ -10960,6 +10938,8 @@ namespace HIMS.Services.Report
 
                             previousLabel = dr["PrintTestName"].ConvertToString();
                         }
+
+
 
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -12479,8 +12459,7 @@ namespace HIMS.Services.Report
 
                 case "OTAnaesthesiaRecord":
                     {
-                        html = html.Replace("{{PrintDate}}",
-                            AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                        html = html.Replace("{{PrintDate}}", AppTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
 
                         // ===== Patient Details =====
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
