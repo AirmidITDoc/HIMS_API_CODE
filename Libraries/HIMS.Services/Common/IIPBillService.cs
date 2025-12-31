@@ -34,12 +34,12 @@ namespace HIMS.Services.Common
         Task IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, List<TPayment> ObjTPayment, int UserId, string Username);
         void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
 
-        void IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
+        Task IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
         Task Update(AddCharge objAddCharge, int CurrentUserId, string CurrentUserName);
         void InsertLabRequest(AddCharge objAddCharge, int UserId, string Username, long traiffId, long ReqDetId);
         Task InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
         Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName);
-        void InsertSP(AddCharge objAddCharge, int UserId, string Username);
+        Task InsertSP(AddCharge objAddCharge, int UserId, string Username);
         void InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
         void InsertSPT(AddCharge model, int currentUserId, string currentUserName, long? newClassId, long? newTariffId);
 

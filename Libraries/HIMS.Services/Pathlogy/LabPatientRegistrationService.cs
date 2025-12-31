@@ -484,36 +484,7 @@ namespace HIMS.Services.Pathlogy
               .ThenBy(x => x.FirstName).ToListAsync();
         }
 
-        //public virtual async Task<List<TLabPatientRegistration>> SearchlabRegistration(string str)
-        //{
-
-
-
-        //    return await this._context.TLabPatientRegistrations
-        //        .Where(x =>
-        //            (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
-        //            x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
-        //            //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
-        //            x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
-        //        )
-        //        .Take(25)
-        //        .Select(x => new TLabPatientRegistration
-        //        {
-        //            FirstName = x.FirstName,
-        //            LabPatientId = x.LabPatientId,
-        //            LastName = x.LastName,
-        //            MiddleName = x.MiddleName,
-        //            MobileNo = x.MobileNo,
-        //            AgeYear = x.AgeYear,
-        //            AgeMonth = x.AgeMonth,
-        //            AgeDay = x.AgeDay,
-        //            DateofBirth = x.DateofBirth
-        //        })
-        //       .OrderByDescending(x => x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
-        //       .ThenBy(x => x.FirstName).ToListAsync();
-
-        //}
-
+    
         public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -310,7 +310,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPAddcharges")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse IPAddcharges(AddChargModel obj)
         {
             AddCharge Model = obj.AdddCharges.MapTo<AddCharge>();
