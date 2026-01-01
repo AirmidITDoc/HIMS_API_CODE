@@ -305,8 +305,8 @@ namespace HIMS.Services.Inventory
             SqlParameter[] para = new SqlParameter[3];
 
             para[0] = new SqlParameter("@StoreId", StoreId);
-            para[2] = new SqlParameter("@ItemId", ItemId);
-            para[3] = new SqlParameter("@PatientTypeId", PatientTypeId);
+            para[1] = new SqlParameter("@ItemId", ItemId);
+            para[2] = new SqlParameter("@PatientTypeId", PatientTypeId);
 
             List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;
