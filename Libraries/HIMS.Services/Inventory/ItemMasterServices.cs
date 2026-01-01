@@ -299,13 +299,14 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
         }
 
-        public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId)
+        public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[3];
 
             para[0] = new SqlParameter("@StoreId", StoreId);
             para[2] = new SqlParameter("@ItemId", ItemId);
+            para[3] = new SqlParameter("@PatientTypeId", PatientTypeId);
 
             List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;

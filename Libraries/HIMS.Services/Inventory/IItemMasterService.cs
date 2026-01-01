@@ -18,7 +18,7 @@ namespace HIMS.Services.Inventory
         Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId);
         Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName);
         List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, String ItemName);
-        List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId);
+        List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId);
 
     }
 }
