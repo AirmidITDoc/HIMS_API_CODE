@@ -257,6 +257,8 @@ namespace HIMS.API.Controllers.Report
                 case "OPBillWithPackagePrint":
                 case "GRNReport":
                 case "GRNReturnReport":
+                case "KenyaGRNReport":
+
                 //case "IndentwiseReport":
                 case "OPCasePaper":
                 //case "OPDSpineCasePaper":
