@@ -84,7 +84,8 @@ namespace HIMS.Services.Common
 
                 //
                 case "OPBillPrint": sp_Name = "ps_rptBillPrint"; break;
-
+                case "BillList": sp_Name = "ps_rtrv_BillList"; break;
+                    
                 // Check IP admission
                 case "GetBillDetails": sp_Name = "ps_getBillDetails"; break;
 

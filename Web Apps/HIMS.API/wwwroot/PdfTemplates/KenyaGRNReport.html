@@ -1,0 +1,155 @@
+
+<div class="main-content-wrapper" #WorkorderTemplate>
+    <div class="invoice-box" style="max-width: 1000px; margin: 0 auto; font-size: 14px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+        <table style="width: 100%;line-height: inherit;text-align: left;">
+            <tr class="top-header-row">
+                {{NewHeader}}
+            </tr>
+            <tr class="title-date-row">
+                <td>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="font-size: 18px">
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                <b>
+                                    GOODS RECEIPT NOTE
+                                </b>
+                            </td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                <b>
+                                    Print
+                                    Date : {{CurrentDate}}
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bill-info-row">
+                <td style="border-bottom: 1px solid #d4c3c3; padding-bottom: 6px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                        <tr>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Grn No : </span>
+                                <span>{{GrnNumber}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">PO NO : </span>
+                                <span>{{PONo}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 40%;">
+                                <span style="font-weight: bold;">Invoice No. : </span>
+                                <span>{{InvoiceNo}}</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">GRN Date : </span>
+                                <span>{{GRNDate}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">PO Date : </span>
+                                <span>{{PurchaseTime}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 40%;">
+                                <span style="font-weight: bold;">Invoice Date : </span>
+                                <span>{{InvDate}}</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Supplier Name : </span>
+                                <span>{{SupplierName}}</span>
+                            </td>
+
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Supplier GST : </span>
+                                <span>{{GSTNo}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Store Name : </span>
+                                <span>{{PrintStoreName}}</span>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px; width: 40%;">
+                                <span style="font-weight: bold;">Address : </span>
+                                <span> {{Address}}</span>
+                            </td>
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Mobile No : </span>
+                                <span>{{Mobile}}</span>
+                            </td>
+
+                            <td style="padding: 2px; width: 30%;">
+                                <span style="font-weight: bold;">Gate Entry No : </span>
+                                <span>{{GateEntryNo}}</span>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr class="bill-table-row">
+                <td style="padding: 6px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead style="font-size: 15px; text-align: center; border-bottom: 1px solid #000000;">
+                            <tr>
+                                <th style="padding: 6px;">Sr.No</th>
+                                <th style="padding: 6px;">HSNCODE</th>
+                                <th style="padding: 6px;">Description</th>
+                                <th style="padding: 6px;">Qty</th>
+                                <th style="padding: 6px;">Bonus</th>
+                                <th style="padding: 6px;">Price</th>
+                                <th style="padding: 6px;">Disc%</th>
+                                <th style="padding: 6px;">Vat%</th>
+                                <th style="padding: 6px;">Net Amt</th>
+                            </tr>
+                        </thead>
+                        {{Items}}
+                    </table>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <table style="width: 100%; border-collapse: collapse; border-top:1px solid #000000">
+                    <tr>
+                        <td colspan="8" style=" text-align: right; padding: 6px;">
+                            SUB TOTAL :-
+                            <span style=" text-align: center; padding: 6px;"> {{TotalAmount}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="  text-align: right; padding: 6px;">
+                            VAT TOTAL  :-
+                            <span style=" text-align: center; padding: 6px;"> {{TotalVATAmount}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="  text-align: right; padding: 6px;">
+                            TOTAL :-
+                            <span style=" text-align: center; padding: 6px;"> {{NetPayble}}</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding-top:10px; font-size: 12px; font-weight:bold">
+                            <strong>IMPORTANT:</strong> DO NOT PAY ANY CASH TO OUR DELIVERY OR SALES PERSON
+                        </td>
+                    </tr>
+
+                </table>
+            </tr>
+
+
+        </table>
+    </div>
+</div>
