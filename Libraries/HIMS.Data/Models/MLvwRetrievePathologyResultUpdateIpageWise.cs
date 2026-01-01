@@ -41,5 +41,7 @@ namespace HIMS.Data.Models
         public float? MinValue { get; set; }
         public float? MaxValue { get; set; }
         public long PathReportdetid { get; set; }
+        public long? OpdIpdId { get; set; }
+        public long? OpdIpdType { get; set; }
     }
 }

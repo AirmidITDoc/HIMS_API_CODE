@@ -70,6 +70,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\PdfTemplates\SalesTaxReceipt - Copy.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="DinkToPdfBinaries\32bit\libwkhtmltox.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -276,6 +276,40 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesId);
         }
 
+        // done by Ashu Date : 20-May-2025
+        [HttpPost("SaveSalesInpatient")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> SaveSalesInpatient(SaleReqModel obj)
+        {
+            TSalesInpatientHeader model = obj.Sales.MapTo<TSalesInpatientHeader>();
+            List<TCurrentStock> CurrentStock = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+            TIpPrescription modelPrescription = obj.Prescription.MapTo<TIpPrescription>();
+            TSalesDraftHeader modelDraftHeader = obj.SalesDraft.MapTo<TSalesDraftHeader>();
+            string stockmsg = "";
+            foreach (var item in model.TSalesInpatientDetails)
+            {
+                var stock = await _ISalesService.GetStock(item.StkId.Value);
+                if (stock < item.Qty)
+                {
+                    stockmsg += item.BatchNo + " has only " + stock + " available stock. \n";
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(stockmsg))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, stockmsg);
+            }
+            if (obj.Sales.SalesId == 0)
+            {
+                model.Date = Convert.ToDateTime(obj.Sales.Date);
+                model.Time = Convert.ToDateTime(obj.Sales.Time);
+                model.AddedBy = CurrentUserId;
+                await _ISalesService.InsertSalesInPatientAsyncSPC(model, CurrentStock, modelPrescription, modelDraftHeader, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesId);
+        }
+
         [HttpPost("SalesDraftBillSave")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse InsertSPD(SalesDraftHeadersModel obj)
