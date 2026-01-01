@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("List")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabPatientRegistrationListDto> LabPatientRegistrationList = await _ILabPatientRegistrationService.GetListAsync(objGrid);
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabBillDetailList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> BillDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabregBilldetailListDto> LabPatientBillList = await _ILabPatientRegistrationService.GetBillDetailListAsync(objGrid);
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LabPatientRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.MapTo<TLabPatientRegistration>();
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PatientRegistrationcreditbill")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(LabRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
@@ -118,7 +118,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPost("PatientRegistrationPaidBill")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPaidBill(LabRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
@@ -142,7 +142,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientRegistrationMasterModels obj)
         {
             TLabPatientRegisteredMaster model = obj.MapTo<TLabPatientRegisteredMaster>();
@@ -160,7 +160,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpGet("search-patient-1")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public ApiResponse SearchPatientNew(string Keyword)
         {
             var data = _ILabPatientRegistrationService.SearchlabRegistration(Keyword);
@@ -168,7 +168,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("Labauto-complete")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _ILabPatientRegistrationService.SearchLabRegistration(Keyword);
