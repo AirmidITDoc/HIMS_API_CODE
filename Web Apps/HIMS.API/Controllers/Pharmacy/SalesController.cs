@@ -279,7 +279,7 @@ namespace HIMS.API.Controllers.Pharmacy
         // done by Ashu Date : 20-May-2025
         [HttpPost("SaveSalesInpatient")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> SaveSalesInpatient(SaleReqModel obj)
+        public async Task<ApiResponse> SaveSalesInpatient(SaleReqModelInpatient obj)
         {
             TSalesInpatientHeader model = obj.Sales.MapTo<TSalesInpatientHeader>();
             List<TCurrentStock> CurrentStock = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
