@@ -41,5 +41,7 @@ namespace HIMS.Data.Models
         public long PathReportdetid { get; set; }
         public string Formula { get; set; } = null!;
         public string? ParaBoldFlag { get; set; }
+        public long? OpdIpdId { get; set; }
+        public long? OpdIpdType { get; set; }
     }
 }

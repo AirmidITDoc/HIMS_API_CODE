@@ -191,5 +191,85 @@ namespace HIMS.API.Models.Pharmacy
         public SalesDraftHeaderModel SalesDraft { get; set; }
 
     }
+    public class TSalesInpatientHeaderModel
+    {
+
+        public DateTime Date { get; set; }
+        public string Time { get; set; }
+        public long? OpIpId { get; set; }
+        public long? OpIpType { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public decimal? VatAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? NetAmount { get; set; }
+        public decimal? PaidAmount { get; set; }
+        public decimal? BalanceAmount { get; set; }
+        public long? ConcessionReasonId { get; set; }
+        public long? ConcessionAuthorizationId { get; set; }
+        public bool? IsSellted { get; set; }
+        public bool? IsPrint { get; set; }
+        public bool? IsFree { get; set; }
+        public long? UnitId { get; set; }
+        public string? ExternalPatientName { get; set; }
+        public string? DoctorName { get; set; }
+        public long? StoreId { get; set; }
+        public long? IsPrescription { get; set; }
+        public long? AddedBy { get; set; }
+        public string? CreditReason { get; set; }
+        public long? CreditReasonId { get; set; }
+        public long? WardId { get; set; }
+        public long? BedId { get; set; }
+        public float? DiscperH { get; set; }
+        public bool? IsPurBill { get; set; }
+        public bool? IsBillCheck { get; set; }
+        public string? SalesHeadName { get; set; }
+        public long? SalesTypeId { get; set; }
+        public long? RegId { get; set; }
+        public string? ExtMobileNo { get; set; }
+        public decimal? RoundOff { get; set; }
+        public string? ExtAddress { get; set; }
+        public long SalesId { get; set; }
+        public List<TSalesInpatientDetailModel> TSalesInpatientDetails { get; set; }
+        public class TSalesInpatientDetailModel
+        {
+            public long? SalesId { get; set; }
+            public long? ItemId { get; set; }
+            public string? BatchNo { get; set; }
+            public DateTime? BatchExpDate { get; set; }
+            public decimal? UnitMrp { get; set; }
+            public double? Qty { get; set; }
+            public decimal? TotalAmount { get; set; }
+            public double? VatPer { get; set; }
+            public decimal? VatAmount { get; set; }
+            public double? DiscPer { get; set; }
+            public decimal? DiscAmount { get; set; }
+            public decimal? GrossAmount { get; set; }
+            public decimal? LandedPrice { get; set; }
+            public decimal? TotalLandedAmount { get; set; }
+            public double? ReturnQty { get; set; }
+            public decimal? PurRateWf { get; set; }
+            public decimal? PurTotAmt { get; set; }
+            public float? Cgstper { get; set; }
+            public decimal? Cgstamt { get; set; }
+            public float? Sgstper { get; set; }
+            public decimal? Sgstamt { get; set; }
+            public float? Igstper { get; set; }
+            public decimal? Igstamt { get; set; }
+            public bool? IsPurRate { get; set; }
+            public long? StkId { get; set; }
+            public decimal? Mrp { get; set; }
+            public decimal? MrpTotal { get; set; }
+        }
+    }
+    public class SaleReqModelInpatient
+    {
+        public TSalesInpatientHeaderModel Sales { get; set; }
+        public List<CurrentStocksModel> TCurrentStock { get; set; }
+        public IPPrescriptionsModel Prescription { get; set; }
+        public SalesDraftHeaderModel SalesDraft { get; set; }
+
+
+    }
+
 
 }

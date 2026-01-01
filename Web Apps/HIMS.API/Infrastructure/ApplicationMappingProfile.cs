@@ -27,6 +27,7 @@ using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
+using static HIMS.API.Models.Pharmacy.TSalesInpatientHeaderModel;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -252,7 +253,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesHeader, SalesHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, GlobalDiscountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, ExtpatientDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TSalesInpatientHeader, TSalesInpatientHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TSalesInpatientDetail, TSalesInpatientDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
+            
 
             CreateMap<PaymentPharmacy, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCurrentStock, CurStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

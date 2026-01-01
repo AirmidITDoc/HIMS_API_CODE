@@ -26,6 +26,7 @@ namespace HIMS.Data.Models
         public string? DoctorName { get; set; }
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
+        public decimal? CompDiscAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
         public decimal? PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
@@ -53,6 +54,7 @@ namespace HIMS.Data.Models
         public bool? IsFree { get; set; }
         public long? CompanyId { get; set; }
         public long? InterimOrFinal { get; set; }
+        public int? LoyaltyPoints { get; set; }
         public string? CompanyRefNo { get; set; }
         public long? ConcessionAuthorizationName { get; set; }
         public bool? IsBillCheck { get; set; }
@@ -63,7 +65,6 @@ namespace HIMS.Data.Models
         public decimal? ChTotalAmt { get; set; }
         public decimal? ChConcessionAmt { get; set; }
         public decimal? ChNetPayAmt { get; set; }
-        public decimal? CompDiscAmt { get; set; }
         public long? IsCancelled { get; set; }
         public long? AddedBy { get; set; }
         public long? CreatedBy { get; set; }
