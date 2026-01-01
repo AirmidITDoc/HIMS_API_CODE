@@ -412,6 +412,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
+        public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
         public virtual DbSet<TDoctorPatientHandover> TDoctorPatientHandovers { get; set; } = null!;
         public virtual DbSet<TDoctorPayoutProcessDetail> TDoctorPayoutProcessDetails { get; set; } = null!;
@@ -542,6 +543,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TSalesDraftDet> TSalesDraftDets { get; set; } = null!;
         public virtual DbSet<TSalesDraftHeader> TSalesDraftHeaders { get; set; } = null!;
         public virtual DbSet<TSalesHeader> TSalesHeaders { get; set; } = null!;
+        public virtual DbSet<TSalesInpatientDetail> TSalesInpatientDetails { get; set; } = null!;
+        public virtual DbSet<TSalesInpatientHeader> TSalesInpatientHeaders { get; set; } = null!;
         public virtual DbSet<TSalesReturnDetail> TSalesReturnDetails { get; set; } = null!;
         public virtual DbSet<TSalesReturnHeader> TSalesReturnHeaders { get; set; } = null!;
         public virtual DbSet<TSmsOutgoing> TSmsOutgoings { get; set; } = null!;
@@ -575,7 +578,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
-        public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
@@ -585,7 +587,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -7147,9 +7149,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdmissionTime).HasColumnType("datetime");
 
-                entity.Property(e => e.AgeYear)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
 
                 entity.Property(e => e.CategoryName).HasMaxLength(50);
 
@@ -7168,6 +7168,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MachineName).HasMaxLength(200);
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
 
                 entity.Property(e => e.ParameterName).HasMaxLength(100);
 
@@ -7190,8 +7194,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SubTestName).HasMaxLength(200);
 
                 entity.Property(e => e.SubTestNamePrint).HasMaxLength(200);
-
-                entity.Property(e => e.SuggestionNote).HasMaxLength(500);
 
                 entity.Property(e => e.TechniqueName).HasMaxLength(200);
 
@@ -7217,6 +7219,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MachineName).HasMaxLength(200);
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
 
                 entity.Property(e => e.Opdno)
                     .HasMaxLength(1)
@@ -7264,9 +7270,7 @@ namespace HIMS.Data.Models
 
                 entity.ToView("m_lvw_Retrieve_PathologyResultUpdate_OPAgeWise");
 
-                entity.Property(e => e.AgeYear)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
 
                 entity.Property(e => e.CategoryName).HasMaxLength(50);
 
@@ -7281,6 +7285,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MachineName).HasMaxLength(200);
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
 
                 entity.Property(e => e.Opdno)
                     .HasMaxLength(50)
@@ -7309,8 +7317,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SubTestName).HasMaxLength(200);
 
                 entity.Property(e => e.SubTestNamePrint).HasMaxLength(200);
-
-                entity.Property(e => e.SuggestionNote).HasMaxLength(500);
 
                 entity.Property(e => e.TechniqueName).HasMaxLength(200);
 
@@ -8078,9 +8084,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.FootNote).HasMaxLength(400);
-
-                entity.Property(e => e.MachineName).HasMaxLength(200);
+                entity.Property(e => e.MachineName).HasMaxLength(2000);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -8088,9 +8092,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
-                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
-
-                entity.Property(e => e.TechniqueName).HasMaxLength(200);
+                entity.Property(e => e.TechniqueName).HasMaxLength(2000);
 
                 entity.Property(e => e.TestDate).HasColumnType("datetime");
 
@@ -11751,6 +11753,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ProvisionalDiag3).HasMaxLength(500);
             });
 
+            modelBuilder.Entity<TDiscountTransactionHistory>(entity =>
+            {
+                entity.HasKey(e => e.DiscTranId);
+
+                entity.ToTable("T_DiscountTransactionHistory");
+
+                entity.Property(e => e.CompDiscountAmt).HasColumnType("money");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DiscountAmt).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TDlabRequest>(entity =>
             {
                 entity.HasKey(e => e.ReqDetId)
@@ -12358,6 +12375,14 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Grnid).HasColumnName("GRNId");
 
                 entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.HmrpStrip)
+                    .HasColumnType("money")
+                    .HasColumnName("HMrp_Strip");
+
+                entity.Property(e => e.HmrpUnitPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("HMrpUnitPrice");
 
                 entity.Property(e => e.Igstamt)
                     .HasColumnType("money")
@@ -16157,6 +16182,151 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VatAmount).HasColumnType("money");
             });
 
+            modelBuilder.Entity<TSalesInpatientDetail>(entity =>
+            {
+                entity.HasKey(e => e.SalesDetId)
+                    .HasName("PK_T_Sales_InpatientDetails");
+
+                entity.ToTable("T_SalesInpatientDetails");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTAmt");
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Igstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("IGSTAmt");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.LandedPrice).HasColumnType("money");
+
+                entity.Property(e => e.Mrp).HasColumnType("money");
+
+                entity.Property(e => e.MrpTotal).HasColumnType("money");
+
+                entity.Property(e => e.PurRateWf).HasColumnType("money");
+
+                entity.Property(e => e.PurTotAmt).HasColumnType("money");
+
+                entity.Property(e => e.ReturnQty).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Sgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("SGSTAmt");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StkId).HasColumnName("StkID");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.TotalLandedAmount).HasColumnType("money");
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.TSalesInpatientDetails)
+                    .HasForeignKey(d => d.SalesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_SalesInpatientDetails_T_SalesInpatientHeader");
+            });
+
+            modelBuilder.Entity<TSalesInpatientHeader>(entity =>
+            {
+                entity.HasKey(e => e.SalesId);
+
+                entity.ToTable("T_SalesInpatientHeader");
+
+                entity.Property(e => e.BalanceAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
+
+                entity.Property(e => e.Cgstsgatamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTSGATAmt");
+
+                entity.Property(e => e.Cgstsgatper).HasColumnName("CGSTSGATPer");
+
+                entity.Property(e => e.ConcessionReasonId).HasColumnName("ConcessionReasonID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreditReason).HasMaxLength(100);
+
+                entity.Property(e => e.CreditReasonId).HasColumnName("CreditReasonID");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.DiscperH).HasColumnName("Discper_H");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(200);
+
+                entity.Property(e => e.ExtAddress).HasMaxLength(200);
+
+                entity.Property(e => e.ExtMobileNo).HasMaxLength(11);
+
+                entity.Property(e => e.ExtRegNo).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ExternalPatientName).HasMaxLength(200);
+
+                entity.Property(e => e.Igstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("IGSTAmt");
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Isgtper).HasColumnName("ISGTPer");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+
+                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+
+                entity.Property(e => e.PaidAmount).HasColumnType("money");
+
+                entity.Property(e => e.PatientName).HasMaxLength(500);
+
+                entity.Property(e => e.RefundAmt)
+                    .HasColumnType("money")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RegNo).HasMaxLength(50);
+
+                entity.Property(e => e.RoundOff).HasColumnType("money");
+
+                entity.Property(e => e.SalesHeadName).HasMaxLength(100);
+
+                entity.Property(e => e.SalesNo).HasMaxLength(50);
+
+                entity.Property(e => e.Time).HasColumnType("datetime");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
+
+                entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<TSalesReturnDetail>(entity =>
             {
                 entity.HasKey(e => e.SalesReturnDetId);
@@ -16941,25 +17111,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RefDoctorName).HasMaxLength(202);
 
                 entity.Property(e => e.RegNo).HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<View1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("View_1");
-
-                entity.Property(e => e.CashPayAmount).HasColumnType("money");
-
-                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
-
-                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
-
-                entity.Property(e => e.StoreId).HasColumnName("StoreID");
-
-                entity.Property(e => e.TranMode).HasMaxLength(30);
             });
 
             modelBuilder.Entity<ViewDoctorshare>(entity =>
