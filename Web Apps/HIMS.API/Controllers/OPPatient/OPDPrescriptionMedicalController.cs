@@ -192,7 +192,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PrescriptionInsertSP")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(ModelTPrescription obj)
         {
             List<TPrescription> model = obj.TPrescription.MapTo<List<TPrescription>>();
@@ -276,7 +276,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("NewOPTemplateInsert")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PrescriptionTemplateModels obj)
         {
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
@@ -318,7 +318,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPTemplateInsert")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(PreTemplateModel obj)
         {
             MPresTemplateH model = obj.PrescriptionOPTemplate.MapTo<MPresTemplateH>();
@@ -338,7 +338,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPut("OPTemplateUpdate/{id:int}")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PrescriptionTemplateModels obj)
         {
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
