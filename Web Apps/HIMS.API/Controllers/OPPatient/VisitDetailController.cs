@@ -347,7 +347,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPut("UpdateVisitdatetime{id:int}")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
         public ApiResponse Update(VisitDateTimeModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();

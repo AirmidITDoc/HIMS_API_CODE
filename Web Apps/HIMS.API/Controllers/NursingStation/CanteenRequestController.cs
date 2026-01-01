@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("CanteenRequestCancel")]
-        //[Permission(PageCode = "MedicalRecord", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescCancel(CanteenRequestCancel obj)
         {
             TCanteenRequestDetail model = new();
