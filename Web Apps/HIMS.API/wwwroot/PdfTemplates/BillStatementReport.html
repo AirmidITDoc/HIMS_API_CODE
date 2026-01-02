@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="bill-template-wrapper" style="font-size: 14px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; ">
+        {{NewHeader}}
+        <table style="width: 100%;line-height: inherit;text-align: left;">
+            <tr class="title-date-row">
+                <td style="padding: 6px;">
+
+                    <table style="width: 100%; border-collapse: collapse;">
+
+                        <tr style="font-size: 18px">
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>Sales Bill Details</b></td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr class="bill-info-row">
+                <td>
+                    <table style="width: 100%; border-collapse: collapse;font-size:20px;">
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">UHID  :</span>
+                                <span>{{RegNo}}</span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">OP No :</span>
+                                <span>{{OPD_IPD_ID}}</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">Patient Name :</span>
+                                <span>{{PatientName}}</span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">Doctor Name :</span>
+                                <span>{{DoctorName}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">Gov. Amount :</span>
+                                <span>{{GovtApprovedAmt}}</span>
+                            </td>
+                          
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">AL Entry :</span>
+                                <span>{{ALEntry}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">Appr. Amount :</span>
+                                <span>{{ApprovedAmount}}</span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <span style="font-weight: bold;">Appr. Date :</span>
+                                <span>{{DateApproved}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <table class="table" style="width:100%;border-collapse:collapse">
+                            <tbody>
+
+                                <tr style="font-size:18px;background-color: white;">
+                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                        Sr.No
+                                    </td>
+                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                        Bill Date
+                                    </td>
+                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                        Service Name
+                                    </td>
+                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                        Price
+                                    </td>
+                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                        Qty
+                                    </td>
+                                    <td style="border: 1px solid #000; font-weight: 700; text-align: center; vertical-align: middle; padding: 5px 5px;">
+                                        Net Amt
+                                    </td>
+
+                                </tr>
+
+                                {{Items}}
+                                <!--<tr style="border: 1px solid black; background-color: white">
+
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px; ">
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">
+                                    </td>
+                                </tr>-->
+                            </tbody>
+                        </table>
+</td>
+            </tr>
+        </table>
+    </div>
+    </div>
+</body>
+</html>
+
