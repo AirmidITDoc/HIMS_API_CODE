@@ -45,5 +45,10 @@ namespace HIMS.Services.Users
         Task<float> GetStock(long StockId);
 
         Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName);
+        Task Update(TSalesHeader ObjTSalesHeader, List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName);
+        Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName);
+
+
     }
 }
+

@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
@@ -490,6 +491,42 @@ namespace HIMS.API.Controllers.Pharmacy
                 x.DoctorName,
             }));
         }
+      
+        [HttpPut("SalesUpdate/{id:int}")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Update(SalesUpdate obj)
+        {
+            TSalesHeader objSalesHeader = obj.SalesHeader.MapTo<TSalesHeader>();
+            List<TSalesDetail> ObjSalesDetail = obj.SalesDetails.MapTo<List<TSalesDetail>>();
+
+            if (obj.SalesHeader.SalesId != 0)
+            {
+
+               await _ISalesService.Update(objSalesHeader, ObjSalesDetail, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
+        }
+
+        [HttpPut("SalesInpatientUpdate/{id:int}")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> SaleUpdate(SalesUpdate obj)
+        {
+            TSalesInpatientHeader objSalesHeader = obj.SalesHeader.MapTo<TSalesInpatientHeader>();
+            List<TSalesInpatientDetail> ObjSalesDetail = obj.SalesDetails.MapTo<List<TSalesInpatientDetail>>();
+
+            if (obj.SalesHeader.SalesId != 0)
+            {
+
+                await _ISalesService.SalesUpdate(objSalesHeader, ObjSalesDetail, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
+        }
+
+
     }
 
 }
