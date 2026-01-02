@@ -303,10 +303,9 @@ namespace HIMS.Services.Inventory
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[3];
-
             para[0] = new SqlParameter("@StoreId", StoreId);
-            para[2] = new SqlParameter("@ItemId", ItemId);
-            para[3] = new SqlParameter("@PatientTypeId", PatientTypeId);
+            para[1] = new SqlParameter("@ItemId", ItemId);       
+            para[2] = new SqlParameter("@PatientTypeId", PatientTypeId); 
 
             List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;
@@ -368,36 +367,36 @@ namespace HIMS.Services.Inventory
                      StoreId = cs.StoreId,
                      ItemId = cs.ItemId,
                      ItemName = im.ItemName,
-                     MinQty = im.MinQty,
-                     MaxQty = im.MaxQty,
-                     ItemGenericNameId = gm.ItemGenericNameId,
-                     ItemGenericName = gm.ItemGenericName,
-                     ProdLocation = im.ProdLocation,
-                     BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
-                     LandedRate = cs.LandedRate,
-                     UnitMRP = cs.UnitMrp,
-                     PurchaseRate = cs.PurUnitRateWf,
-                     VatPercentage = cs.VatPercentage,
-                     //IsBatchRequired = im.IsBatchRequired,
-                     BatchNo = cs.BatchNo,
-                     BatchExpDate = cs.BatchExpDate,
-                     ConversionFactor = im.ConversionFactor,
-                     CGSTPer = cs.Cgstper,
-                     SGSTPer = cs.Sgstper,
-                     IGSTPer = cs.Igstper,
-                     //IsNarcotic = im.IsNarcotic ?? 0,
-                     ManufactureName = mf != null ? mf.ManufactureName : string.Empty,
-                     //IsHighRisk = cs.IsHighRisk,
-                     //IsEmgerency = cs.IsEmgerency,
-                     //IsLASA = cs.IsLasa,
-                     //IsH1Drug = cs.IsH1Drug,
-                     GrnRetQty = cs.GrnRetQty,
-                     //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
-                     ExpDays = EF.Functions.DateDiffDay(AppTime.Now ,cs.BatchExpDate),
-                     DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
-                               : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
-                               : 3,
-                     DrugTypeName = im.DrugTypeName
+                     //MinQty = im.MinQty,
+                     //MaxQty = im.MaxQty,
+                     //ItemGenericNameId = gm.ItemGenericNameId,
+                     //ItemGenericName = gm.ItemGenericName,
+                     //ProdLocation = im.ProdLocation,
+                     //BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
+                     //LandedRate = cs.LandedRate,
+                     //UnitMRP = cs.UnitMrp,
+                     //PurchaseRate = cs.PurUnitRateWf,
+                     //VatPercentage = cs.VatPercentage,
+                     ////IsBatchRequired = im.IsBatchRequired,
+                     //BatchNo = cs.BatchNo,
+                     //BatchExpDate = cs.BatchExpDate,
+                     //ConversionFactor = im.ConversionFactor,
+                     //CGSTPer = cs.Cgstper,
+                     //SGSTPer = cs.Sgstper,
+                     //IGSTPer = cs.Igstper,
+                     ////IsNarcotic = im.IsNarcotic ?? 0,
+                     //ManufactureName = mf != null ? mf.ManufactureName : string.Empty,
+                     ////IsHighRisk = cs.IsHighRisk,
+                     ////IsEmgerency = cs.IsEmgerency,
+                     ////IsLASA = cs.IsLasa,
+                     ////IsH1Drug = cs.IsH1Drug,
+                     //GrnRetQty = cs.GrnRetQty,
+                     ////ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
+                     //ExpDays = EF.Functions.DateDiffDay(AppTime.Now ,cs.BatchExpDate),
+                     //DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
+                     //          : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
+                     //          : 3,
+                     //DrugTypeName = im.DrugTypeName
                  });
 
             return await qry.Take(50).ToListAsync();
