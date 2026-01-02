@@ -13274,7 +13274,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         StringBuilder item = new StringBuilder("");
-                        int i = 0, j = 0;
+                      
                         //double totalSales = 0, totalSalesReturn = 0;
                         //double NetAmount = 0;
 
@@ -13377,19 +13377,24 @@ namespace HIMS.Services.Report
                         //     .Append("<td colspan='5' style='text-align:right;'>Total </td>")
                         //     .Append("<td colspan='6' style='text-align:right;'>").Append(totalSales.ToString("0.00")).Append("</td></tr>");
 
+
                         double NetAmount = 0;
                         double totalSales = 0;
                         double GrandTotalAmount = 0;
 
+                        int i = 0, j = 0;
 
                         string previousSalesType = "";
                         string previousSalesDate = "";
                         string previousSalesNo = "";
+
+                        // Sort bills
                         var sortedBills = dt.AsEnumerable()
                             .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
                             .ThenBy(dr => dr["BillDate"])
                             .ThenBy(dr => dr["PBillNo"])
                             .ToList();
+
                         foreach (DataRow dr in sortedBills)
                         {
                             i++; j++;
@@ -13399,9 +13404,10 @@ namespace HIMS.Services.Report
                             string currentSalesNo = dr["PBillNo"].ToString();
 
                             // ================= SALES TYPE CHANGE =================
-                            if (previousSalesType != currentSalesType && !string.IsNullOrEmpty(previousSalesType))
+                            if (previousSalesType != currentSalesType)
                             {
-                                if (NetAmount > 0)
+                                // Close previous sales type totals
+                                if (!string.IsNullOrEmpty(previousSalesType) && NetAmount > 0)
                                 {
                                     items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
                                          .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
@@ -13413,6 +13419,12 @@ namespace HIMS.Services.Report
                                     GrandTotalAmount += NetAmount;
                                     NetAmount = 0;
                                 }
+
+                                // 🔥 PRINT SALES TYPE (LBL)
+                                items.Append("<tr style='font-size:22px;font-weight:bold;background:#e6e6e6;'>")
+                                     .Append("<td colspan='6' style='text-align:left;'>")
+                                     .Append(currentSalesType)
+                                     .Append("</td></tr>");
                             }
 
                             // ================= BILL CHANGE =================
@@ -13433,7 +13445,7 @@ namespace HIMS.Services.Report
                                     NetAmount = 0;
                                 }
 
-                                // Bill Header
+                                // Bill header
                                 items.Append("<tr style='font-size:20px;font-family: Calibri;'>")
                                      .Append("<td colspan='6' style='border:1px solid #000;padding:3px;text-align:left;'>")
                                      .Append("Bill Date: ").Append(currentSalesDate)
@@ -13479,18 +13491,18 @@ namespace HIMS.Services.Report
                         }
 
                         // ================= GRAND TOTAL =================
-                        items.Append("<tr style='font-weight:bold;font-size:20px;background-color:#f0f0f0;border-top:3px double black;'>")
+                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;border-top:3px double black;'>")
                              .Append("<td colspan='5' style='text-align:right;'>GRAND TOTAL</td>")
                              .Append("<td colspan='6' style='text-align:right;'>")
                              .Append(GrandTotalAmount.ToString("0.00"))
                              .Append("</td></tr>");
 
 
-
                         html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
                         html = html.Replace("{{DateApproved}}", dt.GetColValue("DateApproved"));
                         html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID").ToString());
-
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -13498,7 +13510,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ALEntry}}", dt.GetColValue("ALEntry"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
-
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
