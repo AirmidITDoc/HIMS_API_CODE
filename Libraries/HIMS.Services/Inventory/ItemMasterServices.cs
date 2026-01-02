@@ -299,7 +299,7 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
         }
 
-        public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId)
+        public List<ItemListForBatchDTO> ItemListForBatch(int StoreId, int ItemId, int PatientTypeId)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[3];
@@ -307,7 +307,7 @@ namespace HIMS.Services.Inventory
             para[1] = new SqlParameter("@ItemId", ItemId);       
             para[2] = new SqlParameter("@PatientTypeId", PatientTypeId); 
 
-            List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
+            List<ItemListForBatchDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;
         }
 
@@ -381,9 +381,9 @@ namespace HIMS.Services.Inventory
                      BatchNo = cs.BatchNo,
                      BatchExpDate = cs.BatchExpDate,
                      ConversionFactor = im.ConversionFactor,
-                     CGSTPer = cs.Cgstper,
-                     SGSTPer = cs.Sgstper,
-                     IGSTPer = cs.Igstper,
+                     Cgstper = cs.Cgstper,
+                     Sgstper = cs.Sgstper,
+                     Igstper = cs.Igstper,
                      //IsNarcotic = im.IsNarcotic ?? 0,
                      ManufactureName = mf != null ? mf.ManufactureName : string.Empty,
                      //IsHighRisk = cs.IsHighRisk,
@@ -463,6 +463,11 @@ namespace HIMS.Services.Inventory
                 }
             );
             return await qry.Take(50).ToListAsync();
+        }
+
+        public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

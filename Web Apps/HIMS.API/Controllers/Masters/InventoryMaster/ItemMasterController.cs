@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -155,9 +155,9 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("search-GetItemListForSalesBatchPop")]
-        public ApiResponse SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId)
+        public ApiResponse ItemListForBatch(int StoreId, int ItemId, int PatientTypeId)
         {
-            var data = _ItemMasterServices.SearchGetItemListForSalesBatchPop(StoreId, ItemId, PatientTypeId);
+            var data = _ItemMasterServices.ItemListForBatch(StoreId, ItemId, PatientTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Item Wise Batch List.", data);
         }
 

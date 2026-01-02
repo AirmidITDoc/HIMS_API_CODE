@@ -92,9 +92,9 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? UnitMRP { get; set; }
         public decimal? PurchaseRate { get; set; }
         public decimal? VatPercentage { get; set; }
-        public double? CGSTPer { get; set; }
-        public double? SGSTPer { get; set; }
-        public double? IGSTPer { get; set; }
+        public float? Cgstper { get; set; }
+        public float? Sgstper { get; set; }
+        public float? Igstper { get; set; }
         public string? ConverFactor { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -109,10 +109,33 @@ namespace HIMS.Data.DTO.Inventory
         public double? MaxQty { get; set; }
         public long? ItemGenericNameId { get; set; }
         public string? ItemGenericName { get; set; }
-
-
         public string? ProdLocation { get; set; }
     }
+    public class ItemListForBatchDTO
+    {
+        public long StockId { get; set; }
+        public long? StoreId { get; set; }
+        public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public float? BalanceQty { get; set; }
+        public decimal? LandedRate { get; set; }
+        public decimal? UnitMRP { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? VatPercentage { get; set; }
+        public bool? IsBatchRequired { get; set; }
+        public string? BatchNo { get; set; }
+        public float? Cgstper { get; set; }
+        public float? Sgstper { get; set; }
+        public float? Igstper { get; set; }
+        public DateTime? BatchExpDate { get; set; }
+        public float? GrnRetQty { get; set; }
+        public string? DrugTypeName { get; set; }
+        public string? ManufactureName { get; set; }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+        public string? ConversionFactor { get; set; }
+        public string? ProdLocation { get; set; }
+    }
+
 
     public class ItemListForSalesPageDTO
     {
