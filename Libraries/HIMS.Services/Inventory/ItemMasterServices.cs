@@ -303,10 +303,9 @@ namespace HIMS.Services.Inventory
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[3];
-
             para[0] = new SqlParameter("@StoreId", StoreId);
-            para[1] = new SqlParameter("@ItemId", ItemId);
-            para[2] = new SqlParameter("@PatientTypeId", PatientTypeId);
+            para[1] = new SqlParameter("@ItemId", ItemId);       
+            para[2] = new SqlParameter("@PatientTypeId", PatientTypeId); 
 
             List<ItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchPopDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;
@@ -353,14 +352,14 @@ namespace HIMS.Services.Inventory
                 (from cs in _context.TCurrentStocks
                  join im in _context.MItemMasters
                      on cs.ItemId equals im.ItemId
-                   join gm in _context.MItemGenericNameMasters
-                    on im.ItemGenericNameId equals gm.ItemGenericNameId
+                 join gm in _context.MItemGenericNameMasters
+          on im.ItemGenericNameId equals gm.ItemGenericNameId
                  join mf in _context.MItemManufactureMasters
                      on im.ManufId equals mf.ItemManufactureId into manufactureGroup
                  from mf in manufactureGroup.DefaultIfEmpty() // LEFT JOIN
                  where cs.ItemId == ItemId
-                       && cs.StoreId == StoreId
-                       && (cs.BalanceQty - (cs.GrnRetQty ?? 0)) > 0
+        && cs.StoreId == StoreId
+        && (cs.BalanceQty - (cs.GrnRetQty ?? 0)) > 0
                  orderby cs.BalanceQty descending
                  select new ItemListForBatchPopDTO
                  {
@@ -393,7 +392,7 @@ namespace HIMS.Services.Inventory
                      //IsH1Drug = cs.IsH1Drug,
                      GrnRetQty = cs.GrnRetQty,
                      //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
-                     ExpDays = EF.Functions.DateDiffDay(AppTime.Now ,cs.BatchExpDate),
+                     ExpDays = EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate),
                      DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
                                : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
                                : 3,
@@ -403,7 +402,6 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
 
         }
-
         public virtual async Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName)
         {
             var qry = (

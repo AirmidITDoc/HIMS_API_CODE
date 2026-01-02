@@ -2315,6 +2315,22 @@ namespace HIMS.Services.Report
                 #endregion
 
 
+                #region :: PatientBillStatement ::
+                case "PatientBillStatement":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BillStatementReport.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rpt_BillCompanySummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PatientBillStatement", "PatientBillStatement" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
 
 
                 //Pharmacy
@@ -13252,6 +13268,246 @@ namespace HIMS.Services.Report
 
 
 
+
+                case "PatientBillStatement":
+                    {
+
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0, j = 0;
+                        //double totalSales = 0, totalSalesReturn = 0;
+                        //double NetAmount = 0;
+
+
+                        //string previousSalesType = "";
+                        //string previousSalesDate = "";
+                        //string previousSalesNo = "";
+
+                        //var sortedBills = dt.AsEnumerable()
+                        //    .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
+                        //    .ThenBy(dr => dr["BillDate"])
+                        //    .ThenBy(dr => dr["PBillNo"])
+                        //    .ToList();
+
+                        //foreach (DataRow dr in sortedBills)
+                        //{
+                        //    i++; j++;
+
+                        //    string currentSalesType = dr["Lbl"].ToString();
+                        //    string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
+                        //    string currentSalesNo = dr["PBillNo"].ToString();
+
+                        //    // Print group header if SalesType changes
+                        //    if (previousSalesType != currentSalesType)
+                        //    {
+                        //        if (!string.IsNullOrEmpty(previousSalesNo) && NetAmount > 0)
+                        //        {
+                        //            items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                        //                 .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                        //                 .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                        //                 .Append(NetAmount.ToString("0.00")).Append("</td><td></td></tr>");
+
+                        //            if (previousSalesType == " Bill") totalSales += NetAmount;
+
+                        //            NetAmount = 0;
+                        //        }
+
+                        //        items.Append("<tr style='font-size:22px;font-weight:bold;'>")
+                        //             .Append("<td colspan='6' style='text-align:left;color:black;'>")
+                        //             .Append(currentSalesType).Append("</td></tr>");
+                        //    }
+
+                        //    // Print Sales Date & No if different
+                        //    if (previousSalesDate != currentSalesDate || previousSalesNo != currentSalesNo || previousSalesType != currentSalesType)
+                        //    {
+                        //        if (i != 1 && NetAmount > 0 && previousSalesNo != "")
+                        //        {
+                        //            items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                        //                 .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                        //                 .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                        //                 .Append(NetAmount.ToString("0.00")).Append("</td><td></td></tr>");
+
+                        //            if (previousSalesType == " Bill") totalSales += NetAmount;
+
+                        //            NetAmount = 0;
+                        //        }
+
+
+
+
+
+                        //        items.Append("<tr style='font-size:20px;font-family: Calibri, Helvetica, Arial, sans-serif;'>")
+                        //             .Append("<td colspan='6' style='border:1px solid #000;padding:3px;text-align:left;'>")
+                        //             .Append("Bill Date: ").Append(currentSalesDate)
+                        //             .Append(" | Bill No: ").Append(currentSalesNo)
+                        //             .Append("</td></tr>");
+                        //    }
+
+
+                        //    items.Append("<tr style=\"font-size:15px;\"><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(i).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BillDate"].ConvertToDateString("dd-MM-yyyy")).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["Price"].ConvertToString()).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+
+                        //    NetAmount += Convert.ToDouble(dr["NetAmount"]);
+
+
+
+                        //    previousSalesType = currentSalesType;
+                        //    previousSalesDate = currentSalesDate;
+                        //    previousSalesNo = currentSalesNo;
+
+                        //    // Final item
+                        //    if (i == sortedBills.Count && NetAmount > 0)
+                        //    {
+                        //        items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                        //             .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                        //             .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                        //             .Append(NetAmount.ToString("0.00")).Append("</td><td></td></tr>");
+
+                        //        if (currentSalesType == " Bill") totalSales += NetAmount;
+                        //    }
+                        //}
+
+                        //// Grand totals
+                        //items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;'>")
+                        //     .Append("<td colspan='5' style='text-align:right;'>Total </td>")
+                        //     .Append("<td colspan='6' style='text-align:right;'>").Append(totalSales.ToString("0.00")).Append("</td></tr>");
+
+                        double NetAmount = 0;
+                        double totalSales = 0;
+                        double GrandTotalAmount = 0;
+
+
+                        string previousSalesType = "";
+                        string previousSalesDate = "";
+                        string previousSalesNo = "";
+                        var sortedBills = dt.AsEnumerable()
+                            .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
+                            .ThenBy(dr => dr["BillDate"])
+                            .ThenBy(dr => dr["PBillNo"])
+                            .ToList();
+                        foreach (DataRow dr in sortedBills)
+                        {
+                            i++; j++;
+
+                            string currentSalesType = dr["Lbl"].ToString();
+                            string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
+                            string currentSalesNo = dr["PBillNo"].ToString();
+
+                            // ================= SALES TYPE CHANGE =================
+                            if (previousSalesType != currentSalesType && !string.IsNullOrEmpty(previousSalesType))
+                            {
+                                if (NetAmount > 0)
+                                {
+                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                         .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                         .Append(NetAmount.ToString("0.00"))
+                                         .Append("</td><td></td></tr>");
+
+                                    totalSales += NetAmount;
+                                    GrandTotalAmount += NetAmount;
+                                    NetAmount = 0;
+                                }
+                            }
+
+                            // ================= BILL CHANGE =================
+                            if (previousSalesDate != currentSalesDate ||
+                                previousSalesNo != currentSalesNo ||
+                                previousSalesType != currentSalesType)
+                            {
+                                if (i != 1 && NetAmount > 0)
+                                {
+                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                         .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                         .Append(NetAmount.ToString("0.00"))
+                                         .Append("</td><td></td></tr>");
+
+                                    totalSales += NetAmount;
+                                    GrandTotalAmount += NetAmount;
+                                    NetAmount = 0;
+                                }
+
+                                // Bill Header
+                                items.Append("<tr style='font-size:20px;font-family: Calibri;'>")
+                                     .Append("<td colspan='6' style='border:1px solid #000;padding:3px;text-align:left;'>")
+                                     .Append("Bill Date: ").Append(currentSalesDate)
+                                     .Append(" | Bill No: ").Append(currentSalesNo)
+                                     .Append("</td></tr>");
+                            }
+
+                            // ================= ITEM ROW =================
+                            items.Append("<tr style='font-size:15px;'>")
+                                 .Append("<td style='border-left:1px solid black;text-align:center;'>").Append(i).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
+                                 .Append(dr["BillDate"].ConvertToDateString("dd-MM-yyyy")).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
+                                 .Append(dr["ServiceName"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
+                                 .Append(dr["Price"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
+                                 .Append(dr["Qty"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
+                                 .Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace())
+                                 .Append("</td></tr>");
+
+                            // ================= ACCUMULATE =================
+                            NetAmount += dr["NetAmount"].ConvertToDouble();
+
+                            previousSalesType = currentSalesType;
+                            previousSalesDate = currentSalesDate;
+                            previousSalesNo = currentSalesNo;
+
+                            // ================= LAST BILL =================
+                            if (i == sortedBills.Count && NetAmount > 0)
+                            {
+                                items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                     .Append("<td colspan='5' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                     .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                     .Append(NetAmount.ToString("0.00"))
+                                     .Append("</td><td></td></tr>");
+
+                                totalSales += NetAmount;
+                                GrandTotalAmount += NetAmount;
+                                NetAmount = 0;
+                            }
+                        }
+
+                        // ================= GRAND TOTAL =================
+                        items.Append("<tr style='font-weight:bold;font-size:20px;background-color:#f0f0f0;border-top:3px double black;'>")
+                             .Append("<td colspan='5' style='text-align:right;'>GRAND TOTAL</td>")
+                             .Append("<td colspan='6' style='text-align:right;'>")
+                             .Append(GrandTotalAmount.ToString("0.00"))
+                             .Append("</td></tr>");
+
+
+
+                        html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
+                        html = html.Replace("{{DateApproved}}", dt.GetColValue("DateApproved"));
+                        html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID").ToString());
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                        html = html.Replace("{{ALEntry}}", dt.GetColValue("ALEntry"));
+                        html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+
+                        return html;
+
+
+                    }
+                    break;
 
                 case "PharmacyPatientStatement":
                     {

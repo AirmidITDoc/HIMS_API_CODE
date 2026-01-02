@@ -109,6 +109,8 @@ namespace HIMS.Data.DTO.Inventory
         public double? MaxQty { get; set; }
         public long? ItemGenericNameId { get; set; }
         public string? ItemGenericName { get; set; }
+
+
         public string? ProdLocation { get; set; }
     }
 
