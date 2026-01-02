@@ -45,8 +45,6 @@ namespace HIMS.Data.Models
         public string? DrugTypeName { get; set; }
         public string? ProdLocation { get; set; }
         public long? ItemCompnayId { get; set; }
-        public DateTime? IsCreatedBy { get; set; }
-        public DateTime? IsUpdatedBy { get; set; }
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
         public string? Instruction { get; set; }

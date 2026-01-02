@@ -7083,13 +7083,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Instruction).HasMaxLength(100);
 
-                entity.Property(e => e.IsCreatedBy).HasColumnType("datetime");
-
                 entity.Property(e => e.IsH1drug).HasColumnName("IsH1Drug");
 
                 entity.Property(e => e.IsLasa).HasColumnName("IsLASA");
-
-                entity.Property(e => e.IsUpdatedBy).HasColumnType("datetime");
 
                 entity.Property(e => e.ItemName).HasMaxLength(200);
 

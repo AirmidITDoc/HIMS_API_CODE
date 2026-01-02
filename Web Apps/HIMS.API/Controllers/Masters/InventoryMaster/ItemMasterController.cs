@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ItemMasterModel obj)
         {
             MItemMaster model = obj.MapTo<MItemMaster>();
@@ -76,8 +76,8 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
+                model.UpDatedBy = CurrentUserId;
                 model.IsActive = true;
-                model.IsCreatedBy = AppTime.Now;
                 await _ItemMasterServices.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -98,7 +98,6 @@ namespace HIMS.API.Controllers.Inventory
             {
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.IsUpdatedBy = AppTime.Now;
                 model.ItemTime = Convert.ToDateTime(obj.ItemTime);
                 await _ItemMasterServices.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
