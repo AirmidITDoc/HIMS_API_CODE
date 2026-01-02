@@ -352,14 +352,14 @@ namespace HIMS.Services.Inventory
                 (from cs in _context.TCurrentStocks
                  join im in _context.MItemMasters
                      on cs.ItemId equals im.ItemId
-                   join gm in _context.MItemGenericNameMasters
-                    on im.ItemGenericNameId equals gm.ItemGenericNameId
+                 join gm in _context.MItemGenericNameMasters
+          on im.ItemGenericNameId equals gm.ItemGenericNameId
                  join mf in _context.MItemManufactureMasters
                      on im.ManufId equals mf.ItemManufactureId into manufactureGroup
                  from mf in manufactureGroup.DefaultIfEmpty() // LEFT JOIN
                  where cs.ItemId == ItemId
-                       && cs.StoreId == StoreId
-                       && (cs.BalanceQty - (cs.GrnRetQty ?? 0)) > 0
+        && cs.StoreId == StoreId
+        && (cs.BalanceQty - (cs.GrnRetQty ?? 0)) > 0
                  orderby cs.BalanceQty descending
                  select new ItemListForBatchPopDTO
                  {
@@ -367,42 +367,41 @@ namespace HIMS.Services.Inventory
                      StoreId = cs.StoreId,
                      ItemId = cs.ItemId,
                      ItemName = im.ItemName,
-                     //MinQty = im.MinQty,
-                     //MaxQty = im.MaxQty,
-                     //ItemGenericNameId = gm.ItemGenericNameId,
-                     //ItemGenericName = gm.ItemGenericName,
-                     //ProdLocation = im.ProdLocation,
-                     //BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
-                     //LandedRate = cs.LandedRate,
-                     //UnitMRP = cs.UnitMrp,
-                     //PurchaseRate = cs.PurUnitRateWf,
-                     //VatPercentage = cs.VatPercentage,
-                     ////IsBatchRequired = im.IsBatchRequired,
-                     //BatchNo = cs.BatchNo,
-                     //BatchExpDate = cs.BatchExpDate,
-                     //ConversionFactor = im.ConversionFactor,
-                     //CGSTPer = cs.Cgstper,
-                     //SGSTPer = cs.Sgstper,
-                     //IGSTPer = cs.Igstper,
-                     ////IsNarcotic = im.IsNarcotic ?? 0,
-                     //ManufactureName = mf != null ? mf.ManufactureName : string.Empty,
-                     ////IsHighRisk = cs.IsHighRisk,
-                     ////IsEmgerency = cs.IsEmgerency,
-                     ////IsLASA = cs.IsLasa,
-                     ////IsH1Drug = cs.IsH1Drug,
-                     //GrnRetQty = cs.GrnRetQty,
-                     ////ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
-                     //ExpDays = EF.Functions.DateDiffDay(AppTime.Now ,cs.BatchExpDate),
-                     //DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
-                     //          : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
-                     //          : 3,
-                     //DrugTypeName = im.DrugTypeName
+                     MinQty = im.MinQty,
+                     MaxQty = im.MaxQty,
+                     ItemGenericNameId = gm.ItemGenericNameId,
+                     ItemGenericName = gm.ItemGenericName,
+                     ProdLocation = im.ProdLocation,
+                     BalanceQty = cs.BalanceQty - (cs.GrnRetQty ?? 0),
+                     LandedRate = cs.LandedRate,
+                     UnitMRP = cs.UnitMrp,
+                     PurchaseRate = cs.PurUnitRateWf,
+                     VatPercentage = cs.VatPercentage,
+                     //IsBatchRequired = im.IsBatchRequired,
+                     BatchNo = cs.BatchNo,
+                     BatchExpDate = cs.BatchExpDate,
+                     ConversionFactor = im.ConversionFactor,
+                     CGSTPer = cs.Cgstper,
+                     SGSTPer = cs.Sgstper,
+                     IGSTPer = cs.Igstper,
+                     //IsNarcotic = im.IsNarcotic ?? 0,
+                     ManufactureName = mf != null ? mf.ManufactureName : string.Empty,
+                     //IsHighRisk = cs.IsHighRisk,
+                     //IsEmgerency = cs.IsEmgerency,
+                     //IsLASA = cs.IsLasa,
+                     //IsH1Drug = cs.IsH1Drug,
+                     GrnRetQty = cs.GrnRetQty,
+                     //ExpDays = EF.Functions.DateDiffDay(cs.BatchExpDate, AppTime.Now),
+                     ExpDays = EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate),
+                     DaysFlag = (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) < 30) ? 1
+                               : (EF.Functions.DateDiffDay(AppTime.Now, cs.BatchExpDate) > 50) ? 2
+                               : 3,
+                     DrugTypeName = im.DrugTypeName
                  });
 
             return await qry.Take(50).ToListAsync();
 
         }
-
         public virtual async Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName)
         {
             var qry = (
