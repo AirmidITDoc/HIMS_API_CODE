@@ -92,9 +92,9 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? UnitMRP { get; set; }
         public decimal? PurchaseRate { get; set; }
         public decimal? VatPercentage { get; set; }
-        public float? Cgstper { get; set; }
-        public float? Sgstper { get; set; }
-        public float? Igstper { get; set; }
+        public float? cgstper { get; set; }
+        public float? sgstper { get; set; }
+        public float? igstper { get; set; }
         public string? ConverFactor { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -124,9 +124,9 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? VatPercentage { get; set; }
         public bool? IsBatchRequired { get; set; }
         public string? BatchNo { get; set; }
-        public float? Cgstper { get; set; }
-        public float? Sgstper { get; set; }
-        public float? Igstper { get; set; }
+        public float? cgstper { get; set; }
+        public float? sgstper { get; set; }
+        public float? igstper { get; set; }
         public DateTime? BatchExpDate { get; set; }
         public float? GrnRetQty { get; set; }
         public string? DrugTypeName { get; set; }
@@ -134,6 +134,10 @@ namespace HIMS.Data.DTO.Inventory
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
         public string? ConversionFactor { get; set; }
         public string? ProdLocation { get; set; }
+        public long? ItemGenericNameId { get; set; }
+        public string? ItemGenericName { get; set; }
+        public string? ExpDays { get; set; }
+        public string? DaysFlag { get; set; }
     }
 
 
