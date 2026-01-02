@@ -163,7 +163,6 @@ namespace HIMS.Services.Common
                 case "Mobile_WardWiseBedOccupancy": sp_Name = "ps_MobileApp_WardWiseBedOccupancy"; break;
                 case "Mobile_DoctorWisePerformance": sp_Name = "ps_rpt_DoctorWisePatientCount"; break;
                 case "Mobile_DepartmentWisePerformance": sp_Name = "ps_rpt_DepartmentWisePatientCount"; break;
-
                 case "Mobile_OPIPBillingList": sp_Name = "ps_APP_BILL_OP_IP_LIST"; break;
                 case "Mobile_OPIPBillDetails": sp_Name = "ps_APP_VIEW_BILL_DET"; break;
                 case "Mobile_ViewPathologytestDet": sp_Name = "ps_APP_VIEW_PathologyTest_DET"; break;
