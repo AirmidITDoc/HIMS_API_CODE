@@ -46,7 +46,7 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
         }
         //Changes Done By shilpa 12 dec 2025 
-        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
+        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
@@ -67,7 +67,7 @@ namespace HIMS.Services.Pharmacy
             {
                 item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
-                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate","UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount","PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
                 var Aentity = item.ToDictionary();
                 foreach (var rProperty in Aentity.Keys.ToList())
                 {
@@ -79,7 +79,7 @@ namespace HIMS.Services.Pharmacy
 
             foreach (var item in ObjTCurrentStock)
             {
-                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId"};
+                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
                 var Pentity = item.ToDictionary();
                 foreach (var rProperty in Pentity.Keys.ToList())
                 {
@@ -231,5 +231,86 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
         }
+    
+
+        //    //Changes Done By Ashutosh 19 May 2025
+        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username)
+        {
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
+            var entity = ObjTSalesReturnHeader.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string vSalesReturnId = odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
+            ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+
+            foreach (var item in ObjTSalesReturnDetail)
+            {
+                item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+
+                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                var Aentity = item.ToDictionary();
+                foreach (var rProperty in Aentity.Keys.ToList())
+                {
+                    if (!TEntity.Contains(rProperty))
+                        Aentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnDetails_1", CommandType.StoredProcedure, Aentity);
+            }
+
+
+            foreach (var item in ObjTCurrentStock)
+            {
+                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in Pentity.Keys.ToList())
+                {
+                    if (!REntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+
+            }
+
+            foreach (var item in ObjTSalesDetail)
+            {
+                string[] REntity = { "SalesDetId", "ReturnQty" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in Pentity.Keys.ToList())
+                {
+                    if (!REntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_SalesInPatientReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+
+            }
+            var SalesReturnIdObj = new
+            {
+                SalesReturnId = Convert.ToInt32(vSalesReturnId)
+            };
+            odal.ExecuteNonQuery("ps_Update_SalesInPatientRefundAmt_SalesInPatientHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
+
+            var SalesReturnsIdObj = new
+            {
+                SalesReturnId = Convert.ToInt32(vSalesReturnId)
+            };
+            odal.ExecuteNonQuery("ps_Cal_GSTAmount_SalesInPatientReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
+
+
+            var SalesReturnObj = new
+            {
+                Id = Convert.ToInt32(vSalesReturnId),
+                TypeId = 2
+
+            };
+            odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+
+        }
     }
 }
+
+

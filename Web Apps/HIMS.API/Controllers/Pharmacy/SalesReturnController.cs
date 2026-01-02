@@ -120,5 +120,25 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesReturnId);
         }
 
+        [HttpPost("SalesReturnInPatient")]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        public ApiResponse Insert(SalesReturnsModels obj)
+        {
+            TSalesInPatientReturnHeader model = obj.SalesReturn.MapTo<TSalesInPatientReturnHeader>();
+            List<TSalesInPatientReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesInPatientReturnDetail>>();
+            List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
+            List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
+
+            if (obj.SalesReturn.SalesReturnId == 0)
+            {
+                model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
+                model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
+                _ISalesReturnService.InsertInPatient(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesReturnId);
+        }
+
     }
 }

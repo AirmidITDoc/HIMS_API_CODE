@@ -420,7 +420,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDoctorShareDetail> TDoctorShareDetails { get; set; } = null!;
         public virtual DbSet<TDoctorShareGenerationLog> TDoctorShareGenerationLogs { get; set; } = null!;
         public virtual DbSet<TDoctorShareHeader> TDoctorShareHeaders { get; set; } = null!;
-        public virtual DbSet<TDoctorShareHeaderBack> TDoctorShareHeaderBacks { get; set; } = null!;
         public virtual DbSet<TDoctorsNote> TDoctorsNotes { get; set; } = null!;
         public virtual DbSet<TDrbill> TDrbills { get; set; } = null!;
         public virtual DbSet<TDrbillDet> TDrbillDets { get; set; } = null!;
@@ -543,6 +542,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TSalesDraftDet> TSalesDraftDets { get; set; } = null!;
         public virtual DbSet<TSalesDraftHeader> TSalesDraftHeaders { get; set; } = null!;
         public virtual DbSet<TSalesHeader> TSalesHeaders { get; set; } = null!;
+        public virtual DbSet<TSalesInPatientReturnDetail> TSalesInPatientReturnDetails { get; set; } = null!;
+        public virtual DbSet<TSalesInPatientReturnHeader> TSalesInPatientReturnHeaders { get; set; } = null!;
         public virtual DbSet<TSalesInpatientDetail> TSalesInpatientDetails { get; set; } = null!;
         public virtual DbSet<TSalesInpatientHeader> TSalesInpatientHeaders { get; set; } = null!;
         public virtual DbSet<TSalesReturnDetail> TSalesReturnDetails { get; set; } = null!;
@@ -554,6 +555,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TSupPayDet> TSupPayDets { get; set; } = null!;
         public virtual DbSet<TTokenNoDoctorWiseMannual> TTokenNoDoctorWiseMannuals { get; set; } = null!;
         public virtual DbSet<TTokenNumberGroupWise> TTokenNumberGroupWises { get; set; } = null!;
+        public virtual DbSet<TTokenNumberWithDepartmentWise> TTokenNumberWithDepartmentWises { get; set; } = null!;
         public virtual DbSet<TTokenNumberWithDoctorWise> TTokenNumberWithDoctorWises { get; set; } = null!;
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
@@ -11929,43 +11931,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
             });
 
-            modelBuilder.Entity<TDoctorShareHeaderBack>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_DoctorShareHeaderBack");
-
-                entity.Property(e => e.DocShareId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Gdate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("GDate");
-
-                entity.Property(e => e.GroupId).HasColumnName("GroupID");
-
-                entity.Property(e => e.Gtime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("GTime");
-
-                entity.Property(e => e.NetPayableAmount).HasColumnType("money");
-
-                entity.Property(e => e.OpIpType).HasColumnName("Op_Ip_Type");
-
-                entity.Property(e => e.PerAmount).HasColumnType("money");
-
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Tdsamount)
-                    .HasColumnType("money")
-                    .HasColumnName("TDSAmount");
-
-                entity.Property(e => e.Tdspercentage).HasColumnName("TDSPercentage");
-
-                entity.Property(e => e.TotalAmount).HasColumnType("money");
-            });
-
             modelBuilder.Entity<TDoctorsNote>(entity =>
             {
                 entity.HasKey(e => e.DoctNoteId);
@@ -16182,6 +16147,121 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VatAmount).HasColumnType("money");
             });
 
+            modelBuilder.Entity<TSalesInPatientReturnDetail>(entity =>
+            {
+                entity.HasKey(e => e.SalesReturnDetId);
+
+                entity.ToTable("T_SalesInPatientReturnDetails");
+
+                entity.Property(e => e.BatchExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.Cgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("CGSTAmt");
+
+                entity.Property(e => e.Cgstper).HasColumnName("CGSTPer");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.GrossAmount).HasColumnType("money");
+
+                entity.Property(e => e.Igstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("IGSTAmt");
+
+                entity.Property(e => e.Igstper).HasColumnName("IGSTPer");
+
+                entity.Property(e => e.LandedPrice).HasColumnType("money");
+
+                entity.Property(e => e.Mrp)
+                    .HasColumnType("money")
+                    .HasColumnName("MRP");
+
+                entity.Property(e => e.Mrptotal)
+                    .HasColumnType("money")
+                    .HasColumnName("MRPTotal");
+
+                entity.Property(e => e.PurRate).HasColumnType("money");
+
+                entity.Property(e => e.PurTot).HasColumnType("money");
+
+                entity.Property(e => e.SalesDetId).HasColumnName("SalesDetID");
+
+                entity.Property(e => e.SalesId).HasColumnName("SalesID");
+
+                entity.Property(e => e.Sgstamt)
+                    .HasColumnType("money")
+                    .HasColumnName("SGSTAmt");
+
+                entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
+
+                entity.Property(e => e.StkId).HasColumnName("StkID");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.TotalLandedAmount).HasColumnType("money");
+
+                entity.Property(e => e.UnitMrp)
+                    .HasColumnType("money")
+                    .HasColumnName("UnitMRP");
+
+                entity.Property(e => e.VatAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.SalesReturn)
+                    .WithMany(p => p.TSalesInPatientReturnDetails)
+                    .HasForeignKey(d => d.SalesReturnId)
+                    .HasConstraintName("FK_T_SalesInPatientReturnDetails_T_SalesReturnHeader");
+            });
+
+            modelBuilder.Entity<TSalesInPatientReturnHeader>(entity =>
+            {
+                entity.HasKey(e => e.SalesReturnId);
+
+                entity.ToTable("T_SalesInPatientReturnHeader");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.BalanceAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashCounterId).HasColumnName("CashCounterID");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(255);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.Narration).HasMaxLength(500);
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+
+                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+
+                entity.Property(e => e.PaidAmount).HasColumnType("money");
+
+                entity.Property(e => e.PatientName).HasMaxLength(255);
+
+                entity.Property(e => e.SalesId).HasColumnName("SalesID");
+
+                entity.Property(e => e.SalesReturnNo).HasMaxLength(50);
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.Property(e => e.Time).HasColumnType("datetime");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
+
+                entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<TSalesInpatientDetail>(entity =>
             {
                 entity.HasKey(e => e.SalesDetId)
@@ -16575,6 +16655,15 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_TokenNumberGroupWise");
 
                 entity.Property(e => e.BillDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TTokenNumberWithDepartmentWise>(entity =>
+            {
+                entity.HasKey(e => e.TokenId);
+
+                entity.ToTable("T_TokenNumberWithDepartmentWise");
+
+                entity.Property(e => e.VisitDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TTokenNumberWithDoctorWise>(entity =>
