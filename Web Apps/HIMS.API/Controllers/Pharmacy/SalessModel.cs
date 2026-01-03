@@ -279,7 +279,6 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? NetAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
 
-
     }
     public class SalesDetailsUpdateModel
 
