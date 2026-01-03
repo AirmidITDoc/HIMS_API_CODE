@@ -92,9 +92,9 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? UnitMRP { get; set; }
         public decimal? PurchaseRate { get; set; }
         public decimal? VatPercentage { get; set; }
-        public float? cgstper { get; set; }
-        public float? sgstper { get; set; }
-        public float? igstper { get; set; }
+        public double? CGSTPer { get; set; }
+        public double? SGSTPer { get; set; }
+        public double? IGSTPer { get; set; }
         public string? ConverFactor { get; set; }
         public string? BatchNo { get; set; }
         public DateTime? BatchExpDate { get; set; }
@@ -124,9 +124,9 @@ namespace HIMS.Data.DTO.Inventory
         public decimal? VatPercentage { get; set; }
         public bool? IsBatchRequired { get; set; }
         public string? BatchNo { get; set; }
-        public float? cgstper { get; set; }
-        public float? sgstper { get; set; }
-        public float? igstper { get; set; }
+        public float? CGSTPer { get; set; }
+        public float? SGSTPer { get; set; }
+        public float? IGSTPer { get; set; }
         public DateTime? BatchExpDate { get; set; }
         public float? GrnRetQty { get; set; }
         public string? DrugTypeName { get; set; }

@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesReturnInPatient")]
-        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public ApiResponse Insert(SalesReturnsModels obj)
         {
             TSalesInPatientReturnHeader model = obj.SalesReturn.MapTo<TSalesInPatientReturnHeader>();
