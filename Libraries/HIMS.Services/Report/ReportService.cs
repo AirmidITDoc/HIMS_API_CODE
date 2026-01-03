@@ -383,6 +383,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptOPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPaymentReceipt", "OPPaymentReceipt" + vDate, Orientation.Portrait);
                         break;
@@ -454,6 +455,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceipt" + vDate, Orientation.Portrait);
                         break;
@@ -469,6 +471,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeaderThermal}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
                         tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceiptT" + vDate, Orientation.Portrait);
                         break;
@@ -15149,6 +15152,7 @@ namespace HIMS.Services.Report
 
         public static string conversion(string amount)
         {
+            var Currencysymbol = CurrencyHelper.CurrencySymbol;
             double m = Convert.ToInt64(Math.Floor(Convert.ToDouble(amount)));
             double l = Convert.ToDouble(amount);
 
@@ -15158,10 +15162,7 @@ namespace HIMS.Services.Report
             var beforefloating = ConvertNumbertoWords(Convert.ToInt64(m));
             ConvertNumbertoWords(Convert.ToInt64(j));
 
-            // Word = beforefloating + '.' + afterfloating;
-
-            var Content = beforefloating + ' ' + " RUPEES" + ' ' + " only";
-
+            var Content = beforefloating + ' ' + Currencysymbol.ToString() + ' ' + "Only";
             return Content;
         }
 
