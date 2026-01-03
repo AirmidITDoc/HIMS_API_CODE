@@ -2477,6 +2477,38 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                #region :: PharmacyInPatientSalesDetails ::
+                case "PharmacyInPatientSalesDetails":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyInPatientSalesDetails.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptInPatientIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientSalesDetails", "PharmacyInPatientSalesDetails" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: PharmacyInPatientStatement ::
+                case "PharmacyInPatientStatement":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyInPatientStatement.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptInPatientIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientStatement", "PharmacyInPatientStatement" + vDate, Orientation.Landscape);
+                        break;
+                    }
+                #endregion
                 #region :: PharamcyAdvanceReceipt ::
                 case "PharamcyAdvanceReceipt":
                     {
@@ -14792,6 +14824,458 @@ namespace HIMS.Services.Report
 
                         return html;
 
+                    }
+                    break;
+
+                case "PharmacyInPatientSalesDetails":
+                    {
+
+
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0, j = 0;
+                        double totalSales = 0, totalSalesReturn = 0;
+                        double netPayableAmt = 0;
+
+                        string previousSalesType = "";
+                        string previousSalesDate = "";
+                        string previousSalesNo = "";
+
+                        var sortedBills = dt.AsEnumerable()
+                            .OrderBy(dr => dr["SalesType"].ToString() == "Sales" ? 0 : 1)
+                            .ThenBy(dr => dr["Date"])
+                            .ThenBy(dr => dr["SalesNo"])
+                            .ToList();
+
+                        foreach (DataRow dr in sortedBills)
+                        {
+                            i++; j++;
+
+                            string currentSalesType = dr["SalesType"].ToString();
+                            string currentSalesDate = dr["Date"].ConvertToDateString("dd-MM-yyyy");
+                            string currentSalesNo = dr["SalesNo"].ToString();
+
+                            // Print group header if SalesType changes
+                            if (previousSalesType != currentSalesType)
+                            {
+                                if (!string.IsNullOrEmpty(previousSalesNo) && netPayableAmt > 0)
+                                {
+                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                         .Append("<td colspan='6' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                         .Append(netPayableAmt.ToString("0.00")).Append("</td><td></td></tr>");
+
+                                    if (previousSalesType == "Sales") totalSales += netPayableAmt;
+                                    else totalSalesReturn += netPayableAmt;
+
+                                    netPayableAmt = 0;
+                                }
+
+                                items.Append("<tr style='font-size:22px;font-weight:bold;'>")
+                                     .Append("<td colspan='8' style='text-align:left;color:black;'>")
+                                     .Append(currentSalesType).Append("</td></tr>");
+                            }
+
+                            // Print Sales Date & No if different
+                            if (previousSalesDate != currentSalesDate || previousSalesNo != currentSalesNo || previousSalesType != currentSalesType)
+                            {
+                                if (i != 1 && netPayableAmt > 0 && previousSalesNo != "")
+                                {
+                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                         .Append("<td colspan='6' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                         .Append(netPayableAmt.ToString("0.00")).Append("</td><td></td></tr>");
+
+                                    if (previousSalesType == "Sales") totalSales += netPayableAmt;
+                                    else totalSalesReturn += netPayableAmt;
+
+                                    netPayableAmt = 0;
+                                }
+
+                                items.Append("<tr style='font-size:20px;font-family: Calibri, Helvetica, Arial, sans-serif;'>")
+                                     .Append("<td colspan='8' style='border:1px solid #000;padding:3px;text-align:left;'>")
+                                     .Append("Sales Date: ").Append(currentSalesDate)
+                                     .Append(" | Sales No: ").Append(currentSalesNo)
+                                     .Append("</td></tr>");
+                            }
+
+                            // Item row
+                            items.Append("<tr style='font-family: Helvetica, Arial, sans-serif;'>")
+                                 .Append("<td style='border: 1px solid #d4c3c3; text-align: right; padding: 6px;'>").Append(j).Append("</td>")
+                                 .Append("<td style='text-align: left; border: 1px solid #d4c3c3; padding: 6px;'>").Append(dr["ItemName"].ToString()).Append("</td>")
+                                 .Append("<td style='text-align: left; border: 1px solid #d4c3c3; padding: 6px;'>").Append(dr["BatchNo"].ToString()).Append("</td>")
+                                 .Append("<td style='text-align: center; border: 1px solid #d4c3c3; padding: 6px;'>").Append(dr["BatchExpDate"].ConvertToDateString("dd-MM-yyyy")).Append("</td>")
+                                 .Append("<td style='text-align: center; border: 1px solid #d4c3c3; padding: 6px;'>").Append(Convert.ToDouble(dr["UnitMRP"]).ToString("0.00")).Append("</td>")
+                                 .Append("<td style='text-align: center; border: 1px solid #d4c3c3; padding: 6px;'>").Append(dr["Qty"].ToString()).Append("</td>")
+                                 .Append("<td style='text-align: right; border: 1px solid #d4c3c3; padding: 6px;'>").Append(Convert.ToDouble(dr["TotalAmount"]).ToString("0.00")).Append("</td>")
+                                 .Append("<td style='text-align: right; border: 1px solid #d4c3c3; padding: 6px;'>").Append(Convert.ToDouble(dr["GrossAmount"]).ToString("0.00")).Append("</td>")
+                                 .Append("</tr>");
+
+                            netPayableAmt += Convert.ToDouble(dr["TotalAmount"]);
+
+                            previousSalesType = currentSalesType;
+                            previousSalesDate = currentSalesDate;
+                            previousSalesNo = currentSalesNo;
+
+                            // Final item
+                            if (i == sortedBills.Count && netPayableAmt > 0)
+                            {
+                                items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
+                                     .Append("<td colspan='6' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                     .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
+                                     .Append(netPayableAmt.ToString("0.00")).Append("</td><td></td></tr>");
+
+                                if (currentSalesType == "Sales") totalSales += netPayableAmt;
+                                else totalSalesReturn += netPayableAmt;
+                            }
+                        }
+
+                        // Grand totals
+                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;'>")
+                             .Append("<td colspan='6' style='text-align:right;'>Total Sales</td>")
+                             .Append("<td colspan='6' style='text-align:right;'>").Append(totalSales.ToString("0.00")).Append("</td></tr>");
+
+                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;'>")
+                             .Append("<td colspan='6' style='text-align:right;'>Total Sales Return</td>")
+                             .Append("<td colspan='6' style='text-align:right;'>").Append(totalSalesReturn.ToString("0.00")).Append("</td></tr>");
+
+
+
+                        // Update the total amounts for all doctors and patients
+                        //T_NetAmount += dr["TotalAmount"].ConvertToDouble();
+                        //    T_Amount += dr["NetAmount"].ConvertToDouble();
+                        //NetAmount += dr["NetAmount"].ConvertToDouble();
+
+
+                        html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
+                        html = html.Replace("{{OP_IP_Type}}", dt.GetColValue("OP_IP_Type"));
+                        html = html.Replace("{{IP_OP_Number}}", dt.GetColValue("IP_OP_Number").ToString());
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        // Replace the placeholders with actual totals and the generated items
+                        //html = html.Replace("{{T_NetAmount}}", T_NetAmount.ToString("0.00"));
+                        //html = html.Replace("{{T_Amount}}", T_Amount.ToString("0.00"));
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+
+
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+
+                        return html;
+                    }
+                    break;
+
+                case "PharmacyInPatientStatement":
+                    {
+                        var dynamicVariable = new Dictionary<string, double>();
+
+                        string html1 = File.ReadAllText(htmlFilePath);
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+                        StringBuilder item = new StringBuilder("");
+                        int i = 0, j = 0;
+                        double salesTotal = 0, salesdisc = 0, salesnet = 0, salesbal = 0, salesrefund = 0, salesadv = 0, salesrefundTotal = 0, salesrefunddisc = 0, salesrefundnet = 0, salesrefundbal = 0, salesrefundrefund = 0, Total_Total = 0, Total_disc = 0, Total_net = 0, Total_bal = 0, Total_refund = 0, salespaid = 0, salesrefundpaid = 0;
+                        double salescashTotal = 0, salescard = 0, salescheque = 0, salesneft = 0, salesonline = 0, salesreturncashTotal = 0, salesreturncard = 0, salesreturncheque = 0, salesreturnneft = 0, salesreturnonline = 0;
+                        double G_NetPayableAmt = 0, G_TotalAmount = 0, G_discAmount = 0, G_balAmount = 0, G_RefundAmount = 0, G_PaidAmount = 0, G_cashAmount = 0, G_chequeAmount = 0, G_neftAmount = 0, G_cardAmount = 0, G_onlineAmount = 0, G_AdvAmount = 0;
+                        double G_BalTotalamt = 0, T_Totalamt = 0, T_Discamt = 0, T_Netamt = 0, T_paidamt = 0, T_Balamt = 0, T_Refundamt = 0, T_Creditreturnamt = 0, T_Cashreturnamt = 0, T_Advamt = 0, T_Advrefundamt = 0, T_Advusedamt = 0, T_AdvBalamt = 0, T_Cashpayamt = 0, T_Cardpayamt = 0, T_Chequepayamt = 0, T_Onlinepayamt = 0, T_Neftpayamt = 0, Net_Billamount = 0, Total_PaidAmount = 0;
+                        double Total_Cash = 0, Total_card = 0, Total_cheque = 0, Total_neft = 0, Total_online = 0;
+                        string Lablecount = "";
+
+
+                        string previousLabel = "";
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            i++; j++;
+
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["Label"].ConvertToString();
+                                Lablecount = dr["Label"].ConvertToString();
+                                items.Append("<tr style=\"font-size:20px;border: 1px;color:black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-weight:bold;\"><td colspan=\"14\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label).Append("</td></tr>");
+                            }
+                            if (previousLabel != "" && previousLabel != dr["Label"].ConvertToString())
+                            {
+                                j = 1;
+                                items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;\"><td colspan='3' style=\"border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_TotalAmount.ConvertToDouble()).ToString("F2")).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_discAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_NetPayableAmt.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_PaidAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_balAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_RefundAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_cashAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_cardAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                    .Append(Math.Round(G_chequeAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   //.AppendMath.Round(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_onlineAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                   .Append(Math.Round(G_AdvAmount.ConvertToDouble()).ToString("F2")).Append("</td></tr>");
+
+                                G_NetPayableAmt = 0; G_TotalAmount = 0; G_discAmount = 0; G_balAmount = 0; G_RefundAmount = 0; G_PaidAmount = 0; G_cashAmount = 0; G_chequeAmount = 0; G_neftAmount = 0; G_cardAmount = 0; G_onlineAmount = 0; G_AdvAmount = 0;
+
+
+                                items.Append("<tr style=\"font-size:20px;border-bottom: 1px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color:black\"><td colspan=\"15\" style=\"border:1px solid #000;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(dr["Label"].ConvertToString()).Append("</td></tr>");
+
+                            }
+
+                            G_TotalAmount += dr["TotalAmount"].ConvertToDouble();
+                            G_discAmount += dr["DiscAmount"].ConvertToDouble();
+                            G_NetPayableAmt += dr["NetAmount"].ConvertToDouble();
+                            G_PaidAmount += dr["PaidAmount"].ConvertToDouble();
+                            G_balAmount += dr["BalanceAmount"].ConvertToDouble();
+                            G_RefundAmount += dr["RefundAmt"].ConvertToDouble();
+                            G_AdvAmount += dr["AdvUsedAmt"].ConvertToDouble();
+
+                            G_cashAmount += dr["CashPay"].ConvertToDouble();
+                            G_cardAmount += dr["CardPay"].ConvertToDouble();
+                            G_chequeAmount += dr["ChequePay"].ConvertToDouble();
+                            G_onlineAmount += dr["PayTMAmount"].ConvertToDouble();
+                            G_neftAmount += dr["NEFTPayAmount"].ConvertToDouble();
+
+
+
+                            previousLabel = dr["Label"].ConvertToString();
+
+                            items.Append("<tr style=\"font-size: 20px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\"border-left: 1px solid #ccc;border-bottom:1px solid #ccc;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:0;height:10px;text-align:right;vertical-align:middle\">").Append(dr["Date"].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:0;height:10px;text-align:right;vertical-align:middle\">").Append(dr["Time"].ConvertToDateString("hh:mm")).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:0;height:10px;vertical-align:middle;text-align: right;padding-left:10px;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;padding:0;height:10px;vertical-align:middle;text-align: right;padding-left:10px;\">").Append(dr["DiscAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["PaidAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;padding:0;height:10px;vertical-align:middle;text-align: right;\">").Append(dr["BalanceAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["RefundAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["CashPay"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["CardPay"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["ChequePay"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            //  items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;padding:0;height:10px;vertical-align:middle;text-align: right;\">").Append(dr["NEFTPayAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;vertical-align:middle;padding:3px;height:10px;text-align:right;\">").Append(dr["PayTMAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #ccc;border-bottom:1px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;padding:0;height:10px;vertical-align:middle;text-align: right;\">").Append(dr["AdvUsedAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+
+
+
+
+                            // salesTotal= salesTotal - 
+
+                            //Total_Total = salesTotal.ConvertToDouble() - salesrefundTotal.ConvertToDouble();
+                            //Total_disc = salesdisc.ConvertToDouble() - salesrefunddisc.ConvertToDouble();
+                            //Total_net = salesnet.ConvertToDouble() - salesrefundnet.ConvertToDouble();
+                            //Total_bal = salesbal.ConvertToDouble() - salesrefundbal.ConvertToDouble();
+                            //Total_refund = salesrefund.ConvertToDouble() - salesrefundrefund.ConvertToDouble();
+                            //Total_PaidAmount = salespaid.ConvertToDouble() - salesrefundpaid.ConvertToDouble();
+
+
+                            //Total_Cash = salescashTotal.ConvertToDouble() - salesreturncashTotal.ConvertToDouble();
+                            //Total_card = salescard.ConvertToDouble() - salesreturncard.ConvertToDouble();
+                            //Total_cheque = salescheque.ConvertToDouble() - salesreturncheque.ConvertToDouble();
+                            //Total_neft = salesneft.ConvertToDouble() - salesreturnneft.ConvertToDouble();
+                            //Total_online = salesonline.ConvertToDouble() - salesreturnonline.ConvertToDouble();
+
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+                                //items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-weight:bold;font-size:22px;\"><td colspan='2' style=\"border-right:1px solid #ccc;border-left:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
+                                //                     .Append(G_TotalAmount.To2DecimalPlace()).Append(" </td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                     .Append(G_discAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                      .Append(G_NetPayableAmt.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                     .Append(G_PaidAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                        .Append(G_balAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                       .Append(G_RefundAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                        .Append(G_cashAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                    .Append(G_cardAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                    .Append(G_chequeAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                  //  .Append(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                    .Append(G_onlineAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                //                    .Append("</td></tr>");
+
+                                items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;\"><td colspan='3' style=\"border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_TotalAmount.ConvertToDouble()).ToString("F2")).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_discAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_NetPayableAmt.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_PaidAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_balAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_RefundAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_cashAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_cardAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                  .Append(Math.Round(G_chequeAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 //.AppendMath.Round(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_onlineAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+                                 .Append(Math.Round(G_AdvAmount.ConvertToDouble()).ToString("F2")).Append("</td></tr>");
+
+
+                            }
+                        }
+
+
+                        foreach (DataRow dr1 in dt.Rows)
+                        {
+
+                            //i++; j++;
+                            if (dr1["Label"].ConvertToString() == "Sales")
+                            {
+
+                                salesTotal += dr1["TotalAmount"].ConvertToDouble();
+                                salesdisc += dr1["DiscAmount"].ConvertToDouble();
+                                salesnet += dr1["NetAmount"].ConvertToDouble();
+                                salesbal += dr1["BalanceAmount"].ConvertToDouble();
+                                salesrefund += dr1["RefundAmt"].ConvertToDouble();
+                                salespaid += dr1["PaidAmount"].ConvertToDouble();
+
+                                salescashTotal += dr1["CashPay"].ConvertToDouble();
+                                salescard += dr1["CardPay"].ConvertToDouble();
+                                salescheque += dr1["ChequePay"].ConvertToDouble();
+                                salesneft += dr1["NEFTPayAmount"].ConvertToDouble();
+                                salesonline += dr1["PayTMAmount"].ConvertToDouble();
+                                salesadv += dr1["AdvUsedAmt"].ConvertToDouble();
+
+                            }
+
+                            if (dr1["Label"].ConvertToString() == "Sales Return")
+                            {
+                                salesrefundTotal += dr1["TotalAmount"].ConvertToDouble();
+                                salesrefunddisc += dr1["DiscAmount"].ConvertToDouble();
+                                salesrefundnet += dr1["NetAmount"].ConvertToDouble();
+                                salesrefundbal += dr1["BalanceAmount"].ConvertToDouble();
+                                salesrefundrefund += dr1["RefundAmt"].ConvertToDouble();
+                                salesrefundpaid += dr1["PaidAmount"].ConvertToDouble();
+
+
+                                salesreturncashTotal += dr1["CashPay"].ConvertToDouble();
+                                salesreturncard += dr1["CardPay"].ConvertToDouble();
+                                salesreturncheque += dr1["ChequePay"].ConvertToDouble();
+                                salesreturnneft += dr1["NEFTPayAmount"].ConvertToDouble();
+                                salesreturnonline += dr1["PayTMAmount"].ConvertToDouble();
+                            }
+
+
+                        }
+
+                        salesnet = Math.Round(salesTotal.ConvertToDouble() - salesdisc.ConvertToDouble());
+                        salesbal = Math.Round(salesbal.ConvertToDouble());
+                        salesadv = Math.Round(salesadv.ConvertToDouble());
+                        salesdisc = Math.Round(salesdisc.ConvertToDouble());
+                        salesTotal = Math.Round(salesTotal.ConvertToDouble());
+                        salesreturncashTotal = Math.Round(salesreturncashTotal.ConvertToDouble());
+
+                        G_BalTotalamt = salesnet.ConvertToDouble() - (T_Creditreturnamt.ConvertToDouble() + salesadv.ConvertToDouble() + salescashTotal.ConvertToDouble() + salesonline.ConvertToDouble());
+
+
+                        //TotalCollection = T_CashPayAmount.ConvertToDouble() + T_CardPayAmount.ConvertToDouble() + T_ChequePayAmount.ConvertToDouble() + T_TotalNEFT.ConvertToDouble() + T_TotalPAYTM.ConvertToDouble();
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+
+
+
+
+                        html = html.Replace("{{salesreturncashTotal}}", salesreturncashTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesonline}}", salesonline.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salescashTotal}}", salescashTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesnet}}", salesnet.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesdisc}}", salesdisc.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesrefund}}", salesrefund.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesTotal}}", salesTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesbal}}", salesbal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
+
+
+
+                        html = html.Replace("{{T_Totalamt}}", T_Totalamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Discamt}}", T_Discamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Netamt}}", T_Netamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_paidamt}}", T_paidamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Creditreturnamt}}", T_Creditreturnamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Cashreturnamt}}", T_Cashreturnamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advamt}}", T_Advamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advrefundamt}}", T_Advrefundamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Advusedamt}}", T_Advusedamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_AdvBalamt}}", T_AdvBalamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Cashpayamt}}", T_Cashpayamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_Onlinepayamt}}", T_Onlinepayamt.ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{G_BalTotalamt}}", G_BalTotalamt.To2DecimalPlace());
+
+
+                        html = html.Replace("{{StoreName}}", dt.GetColValue("StoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+                        html = html.Replace("{{HospitalMobileNo}}", dt.GetColValue("HospitalMobileNo"));
+                        html = html.Replace("{{HospitalEmailId}}", dt.GetColValue("HospitalEmailId"));
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+
+                        html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+
+
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+                        html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/M/yyyy hh:mm tt"));
+
+                        html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+                        html = html.Replace("{{DL_NO}}", dt.GetColValue("DL_NO"));
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
+                        html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+
+
+
+                        html = html.Replace("{{AdvUsedAmt}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalAdvAmount}}", dt.GetColValue("BalAdvAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvAmount}}", dt.GetColValue("AdvAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvUsedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{creditreturnamt}}", dt.GetColValue("creditreturnamt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{AdvRefundAmt}}", dt.GetColValue("AdvRefundAmt").ConvertToDouble().ToString("F2"));
+
+
+                        return html;
                     }
                     break;
 
