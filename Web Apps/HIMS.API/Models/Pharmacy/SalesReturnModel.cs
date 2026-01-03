@@ -269,7 +269,7 @@ namespace HIMS.API.Models.Pharmacy
         public List<CurrentStockModels> CurrentStock { get; set; }
         public List<SalesDetailsModel> SalesDetail { get; set; }
         public PaymentModels? Payment { get; set; }
-        public List<TPaymentpharModelS> TPayments { get; set; }
+        public List<TPaymentpharModelS>? TPayments { get; set; }
 
     }
 }
