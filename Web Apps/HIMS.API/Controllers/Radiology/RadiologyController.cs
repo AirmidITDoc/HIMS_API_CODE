@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Pathology;
@@ -25,7 +26,7 @@ namespace HIMS.API.Controllers.Radiology
 
 
         [HttpPost("RadiologyList")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadilogyService.GetListAsync(objGrid);
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPut("RadiologyUpdate/{id:int}")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
         public ApiResponse Update(TRadiologyReportModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -50,7 +51,7 @@ namespace HIMS.API.Controllers.Radiology
         }
         //shilpa 26-09-2025//
         [HttpPut("RadiologyOutsourceUpdate/{id:int}")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TRadiologyReportUpdate obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -68,7 +69,7 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Verify(RadiologyVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

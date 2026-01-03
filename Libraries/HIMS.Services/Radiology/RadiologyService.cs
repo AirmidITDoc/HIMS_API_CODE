@@ -22,17 +22,19 @@ namespace HIMS.Services.Radiology
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
         }
-        public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string UserName)
+        public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] REntity = { "RadDate", "RadTime", "OpdIpdType", "OpdIpdId", "RadTestId", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId", "TestType", "IsVerifySign", "IsVerified", "IsVerifyedDate", "OutSourceId", "OutSourceLabName", "OutSourceSampleSentDateTime", "OutSourceStatus", "OutSourceReportCollectedDateTime", "OutSourceCreatedBy", "OutSourceCreatedDateTime", "OutSourceModifiedby", "OutSourceModifiedDateTime", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "IsVerifyId", "RegNo", "PatientName", "Opipnumber", "DoctorName" };
+            string[] REntity = { "RadReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "RadResultDr1", "RadResultDr2", "RadResultDr3", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "ResultEntry" };
             var Dentity = ObjTRadiologyReportHeader.ToDictionary();
-            foreach (var rProperty in REntity)
+            foreach (var rProperty in Dentity.Keys.ToList())
             {
-                Dentity.Remove(rProperty);
+                if (!REntity.Contains(rProperty))
+                    Dentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("update_T_RadiologyReportHeader_1", CommandType.StoredProcedure, Dentity);
+            await _context.LogProcedureExecution(Dentity, nameof(TRadiologyReportHeader), Convert.ToInt32(ObjTRadiologyReportHeader.RadReportId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
         }
         public virtual async Task UpdateAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {

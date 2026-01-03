@@ -222,6 +222,9 @@ namespace HIMS.Services.Pathlogy
                             }
                             string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                             item.PaymentId = Convert.ToInt32(VPaymentId);
+                            await _context.LogProcedureExecution(pentity, nameof(TPayment), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
                         }
                     }
 
@@ -254,7 +257,7 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserNameint)
+        public virtual async Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -432,6 +435,8 @@ namespace HIMS.Services.Pathlogy
                         }
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                         item.PaymentId = Convert.ToInt32(VPaymentId);
+                        await _context.LogProcedureExecution(pentity, nameof(TPayment), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
                     }
                     scope.Complete();

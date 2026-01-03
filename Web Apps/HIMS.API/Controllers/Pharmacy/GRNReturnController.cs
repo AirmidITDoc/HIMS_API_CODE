@@ -66,27 +66,9 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        //[HttpPost("Insert")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
-        //{
-        //    TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
-        //    List<TCurrentStock> objCStock = obj.GrnReturnCurrentStock.MapTo<List<TCurrentStock>>();
-        //    List<TGrndetail> objReturnQty = obj.GrnReturnReturnQt.MapTo<List<TGrndetail>>();
-        //    if (obj.GrnReturn.GrnreturnId == 0)
-        //    {
-        //        model.GrnreturnDate = Convert.ToDateTime(obj.GrnReturn.GrnreturnDate);
-        //        model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
-        //        model.AddedBy = CurrentUserId;
-        //        model.UpdatedBy = 0;
-        //        await _gRNReturnService.InsertAsync(model, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model.GrnreturnId);
-        //}
+      
         [HttpPost("Insert")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public ApiResponse Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -107,7 +89,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("UpdateGRNReturn")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public ApiResponse Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
@@ -129,7 +111,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public ApiResponse Verify(GRNReturnVerifyModel obj)
         {
             TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
