@@ -474,6 +474,8 @@ namespace HIMS.API.Controllers.Report
                 case "PharamcySalesReturnKenya":
                 case "PharamcyInPatientSalesBillKenya":
                 case "PharamcyInPatientSalesReturnKenya":
+                case "PharmacyInPatientSalesDetails":
+                case "PharmacyInPatientStatement":
 
                 //Clinical Care
                 case "NursingVitalsReport":
