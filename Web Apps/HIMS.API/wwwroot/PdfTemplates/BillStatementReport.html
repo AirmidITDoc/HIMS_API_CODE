@@ -17,7 +17,7 @@
                     <table style="width: 100%; border-collapse: collapse;">
 
                         <tr style="font-size: 18px">
-                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> Bill Details</b></td>
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> Patient Bill Information</b></td>
                             <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                         </tr>
 
@@ -28,92 +28,77 @@
                 <td>
                     <table style="width: 100%; border-collapse: collapse;font-size:20px;">
                         <tr>
-                            <td style="padding: 2px;">
+                            <td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">UHID  :</span>
                                 <span>{{RegNo}}</span>
                             </td>
-                            <td style="padding: 2px;">
-                                <span style="font-weight: bold;">OP No :</span>
-                                <span>{{OPD_IPD_ID}}</span>
-                            </td>
 
-                            <td style="padding: 2px;">
+                            <td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">Doctor Name :</span>
                                 <span>{{DoctorName}}</span>
                             </td>
-
-                           
-
                         </tr>
                         <tr>
-                            <td style="padding: 2px;">
+                            <td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">Patient Name :</span>
                                 <span>{{PatientName}}</span>
                             </td>
-                            <td style="padding: 2px;">
+                            <td style="width:50%; padding:2px;">
+                                <span style="font-weight: bold;">Department Name :</span>
+                                <span>{{DepartmentName}}</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td style="width:50%; padding:2px;">
+                                <span style="font-weight: bold;">Patient Type :</span>
+                                <span>{{PatientType}}</span>
+                            </td>
+                            <td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">Company Name :</span>
                                 <span>{{CompanyName}}</span>
                             </td>
-                            <td style="padding: 2px;">
-                                <span style="font-weight: bold;">Department Name :</span>
-                                <span>{{PolicyNo}}</span>
-                            </td>
-
-                        </tr>                
+                        </tr>
                         <tr>
-
-                            <td style="padding: 2px;">
-                                <span style="font-weight: bold;">Patient Type :</span>
-                                <span>{{GovtApprovedAmt}}</span>
-                            </td>
-                            <td style="padding: 2px;">
-                                <span style="font-weight: bold;">Appr. Amount :</span>
+                            <td style="width:50%; padding:2px;">
+                                <span style="font-weight: bold;">Approved Amount :</span>
                                 <span>{{ApprovedAmount}}</span>
                             </td>
-                            <!--<td style="padding: 2px;">
-                                <span style="font-weight: bold;">Appr. Date :</span>
-                                <span>{{DateApproved}}</span>
-                            </td>-->
-                          
-                        </tr>
-                        <tr>
-                            <!--<td style="padding: 2px;">
-                                <span style="font-weight: bold;">AL Entry :</span>
-                                <span>{{ALEntry}}</span>
-                            </td>-->
 
                         </tr>
                         <tr>
                         </tr>
-                        <table class="table" style="width:100%;border-collapse:collapse">
-                            <tbody>
-
-                                <tr style="font-size:18px;background-color: white;">
-                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                        Sr.No
-                                    </td>
-                                    <!--<td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                        Bill Date
-                                    </td>-->
-                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                        Service Name
-                                    </td>
-                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                        Price
-                                    </td>
-                                    <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                        Qty
-                                    </td>
-                                    <td style="border: 1px solid #000; font-weight: 700; text-align: center; vertical-align: middle; padding: 5px 5px;">
-                                        Net Amt
-                                    </td>
-
-                                </tr>
-
-                                {{Items}}
-                            </tbody>
-                        </table>
                     </table>
+                    <table class="table" style="width:100%;border-collapse:collapse">
+                        <tbody>
+
+                            <tr style="font-size:18px;background-color: white;">
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                    Sr.No
+                                </td>
+                                <!--<td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                    Bill Date
+                                </td>-->
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                    Service Name
+                                </td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                    Price
+                                </td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
+                                    Qty
+                                </td>
+                                <td style="border: 1px solid #000; font-weight: 700; text-align: center; vertical-align: middle; padding: 5px 5px;">
+                                    Net Amt
+                                </td>
+
+                            </tr>
+
+                            {{Items}}
+                        </tbody>
+                    </table>
+
                 </td>
             </tr>
         </table>
