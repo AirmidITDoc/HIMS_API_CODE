@@ -493,7 +493,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
       
         [HttpPut("SalesUpdate/{id:int}")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(SalesUpdate obj)
         {
             TSalesHeader objSalesHeader = obj.SalesHeader.MapTo<TSalesHeader>();

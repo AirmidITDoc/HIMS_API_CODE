@@ -9038,28 +9038,25 @@ namespace HIMS.Services.Report
 
                         foreach (DataRow dr in dt.Rows)
                         {
-
                             i++; j++;
-
 
                             if (i == 1)
                             {
 
                                 String Label2;
-                                Label2 = dr["ChargesDate"].ConvertToString();
-                                items.Append("<tr style=\"font-size:17px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;border: 1px;font-weight:bold;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label2).Append("</td></tr>");
+                                Label2 = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
+                                items.Append("<tr style=\"font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;border: 1px;font-weight:bold;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label2).Append("</td></tr>");
 
                             }
-
 
                             if (previousLabel != "" && previousLabel != dr["ChargesDate"].ConvertToString())
                             {
                                 j = 1;
-                                items.Append("<tr style='font-size:17px;border:1px solid #eee;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
+                                items.Append("<tr style='font-size:14px;border:1px solid #eee;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                               .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
                                 T_TotalAmount = 0;
 
-                                items.Append("<tr style=\"font-size:17px;border-bottom: 1px solid #eee;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-weight:bold;\">").Append(dr["ChargesDate"].ConvertToString()).Append("</td></tr>");
+                                items.Append("<tr style=\"font-size:14px;border-bottom: 1px solid #eee;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-weight:bold;\">").Append(dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td></tr>");
 
                             }
 

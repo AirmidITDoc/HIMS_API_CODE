@@ -1050,7 +1050,7 @@ namespace HIMS.Services.Users
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_UpdateSalesInPatientHeader", CommandType.StoredProcedure, entity);
+                odal.ExecuteNonQuery("ps_UpdateSalesHeader", CommandType.StoredProcedure, entity);
                 await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjTSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 foreach (var item in ObjTSalesDetail)
                 {
