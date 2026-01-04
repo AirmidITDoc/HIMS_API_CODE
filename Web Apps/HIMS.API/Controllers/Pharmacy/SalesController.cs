@@ -498,11 +498,11 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             TSalesHeader objSalesHeader = obj.SalesHeader.MapTo<TSalesHeader>();
             List<TSalesDetail> ObjSalesDetail = obj.SalesDetails.MapTo<List<TSalesDetail>>();
-
+            List<TCurrentStock> model2 = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
             if (obj.SalesHeader.SalesId != 0)
             {
 
-               await _ISalesService.Update(objSalesHeader, ObjSalesDetail, CurrentUserId, CurrentUserName);
+               await _ISalesService.Update(objSalesHeader, ObjSalesDetail, model2,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -515,11 +515,12 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             TSalesInpatientHeader objSalesHeader = obj.SalesHeader.MapTo<TSalesInpatientHeader>();
             List<TSalesInpatientDetail> ObjSalesDetail = obj.SalesDetails.MapTo<List<TSalesInpatientDetail>>();
+            List<TCurrentStock> model2 = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
 
             if (obj.SalesHeader.SalesId != 0)
             {
 
-                await _ISalesService.SalesUpdate(objSalesHeader, ObjSalesDetail, CurrentUserId, CurrentUserName);
+                await _ISalesService.SalesUpdate(objSalesHeader, ObjSalesDetail, model2,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -273,6 +273,7 @@ namespace HIMS.API.Models.Pharmacy
     public class SalesHederUpdateModel
     {
         public long SalesId { get; set; }
+        public long? StoreId { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? VatAmount { get; set; }
         public decimal? DiscAmount { get; set; }
@@ -285,14 +286,24 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long SalesId { get; set; }
         public long SalesDetId { get; set; }
+        public long? ItemId { get; set; }
         public decimal? UnitMrp { get; set; }
         public double? Qty { get; set; }
         public decimal? TotalAmount { get; set; }
+    }
+    public class CurrentStockUpdateModels
+    {
+        public long? ItemId { get; set; }
+        public float? IssueQty { get; set; }
+        public long? StoreId { get; set; }
+        public long? IstkId { get; set; }
+
     }
     public class SalesUpdate
     {
         public SalesHederUpdateModel SalesHeader { get; set; }
         public List<SalesDetailsUpdateModel> SalesDetails { get; set; }
-       
+        public List<CurrentStockUpdateModels> CurrentStockUpdate { get; set; }
+
     }
 }

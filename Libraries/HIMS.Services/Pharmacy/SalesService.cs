@@ -1037,13 +1037,13 @@ namespace HIMS.Services.Users
             TCurrentStock objStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.StockId == StockId);
             return (objStock?.BalanceQty ?? 0) - (objStock?.GrnRetQty ?? 0);
         }
-        public virtual async Task Update(TSalesHeader ObjTSalesHeader,List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task Update(TSalesHeader ObjTSalesHeader,List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "SalesId", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "BalanceAmount" };
+                string[] rEntity = { "SalesId", "StoreId", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "BalanceAmount" };
                 var entity = ObjTSalesHeader.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -1055,7 +1055,7 @@ namespace HIMS.Services.Users
                 foreach (var item in ObjTSalesDetail)
                 {
 
-                    string[] Entity = { "SalesId", "SalesDetId", "UnitMrp", "Qty", "TotalAmount" };
+                    string[] Entity = { "SalesId", "SalesDetId", "ItemId", "UnitMrp", "Qty", "TotalAmount" };
                     var dentity = item.ToDictionary();
                     foreach (var rProperty in dentity.Keys.ToList())
                     {
@@ -1066,16 +1066,29 @@ namespace HIMS.Services.Users
                     odal.ExecuteNonQuery("ps_UpdateSalesDetails", CommandType.StoredProcedure, dentity);
                 }
 
+                foreach (var item in ObjTCurrentStock)
+                {
+                    string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+
+                }
+
                 scope.Complete();
             }
         }
-        public virtual async Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "SalesId", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "BalanceAmount" };
+                string[] rEntity = { "SalesId", "StoreId", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "BalanceAmount" };
                 var entity = ObjTSalesHeader.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -1087,7 +1100,7 @@ namespace HIMS.Services.Users
                 foreach (var item in ObjTSalesDetail)
                 {
 
-                    string[] Entity = { "SalesId", "SalesDetId", "UnitMrp", "Qty", "TotalAmount" };
+                    string[] Entity = { "SalesId", "SalesDetId", "ItemId", "UnitMrp", "Qty", "TotalAmount" };
                     var dentity = item.ToDictionary();
                     foreach (var rProperty in dentity.Keys.ToList())
                     {
@@ -1098,6 +1111,18 @@ namespace HIMS.Services.Users
                     odal.ExecuteNonQuery("ps_UpdateSalesInPatientDetails", CommandType.StoredProcedure, dentity);
                 }
 
+                foreach (var item in ObjTCurrentStock)
+                {
+                    string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+
+                }
                 scope.Complete();
             }
         }

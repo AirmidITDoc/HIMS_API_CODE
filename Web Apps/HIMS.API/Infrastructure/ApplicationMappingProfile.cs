@@ -259,6 +259,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesInPatientReturnDetail, TSalesInPatientReturnDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesHeader, SalesHederUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesDetail, SalesDetailsUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCurrentStock, CurrentStockUpdateModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesInpatientHeader, SalesHederUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesInpatientDetail, SalesDetailsUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
