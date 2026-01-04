@@ -21,8 +21,7 @@ namespace HIMS.Services.Common
         Task<IPagedList<PackageDetailsListDto>> Addpackagelist(GridRequestModel objGrid);
         Task<IPagedList<PackagedetListDto>> Retrivepackagedetaillist(GridRequestModel objGrid);
         Task<IPagedList<BillChargeDetailsListDto>> BillChargeDetailsList(GridRequestModel objGrid);
-
-
+        Task<IPagedList<PharmacyDetailsListDto>> GetPharmacyDetailsList(GridRequestModel objGrid);
 
         Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName);
         Task IPAddchargesdelete(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName);

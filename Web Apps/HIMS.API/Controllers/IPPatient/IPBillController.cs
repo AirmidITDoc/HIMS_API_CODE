@@ -118,7 +118,13 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<BillChargeDetailsListDto> BillChargeDetailsList = await _IPBillService.BillChargeDetailsList(objGrid);
             return Ok(BillChargeDetailsList.ToGridResponse(objGrid, "BillChargeDetails List"));
         }
-
+        [HttpPost("GetPharmacyDetailsList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetPharmacyDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<PharmacyDetailsListDto> PharmacyDetailsListDto = await _IPBillService.GetPharmacyDetailsList(objGrid);
+            return Ok(PharmacyDetailsListDto.ToGridResponse(objGrid, "BillChargeDetails List"));
+        }
 
 
         [HttpPost("AddChargeInsert")]

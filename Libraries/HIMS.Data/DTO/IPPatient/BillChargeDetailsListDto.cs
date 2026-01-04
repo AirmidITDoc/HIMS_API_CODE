@@ -31,4 +31,30 @@ namespace HIMS.Data.DTO.IPPatient
         public bool? IsApprovedByCamp { get; set; }
 
     }
+
+    public class PharmacyDetailsListDto
+    {
+        public long? ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+        public decimal? Price { get; set; }
+        public string? Qty { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public string? ConcessionPercentage { get; set; }
+        public string? ConcessionAmount { get; set; }
+        public decimal? NetAmount { get; set; }
+        public int? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public byte? OpdIpdType { get; set; }
+        public long? OpdIpdId { get; set; }
+        public int? IsPathology { get; set; }
+        public int? IsRadiology { get; set; }
+        public int? IsPackage { get; set; }
+        public long? BillNo { get; set; }
+        public int? IsInclusionExclusion { get; set; }
+        public long? ChargesId { get; set; }
+        public DateTime? ChargesDate { get; set; }
+        public DateTime? ChargesTime { get; set; }
+        public int? IsApprovedByCamp { get; set; }
+
+    }
 }
