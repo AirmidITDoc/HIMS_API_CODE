@@ -11034,7 +11034,7 @@ namespace HIMS.Services.Report
                             if (previousLabel != currentTestName)
                             {
                                 items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
-                                     .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                     .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                      .Append("<span style=\"border-bottom:2px solid #000;\">")
                                      .Append(currentTestName)
                                      .Append("</span>")
@@ -11064,9 +11064,9 @@ namespace HIMS.Services.Report
 
                                 // ----- Parameter Name -----
                                 if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:5px;text-align:left;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:5px;text-align:left;\">");
 
                                 items.Append(dr["PrintParameterName"].ConvertToString());
 
@@ -11428,7 +11428,7 @@ namespace HIMS.Services.Report
                                     previoussubLabel != currentSubTestName)
                                 {
                                     items.Append("<tr style=\"font-size:12px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
-                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                          .Append(currentSubTestName)
                                          .Append("</td></tr>");
 
@@ -11440,9 +11440,9 @@ namespace HIMS.Services.Report
 
                                 // ----- Parameter Name -----
                                 if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:6px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;font-weight:bold;padding:5px;text-align:left;\">");
                                 else
-                                    items.Append("<td style=\"font-size:12px;padding:6px;text-align:left;\">");
+                                    items.Append("<td style=\"font-size:12px;padding:5px;text-align:left;\">");
 
                                 items.Append(dr["PrintParameterName"].ConvertToString());
 
