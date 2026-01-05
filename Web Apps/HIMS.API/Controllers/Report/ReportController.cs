@@ -238,15 +238,7 @@ namespace HIMS.API.Controllers.Report
                 #region"OP Reports"
                 case "RegistrationForm":
                 case "OPStickerPrint":
-                //case "RegistrationReport":
-                //case "AppointmentListReport":
-                //case "DoctorWiseVisitReport":
-                //case "RefDoctorWiseReport":
-                //case "DepartmentWisecountSummury":
-                //case "OPDoctorWiseVisitCountSummary":
-                //case "OPAppoinmentListWithServiseAvailed":
-                //case "CrossConsultationReport":
-                //case "OPDoctorWiseNewOldPatientReport":
+               
                 case "OPRefundReceipt":
                 case "OPPaymentReceipt":
                 case "LabPaymentReceipt":
@@ -274,39 +266,10 @@ namespace HIMS.API.Controllers.Report
                 case "EmergencyPrescription":
                 case "ConsentInformation":
                 case "LabregisterBillReceipt":
-
-
-
-
-
-
-
-
-
-
-
-                //{
-                //    if (!CommonExtensions.CheckPermission("OPReports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
+             
                 #endregion
 
-                #region"OPBilling Reports"
-
-                //case "BillReportSummary":
-                //case "BillReportSummarySummary":
-                //case "OPDBillBalanceReport":
-                //case "OPDRefundOfBill":
-                //case "OPDailyCollectionReport":
-                //case "OPCollectionSummary":
-
-                //{
-                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
-                #endregion
+               
 
                 #region"Nursing Reports"
 
@@ -322,45 +285,12 @@ namespace HIMS.API.Controllers.Report
 
                     //OT
                 //case "OTOprativereport":
-                ////case "DoctorNoteandNursingNoteReport":
-
-
-
-
-                //{
-                //    if (!CommonExtensions.CheckPermission("OPBilling Reports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
-                #endregion
-
-                #region"OP MIS Reports"
-
-                //case "DayWiseOpdCountDetails":
-                //case "DayWiseOpdCountSummry":
-                //case "DepartmentWiseOPDCount":
-                //case "DepartmentWiseOpdCountSummary":
-                //case "DrWiseOPDCountDetail":
-                //case "DoctorWiseOpdCountSummary":
-                //case "DrWiseOPDCollectionDetails":
-                //case "DoctorWiseOpdCollectionSummary":
-                //case "DepartmentWiseOPDCollectionDetails":
-                //case "DepartmentWiseOpdCollectionSummary":
-                //case "DepartmentServiceGroupWiseCollectionDetails":
-                //case "DepartmentServiceGroupWiseCollectionSummary":
-
-
-                //{
-                //    if (!CommonExtensions.CheckPermission("OP MIS Reports", PagePermission.View))
-                //        return Unauthorized("You don't have permission to access this report.");
-                //    break;
-                //}
+              
                 #endregion
 
                 #region"IP Reports"
 
                 case "IpCasepaperReport":
-                //case "IpCasepaperReport1":
                 case "IPStickerPrint":
 
                 case "IptemplateCasepaperReport":
@@ -369,12 +299,13 @@ namespace HIMS.API.Controllers.Report
                 case "IpDraftBillGroupWiseA5":
                 case "IpDraftBillClassWise"://Namechange
                 case "IpDraftBillClassWiseA5"://
+                case "IpDraftBillDateWise"://
+
 
                 case "IpFinalBillNew":
                 case "IPFinalBillClassWise"://Namechanges
                 case "IPFinalBillClassServiceWise"://Namechange
-
-                //     case "IpFinalClasswiseBill":
+                case "IPFinalBillChargesDateWise":
                 case "IPFinalBillGroupwise"://Namechanges
                 case "IpCreditBill":
                 case "IPDInterimBill"://change
@@ -466,7 +397,6 @@ namespace HIMS.API.Controllers.Report
                 case "SalesReturnBill":
                 case "ExpenseVoucharPrint":
 
-
                 case "PatientBillStatement":
 
 
@@ -480,8 +410,6 @@ namespace HIMS.API.Controllers.Report
                 //Clinical Care
                 case "NursingVitalsReport":
 
-                //case "OTReservationReport":
-             //   case "OTRequest":
                 case "SupplierPaymentReciept":
            
 

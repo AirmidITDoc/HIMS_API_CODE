@@ -163,20 +163,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                #region :: AppointmentListReport ::
-                case "AppointmentListReport":
-                    {
-
-                        model.RepoertName = "Appointment List";
-                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name" };
-                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPAppointmentListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentListReport", "AppointmentListReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
+               
                 #region :: LabRegistrationListReport ::
                 case "LabRegistrationListReport":
                     {
@@ -200,160 +187,6 @@ namespace HIMS.Services.Report
                         break;
 
 
-                    }
-                #endregion
-
-                #region :: DoctorWiseVisitReport ::
-                case "DoctorWiseVisitReport":
-                    {
-                        model.RepoertName = "DoctorWiseVisit Report ";
-                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "DoctorName", "RefDoctorName" };
-                        string[] colList = { "RegID", "PatientName", "DoctorName", "RefDoctorName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDoctorWiseVisitDetails", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorWiseVisitReport", "DoctorWiseVisitReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: RefDoctorWiseReport ::
-                case "RefDoctorWiseReport":
-                    {
-                        model.RepoertName = "RefDoctorWise Report  ";
-                        string[] headerList = { "Sr.No", "RegNO", "PatientName", "AdmittedDoctorName", "AgeYear" };
-                        string[] colList = { "RegNo", "PatientName", "AdmittedDoctorName", "AgeYear" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RefDoctorWiseReport", "RefDoctorWiseReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentWiseCountSummury ::
-                case "DepartmentWisecountSummury":
-                    {
-                        model.RepoertName = "Department Wise Count Summury";
-                        string[] headerList = { "Sr.No", "Department Name", "Count" };
-                        string[] colList = { "DepartmentName", "Lbl" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("Rtrv_OPDepartSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseCountSummury", "DepartmentWiseCountSummury" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: OPDoctorWiseVisitCountSummary ::
-                case "OPDoctorWiseVisitCountSummary":
-                    {
-                        model.RepoertName = "Doctor Wise Count List";
-                        string[] headerList = { "Sr.No", "Total Count", "Doctor Name" };
-                        string[] colList = { "DocName", "Lbl" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("Rtrv_OPDocSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDoctorWiseVisitCountSummary", "OPDoctorWiseVisitCountSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: OPAppoinmentListWithServiseAvailed ::
-                case "OPAppoinmentListWithServiseAvailed":
-                    {
-                        model.RepoertName = "ViewAppoinment List With Service";
-                        string[] headerList = { "Sr.No", "Reg NO", "Patient Name", "Doctor Name", "RefDoctor Name", "Medical", "Pathology", "Radiology" };
-                        string[] colList = { "RegNO", "PatientName", "DoctorName", "RefDoctorName", "Medical", "Pathology", "Radiology" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptAppointListWithService", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPAppoinmentListWithServiseAvailed", "OPAppoinmentListWithServiseAvailed" + vDate, Orientation.Portrait);
-
-                        break;
-                    }
-                #endregion
-
-                #region :: CrossConsultationReport ::
-                case "CrossConsultationReport":
-                    {
-                        model.RepoertName = "Cross Consultation Report";
-                        string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name", "Doctor Name", "OPD NO", "Department Name" };
-                        string[] colList = { "RegNO", "VisitDate", "PatientName", "DoctorName", "OPDNo", "DepartmentName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPCrossConsultationReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CrossConsultationReport", "CrossConsultationReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: OPDoctorWiseNewOldPatientReport ::
-                case "OPDoctorWiseNewOldPatientReport":
-                    {
-                        model.RepoertName = "Doctor Wise New And Old Patient Report";
-                        string[] headerList = { "Sr.No", "UHID", "Patient Name", "Department Name", "Doctor Name", "OPD NO" };
-                        string[] colList = { "RegNO", "PatientName", "DepartmentName", "DoctorName", "OPDNo" };
-                        string groupByCol = "PatientOldAndNew";
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MultiTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDocWiseNewOldPatient_web", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, null, groupByCol);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDoctorWiseNewAndOldPatientReport", "OPDoctorWiseNewAndOldPatientReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: BillReportSummary ::
-
-                case "BillReportSummary":
-                    {
-                        model.RepoertName = "OP Bill Summary";
-                        string[] headerList = { "Sr.No", "Bill No", "Bill Date", "UHID", "Patient Name", "Total Amount", "Con Amt", "Net Amount", "Paid Amount", "Bal Amt", "Cash Pay", "Cheque Pay", "Card Pay", "NEFT Pay", "Online Pa" };
-                        string[] colList = { "BillNo", "BillDate", "RegId", "PatientName", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
-                        string[] totalColList = { "", "", "", "", "lableTotal", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptBillDateWise", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BillReportSummary", "BillReportSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: BillReportSummarySummary ::
-                case "BillReportSummarySummary":
-                    {
-                        string[] colList = { "RegId", "PatientName", "BillNo", "BillAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmount", "BalanceAmt", "CashPay", "ChequePay", "CardPay", "NeftPay", "PayTMPay" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_BillReportSummarySummary.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptBillDetails", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BillReportSummarySummary", "BillReportSummarySummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-
-
-                #region :: OPDBillBalanceReport ::
-                case "OPDBillBalanceReport":
-                    {
-                        string[] colList = { "RegId", "BillNo", "PatientName", "NetPayableAmt", "PaidAmount", "BalanceAmt", "TotalAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPDBillBalanceReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDCreditBills", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDBillBalanceReport", "OPDBillBalanceReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: OPDRefundOfBill ::
-                case "OPDRefundOfBill":
-                    {
-                        string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPDRefundOfBill.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDRefundOfBill", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDRefundOfBill", "OPDRefundOfBill" + vDate, Orientation.Portrait);
-                        break;
                     }
                 #endregion
 
@@ -960,215 +793,8 @@ namespace HIMS.Services.Report
 
 
 
-                #region :: OPDailyCollectionReport ::
-                case "OPDailyCollectionReport":
-                    {
-                        model.RepoertName = "OP DAILY COLLECTION REPORT";
-                        string[] headerList = { "Sr.No", "Bill No", "Date", "UHID", "Patient Name", "Receipt No", "Net Amt", "Cash Amt", "Cheque Amt", "Card Amt", "Online Amt", "User Name" };
-                        string[] colList = { "Number", "PaymentTime", "RegNo", "PatientName", "ReceiptNo", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "UserName" };
-                        string[] totalColList = { "", "", "", "", "", "lableTotal", "NetPayableAmt", "CashPayAmount", "ChequePayAmount", "CardPayAmount", "PayTMAmount", "" };
-                        string groupByCol = "Type";
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MultiTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDailyCollectionReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList, groupByCol);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPDailyCollectionReport", "OPDailyCollectionReport" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-                #region :: OPCollectionSummary ::
-                case "OPCollectionSummary":
-                    {
-                        string[] colList = { "RegNo", "PatientName", "PBillNo", "BillDate", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "CashPayAmount", "CardPayAmount", "NEFTPayAmount", "PayTMAmount", "RefundAmount", "ConcessionReason", "CompanyName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPReport_OPCollectionReportSummary.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptOPDCollectionReport", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPCollectionSummary", "OPCollectionSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-                //#region :: OPCollectionSummary ::
-                //case "OPCollectionSummary":
-                //    {
-                //        string[] headerList = { "RegNo", "UHID", "Patient Name", "PBillNo BillDate", "TotalAmt ", "ConcessionAmt ", "NetPayableAmt ", "CashPayAmount ", "CardPayAmount ", "NEFTPayAmount ", "PayTMAmount", "RefundAmount", "ConcessionReason", "CompanyName" };
-                //        string[] colList = { "RegNo", "PatientName", "PBillNo", "BillDate", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "CashPayAmount", "CardPayAmount", "NEFTPayAmount", "PayTMAmount", "RefundAmount", "ConcessionReason", "CompanyName" };
-                //        string[] totalColList = { "", "", "PatientName", "", "lableTotal", "", "", "", "","","","","","",""};
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MultiTotalReportFormat.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        var html = GetHTMLView("rptOPDCollectionReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList);
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPCollectionSummary", "OPCollectionSummary", Orientation.Landscape);
-                //        break;
-                //    }
-                //#endregion
-
-
-                #region :: DayWiseOpdCountDetails ::
-                case "DayWiseOpdCountDetails":
-                    {
-                        model.RepoertName = "Day Wise Opd Details";
-                        string[] headerList = { "Sr.No", "UHID", "Patient Name", "Age Year", "City Name", "Mobile No", "Department Name", "Doctor Name", "RefDoctor Name", "Company Name" };
-                        string[] colList = { "RegNO", "PatientName", "AgeYear", "CityName", "MobileNo", "DepartmentName", "DoctorName", "RefDoctorName", "CompanyName" };
-                        string[] totalColList = { "", "lableTotal", "PatientName", "", "", "", "", "", "", "" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalColList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DayWiseOpdCountDetails", "DayWiseOpdCountDetails" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-                #region :: DayWiseOpdCountSummry ::
-                case "DayWiseOpdCountSummry":
-                    {
-                        model.RepoertName = "Day Wise Opd Count Summary";
-                        string[] headerList = { "Sr.No", "Visit Date", "Count" };
-                        string[] colList = { "VisitDate", "DateWiseCount" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDaywiseopdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DayWiseOpdCountSummry", "DayWiseOpdCountSummry" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-
-                #region :: DepartmentWiseOPDCount ::
-                case "DepartmentWiseOPDCount":
-                    {
-                        model.RepoertName = "Department WiseCount Details ";
-                        string[] headerList = { "Sr.No", "PatientName", "DoctorName", "MobileNo" };
-                        string[] colList = { "PatientName", "DoctorName", "MobileNo" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseOPDCount", "DepartmentWiseOPDCount" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentWiseOpdCountSummary ::
-                case "DepartmentWiseOpdCountSummary":
-                    {
-                        model.RepoertName = "Department Wise OPD Count Summary";
-                        string[] headerList = { "Sr.No", "Department Name", "Count" };
-                        string[] colList = { "DepartmentName", "VisitCount" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDepartmentDaywiseopdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseOpdCountSummary", "DepartmentWiseOpdCountSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DrWiseOPDCountDetail ::
-                case "DrWiseOPDCountDetail":
-                    {
-                        model.RepoertName = "DrWise OPD CountDetail  ";
-                        string[] headerList = { "Sr.No", "Department Name", " PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
-                        string[] colList = { "DepartmentName", "PatientName", "AgeYear", "CityName", "MobileNo", "RefDoctorName", "CompanyName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDaywiseopdcountdetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DrWiseOPDCountDetail", "DrWiseOPDCountDetail" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-                #region :: DoctorWiseOpdCountSummary ::
-                case "DoctorWiseOpdCountSummary":
-                    {
-                        model.RepoertName = "Doctor Wise Opd Count Summary";
-                        string[] colList = { "DoctorName", "Count" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDaywiseDoctoropdcountSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorWiseOpdCountSummary", "DoctorWiseOpdCountSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DrWiseOPDCollectionDetails ::
-                case "DrWiseOPDCollectionDetails":
-                    {
-                        model.RepoertName = "Doctor Wise Opd Count Summary";
-                        string[] headerList = { "Sr.No", "Doctor Name", "Count" };
-                        string[] colList = { "DoctorName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDrwiseopdcollectiondetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DrWiseOPDCollectionDetails", "DrWiseOPDCollectionDetails" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-                #region :: DoctorWiseOpdCollectionSummary ::
-                case "DoctorWiseOpdCollectionSummary":
-                    {
-                        model.RepoertName = "Doctor Wise Opd Collection Summary";
-                        string[] headerList = { "Sr.No", "Patient Name", "Bill Amount" };
-                        string[] colList = { "DoctorName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDrwiseopdcollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorWiseOpdCollectionSummary", "DoctorWiseOpdCollectionSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentWiseOPDCollectionDetails ::
-                case "DepartmentWiseOPDCollectionDetails":
-                    {
-                        model.RepoertName = "Doctor Wise Opd Collection Summary";
-                        string[] headerList = { "Sr.No", "Patient Name", "Bill Amount" };
-                        string[] colList = { "DoctorName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDrwiseopdcollectiondetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseOPDCollectionDetails", "DepartmentWiseOPDCollectionDetails" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentWiseOpdCollectionSummary ::
-                case "DepartmentWiseOpdCollectionSummary":
-                    {
-                        model.RepoertName = "Department Wise Opd Collection Summary";
-                        string[] headerList = { "Sr.No", "Department Name", "Bill Amount" };
-                        string[] colList = { "DoctorName", "TotalAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDepartmentwiseopdcollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentWiseOpdCollectionSummary", "DepartmentWiseOpdCollectionSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentServiceGroupWiseCollectionDetails ::
-                case "DepartmentServiceGroupWiseCollectionDetails":
-                    {
-                        model.RepoertName = "Department Wise Opd Collection Summary";
-                        string[] headerList = { "Sr.No", "Department Name", "Bill Amount" };
-                        string[] colList = { "DepartmentName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptDepartmentservicegroupwisecollectionDetail", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentServiceGroupWiseCollectionDetails", "DepartmentServiceGroupWiseCollectionDetails" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-                #region :: DepartmentServiceGroupWiseCollectionSummary ::
-                case "DepartmentServiceGroupWiseCollectionSummary":
-                    {
-                        model.RepoertName = "Department Service Group Wise Collection Summary";
-                        string[] headerList = { "Sr.No", "Description", "Net Amount" };
-                        string[] colList = { "GroupName", "NetPayableAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleTotalReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptservicegroupwisecollectionSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DepartmentServiceGroupWiseCollectionSummary", "DepartmentServiceGroupWiseCollectionSummary" + vDate, Orientation.Portrait);
-                        break;
-                    }
-                #endregion
-
-
+              
+              
 
                 //Ipsection
                 #region :: AdmissionList ::
@@ -1201,21 +827,6 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                //#region :: IpCasepaperReport1 ::
-                //case "IpCasepaperReport1":
-                //    {
-
-                //        string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPCasepaper.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                //        var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper", Orientation.Portrait);
-                //        break;
-                //    }
-                //#endregion
                 #region :: IptemplateCasepaperReport ::
                 case "IptemplateCasepaperReport":
                     {
@@ -1422,6 +1033,23 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: IpDraftBillDateWise ::
+                case "IpDraftBillDateWise":
+                    {
+
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillDateWise.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillDateWise" + vDate, Orientation.Portrait);
+                        break;
+
+                    }
+                #endregion
+
                 #region :: IPFinalBillClassServiceWise ::
                 case "IPFinalBillClassServiceWise":
                     {
@@ -1439,40 +1067,7 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
-
-                //#region :: IpFinalBillNew ::
-                //case "IpFinalBillNew":
-                //    {
-
-                //        string[] colList = { };
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPFinalBillReceiptNew.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                //        var html = GetHTMLView("rptIPComBlPrtSummary_WithAdd_SR", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NewIPBillClassservicewise", "NewIPBillClassservicewise", Orientation.Portrait);
-                //        break;
-
-                //    }
-                //#endregion
-                //#region :: IpFinalClasswiseBill ::
-                //case "IpFinalClasswiseBill":
-                //    {
-
-                //        string[] colList = { "RegNo", "VisitDate", "PatientName" };
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPBillingReceiptclasswise.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-                //        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "NewIPBilClasswise"+vDate, Orientation.Portrait);
-                //        break;
-                //    }
-                //#endregion
+            
                 #region :: IPFinalBillGroupwise ::
                 case "IPFinalBillGroupwise":
                     {
@@ -2573,21 +2168,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                //#region :: OTRequest ::
-                //case "OTRequest":
-                //    {
-                //        string[] colList = { };
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OT_RequestReport.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                //        var html = GetHTMLView("Rtrv_OTRequest", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTRequest", "OTRequest" + vDate, Orientation.Portrait);
-                //        break;
-                //    }
-                //#endregion
+            
 
                 #region :: OTReservation ::
                 case "OTReservation":
@@ -2629,21 +2210,7 @@ namespace HIMS.Services.Report
 
 
 
-                //#region :: OTReservationReport ::
-                //case "OTReservationReport":
-                //    {
-                //        string[] colList = { };
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTReservationReport.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                //        var html = GetHTMLView("ps_rpt_OTReservation", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTReservationReport", "OTReservationReport" + vDate, Orientation.Portrait);
-                //        break;
-                //    }
-                //#endregion
+                
 
 
 
@@ -2746,21 +2313,7 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                //#region :: OTOprativereport ::
-                //case "OTOprativereport":
-                //    {
-                //        string[] colList = { };
-
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTOprativeReport.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                //        var html = GetHTMLView("rptRtrv_OTReservation", model, htmlFilePath, htmlHeaderFilePath, colList);
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTOprativereport", "OTOprativereport" + vDate, Orientation.Portrait);
-                //        break;
-                //    }
-                //    #endregion
+             
 
 
 
@@ -4347,192 +3900,7 @@ namespace HIMS.Services.Report
         }
 
 
-        //private static string GetHTMLViewWithSPHTML(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
-        //{
-        //    Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
-        //    DatabaseHelper odal = new();
-        //    int sp_Para = 0;
-        //    SqlParameter[] para = new SqlParameter[fields.Count];
-        //    foreach (var property in fields)
-        //    {
-        //        var param = new SqlParameter
-        //        {
-        //            ParameterName = "@" + property.Key,
-        //            Value = property.Value.ToString()
-        //        };
-
-        //        para[sp_Para] = param;
-        //        sp_Para++;
-        //    }
-        //    var dt = odal.FetchDataTableBySP(sp_Name, para);
-
-
-        //    //string htmlHeader = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
-
-        //    string html = File.ReadAllText(htmlFilePath);
-        //    //html = html.Replace("{{HospitalHeader}}", htmlHeader);
-        //    html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-        //    html = html.Replace("{{RepoertName}}", model.RepoertName);
-
-        //    DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
-        //    DateTime ToDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValue ?? null);
-
-        //    StringBuilder HeaderItems = new("");
-        //    StringBuilder items = new("");
-        //    StringBuilder ItemsTotal = new("");
-        //    double T_Count = 0;
-        //    switch (model.Mode)
-        //    {
-        //        // Simple Report Format
-        //        //case "RegistrationReport":
-        //        case "AppointmentListReport":
-        //        case "IpDischargeSummaryReport":
-        //            {
-
-        //                int i = 0;
-        //                html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-        //                html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-        //                html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-        //                html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-        //                html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-        //                html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-        //                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-        //                html = html.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-        //                html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-        //                html = html.Replace("{{Followupdate}}", dt.GetColValue("Followupdate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
-        //                html = html.Replace("{{History}}", dt.GetColValue("History"));
-        //                html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
-        //                html = html.Replace("{{ClinicalFinding}}", dt.GetColValue("ClinicalFinding"));
-        //                html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-        //                html = html.Replace("{{OpertiveNotes}}", dt.GetColValue("OpertiveNotes"));
-        //                html = html.Replace("{{TreatmentGiven}}", dt.GetColValue("TreatmentGiven"));
-        //                html = html.Replace("{{Investigation}}", dt.GetColValue("Investigation"));
-
-        //                html = html.Replace("{{p}}", dt.GetColValue("History"));
-        //                html = html.Replace("{{R}}", dt.GetColValue("Diagnosis"));
-        //                html = html.Replace("{{SPO2}}", dt.GetColValue("ClinicalFinding"));
-        //                html = html.Replace("{{RS}}", dt.GetColValue("DoctorName"));
-        //                html = html.Replace("{{PA}}", dt.GetColValue("OpertiveNotes"));
-        //                html = html.Replace("{{CVS}}", dt.GetColValue("TreatmentGiven"));
-        //                html = html.Replace("{{CNS}}", dt.GetColValue("Investigation"));
-
-        //                html = html.Replace("{{DischargeTypeName}}", dt.GetColValue("DischargeTypeName"));
-        //                html = html.Replace("{{TreatmentAdvisedAfterDischarge}}", dt.GetColValue("TreatmentAdvisedAfterDischarge"));
-
-        //                html = html.Replace("{{ClinicalConditionOnAdmisssion}}", dt.GetColValue("ClinicalConditionOnAdmisssion"));
-
-        //                html = html.Replace("{{OtherConDrOpinions}}", dt.GetColValue("OtherConDrOpinions"));
-
-        //                html = html.Replace("{{PainManagementTechnique}}", dt.GetColValue("PainManagementTechnique"));
-        //                html = html.Replace("{{LifeStyle}}", dt.GetColValue("LifeStyle"));
-
-        //                html = html.Replace("{{WarningSymptoms}}", dt.GetColValue("WarningSymptoms"));
-        //                html = html.Replace("{{ConditionAtTheTimeOfDischarge}}", dt.GetColValue("ConditionAtTheTimeOfDischarge"));
-
-
-
-
-        //                html = html.Replace("{{DoctorAssistantName}}", dt.GetColValue("DoctorAssistantName"));
-        //                html = html.Replace("{{PreOthNumber}}", dt.GetColValue("PreOthNumber"));
-        //                html = html.Replace("{{SurgeryProcDone}}", dt.GetColValue("SurgeryProcDone"));
-        //                html = html.Replace("{{ICD10CODE}}", dt.GetColValue("ICD10CODE"));
-        //                html = html.Replace("{{Radiology}}", dt.GetColValue("Radiology"));
-        //                html = html.Replace("{{IsNormalOrDeath}}", dt.GetColValue("IsNormalOrDeath"));
-
-        //                html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-        //                html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-        //                html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-        //                html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-        //                html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
-        //                html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-        //                html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-        //                html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-        //                html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
-        //                html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-        //                html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-        //                html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DischargeDoctor2"));
-
-        //                //border: 1px solid #d4c3c3;
-
-        //                foreach (DataRow dr in dt.Rows)
-        //                {
-        //                    i++;
-        //                    items.Append("<tr style=\" text-align: center; padding: 6px;font-family: Calibri,'Helvetica Neue', 'Helvetica',, sans-serif;font-size: 24px;\"><td style=\"border-left: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-        //                    //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ItemName"].ConvertToString()).Append("<br>").Append(dr["ItemGenericName"].ConvertToString()).Append("</td>");
-        //                    //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-        //                    //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["DoseNameInEnglish"].ConvertToString()).Append("</td>");
-        //                    //items.Append("<td style=\"border-right: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-bottom: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append("(").Append(dr["DoseNameInMarathi"].ConvertToString()).Append(")").Append("</td>");
-        //                    //items.Append("<td style=\"border-left: 1px solid #d4c3c3;border-top: 1px solid #d4c3c3;border-right: 1px solid #d4c3c3;  text-align: center; padding: 6px;\">").Append(dr["Days"].ConvertToString()).Append("</td></tr>");
-
-
-        //                }
-
-        //                html = html.Replace("{{Items}}", items.ToString());
-
-        //                html = html.Replace("{{chkHistoryflag}}", dt.GetColValue("History").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkHistoryflag}}", dt.GetColValue("History").ConvertToString() != "" ? "block" : "table-row");
-
-        //                html = html.Replace("{{chkRadiologyflag}}", dt.GetColValue("Radiology").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkRadiologyflag}}", dt.GetColValue("Radiology").ConvertToString() != "" ? "block" : "table-row");
-
-
-        //                html = html.Replace("{{chkDignosflag}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkClfindingflag}}", dt.GetColValue("ClinicalFinding").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkOprativeflag}}", dt.GetColValue("OpertiveNotes").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkTreatmentflag}}", dt.GetColValue("TreatmentGiven").ConvertToString() != "" ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkInvestigationflag}}", dt.GetColValue("Investigation").ConvertToString() != "" ? "table-row" : "none");
-
-
-
-        //                html = html.Replace("{{chktreatadviceflag}}", dt.GetColValue("TreatmentAdvisedAfterDischarge").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkTreatmentflag}}", dt.GetColValue("TreatmentGiven").ConvertToString() != " " ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkInvestigationflag}}", dt.GetColValue("Investigation").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkClinicalconditionflag}}", dt.GetColValue("ClinicalConditionOnAdmisssion").ConvertToString() != "" ? "table-row" : "none");
-
-
-
-        //                html = html.Replace("{{chkotherconditionflag}}", dt.GetColValue("OtherConDrOpinions").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkpainmanageflag}}", dt.GetColValue("PainManagementTechnique").ConvertToString() != "" ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkConondiscflag}}", dt.GetColValue("ConditionAtTheTimeOfDischarge").ConvertToString() != "" ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkLifeStyleflag}}", dt.GetColValue("LifeStyle").ConvertToString() != "" ? "table-row" : "none");
-
-        //                html = html.Replace("{{chkWarningSymptomsflag}}", dt.GetColValue("WarningSymptoms").ConvertToString() != "" ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkSurgeryProcDoneflag}}", dt.GetColValue("SurgeryProcDone").ConvertToString() != "" ? "table-row" : "none");
-        //                html = html.Replace("{{chkidischragetypeflag}}", dt.GetColValue("DischargeTypeName").ConvertToString() != "NULL" ? "table-row" : "none");
-
-
-        //                html = html.Replace("{{chkSurgeryProcDoneflag}}", dt.GetColValue("SurgeryProcDone").ConvertToString() != "" ? "table-row" : "none");
-        //                //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
-        //            }
-        //            break;
-        //    }
-        //    html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
-        //    html = html.Replace("{{Items}}", items.ToString());
-        //    html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
-        //    html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
-        //    html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
-        //    return html;
-
-        //}
+        
         private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
@@ -7152,64 +6520,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                case "BillReportSummary":
-                case "DayWiseOpdCountDetails":
-                    {
-                        HeaderItems.Append("<tr>");
-                        foreach (var hr in headerList)
-                        {
-                            HeaderItems.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">");
-                            HeaderItems.Append(hr.ConvertToString());
-                            HeaderItems.Append("</th>");
-                        }
-                        HeaderItems.Append("</tr>");
-
-                        int k = 0;
-                        var dynamicVariable = new Dictionary<string, double>();
-                        foreach (var colName in totalColList)
-                        {
-                            if (!string.IsNullOrEmpty(colName))
-                            {
-                                dynamicVariable.Add(colName, 0);
-                            }
-                        }
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            k++;
-
-                            items.Append("<tr style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\"><td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(k).Append("</td>");
-                            foreach (var colName in colList)
-                            {
-                                if (!colName.ToLower().Contains("date", StringComparison.CurrentCulture))
-                                    items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToString()).Append("</td>");
-                                else
-                                    items.Append("<td style=\"text-align: Left; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr[colName].ConvertToDateString("dd/MM/yyyy")).Append("</td>");
-                            }
-                            items.Append("</tr>");
-
-                            foreach (var colName in totalColList)
-                            {
-                                if (!string.IsNullOrEmpty(colName) && colName != "lableTotal")
-                                    dynamicVariable[colName] += dr[colName].ConvertToDouble();
-                            }
-                        }
-
-                        ItemsTotal.Append("<tr style='border:1px solid black;color:black;background-color:white; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'>");
-                        foreach (var colName in totalColList)
-                        {
-                            if (colName == "lableTotal")
-                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">Total</td>");
-                            else if (!string.IsNullOrEmpty(colName))
-                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\">").Append(dynamicVariable[colName]).Append("</td>");
-                            else
-                                ItemsTotal.Append("<td style=\"text-align: center; border: 1px solid #d4c3c3; padding: 6px;\"></td>");
-                        }
-                        ItemsTotal.Append("</tr>");
-                    }
-                    break;
-
-
+            
                 //Ip Section
 
                 case "IpCasepaperReport":
@@ -7303,78 +6614,6 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-                //case "IpCasepaperReport1":
-                //    {
-
-
-                //        foreach (DataRow dr in dt.Rows)
-                //        {
-                //            //html = html.Replace("{{DataContent}}", htmlHeader);
-
-
-                //            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ToUpper());
-                //            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ToUpper());
-
-                //            html = html.Replace("{{Address}}", dt.GetColValue("Address").ToUpper());
-                //            html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
-                //            html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
-
-                //            html = html.Replace("{{DOT}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yy hh:mm tt"));
-                //            html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType").ToUpper());
-
-                //            html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName").ToUpper());
-                //            html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ToUpper());
-
-                //            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                //            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                //            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                //            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-
-
-                //            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName").ToUpper());
-                //            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName").ToUpper());
-
-                //            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName").ToUpper());
-                //            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName").ToUpper());
-
-                //            html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName").ToUpper());
-                //            html = html.Replace("{{RelativePhoneNo}}", dt.GetColValue("RelativePhoneNo"));
-
-                //            html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName").ToUpper());
-                //            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
-                //            html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
-                //            html = html.Replace("{{AdmittedDoctor1}}", dt.GetColValue("AdmittedDoctor1").ToUpper());
-                //            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName").ToUpper());
-
-                //            html = html.Replace("{{MaritalStatusName}}", dt.GetColValue("MaritalStatusName").ToUpper());
-                //            html = html.Replace("{{AadharcardNo}}", dt.GetColValue("AadharcardNo"));
-                //            html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName").ToUpper());
-                //            html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2").ToUpper());
-                //            html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname").ToUpper());
-
-
-                //            //html = html.Replace("{{chkMLCflag}}", dt.GetColValue("IsMLC").ToString() == "False" ? "table-row " : "none");
-                //            //html = html.Replace("{{chkMLCflag1}}", dt.GetColValue("IsMLC").ToString() == "True" ? "table-row " : "none");
-                //            //html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
-
-                //            html = html.Replace("{{chkMLCflag}}", dt.GetColValue("IsMLC").ToString() == "True" ? "table-row " : "none");
-                //            html = html.Replace("{{chkMLCflag1}}", dt.GetColValue("IsMLC").ToString() == "false" ? "table-row " : "none");
-
-
-                //            html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-
-
-
-                //            return html;
-
-                //        }
-
-                //    }
-                //    break;
-
-
-
                 case "IptemplateCasepaperReport":
                     {
 
@@ -8315,6 +7554,170 @@ namespace HIMS.Services.Report
                     break;
 
 
+                case "IpDraftBillDateWise":
+                    {
+
+                        int i = 0, j = 0;
+                        double T_NetAmount = 0;
+                        string previousLabel = "";
+                        String finalLabel = "";
+                        int rowlength = 0;
+                        rowlength = dt.Rows.Count;
+                        double Tot_AfterAdvused = 0, Tot_Wothoutdedu = 0, Tot_Balamt = 0, Tot_Advamt = 0, Tot_Advusedamt = 0, T_TotalAmount = 0, F_TotalAmount = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0, AdminChares = 0, TotalNetPayAmt = 0;
+                        double T_TotAmount = 0;
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            i++; j++;
+
+
+                            if (i == 1)
+                            {
+                                String Label;
+                                Label = dr["AdmissionDate"].ConvertToDateString("dd/MM/yyyy");
+                                items.Append("<tr style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(Label).Append("</td></tr>");
+                            }
+                            if (previousLabel != "" && previousLabel != dr["AdmissionDate"].ConvertToDateString("dd/MM/yyyy"))
+                            {
+                                j = 1;
+                                items.Append("<tr style='font-size:15px;border:1px solid #eee;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
+
+                               .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
+                                T_TotalAmount = 0;
+
+                                items.Append("<tr style=\"font-size:15px;border-bottom: 1px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(dr["GroupName"].ConvertToString()).Append("</td></tr>");
+
+                            }
+
+
+                            T_TotalAmount += dr["TotalAmt"].ConvertToDouble();
+                            F_TotalAmount += dr["TotalAmt"].ConvertToDouble();
+
+                            previousLabel = dr["AdmissionDate"].ConvertToDateString("dd/MM/yyyy");
+
+
+                            items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"border: 1px solid #eee; text-align: center; padding: 2px;\">").Append(j).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #eee; text-align: right; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["TotalAmt"].ConvertToDouble()).Append("</td></tr>");
+
+
+                            TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
+                            Tot_Advamt = dr["AdvanceAmount"].ConvertToDouble();
+
+                            if (Tot_Advamt.ConvertToDouble() > TotalNetPayAmt.ConvertToDouble())
+                            {
+                                balafteradvuseAmount = (Tot_Advamt - TotalNetPayAmt).ConvertToDouble();
+                            }
+                            if (Tot_Advamt.ConvertToDouble() < TotalNetPayAmt.ConvertToDouble())
+                            {
+                                BalancewdudcAmt = (TotalNetPayAmt - Tot_Advamt).ConvertToDouble();
+                            }
+
+
+
+                            if (dt.Rows.Count > 0 && dt.Rows.Count == i)
+                            {
+
+                                items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total Amount</td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                    .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
+                                items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                .Append(F_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
+
+
+                            }
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
+
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ToString());
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ToString());
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear").ToString());
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ToString());
+
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName").ToString());
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("AdmittedDoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode").ToString());
+
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmt").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmt").ConvertToDouble().ToString("0.00"));
+
+                        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{AdvanceBalAmount}}", dt.GetColValue("AdvanceBalAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
+
+                        html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{TaxAmount}}", dt.GetColValue("TaxAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{ConcessionAmount}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        string finalamt = conversion(dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        //html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ToString());
+                        //html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ToString());
+
+                        html = html.Replace("{{AdvanceRefundAmount}}", dt.GetColValue("AdvanceRefundAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("0.00"));
+
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("0.00"));
+
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+
+                        html = html.Replace("{{chkAftBalflag}}", balafteradvuseAmount.ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkBalflag}}", BalancewdudcAmt.ConvertToDouble() > 0 ? "table-row" : "none");
+
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row" : "none");
+
+                        html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkAdvflag}}", dt.GetColValue("AdvanceAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkbalflag}}", balafteradvuseAmount.ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkbalafterdudcflag}}", BalancewdudcAmt.ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkadminflag}}", dt.GetColValue("TaxAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
+
+
+
+                    }
+
+
+                    break;
+
                 case "IPFinalBillClassWise":
                     {
 
@@ -8684,142 +8087,7 @@ namespace HIMS.Services.Report
 
                     break;
 
-                //case "IpFinalClasswiseBill":
-                //    {
-
-
-                //        int i = 0, j = 0;
-                //        String[] GroupName;
-                //        object GroupName1 = "";
-                //        Boolean chkcommflag = false, chkpaidflag = false, chkbalflag = false, chkdiscflag = false, chkAdvflag = false, chkadminchargeflag = false;
-                //        double T_NetAmount = 0, TotalNetPayAmt = 0, Tot_Advamt = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0;
-
-                //        string GroupLable = "";
-                //        string ClassLable = "";
-                //        String FinalLabel = "";
-                //        double T_TotAmount = 0, T_TotalAmt = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0;
-                //        double Tot = 0;
-                //        int length = dt.Rows.Count - 1;
-
-                //        foreach (DataRow dr in dt.Rows)
-                //        {
-
-                //            i++; j++;
-
-                //            items.Append("<tr style=\"font-family: 'Helvetica Neue','Helvetica',, Arial, sans-serif;font-size:20px;\"><td style=\"border: 1px solid #000; text-align: center; padding: 6px;\">").Append(j).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: left; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: center; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["Price"].ConvertToString()).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: center; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                //            items.Append("<td style=\"border: 1px solid #000; text-align: right; padding: 6px;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ChargesTotalAmt"].ConvertToDouble()).Append("</td></tr>");
-
-
-                //            ClassLable = dr["ClassName"].ConvertToString();
-                //            GroupLable = dr["GroupName"].ConvertToString();
-                //            T_TotalAmt = dr["ChargesTotalAmt"].ConvertToDouble();
-                //            TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
-                //            Tot_Advamt = dr["AdvanceUsedAmount"].ConvertToDouble();
-                //            Tot_paidamt = dr["PaidAmount"].ConvertToDouble();
-
-                //            if (Tot_Advamt.ConvertToDouble() < TotalNetPayAmt.ConvertToDouble())
-                //            {
-                //                BalancewdudcAmt = (TotalNetPayAmt - Tot_Advamt - Tot_paidamt).ConvertToDouble();
-                //            }
-
-                //        }
-
-
-                //        html = html.Replace("{{Items}}", items.ToString());
-
-                //        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
-
-                //        string finalamt = conversion(dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace().ToString());
-                //        html = html.Replace("{{T_TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-
-
-                //        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
-                //        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
-
-                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                //        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                //        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
-                //        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                //        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                //        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-
-
-                //        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                //        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                //        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
-
-                //        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-                //        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
-                //        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-
-                //        html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                //        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                //        html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
-                //        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{TaxAmount}}", dt.GetColValue("TaxAmount").ConvertToDouble().ToString("0.00"));
-
-                //        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("0.00"));
-                //        // html = html.Replace("{{PayTMPayAmount}}", Bills.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("OnlinePayAmount").ConvertToDouble().ToString("0.00"));
-
-                //        html = html.Replace("{{TotalAdvanceAmount}}", dt.GetColValue("TotalAdvanceAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{AdvanceBalAmount}}", dt.GetColValue("AdvanceBalAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{AdvanceRefundAmount}}", dt.GetColValue("AdvanceRefundAmount").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{ConcessionAmount}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
-
-
-                //        html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
-
-                //        html = html.Replace("{{ChargesTotalamt}}", ChargesTotalamt.ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
-
-                //        html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
-                //        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{F_TotalAmount}}", F_TotalAmount.ConvertToDouble().ToString("0.00"));
-                //        html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
-
-                //        html = html.Replace("{{UseName}}", dt.GetColValue("UseName"));
-                //        html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
-                //        html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
-
-                //        html = html.Replace("{{chktotalflag}}", dt.GetColValue("ChargesTotalAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                //        html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                //        html = html.Replace("{{chkAdvflag}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
-                //        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-
-                //        html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-
-                //        html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
-                //        html = html.Replace("{{chkbalafterdudcflag}}", BalancewdudcAmt.ConvertToDouble() > 0 ? "table-row " : "none");
-                //        html = html.Replace("{{chktdsflag}}", dt.GetColValue("TDSAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                //        html = html.Replace("{{chkWrfAmountflag}}", dt.GetColValue("AffilAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
-                //        html = html.Replace("{{chkadminflag}}", dt.GetColValue("TaxAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
-
-                //    }
-
-
-                //    break;
+             
                 case "IPFinalBillGroupwise":
                     {
 
@@ -12787,87 +12055,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
-
-                //case "OTRequest":
-                //    {
-                //        string html1 = File.ReadAllText(htmlFilePath);
-                //        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                //        StringBuilder item = new StringBuilder("");
-                //        int i = 0;
-
-
-                //        //html = html.Replace("{{MaterialConsumptionId}}", Bills.GetColValue("MaterialConsumptionId"));
-                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-
-                //        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
-                //        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                //        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                //        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                //        html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
-
-                //        html = html.Replace("{{OTdepartment}}", dt.GetColValue("OTdepartment"));
-                //        html = html.Replace("{{Surgeryname}}", dt.GetColValue("Surgeryname"));
-                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-
-                //        html = html.Replace("{{SurgeryType}}", dt.GetColValue("SurgeryType"));
-                //        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
-                //        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                //        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                //        html = html.Replace("{{OPDIPDNO}}", dt.GetColValue("OPDIPDNO"));
-                //        html = html.Replace("{{OTdepartment}}", dt.GetColValue("OTdepartment"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{SurgeryCategoryName}}", dt.GetColValue("SurgeryCategoryName"));
-                //        html = html.Replace("{{SiteDescriptionName}}", dt.GetColValue("SiteDescriptionName"));
-
-                //        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-                //        html = html.Replace("{{OTRequestTime}}", dt.GetColValue("OTRequestTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-
-
-                //        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-
-
-                //        //html = html.Replace("{{chkInstructionflag}}", Bills.GetColValue("Instruction").ConvertToString() != "" ? "table-row" : "none");
-
-                //        //html = html.Replace("{{chkDigflag}}", Bills.GetColValue("OperativeDiagnosis").ConvertToString() != "" ? "block" : "table-row");
-
-
-
-                //        //html = html.Replace("{{chkOPFindingflag}}", Bills.GetColValue("OperativeFindings").ConvertToString() != "" ? "table-row" : "none");
-
-                //        //html = html.Replace("{{chkClfindingflag}}", Bills.GetColValue("ClinicalFinding").ConvertToString() != "" ? "table-row" : "none");
-
-                //        //html = html.Replace("{{chkOprativeflag}}", Bills.GetColValue("OperativeProcedure").ConvertToString() != "" ? "table-row" : "none");
-
-                //        //html = html.Replace("{{chkExtraflag}}", Bills.GetColValue("ExtraProPerformed").ConvertToString() != "" ? "table-row" : "none");
-
-
-                //        //html = html.Replace("{{chkClosureflag}}", Bills.GetColValue("ClosureTechnique").ConvertToString() != "" ? "table-row" : "none");
-
-
-
-                //        //html = html.Replace("{{chkpostflag}}", Bills.GetColValue("PostOpertiveInstru").ConvertToString() != "" ? "table-row" : "none");
-
-                //        //html = html.Replace("{{chkSpeciflag}}", Bills.GetColValue("DetSpecimenForLab").ConvertToString() != " " ? "table-row" : "none");
-
-
-                //        //html = html.Replace("{{chkSurgeryTypeflag}}", Bills.GetColValue("SurgeryType").ConvertToString() != "" ? "table-row" : "none");
-                //        //html = html.Replace("{{chkSurgeryProcDoneflag}}", Bills.GetColValue("SurgeryProcDone").ConvertToString() != "" ? "table-row" : "none");
-                //        //html = html.Replace("{{chkClinicalconditionflag}}", Bills.GetColValue("ClinicalConditionOnAdmisssion").ConvertToString() != "" ? "table-row" : "none");
-
-
-
-
-                //        return html;
-                //    }
-                //    break;
-
                 case "OTReservation":
                     {
                         
@@ -13504,64 +12691,7 @@ namespace HIMS.Services.Report
                     break;
 
 
-                //case "OTReservationReport":
-                //    {
-                //        string html1 = File.ReadAllText(htmlFilePath);
-                //        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                //        StringBuilder item = new StringBuilder("");
-                //        int i = 0;
-                //        //html = html.Replace("{{MaterialConsumptionId}}", Bills.GetColValue("MaterialConsumptionId"));
-                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-
-                //        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
-                //        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
-                //        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
-                //        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
-                //        html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
-
-                //        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                //        html = html.Replace("{{Surgeryname}}", dt.GetColValue("Surgeryname"));
-                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                //        html = html.Replace("{{AnathesDrName1}}", dt.GetColValue("AnathesDrName1"));
-                //        html = html.Replace("{{AnathesDrName2}}", dt.GetColValue("AnathesDrName2"));
-                //        html = html.Replace("{{SurgeonName2}}", dt.GetColValue("SurgeonName2"));
-                //        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
-                //        html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
-                //        html = html.Replace("{{AnaesthesiaType}}", dt.GetColValue("AnaesthesiaType"));
-                //        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
-                //        html = html.Replace("{{SurgeonName1}}", dt.GetColValue("SurgeonName1"));
-
-
-
-
-                //        html = html.Replace("{{SurgeryType}}", dt.GetColValue("SurgeryType"));
-                //        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
-                //        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
-                //        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                //        html = html.Replace("{{OPDIPDNO}}", dt.GetColValue("OPDIPDNO"));
-                //        html = html.Replace("{{OTdepartment}}", dt.GetColValue("OTdepartment"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                //        html = html.Replace("{{Instruction}}", dt.GetColValue("Instruction"));
-                //        html = html.Replace("{{SiteDescriptionName}}", dt.GetColValue("SiteDescriptionName"));
-
-                //        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-                //        html = html.Replace("{{OTRequestTime}}", dt.GetColValue("OTRequestTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
-
-
-                //        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
-                //        html = html.Replace("{{chkInstructionflag}}", dt.GetColValue("Instruction").ConvertToString() != "" ? "table-row" : "none");
-
-
-                //        return html;
-                //    }
-                //    break;
-
+             
 
                     
 
