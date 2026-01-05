@@ -33,14 +33,14 @@ namespace HIMS.API.Controllers.OTManagement
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.View)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TOtAnesthesiaRecord> OtAnesthesiaRecordList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(OtAnesthesiaRecordList.ToGridResponse(objGrid, "OtAnesthesiaRecord List"));
         }
         [HttpGet("GetOtAnesthesiaPreOpdiagnosisList")]
-        //[Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.View)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetOtInOperationDiagnosisList(string DescriptionType)
         {
             var result = await _IOTAnesthesiaService.OtAnesthesiaPreOpdiagnosisListAsync(DescriptionType);
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.OTManagement
        
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Add)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OTAnesthesiaModel obj)
         {
             TOtAnesthesiaRecord model = obj.MapTo<TOtAnesthesiaRecord>();
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.OTManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AnesthesiaId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTAnesthesiaModel obj)
         {
             TOtAnesthesiaRecord model = obj.MapTo<TOtAnesthesiaRecord>();
@@ -116,7 +116,7 @@ namespace HIMS.API.Controllers.OTManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AnesthesiaId);
         }
         [HttpDelete]
-        //[Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "AnesthesiaRecord", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TOtAnesthesiaRecord model = await _repository.GetById(x => x.AnesthesiaId == Id);

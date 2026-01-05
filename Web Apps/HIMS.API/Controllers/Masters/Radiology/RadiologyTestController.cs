@@ -61,22 +61,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
             return Ok(RadTemplateMasterList.ToGridResponse(objGrid, "RadiologyPatient List "));
         }
 
-        //[HttpPost("Insert")]
-        //[Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(RadiologyTestModel obj)
-        //{
-        //    MRadiologyTestMaster model = obj.MapTo<MRadiologyTestMaster>();
-        //    if (obj.TestId == 0)
-        //    {
-        //        model.CreatedDate = AppTime.Now;
-        //        model.Addedby = CurrentUserId;
-        //        model.IsActive = true;
-        //        await _RadiologyTestService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        //}
+      
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "RadiologyTestMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(RadiologyTestModel obj)

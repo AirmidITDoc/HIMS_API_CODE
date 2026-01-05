@@ -65,6 +65,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         public async Task<ApiResponse> Edit(QuestionMasterModel obj)
         {
             MQuestionMaster model = obj.MapTo<MQuestionMaster>();
+            model.IsActive = true;
+
             if (obj.QuestionId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
