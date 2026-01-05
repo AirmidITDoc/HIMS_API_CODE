@@ -102,11 +102,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MOttypeMaster> _MOttypeMaster;
         private readonly IGenericService<MItemCompanyMaster> _MItemCompanyMaster;
         private readonly IGenericService<MExpensesCategoryMaster> _MExpensesCategoryMaster;
-
-
-
-
-
+        private readonly IGenericService<MQuestionMaster> _MQuestionMaster;
+        private readonly IGenericService<MSubQuestionMaster> _MSubQuestionMaster;
+        private readonly IGenericService<MSubQuestionValuesMaster> _MSubQuestionValuesMaster;
 
 
 
@@ -155,20 +153,15 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MDriverMaster> MDriverMaster,
                               IGenericService<MOttypeMaster> MOttypeMaster,
                               IGenericService<MItemCompanyMaster> MItemCompanyMaster,
-                              IGenericService<MExpensesCategoryMaster> MExpensesCategoryMaster
+                              IGenericService<MExpensesCategoryMaster> MExpensesCategoryMaster,
+                              IGenericService<MQuestionMaster> MQuestionMaster,
+                              IGenericService<MSubQuestionMaster> MSubQuestionMaster,
+                              IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster
 
 
 
 
-
-
-
-
-
-
-
-
-              )
+                             )
         {
 
             _IAreaService = areaservice;
@@ -255,13 +248,12 @@ namespace HIMS.API.Controllers.Common
             _MOttypeMaster = MOttypeMaster;
             _MItemCompanyMaster = MItemCompanyMaster;
             _MExpensesCategoryMaster = MExpensesCategoryMaster;
+            _MQuestionMaster = MQuestionMaster;
+            _MSubQuestionMaster = MSubQuestionMaster;
+            _MSubQuestionValuesMaster = MSubQuestionValuesMaster;
 
 
-
-
-
-
-
+            
 
 
         }
@@ -444,6 +436,12 @@ namespace HIMS.API.Controllers.Common
                 "MarketingFollowupType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingFollowupType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "MarketingStatus" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MarketingStatus")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "ResourcesTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Resources_Types")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                //GastrologyMaster//
+                "QuestionMaster" => (await _MQuestionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MQuestionMaster.QuestionId), nameof(MQuestionMaster.QuestionName)),
+                "SubQuestionMaster" => (await _MSubQuestionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionMaster.SubQuestionId), nameof(MSubQuestionMaster.SubQuestionName)),
+                "SubQuestionValuesMaster" => (await _MSubQuestionValuesMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionValuesMaster.SubQuestionValId), nameof(MSubQuestionValuesMaster.SubQuestionValName)),
+
+
 
 
                 _ => new List<SelectListItem>()
