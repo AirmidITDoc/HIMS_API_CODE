@@ -19,17 +19,17 @@
                         <td>
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr style="font-size: 20px;font-weight:bold;">
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
+                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 6px;  text-align:center">
                                         <b>
-                                            IP Final Bill Group Wise
+                                       INVOICE
                                         </b>
                                     </td>
-                                    <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                    <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
                                         <b>
                                             Print
                                             Date : {{CurrentDate}}
                                         </b>
-                                    </td>
+                                    </td>-->
                                 </tr>
                             </table>
                         </td>
@@ -196,14 +196,14 @@
         <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{AffilAmount}}</td>
     </tr>-->
                                                 <tr style="display:{{chkdiscflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount/Reason:-  {{ConcessionReason}}</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount/Reason:-  {{DiscComments}}</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{ConcessionAmount}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Net Amount</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{T_NetAmount}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;font-weight:bold;"> {{FinalNetAmt}}</td>
                                                 </tr>
 
                                                 <tr style="display:{{chkGovtApprovedAmtflag}}">
@@ -242,11 +242,11 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BalanceAmt}}</td>
                                                 </tr>-->
 
-                                                <tr style="display:{{chkDiscCommentsflag}}">
+                                                <!--<tr style="display:{{chkDiscCommentsflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Remark :- </td>
 
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: left;"> {{DiscComments}}</td>
-                                                </tr>
+                                                </tr>-->
 
 
                                             </table>
