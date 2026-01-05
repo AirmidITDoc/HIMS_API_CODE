@@ -28,6 +28,8 @@ using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 using static HIMS.API.Models.Pharmacy.TSalesInpatientHeaderModel;
+using HIMS.API.Models.GastrologyMasterModel;
+using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -263,9 +265,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TSalesInpatientHeader, SalesHederUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TSalesInpatientDetail, SalesDetailsUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-
-
+            CreateMap<MQuestionMaster, QuestionMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MSubQuestionMaster, MSubQuestionMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MSubQuestionValuesMaster, MSubQuestionValuesMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<PaymentPharmacy, PaymentModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
