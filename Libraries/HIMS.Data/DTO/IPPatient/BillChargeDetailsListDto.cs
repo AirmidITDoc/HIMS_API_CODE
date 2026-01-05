@@ -29,7 +29,8 @@ namespace HIMS.Data.DTO.IPPatient
         public DateTime? ChargesDate { get; set; }
         public DateTime? ChargesTime { get; set; }
         public bool? IsApprovedByCamp { get; set; }
-
+        public int? StockId { get; set; }
+        public int? StoreId { get; set; }
     }
 
     public class PharmacyDetailsListDto
@@ -55,6 +56,8 @@ namespace HIMS.Data.DTO.IPPatient
         public DateTime? ChargesDate { get; set; }
         public DateTime? ChargesTime { get; set; }
         public int? IsApprovedByCamp { get; set; }
+        public long? StockId { get; set; }
+        public long? StoreId { get; set; }
 
     }
 }

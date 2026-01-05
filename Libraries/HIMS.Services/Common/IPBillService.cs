@@ -69,8 +69,6 @@ namespace HIMS.Services.Common
                             _context.BillDetails.Add(objItem);
                             await _context.SaveChangesAsync();
                         }
-
-
                     }
 
                     // Payment Code
