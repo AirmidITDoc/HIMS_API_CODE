@@ -275,6 +275,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPresTemplateH> MPresTemplateHs { get; set; } = null!;
         public virtual DbSet<MPrescriptionInstructionMaster> MPrescriptionInstructionMasters { get; set; } = null!;
         public virtual DbSet<MPrescriptionTemplateMaster> MPrescriptionTemplateMasters { get; set; } = null!;
+        public virtual DbSet<MQuestionMaster> MQuestionMasters { get; set; } = null!;
         public virtual DbSet<MRadiologyCategoryMaster> MRadiologyCategoryMasters { get; set; } = null!;
         public virtual DbSet<MRadiologyTemplateDetail> MRadiologyTemplateDetails { get; set; } = null!;
         public virtual DbSet<MRadiologyTemplateMaster> MRadiologyTemplateMasters { get; set; } = null!;
@@ -293,6 +294,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MStateMaster> MStateMasters { get; set; } = null!;
         public virtual DbSet<MStoreMaster> MStoreMasters { get; set; } = null!;
         public virtual DbSet<MSubGroupMaster> MSubGroupMasters { get; set; } = null!;
+        public virtual DbSet<MSubQuestionMaster> MSubQuestionMasters { get; set; } = null!;
+        public virtual DbSet<MSubQuestionValuesMaster> MSubQuestionValuesMasters { get; set; } = null!;
         public virtual DbSet<MSubTpacompanyMaster> MSubTpacompanyMasters { get; set; } = null!;
         public virtual DbSet<MSupplierMaster> MSupplierMasters { get; set; } = null!;
         public virtual DbSet<MSystemConfig> MSystemConfigs { get; set; } = null!;
@@ -8174,6 +8177,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TemplateName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<MQuestionMaster>(entity =>
+            {
+                entity.HasKey(e => e.QuestionId);
+
+                entity.ToTable("M_QuestionMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.QuestionName).HasMaxLength(50);
+
+                entity.Property(e => e.ShortCutValues).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<MRadiologyCategoryMaster>(entity =>
             {
                 entity.HasKey(e => e.CategoryId);
@@ -8530,6 +8548,38 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SubGroupName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<MSubQuestionMaster>(entity =>
+            {
+                entity.HasKey(e => e.SubQuestionId);
+
+                entity.ToTable("M_SubQuestionMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultValues).HasMaxLength(50);
+
+                entity.Property(e => e.SubQuestionName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<MSubQuestionValuesMaster>(entity =>
+            {
+                entity.HasKey(e => e.SubQuestionValId);
+
+                entity.ToTable("M_SubQuestionValuesMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultValues).HasMaxLength(50);
+
+                entity.Property(e => e.ShortcutValues).HasMaxLength(50);
+
+                entity.Property(e => e.SubQuestionValName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MSubTpacompanyMaster>(entity =>
@@ -9552,11 +9602,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
-                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
-
                 entity.Property(e => e.SubTestName).HasMaxLength(200);
-
-                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
 
                 entity.Property(e => e.TestName).HasMaxLength(200);
 
@@ -9654,11 +9700,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
-                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
-
                 entity.Property(e => e.SubTestName).HasMaxLength(200);
-
-                entity.Property(e => e.SuggestionNote).HasMaxLength(400);
 
                 entity.Property(e => e.TestName).HasMaxLength(200);
 

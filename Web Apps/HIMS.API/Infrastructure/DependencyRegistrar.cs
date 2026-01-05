@@ -10,6 +10,7 @@ using HIMS.Services.Administration;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
+using HIMS.Services.GastrologyService;
 using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Marketing;
@@ -73,12 +74,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IEmergencyService, EmergencyService>();
             services.AddScoped<ITexpenseservice, Texpenseservice>();
             services.AddScoped<IRadilogyService, RadiologyService>();
-
-
-
-
-
-
+            services.AddScoped<IQuestionMasterService, QuestionMasterService>();
 
             services.AddScoped<IPrescriptionOPTemplateService, PrescriptionOPTemplateService>();
             services.AddScoped<IGRNReturnService, GRNReturnService>();
@@ -119,12 +115,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOTAnesthesiaService, OTAnesthesiaService>();
             services.AddScoped<IOTInOperationService, OTInOperationService>();
             services.AddScoped<IOTOperativeNotes, OTOperativeNotesService>();
-
-
-
-
-
-
 
 
             services.AddScoped<IPaymentModeService, PaymentModeService>();
@@ -171,10 +161,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOPBillShilpaService, OPBillShilpaService>();
             services.AddScoped<ILabPatientRegistrationService, LabPatientRegistrationService>();
             services.AddScoped<ILabBrowseListService, LabBrowseListService>();
-
-
-
-
 
 
             services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
