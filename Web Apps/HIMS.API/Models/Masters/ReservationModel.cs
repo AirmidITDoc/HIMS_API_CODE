@@ -29,6 +29,8 @@ namespace HIMS.API.Models.Masters
         public DateTime? IsCancelledDateTime { get; set; }
         public bool? IsAnaesthetistPaid { get; set; }
         public bool? IsMaterialReplacement { get; set; }
+        public int? AnesthesiaType { get; set; }
+
         public List<OtReservationAttendingDetailModel> TOtReservationAttendingDetails { get; set; }
         public List<TOtReservationSurgeryDetailModel> TOtReservationSurgeryDetails { get; set; }
         public List<ReservationDiagnosisModel> TOtReservationDiagnoses { get; set; }
@@ -98,6 +100,8 @@ namespace HIMS.API.Models.Masters
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
+        public int? AnesthesiaType { get; set; }
+
     }
     public class ReservationDiagnosisModel
     {

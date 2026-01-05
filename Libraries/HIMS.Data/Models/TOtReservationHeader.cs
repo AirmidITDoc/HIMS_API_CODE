@@ -42,6 +42,7 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
+        public int? AnesthesiaType { get; set; }
 
         public virtual ICollection<TOtReservationAttendingDetail> TOtReservationAttendingDetails { get; set; }
         public virtual ICollection<TOtReservationDiagnosis> TOtReservationDiagnoses { get; set; }
