@@ -9,7 +9,7 @@ namespace HIMS.Services.GastrologyService
 {
     public partial interface IQuestionMasterService
     {
-        //Task InsertAsync(MQuestionMaster ObjMQuestionMaster, int UserId, string Username);
-        //Task UpdateAsync(MQuestionMaster ObjMQuestionMaster, int UserId, string Username, string[]? references);
+        Task InsertAsync(MSubQuestionMaster ObjMSubQuestionMaster, int UserId, string Username);
+        Task UpdateAsync(MSubQuestionMaster ObjMSubQuestionMaster, int UserId, string Username, string[]? references);
     }
 }

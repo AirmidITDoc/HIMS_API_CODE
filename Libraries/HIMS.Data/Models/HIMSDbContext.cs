@@ -8560,8 +8560,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ResultValues).HasMaxLength(50);
-
                 entity.Property(e => e.SubQuestionName).HasMaxLength(50);
             });
 
@@ -8575,11 +8573,14 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ResultValues).HasMaxLength(50);
-
                 entity.Property(e => e.ShortcutValues).HasMaxLength(50);
 
                 entity.Property(e => e.SubQuestionValName).HasMaxLength(50);
+
+                entity.HasOne(d => d.SubQuestion)
+                    .WithMany(p => p.MSubQuestionValuesMasters)
+                    .HasForeignKey(d => d.SubQuestionId)
+                    .HasConstraintName("FK_M_SubQuestionValuesMaster_M_SubQuestionMaster");
             });
 
             modelBuilder.Entity<MSubTpacompanyMaster>(entity =>

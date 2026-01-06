@@ -12998,11 +12998,24 @@ namespace HIMS.Services.Report
                         string previousSalesNo = "";
 
                         // Sort bills
+                        //var sortedBills = dt.AsEnumerable()
+                        //    .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
+                        //    .ThenBy(dr => dr["BillDate"])
+                        //    .ThenBy(dr => dr["PBillNo"])
+                        //    .ToList();
                         var sortedBills = dt.AsEnumerable()
-                            .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
-                            .ThenBy(dr => dr["BillDate"])
-                            .ThenBy(dr => dr["PBillNo"])
-                            .ToList();
+    .OrderBy(dr =>
+    {
+        var lbl = dr["Lbl"].ToString().Trim();
+
+        if (lbl == "Bill") return 0;
+        if (lbl == "Pharmacy") return 1;
+        return 2; // all other labels
+    })
+    .ThenBy(dr => dr["BillDate"])
+    .ThenBy(dr => dr["PBillNo"])
+    .ToList();
+
 
                         foreach (DataRow dr in sortedBills)
                         {
@@ -13019,7 +13032,7 @@ namespace HIMS.Services.Report
                                 if (!string.IsNullOrEmpty(previousSalesType) && NetAmount > 0)
                                 {
                                     items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
                                          .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
                                          .Append(NetAmount.ToString("0.00"))
                                          .Append("</td><td></td></tr>");
@@ -13044,7 +13057,7 @@ namespace HIMS.Services.Report
                                 if (i != 1 && NetAmount > 0)
                                 {
                                     items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
                                          .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
                                          .Append(NetAmount.ToString("0.00"))
                                          .Append("</td><td></td></tr>");
@@ -13088,7 +13101,7 @@ namespace HIMS.Services.Report
                             if (i == sortedBills.Count && NetAmount > 0)
                             {
                                 items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                     .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt</td>")
+                                     .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
                                      .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
                                      .Append(NetAmount.ToString("0.00"))
                                      .Append("</td><td></td></tr>");
@@ -13101,7 +13114,7 @@ namespace HIMS.Services.Report
 
                         // ================= GRAND TOTAL =================
                         items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;border-top:3px double black;'>")
-                             .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL</td>")
+                             .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL :</td>")
                              .Append("<td colspan='5' style='text-align:right;'>")
                                .Append(Math.Ceiling(GrandTotalAmount).ToString("0"))
                              .Append("</td></tr>");

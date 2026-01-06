@@ -21,12 +21,10 @@ namespace HIMS.API.Controllers.GastrologyMaster
     [ApiVersion("1")]
     public class QuestionMasterController : BaseController
     {
-        private readonly IQuestionMasterService _IQuestionMasterService;
         private readonly IGenericService<MQuestionMaster> _repository;
       
-        public QuestionMasterController(IQuestionMasterService repository, IGenericService<MQuestionMaster> repository1)
+        public QuestionMasterController(IGenericService<MQuestionMaster> repository1)
         {
-            _IQuestionMasterService = repository;
             _repository = repository1;
            
         }
@@ -39,8 +37,20 @@ namespace HIMS.API.Controllers.GastrologyMaster
             IPagedList<MQuestionMaster> MQuestionMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MQuestionMasterList.ToGridResponse(objGrid, "QuestionMaster List"));
         }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.QuestionId == id);
+            return data.ToSingleResponse<MQuestionMaster, QuestionMasterModel>("MQuestionMaster");
+        }
 
-       
+
         //Add API
         [HttpPost]
         //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
@@ -94,41 +104,6 @@ namespace HIMS.API.Controllers.GastrologyMaster
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-        //[HttpPost("Insert")]
-        ////[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(QuestionMasterModel obj)
-        //{
-        //    MQuestionMaster model = obj.MapTo<MQuestionMaster>();
-        //    model.IsActive = true;
-
-        //    if (obj.QuestionId == 0)
-        //    {
-        //        foreach (var p in model.MSubQuestionMasters)
-        //        {
-        //            p.CreatedBy = CurrentUserId;
-        //            p.CreatedDate = AppTime.Now;
-        //            p.IsActive = true;
-
-
-        //        }
-        //        foreach (var q in model.MSubQuestionValuesMasters)
-        //        {
-        //            q.CreatedBy = CurrentUserId;
-        //            q.CreatedDate = AppTime.Now;
-        //            q.IsActive = true;
-
-
-        //        }
-        //        model.CreatedDate = AppTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _IQuestionMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.QuestionId);
-        //}
        
     }
 }
