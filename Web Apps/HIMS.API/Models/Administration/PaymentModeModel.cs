@@ -47,4 +47,10 @@
 
 
     }
+    public class TpaymentUpdateModel
+    {
+        public long PaymentId { get; set; }
+        public long? BillNo { get; set; }
+        public string? PayMode { get; set; }
+    }
 }

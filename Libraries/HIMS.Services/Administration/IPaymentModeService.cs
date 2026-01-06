@@ -9,6 +9,8 @@ namespace HIMS.Services.Administration
     {
         Task UpdateAsync(Payment objPayment, int UserId, string Username, string[]? references);
         Task<IPagedList<OPBillListForPaymentModeChangeListDto>> GetListAsync(GridRequestModel objGrid);
+        Task PaymentUpdateAsync(TPayment ObjBill, int CurrentUserId, string CurrentUserName);
+
 
 
     }

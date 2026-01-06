@@ -177,6 +177,11 @@ namespace HIMS.Services.Common
                 case "ConstantType": sp_Name = "m_rtrv_ConstantType_Wise_List"; break;
                 case "paymentMode": sp_Name = "ps_rtrv_paymentModelist"; break;
                 case "ParameterDescriptiveMaster": sp_Name = "ps_Get_ParameterDescriptiveMaster_ById"; break;
+                case "OPBillPaymentListForPayModeChange": sp_Name = "ps_rtrv_OPBillPaymentListForPayModeChange"; break;
+                case "subQuestionList": sp_Name = "ps_Rtrv_subQuestionList"; break;
+                case "subQuestionValueList": sp_Name = "ps_Rtrv_subQuestionValueList"; break;
+
+
 
 
 
