@@ -30,6 +30,8 @@ namespace HIMS.API.Models.GastrologyMasterModel
         public string? SubQuestionName { get; set; }
         public long? SequenceNo { get; set; }
         public string? ResultValues { get; set; }
+        public List<MSubQuestionValuesMasterModel> MSubQuestionValuesMasters { get; set; }
+
 
         public class MSubQuestionMasterModelValidator : AbstractValidator<MSubQuestionMasterModel>
         {
@@ -44,7 +46,7 @@ namespace HIMS.API.Models.GastrologyMasterModel
         public class MSubQuestionValuesMasterModel
         {
             public long SubQuestionValId { get; set; }
-            public long? QuestionId { get; set; }
+            public long? SubQuestionId { get; set; }
             public string? SubQuestionValName { get; set; }
             public long? SequenceNo { get; set; }
             public string? ResultValues { get; set; }

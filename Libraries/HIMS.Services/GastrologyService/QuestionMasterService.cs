@@ -17,35 +17,69 @@ namespace HIMS.Services.GastrologyService
         {
             _context = HIMSDbContext;
         }
-        //public virtual async Task InsertAsync(MQuestionMaster ObjMQuestionMaster, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-        //    {
-                //var lastSeqNoStr = await _context.MQuestionMasters
-                //    .OrderByDescending(x => x.OtreservationNo)
-                //    .Select(x => x.OtreservationNo)
-                //    .FirstOrDefaultAsync();
-
-                //int lastSeqNo = 0;
-                //if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                //    lastSeqNo = parsed;
-
-                //// Increment the sequence number
-                //int newSeqNo = lastSeqNo + 1;
-                //ObjMQuestionMaster.OtreservationNo = newSeqNo.ToString();
-
-
-        //        ObjMQuestionMaster.CreatedBy = UserId;
-        //        ObjMQuestionMaster.CreatedDate = AppTime.Now;
-
-        //        _context.MQuestionMasters.Add(ObjMQuestionMaster);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
+       
       
+        public virtual async Task InsertAsync(MSubQuestionMaster ObjMSubQuestionMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
+            // Get last sequence number (numeric)
+            var lastSeqNo = await _context.MSubQuestionMasters .OrderByDescending(x => x.SequenceNo).Select(x => x.SequenceNo) .FirstOrDefaultAsync();
+
+            var newSeqNo = lastSeqNo + 1;
+
+            // Assign new sequence number
+            ObjMSubQuestionMaster.SequenceNo = newSeqNo;
+
+            ObjMSubQuestionMaster.CreatedBy = UserId;
+            ObjMSubQuestionMaster.CreatedDate = AppTime.Now;
+
+            _context.MSubQuestionMasters.Add(ObjMSubQuestionMaster);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
+        }
+        public virtual async Task UpdateAsync(MSubQuestionMaster ObjMSubQuestionMaster, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            {
+                long subQuestionId = ObjMSubQuestionMaster.SubQuestionId;
+
+                // ✅ Delete related details first
+                var lstAttend = await _context.MSubQuestionValuesMasters
+                    .Where(x => x.SubQuestionId == subQuestionId)
+                    .ToListAsync();
+
+                if (lstAttend.Any())
+                {
+                    _context.MSubQuestionValuesMasters.RemoveRange(lstAttend);
+                    await _context.SaveChangesAsync();
+                }
+
+                // ✅ Save deletion first
+                await _context.SaveChangesAsync();
+
+                // ✅ Then attach and update header
+                _context.Attach(ObjMSubQuestionMaster);
+                _context.Entry(ObjMSubQuestionMaster).State = EntityState.Modified;
+
+                _context.Entry(ObjMSubQuestionMaster).Property(x => x.CreatedBy).IsModified = false;
+                _context.Entry(ObjMSubQuestionMaster).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(ObjMSubQuestionMaster).Property(x => x.SequenceNo).IsModified = false;
+
+                ObjMSubQuestionMaster.ModifiedBy = UserId;
+                ObjMSubQuestionMaster.ModifiedDate = AppTime.Now;
+
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                        _context.Entry(ObjMSubQuestionMaster).Property(column).IsModified = false;
+                }
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
     }
 }
