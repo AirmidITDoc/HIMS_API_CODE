@@ -12309,9 +12309,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName"));
+                        html = html.Replace("{{AnaesthesiaType}}", dt.GetColValue("AnaesthesiaType")); 
 
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("Name"));
-                        html = html.Replace("{{CategoryType}}", dt.GetColValue("ConstantType"));
+                        html = html.Replace("{{CategoryType}}", dt.GetColValue("TypeName"));
                         html = html.Replace("{{OTTableName}}", dt.GetColValue("OTTableName"));
                         html = html.Replace("{{LocationName}}", dt.GetColValue("LocationName"));
                         html = html.Replace("{{EstimateTime}}", dt.GetColValue("EstimateTime").ConvertToDateString("hh:mm tt"));
