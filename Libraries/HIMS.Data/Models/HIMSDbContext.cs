@@ -34,6 +34,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<CasePaper> CasePapers { get; set; } = null!;
         public virtual DbSet<CashCounter> CashCounters { get; set; } = null!;
         public virtual DbSet<ClassMaster> ClassMasters { get; set; } = null!;
+        public virtual DbSet<ClinicalQuesDetail> ClinicalQuesDetails { get; set; } = null!;
+        public virtual DbSet<ClinicalQuesHeader> ClinicalQuesHeaders { get; set; } = null!;
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; } = null!;
         public virtual DbSet<CompanyTypeMaster> CompanyTypeMasters { get; set; } = null!;
         public virtual DbSet<ConfigSetting> ConfigSettings { get; set; } = null!;
@@ -303,6 +305,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MTaxNatureMaster> MTaxNatureMasters { get; set; } = null!;
         public virtual DbSet<MTemplateMaster> MTemplateMasters { get; set; } = null!;
         public virtual DbSet<MTermsOfPaymentMaster> MTermsOfPaymentMasters { get; set; } = null!;
+        public virtual DbSet<MUnitWiseCashCounter> MUnitWiseCashCounters { get; set; } = null!;
         public virtual DbSet<MUnitofMeasurementMaster> MUnitofMeasurementMasters { get; set; } = null!;
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
         public virtual DbSet<MVehicleMaster> MVehicleMasters { get; set; } = null!;
@@ -1247,6 +1250,36 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<ClinicalQuesDetail>(entity =>
+            {
+                entity.HasKey(e => e.ClinicalQuesDetId);
+
+                entity.ToTable("ClinicalQuesDetail");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultEntry).HasMaxLength(500);
+
+                entity.Property(e => e.SubQuesName).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<ClinicalQuesHeader>(entity =>
+            {
+                entity.ToTable("ClinicalQuesHeader");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.QuestionName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<CompanyMaster>(entity =>
@@ -8560,8 +8593,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ResultValues).HasMaxLength(50);
-
                 entity.Property(e => e.SubQuestionName).HasMaxLength(50);
             });
 
@@ -8575,11 +8606,14 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ResultValues).HasMaxLength(50);
-
                 entity.Property(e => e.ShortcutValues).HasMaxLength(50);
 
                 entity.Property(e => e.SubQuestionValName).HasMaxLength(50);
+
+                entity.HasOne(d => d.SubQuestion)
+                    .WithMany(p => p.MSubQuestionValuesMasters)
+                    .HasForeignKey(d => d.SubQuestionId)
+                    .HasConstraintName("FK_M_SubQuestionValuesMaster_M_SubQuestionMaster");
             });
 
             modelBuilder.Entity<MSubTpacompanyMaster>(entity =>
@@ -8733,6 +8767,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TermsOfPayment).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<MUnitWiseCashCounter>(entity =>
+            {
+                entity.ToTable("M_UnitWiseCashCounter");
+
+                entity.Property(e => e.CashCounterCode).HasMaxLength(20);
             });
 
             modelBuilder.Entity<MUnitofMeasurementMaster>(entity =>

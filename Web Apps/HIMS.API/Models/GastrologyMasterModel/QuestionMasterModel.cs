@@ -29,14 +29,14 @@ namespace HIMS.API.Models.GastrologyMasterModel
         public long? QuestionId { get; set; }
         public string? SubQuestionName { get; set; }
         public long? SequenceNo { get; set; }
-        public string? ResultValues { get; set; }
+        public List<MSubQuestionValuesMasterModel> MSubQuestionValuesMasters { get; set; }
+
 
         public class MSubQuestionMasterModelValidator : AbstractValidator<MSubQuestionMasterModel>
         {
             public MSubQuestionMasterModelValidator()
             {
                 RuleFor(x => x.SubQuestionName).NotNull().NotEmpty().WithMessage("SubQuestionName is required");
-                RuleFor(x => x.ResultValues).NotNull().NotEmpty().WithMessage("ResultValues is required");
 
 
             }
@@ -44,10 +44,9 @@ namespace HIMS.API.Models.GastrologyMasterModel
         public class MSubQuestionValuesMasterModel
         {
             public long SubQuestionValId { get; set; }
-            public long? QuestionId { get; set; }
+            public long? SubQuestionId { get; set; }
             public string? SubQuestionValName { get; set; }
             public long? SequenceNo { get; set; }
-            public string? ResultValues { get; set; }
             public string? ShortcutValues { get; set; }
 
             public class MSubQuestionValuesMasterModelValidator : AbstractValidator<MSubQuestionValuesMasterModel>
@@ -55,7 +54,6 @@ namespace HIMS.API.Models.GastrologyMasterModel
                 public MSubQuestionValuesMasterModelValidator()
                 {
                     RuleFor(x => x.SubQuestionValName).NotNull().NotEmpty().WithMessage("SubQuestionValName is required");
-                    RuleFor(x => x.ResultValues).NotNull().NotEmpty().WithMessage("ResultValues is required");
                     RuleFor(x => x.ShortcutValues).NotNull().NotEmpty().WithMessage("ShortcutValues is required");
                 }
             }

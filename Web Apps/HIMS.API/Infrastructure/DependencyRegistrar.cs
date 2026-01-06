@@ -145,6 +145,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IsmsConfigService, smsConfigService>();
             services.AddScoped<ISupplierPaymentStatusService, SupplierPaymentStatusService>();
             services.AddScoped<IMarketingService, MarketingService>();
+            services.AddScoped<IInPatientService, InPatientService>();
+
 
 
 

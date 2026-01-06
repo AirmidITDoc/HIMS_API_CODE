@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "OTPreOperation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OTPreOperationModel obj)
         {
             TOtPreOperationHeader model = obj.MapTo<TOtPreOperationHeader>();

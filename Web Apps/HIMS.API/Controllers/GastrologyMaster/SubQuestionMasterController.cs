@@ -9,6 +9,8 @@ using HIMS.API.Models.GastrologyMasterModel;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
 
 namespace HIMS.API.Controllers.GastrologyMaster
 {
@@ -18,9 +20,13 @@ namespace HIMS.API.Controllers.GastrologyMaster
     public class SubQuestionMasterController : BaseController
     {
         private readonly IGenericService<MSubQuestionMaster> _repository;
-        public SubQuestionMasterController( IGenericService<MSubQuestionMaster> repository)
+        private readonly IQuestionMasterService _IQuestionMasterService;
+
+        public SubQuestionMasterController(IQuestionMasterService repository1, IGenericService<MSubQuestionMaster> repository)
         {
             _repository = repository;
+            _IQuestionMasterService = repository1;
+
 
         }
         //List API
@@ -32,29 +38,48 @@ namespace HIMS.API.Controllers.GastrologyMaster
             IPagedList<MSubQuestionMaster> MSubQuestionMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSubQuestionMasterList.ToGridResponse(objGrid, "MSubQuestionMaster List"));
         }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.SubQuestionId == id);
+            return data.ToSingleResponse<MSubQuestionMaster, MSubQuestionMasterModel>("MSubQuestionMaster");
+        }
 
-
-        //Add API
-        [HttpPost]
-        //[Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(MSubQuestionMasterModel obj)
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(MSubQuestionMasterModel obj)
         {
             MSubQuestionMaster model = obj.MapTo<MSubQuestionMaster>();
             model.IsActive = true;
+
             if (obj.SubQuestionId == 0)
             {
-                model.CreatedBy = CurrentUserId;
+                foreach (var p in model.MSubQuestionValuesMasters)
+                {
+                    p.CreatedBy = CurrentUserId;
+                    p.CreatedDate = AppTime.Now;
+                    p.IsActive = true;
+
+                }
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IQuestionMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SubQuestionId);
         }
 
-        //Edit API
-        [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.Edit)]
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MSubQuestionMasterModel obj)
         {
             MSubQuestionMaster model = obj.MapTo<MSubQuestionMaster>();
@@ -64,11 +89,27 @@ namespace HIMS.API.Controllers.GastrologyMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedBy = CurrentUserId;
+                foreach (var q in model.MSubQuestionValuesMasters)
+                {
+                    if (q.SubQuestionValId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = AppTime.Now;
+                        q.IsActive = true;
+
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = AppTime.Now;
+                    q.SubQuestionValId = 0;
+                }
+
+              
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                model.ModifiedBy = CurrentUserId;
+                await _IQuestionMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.SubQuestionId);
         }
         //Delete API
         [HttpDelete]

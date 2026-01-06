@@ -33,7 +33,18 @@ namespace HIMS.API.Controllers.GastrologyMaster
             IPagedList<MSubQuestionValuesMaster> MSubQuestionValuesMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MSubQuestionValuesMasterList.ToGridResponse(objGrid, "MSubQuestionValuesMaster List"));
         }
-
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.SubQuestionValId == id);
+            return data.ToSingleResponse<MSubQuestionValuesMaster, MSubQuestionValuesMasterModel>("MSubQuestionValuesMaster");
+        }
 
         //Add API
         [HttpPost]
