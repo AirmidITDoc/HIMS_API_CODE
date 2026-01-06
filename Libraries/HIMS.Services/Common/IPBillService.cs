@@ -933,6 +933,28 @@ namespace HIMS.Services.Common
 
         }
 
+        //public virtual async Task BillGovtUpdate(Bill ObjBill, int CurrentUserId, string CurrentUserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
+        //                          "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt",
+        //                          "HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
+        //    var entity = ObjaddCharge.ToDictionary();
+
+        //    foreach (var rProperty in entity.Keys.ToList())
+        //    {
+        //        if (!AEntity.Contains(rProperty))
+        //            entity.Remove(rProperty);
+        //    }
+
+        //    string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
+        //    await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+        //}
+
+
 
 
 
