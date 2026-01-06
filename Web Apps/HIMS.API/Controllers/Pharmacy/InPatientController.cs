@@ -22,24 +22,22 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _IInPatientService = repository;
         }
-        // Changes done by Subhash Date : 17-May-2025
         [HttpPost("SalesInPatientBillList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<SalesBillListDto> salesbrowselist = await _IInPatientService.salesbrowselist(objGrid);
             return Ok(salesbrowselist.ToGridResponse(objGrid, "Sales InPatient BillList"));
         }
-        // Changes done by Subhash Date : 17-May-2025
         [HttpPost("SalesInPatientDetailsList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<InPatientSalesDetailsListDto> SalesBrowseDetailList = await _IInPatientService.Getsalesdetaillist(objGrid);
             return Ok(SalesBrowseDetailList.ToGridResponse(objGrid, "Sales InPatient Details List"));
         }
         [HttpPost("SalesInPatientReturnBillList")]
-        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> salesreturnlist(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnBillListDto> salesreturnlist = await _IInPatientService.salesreturnlist(objGrid);
