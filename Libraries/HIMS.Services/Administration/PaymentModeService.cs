@@ -1,4 +1,8 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
@@ -19,6 +23,10 @@ namespace HIMS.Services.Administration
             await _context.SaveChangesAsync();
 
             //scope.Complete();
+        }
+        public virtual async Task<IPagedList<OPBillListForPaymentModeChangeListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListForPaymentModeChangeListDto>(model, "ps_rtrv_OPBillListForPaymentModeChange");
         }
 
         public virtual async Task UpdateAsync(Payment objPayment, int UserId, string Username, string[]? ignoreColumns = null)
