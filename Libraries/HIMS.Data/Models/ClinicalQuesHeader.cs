@@ -5,7 +5,14 @@ namespace HIMS.Data.Models
 {
     public partial class ClinicalQuesHeader
     {
+        public ClinicalQuesHeader()
+        {
+            ClinicalQuesDetails = new HashSet<ClinicalQuesDetail>();
+        }
+
         public long ClinicalQuesHeaderId { get; set; }
+        public DateTime? ClinicalQuesDate { get; set; }
+        public DateTime? ClinicalQuesTime { get; set; }
         public long? Opipid { get; set; }
         public byte? Opiptype { get; set; }
         public long? QuestionId { get; set; }
@@ -14,5 +21,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<ClinicalQuesDetail> ClinicalQuesDetails { get; set; }
     }
 }
