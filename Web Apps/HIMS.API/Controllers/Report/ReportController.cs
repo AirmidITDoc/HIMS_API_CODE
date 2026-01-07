@@ -358,8 +358,8 @@ namespace HIMS.API.Controllers.Report
                 case "PathologyReportTemplateWithImgHeader":
                 case "PathologyReportWithImgHeader":
 
+                case "PathologySampleBarcode":
 
-                //case "PathologyReporKenyatWithHeader":
 
 
                 //Radiology 

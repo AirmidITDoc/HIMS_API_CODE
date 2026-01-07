@@ -23,28 +23,28 @@ namespace HIMS.API.Controllers.Pharmacy
             _IInPatientService = repository;
         }
         [HttpPost("SalesInPatientBillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<SalesBillListDto> salesbrowselist = await _IInPatientService.salesbrowselist(objGrid);
             return Ok(salesbrowselist.ToGridResponse(objGrid, "Sales InPatient BillList"));
         }
         [HttpPost("SalesInPatientDetailsList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<InPatientSalesDetailsListDto> SalesBrowseDetailList = await _IInPatientService.Getsalesdetaillist(objGrid);
             return Ok(SalesBrowseDetailList.ToGridResponse(objGrid, "Sales InPatient Details List"));
         }
         [HttpPost("SalesInPatientReturnBillList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
         public async Task<IActionResult> salesreturnlist(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnBillListDto> salesreturnlist = await _IInPatientService.salesreturnlist(objGrid);
             return Ok(salesreturnlist.ToGridResponse(objGrid, "Sales InPatient ReturnBil lList"));
         }
         [HttpPost("salesInPatientReturnBrowseDetaillist")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
         public async Task<IActionResult> salesInPatientReturnBrowseDetaillist(GridRequestModel objGrid)
         {
             IPagedList<SalesInPatientReturnDetailsListDto> salesInPatientReturnBrowseDetaillist = await _IInPatientService.salesreturndetaillist(objGrid);
